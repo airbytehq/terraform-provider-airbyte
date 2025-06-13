@@ -28,6 +28,12 @@ func (r *SourceAlgoliaResourceModel) ToSharedSourceAlgoliaCreateRequest() *share
 	var applicationID string
 	applicationID = r.Configuration.ApplicationID.ValueString()
 
+	objectID := new(string)
+	if !r.Configuration.ObjectID.IsUnknown() && !r.Configuration.ObjectID.IsNull() {
+		*objectID = r.Configuration.ObjectID.ValueString()
+	} else {
+		objectID = nil
+	}
 	searchQuery := new(string)
 	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
 		*searchQuery = r.Configuration.SearchQuery.ValueString()
@@ -35,18 +41,12 @@ func (r *SourceAlgoliaResourceModel) ToSharedSourceAlgoliaCreateRequest() *share
 		searchQuery = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	objectID := new(string)
-	if !r.Configuration.ObjectID.IsUnknown() && !r.Configuration.ObjectID.IsNull() {
-		*objectID = r.Configuration.ObjectID.ValueString()
-	} else {
-		objectID = nil
-	}
 	configuration := shared.SourceAlgolia{
 		APIKey:        apiKey,
 		ApplicationID: applicationID,
+		ObjectID:      objectID,
 		SearchQuery:   searchQuery,
 		StartDate:     startDate,
-		ObjectID:      objectID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -124,6 +124,12 @@ func (r *SourceAlgoliaResourceModel) ToSharedSourceAlgoliaPutRequest() *shared.S
 	var applicationID string
 	applicationID = r.Configuration.ApplicationID.ValueString()
 
+	objectID := new(string)
+	if !r.Configuration.ObjectID.IsUnknown() && !r.Configuration.ObjectID.IsNull() {
+		*objectID = r.Configuration.ObjectID.ValueString()
+	} else {
+		objectID = nil
+	}
 	searchQuery := new(string)
 	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
 		*searchQuery = r.Configuration.SearchQuery.ValueString()
@@ -131,18 +137,12 @@ func (r *SourceAlgoliaResourceModel) ToSharedSourceAlgoliaPutRequest() *shared.S
 		searchQuery = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	objectID := new(string)
-	if !r.Configuration.ObjectID.IsUnknown() && !r.Configuration.ObjectID.IsNull() {
-		*objectID = r.Configuration.ObjectID.ValueString()
-	} else {
-		objectID = nil
-	}
 	configuration := shared.SourceAlgoliaUpdate{
 		APIKey:        apiKey,
 		ApplicationID: applicationID,
+		ObjectID:      objectID,
 		SearchQuery:   searchQuery,
 		StartDate:     startDate,
-		ObjectID:      objectID,
 	}
 	out := shared.SourceAlgoliaPutRequest{
 		Name:          name,

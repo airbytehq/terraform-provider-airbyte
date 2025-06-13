@@ -26,11 +26,11 @@ func (r *SourceRedditResourceModel) ToSharedSourceRedditCreateRequest() *shared.
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	query := new(string)
-	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
-		*query = r.Configuration.Query.ValueString()
+	exact := new(bool)
+	if !r.Configuration.Exact.IsUnknown() && !r.Configuration.Exact.IsNull() {
+		*exact = r.Configuration.Exact.ValueBool()
 	} else {
-		query = nil
+		exact = nil
 	}
 	includeOver18 := new(bool)
 	if !r.Configuration.IncludeOver18.IsUnknown() && !r.Configuration.IncludeOver18.IsNull() {
@@ -38,33 +38,33 @@ func (r *SourceRedditResourceModel) ToSharedSourceRedditCreateRequest() *shared.
 	} else {
 		includeOver18 = nil
 	}
-	exact := new(bool)
-	if !r.Configuration.Exact.IsUnknown() && !r.Configuration.Exact.IsNull() {
-		*exact = r.Configuration.Exact.ValueBool()
-	} else {
-		exact = nil
-	}
 	limit := new(float64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit, _ = r.Configuration.Limit.ValueBigFloat().Float64()
 	} else {
 		limit = nil
 	}
+	query := new(string)
+	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
+		*query = r.Configuration.Query.ValueString()
+	} else {
+		query = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var subreddits []interface{} = []interface{}{}
 	for _, subredditsItem := range r.Configuration.Subreddits {
 		var subredditsTmp interface{}
 		_ = json.Unmarshal([]byte(subredditsItem.ValueString()), &subredditsTmp)
 		subreddits = append(subreddits, subredditsTmp)
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceReddit{
 		APIKey:        apiKey,
-		Query:         query,
-		IncludeOver18: includeOver18,
 		Exact:         exact,
+		IncludeOver18: includeOver18,
 		Limit:         limit,
-		Subreddits:    subreddits,
+		Query:         query,
 		StartDate:     startDate,
+		Subreddits:    subreddits,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -139,11 +139,11 @@ func (r *SourceRedditResourceModel) ToSharedSourceRedditPutRequest() *shared.Sou
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	query := new(string)
-	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
-		*query = r.Configuration.Query.ValueString()
+	exact := new(bool)
+	if !r.Configuration.Exact.IsUnknown() && !r.Configuration.Exact.IsNull() {
+		*exact = r.Configuration.Exact.ValueBool()
 	} else {
-		query = nil
+		exact = nil
 	}
 	includeOver18 := new(bool)
 	if !r.Configuration.IncludeOver18.IsUnknown() && !r.Configuration.IncludeOver18.IsNull() {
@@ -151,33 +151,33 @@ func (r *SourceRedditResourceModel) ToSharedSourceRedditPutRequest() *shared.Sou
 	} else {
 		includeOver18 = nil
 	}
-	exact := new(bool)
-	if !r.Configuration.Exact.IsUnknown() && !r.Configuration.Exact.IsNull() {
-		*exact = r.Configuration.Exact.ValueBool()
-	} else {
-		exact = nil
-	}
 	limit := new(float64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit, _ = r.Configuration.Limit.ValueBigFloat().Float64()
 	} else {
 		limit = nil
 	}
+	query := new(string)
+	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
+		*query = r.Configuration.Query.ValueString()
+	} else {
+		query = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var subreddits []interface{} = []interface{}{}
 	for _, subredditsItem := range r.Configuration.Subreddits {
 		var subredditsTmp interface{}
 		_ = json.Unmarshal([]byte(subredditsItem.ValueString()), &subredditsTmp)
 		subreddits = append(subreddits, subredditsTmp)
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceRedditUpdate{
 		APIKey:        apiKey,
-		Query:         query,
-		IncludeOver18: includeOver18,
 		Exact:         exact,
+		IncludeOver18: includeOver18,
 		Limit:         limit,
-		Subreddits:    subreddits,
+		Query:         query,
 		StartDate:     startDate,
+		Subreddits:    subreddits,
 	}
 	out := shared.SourceRedditPutRequest{
 		Name:          name,

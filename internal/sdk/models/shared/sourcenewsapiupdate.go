@@ -8,96 +8,45 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type SourceNewsAPIUpdateSearchIn string
+// SourceNewsAPIUpdateCategory - The category you want to get top headlines for.
+type SourceNewsAPIUpdateCategory string
 
 const (
-	SourceNewsAPIUpdateSearchInTitle       SourceNewsAPIUpdateSearchIn = "title"
-	SourceNewsAPIUpdateSearchInDescription SourceNewsAPIUpdateSearchIn = "description"
-	SourceNewsAPIUpdateSearchInContent     SourceNewsAPIUpdateSearchIn = "content"
+	SourceNewsAPIUpdateCategoryBusiness      SourceNewsAPIUpdateCategory = "business"
+	SourceNewsAPIUpdateCategoryEntertainment SourceNewsAPIUpdateCategory = "entertainment"
+	SourceNewsAPIUpdateCategoryGeneral       SourceNewsAPIUpdateCategory = "general"
+	SourceNewsAPIUpdateCategoryHealth        SourceNewsAPIUpdateCategory = "health"
+	SourceNewsAPIUpdateCategoryScience       SourceNewsAPIUpdateCategory = "science"
+	SourceNewsAPIUpdateCategorySports        SourceNewsAPIUpdateCategory = "sports"
+	SourceNewsAPIUpdateCategoryTechnology    SourceNewsAPIUpdateCategory = "technology"
 )
 
-func (e SourceNewsAPIUpdateSearchIn) ToPointer() *SourceNewsAPIUpdateSearchIn {
+func (e SourceNewsAPIUpdateCategory) ToPointer() *SourceNewsAPIUpdateCategory {
 	return &e
 }
-func (e *SourceNewsAPIUpdateSearchIn) UnmarshalJSON(data []byte) error {
+func (e *SourceNewsAPIUpdateCategory) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "title":
+	case "business":
 		fallthrough
-	case "description":
+	case "entertainment":
 		fallthrough
-	case "content":
-		*e = SourceNewsAPIUpdateSearchIn(v)
+	case "general":
+		fallthrough
+	case "health":
+		fallthrough
+	case "science":
+		fallthrough
+	case "sports":
+		fallthrough
+	case "technology":
+		*e = SourceNewsAPIUpdateCategory(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNewsAPIUpdateSearchIn: %v", v)
-	}
-}
-
-// SourceNewsAPIUpdateLanguage - The 2-letter ISO-639-1 code of the language you want to get headlines
-// for. Possible options: ar de en es fr he it nl no pt ru se ud zh.
-type SourceNewsAPIUpdateLanguage string
-
-const (
-	SourceNewsAPIUpdateLanguageAr SourceNewsAPIUpdateLanguage = "ar"
-	SourceNewsAPIUpdateLanguageDe SourceNewsAPIUpdateLanguage = "de"
-	SourceNewsAPIUpdateLanguageEn SourceNewsAPIUpdateLanguage = "en"
-	SourceNewsAPIUpdateLanguageEs SourceNewsAPIUpdateLanguage = "es"
-	SourceNewsAPIUpdateLanguageFr SourceNewsAPIUpdateLanguage = "fr"
-	SourceNewsAPIUpdateLanguageHe SourceNewsAPIUpdateLanguage = "he"
-	SourceNewsAPIUpdateLanguageIt SourceNewsAPIUpdateLanguage = "it"
-	SourceNewsAPIUpdateLanguageNl SourceNewsAPIUpdateLanguage = "nl"
-	SourceNewsAPIUpdateLanguageNo SourceNewsAPIUpdateLanguage = "no"
-	SourceNewsAPIUpdateLanguagePt SourceNewsAPIUpdateLanguage = "pt"
-	SourceNewsAPIUpdateLanguageRu SourceNewsAPIUpdateLanguage = "ru"
-	SourceNewsAPIUpdateLanguageSe SourceNewsAPIUpdateLanguage = "se"
-	SourceNewsAPIUpdateLanguageUd SourceNewsAPIUpdateLanguage = "ud"
-	SourceNewsAPIUpdateLanguageZh SourceNewsAPIUpdateLanguage = "zh"
-)
-
-func (e SourceNewsAPIUpdateLanguage) ToPointer() *SourceNewsAPIUpdateLanguage {
-	return &e
-}
-func (e *SourceNewsAPIUpdateLanguage) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ar":
-		fallthrough
-	case "de":
-		fallthrough
-	case "en":
-		fallthrough
-	case "es":
-		fallthrough
-	case "fr":
-		fallthrough
-	case "he":
-		fallthrough
-	case "it":
-		fallthrough
-	case "nl":
-		fallthrough
-	case "no":
-		fallthrough
-	case "pt":
-		fallthrough
-	case "ru":
-		fallthrough
-	case "se":
-		fallthrough
-	case "ud":
-		fallthrough
-	case "zh":
-		*e = SourceNewsAPIUpdateLanguage(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceNewsAPIUpdateLanguage: %v", v)
+		return fmt.Errorf("invalid value for SourceNewsAPIUpdateCategory: %v", v)
 	}
 }
 
@@ -285,45 +234,96 @@ func (e *SourceNewsAPIUpdateCountry) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceNewsAPIUpdateCategory - The category you want to get top headlines for.
-type SourceNewsAPIUpdateCategory string
+// SourceNewsAPIUpdateLanguage - The 2-letter ISO-639-1 code of the language you want to get headlines
+// for. Possible options: ar de en es fr he it nl no pt ru se ud zh.
+type SourceNewsAPIUpdateLanguage string
 
 const (
-	SourceNewsAPIUpdateCategoryBusiness      SourceNewsAPIUpdateCategory = "business"
-	SourceNewsAPIUpdateCategoryEntertainment SourceNewsAPIUpdateCategory = "entertainment"
-	SourceNewsAPIUpdateCategoryGeneral       SourceNewsAPIUpdateCategory = "general"
-	SourceNewsAPIUpdateCategoryHealth        SourceNewsAPIUpdateCategory = "health"
-	SourceNewsAPIUpdateCategoryScience       SourceNewsAPIUpdateCategory = "science"
-	SourceNewsAPIUpdateCategorySports        SourceNewsAPIUpdateCategory = "sports"
-	SourceNewsAPIUpdateCategoryTechnology    SourceNewsAPIUpdateCategory = "technology"
+	SourceNewsAPIUpdateLanguageAr SourceNewsAPIUpdateLanguage = "ar"
+	SourceNewsAPIUpdateLanguageDe SourceNewsAPIUpdateLanguage = "de"
+	SourceNewsAPIUpdateLanguageEn SourceNewsAPIUpdateLanguage = "en"
+	SourceNewsAPIUpdateLanguageEs SourceNewsAPIUpdateLanguage = "es"
+	SourceNewsAPIUpdateLanguageFr SourceNewsAPIUpdateLanguage = "fr"
+	SourceNewsAPIUpdateLanguageHe SourceNewsAPIUpdateLanguage = "he"
+	SourceNewsAPIUpdateLanguageIt SourceNewsAPIUpdateLanguage = "it"
+	SourceNewsAPIUpdateLanguageNl SourceNewsAPIUpdateLanguage = "nl"
+	SourceNewsAPIUpdateLanguageNo SourceNewsAPIUpdateLanguage = "no"
+	SourceNewsAPIUpdateLanguagePt SourceNewsAPIUpdateLanguage = "pt"
+	SourceNewsAPIUpdateLanguageRu SourceNewsAPIUpdateLanguage = "ru"
+	SourceNewsAPIUpdateLanguageSe SourceNewsAPIUpdateLanguage = "se"
+	SourceNewsAPIUpdateLanguageUd SourceNewsAPIUpdateLanguage = "ud"
+	SourceNewsAPIUpdateLanguageZh SourceNewsAPIUpdateLanguage = "zh"
 )
 
-func (e SourceNewsAPIUpdateCategory) ToPointer() *SourceNewsAPIUpdateCategory {
+func (e SourceNewsAPIUpdateLanguage) ToPointer() *SourceNewsAPIUpdateLanguage {
 	return &e
 }
-func (e *SourceNewsAPIUpdateCategory) UnmarshalJSON(data []byte) error {
+func (e *SourceNewsAPIUpdateLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "business":
+	case "ar":
 		fallthrough
-	case "entertainment":
+	case "de":
 		fallthrough
-	case "general":
+	case "en":
 		fallthrough
-	case "health":
+	case "es":
 		fallthrough
-	case "science":
+	case "fr":
 		fallthrough
-	case "sports":
+	case "he":
 		fallthrough
-	case "technology":
-		*e = SourceNewsAPIUpdateCategory(v)
+	case "it":
+		fallthrough
+	case "nl":
+		fallthrough
+	case "no":
+		fallthrough
+	case "pt":
+		fallthrough
+	case "ru":
+		fallthrough
+	case "se":
+		fallthrough
+	case "ud":
+		fallthrough
+	case "zh":
+		*e = SourceNewsAPIUpdateLanguage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNewsAPIUpdateCategory: %v", v)
+		return fmt.Errorf("invalid value for SourceNewsAPIUpdateLanguage: %v", v)
+	}
+}
+
+type SourceNewsAPIUpdateSearchIn string
+
+const (
+	SourceNewsAPIUpdateSearchInTitle       SourceNewsAPIUpdateSearchIn = "title"
+	SourceNewsAPIUpdateSearchInDescription SourceNewsAPIUpdateSearchIn = "description"
+	SourceNewsAPIUpdateSearchInContent     SourceNewsAPIUpdateSearchIn = "content"
+)
+
+func (e SourceNewsAPIUpdateSearchIn) ToPointer() *SourceNewsAPIUpdateSearchIn {
+	return &e
+}
+func (e *SourceNewsAPIUpdateSearchIn) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "title":
+		fallthrough
+	case "description":
+		fallthrough
+	case "content":
+		*e = SourceNewsAPIUpdateSearchIn(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceNewsAPIUpdateSearchIn: %v", v)
 	}
 }
 
@@ -361,50 +361,50 @@ func (e *SourceNewsAPIUpdateSortBy) UnmarshalJSON(data []byte) error {
 type SourceNewsAPIUpdate struct {
 	// API Key
 	APIKey string `json:"api_key"`
-	// Search query. See https://newsapi.org/docs/endpoints/everything for
-	// information.
+	// The category you want to get top headlines for.
+	Category *SourceNewsAPIUpdateCategory `default:"business" json:"category"`
+	// The 2-letter ISO 3166-1 code of the country you want to get headlines
+	// for. You can't mix this with the sources parameter.
 	//
-	SearchQuery *string `json:"search_query,omitempty"`
+	Country *SourceNewsAPIUpdateCountry `default:"us" json:"country"`
+	// A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com,
+	// engadget.com) to restrict the search to.
+	//
+	Domains []string `json:"domains,omitempty"`
+	// A date and optional time for the newest article allowed. This should
+	// be in ISO 8601 format.
+	//
+	EndDate *string `json:"end_date,omitempty"`
+	// A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com,
+	// engadget.com) to remove from the results.
+	//
+	ExcludeDomains []string `json:"exclude_domains,omitempty"`
+	// The 2-letter ISO-639-1 code of the language you want to get headlines
+	// for. Possible options: ar de en es fr he it nl no pt ru se ud zh.
+	//
+	Language *SourceNewsAPIUpdateLanguage `json:"language,omitempty"`
 	// Where to apply search query. Possible values are: title, description,
 	// content.
 	//
 	SearchIn []SourceNewsAPIUpdateSearchIn `json:"search_in,omitempty"`
+	// Search query. See https://newsapi.org/docs/endpoints/everything for
+	// information.
+	//
+	SearchQuery *string `json:"search_query,omitempty"`
+	// The order to sort the articles in. Possible options: relevancy,
+	// popularity, publishedAt.
+	//
+	SortBy *SourceNewsAPIUpdateSortBy `default:"publishedAt" json:"sort_by"`
 	// Identifiers (maximum 20) for the news sources or blogs you want
 	// headlines from. Use the `/sources` endpoint to locate these
 	// programmatically or look at the sources index:
 	// https://newsapi.com/sources. Will override both country and category.
 	//
 	Sources []string `json:"sources,omitempty"`
-	// A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com,
-	// engadget.com) to restrict the search to.
-	//
-	Domains []string `json:"domains,omitempty"`
-	// A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com,
-	// engadget.com) to remove from the results.
-	//
-	ExcludeDomains []string `json:"exclude_domains,omitempty"`
 	// A date and optional time for the oldest article allowed. This should
 	// be in ISO 8601 format.
 	//
 	StartDate *string `json:"start_date,omitempty"`
-	// A date and optional time for the newest article allowed. This should
-	// be in ISO 8601 format.
-	//
-	EndDate *string `json:"end_date,omitempty"`
-	// The 2-letter ISO-639-1 code of the language you want to get headlines
-	// for. Possible options: ar de en es fr he it nl no pt ru se ud zh.
-	//
-	Language *SourceNewsAPIUpdateLanguage `json:"language,omitempty"`
-	// The 2-letter ISO 3166-1 code of the country you want to get headlines
-	// for. You can't mix this with the sources parameter.
-	//
-	Country *SourceNewsAPIUpdateCountry `default:"us" json:"country"`
-	// The category you want to get top headlines for.
-	Category *SourceNewsAPIUpdateCategory `default:"business" json:"category"`
-	// The order to sort the articles in. Possible options: relevancy,
-	// popularity, publishedAt.
-	//
-	SortBy *SourceNewsAPIUpdateSortBy `default:"publishedAt" json:"sort_by"`
 }
 
 func (s SourceNewsAPIUpdate) MarshalJSON() ([]byte, error) {
@@ -425,60 +425,11 @@ func (o *SourceNewsAPIUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceNewsAPIUpdate) GetSearchQuery() *string {
+func (o *SourceNewsAPIUpdate) GetCategory() *SourceNewsAPIUpdateCategory {
 	if o == nil {
 		return nil
 	}
-	return o.SearchQuery
-}
-
-func (o *SourceNewsAPIUpdate) GetSearchIn() []SourceNewsAPIUpdateSearchIn {
-	if o == nil {
-		return nil
-	}
-	return o.SearchIn
-}
-
-func (o *SourceNewsAPIUpdate) GetSources() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Sources
-}
-
-func (o *SourceNewsAPIUpdate) GetDomains() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Domains
-}
-
-func (o *SourceNewsAPIUpdate) GetExcludeDomains() []string {
-	if o == nil {
-		return nil
-	}
-	return o.ExcludeDomains
-}
-
-func (o *SourceNewsAPIUpdate) GetStartDate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-func (o *SourceNewsAPIUpdate) GetEndDate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
-}
-
-func (o *SourceNewsAPIUpdate) GetLanguage() *SourceNewsAPIUpdateLanguage {
-	if o == nil {
-		return nil
-	}
-	return o.Language
+	return o.Category
 }
 
 func (o *SourceNewsAPIUpdate) GetCountry() *SourceNewsAPIUpdateCountry {
@@ -488,11 +439,46 @@ func (o *SourceNewsAPIUpdate) GetCountry() *SourceNewsAPIUpdateCountry {
 	return o.Country
 }
 
-func (o *SourceNewsAPIUpdate) GetCategory() *SourceNewsAPIUpdateCategory {
+func (o *SourceNewsAPIUpdate) GetDomains() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Category
+	return o.Domains
+}
+
+func (o *SourceNewsAPIUpdate) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceNewsAPIUpdate) GetExcludeDomains() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeDomains
+}
+
+func (o *SourceNewsAPIUpdate) GetLanguage() *SourceNewsAPIUpdateLanguage {
+	if o == nil {
+		return nil
+	}
+	return o.Language
+}
+
+func (o *SourceNewsAPIUpdate) GetSearchIn() []SourceNewsAPIUpdateSearchIn {
+	if o == nil {
+		return nil
+	}
+	return o.SearchIn
+}
+
+func (o *SourceNewsAPIUpdate) GetSearchQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SearchQuery
 }
 
 func (o *SourceNewsAPIUpdate) GetSortBy() *SourceNewsAPIUpdateSortBy {
@@ -500,4 +486,18 @@ func (o *SourceNewsAPIUpdate) GetSortBy() *SourceNewsAPIUpdateSortBy {
 		return nil
 	}
 	return o.SortBy
+}
+
+func (o *SourceNewsAPIUpdate) GetSources() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Sources
+}
+
+func (o *SourceNewsAPIUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

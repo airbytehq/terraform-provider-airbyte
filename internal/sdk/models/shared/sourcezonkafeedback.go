@@ -59,10 +59,10 @@ func (e *ZonkaFeedback) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZonkaFeedback struct {
-	// The identifier for the data center, such as 'us1' or 'e' for EU.
-	Datacenter DataCenterID `json:"datacenter"`
 	// Auth token to use. Generate it by navigating to Company Settings > Developers > API in your Zonka Feedback account.
-	AuthToken  string        `json:"auth_token"`
+	AuthToken string `json:"auth_token"`
+	// The identifier for the data center, such as 'us1' or 'e' for EU.
+	Datacenter DataCenterID  `json:"datacenter"`
 	sourceType ZonkaFeedback `const:"zonka-feedback" json:"sourceType"`
 }
 
@@ -77,18 +77,18 @@ func (s *SourceZonkaFeedback) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZonkaFeedback) GetDatacenter() DataCenterID {
-	if o == nil {
-		return DataCenterID("")
-	}
-	return o.Datacenter
-}
-
 func (o *SourceZonkaFeedback) GetAuthToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AuthToken
+}
+
+func (o *SourceZonkaFeedback) GetDatacenter() DataCenterID {
+	if o == nil {
+		return DataCenterID("")
+	}
+	return o.Datacenter
 }
 
 func (o *SourceZonkaFeedback) GetSourceType() ZonkaFeedback {

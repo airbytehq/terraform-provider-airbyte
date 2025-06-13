@@ -9,29 +9,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 )
 
-type AuthMethod string
-
-const (
-	AuthMethodOauth20 AuthMethod = "oauth2.0"
-)
-
-func (e AuthMethod) ToPointer() *AuthMethod {
-	return &e
-}
-func (e *AuthMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "oauth2.0":
-		*e = AuthMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthMethod: %v", v)
-	}
-}
-
 // An Operator that will be used to filter accounts. The Contains predicate has features for matching words, matching inflectional forms of words, searching using wildcard characters, and searching using proximity. The Equals is used to return all rows where account name is equal(=) to the string that you provided
 type Operator string
 
@@ -61,10 +38,17 @@ func (e *Operator) UnmarshalJSON(data []byte) error {
 
 // AccountNames - Account Names Predicates Config.
 type AccountNames struct {
-	// An Operator that will be used to filter accounts. The Contains predicate has features for matching words, matching inflectional forms of words, searching using wildcard characters, and searching using proximity. The Equals is used to return all rows where account name is equal(=) to the string that you provided
-	Operator Operator `json:"operator"`
 	// Account Name is a string value for comparing with the specified predicate.
 	Name string `json:"name"`
+	// An Operator that will be used to filter accounts. The Contains predicate has features for matching words, matching inflectional forms of words, searching using wildcard characters, and searching using proximity. The Equals is used to return all rows where account name is equal(=) to the string that you provided
+	Operator Operator `json:"operator"`
+}
+
+func (o *AccountNames) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *AccountNames) GetOperator() Operator {
@@ -74,11 +58,27 @@ func (o *AccountNames) GetOperator() Operator {
 	return o.Operator
 }
 
-func (o *AccountNames) GetName() string {
-	if o == nil {
-		return ""
+type AuthMethod string
+
+const (
+	AuthMethodOauth20 AuthMethod = "oauth2.0"
+)
+
+func (e AuthMethod) ToPointer() *AuthMethod {
+	return &e
+}
+func (e *AuthMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return o.Name
+	switch v {
+	case "oauth2.0":
+		*e = AuthMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AuthMethod: %v", v)
+	}
 }
 
 // ReportingDataObject - The name of the the object derives from the ReportRequest object. You can find it in Bing Ads Api docs - Reporting API - Reporting Data Objects.
@@ -207,12 +207,12 @@ func (e *ReportingDataObject) UnmarshalJSON(data []byte) error {
 type CustomReportConfig struct {
 	// The name of the custom report, this name would be used as stream name
 	Name string `json:"name"`
-	// The name of the the object derives from the ReportRequest object. You can find it in Bing Ads Api docs - Reporting API - Reporting Data Objects.
-	ReportingObject ReportingDataObject `json:"reporting_object"`
-	// A list of available report object columns. You can find it in description of reporting object that you want to add to custom report.
-	ReportColumns []string `json:"report_columns"`
 	// A list of available aggregations.
 	ReportAggregation *string `default:"[Hourly]" json:"report_aggregation"`
+	// A list of available report object columns. You can find it in description of reporting object that you want to add to custom report.
+	ReportColumns []string `json:"report_columns"`
+	// The name of the the object derives from the ReportRequest object. You can find it in Bing Ads Api docs - Reporting API - Reporting Data Objects.
+	ReportingObject ReportingDataObject `json:"reporting_object"`
 }
 
 func (c CustomReportConfig) MarshalJSON() ([]byte, error) {
@@ -233,11 +233,11 @@ func (o *CustomReportConfig) GetName() string {
 	return o.Name
 }
 
-func (o *CustomReportConfig) GetReportingObject() ReportingDataObject {
+func (o *CustomReportConfig) GetReportAggregation() *string {
 	if o == nil {
-		return ReportingDataObject("")
+		return nil
 	}
-	return o.ReportingObject
+	return o.ReportAggregation
 }
 
 func (o *CustomReportConfig) GetReportColumns() []string {
@@ -247,11 +247,11 @@ func (o *CustomReportConfig) GetReportColumns() []string {
 	return o.ReportColumns
 }
 
-func (o *CustomReportConfig) GetReportAggregation() *string {
+func (o *CustomReportConfig) GetReportingObject() ReportingDataObject {
 	if o == nil {
-		return nil
+		return ReportingDataObject("")
 	}
-	return o.ReportAggregation
+	return o.ReportingObject
 }
 
 type BingAds string
@@ -278,26 +278,26 @@ func (e *BingAds) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBingAds struct {
-	authMethod *AuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
-	// The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
-	TenantID *string `default:"common" json:"tenant_id"`
+	// Predicates that will be used to sync data by specific accounts.
+	AccountNames []AccountNames `json:"account_names,omitempty"`
+	authMethod   *AuthMethod    `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Advertising developer application.
 	ClientSecret *string `default:"" json:"client_secret"`
-	// Refresh Token to renew the expired Access Token.
-	RefreshToken string `json:"refresh_token"`
-	// Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
-	DeveloperToken string `json:"developer_token"`
-	// Predicates that will be used to sync data by specific accounts.
-	AccountNames []AccountNames `json:"account_names,omitempty"`
-	// The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format. If not set, data from previous and current calendar year will be replicated.
-	ReportsStartDate *types.Date `json:"reports_start_date,omitempty"`
-	// Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode without specified Reports Start Date.
-	LookbackWindow *int64 `default:"0" json:"lookback_window"`
 	// You can add your Custom Bing Ads report by creating one.
 	CustomReports []CustomReportConfig `json:"custom_reports,omitempty"`
-	sourceType    BingAds              `const:"bing-ads" json:"sourceType"`
+	// Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
+	DeveloperToken string `json:"developer_token"`
+	// Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode without specified Reports Start Date.
+	LookbackWindow *int64 `default:"0" json:"lookback_window"`
+	// Refresh Token to renew the expired Access Token.
+	RefreshToken string `json:"refresh_token"`
+	// The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format. If not set, data from previous and current calendar year will be replicated.
+	ReportsStartDate *types.Date `json:"reports_start_date,omitempty"`
+	// The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
+	TenantID   *string `default:"common" json:"tenant_id"`
+	sourceType BingAds `const:"bing-ads" json:"sourceType"`
 }
 
 func (s SourceBingAds) MarshalJSON() ([]byte, error) {
@@ -311,15 +311,15 @@ func (s *SourceBingAds) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceBingAds) GetAuthMethod() *AuthMethod {
-	return AuthMethodOauth20.ToPointer()
-}
-
-func (o *SourceBingAds) GetTenantID() *string {
+func (o *SourceBingAds) GetAccountNames() []AccountNames {
 	if o == nil {
 		return nil
 	}
-	return o.TenantID
+	return o.AccountNames
+}
+
+func (o *SourceBingAds) GetAuthMethod() *AuthMethod {
+	return AuthMethodOauth20.ToPointer()
 }
 
 func (o *SourceBingAds) GetClientID() string {
@@ -336,11 +336,11 @@ func (o *SourceBingAds) GetClientSecret() *string {
 	return o.ClientSecret
 }
 
-func (o *SourceBingAds) GetRefreshToken() string {
+func (o *SourceBingAds) GetCustomReports() []CustomReportConfig {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.RefreshToken
+	return o.CustomReports
 }
 
 func (o *SourceBingAds) GetDeveloperToken() string {
@@ -350,11 +350,18 @@ func (o *SourceBingAds) GetDeveloperToken() string {
 	return o.DeveloperToken
 }
 
-func (o *SourceBingAds) GetAccountNames() []AccountNames {
+func (o *SourceBingAds) GetLookbackWindow() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.AccountNames
+	return o.LookbackWindow
+}
+
+func (o *SourceBingAds) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 func (o *SourceBingAds) GetReportsStartDate() *types.Date {
@@ -364,18 +371,11 @@ func (o *SourceBingAds) GetReportsStartDate() *types.Date {
 	return o.ReportsStartDate
 }
 
-func (o *SourceBingAds) GetLookbackWindow() *int64 {
+func (o *SourceBingAds) GetTenantID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.LookbackWindow
-}
-
-func (o *SourceBingAds) GetCustomReports() []CustomReportConfig {
-	if o == nil {
-		return nil
-	}
-	return o.CustomReports
+	return o.TenantID
 }
 
 func (o *SourceBingAds) GetSourceType() BingAds {

@@ -25,22 +25,22 @@ func (r *SourceHuggingFaceDatasetsResourceModel) ToSharedSourceHuggingFaceDatase
 	var datasetName string
 	datasetName = r.Configuration.DatasetName.ValueString()
 
-	var datasetSubsets []interface{} = []interface{}{}
-	for _, datasetSubsetsItem := range r.Configuration.DatasetSubsets {
-		var datasetSubsetsTmp interface{}
-		_ = json.Unmarshal([]byte(datasetSubsetsItem.ValueString()), &datasetSubsetsTmp)
-		datasetSubsets = append(datasetSubsets, datasetSubsetsTmp)
-	}
 	var datasetSplits []interface{} = []interface{}{}
 	for _, datasetSplitsItem := range r.Configuration.DatasetSplits {
 		var datasetSplitsTmp interface{}
 		_ = json.Unmarshal([]byte(datasetSplitsItem.ValueString()), &datasetSplitsTmp)
 		datasetSplits = append(datasetSplits, datasetSplitsTmp)
 	}
+	var datasetSubsets []interface{} = []interface{}{}
+	for _, datasetSubsetsItem := range r.Configuration.DatasetSubsets {
+		var datasetSubsetsTmp interface{}
+		_ = json.Unmarshal([]byte(datasetSubsetsItem.ValueString()), &datasetSubsetsTmp)
+		datasetSubsets = append(datasetSubsets, datasetSubsetsTmp)
+	}
 	configuration := shared.SourceHuggingFaceDatasets{
 		DatasetName:    datasetName,
-		DatasetSubsets: datasetSubsets,
 		DatasetSplits:  datasetSplits,
+		DatasetSubsets: datasetSubsets,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,22 +115,22 @@ func (r *SourceHuggingFaceDatasetsResourceModel) ToSharedSourceHuggingFaceDatase
 	var datasetName string
 	datasetName = r.Configuration.DatasetName.ValueString()
 
-	var datasetSubsets []interface{} = []interface{}{}
-	for _, datasetSubsetsItem := range r.Configuration.DatasetSubsets {
-		var datasetSubsetsTmp interface{}
-		_ = json.Unmarshal([]byte(datasetSubsetsItem.ValueString()), &datasetSubsetsTmp)
-		datasetSubsets = append(datasetSubsets, datasetSubsetsTmp)
-	}
 	var datasetSplits []interface{} = []interface{}{}
 	for _, datasetSplitsItem := range r.Configuration.DatasetSplits {
 		var datasetSplitsTmp interface{}
 		_ = json.Unmarshal([]byte(datasetSplitsItem.ValueString()), &datasetSplitsTmp)
 		datasetSplits = append(datasetSplits, datasetSplitsTmp)
 	}
+	var datasetSubsets []interface{} = []interface{}{}
+	for _, datasetSubsetsItem := range r.Configuration.DatasetSubsets {
+		var datasetSubsetsTmp interface{}
+		_ = json.Unmarshal([]byte(datasetSubsetsItem.ValueString()), &datasetSubsetsTmp)
+		datasetSubsets = append(datasetSubsets, datasetSubsetsTmp)
+	}
 	configuration := shared.SourceHuggingFaceDatasetsUpdate{
 		DatasetName:    datasetName,
-		DatasetSubsets: datasetSubsets,
 		DatasetSplits:  datasetSplits,
+		DatasetSubsets: datasetSubsets,
 	}
 	out := shared.SourceHuggingFaceDatasetsPutRequest{
 		Name:          name,

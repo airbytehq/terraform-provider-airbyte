@@ -8,13 +8,13 @@ import (
 )
 
 type SourceSignnowUpdate struct {
+	// Api key which could be found in API section after enlarging keys section
+	APIKeyID string `json:"api_key_id"`
 	// The authorization token is needed for `signing_links` stream which could be seen from enlarged view of `https://app.signnow.com/webapp/api-dashboard/keys`
 	AuthToken string `json:"auth_token"`
-	// Api key which could be found in API section after enlarging keys section
-	APIKeyID  string    `json:"api_key_id"`
-	StartDate time.Time `json:"start_date"`
 	// Name filter for documents stream
-	NameFilterForDocuments []any `json:"name_filter_for_documents,omitempty"`
+	NameFilterForDocuments []any     `json:"name_filter_for_documents,omitempty"`
+	StartDate              time.Time `json:"start_date"`
 }
 
 func (s SourceSignnowUpdate) MarshalJSON() ([]byte, error) {
@@ -28,13 +28,6 @@ func (s *SourceSignnowUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSignnowUpdate) GetAuthToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AuthToken
-}
-
 func (o *SourceSignnowUpdate) GetAPIKeyID() string {
 	if o == nil {
 		return ""
@@ -42,11 +35,11 @@ func (o *SourceSignnowUpdate) GetAPIKeyID() string {
 	return o.APIKeyID
 }
 
-func (o *SourceSignnowUpdate) GetStartDate() time.Time {
+func (o *SourceSignnowUpdate) GetAuthToken() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.StartDate
+	return o.AuthToken
 }
 
 func (o *SourceSignnowUpdate) GetNameFilterForDocuments() []any {
@@ -54,4 +47,11 @@ func (o *SourceSignnowUpdate) GetNameFilterForDocuments() []any {
 		return nil
 	}
 	return o.NameFilterForDocuments
+}
+
+func (o *SourceSignnowUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

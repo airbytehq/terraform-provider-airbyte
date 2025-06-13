@@ -8,10 +8,10 @@ import (
 )
 
 type SourceCodefreshUpdate struct {
-	APIKey            string    `json:"api_key"`
 	AccountID         string    `json:"account_id"`
-	ReportGranularity *string   `json:"report_granularity,omitempty"`
+	APIKey            string    `json:"api_key"`
 	ReportDateRange   []any     `json:"report_date_range,omitempty"`
+	ReportGranularity *string   `json:"report_granularity,omitempty"`
 	StartDate         time.Time `json:"start_date"`
 }
 
@@ -26,13 +26,6 @@ func (s *SourceCodefreshUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceCodefreshUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceCodefreshUpdate) GetAccountID() string {
 	if o == nil {
 		return ""
@@ -40,11 +33,11 @@ func (o *SourceCodefreshUpdate) GetAccountID() string {
 	return o.AccountID
 }
 
-func (o *SourceCodefreshUpdate) GetReportGranularity() *string {
+func (o *SourceCodefreshUpdate) GetAPIKey() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.ReportGranularity
+	return o.APIKey
 }
 
 func (o *SourceCodefreshUpdate) GetReportDateRange() []any {
@@ -52,6 +45,13 @@ func (o *SourceCodefreshUpdate) GetReportDateRange() []any {
 		return nil
 	}
 	return o.ReportDateRange
+}
+
+func (o *SourceCodefreshUpdate) GetReportGranularity() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReportGranularity
 }
 
 func (o *SourceCodefreshUpdate) GetStartDate() time.Time {

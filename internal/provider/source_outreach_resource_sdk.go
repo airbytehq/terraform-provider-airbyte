@@ -28,18 +28,18 @@ func (r *SourceOutreachResourceModel) ToSharedSourceOutreachCreateRequest() *sha
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	var redirectURI string
 	redirectURI = r.Configuration.RedirectURI.ValueString()
+
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceOutreach{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		RefreshToken: refreshToken,
 		RedirectURI:  redirectURI,
+		RefreshToken: refreshToken,
 		StartDate:    startDate,
 	}
 	secretID := new(string)
@@ -118,18 +118,18 @@ func (r *SourceOutreachResourceModel) ToSharedSourceOutreachPutRequest() *shared
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	var redirectURI string
 	redirectURI = r.Configuration.RedirectURI.ValueString()
+
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceOutreachUpdate{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		RefreshToken: refreshToken,
 		RedirectURI:  redirectURI,
+		RefreshToken: refreshToken,
 		StartDate:    startDate,
 	}
 	out := shared.SourceOutreachPutRequest{

@@ -32,12 +32,12 @@ func (e *Partnerstack) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePartnerstack struct {
+	// The Live Private Key for a Partnerstack account.
+	PrivateKey string `json:"private_key"`
 	// The Live Public Key for a Partnerstack account.
 	PublicKey string `json:"public_key"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate *string `json:"start_date,omitempty"`
-	// The Live Private Key for a Partnerstack account.
-	PrivateKey string       `json:"private_key"`
+	StartDate  *string      `json:"start_date,omitempty"`
 	sourceType Partnerstack `const:"partnerstack" json:"sourceType"`
 }
 
@@ -52,6 +52,13 @@ func (s *SourcePartnerstack) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourcePartnerstack) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
+}
+
 func (o *SourcePartnerstack) GetPublicKey() string {
 	if o == nil {
 		return ""
@@ -64,13 +71,6 @@ func (o *SourcePartnerstack) GetStartDate() *string {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourcePartnerstack) GetPrivateKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.PrivateKey
 }
 
 func (o *SourcePartnerstack) GetSourceType() Partnerstack {

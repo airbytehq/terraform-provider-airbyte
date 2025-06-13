@@ -21,15 +21,15 @@ func (r *SourceWorkrampResourceModel) ToSharedSourceWorkrampCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var academyID string
 	academyID = r.Configuration.AcademyID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceWorkramp{
-		APIKey:    apiKey,
 		AcademyID: academyID,
+		APIKey:    apiKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceWorkrampResourceModel) ToSharedSourceWorkrampPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var academyID string
 	academyID = r.Configuration.AcademyID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceWorkrampUpdate{
-		APIKey:    apiKey,
 		AcademyID: academyID,
+		APIKey:    apiKey,
 	}
 	out := shared.SourceWorkrampPutRequest{
 		Name:          name,

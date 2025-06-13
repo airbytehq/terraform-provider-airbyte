@@ -22,6 +22,50 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var bucket string
+	bucket = r.Configuration.Bucket.ValueString()
+
+	var credentials shared.SourceGcsAuthentication
+	var authenticateViaGoogleOAuth *shared.AuthenticateViaGoogleOAuth
+	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.AccessToken.ValueString()
+
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.RefreshToken.ValueString()
+
+		authenticateViaGoogleOAuth = &shared.AuthenticateViaGoogleOAuth{
+			AccessToken:  accessToken,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+		}
+	}
+	if authenticateViaGoogleOAuth != nil {
+		credentials = shared.SourceGcsAuthentication{
+			AuthenticateViaGoogleOAuth: authenticateViaGoogleOAuth,
+		}
+	}
+	var serviceAccountAuthentication *shared.ServiceAccountAuthentication
+	if r.Configuration.Credentials.ServiceAccountAuthentication != nil {
+		var serviceAccount string
+		serviceAccount = r.Configuration.Credentials.ServiceAccountAuthentication.ServiceAccount.ValueString()
+
+		serviceAccountAuthentication = &shared.ServiceAccountAuthentication{
+			ServiceAccount: serviceAccount,
+		}
+	}
+	if serviceAccountAuthentication != nil {
+		credentials = shared.SourceGcsAuthentication{
+			ServiceAccountAuthentication: serviceAccountAuthentication,
+		}
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -30,25 +74,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 	}
 	var streams []shared.SourceGcsFileBasedStreamConfig = []shared.SourceGcsFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceGcsValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceGcsValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -81,17 +106,11 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -99,33 +118,15 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceGcsCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -163,34 +164,58 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceGcsCSVFormat = &shared.SourceGcsCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceGcsCSVFormat != nil {
@@ -226,18 +251,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 		}
 		var sourceGcsUnstructuredDocumentFormat *shared.SourceGcsUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceGcsParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceGcsParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceGcsProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceGcsLocal *shared.SourceGcsLocal
@@ -265,14 +278,14 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 					}
 					var parameters []shared.APIParameterConfigModel = []shared.APIParameterConfigModel{}
 					for _, parametersItem := range streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.Parameters {
-						var name2 string
-						name2 = parametersItem.Name.ValueString()
+						var name1 string
+						name1 = parametersItem.Name.ValueString()
 
 						var value string
 						value = parametersItem.Value.ValueString()
 
 						parameters = append(parameters, shared.APIParameterConfigModel{
-							Name:  name2,
+							Name:  name1,
 							Value: value,
 						})
 					}
@@ -288,10 +301,22 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceGcsParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceGcsParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceGcsUnstructuredDocumentFormat = &shared.SourceGcsUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceGcsUnstructuredDocumentFormat != nil {
@@ -308,78 +333,53 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 				ExcelFormat: excelFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name2 string
+		name2 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceGcsValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceGcsValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceGcsFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name2,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var credentials shared.SourceGcsAuthentication
-	var authenticateViaGoogleOAuth *shared.AuthenticateViaGoogleOAuth
-	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientSecret.ValueString()
-
-		var accessToken string
-		accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.AccessToken.ValueString()
-
-		var refreshToken string
-		refreshToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.RefreshToken.ValueString()
-
-		authenticateViaGoogleOAuth = &shared.AuthenticateViaGoogleOAuth{
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			AccessToken:  accessToken,
-			RefreshToken: refreshToken,
-		}
-	}
-	if authenticateViaGoogleOAuth != nil {
-		credentials = shared.SourceGcsAuthentication{
-			AuthenticateViaGoogleOAuth: authenticateViaGoogleOAuth,
-		}
-	}
-	var serviceAccountAuthentication *shared.ServiceAccountAuthentication
-	if r.Configuration.Credentials.ServiceAccountAuthentication != nil {
-		var serviceAccount string
-		serviceAccount = r.Configuration.Credentials.ServiceAccountAuthentication.ServiceAccount.ValueString()
-
-		serviceAccountAuthentication = &shared.ServiceAccountAuthentication{
-			ServiceAccount: serviceAccount,
-		}
-	}
-	if serviceAccountAuthentication != nil {
-		credentials = shared.SourceGcsAuthentication{
-			ServiceAccountAuthentication: serviceAccountAuthentication,
-		}
-	}
-	var bucket string
-	bucket = r.Configuration.Bucket.ValueString()
-
 	configuration := shared.SourceGcs{
+		Bucket:      bucket,
+		Credentials: credentials,
 		StartDate:   startDate,
 		Streams:     streams,
-		Credentials: credentials,
-		Bucket:      bucket,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -451,6 +451,50 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var bucket string
+	bucket = r.Configuration.Bucket.ValueString()
+
+	var credentials shared.SourceGcsUpdateAuthentication
+	var sourceGcsUpdateAuthenticateViaGoogleOAuth *shared.SourceGcsUpdateAuthenticateViaGoogleOAuth
+	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.AccessToken.ValueString()
+
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.RefreshToken.ValueString()
+
+		sourceGcsUpdateAuthenticateViaGoogleOAuth = &shared.SourceGcsUpdateAuthenticateViaGoogleOAuth{
+			AccessToken:  accessToken,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+		}
+	}
+	if sourceGcsUpdateAuthenticateViaGoogleOAuth != nil {
+		credentials = shared.SourceGcsUpdateAuthentication{
+			SourceGcsUpdateAuthenticateViaGoogleOAuth: sourceGcsUpdateAuthenticateViaGoogleOAuth,
+		}
+	}
+	var sourceGcsUpdateServiceAccountAuthentication *shared.SourceGcsUpdateServiceAccountAuthentication
+	if r.Configuration.Credentials.ServiceAccountAuthentication != nil {
+		var serviceAccount string
+		serviceAccount = r.Configuration.Credentials.ServiceAccountAuthentication.ServiceAccount.ValueString()
+
+		sourceGcsUpdateServiceAccountAuthentication = &shared.SourceGcsUpdateServiceAccountAuthentication{
+			ServiceAccount: serviceAccount,
+		}
+	}
+	if sourceGcsUpdateServiceAccountAuthentication != nil {
+		credentials = shared.SourceGcsUpdateAuthentication{
+			SourceGcsUpdateServiceAccountAuthentication: sourceGcsUpdateServiceAccountAuthentication,
+		}
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -459,25 +503,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 	}
 	var streams []shared.SourceGcsUpdateFileBasedStreamConfig = []shared.SourceGcsUpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceGcsUpdateValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceGcsUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -510,17 +535,11 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -528,33 +547,15 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceGcsUpdateCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -592,34 +593,58 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceGcsUpdateCSVFormat = &shared.SourceGcsUpdateCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceGcsUpdateCSVFormat != nil {
@@ -655,18 +680,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 		}
 		var sourceGcsUpdateUnstructuredDocumentFormat *shared.SourceGcsUpdateUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceGcsUpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceGcsUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceGcsUpdateProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceGcsUpdateLocal *shared.SourceGcsUpdateLocal
@@ -694,14 +707,14 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 					}
 					var parameters []shared.SourceGcsUpdateAPIParameterConfigModel = []shared.SourceGcsUpdateAPIParameterConfigModel{}
 					for _, parametersItem := range streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.Parameters {
-						var name2 string
-						name2 = parametersItem.Name.ValueString()
+						var name1 string
+						name1 = parametersItem.Name.ValueString()
 
 						var value string
 						value = parametersItem.Value.ValueString()
 
 						parameters = append(parameters, shared.SourceGcsUpdateAPIParameterConfigModel{
-							Name:  name2,
+							Name:  name1,
 							Value: value,
 						})
 					}
@@ -717,10 +730,22 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceGcsUpdateParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceGcsUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceGcsUpdateUnstructuredDocumentFormat = &shared.SourceGcsUpdateUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceGcsUpdateUnstructuredDocumentFormat != nil {
@@ -737,78 +762,53 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 				SourceGcsUpdateExcelFormat: sourceGcsUpdateExcelFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name2 string
+		name2 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceGcsUpdateValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceGcsUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceGcsUpdateFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name2,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var credentials shared.SourceGcsUpdateAuthentication
-	var sourceGcsUpdateAuthenticateViaGoogleOAuth *shared.SourceGcsUpdateAuthenticateViaGoogleOAuth
-	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.ClientSecret.ValueString()
-
-		var accessToken string
-		accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.AccessToken.ValueString()
-
-		var refreshToken string
-		refreshToken = r.Configuration.Credentials.AuthenticateViaGoogleOAuth.RefreshToken.ValueString()
-
-		sourceGcsUpdateAuthenticateViaGoogleOAuth = &shared.SourceGcsUpdateAuthenticateViaGoogleOAuth{
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			AccessToken:  accessToken,
-			RefreshToken: refreshToken,
-		}
-	}
-	if sourceGcsUpdateAuthenticateViaGoogleOAuth != nil {
-		credentials = shared.SourceGcsUpdateAuthentication{
-			SourceGcsUpdateAuthenticateViaGoogleOAuth: sourceGcsUpdateAuthenticateViaGoogleOAuth,
-		}
-	}
-	var sourceGcsUpdateServiceAccountAuthentication *shared.SourceGcsUpdateServiceAccountAuthentication
-	if r.Configuration.Credentials.ServiceAccountAuthentication != nil {
-		var serviceAccount string
-		serviceAccount = r.Configuration.Credentials.ServiceAccountAuthentication.ServiceAccount.ValueString()
-
-		sourceGcsUpdateServiceAccountAuthentication = &shared.SourceGcsUpdateServiceAccountAuthentication{
-			ServiceAccount: serviceAccount,
-		}
-	}
-	if sourceGcsUpdateServiceAccountAuthentication != nil {
-		credentials = shared.SourceGcsUpdateAuthentication{
-			SourceGcsUpdateServiceAccountAuthentication: sourceGcsUpdateServiceAccountAuthentication,
-		}
-	}
-	var bucket string
-	bucket = r.Configuration.Bucket.ValueString()
-
 	configuration := shared.SourceGcsUpdate{
+		Bucket:      bucket,
+		Credentials: credentials,
 		StartDate:   startDate,
 		Streams:     streams,
-		Credentials: credentials,
-		Bucket:      bucket,
 	}
 	out := shared.SourceGcsPutRequest{
 		Name:          name,

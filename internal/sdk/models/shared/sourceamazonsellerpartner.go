@@ -9,6 +9,33 @@ import (
 	"time"
 )
 
+// AWSSellerPartnerAccountType - Type of the Account you're going to authorize the Airbyte application by
+type AWSSellerPartnerAccountType string
+
+const (
+	AWSSellerPartnerAccountTypeSeller AWSSellerPartnerAccountType = "Seller"
+	AWSSellerPartnerAccountTypeVendor AWSSellerPartnerAccountType = "Vendor"
+)
+
+func (e AWSSellerPartnerAccountType) ToPointer() *AWSSellerPartnerAccountType {
+	return &e
+}
+func (e *AWSSellerPartnerAccountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Seller":
+		fallthrough
+	case "Vendor":
+		*e = AWSSellerPartnerAccountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AWSSellerPartnerAccountType: %v", v)
+	}
+}
+
 type SourceAmazonSellerPartnerAuthType string
 
 const (
@@ -56,6 +83,53 @@ func (e *AWSEnvironment) UnmarshalJSON(data []byte) error {
 		return nil
 	default:
 		return fmt.Errorf("invalid value for AWSEnvironment: %v", v)
+	}
+}
+
+// FinancialEventsStepSizeInDays - The time window size (in days) for fetching financial events data in chunks. Options are 1 day, 7 days, 14 days, 30 days, 60 days, and 190 days, based on API limitations.
+//
+// - **Smaller step sizes (e.g., 1 day)** are better for large data volumes. They fetch smaller chunks per request, reducing the risk of timeouts or overwhelming the API, though more requests may slow syncing and increase the chance of hitting rate limits.
+// - **Larger step sizes (e.g., 14 days)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls, which minimizes strain on rate limits.
+//
+// Select a step size that matches your data volume to optimize syncing speed and API performance.
+type FinancialEventsStepSizeInDays string
+
+const (
+	FinancialEventsStepSizeInDaysOne                 FinancialEventsStepSizeInDays = "1"
+	FinancialEventsStepSizeInDaysSeven               FinancialEventsStepSizeInDays = "7"
+	FinancialEventsStepSizeInDaysFourteen            FinancialEventsStepSizeInDays = "14"
+	FinancialEventsStepSizeInDaysThirty              FinancialEventsStepSizeInDays = "30"
+	FinancialEventsStepSizeInDaysSixty               FinancialEventsStepSizeInDays = "60"
+	FinancialEventsStepSizeInDaysNinety              FinancialEventsStepSizeInDays = "90"
+	FinancialEventsStepSizeInDaysOneHundredAndEighty FinancialEventsStepSizeInDays = "180"
+)
+
+func (e FinancialEventsStepSizeInDays) ToPointer() *FinancialEventsStepSizeInDays {
+	return &e
+}
+func (e *FinancialEventsStepSizeInDays) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "1":
+		fallthrough
+	case "7":
+		fallthrough
+	case "14":
+		fallthrough
+	case "30":
+		fallthrough
+	case "60":
+		fallthrough
+	case "90":
+		fallthrough
+	case "180":
+		*e = FinancialEventsStepSizeInDays(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for FinancialEventsStepSizeInDays: %v", v)
 	}
 }
 
@@ -146,31 +220,23 @@ func (e *AWSRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AWSSellerPartnerAccountType - Type of the Account you're going to authorize the Airbyte application by
-type AWSSellerPartnerAccountType string
-
-const (
-	AWSSellerPartnerAccountTypeSeller AWSSellerPartnerAccountType = "Seller"
-	AWSSellerPartnerAccountTypeVendor AWSSellerPartnerAccountType = "Vendor"
-)
-
-func (e AWSSellerPartnerAccountType) ToPointer() *AWSSellerPartnerAccountType {
-	return &e
+type OptionsList struct {
+	OptionName  string `json:"option_name"`
+	OptionValue string `json:"option_value"`
 }
-func (e *AWSSellerPartnerAccountType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+
+func (o *OptionsList) GetOptionName() string {
+	if o == nil {
+		return ""
 	}
-	switch v {
-	case "Seller":
-		fallthrough
-	case "Vendor":
-		*e = AWSSellerPartnerAccountType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AWSSellerPartnerAccountType: %v", v)
+	return o.OptionName
+}
+
+func (o *OptionsList) GetOptionValue() string {
+	if o == nil {
+		return ""
 	}
+	return o.OptionValue
 }
 
 type ReportName string
@@ -304,30 +370,18 @@ func (e *ReportName) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type OptionsList struct {
-	OptionName  string `json:"option_name"`
-	OptionValue string `json:"option_value"`
-}
-
-func (o *OptionsList) GetOptionName() string {
-	if o == nil {
-		return ""
-	}
-	return o.OptionName
-}
-
-func (o *OptionsList) GetOptionValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.OptionValue
-}
-
 type ReportOptions struct {
-	ReportName ReportName `json:"report_name"`
-	StreamName string     `json:"stream_name"`
 	// List of options
 	OptionsList []OptionsList `json:"options_list"`
+	ReportName  ReportName    `json:"report_name"`
+	StreamName  string        `json:"stream_name"`
+}
+
+func (o *ReportOptions) GetOptionsList() []OptionsList {
+	if o == nil {
+		return []OptionsList{}
+	}
+	return o.OptionsList
 }
 
 func (o *ReportOptions) GetReportName() ReportName {
@@ -342,60 +396,6 @@ func (o *ReportOptions) GetStreamName() string {
 		return ""
 	}
 	return o.StreamName
-}
-
-func (o *ReportOptions) GetOptionsList() []OptionsList {
-	if o == nil {
-		return []OptionsList{}
-	}
-	return o.OptionsList
-}
-
-// FinancialEventsStepSizeInDays - The time window size (in days) for fetching financial events data in chunks. Options are 1 day, 7 days, 14 days, 30 days, 60 days, and 190 days, based on API limitations.
-//
-// - **Smaller step sizes (e.g., 1 day)** are better for large data volumes. They fetch smaller chunks per request, reducing the risk of timeouts or overwhelming the API, though more requests may slow syncing and increase the chance of hitting rate limits.
-// - **Larger step sizes (e.g., 14 days)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls, which minimizes strain on rate limits.
-//
-// Select a step size that matches your data volume to optimize syncing speed and API performance.
-type FinancialEventsStepSizeInDays string
-
-const (
-	FinancialEventsStepSizeInDaysOne                 FinancialEventsStepSizeInDays = "1"
-	FinancialEventsStepSizeInDaysSeven               FinancialEventsStepSizeInDays = "7"
-	FinancialEventsStepSizeInDaysFourteen            FinancialEventsStepSizeInDays = "14"
-	FinancialEventsStepSizeInDaysThirty              FinancialEventsStepSizeInDays = "30"
-	FinancialEventsStepSizeInDaysSixty               FinancialEventsStepSizeInDays = "60"
-	FinancialEventsStepSizeInDaysNinety              FinancialEventsStepSizeInDays = "90"
-	FinancialEventsStepSizeInDaysOneHundredAndEighty FinancialEventsStepSizeInDays = "180"
-)
-
-func (e FinancialEventsStepSizeInDays) ToPointer() *FinancialEventsStepSizeInDays {
-	return &e
-}
-func (e *FinancialEventsStepSizeInDays) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "1":
-		fallthrough
-	case "7":
-		fallthrough
-	case "14":
-		fallthrough
-	case "30":
-		fallthrough
-	case "60":
-		fallthrough
-	case "90":
-		fallthrough
-	case "180":
-		*e = FinancialEventsStepSizeInDays(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for FinancialEventsStepSizeInDays: %v", v)
-	}
 }
 
 type AmazonSellerPartner string
@@ -422,31 +422,13 @@ func (e *AmazonSellerPartner) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAmazonSellerPartner struct {
-	authType *SourceAmazonSellerPartnerAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
-	// Select the AWS Environment.
-	AwsEnvironment *AWSEnvironment `default:"PRODUCTION" json:"aws_environment"`
-	// Select the AWS Region.
-	Region *AWSRegion `default:"US" json:"region"`
 	// Type of the Account you're going to authorize the Airbyte application by
 	AccountType *AWSSellerPartnerAccountType `default:"Seller" json:"account_type"`
 	// Your Amazon Application ID.
-	AppID *string `json:"app_id,omitempty"`
-	// Your Login with Amazon Client ID.
-	LwaAppID string `json:"lwa_app_id"`
-	// Your Login with Amazon Client Secret.
-	LwaClientSecret string `json:"lwa_client_secret"`
-	// The Refresh Token obtained via OAuth flow authorization.
-	RefreshToken string `json:"refresh_token"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.
-	ReplicationStartDate *time.Time `json:"replication_start_date,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
-	ReplicationEndDate *time.Time `json:"replication_end_date,omitempty"`
-	// For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day.
-	PeriodInDays *int64 `default:"90" json:"period_in_days"`
-	// Additional information passed to reports. This varies by report type.
-	ReportOptionsList []ReportOptions `json:"report_options_list,omitempty"`
-	// For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details
-	WaitToAvoidFatalErrors *bool `default:"false" json:"wait_to_avoid_fatal_errors"`
+	AppID    *string                            `json:"app_id,omitempty"`
+	authType *SourceAmazonSellerPartnerAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	// Select the AWS Environment.
+	AwsEnvironment *AWSEnvironment `default:"PRODUCTION" json:"aws_environment"`
 	// The time window size (in days) for fetching financial events data in chunks. Options are 1 day, 7 days, 14 days, 30 days, 60 days, and 190 days, based on API limitations.
 	//
 	// - **Smaller step sizes (e.g., 1 day)** are better for large data volumes. They fetch smaller chunks per request, reducing the risk of timeouts or overwhelming the API, though more requests may slow syncing and increase the chance of hitting rate limits.
@@ -454,7 +436,25 @@ type SourceAmazonSellerPartner struct {
 	//
 	// Select a step size that matches your data volume to optimize syncing speed and API performance.
 	FinancialEventsStep *FinancialEventsStepSizeInDays `default:"180" json:"financial_events_step"`
-	sourceType          AmazonSellerPartner            `const:"amazon-seller-partner" json:"sourceType"`
+	// Your Login with Amazon Client ID.
+	LwaAppID string `json:"lwa_app_id"`
+	// Your Login with Amazon Client Secret.
+	LwaClientSecret string `json:"lwa_client_secret"`
+	// For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day.
+	PeriodInDays *int64 `default:"90" json:"period_in_days"`
+	// The Refresh Token obtained via OAuth flow authorization.
+	RefreshToken string `json:"refresh_token"`
+	// Select the AWS Region.
+	Region *AWSRegion `default:"US" json:"region"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
+	ReplicationEndDate *time.Time `json:"replication_end_date,omitempty"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.
+	ReplicationStartDate *time.Time `json:"replication_start_date,omitempty"`
+	// Additional information passed to reports. This varies by report type.
+	ReportOptionsList []ReportOptions `json:"report_options_list,omitempty"`
+	// For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details
+	WaitToAvoidFatalErrors *bool               `default:"false" json:"wait_to_avoid_fatal_errors"`
+	sourceType             AmazonSellerPartner `const:"amazon-seller-partner" json:"sourceType"`
 }
 
 func (s SourceAmazonSellerPartner) MarshalJSON() ([]byte, error) {
@@ -466,24 +466,6 @@ func (s *SourceAmazonSellerPartner) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceAmazonSellerPartner) GetAuthType() *SourceAmazonSellerPartnerAuthType {
-	return SourceAmazonSellerPartnerAuthTypeOauth20.ToPointer()
-}
-
-func (o *SourceAmazonSellerPartner) GetAwsEnvironment() *AWSEnvironment {
-	if o == nil {
-		return nil
-	}
-	return o.AwsEnvironment
-}
-
-func (o *SourceAmazonSellerPartner) GetRegion() *AWSRegion {
-	if o == nil {
-		return nil
-	}
-	return o.Region
 }
 
 func (o *SourceAmazonSellerPartner) GetAccountType() *AWSSellerPartnerAccountType {
@@ -500,6 +482,24 @@ func (o *SourceAmazonSellerPartner) GetAppID() *string {
 	return o.AppID
 }
 
+func (o *SourceAmazonSellerPartner) GetAuthType() *SourceAmazonSellerPartnerAuthType {
+	return SourceAmazonSellerPartnerAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceAmazonSellerPartner) GetAwsEnvironment() *AWSEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.AwsEnvironment
+}
+
+func (o *SourceAmazonSellerPartner) GetFinancialEventsStep() *FinancialEventsStepSizeInDays {
+	if o == nil {
+		return nil
+	}
+	return o.FinancialEventsStep
+}
+
 func (o *SourceAmazonSellerPartner) GetLwaAppID() string {
 	if o == nil {
 		return ""
@@ -514,6 +514,13 @@ func (o *SourceAmazonSellerPartner) GetLwaClientSecret() string {
 	return o.LwaClientSecret
 }
 
+func (o *SourceAmazonSellerPartner) GetPeriodInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PeriodInDays
+}
+
 func (o *SourceAmazonSellerPartner) GetRefreshToken() string {
 	if o == nil {
 		return ""
@@ -521,11 +528,11 @@ func (o *SourceAmazonSellerPartner) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-func (o *SourceAmazonSellerPartner) GetReplicationStartDate() *time.Time {
+func (o *SourceAmazonSellerPartner) GetRegion() *AWSRegion {
 	if o == nil {
 		return nil
 	}
-	return o.ReplicationStartDate
+	return o.Region
 }
 
 func (o *SourceAmazonSellerPartner) GetReplicationEndDate() *time.Time {
@@ -535,11 +542,11 @@ func (o *SourceAmazonSellerPartner) GetReplicationEndDate() *time.Time {
 	return o.ReplicationEndDate
 }
 
-func (o *SourceAmazonSellerPartner) GetPeriodInDays() *int64 {
+func (o *SourceAmazonSellerPartner) GetReplicationStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
-	return o.PeriodInDays
+	return o.ReplicationStartDate
 }
 
 func (o *SourceAmazonSellerPartner) GetReportOptionsList() []ReportOptions {
@@ -554,13 +561,6 @@ func (o *SourceAmazonSellerPartner) GetWaitToAvoidFatalErrors() *bool {
 		return nil
 	}
 	return o.WaitToAvoidFatalErrors
-}
-
-func (o *SourceAmazonSellerPartner) GetFinancialEventsStep() *FinancialEventsStepSizeInDays {
-	if o == nil {
-		return nil
-	}
-	return o.FinancialEventsStep
 }
 
 func (o *SourceAmazonSellerPartner) GetSourceType() AmazonSellerPartner {

@@ -25,14 +25,14 @@ func (r *SourceTimelyResourceModel) ToSharedSourceTimelyCreateRequest() *shared.
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var bearerToken string
 	bearerToken = r.Configuration.BearerToken.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceTimely{
 		AccountID:   accountID,
-		StartDate:   startDate,
 		BearerToken: bearerToken,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,14 +107,14 @@ func (r *SourceTimelyResourceModel) ToSharedSourceTimelyPutRequest() *shared.Sou
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var bearerToken string
 	bearerToken = r.Configuration.BearerToken.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceTimelyUpdate{
 		AccountID:   accountID,
-		StartDate:   startDate,
 		BearerToken: bearerToken,
+		StartDate:   startDate,
 	}
 	out := shared.SourceTimelyPutRequest{
 		Name:          name,

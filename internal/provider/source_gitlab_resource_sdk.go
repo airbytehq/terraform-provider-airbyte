@@ -22,28 +22,34 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	var credentials shared.SourceGitlabAuthorizationMethod
 	var sourceGitlabOAuth20 *shared.SourceGitlabOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-		var accessToken string
-		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceGitlabOAuth20 = &shared.SourceGitlabOAuth20{
+			AccessToken:     accessToken,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
-			AccessToken:     accessToken,
-			TokenExpiryDate: tokenExpiryDate,
 			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
 	if sourceGitlabOAuth20 != nil {
@@ -65,18 +71,6 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 			PrivateToken: privateToken,
 		}
 	}
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	apiURL := new(string)
-	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
-		*apiURL = r.Configuration.APIURL.ValueString()
-	} else {
-		apiURL = nil
-	}
 	var groupsList []string = []string{}
 	for _, groupsListItem := range r.Configuration.GroupsList {
 		groupsList = append(groupsList, groupsListItem.ValueString())
@@ -85,12 +79,18 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 	for _, projectsListItem := range r.Configuration.ProjectsList {
 		projectsList = append(projectsList, projectsListItem.ValueString())
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGitlab{
-		Credentials:  credentials,
-		StartDate:    startDate,
 		APIURL:       apiURL,
+		Credentials:  credentials,
 		GroupsList:   groupsList,
 		ProjectsList: projectsList,
+		StartDate:    startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -162,28 +162,34 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	var credentials shared.SourceGitlabUpdateAuthorizationMethod
 	var sourceGitlabUpdateOAuth20 *shared.SourceGitlabUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-		var accessToken string
-		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceGitlabUpdateOAuth20 = &shared.SourceGitlabUpdateOAuth20{
+			AccessToken:     accessToken,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
-			AccessToken:     accessToken,
-			TokenExpiryDate: tokenExpiryDate,
 			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
 	if sourceGitlabUpdateOAuth20 != nil {
@@ -205,18 +211,6 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.Sou
 			SourceGitlabUpdatePrivateToken: sourceGitlabUpdatePrivateToken,
 		}
 	}
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	apiURL := new(string)
-	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
-		*apiURL = r.Configuration.APIURL.ValueString()
-	} else {
-		apiURL = nil
-	}
 	var groupsList []string = []string{}
 	for _, groupsListItem := range r.Configuration.GroupsList {
 		groupsList = append(groupsList, groupsListItem.ValueString())
@@ -225,12 +219,18 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.Sou
 	for _, projectsListItem := range r.Configuration.ProjectsList {
 		projectsList = append(projectsList, projectsListItem.ValueString())
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGitlabUpdate{
-		Credentials:  credentials,
-		StartDate:    startDate,
 		APIURL:       apiURL,
+		Credentials:  credentials,
 		GroupsList:   groupsList,
 		ProjectsList: projectsList,
+		StartDate:    startDate,
 	}
 	out := shared.SourceGitlabPutRequest{
 		Name:          name,

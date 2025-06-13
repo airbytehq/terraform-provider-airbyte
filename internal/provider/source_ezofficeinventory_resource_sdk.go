@@ -25,14 +25,14 @@ func (r *SourceEzofficeinventoryResourceModel) ToSharedSourceEzofficeinventoryCr
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var subdomain string
 	subdomain = r.Configuration.Subdomain.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceEzofficeinventory{
 		APIKey:    apiKey,
-		Subdomain: subdomain,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,14 +107,14 @@ func (r *SourceEzofficeinventoryResourceModel) ToSharedSourceEzofficeinventoryPu
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var subdomain string
 	subdomain = r.Configuration.Subdomain.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceEzofficeinventoryUpdate{
 		APIKey:    apiKey,
-		Subdomain: subdomain,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	out := shared.SourceEzofficeinventoryPutRequest{
 		Name:          name,

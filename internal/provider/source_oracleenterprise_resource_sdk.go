@@ -22,14 +22,23 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
+	checkPrivileges := new(bool)
+	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
+		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
 	} else {
-		port = nil
+		checkPrivileges = nil
+	}
+	checkpointTargetIntervalSeconds := new(int64)
+	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
+		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
+	} else {
+		checkpointTargetIntervalSeconds = nil
+	}
+	concurrency := new(int64)
+	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
+		*concurrency = r.Configuration.Concurrency.ValueInt64()
+	} else {
+		concurrency = nil
 	}
 	var connectionData shared.SourceOracleEnterpriseConnectBy
 	var sourceOracleEnterpriseServiceName *shared.SourceOracleEnterpriseServiceName
@@ -84,24 +93,71 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 			SourceOracleEnterpriseSystemIDSID: sourceOracleEnterpriseSystemIDSID,
 		}
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
+	var cursor shared.SourceOracleEnterpriseUpdateMethod
+	var sourceOracleEnterpriseScanChangesWithUserDefinedCursor *shared.SourceOracleEnterpriseScanChangesWithUserDefinedCursor
+	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
+		cursorMethod := new(shared.SourceOracleEnterpriseCursorMethod)
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
+			*cursorMethod = shared.SourceOracleEnterpriseCursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
+		} else {
+			cursorMethod = nil
+		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
+		sourceOracleEnterpriseScanChangesWithUserDefinedCursor = &shared.SourceOracleEnterpriseScanChangesWithUserDefinedCursor{
+			CursorMethod:         cursorMethod,
+			AdditionalProperties: additionalProperties2,
+		}
 	}
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
+	if sourceOracleEnterpriseScanChangesWithUserDefinedCursor != nil {
+		cursor = shared.SourceOracleEnterpriseUpdateMethod{
+			SourceOracleEnterpriseScanChangesWithUserDefinedCursor: sourceOracleEnterpriseScanChangesWithUserDefinedCursor,
+		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
+	var sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC *shared.SourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC
+	if r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC != nil {
+		cursorMethod1 := new(shared.SourceOracleEnterpriseSchemasCursorMethod)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsNull() {
+			*cursorMethod1 = shared.SourceOracleEnterpriseSchemasCursorMethod(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.ValueString())
+		} else {
+			cursorMethod1 = nil
+		}
+		debeziumShutdownTimeoutSeconds := new(int64)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsNull() {
+			*debeziumShutdownTimeoutSeconds = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.ValueInt64()
+		} else {
+			debeziumShutdownTimeoutSeconds = nil
+		}
+		initialLoadTimeoutHours := new(int64)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+			*initialLoadTimeoutHours = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+		} else {
+			initialLoadTimeoutHours = nil
+		}
+		invalidCdcCursorPositionBehavior := new(shared.SourceOracleEnterpriseInvalidCDCPositionBehaviorAdvanced)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+			*invalidCdcCursorPositionBehavior = shared.SourceOracleEnterpriseInvalidCDCPositionBehaviorAdvanced(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
+		} else {
+			invalidCdcCursorPositionBehavior = nil
+		}
+		var additionalProperties3 interface{}
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.ValueString()), &additionalProperties3)
+		}
+		sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC = &shared.SourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC{
+			CursorMethod:                     cursorMethod1,
+			DebeziumShutdownTimeoutSeconds:   debeziumShutdownTimeoutSeconds,
+			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+			AdditionalProperties:             additionalProperties3,
+		}
+	}
+	if sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC != nil {
+		cursor = shared.SourceOracleEnterpriseUpdateMethod{
+			SourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC: sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC,
+		}
 	}
 	var encryption shared.SourceOracleEnterpriseEncryption
 	var sourceOracleEnterpriseUnencrypted *shared.SourceOracleEnterpriseUnencrypted
@@ -112,13 +168,13 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 		} else {
 			encryptionMethod = nil
 		}
-		var additionalProperties2 interface{}
+		var additionalProperties4 interface{}
 		if !r.Configuration.Encryption.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.Unencrypted.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Encryption.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties2)
+			_ = json.Unmarshal([]byte(r.Configuration.Encryption.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties4)
 		}
 		sourceOracleEnterpriseUnencrypted = &shared.SourceOracleEnterpriseUnencrypted{
 			EncryptionMethod:     encryptionMethod,
-			AdditionalProperties: additionalProperties2,
+			AdditionalProperties: additionalProperties4,
 		}
 	}
 	if sourceOracleEnterpriseUnencrypted != nil {
@@ -128,26 +184,26 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 	}
 	var sourceOracleEnterpriseNativeNetworkEncryptionNNE *shared.SourceOracleEnterpriseNativeNetworkEncryptionNNE
 	if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
-		encryptionMethod1 := new(shared.SourceOracleEnterpriseSchemasEncryptionMethod)
-		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsNull() {
-			*encryptionMethod1 = shared.SourceOracleEnterpriseSchemasEncryptionMethod(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.ValueString())
-		} else {
-			encryptionMethod1 = nil
-		}
 		encryptionAlgorithm := new(shared.SourceOracleEnterpriseEncryptionAlgorithm)
 		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
 			*encryptionAlgorithm = shared.SourceOracleEnterpriseEncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
 		} else {
 			encryptionAlgorithm = nil
 		}
-		var additionalProperties3 interface{}
+		encryptionMethod1 := new(shared.SourceOracleEnterpriseSchemasEncryptionMethod)
+		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsNull() {
+			*encryptionMethod1 = shared.SourceOracleEnterpriseSchemasEncryptionMethod(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.ValueString())
+		} else {
+			encryptionMethod1 = nil
+		}
+		var additionalProperties5 interface{}
 		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.ValueString()), &additionalProperties3)
+			_ = json.Unmarshal([]byte(r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.ValueString()), &additionalProperties5)
 		}
 		sourceOracleEnterpriseNativeNetworkEncryptionNNE = &shared.SourceOracleEnterpriseNativeNetworkEncryptionNNE{
-			EncryptionMethod:     encryptionMethod1,
 			EncryptionAlgorithm:  encryptionAlgorithm,
-			AdditionalProperties: additionalProperties3,
+			EncryptionMethod:     encryptionMethod1,
+			AdditionalProperties: additionalProperties5,
 		}
 	}
 	if sourceOracleEnterpriseNativeNetworkEncryptionNNE != nil {
@@ -166,20 +222,45 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 		var sslCertificate string
 		sslCertificate = r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
 
-		var additionalProperties4 interface{}
+		var additionalProperties6 interface{}
 		if !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties4)
+			_ = json.Unmarshal([]byte(r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties6)
 		}
 		sourceOracleEnterpriseTLSEncryptedVerifyCertificate = &shared.SourceOracleEnterpriseTLSEncryptedVerifyCertificate{
 			EncryptionMethod:     encryptionMethod2,
 			SslCertificate:       sslCertificate,
-			AdditionalProperties: additionalProperties4,
+			AdditionalProperties: additionalProperties6,
 		}
 	}
 	if sourceOracleEnterpriseTLSEncryptedVerifyCertificate != nil {
 		encryption = shared.SourceOracleEnterpriseEncryption{
 			SourceOracleEnterpriseTLSEncryptedVerifyCertificate: sourceOracleEnterpriseTLSEncryptedVerifyCertificate,
 		}
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
 	}
 	var tunnelMethod shared.SourceOracleEnterpriseSSHTunnelMethod
 	var sourceOracleEnterpriseNoTunnel *shared.SourceOracleEnterpriseNoTunnel
@@ -190,13 +271,13 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 		} else {
 			tunnelMethod1 = nil
 		}
-		var additionalProperties5 interface{}
+		var additionalProperties7 interface{}
 		if !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties5)
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties7)
 		}
 		sourceOracleEnterpriseNoTunnel = &shared.SourceOracleEnterpriseNoTunnel{
 			TunnelMethod:         tunnelMethod1,
-			AdditionalProperties: additionalProperties5,
+			AdditionalProperties: additionalProperties7,
 		}
 	}
 	if sourceOracleEnterpriseNoTunnel != nil {
@@ -206,15 +287,18 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 	}
 	var sourceOracleEnterpriseSSHKeyAuthentication *shared.SourceOracleEnterpriseSSHKeyAuthentication
 	if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+		var sshKey string
+		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
+		var tunnelHost string
+		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+
 		tunnelMethod2 := new(shared.SourceOracleEnterpriseSchemasTunnelMethod)
 		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
 			*tunnelMethod2 = shared.SourceOracleEnterpriseSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
 		} else {
 			tunnelMethod2 = nil
 		}
-		var tunnelHost string
-		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
 		tunnelPort := new(int64)
 		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
 			*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
@@ -224,20 +308,17 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 		var tunnelUser string
 		tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-		var sshKey string
-		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
-		var additionalProperties6 interface{}
+		var additionalProperties8 interface{}
 		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties6)
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties8)
 		}
 		sourceOracleEnterpriseSSHKeyAuthentication = &shared.SourceOracleEnterpriseSSHKeyAuthentication{
-			TunnelMethod:         tunnelMethod2,
+			SSHKey:               sshKey,
 			TunnelHost:           tunnelHost,
+			TunnelMethod:         tunnelMethod2,
 			TunnelPort:           tunnelPort,
 			TunnelUser:           tunnelUser,
-			SSHKey:               sshKey,
-			AdditionalProperties: additionalProperties6,
+			AdditionalProperties: additionalProperties8,
 		}
 	}
 	if sourceOracleEnterpriseSSHKeyAuthentication != nil {
@@ -247,15 +328,15 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 	}
 	var sourceOracleEnterprisePasswordAuthentication *shared.SourceOracleEnterprisePasswordAuthentication
 	if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+		var tunnelHost1 string
+		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+
 		tunnelMethod3 := new(shared.SourceOracleEnterpriseSchemasTunnelMethodTunnelMethod)
 		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
 			*tunnelMethod3 = shared.SourceOracleEnterpriseSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
 		} else {
 			tunnelMethod3 = nil
 		}
-		var tunnelHost1 string
-		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
 		tunnelPort1 := new(int64)
 		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
 			*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
@@ -268,17 +349,17 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 		var tunnelUserPassword string
 		tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
 
-		var additionalProperties7 interface{}
+		var additionalProperties9 interface{}
 		if !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties7)
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties9)
 		}
 		sourceOracleEnterprisePasswordAuthentication = &shared.SourceOracleEnterprisePasswordAuthentication{
-			TunnelMethod:         tunnelMethod3,
 			TunnelHost:           tunnelHost1,
+			TunnelMethod:         tunnelMethod3,
 			TunnelPort:           tunnelPort1,
 			TunnelUser:           tunnelUser1,
 			TunnelUserPassword:   tunnelUserPassword,
-			AdditionalProperties: additionalProperties7,
+			AdditionalProperties: additionalProperties9,
 		}
 	}
 	if sourceOracleEnterprisePasswordAuthentication != nil {
@@ -286,104 +367,23 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterpriseCrea
 			SourceOracleEnterprisePasswordAuthentication: sourceOracleEnterprisePasswordAuthentication,
 		}
 	}
-	var cursor shared.SourceOracleEnterpriseUpdateMethod
-	var sourceOracleEnterpriseScanChangesWithUserDefinedCursor *shared.SourceOracleEnterpriseScanChangesWithUserDefinedCursor
-	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
-		cursorMethod := new(shared.SourceOracleEnterpriseCursorMethod)
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
-			*cursorMethod = shared.SourceOracleEnterpriseCursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
-		} else {
-			cursorMethod = nil
-		}
-		var additionalProperties8 interface{}
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties8)
-		}
-		sourceOracleEnterpriseScanChangesWithUserDefinedCursor = &shared.SourceOracleEnterpriseScanChangesWithUserDefinedCursor{
-			CursorMethod:         cursorMethod,
-			AdditionalProperties: additionalProperties8,
-		}
-	}
-	if sourceOracleEnterpriseScanChangesWithUserDefinedCursor != nil {
-		cursor = shared.SourceOracleEnterpriseUpdateMethod{
-			SourceOracleEnterpriseScanChangesWithUserDefinedCursor: sourceOracleEnterpriseScanChangesWithUserDefinedCursor,
-		}
-	}
-	var sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC *shared.SourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC
-	if r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC != nil {
-		cursorMethod1 := new(shared.SourceOracleEnterpriseSchemasCursorMethod)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsNull() {
-			*cursorMethod1 = shared.SourceOracleEnterpriseSchemasCursorMethod(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.ValueString())
-		} else {
-			cursorMethod1 = nil
-		}
-		invalidCdcCursorPositionBehavior := new(shared.SourceOracleEnterpriseInvalidCDCPositionBehaviorAdvanced)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-			*invalidCdcCursorPositionBehavior = shared.SourceOracleEnterpriseInvalidCDCPositionBehaviorAdvanced(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
-		} else {
-			invalidCdcCursorPositionBehavior = nil
-		}
-		initialLoadTimeoutHours := new(int64)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
-			*initialLoadTimeoutHours = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
-		} else {
-			initialLoadTimeoutHours = nil
-		}
-		debeziumShutdownTimeoutSeconds := new(int64)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsNull() {
-			*debeziumShutdownTimeoutSeconds = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.ValueInt64()
-		} else {
-			debeziumShutdownTimeoutSeconds = nil
-		}
-		var additionalProperties9 interface{}
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.ValueString()), &additionalProperties9)
-		}
-		sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC = &shared.SourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC{
-			CursorMethod:                     cursorMethod1,
-			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
-			DebeziumShutdownTimeoutSeconds:   debeziumShutdownTimeoutSeconds,
-			AdditionalProperties:             additionalProperties9,
-		}
-	}
-	if sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC != nil {
-		cursor = shared.SourceOracleEnterpriseUpdateMethod{
-			SourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC: sourceOracleEnterpriseReadChangesUsingChangeDataCaptureCDC,
-		}
-	}
-	checkpointTargetIntervalSeconds := new(int64)
-	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
-		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
-	} else {
-		checkpointTargetIntervalSeconds = nil
-	}
-	concurrency := new(int64)
-	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
-		*concurrency = r.Configuration.Concurrency.ValueInt64()
-	} else {
-		concurrency = nil
-	}
-	checkPrivileges := new(bool)
-	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
-		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
-	} else {
-		checkPrivileges = nil
-	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceOracleEnterprise{
-		Host:                            host,
-		Port:                            port,
-		ConnectionData:                  connectionData,
-		Username:                        username,
-		Password:                        password,
-		Schemas:                         schemas,
-		JdbcURLParams:                   jdbcURLParams,
-		Encryption:                      encryption,
-		TunnelMethod:                    tunnelMethod,
-		Cursor:                          cursor,
+		CheckPrivileges:                 checkPrivileges,
 		CheckpointTargetIntervalSeconds: checkpointTargetIntervalSeconds,
 		Concurrency:                     concurrency,
-		CheckPrivileges:                 checkPrivileges,
+		ConnectionData:                  connectionData,
+		Cursor:                          cursor,
+		Encryption:                      encryption,
+		Host:                            host,
+		JdbcURLParams:                   jdbcURLParams,
+		Password:                        password,
+		Port:                            port,
+		Schemas:                         schemas,
+		TunnelMethod:                    tunnelMethod,
+		Username:                        username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -455,14 +455,23 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
+	checkPrivileges := new(bool)
+	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
+		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
 	} else {
-		port = nil
+		checkPrivileges = nil
+	}
+	checkpointTargetIntervalSeconds := new(int64)
+	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
+		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
+	} else {
+		checkpointTargetIntervalSeconds = nil
+	}
+	concurrency := new(int64)
+	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
+		*concurrency = r.Configuration.Concurrency.ValueInt64()
+	} else {
+		concurrency = nil
 	}
 	var connectionData shared.SourceOracleEnterpriseUpdateConnectBy
 	var sourceOracleEnterpriseUpdateServiceName *shared.SourceOracleEnterpriseUpdateServiceName
@@ -517,24 +526,71 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 			SourceOracleEnterpriseUpdateSystemIDSID: sourceOracleEnterpriseUpdateSystemIDSID,
 		}
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
+	var cursor shared.SourceOracleEnterpriseUpdateUpdateMethod
+	var sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor *shared.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
+	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
+		cursorMethod := new(shared.SourceOracleEnterpriseUpdateCursorMethod)
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
+			*cursorMethod = shared.SourceOracleEnterpriseUpdateCursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
+		} else {
+			cursorMethod = nil
+		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
+		sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor = &shared.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor{
+			CursorMethod:         cursorMethod,
+			AdditionalProperties: additionalProperties2,
+		}
 	}
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
+	if sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
+		cursor = shared.SourceOracleEnterpriseUpdateUpdateMethod{
+			SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor: sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor,
+		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
+	var sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC *shared.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
+	if r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC != nil {
+		cursorMethod1 := new(shared.SourceOracleEnterpriseUpdateSchemasCursorMethod)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsNull() {
+			*cursorMethod1 = shared.SourceOracleEnterpriseUpdateSchemasCursorMethod(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.ValueString())
+		} else {
+			cursorMethod1 = nil
+		}
+		debeziumShutdownTimeoutSeconds := new(int64)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsNull() {
+			*debeziumShutdownTimeoutSeconds = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.ValueInt64()
+		} else {
+			debeziumShutdownTimeoutSeconds = nil
+		}
+		initialLoadTimeoutHours := new(int64)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+			*initialLoadTimeoutHours = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+		} else {
+			initialLoadTimeoutHours = nil
+		}
+		invalidCdcCursorPositionBehavior := new(shared.SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced)
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+			*invalidCdcCursorPositionBehavior = shared.SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
+		} else {
+			invalidCdcCursorPositionBehavior = nil
+		}
+		var additionalProperties3 interface{}
+		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.ValueString()), &additionalProperties3)
+		}
+		sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = &shared.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC{
+			CursorMethod:                     cursorMethod1,
+			DebeziumShutdownTimeoutSeconds:   debeziumShutdownTimeoutSeconds,
+			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+			AdditionalProperties:             additionalProperties3,
+		}
+	}
+	if sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC != nil {
+		cursor = shared.SourceOracleEnterpriseUpdateUpdateMethod{
+			SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC: sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC,
+		}
 	}
 	var encryption shared.SourceOracleEnterpriseUpdateEncryption
 	var sourceOracleEnterpriseUpdateUnencrypted *shared.SourceOracleEnterpriseUpdateUnencrypted
@@ -545,13 +601,13 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 		} else {
 			encryptionMethod = nil
 		}
-		var additionalProperties2 interface{}
+		var additionalProperties4 interface{}
 		if !r.Configuration.Encryption.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.Unencrypted.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Encryption.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties2)
+			_ = json.Unmarshal([]byte(r.Configuration.Encryption.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties4)
 		}
 		sourceOracleEnterpriseUpdateUnencrypted = &shared.SourceOracleEnterpriseUpdateUnencrypted{
 			EncryptionMethod:     encryptionMethod,
-			AdditionalProperties: additionalProperties2,
+			AdditionalProperties: additionalProperties4,
 		}
 	}
 	if sourceOracleEnterpriseUpdateUnencrypted != nil {
@@ -561,26 +617,26 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 	}
 	var sourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE *shared.SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE
 	if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
-		encryptionMethod1 := new(shared.SourceOracleEnterpriseUpdateSchemasEncryptionMethod)
-		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsNull() {
-			*encryptionMethod1 = shared.SourceOracleEnterpriseUpdateSchemasEncryptionMethod(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.ValueString())
-		} else {
-			encryptionMethod1 = nil
-		}
 		encryptionAlgorithm := new(shared.SourceOracleEnterpriseUpdateEncryptionAlgorithm)
 		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
 			*encryptionAlgorithm = shared.SourceOracleEnterpriseUpdateEncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
 		} else {
 			encryptionAlgorithm = nil
 		}
-		var additionalProperties3 interface{}
+		encryptionMethod1 := new(shared.SourceOracleEnterpriseUpdateSchemasEncryptionMethod)
+		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.IsNull() {
+			*encryptionMethod1 = shared.SourceOracleEnterpriseUpdateSchemasEncryptionMethod(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionMethod.ValueString())
+		} else {
+			encryptionMethod1 = nil
+		}
+		var additionalProperties5 interface{}
 		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.ValueString()), &additionalProperties3)
+			_ = json.Unmarshal([]byte(r.Configuration.Encryption.NativeNetworkEncryptionNNE.AdditionalProperties.ValueString()), &additionalProperties5)
 		}
 		sourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE = &shared.SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE{
-			EncryptionMethod:     encryptionMethod1,
 			EncryptionAlgorithm:  encryptionAlgorithm,
-			AdditionalProperties: additionalProperties3,
+			EncryptionMethod:     encryptionMethod1,
+			AdditionalProperties: additionalProperties5,
 		}
 	}
 	if sourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE != nil {
@@ -599,20 +655,45 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 		var sslCertificate string
 		sslCertificate = r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
 
-		var additionalProperties4 interface{}
+		var additionalProperties6 interface{}
 		if !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties4)
+			_ = json.Unmarshal([]byte(r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties6)
 		}
 		sourceOracleEnterpriseUpdateTLSEncryptedVerifyCertificate = &shared.SourceOracleEnterpriseUpdateTLSEncryptedVerifyCertificate{
 			EncryptionMethod:     encryptionMethod2,
 			SslCertificate:       sslCertificate,
-			AdditionalProperties: additionalProperties4,
+			AdditionalProperties: additionalProperties6,
 		}
 	}
 	if sourceOracleEnterpriseUpdateTLSEncryptedVerifyCertificate != nil {
 		encryption = shared.SourceOracleEnterpriseUpdateEncryption{
 			SourceOracleEnterpriseUpdateTLSEncryptedVerifyCertificate: sourceOracleEnterpriseUpdateTLSEncryptedVerifyCertificate,
 		}
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
 	}
 	var tunnelMethod shared.SourceOracleEnterpriseUpdateSSHTunnelMethod
 	var sourceOracleEnterpriseUpdateNoTunnel *shared.SourceOracleEnterpriseUpdateNoTunnel
@@ -623,13 +704,13 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 		} else {
 			tunnelMethod1 = nil
 		}
-		var additionalProperties5 interface{}
+		var additionalProperties7 interface{}
 		if !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties5)
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties7)
 		}
 		sourceOracleEnterpriseUpdateNoTunnel = &shared.SourceOracleEnterpriseUpdateNoTunnel{
 			TunnelMethod:         tunnelMethod1,
-			AdditionalProperties: additionalProperties5,
+			AdditionalProperties: additionalProperties7,
 		}
 	}
 	if sourceOracleEnterpriseUpdateNoTunnel != nil {
@@ -639,15 +720,18 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 	}
 	var sourceOracleEnterpriseUpdateSSHKeyAuthentication *shared.SourceOracleEnterpriseUpdateSSHKeyAuthentication
 	if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+		var sshKey string
+		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
+		var tunnelHost string
+		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+
 		tunnelMethod2 := new(shared.SourceOracleEnterpriseUpdateSchemasTunnelMethod)
 		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
 			*tunnelMethod2 = shared.SourceOracleEnterpriseUpdateSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
 		} else {
 			tunnelMethod2 = nil
 		}
-		var tunnelHost string
-		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
 		tunnelPort := new(int64)
 		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
 			*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
@@ -657,20 +741,17 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 		var tunnelUser string
 		tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-		var sshKey string
-		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
-		var additionalProperties6 interface{}
+		var additionalProperties8 interface{}
 		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties6)
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties8)
 		}
 		sourceOracleEnterpriseUpdateSSHKeyAuthentication = &shared.SourceOracleEnterpriseUpdateSSHKeyAuthentication{
-			TunnelMethod:         tunnelMethod2,
+			SSHKey:               sshKey,
 			TunnelHost:           tunnelHost,
+			TunnelMethod:         tunnelMethod2,
 			TunnelPort:           tunnelPort,
 			TunnelUser:           tunnelUser,
-			SSHKey:               sshKey,
-			AdditionalProperties: additionalProperties6,
+			AdditionalProperties: additionalProperties8,
 		}
 	}
 	if sourceOracleEnterpriseUpdateSSHKeyAuthentication != nil {
@@ -680,15 +761,15 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 	}
 	var sourceOracleEnterpriseUpdatePasswordAuthentication *shared.SourceOracleEnterpriseUpdatePasswordAuthentication
 	if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+		var tunnelHost1 string
+		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+
 		tunnelMethod3 := new(shared.SourceOracleEnterpriseUpdateSchemasTunnelMethodTunnelMethod)
 		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
 			*tunnelMethod3 = shared.SourceOracleEnterpriseUpdateSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
 		} else {
 			tunnelMethod3 = nil
 		}
-		var tunnelHost1 string
-		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
 		tunnelPort1 := new(int64)
 		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
 			*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
@@ -701,17 +782,17 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 		var tunnelUserPassword string
 		tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
 
-		var additionalProperties7 interface{}
+		var additionalProperties9 interface{}
 		if !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties7)
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties9)
 		}
 		sourceOracleEnterpriseUpdatePasswordAuthentication = &shared.SourceOracleEnterpriseUpdatePasswordAuthentication{
-			TunnelMethod:         tunnelMethod3,
 			TunnelHost:           tunnelHost1,
+			TunnelMethod:         tunnelMethod3,
 			TunnelPort:           tunnelPort1,
 			TunnelUser:           tunnelUser1,
 			TunnelUserPassword:   tunnelUserPassword,
-			AdditionalProperties: additionalProperties7,
+			AdditionalProperties: additionalProperties9,
 		}
 	}
 	if sourceOracleEnterpriseUpdatePasswordAuthentication != nil {
@@ -719,104 +800,23 @@ func (r *SourceOracleEnterpriseResourceModel) ToSharedSourceOracleEnterprisePutR
 			SourceOracleEnterpriseUpdatePasswordAuthentication: sourceOracleEnterpriseUpdatePasswordAuthentication,
 		}
 	}
-	var cursor shared.SourceOracleEnterpriseUpdateUpdateMethod
-	var sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor *shared.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
-	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
-		cursorMethod := new(shared.SourceOracleEnterpriseUpdateCursorMethod)
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
-			*cursorMethod = shared.SourceOracleEnterpriseUpdateCursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
-		} else {
-			cursorMethod = nil
-		}
-		var additionalProperties8 interface{}
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties8)
-		}
-		sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor = &shared.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor{
-			CursorMethod:         cursorMethod,
-			AdditionalProperties: additionalProperties8,
-		}
-	}
-	if sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
-		cursor = shared.SourceOracleEnterpriseUpdateUpdateMethod{
-			SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor: sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor,
-		}
-	}
-	var sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC *shared.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
-	if r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC != nil {
-		cursorMethod1 := new(shared.SourceOracleEnterpriseUpdateSchemasCursorMethod)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.IsNull() {
-			*cursorMethod1 = shared.SourceOracleEnterpriseUpdateSchemasCursorMethod(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.CursorMethod.ValueString())
-		} else {
-			cursorMethod1 = nil
-		}
-		invalidCdcCursorPositionBehavior := new(shared.SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-			*invalidCdcCursorPositionBehavior = shared.SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
-		} else {
-			invalidCdcCursorPositionBehavior = nil
-		}
-		initialLoadTimeoutHours := new(int64)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
-			*initialLoadTimeoutHours = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
-		} else {
-			initialLoadTimeoutHours = nil
-		}
-		debeziumShutdownTimeoutSeconds := new(int64)
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.IsNull() {
-			*debeziumShutdownTimeoutSeconds = r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.DebeziumShutdownTimeoutSeconds.ValueInt64()
-		} else {
-			debeziumShutdownTimeoutSeconds = nil
-		}
-		var additionalProperties9 interface{}
-		if !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.ValueString()), &additionalProperties9)
-		}
-		sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = &shared.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC{
-			CursorMethod:                     cursorMethod1,
-			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
-			DebeziumShutdownTimeoutSeconds:   debeziumShutdownTimeoutSeconds,
-			AdditionalProperties:             additionalProperties9,
-		}
-	}
-	if sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC != nil {
-		cursor = shared.SourceOracleEnterpriseUpdateUpdateMethod{
-			SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC: sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC,
-		}
-	}
-	checkpointTargetIntervalSeconds := new(int64)
-	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
-		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
-	} else {
-		checkpointTargetIntervalSeconds = nil
-	}
-	concurrency := new(int64)
-	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
-		*concurrency = r.Configuration.Concurrency.ValueInt64()
-	} else {
-		concurrency = nil
-	}
-	checkPrivileges := new(bool)
-	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
-		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
-	} else {
-		checkPrivileges = nil
-	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceOracleEnterpriseUpdate{
-		Host:                            host,
-		Port:                            port,
-		ConnectionData:                  connectionData,
-		Username:                        username,
-		Password:                        password,
-		Schemas:                         schemas,
-		JdbcURLParams:                   jdbcURLParams,
-		Encryption:                      encryption,
-		TunnelMethod:                    tunnelMethod,
-		Cursor:                          cursor,
+		CheckPrivileges:                 checkPrivileges,
 		CheckpointTargetIntervalSeconds: checkpointTargetIntervalSeconds,
 		Concurrency:                     concurrency,
-		CheckPrivileges:                 checkPrivileges,
+		ConnectionData:                  connectionData,
+		Cursor:                          cursor,
+		Encryption:                      encryption,
+		Host:                            host,
+		JdbcURLParams:                   jdbcURLParams,
+		Password:                        password,
+		Port:                            port,
+		Schemas:                         schemas,
+		TunnelMethod:                    tunnelMethod,
+		Username:                        username,
 	}
 	out := shared.SourceOracleEnterprisePutRequest{
 		Name:          name,

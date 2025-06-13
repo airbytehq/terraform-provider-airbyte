@@ -25,21 +25,21 @@ func (r *SourceNexiopayResourceModel) ToSharedSourceNexiopayCreateRequest() *sha
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subdomain := new(shared.Subdomain)
 	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
 		*subdomain = shared.Subdomain(r.Configuration.Subdomain.ValueString())
 	} else {
 		subdomain = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceNexiopay{
 		APIKey:    apiKey,
-		Username:  username,
-		Subdomain: subdomain,
 		StartDate: startDate,
+		Subdomain: subdomain,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -114,21 +114,21 @@ func (r *SourceNexiopayResourceModel) ToSharedSourceNexiopayPutRequest() *shared
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subdomain := new(shared.SourceNexiopayUpdateSubdomain)
 	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
 		*subdomain = shared.SourceNexiopayUpdateSubdomain(r.Configuration.Subdomain.ValueString())
 	} else {
 		subdomain = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceNexiopayUpdate{
 		APIKey:    apiKey,
-		Username:  username,
-		Subdomain: subdomain,
 		StartDate: startDate,
+		Subdomain: subdomain,
+		Username:  username,
 	}
 	out := shared.SourceNexiopayPutRequest{
 		Name:          name,

@@ -33,17 +33,17 @@ func (e *Couchbase) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCouchbase struct {
-	// The connection string for the Couchbase server (e.g., couchbase://localhost or couchbases://example.com)
-	ConnectionString string `json:"connection_string"`
-	// The username to use for authentication
-	Username string `json:"username"`
-	// The password to use for authentication
-	Password string `json:"password"`
 	// The name of the bucket to sync data from
 	Bucket string `json:"bucket"`
+	// The connection string for the Couchbase server (e.g., couchbase://localhost or couchbases://example.com)
+	ConnectionString string `json:"connection_string"`
+	// The password to use for authentication
+	Password string `json:"password"`
 	// The date from which you'd like to replicate data for incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If not set, all data will be replicated.
-	StartDate  *time.Time `json:"start_date,omitempty"`
-	sourceType Couchbase  `const:"couchbase" json:"sourceType"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// The username to use for authentication
+	Username   string    `json:"username"`
+	sourceType Couchbase `const:"couchbase" json:"sourceType"`
 }
 
 func (s SourceCouchbase) MarshalJSON() ([]byte, error) {
@@ -57,18 +57,18 @@ func (s *SourceCouchbase) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceCouchbase) GetBucket() string {
+	if o == nil {
+		return ""
+	}
+	return o.Bucket
+}
+
 func (o *SourceCouchbase) GetConnectionString() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionString
-}
-
-func (o *SourceCouchbase) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
 }
 
 func (o *SourceCouchbase) GetPassword() string {
@@ -78,18 +78,18 @@ func (o *SourceCouchbase) GetPassword() string {
 	return o.Password
 }
 
-func (o *SourceCouchbase) GetBucket() string {
-	if o == nil {
-		return ""
-	}
-	return o.Bucket
-}
-
 func (o *SourceCouchbase) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceCouchbase) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceCouchbase) GetSourceType() Couchbase {

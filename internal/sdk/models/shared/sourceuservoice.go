@@ -33,9 +33,9 @@ func (e *Uservoice) UnmarshalJSON(data []byte) error {
 }
 
 type SourceUservoice struct {
-	Subdomain  string    `json:"subdomain"`
 	APIKey     string    `json:"api_key"`
 	StartDate  time.Time `json:"start_date"`
+	Subdomain  string    `json:"subdomain"`
 	sourceType Uservoice `const:"uservoice" json:"sourceType"`
 }
 
@@ -50,13 +50,6 @@ func (s *SourceUservoice) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceUservoice) GetSubdomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Subdomain
-}
-
 func (o *SourceUservoice) GetAPIKey() string {
 	if o == nil {
 		return ""
@@ -69,6 +62,13 @@ func (o *SourceUservoice) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceUservoice) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }
 
 func (o *SourceUservoice) GetSourceType() Uservoice {

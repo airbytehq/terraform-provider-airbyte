@@ -130,19 +130,19 @@ func (e *Salesforce) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSalesforce struct {
-	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
-	IsSandbox *bool                     `default:"false" json:"is_sandbox"`
-	authType  *SourceSalesforceAuthType `const:"Client" json:"auth_type,omitempty"`
+	authType *SourceSalesforceAuthType `const:"Client" json:"auth_type,omitempty"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
 	ClientID string `json:"client_id"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
 	ClientSecret string `json:"client_secret"`
+	// Toggle to use Bulk API (this might cause empty fields for some streams)
+	ForceUseBulkAPI *bool `default:"false" json:"force_use_bulk_api"`
+	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 	RefreshToken string `json:"refresh_token"`
 	// Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
 	StartDate *time.Time `json:"start_date,omitempty"`
-	// Toggle to use Bulk API (this might cause empty fields for some streams)
-	ForceUseBulkAPI *bool `default:"false" json:"force_use_bulk_api"`
 	// The size of the time window (ISO8601 duration) to slice requests.
 	StreamSliceStep *string `default:"P30D" json:"stream_slice_step"`
 	// Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector.
@@ -159,13 +159,6 @@ func (s *SourceSalesforce) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceSalesforce) GetIsSandbox() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsSandbox
 }
 
 func (o *SourceSalesforce) GetAuthType() *SourceSalesforceAuthType {
@@ -186,6 +179,20 @@ func (o *SourceSalesforce) GetClientSecret() string {
 	return o.ClientSecret
 }
 
+func (o *SourceSalesforce) GetForceUseBulkAPI() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ForceUseBulkAPI
+}
+
+func (o *SourceSalesforce) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
 func (o *SourceSalesforce) GetRefreshToken() string {
 	if o == nil {
 		return ""
@@ -198,13 +205,6 @@ func (o *SourceSalesforce) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceSalesforce) GetForceUseBulkAPI() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.ForceUseBulkAPI
 }
 
 func (o *SourceSalesforce) GetStreamSliceStep() *string {

@@ -16,6 +16,7 @@ SourceRecharge Resource
 resource "airbyte_source_recharge" "my_source_recharge" {
   configuration = {
     access_token              = "...my_access_token..."
+    lookback_window_days      = 3
     start_date                = "2021-05-14T00:00:00Z"
     use_orders_deprecated_api = false
   }
@@ -57,6 +58,7 @@ Required:
 
 Optional:
 
+- `lookback_window_days` (Number) Specifies how many days of historical data should be reloaded each time the recharge connector runs. Default: 0
 - `use_orders_deprecated_api` (Boolean) Define whether or not the `Orders` stream should use the deprecated `2021-01` API version, or use `2021-11`, otherwise. Default: true
 
 

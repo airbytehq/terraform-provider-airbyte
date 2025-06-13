@@ -32,8 +32,8 @@ func (e *Kissmetrics) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKissmetrics struct {
-	Username   string      `json:"username"`
 	Password   *string     `json:"password,omitempty"`
+	Username   string      `json:"username"`
 	sourceType Kissmetrics `const:"kissmetrics" json:"sourceType"`
 }
 
@@ -48,18 +48,18 @@ func (s *SourceKissmetrics) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceKissmetrics) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceKissmetrics) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceKissmetrics) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceKissmetrics) GetSourceType() Kissmetrics {

@@ -5,10 +5,12 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleSearchConsole struct {
-	Authorization      SourceGoogleSearchConsoleAuthenticationType   `tfsdk:"authorization"`
-	CustomReportsArray []SourceGoogleSearchConsoleCustomReportConfig `tfsdk:"custom_reports_array"`
-	DataState          types.String                                  `tfsdk:"data_state"`
-	EndDate            types.String                                  `tfsdk:"end_date"`
-	SiteUrls           []types.String                                `tfsdk:"site_urls"`
-	StartDate          types.String                                  `tfsdk:"start_date"`
+	AlwaysUseAggregationTypeAuto types.Bool                                    `tfsdk:"always_use_aggregation_type_auto"`
+	Authorization                SourceGoogleSearchConsoleAuthenticationType   `tfsdk:"authorization"`
+	CustomReportsArray           []SourceGoogleSearchConsoleCustomReportConfig `tfsdk:"custom_reports_array"`
+	DataState                    types.String                                  `tfsdk:"data_state"`
+	EndDate                      types.String                                  `tfsdk:"end_date"`
+	NumWorkers                   types.Int64                                   `tfsdk:"num_workers"`
+	SiteUrls                     []types.String                                `tfsdk:"site_urls"`
+	StartDate                    types.String                                  `tfsdk:"start_date"`
 }

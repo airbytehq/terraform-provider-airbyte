@@ -61,19 +61,19 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraCreateRequest() 
 	}
 	var azureOpenAI *shared.AzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		azureOpenAI = &shared.AzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if azureOpenAI != nil {
@@ -92,20 +92,20 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraCreateRequest() 
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		openAICompatible = &shared.OpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if openAICompatible != nil {
@@ -113,40 +113,77 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraCreateRequest() 
 			OpenAICompatible: openAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var astraDbAppToken string
+	astraDbAppToken = r.Configuration.Indexing.AstraDbAppToken.ValueString()
 
+	var astraDbEndpoint string
+	astraDbEndpoint = r.Configuration.Indexing.AstraDbEndpoint.ValueString()
+
+	var astraDbKeyspace string
+	astraDbKeyspace = r.Configuration.Indexing.AstraDbKeyspace.ValueString()
+
+	var collection string
+	collection = r.Configuration.Indexing.Collection.ValueString()
+
+	indexing := shared.Indexing{
+		AstraDbAppToken: astraDbAppToken,
+		AstraDbEndpoint: astraDbEndpoint,
+		AstraDbKeyspace: astraDbKeyspace,
+		Collection:      collection,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.FieldNameMappingConfigModel = []shared.FieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.FieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.TextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var bySeparator *shared.BySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			bySeparator = &shared.BySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if bySeparator != nil {
@@ -184,56 +221,19 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraCreateRequest() 
 			}
 		}
 	}
-	var fieldNameMappings []shared.FieldNameMappingConfigModel = []shared.FieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.FieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.ProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var astraDbAppToken string
-	astraDbAppToken = r.Configuration.Indexing.AstraDbAppToken.ValueString()
-
-	var astraDbEndpoint string
-	astraDbEndpoint = r.Configuration.Indexing.AstraDbEndpoint.ValueString()
-
-	var astraDbKeyspace string
-	astraDbKeyspace = r.Configuration.Indexing.AstraDbKeyspace.ValueString()
-
-	var collection string
-	collection = r.Configuration.Indexing.Collection.ValueString()
-
-	indexing := shared.Indexing{
-		AstraDbAppToken: astraDbAppToken,
-		AstraDbEndpoint: astraDbEndpoint,
-		AstraDbKeyspace: astraDbKeyspace,
-		Collection:      collection,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationAstra{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationAstraCreateRequest{
 		Name:          name,
@@ -338,19 +338,19 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraPutRequest() *sh
 	}
 	var destinationAstraUpdateAzureOpenAI *shared.DestinationAstraUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationAstraUpdateAzureOpenAI = &shared.DestinationAstraUpdateAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationAstraUpdateAzureOpenAI != nil {
@@ -369,20 +369,20 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraPutRequest() *sh
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationAstraUpdateOpenAICompatible = &shared.DestinationAstraUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationAstraUpdateOpenAICompatible != nil {
@@ -390,40 +390,77 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraPutRequest() *sh
 			DestinationAstraUpdateOpenAICompatible: destinationAstraUpdateOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var astraDbAppToken string
+	astraDbAppToken = r.Configuration.Indexing.AstraDbAppToken.ValueString()
 
+	var astraDbEndpoint string
+	astraDbEndpoint = r.Configuration.Indexing.AstraDbEndpoint.ValueString()
+
+	var astraDbKeyspace string
+	astraDbKeyspace = r.Configuration.Indexing.AstraDbKeyspace.ValueString()
+
+	var collection string
+	collection = r.Configuration.Indexing.Collection.ValueString()
+
+	indexing := shared.DestinationAstraUpdateIndexing{
+		AstraDbAppToken: astraDbAppToken,
+		AstraDbEndpoint: astraDbEndpoint,
+		AstraDbKeyspace: astraDbKeyspace,
+		Collection:      collection,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationAstraUpdateFieldNameMappingConfigModel = []shared.DestinationAstraUpdateFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationAstraUpdateFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationAstraUpdateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationAstraUpdateBySeparator *shared.DestinationAstraUpdateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationAstraUpdateBySeparator = &shared.DestinationAstraUpdateBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationAstraUpdateBySeparator != nil {
@@ -461,56 +498,19 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraPutRequest() *sh
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationAstraUpdateFieldNameMappingConfigModel = []shared.DestinationAstraUpdateFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationAstraUpdateFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationAstraUpdateProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var astraDbAppToken string
-	astraDbAppToken = r.Configuration.Indexing.AstraDbAppToken.ValueString()
-
-	var astraDbEndpoint string
-	astraDbEndpoint = r.Configuration.Indexing.AstraDbEndpoint.ValueString()
-
-	var astraDbKeyspace string
-	astraDbKeyspace = r.Configuration.Indexing.AstraDbKeyspace.ValueString()
-
-	var collection string
-	collection = r.Configuration.Indexing.Collection.ValueString()
-
-	indexing := shared.DestinationAstraUpdateIndexing{
-		AstraDbAppToken: astraDbAppToken,
-		AstraDbEndpoint: astraDbEndpoint,
-		AstraDbKeyspace: astraDbKeyspace,
-		Collection:      collection,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationAstraUpdate{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationAstraPutRequest{
 		Name:          name,

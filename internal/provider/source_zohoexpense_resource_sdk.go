@@ -21,25 +21,25 @@ func (r *SourceZohoExpenseResourceModel) ToSharedSourceZohoExpenseCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	dataCenter := new(shared.SourceZohoExpenseDataCenter)
-	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
-		*dataCenter = shared.SourceZohoExpenseDataCenter(r.Configuration.DataCenter.ValueString())
-	} else {
-		dataCenter = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	dataCenter := new(shared.SourceZohoExpenseDataCenter)
+	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
+		*dataCenter = shared.SourceZohoExpenseDataCenter(r.Configuration.DataCenter.ValueString())
+	} else {
+		dataCenter = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	configuration := shared.SourceZohoExpense{
-		DataCenter:   dataCenter,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
+		DataCenter:   dataCenter,
 		RefreshToken: refreshToken,
 	}
 	secretID := new(string)
@@ -112,25 +112,25 @@ func (r *SourceZohoExpenseResourceModel) ToSharedSourceZohoExpensePutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	dataCenter := new(shared.SourceZohoExpenseUpdateDataCenter)
-	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
-		*dataCenter = shared.SourceZohoExpenseUpdateDataCenter(r.Configuration.DataCenter.ValueString())
-	} else {
-		dataCenter = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	dataCenter := new(shared.SourceZohoExpenseUpdateDataCenter)
+	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
+		*dataCenter = shared.SourceZohoExpenseUpdateDataCenter(r.Configuration.DataCenter.ValueString())
+	} else {
+		dataCenter = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	configuration := shared.SourceZohoExpenseUpdate{
-		DataCenter:   dataCenter,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
+		DataCenter:   dataCenter,
 		RefreshToken: refreshToken,
 	}
 	out := shared.SourceZohoExpensePutRequest{

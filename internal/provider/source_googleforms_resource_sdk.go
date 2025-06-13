@@ -25,11 +25,11 @@ func (r *SourceGoogleFormsResourceModel) ToSharedSourceGoogleFormsCreateRequest(
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	var formID []interface{} = []interface{}{}
 	for _, formIDItem := range r.Configuration.FormID {
@@ -39,8 +39,8 @@ func (r *SourceGoogleFormsResourceModel) ToSharedSourceGoogleFormsCreateRequest(
 	}
 	configuration := shared.SourceGoogleForms{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 		FormID:             formID,
 	}
 	secretID := new(string)
@@ -116,11 +116,11 @@ func (r *SourceGoogleFormsResourceModel) ToSharedSourceGoogleFormsPutRequest() *
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	var formID []interface{} = []interface{}{}
 	for _, formIDItem := range r.Configuration.FormID {
@@ -130,8 +130,8 @@ func (r *SourceGoogleFormsResourceModel) ToSharedSourceGoogleFormsPutRequest() *
 	}
 	configuration := shared.SourceGoogleFormsUpdate{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 		FormID:             formID,
 	}
 	out := shared.SourceGoogleFormsPutRequest{

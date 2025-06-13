@@ -22,31 +22,31 @@ func (r *SourceChargebeeResourceModel) ToSharedSourceChargebeeCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteAPIKey string
-	siteAPIKey = r.Configuration.SiteAPIKey.ValueString()
-
-	var site string
-	site = r.Configuration.Site.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	productCatalog := new(shared.ProductCatalog)
-	if !r.Configuration.ProductCatalog.IsUnknown() && !r.Configuration.ProductCatalog.IsNull() {
-		*productCatalog = shared.ProductCatalog(r.Configuration.ProductCatalog.ValueString())
-	} else {
-		productCatalog = nil
-	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
 	} else {
 		numWorkers = nil
 	}
+	productCatalog := new(shared.ProductCatalog)
+	if !r.Configuration.ProductCatalog.IsUnknown() && !r.Configuration.ProductCatalog.IsNull() {
+		*productCatalog = shared.ProductCatalog(r.Configuration.ProductCatalog.ValueString())
+	} else {
+		productCatalog = nil
+	}
+	var site string
+	site = r.Configuration.Site.ValueString()
+
+	var siteAPIKey string
+	siteAPIKey = r.Configuration.SiteAPIKey.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChargebee{
-		SiteAPIKey:     siteAPIKey,
-		Site:           site,
-		StartDate:      startDate,
-		ProductCatalog: productCatalog,
 		NumWorkers:     numWorkers,
+		ProductCatalog: productCatalog,
+		Site:           site,
+		SiteAPIKey:     siteAPIKey,
+		StartDate:      startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -118,31 +118,31 @@ func (r *SourceChargebeeResourceModel) ToSharedSourceChargebeePutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteAPIKey string
-	siteAPIKey = r.Configuration.SiteAPIKey.ValueString()
-
-	var site string
-	site = r.Configuration.Site.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	productCatalog := new(shared.SourceChargebeeUpdateProductCatalog)
-	if !r.Configuration.ProductCatalog.IsUnknown() && !r.Configuration.ProductCatalog.IsNull() {
-		*productCatalog = shared.SourceChargebeeUpdateProductCatalog(r.Configuration.ProductCatalog.ValueString())
-	} else {
-		productCatalog = nil
-	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
 	} else {
 		numWorkers = nil
 	}
+	productCatalog := new(shared.SourceChargebeeUpdateProductCatalog)
+	if !r.Configuration.ProductCatalog.IsUnknown() && !r.Configuration.ProductCatalog.IsNull() {
+		*productCatalog = shared.SourceChargebeeUpdateProductCatalog(r.Configuration.ProductCatalog.ValueString())
+	} else {
+		productCatalog = nil
+	}
+	var site string
+	site = r.Configuration.Site.ValueString()
+
+	var siteAPIKey string
+	siteAPIKey = r.Configuration.SiteAPIKey.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChargebeeUpdate{
-		SiteAPIKey:     siteAPIKey,
-		Site:           site,
-		StartDate:      startDate,
-		ProductCatalog: productCatalog,
 		NumWorkers:     numWorkers,
+		ProductCatalog: productCatalog,
+		Site:           site,
+		SiteAPIKey:     siteAPIKey,
+		StartDate:      startDate,
 	}
 	out := shared.SourceChargebeePutRequest{
 		Name:          name,

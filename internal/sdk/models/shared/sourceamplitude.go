@@ -60,21 +60,21 @@ func (e *Amplitude) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAmplitude struct {
-	// Amplitude data region server
-	DataRegion *DataRegion `default:"Standard Server" json:"data_region"`
+	// According to <a href="https://amplitude.com/docs/apis/analytics/dashboard-rest#query-parameters">Amplitude documentation</a>, grouping by `Country` is optional. If you face issues fetching the stream or checking the connection please set this field to `False`.
+	//
+	ActiveUsersGroupByCountry *bool `default:"true" json:"active_users_group_by_country"`
 	// Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
 	APIKey string `json:"api_key"`
-	// Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
-	SecretKey string `json:"secret_key"`
-	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
+	// Amplitude data region server
+	DataRegion *DataRegion `default:"Standard Server" json:"data_region"`
 	// According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too large of a time range in te request can cause a timeout error. In this case, please provide a shorter time interval in hours.
 	//
 	RequestTimeRange *int64 `default:"24" json:"request_time_range"`
-	// According to <a href="https://amplitude.com/docs/apis/analytics/dashboard-rest#query-parameters">Amplitude documentation</a>, grouping by `Country` is optional. If you face issues fetching the stream or checking the connection please set this field to `False`.
-	//
-	ActiveUsersGroupByCountry *bool     `default:"true" json:"active_users_group_by_country"`
-	sourceType                Amplitude `const:"amplitude" json:"sourceType"`
+	// Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
+	SecretKey string `json:"secret_key"`
+	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate  time.Time `json:"start_date"`
+	sourceType Amplitude `const:"amplitude" json:"sourceType"`
 }
 
 func (s SourceAmplitude) MarshalJSON() ([]byte, error) {
@@ -88,11 +88,11 @@ func (s *SourceAmplitude) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceAmplitude) GetDataRegion() *DataRegion {
+func (o *SourceAmplitude) GetActiveUsersGroupByCountry() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.DataRegion
+	return o.ActiveUsersGroupByCountry
 }
 
 func (o *SourceAmplitude) GetAPIKey() string {
@@ -100,6 +100,20 @@ func (o *SourceAmplitude) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceAmplitude) GetDataRegion() *DataRegion {
+	if o == nil {
+		return nil
+	}
+	return o.DataRegion
+}
+
+func (o *SourceAmplitude) GetRequestTimeRange() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestTimeRange
 }
 
 func (o *SourceAmplitude) GetSecretKey() string {
@@ -114,20 +128,6 @@ func (o *SourceAmplitude) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceAmplitude) GetRequestTimeRange() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.RequestTimeRange
-}
-
-func (o *SourceAmplitude) GetActiveUsersGroupByCountry() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.ActiveUsersGroupByCountry
 }
 
 func (o *SourceAmplitude) GetSourceType() Amplitude {

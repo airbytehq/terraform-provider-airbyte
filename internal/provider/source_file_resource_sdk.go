@@ -30,15 +30,6 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 	} else {
 		format = nil
 	}
-	readerOptions := new(string)
-	if !r.Configuration.ReaderOptions.IsUnknown() && !r.Configuration.ReaderOptions.IsNull() {
-		*readerOptions = r.Configuration.ReaderOptions.ValueString()
-	} else {
-		readerOptions = nil
-	}
-	var url string
-	url = r.Configuration.URL.ValueString()
-
 	var provider shared.StorageProvider
 	var httpsPublicWeb *shared.HTTPSPublicWeb
 	if r.Configuration.Provider.HTTPSPublicWeb != nil {
@@ -100,9 +91,6 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 	}
 	var azBlobAzureBlobStorage *shared.AzBlobAzureBlobStorage
 	if r.Configuration.Provider.AzBlobAzureBlobStorage != nil {
-		var storageAccount string
-		storageAccount = r.Configuration.Provider.AzBlobAzureBlobStorage.StorageAccount.ValueString()
-
 		sasToken := new(string)
 		if !r.Configuration.Provider.AzBlobAzureBlobStorage.SasToken.IsUnknown() && !r.Configuration.Provider.AzBlobAzureBlobStorage.SasToken.IsNull() {
 			*sasToken = r.Configuration.Provider.AzBlobAzureBlobStorage.SasToken.ValueString()
@@ -115,10 +103,13 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 		} else {
 			sharedKey = nil
 		}
+		var storageAccount string
+		storageAccount = r.Configuration.Provider.AzBlobAzureBlobStorage.StorageAccount.ValueString()
+
 		azBlobAzureBlobStorage = &shared.AzBlobAzureBlobStorage{
-			StorageAccount: storageAccount,
 			SasToken:       sasToken,
 			SharedKey:      sharedKey,
+			StorageAccount: storageAccount,
 		}
 	}
 	if azBlobAzureBlobStorage != nil {
@@ -128,8 +119,8 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 	}
 	var sshSecureShell *shared.SSHSecureShell
 	if r.Configuration.Provider.SSHSecureShell != nil {
-		var user string
-		user = r.Configuration.Provider.SSHSecureShell.User.ValueString()
+		var host string
+		host = r.Configuration.Provider.SSHSecureShell.Host.ValueString()
 
 		password := new(string)
 		if !r.Configuration.Provider.SSHSecureShell.Password.IsUnknown() && !r.Configuration.Provider.SSHSecureShell.Password.IsNull() {
@@ -137,20 +128,20 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 		} else {
 			password = nil
 		}
-		var host string
-		host = r.Configuration.Provider.SSHSecureShell.Host.ValueString()
-
 		port := new(string)
 		if !r.Configuration.Provider.SSHSecureShell.Port.IsUnknown() && !r.Configuration.Provider.SSHSecureShell.Port.IsNull() {
 			*port = r.Configuration.Provider.SSHSecureShell.Port.ValueString()
 		} else {
 			port = nil
 		}
+		var user string
+		user = r.Configuration.Provider.SSHSecureShell.User.ValueString()
+
 		sshSecureShell = &shared.SSHSecureShell{
-			User:     user,
-			Password: password,
 			Host:     host,
+			Password: password,
 			Port:     port,
+			User:     user,
 		}
 	}
 	if sshSecureShell != nil {
@@ -160,8 +151,8 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 	}
 	var scpSecureCopyProtocol *shared.SCPSecureCopyProtocol
 	if r.Configuration.Provider.SCPSecureCopyProtocol != nil {
-		var user1 string
-		user1 = r.Configuration.Provider.SCPSecureCopyProtocol.User.ValueString()
+		var host1 string
+		host1 = r.Configuration.Provider.SCPSecureCopyProtocol.Host.ValueString()
 
 		password1 := new(string)
 		if !r.Configuration.Provider.SCPSecureCopyProtocol.Password.IsUnknown() && !r.Configuration.Provider.SCPSecureCopyProtocol.Password.IsNull() {
@@ -169,20 +160,20 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 		} else {
 			password1 = nil
 		}
-		var host1 string
-		host1 = r.Configuration.Provider.SCPSecureCopyProtocol.Host.ValueString()
-
 		port1 := new(string)
 		if !r.Configuration.Provider.SCPSecureCopyProtocol.Port.IsUnknown() && !r.Configuration.Provider.SCPSecureCopyProtocol.Port.IsNull() {
 			*port1 = r.Configuration.Provider.SCPSecureCopyProtocol.Port.ValueString()
 		} else {
 			port1 = nil
 		}
+		var user1 string
+		user1 = r.Configuration.Provider.SCPSecureCopyProtocol.User.ValueString()
+
 		scpSecureCopyProtocol = &shared.SCPSecureCopyProtocol{
-			User:     user1,
-			Password: password1,
 			Host:     host1,
+			Password: password1,
 			Port:     port1,
+			User:     user1,
 		}
 	}
 	if scpSecureCopyProtocol != nil {
@@ -192,8 +183,8 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 	}
 	var sftpSecureFileTransferProtocol *shared.SFTPSecureFileTransferProtocol
 	if r.Configuration.Provider.SFTPSecureFileTransferProtocol != nil {
-		var user2 string
-		user2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.User.ValueString()
+		var host2 string
+		host2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.Host.ValueString()
 
 		password2 := new(string)
 		if !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Password.IsUnknown() && !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Password.IsNull() {
@@ -201,20 +192,20 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 		} else {
 			password2 = nil
 		}
-		var host2 string
-		host2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.Host.ValueString()
-
 		port2 := new(string)
 		if !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Port.IsUnknown() && !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Port.IsNull() {
 			*port2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.Port.ValueString()
 		} else {
 			port2 = nil
 		}
+		var user2 string
+		user2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.User.ValueString()
+
 		sftpSecureFileTransferProtocol = &shared.SFTPSecureFileTransferProtocol{
-			User:     user2,
-			Password: password2,
 			Host:     host2,
+			Password: password2,
 			Port:     port2,
+			User:     user2,
 		}
 	}
 	if sftpSecureFileTransferProtocol != nil {
@@ -231,12 +222,21 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 			LocalFilesystemLimited: localFilesystemLimited,
 		}
 	}
+	readerOptions := new(string)
+	if !r.Configuration.ReaderOptions.IsUnknown() && !r.Configuration.ReaderOptions.IsNull() {
+		*readerOptions = r.Configuration.ReaderOptions.ValueString()
+	} else {
+		readerOptions = nil
+	}
+	var url string
+	url = r.Configuration.URL.ValueString()
+
 	configuration := shared.SourceFile{
 		DatasetName:   datasetName,
 		Format:        format,
+		Provider:      provider,
 		ReaderOptions: readerOptions,
 		URL:           url,
-		Provider:      provider,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -317,15 +317,6 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 	} else {
 		format = nil
 	}
-	readerOptions := new(string)
-	if !r.Configuration.ReaderOptions.IsUnknown() && !r.Configuration.ReaderOptions.IsNull() {
-		*readerOptions = r.Configuration.ReaderOptions.ValueString()
-	} else {
-		readerOptions = nil
-	}
-	var url string
-	url = r.Configuration.URL.ValueString()
-
 	var provider shared.SourceFileUpdateStorageProvider
 	var sourceFileUpdateHTTPSPublicWeb *shared.SourceFileUpdateHTTPSPublicWeb
 	if r.Configuration.Provider.HTTPSPublicWeb != nil {
@@ -387,9 +378,6 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 	}
 	var sourceFileUpdateAzBlobAzureBlobStorage *shared.SourceFileUpdateAzBlobAzureBlobStorage
 	if r.Configuration.Provider.AzBlobAzureBlobStorage != nil {
-		var storageAccount string
-		storageAccount = r.Configuration.Provider.AzBlobAzureBlobStorage.StorageAccount.ValueString()
-
 		sasToken := new(string)
 		if !r.Configuration.Provider.AzBlobAzureBlobStorage.SasToken.IsUnknown() && !r.Configuration.Provider.AzBlobAzureBlobStorage.SasToken.IsNull() {
 			*sasToken = r.Configuration.Provider.AzBlobAzureBlobStorage.SasToken.ValueString()
@@ -402,10 +390,13 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 		} else {
 			sharedKey = nil
 		}
+		var storageAccount string
+		storageAccount = r.Configuration.Provider.AzBlobAzureBlobStorage.StorageAccount.ValueString()
+
 		sourceFileUpdateAzBlobAzureBlobStorage = &shared.SourceFileUpdateAzBlobAzureBlobStorage{
-			StorageAccount: storageAccount,
 			SasToken:       sasToken,
 			SharedKey:      sharedKey,
+			StorageAccount: storageAccount,
 		}
 	}
 	if sourceFileUpdateAzBlobAzureBlobStorage != nil {
@@ -415,8 +406,8 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 	}
 	var sourceFileUpdateSSHSecureShell *shared.SourceFileUpdateSSHSecureShell
 	if r.Configuration.Provider.SSHSecureShell != nil {
-		var user string
-		user = r.Configuration.Provider.SSHSecureShell.User.ValueString()
+		var host string
+		host = r.Configuration.Provider.SSHSecureShell.Host.ValueString()
 
 		password := new(string)
 		if !r.Configuration.Provider.SSHSecureShell.Password.IsUnknown() && !r.Configuration.Provider.SSHSecureShell.Password.IsNull() {
@@ -424,20 +415,20 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 		} else {
 			password = nil
 		}
-		var host string
-		host = r.Configuration.Provider.SSHSecureShell.Host.ValueString()
-
 		port := new(string)
 		if !r.Configuration.Provider.SSHSecureShell.Port.IsUnknown() && !r.Configuration.Provider.SSHSecureShell.Port.IsNull() {
 			*port = r.Configuration.Provider.SSHSecureShell.Port.ValueString()
 		} else {
 			port = nil
 		}
+		var user string
+		user = r.Configuration.Provider.SSHSecureShell.User.ValueString()
+
 		sourceFileUpdateSSHSecureShell = &shared.SourceFileUpdateSSHSecureShell{
-			User:     user,
-			Password: password,
 			Host:     host,
+			Password: password,
 			Port:     port,
+			User:     user,
 		}
 	}
 	if sourceFileUpdateSSHSecureShell != nil {
@@ -447,8 +438,8 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 	}
 	var sourceFileUpdateSCPSecureCopyProtocol *shared.SourceFileUpdateSCPSecureCopyProtocol
 	if r.Configuration.Provider.SCPSecureCopyProtocol != nil {
-		var user1 string
-		user1 = r.Configuration.Provider.SCPSecureCopyProtocol.User.ValueString()
+		var host1 string
+		host1 = r.Configuration.Provider.SCPSecureCopyProtocol.Host.ValueString()
 
 		password1 := new(string)
 		if !r.Configuration.Provider.SCPSecureCopyProtocol.Password.IsUnknown() && !r.Configuration.Provider.SCPSecureCopyProtocol.Password.IsNull() {
@@ -456,20 +447,20 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 		} else {
 			password1 = nil
 		}
-		var host1 string
-		host1 = r.Configuration.Provider.SCPSecureCopyProtocol.Host.ValueString()
-
 		port1 := new(string)
 		if !r.Configuration.Provider.SCPSecureCopyProtocol.Port.IsUnknown() && !r.Configuration.Provider.SCPSecureCopyProtocol.Port.IsNull() {
 			*port1 = r.Configuration.Provider.SCPSecureCopyProtocol.Port.ValueString()
 		} else {
 			port1 = nil
 		}
+		var user1 string
+		user1 = r.Configuration.Provider.SCPSecureCopyProtocol.User.ValueString()
+
 		sourceFileUpdateSCPSecureCopyProtocol = &shared.SourceFileUpdateSCPSecureCopyProtocol{
-			User:     user1,
-			Password: password1,
 			Host:     host1,
+			Password: password1,
 			Port:     port1,
+			User:     user1,
 		}
 	}
 	if sourceFileUpdateSCPSecureCopyProtocol != nil {
@@ -479,8 +470,8 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 	}
 	var sourceFileUpdateSFTPSecureFileTransferProtocol *shared.SourceFileUpdateSFTPSecureFileTransferProtocol
 	if r.Configuration.Provider.SFTPSecureFileTransferProtocol != nil {
-		var user2 string
-		user2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.User.ValueString()
+		var host2 string
+		host2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.Host.ValueString()
 
 		password2 := new(string)
 		if !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Password.IsUnknown() && !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Password.IsNull() {
@@ -488,20 +479,20 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 		} else {
 			password2 = nil
 		}
-		var host2 string
-		host2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.Host.ValueString()
-
 		port2 := new(string)
 		if !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Port.IsUnknown() && !r.Configuration.Provider.SFTPSecureFileTransferProtocol.Port.IsNull() {
 			*port2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.Port.ValueString()
 		} else {
 			port2 = nil
 		}
+		var user2 string
+		user2 = r.Configuration.Provider.SFTPSecureFileTransferProtocol.User.ValueString()
+
 		sourceFileUpdateSFTPSecureFileTransferProtocol = &shared.SourceFileUpdateSFTPSecureFileTransferProtocol{
-			User:     user2,
-			Password: password2,
 			Host:     host2,
+			Password: password2,
 			Port:     port2,
+			User:     user2,
 		}
 	}
 	if sourceFileUpdateSFTPSecureFileTransferProtocol != nil {
@@ -518,12 +509,21 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 			SourceFileUpdateLocalFilesystemLimited: sourceFileUpdateLocalFilesystemLimited,
 		}
 	}
+	readerOptions := new(string)
+	if !r.Configuration.ReaderOptions.IsUnknown() && !r.Configuration.ReaderOptions.IsNull() {
+		*readerOptions = r.Configuration.ReaderOptions.ValueString()
+	} else {
+		readerOptions = nil
+	}
+	var url string
+	url = r.Configuration.URL.ValueString()
+
 	configuration := shared.SourceFileUpdate{
 		DatasetName:   datasetName,
 		Format:        format,
+		Provider:      provider,
 		ReaderOptions: readerOptions,
 		URL:           url,
-		Provider:      provider,
 	}
 	out := shared.SourceFilePutRequest{
 		Name:          name,

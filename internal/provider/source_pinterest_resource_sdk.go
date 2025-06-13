@@ -22,15 +22,11 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	accountID := new(string)
+	if !r.Configuration.AccountID.IsUnknown() && !r.Configuration.AccountID.IsNull() {
+		*accountID = r.Configuration.AccountID.ValueString()
 	} else {
-		startDate = nil
-	}
-	var status []shared.Status = []shared.Status{}
-	for _, statusItem := range r.Configuration.Status {
-		status = append(status, shared.Status(statusItem.ValueString()))
+		accountID = nil
 	}
 	var credentials *shared.OAuth20
 	if r.Configuration.Credentials != nil {
@@ -51,24 +47,9 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 	}
 	var customReports []shared.ReportConfig = []shared.ReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
-		var name1 string
-		name1 = customReportsItem.Name.ValueString()
-
-		level := new(shared.SourcePinterestLevel)
-		if !customReportsItem.Level.IsUnknown() && !customReportsItem.Level.IsNull() {
-			*level = shared.SourcePinterestLevel(customReportsItem.Level.ValueString())
-		} else {
-			level = nil
-		}
-		granularity := new(shared.Granularity)
-		if !customReportsItem.Granularity.IsUnknown() && !customReportsItem.Granularity.IsNull() {
-			*granularity = shared.Granularity(customReportsItem.Granularity.ValueString())
-		} else {
-			granularity = nil
-		}
-		var columns []shared.SourcePinterestValidEnums = []shared.SourcePinterestValidEnums{}
-		for _, columnsItem := range customReportsItem.Columns {
-			columns = append(columns, shared.SourcePinterestValidEnums(columnsItem.ValueString()))
+		var attributionTypes []shared.SourcePinterestValidEnums = []shared.SourcePinterestValidEnums{}
+		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
+			attributionTypes = append(attributionTypes, shared.SourcePinterestValidEnums(attributionTypesItem.ValueString()))
 		}
 		clickWindowDays := new(shared.ClickWindowDays)
 		if !customReportsItem.ClickWindowDays.IsUnknown() && !customReportsItem.ClickWindowDays.IsNull() {
@@ -76,17 +57,9 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 		} else {
 			clickWindowDays = nil
 		}
-		engagementWindowDays := new(shared.EngagementWindowDays)
-		if !customReportsItem.EngagementWindowDays.IsUnknown() && !customReportsItem.EngagementWindowDays.IsNull() {
-			*engagementWindowDays = shared.EngagementWindowDays(customReportsItem.EngagementWindowDays.ValueInt64())
-		} else {
-			engagementWindowDays = nil
-		}
-		viewWindowDays := new(shared.ViewWindowDays)
-		if !customReportsItem.ViewWindowDays.IsUnknown() && !customReportsItem.ViewWindowDays.IsNull() {
-			*viewWindowDays = shared.ViewWindowDays(customReportsItem.ViewWindowDays.ValueInt64())
-		} else {
-			viewWindowDays = nil
+		var columns []shared.SourcePinterestSchemasValidEnums = []shared.SourcePinterestSchemasValidEnums{}
+		for _, columnsItem := range customReportsItem.Columns {
+			columns = append(columns, shared.SourcePinterestSchemasValidEnums(columnsItem.ValueString()))
 		}
 		conversionReportTime := new(shared.ConversionReportTime)
 		if !customReportsItem.ConversionReportTime.IsUnknown() && !customReportsItem.ConversionReportTime.IsNull() {
@@ -94,41 +67,68 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 		} else {
 			conversionReportTime = nil
 		}
-		var attributionTypes []shared.SourcePinterestSchemasValidEnums = []shared.SourcePinterestSchemasValidEnums{}
-		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
-			attributionTypes = append(attributionTypes, shared.SourcePinterestSchemasValidEnums(attributionTypesItem.ValueString()))
-		}
-		startDate1 := new(customTypes.Date)
-		if !customReportsItem.StartDate.IsUnknown() && !customReportsItem.StartDate.IsNull() {
-			startDate1 = customTypes.MustNewDateFromString(customReportsItem.StartDate.ValueString())
+		engagementWindowDays := new(shared.EngagementWindowDays)
+		if !customReportsItem.EngagementWindowDays.IsUnknown() && !customReportsItem.EngagementWindowDays.IsNull() {
+			*engagementWindowDays = shared.EngagementWindowDays(customReportsItem.EngagementWindowDays.ValueInt64())
 		} else {
-			startDate1 = nil
+			engagementWindowDays = nil
+		}
+		granularity := new(shared.Granularity)
+		if !customReportsItem.Granularity.IsUnknown() && !customReportsItem.Granularity.IsNull() {
+			*granularity = shared.Granularity(customReportsItem.Granularity.ValueString())
+		} else {
+			granularity = nil
+		}
+		level := new(shared.SourcePinterestLevel)
+		if !customReportsItem.Level.IsUnknown() && !customReportsItem.Level.IsNull() {
+			*level = shared.SourcePinterestLevel(customReportsItem.Level.ValueString())
+		} else {
+			level = nil
+		}
+		var name1 string
+		name1 = customReportsItem.Name.ValueString()
+
+		startDate := new(customTypes.Date)
+		if !customReportsItem.StartDate.IsUnknown() && !customReportsItem.StartDate.IsNull() {
+			startDate = customTypes.MustNewDateFromString(customReportsItem.StartDate.ValueString())
+		} else {
+			startDate = nil
+		}
+		viewWindowDays := new(shared.ViewWindowDays)
+		if !customReportsItem.ViewWindowDays.IsUnknown() && !customReportsItem.ViewWindowDays.IsNull() {
+			*viewWindowDays = shared.ViewWindowDays(customReportsItem.ViewWindowDays.ValueInt64())
+		} else {
+			viewWindowDays = nil
 		}
 		customReports = append(customReports, shared.ReportConfig{
-			Name:                 name1,
-			Level:                level,
-			Granularity:          granularity,
-			Columns:              columns,
-			ClickWindowDays:      clickWindowDays,
-			EngagementWindowDays: engagementWindowDays,
-			ViewWindowDays:       viewWindowDays,
-			ConversionReportTime: conversionReportTime,
 			AttributionTypes:     attributionTypes,
-			StartDate:            startDate1,
+			ClickWindowDays:      clickWindowDays,
+			Columns:              columns,
+			ConversionReportTime: conversionReportTime,
+			EngagementWindowDays: engagementWindowDays,
+			Granularity:          granularity,
+			Level:                level,
+			Name:                 name1,
+			StartDate:            startDate,
+			ViewWindowDays:       viewWindowDays,
 		})
 	}
-	accountID := new(string)
-	if !r.Configuration.AccountID.IsUnknown() && !r.Configuration.AccountID.IsNull() {
-		*accountID = r.Configuration.AccountID.ValueString()
+	startDate1 := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate1 = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
-		accountID = nil
+		startDate1 = nil
+	}
+	var status []shared.Status = []shared.Status{}
+	for _, statusItem := range r.Configuration.Status {
+		status = append(status, shared.Status(statusItem.ValueString()))
 	}
 	configuration := shared.SourcePinterest{
-		StartDate:     startDate,
-		Status:        status,
+		AccountID:     accountID,
 		Credentials:   credentials,
 		CustomReports: customReports,
-		AccountID:     accountID,
+		StartDate:     startDate1,
+		Status:        status,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -200,15 +200,11 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	accountID := new(string)
+	if !r.Configuration.AccountID.IsUnknown() && !r.Configuration.AccountID.IsNull() {
+		*accountID = r.Configuration.AccountID.ValueString()
 	} else {
-		startDate = nil
-	}
-	var status []shared.SourcePinterestUpdateStatus = []shared.SourcePinterestUpdateStatus{}
-	for _, statusItem := range r.Configuration.Status {
-		status = append(status, shared.SourcePinterestUpdateStatus(statusItem.ValueString()))
+		accountID = nil
 	}
 	var credentials *shared.SourcePinterestUpdateOAuth20
 	if r.Configuration.Credentials != nil {
@@ -229,24 +225,9 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shar
 	}
 	var customReports []shared.SourcePinterestUpdateReportConfig = []shared.SourcePinterestUpdateReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
-		var name1 string
-		name1 = customReportsItem.Name.ValueString()
-
-		level := new(shared.SourcePinterestUpdateLevel)
-		if !customReportsItem.Level.IsUnknown() && !customReportsItem.Level.IsNull() {
-			*level = shared.SourcePinterestUpdateLevel(customReportsItem.Level.ValueString())
-		} else {
-			level = nil
-		}
-		granularity := new(shared.SourcePinterestUpdateGranularity)
-		if !customReportsItem.Granularity.IsUnknown() && !customReportsItem.Granularity.IsNull() {
-			*granularity = shared.SourcePinterestUpdateGranularity(customReportsItem.Granularity.ValueString())
-		} else {
-			granularity = nil
-		}
-		var columns []shared.SourcePinterestUpdateValidEnums = []shared.SourcePinterestUpdateValidEnums{}
-		for _, columnsItem := range customReportsItem.Columns {
-			columns = append(columns, shared.SourcePinterestUpdateValidEnums(columnsItem.ValueString()))
+		var attributionTypes []shared.SourcePinterestUpdateValidEnums = []shared.SourcePinterestUpdateValidEnums{}
+		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
+			attributionTypes = append(attributionTypes, shared.SourcePinterestUpdateValidEnums(attributionTypesItem.ValueString()))
 		}
 		clickWindowDays := new(shared.SourcePinterestUpdateClickWindowDays)
 		if !customReportsItem.ClickWindowDays.IsUnknown() && !customReportsItem.ClickWindowDays.IsNull() {
@@ -254,17 +235,9 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shar
 		} else {
 			clickWindowDays = nil
 		}
-		engagementWindowDays := new(shared.SourcePinterestUpdateEngagementWindowDays)
-		if !customReportsItem.EngagementWindowDays.IsUnknown() && !customReportsItem.EngagementWindowDays.IsNull() {
-			*engagementWindowDays = shared.SourcePinterestUpdateEngagementWindowDays(customReportsItem.EngagementWindowDays.ValueInt64())
-		} else {
-			engagementWindowDays = nil
-		}
-		viewWindowDays := new(shared.SourcePinterestUpdateViewWindowDays)
-		if !customReportsItem.ViewWindowDays.IsUnknown() && !customReportsItem.ViewWindowDays.IsNull() {
-			*viewWindowDays = shared.SourcePinterestUpdateViewWindowDays(customReportsItem.ViewWindowDays.ValueInt64())
-		} else {
-			viewWindowDays = nil
+		var columns []shared.SourcePinterestUpdateSchemasValidEnums = []shared.SourcePinterestUpdateSchemasValidEnums{}
+		for _, columnsItem := range customReportsItem.Columns {
+			columns = append(columns, shared.SourcePinterestUpdateSchemasValidEnums(columnsItem.ValueString()))
 		}
 		conversionReportTime := new(shared.SourcePinterestUpdateConversionReportTime)
 		if !customReportsItem.ConversionReportTime.IsUnknown() && !customReportsItem.ConversionReportTime.IsNull() {
@@ -272,41 +245,68 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shar
 		} else {
 			conversionReportTime = nil
 		}
-		var attributionTypes []shared.SourcePinterestUpdateSchemasValidEnums = []shared.SourcePinterestUpdateSchemasValidEnums{}
-		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
-			attributionTypes = append(attributionTypes, shared.SourcePinterestUpdateSchemasValidEnums(attributionTypesItem.ValueString()))
-		}
-		startDate1 := new(customTypes.Date)
-		if !customReportsItem.StartDate.IsUnknown() && !customReportsItem.StartDate.IsNull() {
-			startDate1 = customTypes.MustNewDateFromString(customReportsItem.StartDate.ValueString())
+		engagementWindowDays := new(shared.SourcePinterestUpdateEngagementWindowDays)
+		if !customReportsItem.EngagementWindowDays.IsUnknown() && !customReportsItem.EngagementWindowDays.IsNull() {
+			*engagementWindowDays = shared.SourcePinterestUpdateEngagementWindowDays(customReportsItem.EngagementWindowDays.ValueInt64())
 		} else {
-			startDate1 = nil
+			engagementWindowDays = nil
+		}
+		granularity := new(shared.SourcePinterestUpdateGranularity)
+		if !customReportsItem.Granularity.IsUnknown() && !customReportsItem.Granularity.IsNull() {
+			*granularity = shared.SourcePinterestUpdateGranularity(customReportsItem.Granularity.ValueString())
+		} else {
+			granularity = nil
+		}
+		level := new(shared.SourcePinterestUpdateLevel)
+		if !customReportsItem.Level.IsUnknown() && !customReportsItem.Level.IsNull() {
+			*level = shared.SourcePinterestUpdateLevel(customReportsItem.Level.ValueString())
+		} else {
+			level = nil
+		}
+		var name1 string
+		name1 = customReportsItem.Name.ValueString()
+
+		startDate := new(customTypes.Date)
+		if !customReportsItem.StartDate.IsUnknown() && !customReportsItem.StartDate.IsNull() {
+			startDate = customTypes.MustNewDateFromString(customReportsItem.StartDate.ValueString())
+		} else {
+			startDate = nil
+		}
+		viewWindowDays := new(shared.SourcePinterestUpdateViewWindowDays)
+		if !customReportsItem.ViewWindowDays.IsUnknown() && !customReportsItem.ViewWindowDays.IsNull() {
+			*viewWindowDays = shared.SourcePinterestUpdateViewWindowDays(customReportsItem.ViewWindowDays.ValueInt64())
+		} else {
+			viewWindowDays = nil
 		}
 		customReports = append(customReports, shared.SourcePinterestUpdateReportConfig{
-			Name:                 name1,
-			Level:                level,
-			Granularity:          granularity,
-			Columns:              columns,
-			ClickWindowDays:      clickWindowDays,
-			EngagementWindowDays: engagementWindowDays,
-			ViewWindowDays:       viewWindowDays,
-			ConversionReportTime: conversionReportTime,
 			AttributionTypes:     attributionTypes,
-			StartDate:            startDate1,
+			ClickWindowDays:      clickWindowDays,
+			Columns:              columns,
+			ConversionReportTime: conversionReportTime,
+			EngagementWindowDays: engagementWindowDays,
+			Granularity:          granularity,
+			Level:                level,
+			Name:                 name1,
+			StartDate:            startDate,
+			ViewWindowDays:       viewWindowDays,
 		})
 	}
-	accountID := new(string)
-	if !r.Configuration.AccountID.IsUnknown() && !r.Configuration.AccountID.IsNull() {
-		*accountID = r.Configuration.AccountID.ValueString()
+	startDate1 := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate1 = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
-		accountID = nil
+		startDate1 = nil
+	}
+	var status []shared.SourcePinterestUpdateStatus = []shared.SourcePinterestUpdateStatus{}
+	for _, statusItem := range r.Configuration.Status {
+		status = append(status, shared.SourcePinterestUpdateStatus(statusItem.ValueString()))
 	}
 	configuration := shared.SourcePinterestUpdate{
-		StartDate:     startDate,
-		Status:        status,
+		AccountID:     accountID,
 		Credentials:   credentials,
 		CustomReports: customReports,
-		AccountID:     accountID,
+		StartDate:     startDate1,
+		Status:        status,
 	}
 	out := shared.SourcePinterestPutRequest{
 		Name:          name,

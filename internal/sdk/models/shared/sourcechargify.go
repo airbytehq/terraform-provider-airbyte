@@ -36,8 +36,8 @@ type SourceChargify struct {
 	APIKey string `json:"api_key"`
 	// Chargify domain. Normally this domain follows the following format
 	Domain     string   `json:"domain"`
-	Username   string   `json:"username"`
 	Password   *string  `json:"password,omitempty"`
+	Username   string   `json:"username"`
 	sourceType Chargify `const:"chargify" json:"sourceType"`
 }
 
@@ -66,18 +66,18 @@ func (o *SourceChargify) GetDomain() string {
 	return o.Domain
 }
 
-func (o *SourceChargify) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceChargify) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceChargify) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceChargify) GetSourceType() Chargify {

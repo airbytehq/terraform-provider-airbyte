@@ -10,1026 +10,228 @@ import (
 	"time"
 )
 
-// SourceSharepointEnterpriseValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-type SourceSharepointEnterpriseValidationPolicy string
+type SourceSharepointEnterpriseSchemasAuthType string
 
 const (
-	SourceSharepointEnterpriseValidationPolicyEmitRecord      SourceSharepointEnterpriseValidationPolicy = "Emit Record"
-	SourceSharepointEnterpriseValidationPolicySkipRecord      SourceSharepointEnterpriseValidationPolicy = "Skip Record"
-	SourceSharepointEnterpriseValidationPolicyWaitForDiscover SourceSharepointEnterpriseValidationPolicy = "Wait for Discover"
+	SourceSharepointEnterpriseSchemasAuthTypeService SourceSharepointEnterpriseSchemasAuthType = "Service"
 )
 
-func (e SourceSharepointEnterpriseValidationPolicy) ToPointer() *SourceSharepointEnterpriseValidationPolicy {
+func (e SourceSharepointEnterpriseSchemasAuthType) ToPointer() *SourceSharepointEnterpriseSchemasAuthType {
 	return &e
 }
-func (e *SourceSharepointEnterpriseValidationPolicy) UnmarshalJSON(data []byte) error {
+func (e *SourceSharepointEnterpriseSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Emit Record":
-		fallthrough
-	case "Skip Record":
-		fallthrough
-	case "Wait for Discover":
-		*e = SourceSharepointEnterpriseValidationPolicy(v)
+	case "Service":
+		*e = SourceSharepointEnterpriseSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseValidationPolicy: %v", v)
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasAuthType: %v", v)
 	}
 }
 
-type SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype string
-
-const (
-	SourceSharepointEnterpriseSchemasStreamsFormatFormat6FiletypeExcel SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype = "excel"
-)
-
-func (e SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype {
-	return &e
-}
-func (e *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "excel":
-		*e = SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype: %v", v)
-	}
+// SourceSharepointEnterpriseServiceKeyAuthentication - ServiceCredentials class for service key authentication.
+// This class is structured similarly to OAuthCredentials but for a different authentication method.
+type SourceSharepointEnterpriseServiceKeyAuthentication struct {
+	authType *SourceSharepointEnterpriseSchemasAuthType `const:"Service" json:"auth_type"`
+	// Client ID of your Microsoft developer application
+	ClientID string `json:"client_id"`
+	// Client Secret of your Microsoft developer application
+	ClientSecret string `json:"client_secret"`
+	// Tenant ID of the Microsoft SharePoint user
+	TenantID string `json:"tenant_id"`
+	// Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
+	UserPrincipalName string `json:"user_principal_name"`
 }
 
-type SourceSharepointEnterpriseExcelFormat struct {
-	filetype *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype `const:"excel" json:"filetype"`
-}
-
-func (s SourceSharepointEnterpriseExcelFormat) MarshalJSON() ([]byte, error) {
+func (s SourceSharepointEnterpriseServiceKeyAuthentication) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceSharepointEnterpriseExcelFormat) UnmarshalJSON(data []byte) error {
+func (s *SourceSharepointEnterpriseServiceKeyAuthentication) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceSharepointEnterpriseExcelFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype {
-	return SourceSharepointEnterpriseSchemasStreamsFormatFormat6FiletypeExcel.ToPointer()
+func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetAuthType() *SourceSharepointEnterpriseSchemasAuthType {
+	return SourceSharepointEnterpriseSchemasAuthTypeService.ToPointer()
 }
 
-type SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype string
+func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetUserPrincipalName() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserPrincipalName
+}
+
+type SourceSharepointEnterpriseAuthType string
 
 const (
-	SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletypeUnstructured SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype = "unstructured"
+	SourceSharepointEnterpriseAuthTypeClient SourceSharepointEnterpriseAuthType = "Client"
 )
 
-func (e SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype {
+func (e SourceSharepointEnterpriseAuthType) ToPointer() *SourceSharepointEnterpriseAuthType {
 	return &e
 }
-func (e *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
+func (e *SourceSharepointEnterpriseAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "unstructured":
-		*e = SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype(v)
+	case "Client":
+		*e = SourceSharepointEnterpriseAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype: %v", v)
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseAuthType: %v", v)
 	}
 }
 
-// SourceSharepointEnterpriseParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
-type SourceSharepointEnterpriseParsingStrategy string
-
-const (
-	SourceSharepointEnterpriseParsingStrategyAuto    SourceSharepointEnterpriseParsingStrategy = "auto"
-	SourceSharepointEnterpriseParsingStrategyFast    SourceSharepointEnterpriseParsingStrategy = "fast"
-	SourceSharepointEnterpriseParsingStrategyOcrOnly SourceSharepointEnterpriseParsingStrategy = "ocr_only"
-	SourceSharepointEnterpriseParsingStrategyHiRes   SourceSharepointEnterpriseParsingStrategy = "hi_res"
-)
-
-func (e SourceSharepointEnterpriseParsingStrategy) ToPointer() *SourceSharepointEnterpriseParsingStrategy {
-	return &e
-}
-func (e *SourceSharepointEnterpriseParsingStrategy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "auto":
-		fallthrough
-	case "fast":
-		fallthrough
-	case "ocr_only":
-		fallthrough
-	case "hi_res":
-		*e = SourceSharepointEnterpriseParsingStrategy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseParsingStrategy: %v", v)
-	}
+// SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth - OAuthCredentials class to hold authentication details for Microsoft OAuth authentication.
+// This class uses pydantic for data validation and settings management.
+type SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth struct {
+	authType *SourceSharepointEnterpriseAuthType `const:"Client" json:"auth_type"`
+	// Client ID of your Microsoft developer application
+	ClientID string `json:"client_id"`
+	// Client Secret of your Microsoft developer application
+	ClientSecret string `json:"client_secret"`
+	// Refresh Token of your Microsoft developer application
+	RefreshToken *string `json:"refresh_token,omitempty"`
+	// Tenant ID of the Microsoft SharePoint user
+	TenantID string `json:"tenant_id"`
 }
 
-type SourceSharepointEnterpriseMode string
-
-const (
-	SourceSharepointEnterpriseModeLocal SourceSharepointEnterpriseMode = "local"
-)
-
-func (e SourceSharepointEnterpriseMode) ToPointer() *SourceSharepointEnterpriseMode {
-	return &e
-}
-func (e *SourceSharepointEnterpriseMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "local":
-		*e = SourceSharepointEnterpriseMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseMode: %v", v)
-	}
-}
-
-// SourceSharepointEnterpriseLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
-type SourceSharepointEnterpriseLocal struct {
-	mode *SourceSharepointEnterpriseMode `const:"local" json:"mode"`
-}
-
-func (s SourceSharepointEnterpriseLocal) MarshalJSON() ([]byte, error) {
+func (s SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceSharepointEnterpriseLocal) UnmarshalJSON(data []byte) error {
+func (s *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceSharepointEnterpriseLocal) GetMode() *SourceSharepointEnterpriseMode {
-	return SourceSharepointEnterpriseModeLocal.ToPointer()
+func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetAuthType() *SourceSharepointEnterpriseAuthType {
+	return SourceSharepointEnterpriseAuthTypeClient.ToPointer()
 }
 
-type SourceSharepointEnterpriseProcessingType string
+func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetRefreshToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+type SourceSharepointEnterpriseAuthenticationType string
 
 const (
-	SourceSharepointEnterpriseProcessingTypeSourceSharepointEnterpriseLocal SourceSharepointEnterpriseProcessingType = "source-sharepoint-enterprise_Local"
+	SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth SourceSharepointEnterpriseAuthenticationType = "source-sharepoint-enterprise_Authenticate via Microsoft (OAuth)"
+	SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseServiceKeyAuthentication      SourceSharepointEnterpriseAuthenticationType = "source-sharepoint-enterprise_Service Key Authentication"
 )
 
-// SourceSharepointEnterpriseProcessing - Processing configuration
-type SourceSharepointEnterpriseProcessing struct {
-	SourceSharepointEnterpriseLocal *SourceSharepointEnterpriseLocal `queryParam:"inline"`
+// SourceSharepointEnterpriseAuthentication - Credentials for connecting to the One Drive API
+type SourceSharepointEnterpriseAuthentication struct {
+	SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth `queryParam:"inline"`
+	SourceSharepointEnterpriseServiceKeyAuthentication      *SourceSharepointEnterpriseServiceKeyAuthentication      `queryParam:"inline"`
 
-	Type SourceSharepointEnterpriseProcessingType
+	Type SourceSharepointEnterpriseAuthenticationType
 }
 
-func CreateSourceSharepointEnterpriseProcessingSourceSharepointEnterpriseLocal(sourceSharepointEnterpriseLocal SourceSharepointEnterpriseLocal) SourceSharepointEnterpriseProcessing {
-	typ := SourceSharepointEnterpriseProcessingTypeSourceSharepointEnterpriseLocal
+func CreateSourceSharepointEnterpriseAuthenticationSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth(sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) SourceSharepointEnterpriseAuthentication {
+	typ := SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth
 
-	return SourceSharepointEnterpriseProcessing{
-		SourceSharepointEnterpriseLocal: &sourceSharepointEnterpriseLocal,
-		Type:                            typ,
-	}
-}
-
-func (u *SourceSharepointEnterpriseProcessing) UnmarshalJSON(data []byte) error {
-
-	var sourceSharepointEnterpriseLocal SourceSharepointEnterpriseLocal = SourceSharepointEnterpriseLocal{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseLocal, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseLocal = &sourceSharepointEnterpriseLocal
-		u.Type = SourceSharepointEnterpriseProcessingTypeSourceSharepointEnterpriseLocal
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseProcessing", string(data))
-}
-
-func (u SourceSharepointEnterpriseProcessing) MarshalJSON() ([]byte, error) {
-	if u.SourceSharepointEnterpriseLocal != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseLocal, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseProcessing: all fields are null")
-}
-
-// SourceSharepointEnterpriseUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type SourceSharepointEnterpriseUnstructuredDocumentFormat struct {
-	filetype *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
-	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
-	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
-	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
-	Strategy *SourceSharepointEnterpriseParsingStrategy `default:"auto" json:"strategy"`
-	// Processing configuration
-	Processing *SourceSharepointEnterpriseProcessing `json:"processing,omitempty"`
-}
-
-func (s SourceSharepointEnterpriseUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype {
-	return SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
-}
-
-func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.SkipUnprocessableFiles
-}
-
-func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetStrategy() *SourceSharepointEnterpriseParsingStrategy {
-	if o == nil {
-		return nil
-	}
-	return o.Strategy
-}
-
-func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetProcessing() *SourceSharepointEnterpriseProcessing {
-	if o == nil {
-		return nil
-	}
-	return o.Processing
-}
-
-type SourceSharepointEnterpriseSchemasStreamsFormatFiletype string
-
-const (
-	SourceSharepointEnterpriseSchemasStreamsFormatFiletypeParquet SourceSharepointEnterpriseSchemasStreamsFormatFiletype = "parquet"
-)
-
-func (e SourceSharepointEnterpriseSchemasStreamsFormatFiletype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFormatFiletype {
-	return &e
-}
-func (e *SourceSharepointEnterpriseSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "parquet":
-		*e = SourceSharepointEnterpriseSchemasStreamsFormatFiletype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFormatFiletype: %v", v)
-	}
-}
-
-type SourceSharepointEnterpriseParquetFormat struct {
-	filetype *SourceSharepointEnterpriseSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
-	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
-}
-
-func (s SourceSharepointEnterpriseParquetFormat) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseParquetFormat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseParquetFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFormatFiletype {
-	return SourceSharepointEnterpriseSchemasStreamsFormatFiletypeParquet.ToPointer()
-}
-
-func (o *SourceSharepointEnterpriseParquetFormat) GetDecimalAsFloat() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DecimalAsFloat
-}
-
-type SourceSharepointEnterpriseSchemasStreamsFiletype string
-
-const (
-	SourceSharepointEnterpriseSchemasStreamsFiletypeJsonl SourceSharepointEnterpriseSchemasStreamsFiletype = "jsonl"
-)
-
-func (e SourceSharepointEnterpriseSchemasStreamsFiletype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFiletype {
-	return &e
-}
-func (e *SourceSharepointEnterpriseSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "jsonl":
-		*e = SourceSharepointEnterpriseSchemasStreamsFiletype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFiletype: %v", v)
-	}
-}
-
-type SourceSharepointEnterpriseJsonlFormat struct {
-	filetype *SourceSharepointEnterpriseSchemasStreamsFiletype `const:"jsonl" json:"filetype"`
-}
-
-func (s SourceSharepointEnterpriseJsonlFormat) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseJsonlFormat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseJsonlFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFiletype {
-	return SourceSharepointEnterpriseSchemasStreamsFiletypeJsonl.ToPointer()
-}
-
-type SourceSharepointEnterpriseSchemasFiletype string
-
-const (
-	SourceSharepointEnterpriseSchemasFiletypeCsv SourceSharepointEnterpriseSchemasFiletype = "csv"
-)
-
-func (e SourceSharepointEnterpriseSchemasFiletype) ToPointer() *SourceSharepointEnterpriseSchemasFiletype {
-	return &e
-}
-func (e *SourceSharepointEnterpriseSchemasFiletype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "csv":
-		*e = SourceSharepointEnterpriseSchemasFiletype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasFiletype: %v", v)
-	}
-}
-
-type SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType string
-
-const (
-	SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionTypeUserProvided SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType = "User Provided"
-)
-
-func (e SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType) ToPointer() *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType {
-	return &e
-}
-func (e *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "User Provided":
-		*e = SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType: %v", v)
-	}
-}
-
-type SourceSharepointEnterpriseUserProvided struct {
-	headerDefinitionType *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
-	// The column names that will be used while emitting the CSV records
-	ColumnNames []string `json:"column_names"`
-}
-
-func (s SourceSharepointEnterpriseUserProvided) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseUserProvided) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseUserProvided) GetHeaderDefinitionType() *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType {
-	return SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
-}
-
-func (o *SourceSharepointEnterpriseUserProvided) GetColumnNames() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.ColumnNames
-}
-
-type SourceSharepointEnterpriseSchemasHeaderDefinitionType string
-
-const (
-	SourceSharepointEnterpriseSchemasHeaderDefinitionTypeAutogenerated SourceSharepointEnterpriseSchemasHeaderDefinitionType = "Autogenerated"
-)
-
-func (e SourceSharepointEnterpriseSchemasHeaderDefinitionType) ToPointer() *SourceSharepointEnterpriseSchemasHeaderDefinitionType {
-	return &e
-}
-func (e *SourceSharepointEnterpriseSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Autogenerated":
-		*e = SourceSharepointEnterpriseSchemasHeaderDefinitionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasHeaderDefinitionType: %v", v)
-	}
-}
-
-type SourceSharepointEnterpriseAutogenerated struct {
-	headerDefinitionType *SourceSharepointEnterpriseSchemasHeaderDefinitionType `const:"Autogenerated" json:"header_definition_type"`
-}
-
-func (s SourceSharepointEnterpriseAutogenerated) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseAutogenerated) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseAutogenerated) GetHeaderDefinitionType() *SourceSharepointEnterpriseSchemasHeaderDefinitionType {
-	return SourceSharepointEnterpriseSchemasHeaderDefinitionTypeAutogenerated.ToPointer()
-}
-
-type SourceSharepointEnterpriseHeaderDefinitionType string
-
-const (
-	SourceSharepointEnterpriseHeaderDefinitionTypeFromCsv SourceSharepointEnterpriseHeaderDefinitionType = "From CSV"
-)
-
-func (e SourceSharepointEnterpriseHeaderDefinitionType) ToPointer() *SourceSharepointEnterpriseHeaderDefinitionType {
-	return &e
-}
-func (e *SourceSharepointEnterpriseHeaderDefinitionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "From CSV":
-		*e = SourceSharepointEnterpriseHeaderDefinitionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseHeaderDefinitionType: %v", v)
-	}
-}
-
-type SourceSharepointEnterpriseFromCSV struct {
-	headerDefinitionType *SourceSharepointEnterpriseHeaderDefinitionType `const:"From CSV" json:"header_definition_type"`
-}
-
-func (s SourceSharepointEnterpriseFromCSV) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseFromCSV) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseFromCSV) GetHeaderDefinitionType() *SourceSharepointEnterpriseHeaderDefinitionType {
-	return SourceSharepointEnterpriseHeaderDefinitionTypeFromCsv.ToPointer()
-}
-
-type SourceSharepointEnterpriseCSVHeaderDefinitionType string
-
-const (
-	SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseFromCSV       SourceSharepointEnterpriseCSVHeaderDefinitionType = "source-sharepoint-enterprise_From CSV"
-	SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseAutogenerated SourceSharepointEnterpriseCSVHeaderDefinitionType = "source-sharepoint-enterprise_Autogenerated"
-	SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseUserProvided  SourceSharepointEnterpriseCSVHeaderDefinitionType = "source-sharepoint-enterprise_User Provided"
-)
-
-// SourceSharepointEnterpriseCSVHeaderDefinition - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
-type SourceSharepointEnterpriseCSVHeaderDefinition struct {
-	SourceSharepointEnterpriseFromCSV       *SourceSharepointEnterpriseFromCSV       `queryParam:"inline"`
-	SourceSharepointEnterpriseAutogenerated *SourceSharepointEnterpriseAutogenerated `queryParam:"inline"`
-	SourceSharepointEnterpriseUserProvided  *SourceSharepointEnterpriseUserProvided  `queryParam:"inline"`
-
-	Type SourceSharepointEnterpriseCSVHeaderDefinitionType
-}
-
-func CreateSourceSharepointEnterpriseCSVHeaderDefinitionSourceSharepointEnterpriseFromCSV(sourceSharepointEnterpriseFromCSV SourceSharepointEnterpriseFromCSV) SourceSharepointEnterpriseCSVHeaderDefinition {
-	typ := SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseFromCSV
-
-	return SourceSharepointEnterpriseCSVHeaderDefinition{
-		SourceSharepointEnterpriseFromCSV: &sourceSharepointEnterpriseFromCSV,
-		Type:                              typ,
-	}
-}
-
-func CreateSourceSharepointEnterpriseCSVHeaderDefinitionSourceSharepointEnterpriseAutogenerated(sourceSharepointEnterpriseAutogenerated SourceSharepointEnterpriseAutogenerated) SourceSharepointEnterpriseCSVHeaderDefinition {
-	typ := SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseAutogenerated
-
-	return SourceSharepointEnterpriseCSVHeaderDefinition{
-		SourceSharepointEnterpriseAutogenerated: &sourceSharepointEnterpriseAutogenerated,
-		Type:                                    typ,
-	}
-}
-
-func CreateSourceSharepointEnterpriseCSVHeaderDefinitionSourceSharepointEnterpriseUserProvided(sourceSharepointEnterpriseUserProvided SourceSharepointEnterpriseUserProvided) SourceSharepointEnterpriseCSVHeaderDefinition {
-	typ := SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseUserProvided
-
-	return SourceSharepointEnterpriseCSVHeaderDefinition{
-		SourceSharepointEnterpriseUserProvided: &sourceSharepointEnterpriseUserProvided,
-		Type:                                   typ,
-	}
-}
-
-func (u *SourceSharepointEnterpriseCSVHeaderDefinition) UnmarshalJSON(data []byte) error {
-
-	var sourceSharepointEnterpriseFromCSV SourceSharepointEnterpriseFromCSV = SourceSharepointEnterpriseFromCSV{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseFromCSV, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseFromCSV = &sourceSharepointEnterpriseFromCSV
-		u.Type = SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseFromCSV
-		return nil
-	}
-
-	var sourceSharepointEnterpriseAutogenerated SourceSharepointEnterpriseAutogenerated = SourceSharepointEnterpriseAutogenerated{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseAutogenerated, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseAutogenerated = &sourceSharepointEnterpriseAutogenerated
-		u.Type = SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseAutogenerated
-		return nil
-	}
-
-	var sourceSharepointEnterpriseUserProvided SourceSharepointEnterpriseUserProvided = SourceSharepointEnterpriseUserProvided{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseUserProvided, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseUserProvided = &sourceSharepointEnterpriseUserProvided
-		u.Type = SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseUserProvided
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseCSVHeaderDefinition", string(data))
-}
-
-func (u SourceSharepointEnterpriseCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
-	if u.SourceSharepointEnterpriseFromCSV != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseFromCSV, "", true)
-	}
-
-	if u.SourceSharepointEnterpriseAutogenerated != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseAutogenerated, "", true)
-	}
-
-	if u.SourceSharepointEnterpriseUserProvided != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseUserProvided, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseCSVHeaderDefinition: all fields are null")
-}
-
-type SourceSharepointEnterpriseCSVFormat struct {
-	filetype *SourceSharepointEnterpriseSchemasFiletype `const:"csv" json:"filetype"`
-	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-	Delimiter *string `default:"," json:"delimiter"`
-	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:"\"" json:"quote_char"`
-	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string `json:"escape_char,omitempty"`
-	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-	Encoding *string `default:"utf8" json:"encoding"`
-	// Whether two quotes in a quoted CSV value denote a single quote in the data.
-	DoubleQuote *bool `default:"true" json:"double_quote"`
-	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-	NullValues []string `json:"null_values,omitempty"`
-	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
-	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
-	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
-	// The number of rows to skip after the header row.
-	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
-	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
-	HeaderDefinition *SourceSharepointEnterpriseCSVHeaderDefinition `json:"header_definition,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as true values.
-	TrueValues []string `json:"true_values,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string `json:"false_values,omitempty"`
-	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
-	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
-}
-
-func (s SourceSharepointEnterpriseCSVFormat) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseCSVFormat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetFiletype() *SourceSharepointEnterpriseSchemasFiletype {
-	return SourceSharepointEnterpriseSchemasFiletypeCsv.ToPointer()
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetDelimiter() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Delimiter
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetQuoteChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuoteChar
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetEscapeChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EscapeChar
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetEncoding() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Encoding
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetDoubleQuote() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DoubleQuote
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetNullValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.NullValues
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetStringsCanBeNull() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.StringsCanBeNull
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetSkipRowsBeforeHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsBeforeHeader
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetSkipRowsAfterHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsAfterHeader
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetHeaderDefinition() *SourceSharepointEnterpriseCSVHeaderDefinition {
-	if o == nil {
-		return nil
-	}
-	return o.HeaderDefinition
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetTrueValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TrueValues
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetFalseValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.FalseValues
-}
-
-func (o *SourceSharepointEnterpriseCSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IgnoreErrorsOnFieldsMismatch
-}
-
-type SourceSharepointEnterpriseFiletype string
-
-const (
-	SourceSharepointEnterpriseFiletypeAvro SourceSharepointEnterpriseFiletype = "avro"
-)
-
-func (e SourceSharepointEnterpriseFiletype) ToPointer() *SourceSharepointEnterpriseFiletype {
-	return &e
-}
-func (e *SourceSharepointEnterpriseFiletype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "avro":
-		*e = SourceSharepointEnterpriseFiletype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseFiletype: %v", v)
-	}
-}
-
-type SourceSharepointEnterpriseAvroFormat struct {
-	filetype *SourceSharepointEnterpriseFiletype `const:"avro" json:"filetype"`
-	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool `default:"false" json:"double_as_string"`
-}
-
-func (s SourceSharepointEnterpriseAvroFormat) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseAvroFormat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseAvroFormat) GetFiletype() *SourceSharepointEnterpriseFiletype {
-	return SourceSharepointEnterpriseFiletypeAvro.ToPointer()
-}
-
-func (o *SourceSharepointEnterpriseAvroFormat) GetDoubleAsString() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DoubleAsString
-}
-
-type SourceSharepointEnterpriseFormatType string
-
-const (
-	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseAvroFormat                 SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Avro Format"
-	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseCSVFormat                  SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_CSV Format"
-	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseJsonlFormat                SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Jsonl Format"
-	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseParquetFormat              SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Parquet Format"
-	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseUnstructuredDocumentFormat SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Unstructured Document Format"
-	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseExcelFormat                SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Excel Format"
-)
-
-// SourceSharepointEnterpriseFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
-type SourceSharepointEnterpriseFormat struct {
-	SourceSharepointEnterpriseAvroFormat                 *SourceSharepointEnterpriseAvroFormat                 `queryParam:"inline"`
-	SourceSharepointEnterpriseCSVFormat                  *SourceSharepointEnterpriseCSVFormat                  `queryParam:"inline"`
-	SourceSharepointEnterpriseJsonlFormat                *SourceSharepointEnterpriseJsonlFormat                `queryParam:"inline"`
-	SourceSharepointEnterpriseParquetFormat              *SourceSharepointEnterpriseParquetFormat              `queryParam:"inline"`
-	SourceSharepointEnterpriseUnstructuredDocumentFormat *SourceSharepointEnterpriseUnstructuredDocumentFormat `queryParam:"inline"`
-	SourceSharepointEnterpriseExcelFormat                *SourceSharepointEnterpriseExcelFormat                `queryParam:"inline"`
-
-	Type SourceSharepointEnterpriseFormatType
-}
-
-func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseAvroFormat(sourceSharepointEnterpriseAvroFormat SourceSharepointEnterpriseAvroFormat) SourceSharepointEnterpriseFormat {
-	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseAvroFormat
-
-	return SourceSharepointEnterpriseFormat{
-		SourceSharepointEnterpriseAvroFormat: &sourceSharepointEnterpriseAvroFormat,
-		Type:                                 typ,
-	}
-}
-
-func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseCSVFormat(sourceSharepointEnterpriseCSVFormat SourceSharepointEnterpriseCSVFormat) SourceSharepointEnterpriseFormat {
-	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseCSVFormat
-
-	return SourceSharepointEnterpriseFormat{
-		SourceSharepointEnterpriseCSVFormat: &sourceSharepointEnterpriseCSVFormat,
-		Type:                                typ,
-	}
-}
-
-func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseJsonlFormat(sourceSharepointEnterpriseJsonlFormat SourceSharepointEnterpriseJsonlFormat) SourceSharepointEnterpriseFormat {
-	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseJsonlFormat
-
-	return SourceSharepointEnterpriseFormat{
-		SourceSharepointEnterpriseJsonlFormat: &sourceSharepointEnterpriseJsonlFormat,
-		Type:                                  typ,
-	}
-}
-
-func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseParquetFormat(sourceSharepointEnterpriseParquetFormat SourceSharepointEnterpriseParquetFormat) SourceSharepointEnterpriseFormat {
-	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseParquetFormat
-
-	return SourceSharepointEnterpriseFormat{
-		SourceSharepointEnterpriseParquetFormat: &sourceSharepointEnterpriseParquetFormat,
-		Type:                                    typ,
-	}
-}
-
-func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseUnstructuredDocumentFormat(sourceSharepointEnterpriseUnstructuredDocumentFormat SourceSharepointEnterpriseUnstructuredDocumentFormat) SourceSharepointEnterpriseFormat {
-	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseUnstructuredDocumentFormat
-
-	return SourceSharepointEnterpriseFormat{
-		SourceSharepointEnterpriseUnstructuredDocumentFormat: &sourceSharepointEnterpriseUnstructuredDocumentFormat,
+	return SourceSharepointEnterpriseAuthentication{
+		SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth: &sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth,
 		Type: typ,
 	}
 }
 
-func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseExcelFormat(sourceSharepointEnterpriseExcelFormat SourceSharepointEnterpriseExcelFormat) SourceSharepointEnterpriseFormat {
-	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseExcelFormat
+func CreateSourceSharepointEnterpriseAuthenticationSourceSharepointEnterpriseServiceKeyAuthentication(sourceSharepointEnterpriseServiceKeyAuthentication SourceSharepointEnterpriseServiceKeyAuthentication) SourceSharepointEnterpriseAuthentication {
+	typ := SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseServiceKeyAuthentication
 
-	return SourceSharepointEnterpriseFormat{
-		SourceSharepointEnterpriseExcelFormat: &sourceSharepointEnterpriseExcelFormat,
-		Type:                                  typ,
+	return SourceSharepointEnterpriseAuthentication{
+		SourceSharepointEnterpriseServiceKeyAuthentication: &sourceSharepointEnterpriseServiceKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func (u *SourceSharepointEnterpriseFormat) UnmarshalJSON(data []byte) error {
+func (u *SourceSharepointEnterpriseAuthentication) UnmarshalJSON(data []byte) error {
 
-	var sourceSharepointEnterpriseJsonlFormat SourceSharepointEnterpriseJsonlFormat = SourceSharepointEnterpriseJsonlFormat{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseJsonlFormat, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseJsonlFormat = &sourceSharepointEnterpriseJsonlFormat
-		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseJsonlFormat
+	var sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth = SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth = &sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth
+		u.Type = SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth
 		return nil
 	}
 
-	var sourceSharepointEnterpriseExcelFormat SourceSharepointEnterpriseExcelFormat = SourceSharepointEnterpriseExcelFormat{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseExcelFormat, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseExcelFormat = &sourceSharepointEnterpriseExcelFormat
-		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseExcelFormat
+	var sourceSharepointEnterpriseServiceKeyAuthentication SourceSharepointEnterpriseServiceKeyAuthentication = SourceSharepointEnterpriseServiceKeyAuthentication{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseServiceKeyAuthentication, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseServiceKeyAuthentication = &sourceSharepointEnterpriseServiceKeyAuthentication
+		u.Type = SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseServiceKeyAuthentication
 		return nil
 	}
 
-	var sourceSharepointEnterpriseAvroFormat SourceSharepointEnterpriseAvroFormat = SourceSharepointEnterpriseAvroFormat{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseAvroFormat, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseAvroFormat = &sourceSharepointEnterpriseAvroFormat
-		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseAvroFormat
-		return nil
-	}
-
-	var sourceSharepointEnterpriseParquetFormat SourceSharepointEnterpriseParquetFormat = SourceSharepointEnterpriseParquetFormat{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseParquetFormat, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseParquetFormat = &sourceSharepointEnterpriseParquetFormat
-		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseParquetFormat
-		return nil
-	}
-
-	var sourceSharepointEnterpriseUnstructuredDocumentFormat SourceSharepointEnterpriseUnstructuredDocumentFormat = SourceSharepointEnterpriseUnstructuredDocumentFormat{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseUnstructuredDocumentFormat, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseUnstructuredDocumentFormat = &sourceSharepointEnterpriseUnstructuredDocumentFormat
-		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseUnstructuredDocumentFormat
-		return nil
-	}
-
-	var sourceSharepointEnterpriseCSVFormat SourceSharepointEnterpriseCSVFormat = SourceSharepointEnterpriseCSVFormat{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseCSVFormat, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseCSVFormat = &sourceSharepointEnterpriseCSVFormat
-		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseCSVFormat
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseFormat", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseAuthentication", string(data))
 }
 
-func (u SourceSharepointEnterpriseFormat) MarshalJSON() ([]byte, error) {
-	if u.SourceSharepointEnterpriseAvroFormat != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseAvroFormat, "", true)
+func (u SourceSharepointEnterpriseAuthentication) MarshalJSON() ([]byte, error) {
+	if u.SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth, "", true)
 	}
 
-	if u.SourceSharepointEnterpriseCSVFormat != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseCSVFormat, "", true)
+	if u.SourceSharepointEnterpriseServiceKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseServiceKeyAuthentication, "", true)
 	}
 
-	if u.SourceSharepointEnterpriseJsonlFormat != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseJsonlFormat, "", true)
-	}
-
-	if u.SourceSharepointEnterpriseParquetFormat != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseParquetFormat, "", true)
-	}
-
-	if u.SourceSharepointEnterpriseUnstructuredDocumentFormat != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseUnstructuredDocumentFormat, "", true)
-	}
-
-	if u.SourceSharepointEnterpriseExcelFormat != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseExcelFormat, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseFormat: all fields are null")
-}
-
-type SourceSharepointEnterpriseFileBasedStreamConfig struct {
-	// The name of the stream.
-	Name string `json:"name"`
-	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
-	Globs []string `json:"globs,omitempty"`
-	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-	ValidationPolicy *SourceSharepointEnterpriseValidationPolicy `default:"Emit Record" json:"validation_policy"`
-	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-	InputSchema *string `json:"input_schema,omitempty"`
-	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
-	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
-	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
-	Format SourceSharepointEnterpriseFormat `json:"format"`
-	// When enabled, syncs will not validate or structure records against the stream's schema.
-	Schemaless *bool `default:"false" json:"schemaless"`
-	// The number of resent files which will be used to discover the schema for this stream.
-	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
-}
-
-func (s SourceSharepointEnterpriseFileBasedStreamConfig) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseFileBasedStreamConfig) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetGlobs() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Globs
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetValidationPolicy() *SourceSharepointEnterpriseValidationPolicy {
-	if o == nil {
-		return nil
-	}
-	return o.ValidationPolicy
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetInputSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InputSchema
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DaysToSyncIfHistoryIsFull
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetFormat() SourceSharepointEnterpriseFormat {
-	if o == nil {
-		return SourceSharepointEnterpriseFormat{}
-	}
-	return o.Format
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetSchemaless() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Schemaless
-}
-
-func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.RecentNFilesToReadForSchemaDiscovery
+	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseAuthentication: all fields are null")
 }
 
 type SourceSharepointEnterpriseSchemasDeliveryMethodDeliveryType string
@@ -1264,230 +466,6 @@ func (u SourceSharepointEnterpriseDeliveryMethod) MarshalJSON() ([]byte, error) 
 	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseDeliveryMethod: all fields are null")
 }
 
-type SourceSharepointEnterpriseSchemasAuthType string
-
-const (
-	SourceSharepointEnterpriseSchemasAuthTypeService SourceSharepointEnterpriseSchemasAuthType = "Service"
-)
-
-func (e SourceSharepointEnterpriseSchemasAuthType) ToPointer() *SourceSharepointEnterpriseSchemasAuthType {
-	return &e
-}
-func (e *SourceSharepointEnterpriseSchemasAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Service":
-		*e = SourceSharepointEnterpriseSchemasAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasAuthType: %v", v)
-	}
-}
-
-// SourceSharepointEnterpriseServiceKeyAuthentication - ServiceCredentials class for service key authentication.
-// This class is structured similarly to OAuthCredentials but for a different authentication method.
-type SourceSharepointEnterpriseServiceKeyAuthentication struct {
-	authType *SourceSharepointEnterpriseSchemasAuthType `const:"Service" json:"auth_type"`
-	// Tenant ID of the Microsoft SharePoint user
-	TenantID string `json:"tenant_id"`
-	// Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
-	UserPrincipalName string `json:"user_principal_name"`
-	// Client ID of your Microsoft developer application
-	ClientID string `json:"client_id"`
-	// Client Secret of your Microsoft developer application
-	ClientSecret string `json:"client_secret"`
-}
-
-func (s SourceSharepointEnterpriseServiceKeyAuthentication) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseServiceKeyAuthentication) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetAuthType() *SourceSharepointEnterpriseSchemasAuthType {
-	return SourceSharepointEnterpriseSchemasAuthTypeService.ToPointer()
-}
-
-func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
-func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetUserPrincipalName() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserPrincipalName
-}
-
-func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *SourceSharepointEnterpriseServiceKeyAuthentication) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-type SourceSharepointEnterpriseAuthType string
-
-const (
-	SourceSharepointEnterpriseAuthTypeClient SourceSharepointEnterpriseAuthType = "Client"
-)
-
-func (e SourceSharepointEnterpriseAuthType) ToPointer() *SourceSharepointEnterpriseAuthType {
-	return &e
-}
-func (e *SourceSharepointEnterpriseAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Client":
-		*e = SourceSharepointEnterpriseAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSharepointEnterpriseAuthType: %v", v)
-	}
-}
-
-// SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth - OAuthCredentials class to hold authentication details for Microsoft OAuth authentication.
-// This class uses pydantic for data validation and settings management.
-type SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth struct {
-	authType *SourceSharepointEnterpriseAuthType `const:"Client" json:"auth_type"`
-	// Tenant ID of the Microsoft SharePoint user
-	TenantID string `json:"tenant_id"`
-	// Client ID of your Microsoft developer application
-	ClientID string `json:"client_id"`
-	// Client Secret of your Microsoft developer application
-	ClientSecret string `json:"client_secret"`
-	// Refresh Token of your Microsoft developer application
-	RefreshToken *string `json:"refresh_token,omitempty"`
-}
-
-func (s SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetAuthType() *SourceSharepointEnterpriseAuthType {
-	return SourceSharepointEnterpriseAuthTypeClient.ToPointer()
-}
-
-func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
-func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-func (o *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) GetRefreshToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RefreshToken
-}
-
-type SourceSharepointEnterpriseAuthenticationType string
-
-const (
-	SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth SourceSharepointEnterpriseAuthenticationType = "source-sharepoint-enterprise_Authenticate via Microsoft (OAuth)"
-	SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseServiceKeyAuthentication      SourceSharepointEnterpriseAuthenticationType = "source-sharepoint-enterprise_Service Key Authentication"
-)
-
-// SourceSharepointEnterpriseAuthentication - Credentials for connecting to the One Drive API
-type SourceSharepointEnterpriseAuthentication struct {
-	SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth *SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth `queryParam:"inline"`
-	SourceSharepointEnterpriseServiceKeyAuthentication      *SourceSharepointEnterpriseServiceKeyAuthentication      `queryParam:"inline"`
-
-	Type SourceSharepointEnterpriseAuthenticationType
-}
-
-func CreateSourceSharepointEnterpriseAuthenticationSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth(sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth) SourceSharepointEnterpriseAuthentication {
-	typ := SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth
-
-	return SourceSharepointEnterpriseAuthentication{
-		SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth: &sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth,
-		Type: typ,
-	}
-}
-
-func CreateSourceSharepointEnterpriseAuthenticationSourceSharepointEnterpriseServiceKeyAuthentication(sourceSharepointEnterpriseServiceKeyAuthentication SourceSharepointEnterpriseServiceKeyAuthentication) SourceSharepointEnterpriseAuthentication {
-	typ := SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseServiceKeyAuthentication
-
-	return SourceSharepointEnterpriseAuthentication{
-		SourceSharepointEnterpriseServiceKeyAuthentication: &sourceSharepointEnterpriseServiceKeyAuthentication,
-		Type: typ,
-	}
-}
-
-func (u *SourceSharepointEnterpriseAuthentication) UnmarshalJSON(data []byte) error {
-
-	var sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth = SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth = &sourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth
-		u.Type = SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth
-		return nil
-	}
-
-	var sourceSharepointEnterpriseServiceKeyAuthentication SourceSharepointEnterpriseServiceKeyAuthentication = SourceSharepointEnterpriseServiceKeyAuthentication{}
-	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseServiceKeyAuthentication, "", true, true); err == nil {
-		u.SourceSharepointEnterpriseServiceKeyAuthentication = &sourceSharepointEnterpriseServiceKeyAuthentication
-		u.Type = SourceSharepointEnterpriseAuthenticationTypeSourceSharepointEnterpriseServiceKeyAuthentication
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseAuthentication", string(data))
-}
-
-func (u SourceSharepointEnterpriseAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseAuthenticateViaMicrosoftOAuth, "", true)
-	}
-
-	if u.SourceSharepointEnterpriseServiceKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SourceSharepointEnterpriseServiceKeyAuthentication, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseAuthentication: all fields are null")
-}
-
 // SourceSharepointEnterpriseSearchScope - Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
 type SourceSharepointEnterpriseSearchScope string
 
@@ -1518,6 +496,1028 @@ func (e *SourceSharepointEnterpriseSearchScope) UnmarshalJSON(data []byte) error
 	}
 }
 
+type SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype string
+
+const (
+	SourceSharepointEnterpriseSchemasStreamsFormatFormat6FiletypeExcel SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype = "excel"
+)
+
+func (e SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype {
+	return &e
+}
+func (e *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "excel":
+		*e = SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseExcelFormat struct {
+	filetype *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype `const:"excel" json:"filetype"`
+}
+
+func (s SourceSharepointEnterpriseExcelFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseExcelFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseExcelFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFormatFormat6Filetype {
+	return SourceSharepointEnterpriseSchemasStreamsFormatFormat6FiletypeExcel.ToPointer()
+}
+
+type SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype string
+
+const (
+	SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletypeUnstructured SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype = "unstructured"
+)
+
+func (e SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype {
+	return &e
+}
+func (e *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "unstructured":
+		*e = SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseMode string
+
+const (
+	SourceSharepointEnterpriseModeLocal SourceSharepointEnterpriseMode = "local"
+)
+
+func (e SourceSharepointEnterpriseMode) ToPointer() *SourceSharepointEnterpriseMode {
+	return &e
+}
+func (e *SourceSharepointEnterpriseMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "local":
+		*e = SourceSharepointEnterpriseMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseMode: %v", v)
+	}
+}
+
+// SourceSharepointEnterpriseLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
+type SourceSharepointEnterpriseLocal struct {
+	mode *SourceSharepointEnterpriseMode `const:"local" json:"mode"`
+}
+
+func (s SourceSharepointEnterpriseLocal) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseLocal) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseLocal) GetMode() *SourceSharepointEnterpriseMode {
+	return SourceSharepointEnterpriseModeLocal.ToPointer()
+}
+
+type SourceSharepointEnterpriseProcessingType string
+
+const (
+	SourceSharepointEnterpriseProcessingTypeSourceSharepointEnterpriseLocal SourceSharepointEnterpriseProcessingType = "source-sharepoint-enterprise_Local"
+)
+
+// SourceSharepointEnterpriseProcessing - Processing configuration
+type SourceSharepointEnterpriseProcessing struct {
+	SourceSharepointEnterpriseLocal *SourceSharepointEnterpriseLocal `queryParam:"inline"`
+
+	Type SourceSharepointEnterpriseProcessingType
+}
+
+func CreateSourceSharepointEnterpriseProcessingSourceSharepointEnterpriseLocal(sourceSharepointEnterpriseLocal SourceSharepointEnterpriseLocal) SourceSharepointEnterpriseProcessing {
+	typ := SourceSharepointEnterpriseProcessingTypeSourceSharepointEnterpriseLocal
+
+	return SourceSharepointEnterpriseProcessing{
+		SourceSharepointEnterpriseLocal: &sourceSharepointEnterpriseLocal,
+		Type:                            typ,
+	}
+}
+
+func (u *SourceSharepointEnterpriseProcessing) UnmarshalJSON(data []byte) error {
+
+	var sourceSharepointEnterpriseLocal SourceSharepointEnterpriseLocal = SourceSharepointEnterpriseLocal{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseLocal, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseLocal = &sourceSharepointEnterpriseLocal
+		u.Type = SourceSharepointEnterpriseProcessingTypeSourceSharepointEnterpriseLocal
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseProcessing", string(data))
+}
+
+func (u SourceSharepointEnterpriseProcessing) MarshalJSON() ([]byte, error) {
+	if u.SourceSharepointEnterpriseLocal != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseLocal, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseProcessing: all fields are null")
+}
+
+// SourceSharepointEnterpriseParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceSharepointEnterpriseParsingStrategy string
+
+const (
+	SourceSharepointEnterpriseParsingStrategyAuto    SourceSharepointEnterpriseParsingStrategy = "auto"
+	SourceSharepointEnterpriseParsingStrategyFast    SourceSharepointEnterpriseParsingStrategy = "fast"
+	SourceSharepointEnterpriseParsingStrategyOcrOnly SourceSharepointEnterpriseParsingStrategy = "ocr_only"
+	SourceSharepointEnterpriseParsingStrategyHiRes   SourceSharepointEnterpriseParsingStrategy = "hi_res"
+)
+
+func (e SourceSharepointEnterpriseParsingStrategy) ToPointer() *SourceSharepointEnterpriseParsingStrategy {
+	return &e
+}
+func (e *SourceSharepointEnterpriseParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceSharepointEnterpriseParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseParsingStrategy: %v", v)
+	}
+}
+
+// SourceSharepointEnterpriseUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceSharepointEnterpriseUnstructuredDocumentFormat struct {
+	filetype *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
+	// Processing configuration
+	Processing *SourceSharepointEnterpriseProcessing `json:"processing,omitempty"`
+	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
+	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
+	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+	Strategy *SourceSharepointEnterpriseParsingStrategy `default:"auto" json:"strategy"`
+}
+
+func (s SourceSharepointEnterpriseUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletype {
+	return SourceSharepointEnterpriseSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
+}
+
+func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetProcessing() *SourceSharepointEnterpriseProcessing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
+func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipUnprocessableFiles
+}
+
+func (o *SourceSharepointEnterpriseUnstructuredDocumentFormat) GetStrategy() *SourceSharepointEnterpriseParsingStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.Strategy
+}
+
+type SourceSharepointEnterpriseSchemasStreamsFormatFiletype string
+
+const (
+	SourceSharepointEnterpriseSchemasStreamsFormatFiletypeParquet SourceSharepointEnterpriseSchemasStreamsFormatFiletype = "parquet"
+)
+
+func (e SourceSharepointEnterpriseSchemasStreamsFormatFiletype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFormatFiletype {
+	return &e
+}
+func (e *SourceSharepointEnterpriseSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "parquet":
+		*e = SourceSharepointEnterpriseSchemasStreamsFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFormatFiletype: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseParquetFormat struct {
+	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
+	DecimalAsFloat *bool                                                   `default:"false" json:"decimal_as_float"`
+	filetype       *SourceSharepointEnterpriseSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
+}
+
+func (s SourceSharepointEnterpriseParquetFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseParquetFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseParquetFormat) GetDecimalAsFloat() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DecimalAsFloat
+}
+
+func (o *SourceSharepointEnterpriseParquetFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFormatFiletype {
+	return SourceSharepointEnterpriseSchemasStreamsFormatFiletypeParquet.ToPointer()
+}
+
+type SourceSharepointEnterpriseSchemasStreamsFiletype string
+
+const (
+	SourceSharepointEnterpriseSchemasStreamsFiletypeJsonl SourceSharepointEnterpriseSchemasStreamsFiletype = "jsonl"
+)
+
+func (e SourceSharepointEnterpriseSchemasStreamsFiletype) ToPointer() *SourceSharepointEnterpriseSchemasStreamsFiletype {
+	return &e
+}
+func (e *SourceSharepointEnterpriseSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "jsonl":
+		*e = SourceSharepointEnterpriseSchemasStreamsFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsFiletype: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseJsonlFormat struct {
+	filetype *SourceSharepointEnterpriseSchemasStreamsFiletype `const:"jsonl" json:"filetype"`
+}
+
+func (s SourceSharepointEnterpriseJsonlFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseJsonlFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseJsonlFormat) GetFiletype() *SourceSharepointEnterpriseSchemasStreamsFiletype {
+	return SourceSharepointEnterpriseSchemasStreamsFiletypeJsonl.ToPointer()
+}
+
+type SourceSharepointEnterpriseSchemasFiletype string
+
+const (
+	SourceSharepointEnterpriseSchemasFiletypeCsv SourceSharepointEnterpriseSchemasFiletype = "csv"
+)
+
+func (e SourceSharepointEnterpriseSchemasFiletype) ToPointer() *SourceSharepointEnterpriseSchemasFiletype {
+	return &e
+}
+func (e *SourceSharepointEnterpriseSchemasFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "csv":
+		*e = SourceSharepointEnterpriseSchemasFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasFiletype: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType string
+
+const (
+	SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionTypeUserProvided SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType = "User Provided"
+)
+
+func (e SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType) ToPointer() *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType {
+	return &e
+}
+func (e *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "User Provided":
+		*e = SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseUserProvided struct {
+	// The column names that will be used while emitting the CSV records
+	ColumnNames          []string                                                      `json:"column_names"`
+	headerDefinitionType *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
+}
+
+func (s SourceSharepointEnterpriseUserProvided) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseUserProvided) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseUserProvided) GetColumnNames() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.ColumnNames
+}
+
+func (o *SourceSharepointEnterpriseUserProvided) GetHeaderDefinitionType() *SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionType {
+	return SourceSharepointEnterpriseSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
+}
+
+type SourceSharepointEnterpriseSchemasHeaderDefinitionType string
+
+const (
+	SourceSharepointEnterpriseSchemasHeaderDefinitionTypeAutogenerated SourceSharepointEnterpriseSchemasHeaderDefinitionType = "Autogenerated"
+)
+
+func (e SourceSharepointEnterpriseSchemasHeaderDefinitionType) ToPointer() *SourceSharepointEnterpriseSchemasHeaderDefinitionType {
+	return &e
+}
+func (e *SourceSharepointEnterpriseSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Autogenerated":
+		*e = SourceSharepointEnterpriseSchemasHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseSchemasHeaderDefinitionType: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseAutogenerated struct {
+	headerDefinitionType *SourceSharepointEnterpriseSchemasHeaderDefinitionType `const:"Autogenerated" json:"header_definition_type"`
+}
+
+func (s SourceSharepointEnterpriseAutogenerated) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseAutogenerated) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseAutogenerated) GetHeaderDefinitionType() *SourceSharepointEnterpriseSchemasHeaderDefinitionType {
+	return SourceSharepointEnterpriseSchemasHeaderDefinitionTypeAutogenerated.ToPointer()
+}
+
+type SourceSharepointEnterpriseHeaderDefinitionType string
+
+const (
+	SourceSharepointEnterpriseHeaderDefinitionTypeFromCsv SourceSharepointEnterpriseHeaderDefinitionType = "From CSV"
+)
+
+func (e SourceSharepointEnterpriseHeaderDefinitionType) ToPointer() *SourceSharepointEnterpriseHeaderDefinitionType {
+	return &e
+}
+func (e *SourceSharepointEnterpriseHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "From CSV":
+		*e = SourceSharepointEnterpriseHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseHeaderDefinitionType: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseFromCSV struct {
+	headerDefinitionType *SourceSharepointEnterpriseHeaderDefinitionType `const:"From CSV" json:"header_definition_type"`
+}
+
+func (s SourceSharepointEnterpriseFromCSV) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseFromCSV) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseFromCSV) GetHeaderDefinitionType() *SourceSharepointEnterpriseHeaderDefinitionType {
+	return SourceSharepointEnterpriseHeaderDefinitionTypeFromCsv.ToPointer()
+}
+
+type SourceSharepointEnterpriseCSVHeaderDefinitionType string
+
+const (
+	SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseFromCSV       SourceSharepointEnterpriseCSVHeaderDefinitionType = "source-sharepoint-enterprise_From CSV"
+	SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseAutogenerated SourceSharepointEnterpriseCSVHeaderDefinitionType = "source-sharepoint-enterprise_Autogenerated"
+	SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseUserProvided  SourceSharepointEnterpriseCSVHeaderDefinitionType = "source-sharepoint-enterprise_User Provided"
+)
+
+// SourceSharepointEnterpriseCSVHeaderDefinition - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+type SourceSharepointEnterpriseCSVHeaderDefinition struct {
+	SourceSharepointEnterpriseFromCSV       *SourceSharepointEnterpriseFromCSV       `queryParam:"inline"`
+	SourceSharepointEnterpriseAutogenerated *SourceSharepointEnterpriseAutogenerated `queryParam:"inline"`
+	SourceSharepointEnterpriseUserProvided  *SourceSharepointEnterpriseUserProvided  `queryParam:"inline"`
+
+	Type SourceSharepointEnterpriseCSVHeaderDefinitionType
+}
+
+func CreateSourceSharepointEnterpriseCSVHeaderDefinitionSourceSharepointEnterpriseFromCSV(sourceSharepointEnterpriseFromCSV SourceSharepointEnterpriseFromCSV) SourceSharepointEnterpriseCSVHeaderDefinition {
+	typ := SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseFromCSV
+
+	return SourceSharepointEnterpriseCSVHeaderDefinition{
+		SourceSharepointEnterpriseFromCSV: &sourceSharepointEnterpriseFromCSV,
+		Type:                              typ,
+	}
+}
+
+func CreateSourceSharepointEnterpriseCSVHeaderDefinitionSourceSharepointEnterpriseAutogenerated(sourceSharepointEnterpriseAutogenerated SourceSharepointEnterpriseAutogenerated) SourceSharepointEnterpriseCSVHeaderDefinition {
+	typ := SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseAutogenerated
+
+	return SourceSharepointEnterpriseCSVHeaderDefinition{
+		SourceSharepointEnterpriseAutogenerated: &sourceSharepointEnterpriseAutogenerated,
+		Type:                                    typ,
+	}
+}
+
+func CreateSourceSharepointEnterpriseCSVHeaderDefinitionSourceSharepointEnterpriseUserProvided(sourceSharepointEnterpriseUserProvided SourceSharepointEnterpriseUserProvided) SourceSharepointEnterpriseCSVHeaderDefinition {
+	typ := SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseUserProvided
+
+	return SourceSharepointEnterpriseCSVHeaderDefinition{
+		SourceSharepointEnterpriseUserProvided: &sourceSharepointEnterpriseUserProvided,
+		Type:                                   typ,
+	}
+}
+
+func (u *SourceSharepointEnterpriseCSVHeaderDefinition) UnmarshalJSON(data []byte) error {
+
+	var sourceSharepointEnterpriseFromCSV SourceSharepointEnterpriseFromCSV = SourceSharepointEnterpriseFromCSV{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseFromCSV, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseFromCSV = &sourceSharepointEnterpriseFromCSV
+		u.Type = SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseFromCSV
+		return nil
+	}
+
+	var sourceSharepointEnterpriseAutogenerated SourceSharepointEnterpriseAutogenerated = SourceSharepointEnterpriseAutogenerated{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseAutogenerated, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseAutogenerated = &sourceSharepointEnterpriseAutogenerated
+		u.Type = SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseAutogenerated
+		return nil
+	}
+
+	var sourceSharepointEnterpriseUserProvided SourceSharepointEnterpriseUserProvided = SourceSharepointEnterpriseUserProvided{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseUserProvided, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseUserProvided = &sourceSharepointEnterpriseUserProvided
+		u.Type = SourceSharepointEnterpriseCSVHeaderDefinitionTypeSourceSharepointEnterpriseUserProvided
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseCSVHeaderDefinition", string(data))
+}
+
+func (u SourceSharepointEnterpriseCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
+	if u.SourceSharepointEnterpriseFromCSV != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseFromCSV, "", true)
+	}
+
+	if u.SourceSharepointEnterpriseAutogenerated != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseAutogenerated, "", true)
+	}
+
+	if u.SourceSharepointEnterpriseUserProvided != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseUserProvided, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseCSVHeaderDefinition: all fields are null")
+}
+
+type SourceSharepointEnterpriseCSVFormat struct {
+	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+	Delimiter *string `default:"," json:"delimiter"`
+	// Whether two quotes in a quoted CSV value denote a single quote in the data.
+	DoubleQuote *bool `default:"true" json:"double_quote"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `default:"utf8" json:"encoding"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                                   `json:"false_values,omitempty"`
+	filetype    *SourceSharepointEnterpriseSchemasFiletype `const:"csv" json:"filetype"`
+	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+	HeaderDefinition *SourceSharepointEnterpriseCSVHeaderDefinition `json:"header_definition,omitempty"`
+	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
+	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `default:"\"" json:"quote_char"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
+}
+
+func (s SourceSharepointEnterpriseCSVFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseCSVFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetDelimiter() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Delimiter
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetDoubleQuote() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DoubleQuote
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetEncoding() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Encoding
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetEscapeChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EscapeChar
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetFalseValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.FalseValues
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetFiletype() *SourceSharepointEnterpriseSchemasFiletype {
+	return SourceSharepointEnterpriseSchemasFiletypeCsv.ToPointer()
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetHeaderDefinition() *SourceSharepointEnterpriseCSVHeaderDefinition {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderDefinition
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IgnoreErrorsOnFieldsMismatch
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetNullValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.NullValues
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetQuoteChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuoteChar
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetSkipRowsAfterHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsAfterHeader
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetSkipRowsBeforeHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsBeforeHeader
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetStringsCanBeNull() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StringsCanBeNull
+}
+
+func (o *SourceSharepointEnterpriseCSVFormat) GetTrueValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TrueValues
+}
+
+type SourceSharepointEnterpriseFiletype string
+
+const (
+	SourceSharepointEnterpriseFiletypeAvro SourceSharepointEnterpriseFiletype = "avro"
+)
+
+func (e SourceSharepointEnterpriseFiletype) ToPointer() *SourceSharepointEnterpriseFiletype {
+	return &e
+}
+func (e *SourceSharepointEnterpriseFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "avro":
+		*e = SourceSharepointEnterpriseFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseFiletype: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseAvroFormat struct {
+	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
+	DoubleAsString *bool                               `default:"false" json:"double_as_string"`
+	filetype       *SourceSharepointEnterpriseFiletype `const:"avro" json:"filetype"`
+}
+
+func (s SourceSharepointEnterpriseAvroFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseAvroFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseAvroFormat) GetDoubleAsString() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DoubleAsString
+}
+
+func (o *SourceSharepointEnterpriseAvroFormat) GetFiletype() *SourceSharepointEnterpriseFiletype {
+	return SourceSharepointEnterpriseFiletypeAvro.ToPointer()
+}
+
+type SourceSharepointEnterpriseFormatType string
+
+const (
+	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseAvroFormat                 SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Avro Format"
+	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseCSVFormat                  SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_CSV Format"
+	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseJsonlFormat                SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Jsonl Format"
+	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseParquetFormat              SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Parquet Format"
+	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseUnstructuredDocumentFormat SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Unstructured Document Format"
+	SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseExcelFormat                SourceSharepointEnterpriseFormatType = "source-sharepoint-enterprise_Excel Format"
+)
+
+// SourceSharepointEnterpriseFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type SourceSharepointEnterpriseFormat struct {
+	SourceSharepointEnterpriseAvroFormat                 *SourceSharepointEnterpriseAvroFormat                 `queryParam:"inline"`
+	SourceSharepointEnterpriseCSVFormat                  *SourceSharepointEnterpriseCSVFormat                  `queryParam:"inline"`
+	SourceSharepointEnterpriseJsonlFormat                *SourceSharepointEnterpriseJsonlFormat                `queryParam:"inline"`
+	SourceSharepointEnterpriseParquetFormat              *SourceSharepointEnterpriseParquetFormat              `queryParam:"inline"`
+	SourceSharepointEnterpriseUnstructuredDocumentFormat *SourceSharepointEnterpriseUnstructuredDocumentFormat `queryParam:"inline"`
+	SourceSharepointEnterpriseExcelFormat                *SourceSharepointEnterpriseExcelFormat                `queryParam:"inline"`
+
+	Type SourceSharepointEnterpriseFormatType
+}
+
+func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseAvroFormat(sourceSharepointEnterpriseAvroFormat SourceSharepointEnterpriseAvroFormat) SourceSharepointEnterpriseFormat {
+	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseAvroFormat
+
+	return SourceSharepointEnterpriseFormat{
+		SourceSharepointEnterpriseAvroFormat: &sourceSharepointEnterpriseAvroFormat,
+		Type:                                 typ,
+	}
+}
+
+func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseCSVFormat(sourceSharepointEnterpriseCSVFormat SourceSharepointEnterpriseCSVFormat) SourceSharepointEnterpriseFormat {
+	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseCSVFormat
+
+	return SourceSharepointEnterpriseFormat{
+		SourceSharepointEnterpriseCSVFormat: &sourceSharepointEnterpriseCSVFormat,
+		Type:                                typ,
+	}
+}
+
+func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseJsonlFormat(sourceSharepointEnterpriseJsonlFormat SourceSharepointEnterpriseJsonlFormat) SourceSharepointEnterpriseFormat {
+	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseJsonlFormat
+
+	return SourceSharepointEnterpriseFormat{
+		SourceSharepointEnterpriseJsonlFormat: &sourceSharepointEnterpriseJsonlFormat,
+		Type:                                  typ,
+	}
+}
+
+func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseParquetFormat(sourceSharepointEnterpriseParquetFormat SourceSharepointEnterpriseParquetFormat) SourceSharepointEnterpriseFormat {
+	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseParquetFormat
+
+	return SourceSharepointEnterpriseFormat{
+		SourceSharepointEnterpriseParquetFormat: &sourceSharepointEnterpriseParquetFormat,
+		Type:                                    typ,
+	}
+}
+
+func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseUnstructuredDocumentFormat(sourceSharepointEnterpriseUnstructuredDocumentFormat SourceSharepointEnterpriseUnstructuredDocumentFormat) SourceSharepointEnterpriseFormat {
+	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseUnstructuredDocumentFormat
+
+	return SourceSharepointEnterpriseFormat{
+		SourceSharepointEnterpriseUnstructuredDocumentFormat: &sourceSharepointEnterpriseUnstructuredDocumentFormat,
+		Type: typ,
+	}
+}
+
+func CreateSourceSharepointEnterpriseFormatSourceSharepointEnterpriseExcelFormat(sourceSharepointEnterpriseExcelFormat SourceSharepointEnterpriseExcelFormat) SourceSharepointEnterpriseFormat {
+	typ := SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseExcelFormat
+
+	return SourceSharepointEnterpriseFormat{
+		SourceSharepointEnterpriseExcelFormat: &sourceSharepointEnterpriseExcelFormat,
+		Type:                                  typ,
+	}
+}
+
+func (u *SourceSharepointEnterpriseFormat) UnmarshalJSON(data []byte) error {
+
+	var sourceSharepointEnterpriseJsonlFormat SourceSharepointEnterpriseJsonlFormat = SourceSharepointEnterpriseJsonlFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseJsonlFormat, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseJsonlFormat = &sourceSharepointEnterpriseJsonlFormat
+		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseJsonlFormat
+		return nil
+	}
+
+	var sourceSharepointEnterpriseExcelFormat SourceSharepointEnterpriseExcelFormat = SourceSharepointEnterpriseExcelFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseExcelFormat, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseExcelFormat = &sourceSharepointEnterpriseExcelFormat
+		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseExcelFormat
+		return nil
+	}
+
+	var sourceSharepointEnterpriseAvroFormat SourceSharepointEnterpriseAvroFormat = SourceSharepointEnterpriseAvroFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseAvroFormat, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseAvroFormat = &sourceSharepointEnterpriseAvroFormat
+		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseAvroFormat
+		return nil
+	}
+
+	var sourceSharepointEnterpriseParquetFormat SourceSharepointEnterpriseParquetFormat = SourceSharepointEnterpriseParquetFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseParquetFormat, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseParquetFormat = &sourceSharepointEnterpriseParquetFormat
+		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseParquetFormat
+		return nil
+	}
+
+	var sourceSharepointEnterpriseUnstructuredDocumentFormat SourceSharepointEnterpriseUnstructuredDocumentFormat = SourceSharepointEnterpriseUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseUnstructuredDocumentFormat = &sourceSharepointEnterpriseUnstructuredDocumentFormat
+		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseUnstructuredDocumentFormat
+		return nil
+	}
+
+	var sourceSharepointEnterpriseCSVFormat SourceSharepointEnterpriseCSVFormat = SourceSharepointEnterpriseCSVFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSharepointEnterpriseCSVFormat, "", true, true); err == nil {
+		u.SourceSharepointEnterpriseCSVFormat = &sourceSharepointEnterpriseCSVFormat
+		u.Type = SourceSharepointEnterpriseFormatTypeSourceSharepointEnterpriseCSVFormat
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSharepointEnterpriseFormat", string(data))
+}
+
+func (u SourceSharepointEnterpriseFormat) MarshalJSON() ([]byte, error) {
+	if u.SourceSharepointEnterpriseAvroFormat != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseAvroFormat, "", true)
+	}
+
+	if u.SourceSharepointEnterpriseCSVFormat != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseCSVFormat, "", true)
+	}
+
+	if u.SourceSharepointEnterpriseJsonlFormat != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseJsonlFormat, "", true)
+	}
+
+	if u.SourceSharepointEnterpriseParquetFormat != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseParquetFormat, "", true)
+	}
+
+	if u.SourceSharepointEnterpriseUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseUnstructuredDocumentFormat, "", true)
+	}
+
+	if u.SourceSharepointEnterpriseExcelFormat != nil {
+		return utils.MarshalJSON(u.SourceSharepointEnterpriseExcelFormat, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceSharepointEnterpriseFormat: all fields are null")
+}
+
+// SourceSharepointEnterpriseValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type SourceSharepointEnterpriseValidationPolicy string
+
+const (
+	SourceSharepointEnterpriseValidationPolicyEmitRecord      SourceSharepointEnterpriseValidationPolicy = "Emit Record"
+	SourceSharepointEnterpriseValidationPolicySkipRecord      SourceSharepointEnterpriseValidationPolicy = "Skip Record"
+	SourceSharepointEnterpriseValidationPolicyWaitForDiscover SourceSharepointEnterpriseValidationPolicy = "Wait for Discover"
+)
+
+func (e SourceSharepointEnterpriseValidationPolicy) ToPointer() *SourceSharepointEnterpriseValidationPolicy {
+	return &e
+}
+func (e *SourceSharepointEnterpriseValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = SourceSharepointEnterpriseValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSharepointEnterpriseValidationPolicy: %v", v)
+	}
+}
+
+type SourceSharepointEnterpriseFileBasedStreamConfig struct {
+	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
+	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
+	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+	Format SourceSharepointEnterpriseFormat `json:"format"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
+	// The number of resent files which will be used to discover the schema for this stream.
+	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
+	// When enabled, syncs will not validate or structure records against the stream's schema.
+	Schemaless *bool `default:"false" json:"schemaless"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *SourceSharepointEnterpriseValidationPolicy `default:"Emit Record" json:"validation_policy"`
+}
+
+func (s SourceSharepointEnterpriseFileBasedStreamConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSharepointEnterpriseFileBasedStreamConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DaysToSyncIfHistoryIsFull
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetFormat() SourceSharepointEnterpriseFormat {
+	if o == nil {
+		return SourceSharepointEnterpriseFormat{}
+	}
+	return o.Format
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetGlobs() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Globs
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetInputSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputSchema
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RecentNFilesToReadForSchemaDiscovery
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetSchemaless() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Schemaless
+}
+
+func (o *SourceSharepointEnterpriseFileBasedStreamConfig) GetValidationPolicy() *SourceSharepointEnterpriseValidationPolicy {
+	if o == nil {
+		return nil
+	}
+	return o.ValidationPolicy
+}
+
 type SharepointEnterprise string
 
 const (
@@ -1544,20 +1544,20 @@ func (e *SharepointEnterprise) UnmarshalJSON(data []byte) error {
 // SourceSharepointEnterprise - SourceMicrosoftSharePointSpec class for Microsoft SharePoint Source Specification.
 // This class combines the authentication details with additional configuration for the SharePoint API.
 type SourceSharepointEnterprise struct {
+	// Credentials for connecting to the One Drive API
+	Credentials    SourceSharepointEnterpriseAuthentication  `json:"credentials"`
+	DeliveryMethod *SourceSharepointEnterpriseDeliveryMethod `json:"delivery_method,omitempty"`
+	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
+	FolderPath *string `default:"." json:"folder_path"`
+	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
+	SearchScope *SourceSharepointEnterpriseSearchScope `default:"ALL" json:"search_scope"`
+	// Url of SharePoint site to search for files. Leave empty to search in the main site. Use 'https://<tenant_name>.sharepoint.com/sites/' to iterate over all sites.
+	SiteURL *string `default:"" json:"site_url"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams        []SourceSharepointEnterpriseFileBasedStreamConfig `json:"streams"`
-	DeliveryMethod *SourceSharepointEnterpriseDeliveryMethod         `json:"delivery_method,omitempty"`
-	// Credentials for connecting to the One Drive API
-	Credentials SourceSharepointEnterpriseAuthentication `json:"credentials"`
-	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
-	SearchScope *SourceSharepointEnterpriseSearchScope `default:"ALL" json:"search_scope"`
-	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
-	FolderPath *string `default:"." json:"folder_path"`
-	// Url of SharePoint site to search for files. Leave empty to search in the main site. Use 'https://<tenant_name>.sharepoint.com/sites/' to iterate over all sites.
-	SiteURL    *string              `default:"" json:"site_url"`
-	sourceType SharepointEnterprise `const:"sharepoint-enterprise" json:"sourceType"`
+	Streams    []SourceSharepointEnterpriseFileBasedStreamConfig `json:"streams"`
+	sourceType SharepointEnterprise                              `const:"sharepoint-enterprise" json:"sourceType"`
 }
 
 func (s SourceSharepointEnterprise) MarshalJSON() ([]byte, error) {
@@ -1569,6 +1569,41 @@ func (s *SourceSharepointEnterprise) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceSharepointEnterprise) GetCredentials() SourceSharepointEnterpriseAuthentication {
+	if o == nil {
+		return SourceSharepointEnterpriseAuthentication{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceSharepointEnterprise) GetDeliveryMethod() *SourceSharepointEnterpriseDeliveryMethod {
+	if o == nil {
+		return nil
+	}
+	return o.DeliveryMethod
+}
+
+func (o *SourceSharepointEnterprise) GetFolderPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FolderPath
+}
+
+func (o *SourceSharepointEnterprise) GetSearchScope() *SourceSharepointEnterpriseSearchScope {
+	if o == nil {
+		return nil
+	}
+	return o.SearchScope
+}
+
+func (o *SourceSharepointEnterprise) GetSiteURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SiteURL
 }
 
 func (o *SourceSharepointEnterprise) GetStartDate() *time.Time {
@@ -1583,41 +1618,6 @@ func (o *SourceSharepointEnterprise) GetStreams() []SourceSharepointEnterpriseFi
 		return []SourceSharepointEnterpriseFileBasedStreamConfig{}
 	}
 	return o.Streams
-}
-
-func (o *SourceSharepointEnterprise) GetDeliveryMethod() *SourceSharepointEnterpriseDeliveryMethod {
-	if o == nil {
-		return nil
-	}
-	return o.DeliveryMethod
-}
-
-func (o *SourceSharepointEnterprise) GetCredentials() SourceSharepointEnterpriseAuthentication {
-	if o == nil {
-		return SourceSharepointEnterpriseAuthentication{}
-	}
-	return o.Credentials
-}
-
-func (o *SourceSharepointEnterprise) GetSearchScope() *SourceSharepointEnterpriseSearchScope {
-	if o == nil {
-		return nil
-	}
-	return o.SearchScope
-}
-
-func (o *SourceSharepointEnterprise) GetFolderPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.FolderPath
-}
-
-func (o *SourceSharepointEnterprise) GetSiteURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SiteURL
 }
 
 func (o *SourceSharepointEnterprise) GetSourceType() SharepointEnterprise {

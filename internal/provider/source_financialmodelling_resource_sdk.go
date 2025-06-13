@@ -31,32 +31,32 @@ func (r *SourceFinancialModellingResourceModel) ToSharedSourceFinancialModelling
 	} else {
 		exchange = nil
 	}
-	marketcapmorethan := new(string)
-	if !r.Configuration.Marketcapmorethan.IsUnknown() && !r.Configuration.Marketcapmorethan.IsNull() {
-		*marketcapmorethan = r.Configuration.Marketcapmorethan.ValueString()
-	} else {
-		marketcapmorethan = nil
-	}
 	marketcaplowerthan := new(string)
 	if !r.Configuration.Marketcaplowerthan.IsUnknown() && !r.Configuration.Marketcaplowerthan.IsNull() {
 		*marketcaplowerthan = r.Configuration.Marketcaplowerthan.ValueString()
 	} else {
 		marketcaplowerthan = nil
 	}
+	marketcapmorethan := new(string)
+	if !r.Configuration.Marketcapmorethan.IsUnknown() && !r.Configuration.Marketcapmorethan.IsNull() {
+		*marketcapmorethan = r.Configuration.Marketcapmorethan.ValueString()
+	} else {
+		marketcapmorethan = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	timeFrame := new(shared.TimeFrame)
 	if !r.Configuration.TimeFrame.IsUnknown() && !r.Configuration.TimeFrame.IsNull() {
 		*timeFrame = shared.TimeFrame(r.Configuration.TimeFrame.ValueString())
 	} else {
 		timeFrame = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFinancialModelling{
 		APIKey:             apiKey,
 		Exchange:           exchange,
-		Marketcapmorethan:  marketcapmorethan,
 		Marketcaplowerthan: marketcaplowerthan,
-		TimeFrame:          timeFrame,
+		Marketcapmorethan:  marketcapmorethan,
 		StartDate:          startDate,
+		TimeFrame:          timeFrame,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -137,32 +137,32 @@ func (r *SourceFinancialModellingResourceModel) ToSharedSourceFinancialModelling
 	} else {
 		exchange = nil
 	}
-	marketcapmorethan := new(string)
-	if !r.Configuration.Marketcapmorethan.IsUnknown() && !r.Configuration.Marketcapmorethan.IsNull() {
-		*marketcapmorethan = r.Configuration.Marketcapmorethan.ValueString()
-	} else {
-		marketcapmorethan = nil
-	}
 	marketcaplowerthan := new(string)
 	if !r.Configuration.Marketcaplowerthan.IsUnknown() && !r.Configuration.Marketcaplowerthan.IsNull() {
 		*marketcaplowerthan = r.Configuration.Marketcaplowerthan.ValueString()
 	} else {
 		marketcaplowerthan = nil
 	}
+	marketcapmorethan := new(string)
+	if !r.Configuration.Marketcapmorethan.IsUnknown() && !r.Configuration.Marketcapmorethan.IsNull() {
+		*marketcapmorethan = r.Configuration.Marketcapmorethan.ValueString()
+	} else {
+		marketcapmorethan = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	timeFrame := new(shared.SourceFinancialModellingUpdateTimeFrame)
 	if !r.Configuration.TimeFrame.IsUnknown() && !r.Configuration.TimeFrame.IsNull() {
 		*timeFrame = shared.SourceFinancialModellingUpdateTimeFrame(r.Configuration.TimeFrame.ValueString())
 	} else {
 		timeFrame = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFinancialModellingUpdate{
 		APIKey:             apiKey,
 		Exchange:           exchange,
-		Marketcapmorethan:  marketcapmorethan,
 		Marketcaplowerthan: marketcaplowerthan,
-		TimeFrame:          timeFrame,
+		Marketcapmorethan:  marketcapmorethan,
 		StartDate:          startDate,
+		TimeFrame:          timeFrame,
 	}
 	out := shared.SourceFinancialModellingPutRequest{
 		Name:          name,

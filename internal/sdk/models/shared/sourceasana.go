@@ -87,10 +87,10 @@ func (e *CredentialsTitle) UnmarshalJSON(data []byte) error {
 }
 
 type AuthenticateViaAsanaOauth struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
 	// OAuth Credentials
 	optionTitle  *CredentialsTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
-	ClientID     string            `json:"client_id"`
-	ClientSecret string            `json:"client_secret"`
 	RefreshToken string            `json:"refresh_token"`
 }
 
@@ -105,10 +105,6 @@ func (a *AuthenticateViaAsanaOauth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AuthenticateViaAsanaOauth) GetOptionTitle() *CredentialsTitle {
-	return CredentialsTitleOAuthCredentials.ToPointer()
-}
-
 func (o *AuthenticateViaAsanaOauth) GetClientID() string {
 	if o == nil {
 		return ""
@@ -121,6 +117,10 @@ func (o *AuthenticateViaAsanaOauth) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *AuthenticateViaAsanaOauth) GetOptionTitle() *CredentialsTitle {
+	return CredentialsTitleOAuthCredentials.ToPointer()
 }
 
 func (o *AuthenticateViaAsanaOauth) GetRefreshToken() string {
@@ -220,11 +220,11 @@ func (e *Asana) UnmarshalJSON(data []byte) error {
 type SourceAsana struct {
 	// Choose how to authenticate to Github
 	Credentials *AuthenticationMechanism `json:"credentials,omitempty"`
-	// Globally unique identifiers for the organization exports
-	OrganizationExportIds []any `json:"organization_export_ids,omitempty"`
 	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Asana pricing plan. More info about the rate limit tiers can be found on Asana's API <a href="https://developers.asana.com/docs/rate-limits">docs</a>.
 	NumWorkers *int64 `default:"10" json:"num_workers"`
-	sourceType *Asana `const:"asana" json:"sourceType,omitempty"`
+	// Globally unique identifiers for the organization exports
+	OrganizationExportIds []any  `json:"organization_export_ids,omitempty"`
+	sourceType            *Asana `const:"asana" json:"sourceType,omitempty"`
 }
 
 func (s SourceAsana) MarshalJSON() ([]byte, error) {
@@ -245,18 +245,18 @@ func (o *SourceAsana) GetCredentials() *AuthenticationMechanism {
 	return o.Credentials
 }
 
-func (o *SourceAsana) GetOrganizationExportIds() []any {
-	if o == nil {
-		return nil
-	}
-	return o.OrganizationExportIds
-}
-
 func (o *SourceAsana) GetNumWorkers() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.NumWorkers
+}
+
+func (o *SourceAsana) GetOrganizationExportIds() []any {
+	if o == nil {
+		return nil
+	}
+	return o.OrganizationExportIds
 }
 
 func (o *SourceAsana) GetSourceType() *Asana {

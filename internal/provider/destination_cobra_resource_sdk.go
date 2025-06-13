@@ -27,16 +27,28 @@ func (r *DestinationCobraResourceModel) ToSharedDestinationCobraCreateRequest() 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
+	printRecordContentOnError := new(bool)
+	if !r.Configuration.PrintRecordContentOnError.IsUnknown() && !r.Configuration.PrintRecordContentOnError.IsNull() {
+		*printRecordContentOnError = r.Configuration.PrintRecordContentOnError.ValueBool()
+	} else {
+		printRecordContentOnError = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	var streamMappings []shared.StreamMapping = []shared.StreamMapping{}
 	for _, streamMappingsItem := range r.Configuration.StreamMappings {
-		var sourceStream string
-		sourceStream = streamMappingsItem.SourceStream.ValueString()
-
 		var destinationTable string
 		destinationTable = streamMappingsItem.DestinationTable.ValueString()
+
+		var sourceStream string
+		sourceStream = streamMappingsItem.SourceStream.ValueString()
 
 		updateMode := shared.UpdateMode(streamMappingsItem.UpdateMode.ValueString())
 		upsertKey := new(string)
@@ -46,8 +58,8 @@ func (r *DestinationCobraResourceModel) ToSharedDestinationCobraCreateRequest() 
 			upsertKey = nil
 		}
 		streamMappings = append(streamMappings, shared.StreamMapping{
-			SourceStream:     sourceStream,
 			DestinationTable: destinationTable,
+			SourceStream:     sourceStream,
 			UpdateMode:       updateMode,
 			UpsertKey:        upsertKey,
 		})
@@ -56,26 +68,14 @@ func (r *DestinationCobraResourceModel) ToSharedDestinationCobraCreateRequest() 
 	for _, streamOrderItem := range r.Configuration.StreamOrder {
 		streamOrder = append(streamOrder, streamOrderItem.ValueString())
 	}
-	printRecordContentOnError := new(bool)
-	if !r.Configuration.PrintRecordContentOnError.IsUnknown() && !r.Configuration.PrintRecordContentOnError.IsNull() {
-		*printRecordContentOnError = r.Configuration.PrintRecordContentOnError.ValueBool()
-	} else {
-		printRecordContentOnError = nil
-	}
-	isSandbox := new(bool)
-	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
-		*isSandbox = r.Configuration.IsSandbox.ValueBool()
-	} else {
-		isSandbox = nil
-	}
 	configuration := shared.DestinationCobra{
 		ClientID:                  clientID,
 		ClientSecret:              clientSecret,
+		IsSandbox:                 isSandbox,
+		PrintRecordContentOnError: printRecordContentOnError,
 		RefreshToken:              refreshToken,
 		StreamMappings:            streamMappings,
 		StreamOrder:               streamOrder,
-		PrintRecordContentOnError: printRecordContentOnError,
-		IsSandbox:                 isSandbox,
 	}
 	out := shared.DestinationCobraCreateRequest{
 		Name:          name,
@@ -146,16 +146,28 @@ func (r *DestinationCobraResourceModel) ToSharedDestinationCobraPutRequest() *sh
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
+	printRecordContentOnError := new(bool)
+	if !r.Configuration.PrintRecordContentOnError.IsUnknown() && !r.Configuration.PrintRecordContentOnError.IsNull() {
+		*printRecordContentOnError = r.Configuration.PrintRecordContentOnError.ValueBool()
+	} else {
+		printRecordContentOnError = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	var streamMappings []shared.DestinationCobraUpdateStreamMapping = []shared.DestinationCobraUpdateStreamMapping{}
 	for _, streamMappingsItem := range r.Configuration.StreamMappings {
-		var sourceStream string
-		sourceStream = streamMappingsItem.SourceStream.ValueString()
-
 		var destinationTable string
 		destinationTable = streamMappingsItem.DestinationTable.ValueString()
+
+		var sourceStream string
+		sourceStream = streamMappingsItem.SourceStream.ValueString()
 
 		updateMode := shared.DestinationCobraUpdateUpdateMode(streamMappingsItem.UpdateMode.ValueString())
 		upsertKey := new(string)
@@ -165,8 +177,8 @@ func (r *DestinationCobraResourceModel) ToSharedDestinationCobraPutRequest() *sh
 			upsertKey = nil
 		}
 		streamMappings = append(streamMappings, shared.DestinationCobraUpdateStreamMapping{
-			SourceStream:     sourceStream,
 			DestinationTable: destinationTable,
+			SourceStream:     sourceStream,
 			UpdateMode:       updateMode,
 			UpsertKey:        upsertKey,
 		})
@@ -175,26 +187,14 @@ func (r *DestinationCobraResourceModel) ToSharedDestinationCobraPutRequest() *sh
 	for _, streamOrderItem := range r.Configuration.StreamOrder {
 		streamOrder = append(streamOrder, streamOrderItem.ValueString())
 	}
-	printRecordContentOnError := new(bool)
-	if !r.Configuration.PrintRecordContentOnError.IsUnknown() && !r.Configuration.PrintRecordContentOnError.IsNull() {
-		*printRecordContentOnError = r.Configuration.PrintRecordContentOnError.ValueBool()
-	} else {
-		printRecordContentOnError = nil
-	}
-	isSandbox := new(bool)
-	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
-		*isSandbox = r.Configuration.IsSandbox.ValueBool()
-	} else {
-		isSandbox = nil
-	}
 	configuration := shared.DestinationCobraUpdate{
 		ClientID:                  clientID,
 		ClientSecret:              clientSecret,
+		IsSandbox:                 isSandbox,
+		PrintRecordContentOnError: printRecordContentOnError,
 		RefreshToken:              refreshToken,
 		StreamMappings:            streamMappings,
 		StreamOrder:               streamOrder,
-		PrintRecordContentOnError: printRecordContentOnError,
-		IsSandbox:                 isSandbox,
 	}
 	out := shared.DestinationCobraPutRequest{
 		Name:          name,

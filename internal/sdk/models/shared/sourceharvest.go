@@ -236,11 +236,11 @@ func (e *Harvest) UnmarshalJSON(data []byte) error {
 type SourceHarvest struct {
 	// Harvest account ID. Required for all Harvest requests in pair with Personal Access Token
 	AccountID string `json:"account_id"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	ReplicationStartDate time.Time `json:"replication_start_date"`
 	// Choose how to authenticate to Harvest.
 	Credentials *SourceHarvestAuthenticationMechanism `json:"credentials,omitempty"`
-	sourceType  Harvest                               `const:"harvest" json:"sourceType"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	ReplicationStartDate time.Time `json:"replication_start_date"`
+	sourceType           Harvest   `const:"harvest" json:"sourceType"`
 }
 
 func (s SourceHarvest) MarshalJSON() ([]byte, error) {
@@ -261,18 +261,18 @@ func (o *SourceHarvest) GetAccountID() string {
 	return o.AccountID
 }
 
-func (o *SourceHarvest) GetReplicationStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.ReplicationStartDate
-}
-
 func (o *SourceHarvest) GetCredentials() *SourceHarvestAuthenticationMechanism {
 	if o == nil {
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceHarvest) GetReplicationStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ReplicationStartDate
 }
 
 func (o *SourceHarvest) GetSourceType() Harvest {

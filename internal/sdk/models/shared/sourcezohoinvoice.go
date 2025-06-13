@@ -77,8 +77,8 @@ func (e *ZohoInvoice) UnmarshalJSON(data []byte) error {
 
 type SourceZohoInvoice struct {
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	// To be provided if a user belongs to multiple organizations
 	OrganizationID *string                 `json:"organization_id,omitempty"`
 	Region         SourceZohoInvoiceRegion `json:"region"`
@@ -103,18 +103,18 @@ func (o *SourceZohoInvoice) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceZohoInvoice) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceZohoInvoice) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceZohoInvoice) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceZohoInvoice) GetOrganizationID() *string {

@@ -33,13 +33,13 @@ func (e *DestinationSnowflakeSchemasCredentialsAuthType) UnmarshalJSON(data []by
 }
 
 type DestinationSnowflakeOAuth20 struct {
-	authType *DestinationSnowflakeSchemasCredentialsAuthType `const:"OAuth2.0" json:"auth_type"`
+	// Enter you application's Access Token
+	AccessToken string                                          `json:"access_token"`
+	authType    *DestinationSnowflakeSchemasCredentialsAuthType `const:"OAuth2.0" json:"auth_type"`
 	// Enter your application's Client ID
 	ClientID *string `json:"client_id,omitempty"`
 	// Enter your application's Client secret
 	ClientSecret *string `json:"client_secret,omitempty"`
-	// Enter you application's Access Token
-	AccessToken string `json:"access_token"`
 	// Enter your application's Refresh Token
 	RefreshToken string `json:"refresh_token"`
 }
@@ -53,6 +53,13 @@ func (d *DestinationSnowflakeOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *DestinationSnowflakeOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *DestinationSnowflakeOAuth20) GetAuthType() *DestinationSnowflakeSchemasCredentialsAuthType {
@@ -71,13 +78,6 @@ func (o *DestinationSnowflakeOAuth20) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
-}
-
-func (o *DestinationSnowflakeOAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
 }
 
 func (o *DestinationSnowflakeOAuth20) GetRefreshToken() string {
@@ -307,30 +307,30 @@ func (e *DestinationSnowflakeSnowflake) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationSnowflake struct {
-	// Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
-	Host string `json:"host"`
-	// Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
-	Role string `json:"role"`
-	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster
-	Warehouse string `json:"warehouse"`
+	Credentials *DestinationSnowflakeAuthorizationMethod `json:"credentials,omitempty"`
 	// Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into
 	Database string `json:"database"`
-	// Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
-	Schema string `json:"schema"`
-	// Enter the name of the user you want to use to access the database
-	Username    string                                   `json:"username"`
-	Credentials *DestinationSnowflakeAuthorizationMethod `json:"credentials,omitempty"`
+	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
+	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
+	Host string `json:"host"`
 	// Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
 	// The schema to write raw tables into (default: airbyte_internal)
 	RawDataSchema *string `json:"raw_data_schema,omitempty"`
-	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
-	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
 	// The number of days of Snowflake Time Travel to enable on the tables. See <a href="https://docs.snowflake.com/en/user-guide/data-time-travel#data-retention-period">Snowflake's documentation</a> for more information. Setting a nonzero value will incur increased storage costs in your Snowflake instance.
 	RetentionPeriodDays *int64 `default:"1" json:"retention_period_days"`
+	// Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
+	Role string `json:"role"`
+	// Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
+	Schema string `json:"schema"`
 	// Use MERGE for de-duplication of final tables. This option no effect if Final tables are disabled or Sync mode is not DEDUPE
-	UseMergeForUpsert *bool                         `default:"false" json:"use_merge_for_upsert"`
-	destinationType   DestinationSnowflakeSnowflake `const:"snowflake" json:"destinationType"`
+	UseMergeForUpsert *bool `default:"false" json:"use_merge_for_upsert"`
+	// Enter the name of the user you want to use to access the database
+	Username string `json:"username"`
+	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster
+	Warehouse       string                        `json:"warehouse"`
+	destinationType DestinationSnowflakeSnowflake `const:"snowflake" json:"destinationType"`
 }
 
 func (d DestinationSnowflake) MarshalJSON() ([]byte, error) {
@@ -344,25 +344,11 @@ func (d *DestinationSnowflake) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationSnowflake) GetHost() string {
+func (o *DestinationSnowflake) GetCredentials() *DestinationSnowflakeAuthorizationMethod {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Host
-}
-
-func (o *DestinationSnowflake) GetRole() string {
-	if o == nil {
-		return ""
-	}
-	return o.Role
-}
-
-func (o *DestinationSnowflake) GetWarehouse() string {
-	if o == nil {
-		return ""
-	}
-	return o.Warehouse
+	return o.Credentials
 }
 
 func (o *DestinationSnowflake) GetDatabase() string {
@@ -372,25 +358,18 @@ func (o *DestinationSnowflake) GetDatabase() string {
 	return o.Database
 }
 
-func (o *DestinationSnowflake) GetSchema() string {
-	if o == nil {
-		return ""
-	}
-	return o.Schema
-}
-
-func (o *DestinationSnowflake) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *DestinationSnowflake) GetCredentials() *DestinationSnowflakeAuthorizationMethod {
+func (o *DestinationSnowflake) GetDisableTypeDedupe() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Credentials
+	return o.DisableTypeDedupe
+}
+
+func (o *DestinationSnowflake) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
 }
 
 func (o *DestinationSnowflake) GetJdbcURLParams() *string {
@@ -407,13 +386,6 @@ func (o *DestinationSnowflake) GetRawDataSchema() *string {
 	return o.RawDataSchema
 }
 
-func (o *DestinationSnowflake) GetDisableTypeDedupe() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DisableTypeDedupe
-}
-
 func (o *DestinationSnowflake) GetRetentionPeriodDays() *int64 {
 	if o == nil {
 		return nil
@@ -421,11 +393,39 @@ func (o *DestinationSnowflake) GetRetentionPeriodDays() *int64 {
 	return o.RetentionPeriodDays
 }
 
+func (o *DestinationSnowflake) GetRole() string {
+	if o == nil {
+		return ""
+	}
+	return o.Role
+}
+
+func (o *DestinationSnowflake) GetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schema
+}
+
 func (o *DestinationSnowflake) GetUseMergeForUpsert() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.UseMergeForUpsert
+}
+
+func (o *DestinationSnowflake) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *DestinationSnowflake) GetWarehouse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Warehouse
 }
 
 func (o *DestinationSnowflake) GetDestinationType() DestinationSnowflakeSnowflake {

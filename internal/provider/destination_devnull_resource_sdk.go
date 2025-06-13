@@ -25,12 +25,6 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 	var testDestination shared.TestDestination
 	var logging *shared.Logging
 	if r.Configuration.TestDestination.Logging != nil {
-		testDestinationType := new(shared.TestDestinationType)
-		if !r.Configuration.TestDestination.Logging.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Logging.TestDestinationType.IsNull() {
-			*testDestinationType = shared.TestDestinationType(r.Configuration.TestDestination.Logging.TestDestinationType.ValueString())
-		} else {
-			testDestinationType = nil
-		}
 		var loggingConfig shared.LoggingConfiguration
 		var firstNEntries *shared.FirstNEntries
 		if r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries != nil {
@@ -69,23 +63,23 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 			} else {
 				loggingType1 = nil
 			}
-			var nthEntryToLog int64
-			nthEntryToLog = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.NthEntryToLog.ValueInt64()
-
 			maxEntryCount1 := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsNull() {
 				*maxEntryCount1, _ = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.ValueBigFloat().Float64()
 			} else {
 				maxEntryCount1 = nil
 			}
+			var nthEntryToLog int64
+			nthEntryToLog = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.NthEntryToLog.ValueInt64()
+
 			var additionalProperties1 interface{}
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			everyNThEntry = &shared.EveryNThEntry{
 				LoggingType:          loggingType1,
-				NthEntryToLog:        nthEntryToLog,
 				MaxEntryCount:        maxEntryCount1,
+				NthEntryToLog:        nthEntryToLog,
 				AdditionalProperties: additionalProperties1,
 			}
 		}
@@ -102,6 +96,12 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 			} else {
 				loggingType2 = nil
 			}
+			maxEntryCount2 := new(float64)
+			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsNull() {
+				*maxEntryCount2, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueBigFloat().Float64()
+			} else {
+				maxEntryCount2 = nil
+			}
 			samplingRatio := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsNull() {
 				*samplingRatio, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.ValueBigFloat().Float64()
@@ -114,21 +114,15 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 			} else {
 				seed = nil
 			}
-			maxEntryCount2 := new(float64)
-			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsNull() {
-				*maxEntryCount2, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueBigFloat().Float64()
-			} else {
-				maxEntryCount2 = nil
-			}
 			var additionalProperties2 interface{}
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.AdditionalProperties.ValueString()), &additionalProperties2)
 			}
 			randomSampling = &shared.RandomSampling{
 				LoggingType:          loggingType2,
+				MaxEntryCount:        maxEntryCount2,
 				SamplingRatio:        samplingRatio,
 				Seed:                 seed,
-				MaxEntryCount:        maxEntryCount2,
 				AdditionalProperties: additionalProperties2,
 			}
 		}
@@ -137,13 +131,19 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 				RandomSampling: randomSampling,
 			}
 		}
+		testDestinationType := new(shared.TestDestinationType)
+		if !r.Configuration.TestDestination.Logging.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Logging.TestDestinationType.IsNull() {
+			*testDestinationType = shared.TestDestinationType(r.Configuration.TestDestination.Logging.TestDestinationType.ValueString())
+		} else {
+			testDestinationType = nil
+		}
 		var additionalProperties3 interface{}
 		if !r.Configuration.TestDestination.Logging.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Logging.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Logging.AdditionalProperties.ValueString()), &additionalProperties3)
 		}
 		logging = &shared.Logging{
-			TestDestinationType:  testDestinationType,
 			LoggingConfig:        loggingConfig,
+			TestDestinationType:  testDestinationType,
 			AdditionalProperties: additionalProperties3,
 		}
 	}
@@ -176,22 +176,22 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 	}
 	var throttled *shared.Throttled
 	if r.Configuration.TestDestination.Throttled != nil {
+		var millisPerRecord int64
+		millisPerRecord = r.Configuration.TestDestination.Throttled.MillisPerRecord.ValueInt64()
+
 		testDestinationType2 := new(shared.DestinationDevNullSchemasTestDestinationType)
 		if !r.Configuration.TestDestination.Throttled.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Throttled.TestDestinationType.IsNull() {
 			*testDestinationType2 = shared.DestinationDevNullSchemasTestDestinationType(r.Configuration.TestDestination.Throttled.TestDestinationType.ValueString())
 		} else {
 			testDestinationType2 = nil
 		}
-		var millisPerRecord int64
-		millisPerRecord = r.Configuration.TestDestination.Throttled.MillisPerRecord.ValueInt64()
-
 		var additionalProperties5 interface{}
 		if !r.Configuration.TestDestination.Throttled.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Throttled.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Throttled.AdditionalProperties.ValueString()), &additionalProperties5)
 		}
 		throttled = &shared.Throttled{
-			TestDestinationType:  testDestinationType2,
 			MillisPerRecord:      millisPerRecord,
+			TestDestinationType:  testDestinationType2,
 			AdditionalProperties: additionalProperties5,
 		}
 	}
@@ -202,22 +202,22 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 	}
 	var failing *shared.Failing
 	if r.Configuration.TestDestination.Failing != nil {
+		var numMessages int64
+		numMessages = r.Configuration.TestDestination.Failing.NumMessages.ValueInt64()
+
 		testDestinationType3 := new(shared.DestinationDevNullSchemasTestDestinationTestDestinationType)
 		if !r.Configuration.TestDestination.Failing.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Failing.TestDestinationType.IsNull() {
 			*testDestinationType3 = shared.DestinationDevNullSchemasTestDestinationTestDestinationType(r.Configuration.TestDestination.Failing.TestDestinationType.ValueString())
 		} else {
 			testDestinationType3 = nil
 		}
-		var numMessages int64
-		numMessages = r.Configuration.TestDestination.Failing.NumMessages.ValueInt64()
-
 		var additionalProperties6 interface{}
 		if !r.Configuration.TestDestination.Failing.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Failing.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Failing.AdditionalProperties.ValueString()), &additionalProperties6)
 		}
 		failing = &shared.Failing{
-			TestDestinationType:  testDestinationType3,
 			NumMessages:          numMessages,
+			TestDestinationType:  testDestinationType3,
 			AdditionalProperties: additionalProperties6,
 		}
 	}
@@ -295,12 +295,6 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 	var testDestination shared.DestinationDevNullUpdateTestDestination
 	var destinationDevNullUpdateLogging *shared.DestinationDevNullUpdateLogging
 	if r.Configuration.TestDestination.Logging != nil {
-		testDestinationType := new(shared.DestinationDevNullUpdateTestDestinationType)
-		if !r.Configuration.TestDestination.Logging.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Logging.TestDestinationType.IsNull() {
-			*testDestinationType = shared.DestinationDevNullUpdateTestDestinationType(r.Configuration.TestDestination.Logging.TestDestinationType.ValueString())
-		} else {
-			testDestinationType = nil
-		}
 		var loggingConfig shared.DestinationDevNullUpdateLoggingConfiguration
 		var destinationDevNullUpdateFirstNEntries *shared.DestinationDevNullUpdateFirstNEntries
 		if r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries != nil {
@@ -339,23 +333,23 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 			} else {
 				loggingType1 = nil
 			}
-			var nthEntryToLog int64
-			nthEntryToLog = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.NthEntryToLog.ValueInt64()
-
 			maxEntryCount1 := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsNull() {
 				*maxEntryCount1, _ = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.ValueBigFloat().Float64()
 			} else {
 				maxEntryCount1 = nil
 			}
+			var nthEntryToLog int64
+			nthEntryToLog = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.NthEntryToLog.ValueInt64()
+
 			var additionalProperties1 interface{}
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			destinationDevNullUpdateEveryNThEntry = &shared.DestinationDevNullUpdateEveryNThEntry{
 				LoggingType:          loggingType1,
-				NthEntryToLog:        nthEntryToLog,
 				MaxEntryCount:        maxEntryCount1,
+				NthEntryToLog:        nthEntryToLog,
 				AdditionalProperties: additionalProperties1,
 			}
 		}
@@ -372,6 +366,12 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 			} else {
 				loggingType2 = nil
 			}
+			maxEntryCount2 := new(float64)
+			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsNull() {
+				*maxEntryCount2, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueBigFloat().Float64()
+			} else {
+				maxEntryCount2 = nil
+			}
 			samplingRatio := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsNull() {
 				*samplingRatio, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.ValueBigFloat().Float64()
@@ -384,21 +384,15 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 			} else {
 				seed = nil
 			}
-			maxEntryCount2 := new(float64)
-			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsNull() {
-				*maxEntryCount2, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueBigFloat().Float64()
-			} else {
-				maxEntryCount2 = nil
-			}
 			var additionalProperties2 interface{}
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.AdditionalProperties.ValueString()), &additionalProperties2)
 			}
 			destinationDevNullUpdateRandomSampling = &shared.DestinationDevNullUpdateRandomSampling{
 				LoggingType:          loggingType2,
+				MaxEntryCount:        maxEntryCount2,
 				SamplingRatio:        samplingRatio,
 				Seed:                 seed,
-				MaxEntryCount:        maxEntryCount2,
 				AdditionalProperties: additionalProperties2,
 			}
 		}
@@ -407,13 +401,19 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 				DestinationDevNullUpdateRandomSampling: destinationDevNullUpdateRandomSampling,
 			}
 		}
+		testDestinationType := new(shared.DestinationDevNullUpdateTestDestinationType)
+		if !r.Configuration.TestDestination.Logging.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Logging.TestDestinationType.IsNull() {
+			*testDestinationType = shared.DestinationDevNullUpdateTestDestinationType(r.Configuration.TestDestination.Logging.TestDestinationType.ValueString())
+		} else {
+			testDestinationType = nil
+		}
 		var additionalProperties3 interface{}
 		if !r.Configuration.TestDestination.Logging.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Logging.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Logging.AdditionalProperties.ValueString()), &additionalProperties3)
 		}
 		destinationDevNullUpdateLogging = &shared.DestinationDevNullUpdateLogging{
-			TestDestinationType:  testDestinationType,
 			LoggingConfig:        loggingConfig,
+			TestDestinationType:  testDestinationType,
 			AdditionalProperties: additionalProperties3,
 		}
 	}
@@ -446,22 +446,22 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 	}
 	var destinationDevNullUpdateThrottled *shared.DestinationDevNullUpdateThrottled
 	if r.Configuration.TestDestination.Throttled != nil {
+		var millisPerRecord int64
+		millisPerRecord = r.Configuration.TestDestination.Throttled.MillisPerRecord.ValueInt64()
+
 		testDestinationType2 := new(shared.DestinationDevNullUpdateSchemasTestDestinationTestDestinationType)
 		if !r.Configuration.TestDestination.Throttled.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Throttled.TestDestinationType.IsNull() {
 			*testDestinationType2 = shared.DestinationDevNullUpdateSchemasTestDestinationTestDestinationType(r.Configuration.TestDestination.Throttled.TestDestinationType.ValueString())
 		} else {
 			testDestinationType2 = nil
 		}
-		var millisPerRecord int64
-		millisPerRecord = r.Configuration.TestDestination.Throttled.MillisPerRecord.ValueInt64()
-
 		var additionalProperties5 interface{}
 		if !r.Configuration.TestDestination.Throttled.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Throttled.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Throttled.AdditionalProperties.ValueString()), &additionalProperties5)
 		}
 		destinationDevNullUpdateThrottled = &shared.DestinationDevNullUpdateThrottled{
-			TestDestinationType:  testDestinationType2,
 			MillisPerRecord:      millisPerRecord,
+			TestDestinationType:  testDestinationType2,
 			AdditionalProperties: additionalProperties5,
 		}
 	}
@@ -472,22 +472,22 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 	}
 	var destinationDevNullUpdateFailing *shared.DestinationDevNullUpdateFailing
 	if r.Configuration.TestDestination.Failing != nil {
+		var numMessages int64
+		numMessages = r.Configuration.TestDestination.Failing.NumMessages.ValueInt64()
+
 		testDestinationType3 := new(shared.DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType)
 		if !r.Configuration.TestDestination.Failing.TestDestinationType.IsUnknown() && !r.Configuration.TestDestination.Failing.TestDestinationType.IsNull() {
 			*testDestinationType3 = shared.DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType(r.Configuration.TestDestination.Failing.TestDestinationType.ValueString())
 		} else {
 			testDestinationType3 = nil
 		}
-		var numMessages int64
-		numMessages = r.Configuration.TestDestination.Failing.NumMessages.ValueInt64()
-
 		var additionalProperties6 interface{}
 		if !r.Configuration.TestDestination.Failing.AdditionalProperties.IsUnknown() && !r.Configuration.TestDestination.Failing.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.TestDestination.Failing.AdditionalProperties.ValueString()), &additionalProperties6)
 		}
 		destinationDevNullUpdateFailing = &shared.DestinationDevNullUpdateFailing{
-			TestDestinationType:  testDestinationType3,
 			NumMessages:          numMessages,
+			TestDestinationType:  testDestinationType3,
 			AdditionalProperties: additionalProperties6,
 		}
 	}

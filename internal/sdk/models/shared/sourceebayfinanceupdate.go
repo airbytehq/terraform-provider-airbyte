@@ -9,32 +9,6 @@ import (
 	"time"
 )
 
-type SourceEbayFinanceUpdateRefreshTokenEndpoint string
-
-const (
-	SourceEbayFinanceUpdateRefreshTokenEndpointHTTPSAPISandboxEbayComIdentityV1Oauth2Token SourceEbayFinanceUpdateRefreshTokenEndpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
-	SourceEbayFinanceUpdateRefreshTokenEndpointHTTPSAPIEbayComIdentityV1Oauth2Token        SourceEbayFinanceUpdateRefreshTokenEndpoint = "https://api.ebay.com/identity/v1/oauth2/token"
-)
-
-func (e SourceEbayFinanceUpdateRefreshTokenEndpoint) ToPointer() *SourceEbayFinanceUpdateRefreshTokenEndpoint {
-	return &e
-}
-func (e *SourceEbayFinanceUpdateRefreshTokenEndpoint) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "https://api.sandbox.ebay.com/identity/v1/oauth2/token":
-		fallthrough
-	case "https://api.ebay.com/identity/v1/oauth2/token":
-		*e = SourceEbayFinanceUpdateRefreshTokenEndpoint(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceEbayFinanceUpdateRefreshTokenEndpoint: %v", v)
-	}
-}
-
 // SourceEbayFinanceUpdateAPIHost - https://apiz.sandbox.ebay.com for sandbox & https://apiz.ebay.com for production
 type SourceEbayFinanceUpdateAPIHost string
 
@@ -62,17 +36,43 @@ func (e *SourceEbayFinanceUpdateAPIHost) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type SourceEbayFinanceUpdateRefreshTokenEndpoint string
+
+const (
+	SourceEbayFinanceUpdateRefreshTokenEndpointHTTPSAPISandboxEbayComIdentityV1Oauth2Token SourceEbayFinanceUpdateRefreshTokenEndpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
+	SourceEbayFinanceUpdateRefreshTokenEndpointHTTPSAPIEbayComIdentityV1Oauth2Token        SourceEbayFinanceUpdateRefreshTokenEndpoint = "https://api.ebay.com/identity/v1/oauth2/token"
+)
+
+func (e SourceEbayFinanceUpdateRefreshTokenEndpoint) ToPointer() *SourceEbayFinanceUpdateRefreshTokenEndpoint {
+	return &e
+}
+func (e *SourceEbayFinanceUpdateRefreshTokenEndpoint) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "https://api.sandbox.ebay.com/identity/v1/oauth2/token":
+		fallthrough
+	case "https://api.ebay.com/identity/v1/oauth2/token":
+		*e = SourceEbayFinanceUpdateRefreshTokenEndpoint(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceEbayFinanceUpdateRefreshTokenEndpoint: %v", v)
+	}
+}
+
 type SourceEbayFinanceUpdate struct {
+	// https://apiz.sandbox.ebay.com for sandbox & https://apiz.ebay.com for production
+	APIHost *SourceEbayFinanceUpdateAPIHost `default:"https://apiz.ebay.com" json:"api_host"`
+	// Ebay Client Secret
+	Password             *string                                      `json:"password,omitempty"`
+	RedirectURI          string                                       `json:"redirect_uri"`
+	RefreshToken         string                                       `json:"refresh_token"`
+	StartDate            time.Time                                    `json:"start_date"`
 	TokenRefreshEndpoint *SourceEbayFinanceUpdateRefreshTokenEndpoint `default:"https://api.ebay.com/identity/v1/oauth2/token" json:"token_refresh_endpoint"`
 	// Ebay Developer Client ID
 	Username string `json:"username"`
-	// Ebay Client Secret
-	Password     *string `json:"password,omitempty"`
-	RedirectURI  string  `json:"redirect_uri"`
-	RefreshToken string  `json:"refresh_token"`
-	// https://apiz.sandbox.ebay.com for sandbox & https://apiz.ebay.com for production
-	APIHost   *SourceEbayFinanceUpdateAPIHost `default:"https://apiz.ebay.com" json:"api_host"`
-	StartDate time.Time                       `json:"start_date"`
 }
 
 func (s SourceEbayFinanceUpdate) MarshalJSON() ([]byte, error) {
@@ -86,18 +86,11 @@ func (s *SourceEbayFinanceUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceEbayFinanceUpdate) GetTokenRefreshEndpoint() *SourceEbayFinanceUpdateRefreshTokenEndpoint {
+func (o *SourceEbayFinanceUpdate) GetAPIHost() *SourceEbayFinanceUpdateAPIHost {
 	if o == nil {
 		return nil
 	}
-	return o.TokenRefreshEndpoint
-}
-
-func (o *SourceEbayFinanceUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	return o.APIHost
 }
 
 func (o *SourceEbayFinanceUpdate) GetPassword() *string {
@@ -121,16 +114,23 @@ func (o *SourceEbayFinanceUpdate) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-func (o *SourceEbayFinanceUpdate) GetAPIHost() *SourceEbayFinanceUpdateAPIHost {
-	if o == nil {
-		return nil
-	}
-	return o.APIHost
-}
-
 func (o *SourceEbayFinanceUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceEbayFinanceUpdate) GetTokenRefreshEndpoint() *SourceEbayFinanceUpdateRefreshTokenEndpoint {
+	if o == nil {
+		return nil
+	}
+	return o.TokenRefreshEndpoint
+}
+
+func (o *SourceEbayFinanceUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

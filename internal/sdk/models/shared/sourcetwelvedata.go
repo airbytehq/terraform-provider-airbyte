@@ -91,11 +91,11 @@ type SourceTwelveData struct {
 	Country *string `json:"country,omitempty"`
 	// Where instrument is traded
 	Exchange *string `json:"exchange,omitempty"`
-	// Ticker of the instrument
-	Symbol *string `json:"symbol,omitempty"`
 	// Between two consecutive points in time series Supports: 1min, 5min, 15min, 30min, 45min, 1h, 2h, 4h, 1day, 1week, 1month
-	Interval   *SourceTwelveDataInterval `default:"1day" json:"interval"`
-	sourceType TwelveData                `const:"twelve-data" json:"sourceType"`
+	Interval *SourceTwelveDataInterval `default:"1day" json:"interval"`
+	// Ticker of the instrument
+	Symbol     *string    `json:"symbol,omitempty"`
+	sourceType TwelveData `const:"twelve-data" json:"sourceType"`
 }
 
 func (s SourceTwelveData) MarshalJSON() ([]byte, error) {
@@ -130,18 +130,18 @@ func (o *SourceTwelveData) GetExchange() *string {
 	return o.Exchange
 }
 
-func (o *SourceTwelveData) GetSymbol() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Symbol
-}
-
 func (o *SourceTwelveData) GetInterval() *SourceTwelveDataInterval {
 	if o == nil {
 		return nil
 	}
 	return o.Interval
+}
+
+func (o *SourceTwelveData) GetSymbol() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Symbol
 }
 
 func (o *SourceTwelveData) GetSourceType() TwelveData {

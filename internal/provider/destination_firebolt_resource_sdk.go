@@ -21,14 +21,20 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var account string
+	account = r.Configuration.Account.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var account string
-	account = r.Configuration.Account.ValueString()
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	var engine string
+	engine = r.Configuration.Engine.ValueString()
 
 	host := new(string)
 	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
@@ -36,12 +42,6 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltCreateRequ
 	} else {
 		host = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var engine string
-	engine = r.Configuration.Engine.ValueString()
-
 	var loadingMethod *shared.DestinationFireboltLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
 		var sqlInserts *shared.SQLInserts
@@ -55,23 +55,23 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltCreateRequ
 		}
 		var externalTableViaS3 *shared.ExternalTableViaS3
 		if r.Configuration.LoadingMethod.ExternalTableViaS3 != nil {
-			var s3Bucket string
-			s3Bucket = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Bucket.ValueString()
-
-			var s3Region string
-			s3Region = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Region.ValueString()
-
 			var awsKeyID string
 			awsKeyID = r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeyID.ValueString()
 
 			var awsKeySecret string
 			awsKeySecret = r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeySecret.ValueString()
 
+			var s3Bucket string
+			s3Bucket = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Bucket.ValueString()
+
+			var s3Region string
+			s3Region = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Region.ValueString()
+
 			externalTableViaS3 = &shared.ExternalTableViaS3{
-				S3Bucket:     s3Bucket,
-				S3Region:     s3Region,
 				AwsKeyID:     awsKeyID,
 				AwsKeySecret: awsKeySecret,
+				S3Bucket:     s3Bucket,
+				S3Region:     s3Region,
 			}
 		}
 		if externalTableViaS3 != nil {
@@ -81,12 +81,12 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltCreateRequ
 		}
 	}
 	configuration := shared.DestinationFirebolt{
+		Account:       account,
 		ClientID:      clientID,
 		ClientSecret:  clientSecret,
-		Account:       account,
-		Host:          host,
 		Database:      database,
 		Engine:        engine,
+		Host:          host,
 		LoadingMethod: loadingMethod,
 	}
 	out := shared.DestinationFireboltCreateRequest{
@@ -152,14 +152,20 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var account string
+	account = r.Configuration.Account.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var account string
-	account = r.Configuration.Account.ValueString()
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	var engine string
+	engine = r.Configuration.Engine.ValueString()
 
 	host := new(string)
 	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
@@ -167,12 +173,6 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltPutRequest
 	} else {
 		host = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var engine string
-	engine = r.Configuration.Engine.ValueString()
-
 	var loadingMethod *shared.DestinationFireboltUpdateLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
 		var destinationFireboltUpdateSQLInserts *shared.DestinationFireboltUpdateSQLInserts
@@ -186,23 +186,23 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltPutRequest
 		}
 		var destinationFireboltUpdateExternalTableViaS3 *shared.DestinationFireboltUpdateExternalTableViaS3
 		if r.Configuration.LoadingMethod.ExternalTableViaS3 != nil {
-			var s3Bucket string
-			s3Bucket = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Bucket.ValueString()
-
-			var s3Region string
-			s3Region = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Region.ValueString()
-
 			var awsKeyID string
 			awsKeyID = r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeyID.ValueString()
 
 			var awsKeySecret string
 			awsKeySecret = r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeySecret.ValueString()
 
+			var s3Bucket string
+			s3Bucket = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Bucket.ValueString()
+
+			var s3Region string
+			s3Region = r.Configuration.LoadingMethod.ExternalTableViaS3.S3Region.ValueString()
+
 			destinationFireboltUpdateExternalTableViaS3 = &shared.DestinationFireboltUpdateExternalTableViaS3{
-				S3Bucket:     s3Bucket,
-				S3Region:     s3Region,
 				AwsKeyID:     awsKeyID,
 				AwsKeySecret: awsKeySecret,
+				S3Bucket:     s3Bucket,
+				S3Region:     s3Region,
 			}
 		}
 		if destinationFireboltUpdateExternalTableViaS3 != nil {
@@ -212,12 +212,12 @@ func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltPutRequest
 		}
 	}
 	configuration := shared.DestinationFireboltUpdate{
+		Account:       account,
 		ClientID:      clientID,
 		ClientSecret:  clientSecret,
-		Account:       account,
-		Host:          host,
 		Database:      database,
 		Engine:        engine,
+		Host:          host,
 		LoadingMethod: loadingMethod,
 	}
 	out := shared.DestinationFireboltPutRequest{

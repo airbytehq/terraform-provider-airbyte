@@ -3,15 +3,8 @@
 package shared
 
 type SourceThinkificCoursesUpdate struct {
-	APIKey         string `json:"api_key"`
 	XAuthSubdomain string `json:"X-Auth-Subdomain"`
-}
-
-func (o *SourceThinkificCoursesUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
+	APIKey         string `json:"api_key"`
 }
 
 func (o *SourceThinkificCoursesUpdate) GetXAuthSubdomain() string {
@@ -19,4 +12,11 @@ func (o *SourceThinkificCoursesUpdate) GetXAuthSubdomain() string {
 		return ""
 	}
 	return o.XAuthSubdomain
+}
+
+func (o *SourceThinkificCoursesUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }

@@ -61,19 +61,19 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 	}
 	var destinationSnowflakeCortexAzureOpenAI *shared.DestinationSnowflakeCortexAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationSnowflakeCortexAzureOpenAI = &shared.DestinationSnowflakeCortexAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationSnowflakeCortexAzureOpenAI != nil {
@@ -92,20 +92,20 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationSnowflakeCortexOpenAICompatible = &shared.DestinationSnowflakeCortexOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationSnowflakeCortexOpenAICompatible != nil {
@@ -113,40 +113,92 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 			DestinationSnowflakeCortexOpenAICompatible: destinationSnowflakeCortexOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var password string
+	password = r.Configuration.Indexing.Credentials.Password.ValueString()
 
+	credentials := shared.DestinationSnowflakeCortexCredentials{
+		Password: password,
+	}
+	var database string
+	database = r.Configuration.Indexing.Database.ValueString()
+
+	var defaultSchema string
+	defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
+
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	var role string
+	role = r.Configuration.Indexing.Role.ValueString()
+
+	var username string
+	username = r.Configuration.Indexing.Username.ValueString()
+
+	var warehouse string
+	warehouse = r.Configuration.Indexing.Warehouse.ValueString()
+
+	indexing := shared.SnowflakeConnection{
+		Credentials:   credentials,
+		Database:      database,
+		DefaultSchema: defaultSchema,
+		Host:          host,
+		Role:          role,
+		Username:      username,
+		Warehouse:     warehouse,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationSnowflakeCortexFieldNameMappingConfigModel = []shared.DestinationSnowflakeCortexFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationSnowflakeCortexFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationSnowflakeCortexTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationSnowflakeCortexBySeparator *shared.DestinationSnowflakeCortexBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationSnowflakeCortexBySeparator = &shared.DestinationSnowflakeCortexBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationSnowflakeCortexBySeparator != nil {
@@ -184,71 +236,19 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationSnowflakeCortexFieldNameMappingConfigModel = []shared.DestinationSnowflakeCortexFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationSnowflakeCortexFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationSnowflakeCortexProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	var role string
-	role = r.Configuration.Indexing.Role.ValueString()
-
-	var warehouse string
-	warehouse = r.Configuration.Indexing.Warehouse.ValueString()
-
-	var database string
-	database = r.Configuration.Indexing.Database.ValueString()
-
-	var defaultSchema string
-	defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
-
-	var username string
-	username = r.Configuration.Indexing.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Indexing.Credentials.Password.ValueString()
-
-	credentials := shared.DestinationSnowflakeCortexCredentials{
-		Password: password,
-	}
-	indexing := shared.SnowflakeConnection{
-		Host:          host,
-		Role:          role,
-		Warehouse:     warehouse,
-		Database:      database,
-		DefaultSchema: defaultSchema,
-		Username:      username,
-		Credentials:   credentials,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationSnowflakeCortex{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationSnowflakeCortexCreateRequest{
 		Name:          name,
@@ -353,19 +353,19 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 	}
 	var destinationSnowflakeCortexUpdateAzureOpenAI *shared.DestinationSnowflakeCortexUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationSnowflakeCortexUpdateAzureOpenAI = &shared.DestinationSnowflakeCortexUpdateAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationSnowflakeCortexUpdateAzureOpenAI != nil {
@@ -384,20 +384,20 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationSnowflakeCortexUpdateOpenAICompatible = &shared.DestinationSnowflakeCortexUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationSnowflakeCortexUpdateOpenAICompatible != nil {
@@ -405,40 +405,92 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 			DestinationSnowflakeCortexUpdateOpenAICompatible: destinationSnowflakeCortexUpdateOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var password string
+	password = r.Configuration.Indexing.Credentials.Password.ValueString()
 
+	credentials := shared.DestinationSnowflakeCortexUpdateCredentials{
+		Password: password,
+	}
+	var database string
+	database = r.Configuration.Indexing.Database.ValueString()
+
+	var defaultSchema string
+	defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
+
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	var role string
+	role = r.Configuration.Indexing.Role.ValueString()
+
+	var username string
+	username = r.Configuration.Indexing.Username.ValueString()
+
+	var warehouse string
+	warehouse = r.Configuration.Indexing.Warehouse.ValueString()
+
+	indexing := shared.DestinationSnowflakeCortexUpdateSnowflakeConnection{
+		Credentials:   credentials,
+		Database:      database,
+		DefaultSchema: defaultSchema,
+		Host:          host,
+		Role:          role,
+		Username:      username,
+		Warehouse:     warehouse,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationSnowflakeCortexUpdateFieldNameMappingConfigModel = []shared.DestinationSnowflakeCortexUpdateFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationSnowflakeCortexUpdateFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationSnowflakeCortexUpdateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationSnowflakeCortexUpdateBySeparator *shared.DestinationSnowflakeCortexUpdateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationSnowflakeCortexUpdateBySeparator = &shared.DestinationSnowflakeCortexUpdateBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationSnowflakeCortexUpdateBySeparator != nil {
@@ -476,71 +528,19 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationSnowflakeCortexUpdateFieldNameMappingConfigModel = []shared.DestinationSnowflakeCortexUpdateFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationSnowflakeCortexUpdateFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationSnowflakeCortexUpdateProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	var role string
-	role = r.Configuration.Indexing.Role.ValueString()
-
-	var warehouse string
-	warehouse = r.Configuration.Indexing.Warehouse.ValueString()
-
-	var database string
-	database = r.Configuration.Indexing.Database.ValueString()
-
-	var defaultSchema string
-	defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
-
-	var username string
-	username = r.Configuration.Indexing.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Indexing.Credentials.Password.ValueString()
-
-	credentials := shared.DestinationSnowflakeCortexUpdateCredentials{
-		Password: password,
-	}
-	indexing := shared.DestinationSnowflakeCortexUpdateSnowflakeConnection{
-		Host:          host,
-		Role:          role,
-		Warehouse:     warehouse,
-		Database:      database,
-		DefaultSchema: defaultSchema,
-		Username:      username,
-		Credentials:   credentials,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationSnowflakeCortexUpdate{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationSnowflakeCortexPutRequest{
 		Name:          name,

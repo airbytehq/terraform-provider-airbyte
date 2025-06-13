@@ -26,19 +26,13 @@ func (r *SourceCimisResourceModel) ToSharedSourceCimisCreateRequest() *shared.So
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	targetsType := shared.TargetsType(r.Configuration.TargetsType.ValueString())
-	var targets []interface{} = []interface{}{}
-	for _, targetsItem := range r.Configuration.Targets {
-		var targetsTmp interface{}
-		_ = json.Unmarshal([]byte(targetsItem.ValueString()), &targetsTmp)
-		targets = append(targets, targetsTmp)
-	}
 	var dailyDataItems []interface{} = []interface{}{}
 	for _, dailyDataItemsItem := range r.Configuration.DailyDataItems {
 		var dailyDataItemsTmp interface{}
 		_ = json.Unmarshal([]byte(dailyDataItemsItem.ValueString()), &dailyDataItemsTmp)
 		dailyDataItems = append(dailyDataItems, dailyDataItemsTmp)
 	}
+	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	var hourlyDataItems []interface{} = []interface{}{}
 	for _, hourlyDataItemsItem := range r.Configuration.HourlyDataItems {
 		var hourlyDataItemsTmp interface{}
@@ -46,7 +40,13 @@ func (r *SourceCimisResourceModel) ToSharedSourceCimisCreateRequest() *shared.So
 		hourlyDataItems = append(hourlyDataItems, hourlyDataItemsTmp)
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	var targets []interface{} = []interface{}{}
+	for _, targetsItem := range r.Configuration.Targets {
+		var targetsTmp interface{}
+		_ = json.Unmarshal([]byte(targetsItem.ValueString()), &targetsTmp)
+		targets = append(targets, targetsTmp)
+	}
+	targetsType := shared.TargetsType(r.Configuration.TargetsType.ValueString())
 	unitOfMeasure := new(shared.UnitOfMeasure)
 	if !r.Configuration.UnitOfMeasure.IsUnknown() && !r.Configuration.UnitOfMeasure.IsNull() {
 		*unitOfMeasure = shared.UnitOfMeasure(r.Configuration.UnitOfMeasure.ValueString())
@@ -55,12 +55,12 @@ func (r *SourceCimisResourceModel) ToSharedSourceCimisCreateRequest() *shared.So
 	}
 	configuration := shared.SourceCimis{
 		APIKey:          apiKey,
-		TargetsType:     targetsType,
-		Targets:         targets,
 		DailyDataItems:  dailyDataItems,
+		EndDate:         endDate,
 		HourlyDataItems: hourlyDataItems,
 		StartDate:       startDate,
-		EndDate:         endDate,
+		Targets:         targets,
+		TargetsType:     targetsType,
 		UnitOfMeasure:   unitOfMeasure,
 	}
 	secretID := new(string)
@@ -136,19 +136,13 @@ func (r *SourceCimisResourceModel) ToSharedSourceCimisPutRequest() *shared.Sourc
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	targetsType := shared.SourceCimisUpdateTargetsType(r.Configuration.TargetsType.ValueString())
-	var targets []interface{} = []interface{}{}
-	for _, targetsItem := range r.Configuration.Targets {
-		var targetsTmp interface{}
-		_ = json.Unmarshal([]byte(targetsItem.ValueString()), &targetsTmp)
-		targets = append(targets, targetsTmp)
-	}
 	var dailyDataItems []interface{} = []interface{}{}
 	for _, dailyDataItemsItem := range r.Configuration.DailyDataItems {
 		var dailyDataItemsTmp interface{}
 		_ = json.Unmarshal([]byte(dailyDataItemsItem.ValueString()), &dailyDataItemsTmp)
 		dailyDataItems = append(dailyDataItems, dailyDataItemsTmp)
 	}
+	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	var hourlyDataItems []interface{} = []interface{}{}
 	for _, hourlyDataItemsItem := range r.Configuration.HourlyDataItems {
 		var hourlyDataItemsTmp interface{}
@@ -156,7 +150,13 @@ func (r *SourceCimisResourceModel) ToSharedSourceCimisPutRequest() *shared.Sourc
 		hourlyDataItems = append(hourlyDataItems, hourlyDataItemsTmp)
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	var targets []interface{} = []interface{}{}
+	for _, targetsItem := range r.Configuration.Targets {
+		var targetsTmp interface{}
+		_ = json.Unmarshal([]byte(targetsItem.ValueString()), &targetsTmp)
+		targets = append(targets, targetsTmp)
+	}
+	targetsType := shared.SourceCimisUpdateTargetsType(r.Configuration.TargetsType.ValueString())
 	unitOfMeasure := new(shared.SourceCimisUpdateUnitOfMeasure)
 	if !r.Configuration.UnitOfMeasure.IsUnknown() && !r.Configuration.UnitOfMeasure.IsNull() {
 		*unitOfMeasure = shared.SourceCimisUpdateUnitOfMeasure(r.Configuration.UnitOfMeasure.ValueString())
@@ -165,12 +165,12 @@ func (r *SourceCimisResourceModel) ToSharedSourceCimisPutRequest() *shared.Sourc
 	}
 	configuration := shared.SourceCimisUpdate{
 		APIKey:          apiKey,
-		TargetsType:     targetsType,
-		Targets:         targets,
 		DailyDataItems:  dailyDataItems,
+		EndDate:         endDate,
 		HourlyDataItems: hourlyDataItems,
 		StartDate:       startDate,
-		EndDate:         endDate,
+		Targets:         targets,
+		TargetsType:     targetsType,
 		UnitOfMeasure:   unitOfMeasure,
 	}
 	out := shared.SourceCimisPutRequest{

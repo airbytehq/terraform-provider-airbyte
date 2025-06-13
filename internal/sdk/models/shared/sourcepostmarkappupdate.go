@@ -3,17 +3,10 @@
 package shared
 
 type SourcePostmarkappUpdate struct {
-	// API Key for server
-	XPostmarkServerToken string `json:"X-Postmark-Server-Token"`
 	// API Key for account
 	XPostmarkAccountToken string `json:"X-Postmark-Account-Token"`
-}
-
-func (o *SourcePostmarkappUpdate) GetXPostmarkServerToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.XPostmarkServerToken
+	// API Key for server
+	XPostmarkServerToken string `json:"X-Postmark-Server-Token"`
 }
 
 func (o *SourcePostmarkappUpdate) GetXPostmarkAccountToken() string {
@@ -21,4 +14,11 @@ func (o *SourcePostmarkappUpdate) GetXPostmarkAccountToken() string {
 		return ""
 	}
 	return o.XPostmarkAccountToken
+}
+
+func (o *SourcePostmarkappUpdate) GetXPostmarkServerToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkServerToken
 }

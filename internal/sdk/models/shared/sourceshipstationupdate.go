@@ -9,8 +9,8 @@ import (
 
 type SourceShipstationUpdate struct {
 	Password  *string   `json:"password,omitempty"`
-	Username  string    `json:"username"`
 	StartDate time.Time `json:"start_date"`
+	Username  string    `json:"username"`
 }
 
 func (s SourceShipstationUpdate) MarshalJSON() ([]byte, error) {
@@ -31,16 +31,16 @@ func (o *SourceShipstationUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceShipstationUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceShipstationUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceShipstationUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

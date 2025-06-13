@@ -25,17 +25,17 @@ func (r *SourceNebiusAiResourceModel) ToSharedSourceNebiusAiCreateRequest() *sha
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
 	} else {
 		limit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNebiusAi{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		Limit:     limit,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,17 +110,17 @@ func (r *SourceNebiusAiResourceModel) ToSharedSourceNebiusAiPutRequest() *shared
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
 	} else {
 		limit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNebiusAiUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		Limit:     limit,
+		StartDate: startDate,
 	}
 	out := shared.SourceNebiusAiPutRequest{
 		Name:          name,

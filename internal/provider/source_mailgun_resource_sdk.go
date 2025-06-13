@@ -22,15 +22,15 @@ func (r *SourceMailgunResourceModel) ToSharedSourceMailgunCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var privateKey string
-	privateKey = r.Configuration.PrivateKey.ValueString()
-
 	domainRegion := new(shared.DomainRegionCode)
 	if !r.Configuration.DomainRegion.IsUnknown() && !r.Configuration.DomainRegion.IsNull() {
 		*domainRegion = shared.DomainRegionCode(r.Configuration.DomainRegion.ValueString())
 	} else {
 		domainRegion = nil
 	}
+	var privateKey string
+	privateKey = r.Configuration.PrivateKey.ValueString()
+
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -38,8 +38,8 @@ func (r *SourceMailgunResourceModel) ToSharedSourceMailgunCreateRequest() *share
 		startDate = nil
 	}
 	configuration := shared.SourceMailgun{
-		PrivateKey:   privateKey,
 		DomainRegion: domainRegion,
+		PrivateKey:   privateKey,
 		StartDate:    startDate,
 	}
 	secretID := new(string)
@@ -112,15 +112,15 @@ func (r *SourceMailgunResourceModel) ToSharedSourceMailgunPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var privateKey string
-	privateKey = r.Configuration.PrivateKey.ValueString()
-
 	domainRegion := new(shared.SourceMailgunUpdateDomainRegionCode)
 	if !r.Configuration.DomainRegion.IsUnknown() && !r.Configuration.DomainRegion.IsNull() {
 		*domainRegion = shared.SourceMailgunUpdateDomainRegionCode(r.Configuration.DomainRegion.ValueString())
 	} else {
 		domainRegion = nil
 	}
+	var privateKey string
+	privateKey = r.Configuration.PrivateKey.ValueString()
+
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -128,8 +128,8 @@ func (r *SourceMailgunResourceModel) ToSharedSourceMailgunPutRequest() *shared.S
 		startDate = nil
 	}
 	configuration := shared.SourceMailgunUpdate{
-		PrivateKey:   privateKey,
 		DomainRegion: domainRegion,
+		PrivateKey:   privateKey,
 		StartDate:    startDate,
 	}
 	out := shared.SourceMailgunPutRequest{

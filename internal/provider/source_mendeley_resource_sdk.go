@@ -25,18 +25,11 @@ func (r *SourceMendeleyResourceModel) ToSharedSourceMendeleyCreateRequest() *sha
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	queryForCatalog := new(string)
-	if !r.Configuration.QueryForCatalog.IsUnknown() && !r.Configuration.QueryForCatalog.IsNull() {
-		*queryForCatalog = r.Configuration.QueryForCatalog.ValueString()
-	} else {
-		queryForCatalog = nil
-	}
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	nameForInstitution := new(string)
 	if !r.Configuration.NameForInstitution.IsUnknown() && !r.Configuration.NameForInstitution.IsNull() {
@@ -44,13 +37,20 @@ func (r *SourceMendeleyResourceModel) ToSharedSourceMendeleyCreateRequest() *sha
 	} else {
 		nameForInstitution = nil
 	}
+	queryForCatalog := new(string)
+	if !r.Configuration.QueryForCatalog.IsUnknown() && !r.Configuration.QueryForCatalog.IsNull() {
+		*queryForCatalog = r.Configuration.QueryForCatalog.ValueString()
+	} else {
+		queryForCatalog = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceMendeley{
 		ClientID:           clientID,
-		StartDate:          startDate,
-		ClientSecret:       clientSecret,
-		QueryForCatalog:    queryForCatalog,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 		NameForInstitution: nameForInstitution,
+		QueryForCatalog:    queryForCatalog,
+		StartDate:          startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -125,18 +125,11 @@ func (r *SourceMendeleyResourceModel) ToSharedSourceMendeleyPutRequest() *shared
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	queryForCatalog := new(string)
-	if !r.Configuration.QueryForCatalog.IsUnknown() && !r.Configuration.QueryForCatalog.IsNull() {
-		*queryForCatalog = r.Configuration.QueryForCatalog.ValueString()
-	} else {
-		queryForCatalog = nil
-	}
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	nameForInstitution := new(string)
 	if !r.Configuration.NameForInstitution.IsUnknown() && !r.Configuration.NameForInstitution.IsNull() {
@@ -144,13 +137,20 @@ func (r *SourceMendeleyResourceModel) ToSharedSourceMendeleyPutRequest() *shared
 	} else {
 		nameForInstitution = nil
 	}
+	queryForCatalog := new(string)
+	if !r.Configuration.QueryForCatalog.IsUnknown() && !r.Configuration.QueryForCatalog.IsNull() {
+		*queryForCatalog = r.Configuration.QueryForCatalog.ValueString()
+	} else {
+		queryForCatalog = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceMendeleyUpdate{
 		ClientID:           clientID,
-		StartDate:          startDate,
-		ClientSecret:       clientSecret,
-		QueryForCatalog:    queryForCatalog,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 		NameForInstitution: nameForInstitution,
+		QueryForCatalog:    queryForCatalog,
+		StartDate:          startDate,
 	}
 	out := shared.SourceMendeleyPutRequest{
 		Name:          name,

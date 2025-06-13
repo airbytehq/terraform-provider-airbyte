@@ -8,10 +8,10 @@ import (
 )
 
 type SourceFrontUpdate struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Page limit for the responses
-	PageLimit *string `default:"50" json:"page_limit"`
+	PageLimit *string   `default:"50" json:"page_limit"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceFrontUpdate) MarshalJSON() ([]byte, error) {
@@ -32,16 +32,16 @@ func (o *SourceFrontUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceFrontUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceFrontUpdate) GetPageLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.PageLimit
+}
+
+func (o *SourceFrontUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

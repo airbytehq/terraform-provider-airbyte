@@ -21,32 +21,35 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickCrea
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var database string
+	database = r.Configuration.Database.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
 	} else {
 		schema = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -143,12 +146,6 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickCrea
 			}
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
 	var tunnelMethod *shared.DestinationYellowbrickSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationYellowbrickNoTunnel *shared.DestinationYellowbrickNoTunnel
@@ -162,6 +159,9 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickCrea
 		}
 		var destinationYellowbrickSSHKeyAuthentication *shared.DestinationYellowbrickSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -174,14 +174,11 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickCrea
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationYellowbrickSSHKeyAuthentication = &shared.DestinationYellowbrickSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationYellowbrickSSHKeyAuthentication != nil {
@@ -219,17 +216,20 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickCrea
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationYellowbrick{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Schema:        schema,
-		Username:      username,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
 		Password:      password,
+		Port:          port,
+		Schema:        schema,
 		Ssl:           ssl,
 		SslMode:       sslMode,
-		JdbcURLParams: jdbcURLParams,
 		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	out := shared.DestinationYellowbrickCreateRequest{
 		Name:          name,
@@ -294,32 +294,35 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickPutR
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var database string
+	database = r.Configuration.Database.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
 	} else {
 		schema = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -416,12 +419,6 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickPutR
 			}
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
 	var tunnelMethod *shared.DestinationYellowbrickUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationYellowbrickUpdateNoTunnel *shared.DestinationYellowbrickUpdateNoTunnel
@@ -435,6 +432,9 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickPutR
 		}
 		var destinationYellowbrickUpdateSSHKeyAuthentication *shared.DestinationYellowbrickUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -447,14 +447,11 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickPutR
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationYellowbrickUpdateSSHKeyAuthentication = &shared.DestinationYellowbrickUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationYellowbrickUpdateSSHKeyAuthentication != nil {
@@ -492,17 +489,20 @@ func (r *DestinationYellowbrickResourceModel) ToSharedDestinationYellowbrickPutR
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationYellowbrickUpdate{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Schema:        schema,
-		Username:      username,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
 		Password:      password,
+		Port:          port,
+		Schema:        schema,
 		Ssl:           ssl,
 		SslMode:       sslMode,
-		JdbcURLParams: jdbcURLParams,
 		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	out := shared.DestinationYellowbrickPutRequest{
 		Name:          name,

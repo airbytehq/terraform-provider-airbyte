@@ -3,12 +3,19 @@
 package shared
 
 type SourcePartnerstackUpdate struct {
+	// The Live Private Key for a Partnerstack account.
+	PrivateKey string `json:"private_key"`
 	// The Live Public Key for a Partnerstack account.
 	PublicKey string `json:"public_key"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate *string `json:"start_date,omitempty"`
-	// The Live Private Key for a Partnerstack account.
-	PrivateKey string `json:"private_key"`
+}
+
+func (o *SourcePartnerstackUpdate) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
 }
 
 func (o *SourcePartnerstackUpdate) GetPublicKey() string {
@@ -23,11 +30,4 @@ func (o *SourcePartnerstackUpdate) GetStartDate() *string {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourcePartnerstackUpdate) GetPrivateKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.PrivateKey
 }

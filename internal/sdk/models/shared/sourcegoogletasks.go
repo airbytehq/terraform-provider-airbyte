@@ -33,10 +33,10 @@ func (e *GoogleTasks) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleTasks struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// The maximum number of records to be returned per request
 	RecordsLimit *string     `default:"50" json:"records_limit"`
+	StartDate    time.Time   `json:"start_date"`
 	sourceType   GoogleTasks `const:"google-tasks" json:"sourceType"`
 }
 
@@ -58,18 +58,18 @@ func (o *SourceGoogleTasks) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceGoogleTasks) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceGoogleTasks) GetRecordsLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RecordsLimit
+}
+
+func (o *SourceGoogleTasks) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceGoogleTasks) GetSourceType() GoogleTasks {

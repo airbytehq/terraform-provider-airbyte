@@ -9,12 +9,12 @@ import (
 type SourceMyHoursUpdate struct {
 	// Your My Hours username
 	Email string `json:"email"`
+	// Pagination size used for retrieving logs in days
+	LogsBatchSize *int64 `default:"30" json:"logs_batch_size"`
 	// The password associated to the username
 	Password string `json:"password"`
 	// Start date for collecting time logs
 	StartDate string `json:"start_date"`
-	// Pagination size used for retrieving logs in days
-	LogsBatchSize *int64 `default:"30" json:"logs_batch_size"`
 }
 
 func (s SourceMyHoursUpdate) MarshalJSON() ([]byte, error) {
@@ -35,6 +35,13 @@ func (o *SourceMyHoursUpdate) GetEmail() string {
 	return o.Email
 }
 
+func (o *SourceMyHoursUpdate) GetLogsBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LogsBatchSize
+}
+
 func (o *SourceMyHoursUpdate) GetPassword() string {
 	if o == nil {
 		return ""
@@ -47,11 +54,4 @@ func (o *SourceMyHoursUpdate) GetStartDate() string {
 		return ""
 	}
 	return o.StartDate
-}
-
-func (o *SourceMyHoursUpdate) GetLogsBatchSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.LogsBatchSize
 }

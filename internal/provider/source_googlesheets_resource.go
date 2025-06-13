@@ -66,11 +66,29 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
+					"allow_leading_numbers": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Allows column names to start with numbers. Example: "50th Percentile" → "50_th_percentile" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled. Default: false`,
+					},
 					"batch_size": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     int64default.StaticInt64(1000000),
 						Description: `Default value is 1000000. An integer representing row batch size for each sent request to Google Sheets API. Row batch size means how many rows are processed from the google sheet, for example default value 1000000 would process rows 2-1000002, then 1000003-2000003 and so on. Based on <a href='https://developers.google.com/sheets/api/limits'>Google Sheets API limits documentation</a>, it is possible to send up to 300 requests per minute, but each individual request has to be processed under 180 seconds, otherwise the request returns a timeout error. In regards to this information, consider network speed and number of columns of the google sheet when deciding a batch_size value. Default: 1000000`,
+					},
+					"combine_letter_number_pairs": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Combines adjacent letters and numbers. Example: "Q3 2023" → "q3_2023" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled. Default: false`,
+					},
+					"combine_number_word_pairs": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Combines adjacent numbers and words. Example: "50th Percentile?" → "_50th_percentile_" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled. Default: false`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
@@ -122,11 +140,50 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 						Computed:    true,
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
-						Description: `Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based. Default: false`,
+						Description: `Converts column names to a SQL-compliant format (snake_case, lowercase, etc). If enabled, you can further customize the sanitization using the options below. Default: false`,
+					},
+					"remove_leading_trailing_underscores": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Removes leading and trailing underscores from column names. Does not remove leading underscores from column names that start with a number. Example: "50th Percentile? "→ "_50_th_percentile" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled. Default: false`,
+					},
+					"remove_special_characters": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Removes all special characters from column names. Example: "Example ID*" → "example_id" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled. Default: false`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter the link to the Google spreadsheet you want to sync. To copy the link, click the 'Share' button in the top-right corner of the spreadsheet, then click 'Copy link'.`,
+					},
+					"stream_name_overrides": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"custom_stream_name": schema.StringAttribute{
+									Required:    true,
+									Description: `The name you want this stream to appear as in Airbyte and your destination.`,
+								},
+								"source_stream_name": schema.StringAttribute{
+									Required:    true,
+									Description: `The exact name of the sheet/tab in your Google Spreadsheet.`,
+								},
+							},
+						},
+						MarkdownDescription: `**Overridden streams will default to Sync Mode: Full Refresh (Append), which does not support primary keys. If you want to use primary keys and deduplication, update the sync mode to "Full Refresh | Overwrite + Deduped" in your connection settings.**` + "\n" +
+							`Allows you to rename streams (Google Sheet tab names) as they appear in Airbyte. ` + "\n" +
+							`Each item should be an object with a ` + "`" + `source_stream_name` + "`" + ` (the exact name of the sheet/tab in your spreadsheet)  and a ` + "`" + `custom_stream_name` + "`" + ` (the name you want it to appear as in Airbyte and the destination).` + "\n" +
+							`If a ` + "`" + `source_stream_name` + "`" + ` is not found in your spreadsheet, it will be ignored and the default name will be used. This feature only affects stream (sheet/tab) names, not field/column names.` + "\n" +
+							`If you want to rename fields or column names, you can do so using the Airbyte Mappings feature after your connection is created. See the Airbyte documentation for more details on how to use Mappings.` + "\n" +
+							`Examples:` + "\n" +
+							`  - To rename a sheet called "Sheet1" to "sales_data", and "2024 Q1" to "q1_2024":` + "\n" +
+							`    [` + "\n" +
+							`      { "source_stream_name": "Sheet1", "custom_stream_name": "sales_data" },` + "\n" +
+							`      { "source_stream_name": "2024 Q1", "custom_stream_name": "q1_2024" }` + "\n" +
+							`    ]` + "\n" +
+							`  - If you do not wish to rename any streams, leave this blank.`,
 					},
 				},
 			},

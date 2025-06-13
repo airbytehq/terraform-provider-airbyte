@@ -26,33 +26,33 @@ func (r *SourceAirtableResourceModel) ToSharedSourceAirtableCreateRequest() *sha
 	if r.Configuration.Credentials != nil {
 		var sourceAirtableOAuth20 *shared.SourceAirtableOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			var clientID string
-			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-
-			var clientSecret string
-			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-
 			accessToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
 				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
+			var clientID string
+			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+
+			var clientSecret string
+			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+
+			var refreshToken string
+			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+
 			tokenExpiryDate := new(time.Time)
 			if !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsNull() {
 				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 			} else {
 				tokenExpiryDate = nil
 			}
-			var refreshToken string
-			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
-
 			sourceAirtableOAuth20 = &shared.SourceAirtableOAuth20{
+				AccessToken:     accessToken,
 				ClientID:        clientID,
 				ClientSecret:    clientSecret,
-				AccessToken:     accessToken,
-				TokenExpiryDate: tokenExpiryDate,
 				RefreshToken:    refreshToken,
+				TokenExpiryDate: tokenExpiryDate,
 			}
 		}
 		if sourceAirtableOAuth20 != nil {
@@ -152,33 +152,33 @@ func (r *SourceAirtableResourceModel) ToSharedSourceAirtablePutRequest() *shared
 	if r.Configuration.Credentials != nil {
 		var sourceAirtableUpdateOAuth20 *shared.SourceAirtableUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			var clientID string
-			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-
-			var clientSecret string
-			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-
 			accessToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
 				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
+			var clientID string
+			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+
+			var clientSecret string
+			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+
+			var refreshToken string
+			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+
 			tokenExpiryDate := new(time.Time)
 			if !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsNull() {
 				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 			} else {
 				tokenExpiryDate = nil
 			}
-			var refreshToken string
-			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
-
 			sourceAirtableUpdateOAuth20 = &shared.SourceAirtableUpdateOAuth20{
+				AccessToken:     accessToken,
 				ClientID:        clientID,
 				ClientSecret:    clientSecret,
-				AccessToken:     accessToken,
-				TokenExpiryDate: tokenExpiryDate,
 				RefreshToken:    refreshToken,
+				TokenExpiryDate: tokenExpiryDate,
 			}
 		}
 		if sourceAirtableUpdateOAuth20 != nil {

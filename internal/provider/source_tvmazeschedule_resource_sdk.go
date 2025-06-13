@@ -21,8 +21,8 @@ func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeScheduleCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
+	var domesticScheduleCountryCode string
+	domesticScheduleCountryCode = r.Configuration.DomesticScheduleCountryCode.ValueString()
 
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -30,8 +30,8 @@ func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeScheduleCreateRe
 	} else {
 		endDate = nil
 	}
-	var domesticScheduleCountryCode string
-	domesticScheduleCountryCode = r.Configuration.DomesticScheduleCountryCode.ValueString()
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
 
 	webScheduleCountryCode := new(string)
 	if !r.Configuration.WebScheduleCountryCode.IsUnknown() && !r.Configuration.WebScheduleCountryCode.IsNull() {
@@ -40,9 +40,9 @@ func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeScheduleCreateRe
 		webScheduleCountryCode = nil
 	}
 	configuration := shared.SourceTvmazeSchedule{
-		StartDate:                   startDate,
-		EndDate:                     endDate,
 		DomesticScheduleCountryCode: domesticScheduleCountryCode,
+		EndDate:                     endDate,
+		StartDate:                   startDate,
 		WebScheduleCountryCode:      webScheduleCountryCode,
 	}
 	secretID := new(string)
@@ -115,8 +115,8 @@ func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeSchedulePutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
+	var domesticScheduleCountryCode string
+	domesticScheduleCountryCode = r.Configuration.DomesticScheduleCountryCode.ValueString()
 
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -124,8 +124,8 @@ func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeSchedulePutReque
 	} else {
 		endDate = nil
 	}
-	var domesticScheduleCountryCode string
-	domesticScheduleCountryCode = r.Configuration.DomesticScheduleCountryCode.ValueString()
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
 
 	webScheduleCountryCode := new(string)
 	if !r.Configuration.WebScheduleCountryCode.IsUnknown() && !r.Configuration.WebScheduleCountryCode.IsNull() {
@@ -134,9 +134,9 @@ func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeSchedulePutReque
 		webScheduleCountryCode = nil
 	}
 	configuration := shared.SourceTvmazeScheduleUpdate{
-		StartDate:                   startDate,
-		EndDate:                     endDate,
 		DomesticScheduleCountryCode: domesticScheduleCountryCode,
+		EndDate:                     endDate,
+		StartDate:                   startDate,
 		WebScheduleCountryCode:      webScheduleCountryCode,
 	}
 	out := shared.SourceTvmazeSchedulePutRequest{

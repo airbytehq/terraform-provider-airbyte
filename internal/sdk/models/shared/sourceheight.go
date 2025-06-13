@@ -33,11 +33,11 @@ func (e *Height) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHeight struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Search query to be used with search stream
-	SearchQuery *string `default:"task" json:"search_query"`
-	sourceType  Height  `const:"height" json:"sourceType"`
+	SearchQuery *string   `default:"task" json:"search_query"`
+	StartDate   time.Time `json:"start_date"`
+	sourceType  Height    `const:"height" json:"sourceType"`
 }
 
 func (s SourceHeight) MarshalJSON() ([]byte, error) {
@@ -58,18 +58,18 @@ func (o *SourceHeight) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceHeight) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceHeight) GetSearchQuery() *string {
 	if o == nil {
 		return nil
 	}
 	return o.SearchQuery
+}
+
+func (o *SourceHeight) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceHeight) GetSourceType() Height {

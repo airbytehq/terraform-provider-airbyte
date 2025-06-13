@@ -21,9 +21,6 @@ func (r *SourceQualarooResourceModel) ToSharedSourceQualarooCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var token string
-	token = r.Configuration.Token.ValueString()
-
 	var key string
 	key = r.Configuration.Key.ValueString()
 
@@ -34,11 +31,14 @@ func (r *SourceQualarooResourceModel) ToSharedSourceQualarooCreateRequest() *sha
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}
+	var token string
+	token = r.Configuration.Token.ValueString()
+
 	configuration := shared.SourceQualaroo{
-		Token:     token,
 		Key:       key,
 		StartDate: startDate,
 		SurveyIds: surveyIds,
+		Token:     token,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,9 +110,6 @@ func (r *SourceQualarooResourceModel) ToSharedSourceQualarooPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var token string
-	token = r.Configuration.Token.ValueString()
-
 	var key string
 	key = r.Configuration.Key.ValueString()
 
@@ -123,11 +120,14 @@ func (r *SourceQualarooResourceModel) ToSharedSourceQualarooPutRequest() *shared
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}
+	var token string
+	token = r.Configuration.Token.ValueString()
+
 	configuration := shared.SourceQualarooUpdate{
-		Token:     token,
 		Key:       key,
 		StartDate: startDate,
 		SurveyIds: surveyIds,
+		Token:     token,
 	}
 	out := shared.SourceQualarooPutRequest{
 		Name:          name,

@@ -26,6 +26,9 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpCreateRequest() *s
 	if r.Configuration.Credentials != nil {
 		var sourceMailchimpOAuth20 *shared.SourceMailchimpOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -38,13 +41,10 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpCreateRequest() *s
 			} else {
 				clientSecret = nil
 			}
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			sourceMailchimpOAuth20 = &shared.SourceMailchimpOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceMailchimpOAuth20 != nil {
@@ -151,6 +151,9 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpPutRequest() *shar
 	if r.Configuration.Credentials != nil {
 		var sourceMailchimpUpdateOAuth20 *shared.SourceMailchimpUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -163,13 +166,10 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpPutRequest() *shar
 			} else {
 				clientSecret = nil
 			}
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			sourceMailchimpUpdateOAuth20 = &shared.SourceMailchimpUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceMailchimpUpdateOAuth20 != nil {

@@ -32,8 +32,8 @@ func (e *Fleetio) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFleetio struct {
-	APIKey       string  `json:"api_key"`
 	AccountToken string  `json:"account_token"`
+	APIKey       string  `json:"api_key"`
 	sourceType   Fleetio `const:"fleetio" json:"sourceType"`
 }
 
@@ -48,18 +48,18 @@ func (s *SourceFleetio) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFleetio) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceFleetio) GetAccountToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountToken
+}
+
+func (o *SourceFleetio) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceFleetio) GetSourceType() Fleetio {

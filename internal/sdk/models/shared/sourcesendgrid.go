@@ -33,11 +33,11 @@ func (e *Sendgrid) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSendgrid struct {
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
 	// Sendgrid API Key, use <a href=\"https://app.sendgrid.com/settings/api_keys/\">admin</a> to generate this key.
-	APIKey     string   `json:"api_key"`
-	sourceType Sendgrid `const:"sendgrid" json:"sourceType"`
+	APIKey string `json:"api_key"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate  time.Time `json:"start_date"`
+	sourceType Sendgrid  `const:"sendgrid" json:"sourceType"`
 }
 
 func (s SourceSendgrid) MarshalJSON() ([]byte, error) {
@@ -51,18 +51,18 @@ func (s *SourceSendgrid) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSendgrid) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceSendgrid) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceSendgrid) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceSendgrid) GetSourceType() Sendgrid {

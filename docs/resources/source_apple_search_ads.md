@@ -15,14 +15,15 @@ SourceAppleSearchAds Resource
 ```terraform
 resource "airbyte_source_apple_search_ads" "my_source_applesearchads" {
   configuration = {
-    backoff_factor  = 10
-    client_id       = "...my_client_id..."
-    client_secret   = "...my_client_secret..."
-    end_date        = "2021-01-01"
-    lookback_window = 7
-    org_id          = 0
-    start_date      = "2020-01-01"
-    timezone        = "UTC"
+    backoff_factor         = 10
+    client_id              = "...my_client_id..."
+    client_secret          = "...my_client_secret..."
+    end_date               = "2021-01-01"
+    lookback_window        = 7
+    org_id                 = 0
+    start_date             = "2020-01-01"
+    timezone               = "UTC"
+    token_refresh_endpoint = "...my_token_refresh_endpoint..."
   }
   definition_id = "f6eb56d1-0915-427d-b110-58bf43673ee3"
   name          = "...my_name..."
@@ -68,6 +69,7 @@ Optional:
 - `end_date` (String) Data is retrieved until that date (included)
 - `lookback_window` (Number) Apple Search Ads uses a 30-day attribution window. However, you may consider smaller values in order to shorten sync durations, at the cost of missing late data attributions. Default: 30
 - `timezone` (String) The timezone for the reporting data. Use 'ORTZ' for Organization Time Zone or 'UTC' for Coordinated Universal Time. Default is UTC. Default: "UTC"; must be one of ["ORTZ", "UTC"]
+- `token_refresh_endpoint` (String) Token Refresh Endpoint. You should override the default value in scenarios  where it's required to proxy requests to Apple's token endpoint. Default: "https://appleid.apple.com/auth/oauth2/token?grant_type=client_credentials&scope=searchadsorg"
 
 
 <a id="nestedatt--resource_allocation"></a>

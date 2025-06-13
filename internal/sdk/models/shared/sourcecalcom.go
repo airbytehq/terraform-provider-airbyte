@@ -32,9 +32,9 @@ func (e *CalCom) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCalCom struct {
-	OrgID string `json:"orgId"`
 	// API key to use. Find it at https://cal.com/account
 	APIKey     string `json:"api_key"`
+	OrgID      string `json:"orgId"`
 	sourceType CalCom `const:"cal-com" json:"sourceType"`
 }
 
@@ -49,18 +49,18 @@ func (s *SourceCalCom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceCalCom) GetOrgID() string {
-	if o == nil {
-		return ""
-	}
-	return o.OrgID
-}
-
 func (o *SourceCalCom) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceCalCom) GetOrgID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OrgID
 }
 
 func (o *SourceCalCom) GetSourceType() CalCom {

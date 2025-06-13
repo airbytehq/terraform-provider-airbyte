@@ -76,10 +76,10 @@ func (e *ZohoBilling) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZohoBilling struct {
-	Region       SourceZohoBillingRegion `json:"region"`
 	ClientID     string                  `json:"client_id"`
 	ClientSecret string                  `json:"client_secret"`
 	RefreshToken string                  `json:"refresh_token"`
+	Region       SourceZohoBillingRegion `json:"region"`
 	sourceType   ZohoBilling             `const:"zoho-billing" json:"sourceType"`
 }
 
@@ -92,13 +92,6 @@ func (s *SourceZohoBilling) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceZohoBilling) GetRegion() SourceZohoBillingRegion {
-	if o == nil {
-		return SourceZohoBillingRegion("")
-	}
-	return o.Region
 }
 
 func (o *SourceZohoBilling) GetClientID() string {
@@ -120,6 +113,13 @@ func (o *SourceZohoBilling) GetRefreshToken() string {
 		return ""
 	}
 	return o.RefreshToken
+}
+
+func (o *SourceZohoBilling) GetRegion() SourceZohoBillingRegion {
+	if o == nil {
+		return SourceZohoBillingRegion("")
+	}
+	return o.Region
 }
 
 func (o *SourceZohoBilling) GetSourceType() ZohoBilling {

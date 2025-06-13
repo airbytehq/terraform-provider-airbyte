@@ -21,15 +21,15 @@ func (r *SourceConvexResourceModel) ToSharedSourceConvexCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var deploymentURL string
-	deploymentURL = r.Configuration.DeploymentURL.ValueString()
-
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	var deploymentURL string
+	deploymentURL = r.Configuration.DeploymentURL.ValueString()
+
 	configuration := shared.SourceConvex{
-		DeploymentURL: deploymentURL,
 		AccessKey:     accessKey,
+		DeploymentURL: deploymentURL,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceConvexResourceModel) ToSharedSourceConvexPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var deploymentURL string
-	deploymentURL = r.Configuration.DeploymentURL.ValueString()
-
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	var deploymentURL string
+	deploymentURL = r.Configuration.DeploymentURL.ValueString()
+
 	configuration := shared.SourceConvexUpdate{
-		DeploymentURL: deploymentURL,
 		AccessKey:     accessKey,
+		DeploymentURL: deploymentURL,
 	}
 	out := shared.SourceConvexPutRequest{
 		Name:          name,

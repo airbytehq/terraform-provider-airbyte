@@ -28,6 +28,20 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *s
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	lookBackWindow := new(int64)
+	if !r.Configuration.LookBackWindow.IsUnknown() && !r.Configuration.LookBackWindow.IsNull() {
+		*lookBackWindow = r.Configuration.LookBackWindow.ValueInt64()
+	} else {
+		lookBackWindow = nil
+	}
+	var marketplaceIds []string = []string{}
+	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
+		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
+	}
+	var profiles []int64 = []int64{}
+	for _, profilesItem := range r.Configuration.Profiles {
+		profiles = append(profiles, profilesItem.ValueInt64())
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
@@ -43,29 +57,15 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *s
 	} else {
 		startDate = nil
 	}
-	var profiles []int64 = []int64{}
-	for _, profilesItem := range r.Configuration.Profiles {
-		profiles = append(profiles, profilesItem.ValueInt64())
-	}
-	var marketplaceIds []string = []string{}
-	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
-		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
-	}
-	lookBackWindow := new(int64)
-	if !r.Configuration.LookBackWindow.IsUnknown() && !r.Configuration.LookBackWindow.IsNull() {
-		*lookBackWindow = r.Configuration.LookBackWindow.ValueInt64()
-	} else {
-		lookBackWindow = nil
-	}
 	configuration := shared.SourceAmazonAds{
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
+		LookBackWindow: lookBackWindow,
+		MarketplaceIds: marketplaceIds,
+		Profiles:       profiles,
 		RefreshToken:   refreshToken,
 		Region:         region,
 		StartDate:      startDate,
-		Profiles:       profiles,
-		MarketplaceIds: marketplaceIds,
-		LookBackWindow: lookBackWindow,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -143,6 +143,20 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shar
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	lookBackWindow := new(int64)
+	if !r.Configuration.LookBackWindow.IsUnknown() && !r.Configuration.LookBackWindow.IsNull() {
+		*lookBackWindow = r.Configuration.LookBackWindow.ValueInt64()
+	} else {
+		lookBackWindow = nil
+	}
+	var marketplaceIds []string = []string{}
+	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
+		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
+	}
+	var profiles []int64 = []int64{}
+	for _, profilesItem := range r.Configuration.Profiles {
+		profiles = append(profiles, profilesItem.ValueInt64())
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
@@ -158,29 +172,15 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shar
 	} else {
 		startDate = nil
 	}
-	var profiles []int64 = []int64{}
-	for _, profilesItem := range r.Configuration.Profiles {
-		profiles = append(profiles, profilesItem.ValueInt64())
-	}
-	var marketplaceIds []string = []string{}
-	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
-		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
-	}
-	lookBackWindow := new(int64)
-	if !r.Configuration.LookBackWindow.IsUnknown() && !r.Configuration.LookBackWindow.IsNull() {
-		*lookBackWindow = r.Configuration.LookBackWindow.ValueInt64()
-	} else {
-		lookBackWindow = nil
-	}
 	configuration := shared.SourceAmazonAdsUpdate{
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
+		LookBackWindow: lookBackWindow,
+		MarketplaceIds: marketplaceIds,
+		Profiles:       profiles,
 		RefreshToken:   refreshToken,
 		Region:         region,
 		StartDate:      startDate,
-		Profiles:       profiles,
-		MarketplaceIds: marketplaceIds,
-		LookBackWindow: lookBackWindow,
 	}
 	out := shared.SourceAmazonAdsPutRequest{
 		Name:          name,

@@ -25,16 +25,16 @@ func (r *SourceRevolutMerchantResourceModel) ToSharedSourceRevolutMerchantCreate
 	var apiVersion string
 	apiVersion = r.Configuration.APIVersion.ValueString()
 
+	environment := shared.SourceRevolutMerchantEnvironment(r.Configuration.Environment.ValueString())
 	var secretAPIKey string
 	secretAPIKey = r.Configuration.SecretAPIKey.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	environment := shared.SourceRevolutMerchantEnvironment(r.Configuration.Environment.ValueString())
 	configuration := shared.SourceRevolutMerchant{
 		APIVersion:   apiVersion,
+		Environment:  environment,
 		SecretAPIKey: secretAPIKey,
 		StartDate:    startDate,
-		Environment:  environment,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -109,16 +109,16 @@ func (r *SourceRevolutMerchantResourceModel) ToSharedSourceRevolutMerchantPutReq
 	var apiVersion string
 	apiVersion = r.Configuration.APIVersion.ValueString()
 
+	environment := shared.SourceRevolutMerchantUpdateEnvironment(r.Configuration.Environment.ValueString())
 	var secretAPIKey string
 	secretAPIKey = r.Configuration.SecretAPIKey.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	environment := shared.SourceRevolutMerchantUpdateEnvironment(r.Configuration.Environment.ValueString())
 	configuration := shared.SourceRevolutMerchantUpdate{
 		APIVersion:   apiVersion,
+		Environment:  environment,
 		SecretAPIKey: secretAPIKey,
 		StartDate:    startDate,
-		Environment:  environment,
 	}
 	out := shared.SourceRevolutMerchantPutRequest{
 		Name:          name,

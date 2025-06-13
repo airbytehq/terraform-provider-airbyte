@@ -5,12 +5,11 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceJira struct {
-	APIToken                  types.String   `tfsdk:"api_token"`
-	Domain                    types.String   `tfsdk:"domain"`
-	Email                     types.String   `tfsdk:"email"`
-	EnableExperimentalStreams types.Bool     `tfsdk:"enable_experimental_streams"`
-	LookbackWindowMinutes     types.Int64    `tfsdk:"lookback_window_minutes"`
-	NumWorkers                types.Int64    `tfsdk:"num_workers"`
-	Projects                  []types.String `tfsdk:"projects"`
-	StartDate                 types.String   `tfsdk:"start_date"`
+	APIToken              types.String   `tfsdk:"api_token"`
+	Domain                types.String   `tfsdk:"domain"`
+	Email                 types.String   `tfsdk:"email"`
+	LookbackWindowMinutes types.Int64    `tfsdk:"lookback_window_minutes"`
+	NumWorkers            types.Int64    `tfsdk:"num_workers"`
+	Projects              []types.String `tfsdk:"projects"`
+	StartDate             types.String   `tfsdk:"start_date"`
 }

@@ -22,12 +22,9 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyCreateReques
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	origin := new(shared.OriginDatacenterOfTheSurveyMonkeyAccount)
-	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
-		*origin = shared.OriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
-	} else {
-		origin = nil
-	}
+	var accessToken string
+	accessToken = r.Configuration.Credentials.AccessToken.ValueString()
+
 	clientID := new(string)
 	if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
 		*clientID = r.Configuration.Credentials.ClientID.ValueString()
@@ -40,13 +37,16 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyCreateReques
 	} else {
 		clientSecret = nil
 	}
-	var accessToken string
-	accessToken = r.Configuration.Credentials.AccessToken.ValueString()
-
 	credentials := shared.SurveyMonkeyAuthorizationMethod{
+		AccessToken:  accessToken,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		AccessToken:  accessToken,
+	}
+	origin := new(shared.OriginDatacenterOfTheSurveyMonkeyAccount)
+	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
+		*origin = shared.OriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
+	} else {
+		origin = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var surveyIds []string = []string{}
@@ -54,8 +54,8 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyCreateReques
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}
 	configuration := shared.SourceSurveymonkey{
-		Origin:      origin,
 		Credentials: credentials,
+		Origin:      origin,
 		StartDate:   startDate,
 		SurveyIds:   surveyIds,
 	}
@@ -129,12 +129,9 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyPutRequest()
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	origin := new(shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount)
-	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
-		*origin = shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
-	} else {
-		origin = nil
-	}
+	var accessToken string
+	accessToken = r.Configuration.Credentials.AccessToken.ValueString()
+
 	clientID := new(string)
 	if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
 		*clientID = r.Configuration.Credentials.ClientID.ValueString()
@@ -147,13 +144,16 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyPutRequest()
 	} else {
 		clientSecret = nil
 	}
-	var accessToken string
-	accessToken = r.Configuration.Credentials.AccessToken.ValueString()
-
 	credentials := shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod{
+		AccessToken:  accessToken,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		AccessToken:  accessToken,
+	}
+	origin := new(shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount)
+	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
+		*origin = shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
+	} else {
+		origin = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var surveyIds []string = []string{}
@@ -161,8 +161,8 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyPutRequest()
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}
 	configuration := shared.SourceSurveymonkeyUpdate{
-		Origin:      origin,
 		Credentials: credentials,
+		Origin:      origin,
 		StartDate:   startDate,
 		SurveyIds:   surveyIds,
 	}

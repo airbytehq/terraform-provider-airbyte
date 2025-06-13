@@ -21,18 +21,18 @@ func (r *DestinationFirestoreResourceModel) ToSharedDestinationFirestoreCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
 	credentialsJSON := new(string)
 	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
 		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
 	} else {
 		credentialsJSON = nil
 	}
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
 	configuration := shared.DestinationFirestore{
-		ProjectID:       projectID,
 		CredentialsJSON: credentialsJSON,
+		ProjectID:       projectID,
 	}
 	out := shared.DestinationFirestoreCreateRequest{
 		Name:          name,
@@ -97,18 +97,18 @@ func (r *DestinationFirestoreResourceModel) ToSharedDestinationFirestorePutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
 	credentialsJSON := new(string)
 	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
 		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
 	} else {
 		credentialsJSON = nil
 	}
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
 	configuration := shared.DestinationFirestoreUpdate{
-		ProjectID:       projectID,
 		CredentialsJSON: credentialsJSON,
+		ProjectID:       projectID,
 	}
 	out := shared.DestinationFirestorePutRequest{
 		Name:          name,

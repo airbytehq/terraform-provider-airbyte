@@ -9,6 +9,76 @@ import (
 	"time"
 )
 
+type SourceSurveymonkeyAuthMethod string
+
+const (
+	SourceSurveymonkeyAuthMethodOauth20 SourceSurveymonkeyAuthMethod = "oauth2.0"
+)
+
+func (e SourceSurveymonkeyAuthMethod) ToPointer() *SourceSurveymonkeyAuthMethod {
+	return &e
+}
+func (e *SourceSurveymonkeyAuthMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "oauth2.0":
+		*e = SourceSurveymonkeyAuthMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSurveymonkeyAuthMethod: %v", v)
+	}
+}
+
+// SurveyMonkeyAuthorizationMethod - The authorization method to use to retrieve data from SurveyMonkey
+type SurveyMonkeyAuthorizationMethod struct {
+	// Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
+	AccessToken string                       `json:"access_token"`
+	authMethod  SourceSurveymonkeyAuthMethod `const:"oauth2.0" json:"auth_method"`
+	// The Client ID of the SurveyMonkey developer application.
+	ClientID *string `json:"client_id,omitempty"`
+	// The Client Secret of the SurveyMonkey developer application.
+	ClientSecret *string `json:"client_secret,omitempty"`
+}
+
+func (s SurveyMonkeyAuthorizationMethod) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SurveyMonkeyAuthorizationMethod) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SurveyMonkeyAuthorizationMethod) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SurveyMonkeyAuthorizationMethod) GetAuthMethod() SourceSurveymonkeyAuthMethod {
+	return SourceSurveymonkeyAuthMethodOauth20
+}
+
+func (o *SurveyMonkeyAuthorizationMethod) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SurveyMonkeyAuthorizationMethod) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
 // OriginDatacenterOfTheSurveyMonkeyAccount - Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
 type OriginDatacenterOfTheSurveyMonkeyAccount string
 
@@ -39,76 +109,6 @@ func (e *OriginDatacenterOfTheSurveyMonkeyAccount) UnmarshalJSON(data []byte) er
 	}
 }
 
-type SourceSurveymonkeyAuthMethod string
-
-const (
-	SourceSurveymonkeyAuthMethodOauth20 SourceSurveymonkeyAuthMethod = "oauth2.0"
-)
-
-func (e SourceSurveymonkeyAuthMethod) ToPointer() *SourceSurveymonkeyAuthMethod {
-	return &e
-}
-func (e *SourceSurveymonkeyAuthMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "oauth2.0":
-		*e = SourceSurveymonkeyAuthMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSurveymonkeyAuthMethod: %v", v)
-	}
-}
-
-// SurveyMonkeyAuthorizationMethod - The authorization method to use to retrieve data from SurveyMonkey
-type SurveyMonkeyAuthorizationMethod struct {
-	authMethod SourceSurveymonkeyAuthMethod `const:"oauth2.0" json:"auth_method"`
-	// The Client ID of the SurveyMonkey developer application.
-	ClientID *string `json:"client_id,omitempty"`
-	// The Client Secret of the SurveyMonkey developer application.
-	ClientSecret *string `json:"client_secret,omitempty"`
-	// Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
-	AccessToken string `json:"access_token"`
-}
-
-func (s SurveyMonkeyAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SurveyMonkeyAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SurveyMonkeyAuthorizationMethod) GetAuthMethod() SourceSurveymonkeyAuthMethod {
-	return SourceSurveymonkeyAuthMethodOauth20
-}
-
-func (o *SurveyMonkeyAuthorizationMethod) GetClientID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientID
-}
-
-func (o *SurveyMonkeyAuthorizationMethod) GetClientSecret() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientSecret
-}
-
-func (o *SurveyMonkeyAuthorizationMethod) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
-}
-
 type Surveymonkey string
 
 const (
@@ -133,10 +133,10 @@ func (e *Surveymonkey) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSurveymonkey struct {
-	// Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
-	Origin *OriginDatacenterOfTheSurveyMonkeyAccount `default:"USA" json:"origin"`
 	// The authorization method to use to retrieve data from SurveyMonkey
 	Credentials SurveyMonkeyAuthorizationMethod `json:"credentials"`
+	// Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
+	Origin *OriginDatacenterOfTheSurveyMonkeyAccount `default:"USA" json:"origin"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	// IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.
@@ -155,18 +155,18 @@ func (s *SourceSurveymonkey) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSurveymonkey) GetOrigin() *OriginDatacenterOfTheSurveyMonkeyAccount {
-	if o == nil {
-		return nil
-	}
-	return o.Origin
-}
-
 func (o *SourceSurveymonkey) GetCredentials() SurveyMonkeyAuthorizationMethod {
 	if o == nil {
 		return SurveyMonkeyAuthorizationMethod{}
 	}
 	return o.Credentials
+}
+
+func (o *SourceSurveymonkey) GetOrigin() *OriginDatacenterOfTheSurveyMonkeyAccount {
+	if o == nil {
+		return nil
+	}
+	return o.Origin
 }
 
 func (o *SourceSurveymonkey) GetStartDate() time.Time {

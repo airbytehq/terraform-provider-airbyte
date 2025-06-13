@@ -56,18 +56,18 @@ func (e *Strava) UnmarshalJSON(data []byte) error {
 }
 
 type SourceStrava struct {
+	// The Athlete ID of your Strava developer application.
+	AthleteID int64                 `json:"athlete_id"`
+	authType  *SourceStravaAuthType `const:"Client" json:"auth_type"`
 	// The Client ID of your Strava developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Strava developer application.
 	ClientSecret string `json:"client_secret"`
 	// The Refresh Token with the activity: read_all permissions.
 	RefreshToken string `json:"refresh_token"`
-	// The Athlete ID of your Strava developer application.
-	AthleteID int64 `json:"athlete_id"`
 	// UTC date and time. Any data before this date will not be replicated.
-	StartDate  time.Time             `json:"start_date"`
-	authType   *SourceStravaAuthType `const:"Client" json:"auth_type"`
-	sourceType Strava                `const:"strava" json:"sourceType"`
+	StartDate  time.Time `json:"start_date"`
+	sourceType Strava    `const:"strava" json:"sourceType"`
 }
 
 func (s SourceStrava) MarshalJSON() ([]byte, error) {
@@ -79,6 +79,17 @@ func (s *SourceStrava) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceStrava) GetAthleteID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AthleteID
+}
+
+func (o *SourceStrava) GetAuthType() *SourceStravaAuthType {
+	return SourceStravaAuthTypeClient.ToPointer()
 }
 
 func (o *SourceStrava) GetClientID() string {
@@ -102,22 +113,11 @@ func (o *SourceStrava) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-func (o *SourceStrava) GetAthleteID() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.AthleteID
-}
-
 func (o *SourceStrava) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceStrava) GetAuthType() *SourceStravaAuthType {
-	return SourceStravaAuthTypeClient.ToPointer()
 }
 
 func (o *SourceStrava) GetSourceType() Strava {

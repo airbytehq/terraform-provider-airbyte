@@ -34,9 +34,9 @@ func (e *SourceLinkedinPagesSchemasAuthMethod) UnmarshalJSON(data []byte) error 
 }
 
 type SourceLinkedinPagesAccessToken struct {
-	authMethod *SourceLinkedinPagesSchemasAuthMethod `const:"access_token" json:"auth_method,omitempty"`
 	// The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-	AccessToken string `json:"access_token"`
+	AccessToken string                                `json:"access_token"`
+	authMethod  *SourceLinkedinPagesSchemasAuthMethod `const:"access_token" json:"auth_method,omitempty"`
 }
 
 func (s SourceLinkedinPagesAccessToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceLinkedinPagesAccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceLinkedinPagesAccessToken) GetAuthMethod() *SourceLinkedinPagesSchemasAuthMethod {
-	return SourceLinkedinPagesSchemasAuthMethodAccessToken.ToPointer()
-}
-
 func (o *SourceLinkedinPagesAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceLinkedinPagesAccessToken) GetAuthMethod() *SourceLinkedinPagesSchemasAuthMethod {
+	return SourceLinkedinPagesSchemasAuthMethodAccessToken.ToPointer()
 }
 
 type SourceLinkedinPagesAuthMethod string
@@ -85,9 +85,9 @@ func (e *SourceLinkedinPagesAuthMethod) UnmarshalJSON(data []byte) error {
 }
 
 type SourceLinkedinPagesOAuth20 struct {
-	// The client ID of the LinkedIn developer application.
-	ClientID   string                         `json:"client_id"`
 	authMethod *SourceLinkedinPagesAuthMethod `const:"oAuth2.0" json:"auth_method,omitempty"`
+	// The client ID of the LinkedIn developer application.
+	ClientID string `json:"client_id"`
 	// The client secret of the LinkedIn developer application.
 	ClientSecret string `json:"client_secret"`
 	// The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
@@ -105,15 +105,15 @@ func (s *SourceLinkedinPagesOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceLinkedinPagesOAuth20) GetAuthMethod() *SourceLinkedinPagesAuthMethod {
+	return SourceLinkedinPagesAuthMethodOAuth20.ToPointer()
+}
+
 func (o *SourceLinkedinPagesOAuth20) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *SourceLinkedinPagesOAuth20) GetAuthMethod() *SourceLinkedinPagesAuthMethod {
-	return SourceLinkedinPagesAuthMethodOAuth20.ToPointer()
 }
 
 func (o *SourceLinkedinPagesOAuth20) GetClientSecret() string {

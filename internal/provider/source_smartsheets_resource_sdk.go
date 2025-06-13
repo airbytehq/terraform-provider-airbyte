@@ -25,25 +25,25 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsCreateRequest(
 	var credentials shared.SourceSmartsheetsAuthorizationMethod
 	var sourceSmartsheetsOAuth20 *shared.SourceSmartsheetsOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-		var accessToken string
-		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceSmartsheetsOAuth20 = &shared.SourceSmartsheetsOAuth20{
+			AccessToken:     accessToken,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
-			AccessToken:     accessToken,
-			TokenExpiryDate: tokenExpiryDate,
 			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
 	if sourceSmartsheetsOAuth20 != nil {
@@ -65,24 +65,24 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsCreateRequest(
 			APIAccessToken: apiAccessToken,
 		}
 	}
-	var spreadsheetID string
-	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
-
-	var metadataFields []shared.Validenums = []shared.Validenums{}
-	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
-		metadataFields = append(metadataFields, shared.Validenums(metadataFieldsItem.ValueString()))
-	}
 	isReport := new(bool)
 	if !r.Configuration.IsReport.IsUnknown() && !r.Configuration.IsReport.IsNull() {
 		*isReport = r.Configuration.IsReport.ValueBool()
 	} else {
 		isReport = nil
 	}
+	var metadataFields []shared.Validenums = []shared.Validenums{}
+	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
+		metadataFields = append(metadataFields, shared.Validenums(metadataFieldsItem.ValueString()))
+	}
+	var spreadsheetID string
+	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
+
 	configuration := shared.SourceSmartsheets{
 		Credentials:    credentials,
-		SpreadsheetID:  spreadsheetID,
-		MetadataFields: metadataFields,
 		IsReport:       isReport,
+		MetadataFields: metadataFields,
+		SpreadsheetID:  spreadsheetID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -157,25 +157,25 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsPutRequest() *
 	var credentials shared.SourceSmartsheetsUpdateAuthorizationMethod
 	var sourceSmartsheetsUpdateOAuth20 *shared.SourceSmartsheetsUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-		var accessToken string
-		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceSmartsheetsUpdateOAuth20 = &shared.SourceSmartsheetsUpdateOAuth20{
+			AccessToken:     accessToken,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
-			AccessToken:     accessToken,
-			TokenExpiryDate: tokenExpiryDate,
 			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
 	if sourceSmartsheetsUpdateOAuth20 != nil {
@@ -197,24 +197,24 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsPutRequest() *
 			SourceSmartsheetsUpdateAPIAccessToken: sourceSmartsheetsUpdateAPIAccessToken,
 		}
 	}
-	var spreadsheetID string
-	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
-
-	var metadataFields []shared.SourceSmartsheetsUpdateValidenums = []shared.SourceSmartsheetsUpdateValidenums{}
-	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
-		metadataFields = append(metadataFields, shared.SourceSmartsheetsUpdateValidenums(metadataFieldsItem.ValueString()))
-	}
 	isReport := new(bool)
 	if !r.Configuration.IsReport.IsUnknown() && !r.Configuration.IsReport.IsNull() {
 		*isReport = r.Configuration.IsReport.ValueBool()
 	} else {
 		isReport = nil
 	}
+	var metadataFields []shared.SourceSmartsheetsUpdateValidenums = []shared.SourceSmartsheetsUpdateValidenums{}
+	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
+		metadataFields = append(metadataFields, shared.SourceSmartsheetsUpdateValidenums(metadataFieldsItem.ValueString()))
+	}
+	var spreadsheetID string
+	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
+
 	configuration := shared.SourceSmartsheetsUpdate{
 		Credentials:    credentials,
-		SpreadsheetID:  spreadsheetID,
-		MetadataFields: metadataFields,
 		IsReport:       isReport,
+		MetadataFields: metadataFields,
+		SpreadsheetID:  spreadsheetID,
 	}
 	out := shared.SourceSmartsheetsPutRequest{
 		Name:          name,

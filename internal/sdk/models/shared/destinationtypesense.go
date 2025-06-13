@@ -34,16 +34,16 @@ func (e *Typesense) UnmarshalJSON(data []byte) error {
 type DestinationTypesense struct {
 	// Typesense API Key
 	APIKey string `json:"api_key"`
+	// How many documents should be imported together. Default 1000
+	BatchSize *int64 `json:"batch_size,omitempty"`
 	// Hostname of the Typesense instance without protocol. Accept multiple hosts separated by comma.
 	Host string `json:"host"`
+	// Path of the Typesense instance. Default is none
+	Path *string `json:"path,omitempty"`
 	// Port of the Typesense instance. Ex: 8108, 80, 443. Default is 8108
 	Port *string `json:"port,omitempty"`
 	// Protocol of the Typesense instance. Ex: http or https. Default is https
-	Protocol *string `json:"protocol,omitempty"`
-	// How many documents should be imported together. Default 1000
-	BatchSize *int64 `json:"batch_size,omitempty"`
-	// Path of the Typesense instance. Default is none
-	Path            *string   `json:"path,omitempty"`
+	Protocol        *string   `json:"protocol,omitempty"`
 	destinationType Typesense `const:"typesense" json:"destinationType"`
 }
 
@@ -65,11 +65,25 @@ func (o *DestinationTypesense) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *DestinationTypesense) GetBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BatchSize
+}
+
 func (o *DestinationTypesense) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
+}
+
+func (o *DestinationTypesense) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
 }
 
 func (o *DestinationTypesense) GetPort() *string {
@@ -84,20 +98,6 @@ func (o *DestinationTypesense) GetProtocol() *string {
 		return nil
 	}
 	return o.Protocol
-}
-
-func (o *DestinationTypesense) GetBatchSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.BatchSize
-}
-
-func (o *DestinationTypesense) GetPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Path
 }
 
 func (o *DestinationTypesense) GetDestinationType() Typesense {

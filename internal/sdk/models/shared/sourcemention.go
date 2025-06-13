@@ -64,11 +64,11 @@ func (e *Mention) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMention struct {
-	APIKey string `json:"api_key"`
+	APIKey       string      `json:"api_key"`
+	StatsEndDate *types.Date `json:"stats_end_date,omitempty"`
 	// Periodicity of statistics returned. it may be daily(P1D), weekly(P1W) or monthly(P1M).
 	StatsInterval  *StatisticsInterval `default:"P1D" json:"stats_interval"`
 	StatsStartDate time.Time           `json:"stats_start_date"`
-	StatsEndDate   *types.Date         `json:"stats_end_date,omitempty"`
 	sourceType     Mention             `const:"mention" json:"sourceType"`
 }
 
@@ -90,6 +90,13 @@ func (o *SourceMention) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceMention) GetStatsEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StatsEndDate
+}
+
 func (o *SourceMention) GetStatsInterval() *StatisticsInterval {
 	if o == nil {
 		return nil
@@ -102,13 +109,6 @@ func (o *SourceMention) GetStatsStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StatsStartDate
-}
-
-func (o *SourceMention) GetStatsEndDate() *types.Date {
-	if o == nil {
-		return nil
-	}
-	return o.StatsEndDate
 }
 
 func (o *SourceMention) GetSourceType() Mention {

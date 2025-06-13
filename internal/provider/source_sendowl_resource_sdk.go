@@ -22,9 +22,6 @@ func (r *SourceSendowlResourceModel) ToSharedSourceSendowlCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -32,10 +29,13 @@ func (r *SourceSendowlResourceModel) ToSharedSourceSendowlCreateRequest() *share
 		password = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceSendowl{
-		Username:  username,
 		Password:  password,
 		StartDate: startDate,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,9 +107,6 @@ func (r *SourceSendowlResourceModel) ToSharedSourceSendowlPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -117,10 +114,13 @@ func (r *SourceSendowlResourceModel) ToSharedSourceSendowlPutRequest() *shared.S
 		password = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceSendowlUpdate{
-		Username:  username,
 		Password:  password,
 		StartDate: startDate,
+		Username:  username,
 	}
 	out := shared.SourceSendowlPutRequest{
 		Name:          name,

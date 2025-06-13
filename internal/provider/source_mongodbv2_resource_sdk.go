@@ -25,41 +25,42 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	var databaseConfig shared.ClusterType
 	var mongoDBAtlasReplicaSet *shared.MongoDBAtlasReplicaSet
 	if r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet != nil {
-		var connectionString string
-		connectionString = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.ConnectionString.ValueString()
-
-		var database string
-		database = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Database.ValueString()
-
-		var username string
-		username = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Username.ValueString()
-
-		var password string
-		password = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Password.ValueString()
-
 		authSource := new(string)
 		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AuthSource.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AuthSource.IsNull() {
 			*authSource = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AuthSource.ValueString()
 		} else {
 			authSource = nil
 		}
+		var connectionString string
+		connectionString = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.ConnectionString.ValueString()
+
+		var databases []string = []string{}
+		for _, databasesItem := range r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Databases {
+			databases = append(databases, databasesItem.ValueString())
+		}
+		var password string
+		password = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Password.ValueString()
+
 		schemaEnforced := new(bool)
 		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsNull() {
 			*schemaEnforced = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.ValueBool()
 		} else {
 			schemaEnforced = nil
 		}
+		var username string
+		username = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Username.ValueString()
+
 		var additionalProperties interface{}
 		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AdditionalProperties.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		mongoDBAtlasReplicaSet = &shared.MongoDBAtlasReplicaSet{
-			ConnectionString:     connectionString,
-			Database:             database,
-			Username:             username,
-			Password:             password,
 			AuthSource:           authSource,
+			ConnectionString:     connectionString,
+			Databases:            databases,
+			Password:             password,
 			SchemaEnforced:       schemaEnforced,
+			Username:             username,
 			AdditionalProperties: additionalProperties,
 		}
 	}
@@ -70,17 +71,18 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	}
 	var selfManagedReplicaSet *shared.SelfManagedReplicaSet
 	if r.Configuration.DatabaseConfig.SelfManagedReplicaSet != nil {
+		authSource1 := new(string)
+		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsNull() {
+			*authSource1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.ValueString()
+		} else {
+			authSource1 = nil
+		}
 		var connectionString1 string
 		connectionString1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.ConnectionString.ValueString()
 
-		var database1 string
-		database1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Database.ValueString()
-
-		username1 := new(string)
-		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsNull() {
-			*username1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.ValueString()
-		} else {
-			username1 = nil
+		var databases1 []string = []string{}
+		for _, databasesItem1 := range r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Databases {
+			databases1 = append(databases1, databasesItem1.ValueString())
 		}
 		password1 := new(string)
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Password.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Password.IsNull() {
@@ -88,29 +90,29 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 		} else {
 			password1 = nil
 		}
-		authSource1 := new(string)
-		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsNull() {
-			*authSource1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.ValueString()
-		} else {
-			authSource1 = nil
-		}
 		schemaEnforced1 := new(bool)
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsNull() {
 			*schemaEnforced1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.ValueBool()
 		} else {
 			schemaEnforced1 = nil
 		}
+		username1 := new(string)
+		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsNull() {
+			*username1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.ValueString()
+		} else {
+			username1 = nil
+		}
 		var additionalProperties1 interface{}
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AdditionalProperties.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		selfManagedReplicaSet = &shared.SelfManagedReplicaSet{
-			ConnectionString:     connectionString1,
-			Database:             database1,
-			Username:             username1,
-			Password:             password1,
 			AuthSource:           authSource1,
+			ConnectionString:     connectionString1,
+			Databases:            databases1,
+			Password:             password1,
 			SchemaEnforced:       schemaEnforced1,
+			Username:             username1,
 			AdditionalProperties: additionalProperties1,
 		}
 	}
@@ -118,18 +120,6 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 		databaseConfig = shared.ClusterType{
 			SelfManagedReplicaSet: selfManagedReplicaSet,
 		}
-	}
-	initialWaitingSeconds := new(int64)
-	if !r.Configuration.InitialWaitingSeconds.IsUnknown() && !r.Configuration.InitialWaitingSeconds.IsNull() {
-		*initialWaitingSeconds = r.Configuration.InitialWaitingSeconds.ValueInt64()
-	} else {
-		initialWaitingSeconds = nil
-	}
-	queueSize := new(int64)
-	if !r.Configuration.QueueSize.IsUnknown() && !r.Configuration.QueueSize.IsNull() {
-		*queueSize = r.Configuration.QueueSize.ValueInt64()
-	} else {
-		queueSize = nil
 	}
 	discoverSampleSize := new(int64)
 	if !r.Configuration.DiscoverSampleSize.IsUnknown() && !r.Configuration.DiscoverSampleSize.IsNull() {
@@ -143,11 +133,29 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	} else {
 		discoverTimeoutSeconds = nil
 	}
+	initialLoadTimeoutHours := new(int64)
+	if !r.Configuration.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.InitialLoadTimeoutHours.IsNull() {
+		*initialLoadTimeoutHours = r.Configuration.InitialLoadTimeoutHours.ValueInt64()
+	} else {
+		initialLoadTimeoutHours = nil
+	}
+	initialWaitingSeconds := new(int64)
+	if !r.Configuration.InitialWaitingSeconds.IsUnknown() && !r.Configuration.InitialWaitingSeconds.IsNull() {
+		*initialWaitingSeconds = r.Configuration.InitialWaitingSeconds.ValueInt64()
+	} else {
+		initialWaitingSeconds = nil
+	}
 	invalidCdcCursorPositionBehavior := new(shared.InvalidCDCPositionBehaviorAdvanced)
 	if !r.Configuration.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.InvalidCdcCursorPositionBehavior.IsNull() {
 		*invalidCdcCursorPositionBehavior = shared.InvalidCDCPositionBehaviorAdvanced(r.Configuration.InvalidCdcCursorPositionBehavior.ValueString())
 	} else {
 		invalidCdcCursorPositionBehavior = nil
+	}
+	queueSize := new(int64)
+	if !r.Configuration.QueueSize.IsUnknown() && !r.Configuration.QueueSize.IsNull() {
+		*queueSize = r.Configuration.QueueSize.ValueInt64()
+	} else {
+		queueSize = nil
 	}
 	updateCaptureMode := new(shared.CaptureModeAdvanced)
 	if !r.Configuration.UpdateCaptureMode.IsUnknown() && !r.Configuration.UpdateCaptureMode.IsNull() {
@@ -155,21 +163,15 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	} else {
 		updateCaptureMode = nil
 	}
-	initialLoadTimeoutHours := new(int64)
-	if !r.Configuration.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.InitialLoadTimeoutHours.IsNull() {
-		*initialLoadTimeoutHours = r.Configuration.InitialLoadTimeoutHours.ValueInt64()
-	} else {
-		initialLoadTimeoutHours = nil
-	}
 	configuration := shared.SourceMongodbV2{
 		DatabaseConfig:                   databaseConfig,
-		InitialWaitingSeconds:            initialWaitingSeconds,
-		QueueSize:                        queueSize,
 		DiscoverSampleSize:               discoverSampleSize,
 		DiscoverTimeoutSeconds:           discoverTimeoutSeconds,
-		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-		UpdateCaptureMode:                updateCaptureMode,
 		InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+		InitialWaitingSeconds:            initialWaitingSeconds,
+		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+		QueueSize:                        queueSize,
+		UpdateCaptureMode:                updateCaptureMode,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -244,41 +246,42 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	var databaseConfig shared.SourceMongodbV2UpdateClusterType
 	var sourceMongodbV2UpdateMongoDBAtlasReplicaSet *shared.SourceMongodbV2UpdateMongoDBAtlasReplicaSet
 	if r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet != nil {
-		var connectionString string
-		connectionString = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.ConnectionString.ValueString()
-
-		var database string
-		database = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Database.ValueString()
-
-		var username string
-		username = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Username.ValueString()
-
-		var password string
-		password = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Password.ValueString()
-
 		authSource := new(string)
 		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AuthSource.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AuthSource.IsNull() {
 			*authSource = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AuthSource.ValueString()
 		} else {
 			authSource = nil
 		}
+		var connectionString string
+		connectionString = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.ConnectionString.ValueString()
+
+		var databases []string = []string{}
+		for _, databasesItem := range r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Databases {
+			databases = append(databases, databasesItem.ValueString())
+		}
+		var password string
+		password = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Password.ValueString()
+
 		schemaEnforced := new(bool)
 		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsNull() {
 			*schemaEnforced = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.ValueBool()
 		} else {
 			schemaEnforced = nil
 		}
+		var username string
+		username = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Username.ValueString()
+
 		var additionalProperties interface{}
 		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AdditionalProperties.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourceMongodbV2UpdateMongoDBAtlasReplicaSet = &shared.SourceMongodbV2UpdateMongoDBAtlasReplicaSet{
-			ConnectionString:     connectionString,
-			Database:             database,
-			Username:             username,
-			Password:             password,
 			AuthSource:           authSource,
+			ConnectionString:     connectionString,
+			Databases:            databases,
+			Password:             password,
 			SchemaEnforced:       schemaEnforced,
+			Username:             username,
 			AdditionalProperties: additionalProperties,
 		}
 	}
@@ -289,17 +292,18 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	}
 	var sourceMongodbV2UpdateSelfManagedReplicaSet *shared.SourceMongodbV2UpdateSelfManagedReplicaSet
 	if r.Configuration.DatabaseConfig.SelfManagedReplicaSet != nil {
+		authSource1 := new(string)
+		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsNull() {
+			*authSource1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.ValueString()
+		} else {
+			authSource1 = nil
+		}
 		var connectionString1 string
 		connectionString1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.ConnectionString.ValueString()
 
-		var database1 string
-		database1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Database.ValueString()
-
-		username1 := new(string)
-		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsNull() {
-			*username1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.ValueString()
-		} else {
-			username1 = nil
+		var databases1 []string = []string{}
+		for _, databasesItem1 := range r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Databases {
+			databases1 = append(databases1, databasesItem1.ValueString())
 		}
 		password1 := new(string)
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Password.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Password.IsNull() {
@@ -307,29 +311,29 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 		} else {
 			password1 = nil
 		}
-		authSource1 := new(string)
-		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.IsNull() {
-			*authSource1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AuthSource.ValueString()
-		} else {
-			authSource1 = nil
-		}
 		schemaEnforced1 := new(bool)
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsNull() {
 			*schemaEnforced1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.ValueBool()
 		} else {
 			schemaEnforced1 = nil
 		}
+		username1 := new(string)
+		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsNull() {
+			*username1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.ValueString()
+		} else {
+			username1 = nil
+		}
 		var additionalProperties1 interface{}
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AdditionalProperties.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.DatabaseConfig.SelfManagedReplicaSet.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceMongodbV2UpdateSelfManagedReplicaSet = &shared.SourceMongodbV2UpdateSelfManagedReplicaSet{
-			ConnectionString:     connectionString1,
-			Database:             database1,
-			Username:             username1,
-			Password:             password1,
 			AuthSource:           authSource1,
+			ConnectionString:     connectionString1,
+			Databases:            databases1,
+			Password:             password1,
 			SchemaEnforced:       schemaEnforced1,
+			Username:             username1,
 			AdditionalProperties: additionalProperties1,
 		}
 	}
@@ -337,18 +341,6 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 		databaseConfig = shared.SourceMongodbV2UpdateClusterType{
 			SourceMongodbV2UpdateSelfManagedReplicaSet: sourceMongodbV2UpdateSelfManagedReplicaSet,
 		}
-	}
-	initialWaitingSeconds := new(int64)
-	if !r.Configuration.InitialWaitingSeconds.IsUnknown() && !r.Configuration.InitialWaitingSeconds.IsNull() {
-		*initialWaitingSeconds = r.Configuration.InitialWaitingSeconds.ValueInt64()
-	} else {
-		initialWaitingSeconds = nil
-	}
-	queueSize := new(int64)
-	if !r.Configuration.QueueSize.IsUnknown() && !r.Configuration.QueueSize.IsNull() {
-		*queueSize = r.Configuration.QueueSize.ValueInt64()
-	} else {
-		queueSize = nil
 	}
 	discoverSampleSize := new(int64)
 	if !r.Configuration.DiscoverSampleSize.IsUnknown() && !r.Configuration.DiscoverSampleSize.IsNull() {
@@ -362,11 +354,29 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	} else {
 		discoverTimeoutSeconds = nil
 	}
+	initialLoadTimeoutHours := new(int64)
+	if !r.Configuration.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.InitialLoadTimeoutHours.IsNull() {
+		*initialLoadTimeoutHours = r.Configuration.InitialLoadTimeoutHours.ValueInt64()
+	} else {
+		initialLoadTimeoutHours = nil
+	}
+	initialWaitingSeconds := new(int64)
+	if !r.Configuration.InitialWaitingSeconds.IsUnknown() && !r.Configuration.InitialWaitingSeconds.IsNull() {
+		*initialWaitingSeconds = r.Configuration.InitialWaitingSeconds.ValueInt64()
+	} else {
+		initialWaitingSeconds = nil
+	}
 	invalidCdcCursorPositionBehavior := new(shared.SourceMongodbV2UpdateInvalidCDCPositionBehaviorAdvanced)
 	if !r.Configuration.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.InvalidCdcCursorPositionBehavior.IsNull() {
 		*invalidCdcCursorPositionBehavior = shared.SourceMongodbV2UpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.InvalidCdcCursorPositionBehavior.ValueString())
 	} else {
 		invalidCdcCursorPositionBehavior = nil
+	}
+	queueSize := new(int64)
+	if !r.Configuration.QueueSize.IsUnknown() && !r.Configuration.QueueSize.IsNull() {
+		*queueSize = r.Configuration.QueueSize.ValueInt64()
+	} else {
+		queueSize = nil
 	}
 	updateCaptureMode := new(shared.SourceMongodbV2UpdateCaptureModeAdvanced)
 	if !r.Configuration.UpdateCaptureMode.IsUnknown() && !r.Configuration.UpdateCaptureMode.IsNull() {
@@ -374,21 +384,15 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	} else {
 		updateCaptureMode = nil
 	}
-	initialLoadTimeoutHours := new(int64)
-	if !r.Configuration.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.InitialLoadTimeoutHours.IsNull() {
-		*initialLoadTimeoutHours = r.Configuration.InitialLoadTimeoutHours.ValueInt64()
-	} else {
-		initialLoadTimeoutHours = nil
-	}
 	configuration := shared.SourceMongodbV2Update{
 		DatabaseConfig:                   databaseConfig,
-		InitialWaitingSeconds:            initialWaitingSeconds,
-		QueueSize:                        queueSize,
 		DiscoverSampleSize:               discoverSampleSize,
 		DiscoverTimeoutSeconds:           discoverTimeoutSeconds,
-		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-		UpdateCaptureMode:                updateCaptureMode,
 		InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+		InitialWaitingSeconds:            initialWaitingSeconds,
+		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+		QueueSize:                        queueSize,
+		UpdateCaptureMode:                updateCaptureMode,
 	}
 	out := shared.SourceMongodbV2PutRequest{
 		Name:          name,

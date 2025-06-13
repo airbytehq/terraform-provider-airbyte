@@ -34,14 +34,14 @@ func (e *DestinationQdrantSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []b
 
 // DestinationQdrantOpenAICompatible - Use a service that's compatible with the OpenAI API to embed text.
 type DestinationQdrantOpenAICompatible struct {
-	mode   *DestinationQdrantSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
-	APIKey *string                                          `default:"" json:"api_key"`
+	APIKey *string `default:"" json:"api_key"`
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
+	// The number of dimensions the embedding model is generating
+	Dimensions int64                                            `json:"dimensions"`
+	mode       *DestinationQdrantSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
 }
 
 func (d DestinationQdrantOpenAICompatible) MarshalJSON() ([]byte, error) {
@@ -53,10 +53,6 @@ func (d *DestinationQdrantOpenAICompatible) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationQdrantOpenAICompatible) GetMode() *DestinationQdrantSchemasEmbeddingEmbedding5Mode {
-	return DestinationQdrantSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationQdrantOpenAICompatible) GetAPIKey() *string {
@@ -73,18 +69,22 @@ func (o *DestinationQdrantOpenAICompatible) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *DestinationQdrantOpenAICompatible) GetModelName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ModelName
-}
-
 func (o *DestinationQdrantOpenAICompatible) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
+}
+
+func (o *DestinationQdrantOpenAICompatible) GetMode() *DestinationQdrantSchemasEmbeddingEmbedding5Mode {
+	return DestinationQdrantSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
+}
+
+func (o *DestinationQdrantOpenAICompatible) GetModelName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ModelName
 }
 
 type DestinationQdrantSchemasEmbeddingEmbeddingMode string
@@ -112,13 +112,13 @@ func (e *DestinationQdrantSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []by
 
 // DestinationQdrantAzureOpenAI - Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationQdrantAzureOpenAI struct {
-	mode *DestinationQdrantSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
-	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	OpenaiKey string `json:"openai_key"`
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string `json:"deployment"`
+	Deployment string                                          `json:"deployment"`
+	mode       *DestinationQdrantSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+	OpenaiKey string `json:"openai_key"`
 }
 
 func (d DestinationQdrantAzureOpenAI) MarshalJSON() ([]byte, error) {
@@ -130,17 +130,6 @@ func (d *DestinationQdrantAzureOpenAI) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationQdrantAzureOpenAI) GetMode() *DestinationQdrantSchemasEmbeddingEmbeddingMode {
-	return DestinationQdrantSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
-}
-
-func (o *DestinationQdrantAzureOpenAI) GetOpenaiKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.OpenaiKey
 }
 
 func (o *DestinationQdrantAzureOpenAI) GetAPIBase() string {
@@ -155,6 +144,17 @@ func (o *DestinationQdrantAzureOpenAI) GetDeployment() string {
 		return ""
 	}
 	return o.Deployment
+}
+
+func (o *DestinationQdrantAzureOpenAI) GetMode() *DestinationQdrantSchemasEmbeddingEmbeddingMode {
+	return DestinationQdrantSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
+}
+
+func (o *DestinationQdrantAzureOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationQdrantSchemasEmbeddingMode string
@@ -225,8 +225,8 @@ func (e *DestinationQdrantSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationQdrantCohere - Use the Cohere API to embed text.
 type DestinationQdrantCohere struct {
-	mode      *DestinationQdrantSchemasMode `const:"cohere" json:"mode"`
 	CohereKey string                        `json:"cohere_key"`
+	mode      *DestinationQdrantSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationQdrantCohere) MarshalJSON() ([]byte, error) {
@@ -240,15 +240,15 @@ func (d *DestinationQdrantCohere) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationQdrantCohere) GetMode() *DestinationQdrantSchemasMode {
-	return DestinationQdrantSchemasModeCohere.ToPointer()
-}
-
 func (o *DestinationQdrantCohere) GetCohereKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.CohereKey
+}
+
+func (o *DestinationQdrantCohere) GetMode() *DestinationQdrantSchemasMode {
+	return DestinationQdrantSchemasModeCohere.ToPointer()
 }
 
 type DestinationQdrantMode string
@@ -432,415 +432,6 @@ func (u DestinationQdrantEmbedding) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationQdrantEmbedding: all fields are null")
 }
 
-type DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode string
-
-const (
-	DestinationQdrantSchemasProcessingTextSplitterTextSplitterModeCode DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode = "code"
-)
-
-func (e DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode {
-	return &e
-}
-func (e *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "code":
-		*e = DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode: %v", v)
-	}
-}
-
-// DestinationQdrantLanguage - Split code in suitable places based on the programming language
-type DestinationQdrantLanguage string
-
-const (
-	DestinationQdrantLanguageCpp      DestinationQdrantLanguage = "cpp"
-	DestinationQdrantLanguageGo       DestinationQdrantLanguage = "go"
-	DestinationQdrantLanguageJava     DestinationQdrantLanguage = "java"
-	DestinationQdrantLanguageJs       DestinationQdrantLanguage = "js"
-	DestinationQdrantLanguagePhp      DestinationQdrantLanguage = "php"
-	DestinationQdrantLanguageProto    DestinationQdrantLanguage = "proto"
-	DestinationQdrantLanguagePython   DestinationQdrantLanguage = "python"
-	DestinationQdrantLanguageRst      DestinationQdrantLanguage = "rst"
-	DestinationQdrantLanguageRuby     DestinationQdrantLanguage = "ruby"
-	DestinationQdrantLanguageRust     DestinationQdrantLanguage = "rust"
-	DestinationQdrantLanguageScala    DestinationQdrantLanguage = "scala"
-	DestinationQdrantLanguageSwift    DestinationQdrantLanguage = "swift"
-	DestinationQdrantLanguageMarkdown DestinationQdrantLanguage = "markdown"
-	DestinationQdrantLanguageLatex    DestinationQdrantLanguage = "latex"
-	DestinationQdrantLanguageHTML     DestinationQdrantLanguage = "html"
-	DestinationQdrantLanguageSol      DestinationQdrantLanguage = "sol"
-)
-
-func (e DestinationQdrantLanguage) ToPointer() *DestinationQdrantLanguage {
-	return &e
-}
-func (e *DestinationQdrantLanguage) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "cpp":
-		fallthrough
-	case "go":
-		fallthrough
-	case "java":
-		fallthrough
-	case "js":
-		fallthrough
-	case "php":
-		fallthrough
-	case "proto":
-		fallthrough
-	case "python":
-		fallthrough
-	case "rst":
-		fallthrough
-	case "ruby":
-		fallthrough
-	case "rust":
-		fallthrough
-	case "scala":
-		fallthrough
-	case "swift":
-		fallthrough
-	case "markdown":
-		fallthrough
-	case "latex":
-		fallthrough
-	case "html":
-		fallthrough
-	case "sol":
-		*e = DestinationQdrantLanguage(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationQdrantLanguage: %v", v)
-	}
-}
-
-// DestinationQdrantByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
-type DestinationQdrantByProgrammingLanguage struct {
-	mode *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
-	// Split code in suitable places based on the programming language
-	Language DestinationQdrantLanguage `json:"language"`
-}
-
-func (d DestinationQdrantByProgrammingLanguage) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantByProgrammingLanguage) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantByProgrammingLanguage) GetMode() *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode {
-	return DestinationQdrantSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
-}
-
-func (o *DestinationQdrantByProgrammingLanguage) GetLanguage() DestinationQdrantLanguage {
-	if o == nil {
-		return DestinationQdrantLanguage("")
-	}
-	return o.Language
-}
-
-type DestinationQdrantSchemasProcessingTextSplitterMode string
-
-const (
-	DestinationQdrantSchemasProcessingTextSplitterModeMarkdown DestinationQdrantSchemasProcessingTextSplitterMode = "markdown"
-)
-
-func (e DestinationQdrantSchemasProcessingTextSplitterMode) ToPointer() *DestinationQdrantSchemasProcessingTextSplitterMode {
-	return &e
-}
-func (e *DestinationQdrantSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "markdown":
-		*e = DestinationQdrantSchemasProcessingTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasProcessingTextSplitterMode: %v", v)
-	}
-}
-
-// DestinationQdrantByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
-type DestinationQdrantByMarkdownHeader struct {
-	mode *DestinationQdrantSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
-	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
-	SplitLevel *int64 `default:"1" json:"split_level"`
-}
-
-func (d DestinationQdrantByMarkdownHeader) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantByMarkdownHeader) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantByMarkdownHeader) GetMode() *DestinationQdrantSchemasProcessingTextSplitterMode {
-	return DestinationQdrantSchemasProcessingTextSplitterModeMarkdown.ToPointer()
-}
-
-func (o *DestinationQdrantByMarkdownHeader) GetSplitLevel() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SplitLevel
-}
-
-type DestinationQdrantSchemasProcessingMode string
-
-const (
-	DestinationQdrantSchemasProcessingModeSeparator DestinationQdrantSchemasProcessingMode = "separator"
-)
-
-func (e DestinationQdrantSchemasProcessingMode) ToPointer() *DestinationQdrantSchemasProcessingMode {
-	return &e
-}
-func (e *DestinationQdrantSchemasProcessingMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "separator":
-		*e = DestinationQdrantSchemasProcessingMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasProcessingMode: %v", v)
-	}
-}
-
-// DestinationQdrantBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
-type DestinationQdrantBySeparator struct {
-	mode *DestinationQdrantSchemasProcessingMode `const:"separator" json:"mode"`
-	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
-	Separators []string `json:"separators,omitempty"`
-	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool `default:"false" json:"keep_separator"`
-}
-
-func (d DestinationQdrantBySeparator) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantBySeparator) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantBySeparator) GetMode() *DestinationQdrantSchemasProcessingMode {
-	return DestinationQdrantSchemasProcessingModeSeparator.ToPointer()
-}
-
-func (o *DestinationQdrantBySeparator) GetSeparators() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Separators
-}
-
-func (o *DestinationQdrantBySeparator) GetKeepSeparator() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KeepSeparator
-}
-
-type DestinationQdrantTextSplitterType string
-
-const (
-	DestinationQdrantTextSplitterTypeDestinationQdrantBySeparator           DestinationQdrantTextSplitterType = "destination-qdrant_By Separator"
-	DestinationQdrantTextSplitterTypeDestinationQdrantByMarkdownHeader      DestinationQdrantTextSplitterType = "destination-qdrant_By Markdown header"
-	DestinationQdrantTextSplitterTypeDestinationQdrantByProgrammingLanguage DestinationQdrantTextSplitterType = "destination-qdrant_By Programming Language"
-)
-
-// DestinationQdrantTextSplitter - Split text fields into chunks based on the specified method.
-type DestinationQdrantTextSplitter struct {
-	DestinationQdrantBySeparator           *DestinationQdrantBySeparator           `queryParam:"inline"`
-	DestinationQdrantByMarkdownHeader      *DestinationQdrantByMarkdownHeader      `queryParam:"inline"`
-	DestinationQdrantByProgrammingLanguage *DestinationQdrantByProgrammingLanguage `queryParam:"inline"`
-
-	Type DestinationQdrantTextSplitterType
-}
-
-func CreateDestinationQdrantTextSplitterDestinationQdrantBySeparator(destinationQdrantBySeparator DestinationQdrantBySeparator) DestinationQdrantTextSplitter {
-	typ := DestinationQdrantTextSplitterTypeDestinationQdrantBySeparator
-
-	return DestinationQdrantTextSplitter{
-		DestinationQdrantBySeparator: &destinationQdrantBySeparator,
-		Type:                         typ,
-	}
-}
-
-func CreateDestinationQdrantTextSplitterDestinationQdrantByMarkdownHeader(destinationQdrantByMarkdownHeader DestinationQdrantByMarkdownHeader) DestinationQdrantTextSplitter {
-	typ := DestinationQdrantTextSplitterTypeDestinationQdrantByMarkdownHeader
-
-	return DestinationQdrantTextSplitter{
-		DestinationQdrantByMarkdownHeader: &destinationQdrantByMarkdownHeader,
-		Type:                              typ,
-	}
-}
-
-func CreateDestinationQdrantTextSplitterDestinationQdrantByProgrammingLanguage(destinationQdrantByProgrammingLanguage DestinationQdrantByProgrammingLanguage) DestinationQdrantTextSplitter {
-	typ := DestinationQdrantTextSplitterTypeDestinationQdrantByProgrammingLanguage
-
-	return DestinationQdrantTextSplitter{
-		DestinationQdrantByProgrammingLanguage: &destinationQdrantByProgrammingLanguage,
-		Type:                                   typ,
-	}
-}
-
-func (u *DestinationQdrantTextSplitter) UnmarshalJSON(data []byte) error {
-
-	var destinationQdrantByMarkdownHeader DestinationQdrantByMarkdownHeader = DestinationQdrantByMarkdownHeader{}
-	if err := utils.UnmarshalJSON(data, &destinationQdrantByMarkdownHeader, "", true, true); err == nil {
-		u.DestinationQdrantByMarkdownHeader = &destinationQdrantByMarkdownHeader
-		u.Type = DestinationQdrantTextSplitterTypeDestinationQdrantByMarkdownHeader
-		return nil
-	}
-
-	var destinationQdrantByProgrammingLanguage DestinationQdrantByProgrammingLanguage = DestinationQdrantByProgrammingLanguage{}
-	if err := utils.UnmarshalJSON(data, &destinationQdrantByProgrammingLanguage, "", true, true); err == nil {
-		u.DestinationQdrantByProgrammingLanguage = &destinationQdrantByProgrammingLanguage
-		u.Type = DestinationQdrantTextSplitterTypeDestinationQdrantByProgrammingLanguage
-		return nil
-	}
-
-	var destinationQdrantBySeparator DestinationQdrantBySeparator = DestinationQdrantBySeparator{}
-	if err := utils.UnmarshalJSON(data, &destinationQdrantBySeparator, "", true, true); err == nil {
-		u.DestinationQdrantBySeparator = &destinationQdrantBySeparator
-		u.Type = DestinationQdrantTextSplitterTypeDestinationQdrantBySeparator
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantTextSplitter", string(data))
-}
-
-func (u DestinationQdrantTextSplitter) MarshalJSON() ([]byte, error) {
-	if u.DestinationQdrantBySeparator != nil {
-		return utils.MarshalJSON(u.DestinationQdrantBySeparator, "", true)
-	}
-
-	if u.DestinationQdrantByMarkdownHeader != nil {
-		return utils.MarshalJSON(u.DestinationQdrantByMarkdownHeader, "", true)
-	}
-
-	if u.DestinationQdrantByProgrammingLanguage != nil {
-		return utils.MarshalJSON(u.DestinationQdrantByProgrammingLanguage, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationQdrantTextSplitter: all fields are null")
-}
-
-type DestinationQdrantFieldNameMappingConfigModel struct {
-	// The field name in the source
-	FromField string `json:"from_field"`
-	// The field name to use in the destination
-	ToField string `json:"to_field"`
-}
-
-func (o *DestinationQdrantFieldNameMappingConfigModel) GetFromField() string {
-	if o == nil {
-		return ""
-	}
-	return o.FromField
-}
-
-func (o *DestinationQdrantFieldNameMappingConfigModel) GetToField() string {
-	if o == nil {
-		return ""
-	}
-	return o.ToField
-}
-
-type DestinationQdrantProcessingConfigModel struct {
-	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
-	ChunkSize int64 `json:"chunk_size"`
-	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
-	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
-	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TextFields []string `json:"text_fields,omitempty"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
-	// Split text fields into chunks based on the specified method.
-	TextSplitter *DestinationQdrantTextSplitter `json:"text_splitter,omitempty"`
-	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
-	FieldNameMappings []DestinationQdrantFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
-}
-
-func (d DestinationQdrantProcessingConfigModel) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantProcessingConfigModel) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantProcessingConfigModel) GetChunkSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ChunkSize
-}
-
-func (o *DestinationQdrantProcessingConfigModel) GetChunkOverlap() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ChunkOverlap
-}
-
-func (o *DestinationQdrantProcessingConfigModel) GetTextFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TextFields
-}
-
-func (o *DestinationQdrantProcessingConfigModel) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
-}
-
-func (o *DestinationQdrantProcessingConfigModel) GetTextSplitter() *DestinationQdrantTextSplitter {
-	if o == nil {
-		return nil
-	}
-	return o.TextSplitter
-}
-
-func (o *DestinationQdrantProcessingConfigModel) GetFieldNameMappings() []DestinationQdrantFieldNameMappingConfigModel {
-	if o == nil {
-		return nil
-	}
-	return o.FieldNameMappings
-}
-
 type DestinationQdrantSchemasIndexingAuthMethodMode string
 
 const (
@@ -907,9 +498,9 @@ func (e *DestinationQdrantSchemasIndexingMode) UnmarshalJSON(data []byte) error 
 }
 
 type APIKeyAuth struct {
-	mode *DestinationQdrantSchemasIndexingMode `const:"api_key_auth" json:"mode"`
 	// API Key for the Qdrant instance
-	APIKey string `json:"api_key"`
+	APIKey string                                `json:"api_key"`
+	mode   *DestinationQdrantSchemasIndexingMode `const:"api_key_auth" json:"mode"`
 }
 
 func (a APIKeyAuth) MarshalJSON() ([]byte, error) {
@@ -923,15 +514,15 @@ func (a *APIKeyAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *APIKeyAuth) GetMode() *DestinationQdrantSchemasIndexingMode {
-	return DestinationQdrantSchemasIndexingModeAPIKeyAuth.ToPointer()
-}
-
 func (o *APIKeyAuth) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *APIKeyAuth) GetMode() *DestinationQdrantSchemasIndexingMode {
+	return DestinationQdrantSchemasIndexingModeAPIKeyAuth.ToPointer()
 }
 
 type DestinationQdrantAuthenticationMethodType string
@@ -1030,18 +621,18 @@ func (e *DistanceMetric) UnmarshalJSON(data []byte) error {
 
 // DestinationQdrantIndexing - Indexing configuration
 type DestinationQdrantIndexing struct {
-	// Public Endpoint of the Qdrant cluser
-	URL string `json:"url"`
 	// Method to authenticate with the Qdrant Instance
 	AuthMethod *DestinationQdrantAuthenticationMethod `json:"auth_method,omitempty"`
-	// Whether to prefer gRPC over HTTP. Set to true for Qdrant cloud clusters
-	PreferGrpc *bool `default:"true" json:"prefer_grpc"`
 	// The collection to load data into
 	Collection string `json:"collection"`
 	// The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
 	DistanceMetric *DistanceMetric `default:"cos" json:"distance_metric"`
+	// Whether to prefer gRPC over HTTP. Set to true for Qdrant cloud clusters
+	PreferGrpc *bool `default:"true" json:"prefer_grpc"`
 	// The field in the payload that contains the embedded text
 	TextField *string `default:"text" json:"text_field"`
+	// Public Endpoint of the Qdrant cluser
+	URL string `json:"url"`
 }
 
 func (d DestinationQdrantIndexing) MarshalJSON() ([]byte, error) {
@@ -1055,25 +646,11 @@ func (d *DestinationQdrantIndexing) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationQdrantIndexing) GetURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.URL
-}
-
 func (o *DestinationQdrantIndexing) GetAuthMethod() *DestinationQdrantAuthenticationMethod {
 	if o == nil {
 		return nil
 	}
 	return o.AuthMethod
-}
-
-func (o *DestinationQdrantIndexing) GetPreferGrpc() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.PreferGrpc
 }
 
 func (o *DestinationQdrantIndexing) GetCollection() string {
@@ -1090,11 +667,434 @@ func (o *DestinationQdrantIndexing) GetDistanceMetric() *DistanceMetric {
 	return o.DistanceMetric
 }
 
+func (o *DestinationQdrantIndexing) GetPreferGrpc() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreferGrpc
+}
+
 func (o *DestinationQdrantIndexing) GetTextField() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TextField
+}
+
+func (o *DestinationQdrantIndexing) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
+type DestinationQdrantFieldNameMappingConfigModel struct {
+	// The field name in the source
+	FromField string `json:"from_field"`
+	// The field name to use in the destination
+	ToField string `json:"to_field"`
+}
+
+func (o *DestinationQdrantFieldNameMappingConfigModel) GetFromField() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromField
+}
+
+func (o *DestinationQdrantFieldNameMappingConfigModel) GetToField() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToField
+}
+
+// DestinationQdrantLanguage - Split code in suitable places based on the programming language
+type DestinationQdrantLanguage string
+
+const (
+	DestinationQdrantLanguageCpp      DestinationQdrantLanguage = "cpp"
+	DestinationQdrantLanguageGo       DestinationQdrantLanguage = "go"
+	DestinationQdrantLanguageJava     DestinationQdrantLanguage = "java"
+	DestinationQdrantLanguageJs       DestinationQdrantLanguage = "js"
+	DestinationQdrantLanguagePhp      DestinationQdrantLanguage = "php"
+	DestinationQdrantLanguageProto    DestinationQdrantLanguage = "proto"
+	DestinationQdrantLanguagePython   DestinationQdrantLanguage = "python"
+	DestinationQdrantLanguageRst      DestinationQdrantLanguage = "rst"
+	DestinationQdrantLanguageRuby     DestinationQdrantLanguage = "ruby"
+	DestinationQdrantLanguageRust     DestinationQdrantLanguage = "rust"
+	DestinationQdrantLanguageScala    DestinationQdrantLanguage = "scala"
+	DestinationQdrantLanguageSwift    DestinationQdrantLanguage = "swift"
+	DestinationQdrantLanguageMarkdown DestinationQdrantLanguage = "markdown"
+	DestinationQdrantLanguageLatex    DestinationQdrantLanguage = "latex"
+	DestinationQdrantLanguageHTML     DestinationQdrantLanguage = "html"
+	DestinationQdrantLanguageSol      DestinationQdrantLanguage = "sol"
+)
+
+func (e DestinationQdrantLanguage) ToPointer() *DestinationQdrantLanguage {
+	return &e
+}
+func (e *DestinationQdrantLanguage) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "cpp":
+		fallthrough
+	case "go":
+		fallthrough
+	case "java":
+		fallthrough
+	case "js":
+		fallthrough
+	case "php":
+		fallthrough
+	case "proto":
+		fallthrough
+	case "python":
+		fallthrough
+	case "rst":
+		fallthrough
+	case "ruby":
+		fallthrough
+	case "rust":
+		fallthrough
+	case "scala":
+		fallthrough
+	case "swift":
+		fallthrough
+	case "markdown":
+		fallthrough
+	case "latex":
+		fallthrough
+	case "html":
+		fallthrough
+	case "sol":
+		*e = DestinationQdrantLanguage(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationQdrantLanguage: %v", v)
+	}
+}
+
+type DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode string
+
+const (
+	DestinationQdrantSchemasProcessingTextSplitterTextSplitterModeCode DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode = "code"
+)
+
+func (e DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode {
+	return &e
+}
+func (e *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	}
+}
+
+// DestinationQdrantByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
+type DestinationQdrantByProgrammingLanguage struct {
+	// Split code in suitable places based on the programming language
+	Language DestinationQdrantLanguage                                       `json:"language"`
+	mode     *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+}
+
+func (d DestinationQdrantByProgrammingLanguage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationQdrantByProgrammingLanguage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationQdrantByProgrammingLanguage) GetLanguage() DestinationQdrantLanguage {
+	if o == nil {
+		return DestinationQdrantLanguage("")
+	}
+	return o.Language
+}
+
+func (o *DestinationQdrantByProgrammingLanguage) GetMode() *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode {
+	return DestinationQdrantSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
+}
+
+type DestinationQdrantSchemasProcessingTextSplitterMode string
+
+const (
+	DestinationQdrantSchemasProcessingTextSplitterModeMarkdown DestinationQdrantSchemasProcessingTextSplitterMode = "markdown"
+)
+
+func (e DestinationQdrantSchemasProcessingTextSplitterMode) ToPointer() *DestinationQdrantSchemasProcessingTextSplitterMode {
+	return &e
+}
+func (e *DestinationQdrantSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "markdown":
+		*e = DestinationQdrantSchemasProcessingTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationQdrantSchemasProcessingTextSplitterMode: %v", v)
+	}
+}
+
+// DestinationQdrantByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
+type DestinationQdrantByMarkdownHeader struct {
+	mode *DestinationQdrantSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
+	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
+	SplitLevel *int64 `default:"1" json:"split_level"`
+}
+
+func (d DestinationQdrantByMarkdownHeader) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationQdrantByMarkdownHeader) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationQdrantByMarkdownHeader) GetMode() *DestinationQdrantSchemasProcessingTextSplitterMode {
+	return DestinationQdrantSchemasProcessingTextSplitterModeMarkdown.ToPointer()
+}
+
+func (o *DestinationQdrantByMarkdownHeader) GetSplitLevel() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SplitLevel
+}
+
+type DestinationQdrantSchemasProcessingMode string
+
+const (
+	DestinationQdrantSchemasProcessingModeSeparator DestinationQdrantSchemasProcessingMode = "separator"
+)
+
+func (e DestinationQdrantSchemasProcessingMode) ToPointer() *DestinationQdrantSchemasProcessingMode {
+	return &e
+}
+func (e *DestinationQdrantSchemasProcessingMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "separator":
+		*e = DestinationQdrantSchemasProcessingMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationQdrantSchemasProcessingMode: %v", v)
+	}
+}
+
+// DestinationQdrantBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
+type DestinationQdrantBySeparator struct {
+	// Whether to keep the separator in the resulting chunks
+	KeepSeparator *bool                                   `default:"false" json:"keep_separator"`
+	mode          *DestinationQdrantSchemasProcessingMode `const:"separator" json:"mode"`
+	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
+	Separators []string `json:"separators,omitempty"`
+}
+
+func (d DestinationQdrantBySeparator) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationQdrantBySeparator) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationQdrantBySeparator) GetKeepSeparator() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepSeparator
+}
+
+func (o *DestinationQdrantBySeparator) GetMode() *DestinationQdrantSchemasProcessingMode {
+	return DestinationQdrantSchemasProcessingModeSeparator.ToPointer()
+}
+
+func (o *DestinationQdrantBySeparator) GetSeparators() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Separators
+}
+
+type DestinationQdrantTextSplitterType string
+
+const (
+	DestinationQdrantTextSplitterTypeDestinationQdrantBySeparator           DestinationQdrantTextSplitterType = "destination-qdrant_By Separator"
+	DestinationQdrantTextSplitterTypeDestinationQdrantByMarkdownHeader      DestinationQdrantTextSplitterType = "destination-qdrant_By Markdown header"
+	DestinationQdrantTextSplitterTypeDestinationQdrantByProgrammingLanguage DestinationQdrantTextSplitterType = "destination-qdrant_By Programming Language"
+)
+
+// DestinationQdrantTextSplitter - Split text fields into chunks based on the specified method.
+type DestinationQdrantTextSplitter struct {
+	DestinationQdrantBySeparator           *DestinationQdrantBySeparator           `queryParam:"inline"`
+	DestinationQdrantByMarkdownHeader      *DestinationQdrantByMarkdownHeader      `queryParam:"inline"`
+	DestinationQdrantByProgrammingLanguage *DestinationQdrantByProgrammingLanguage `queryParam:"inline"`
+
+	Type DestinationQdrantTextSplitterType
+}
+
+func CreateDestinationQdrantTextSplitterDestinationQdrantBySeparator(destinationQdrantBySeparator DestinationQdrantBySeparator) DestinationQdrantTextSplitter {
+	typ := DestinationQdrantTextSplitterTypeDestinationQdrantBySeparator
+
+	return DestinationQdrantTextSplitter{
+		DestinationQdrantBySeparator: &destinationQdrantBySeparator,
+		Type:                         typ,
+	}
+}
+
+func CreateDestinationQdrantTextSplitterDestinationQdrantByMarkdownHeader(destinationQdrantByMarkdownHeader DestinationQdrantByMarkdownHeader) DestinationQdrantTextSplitter {
+	typ := DestinationQdrantTextSplitterTypeDestinationQdrantByMarkdownHeader
+
+	return DestinationQdrantTextSplitter{
+		DestinationQdrantByMarkdownHeader: &destinationQdrantByMarkdownHeader,
+		Type:                              typ,
+	}
+}
+
+func CreateDestinationQdrantTextSplitterDestinationQdrantByProgrammingLanguage(destinationQdrantByProgrammingLanguage DestinationQdrantByProgrammingLanguage) DestinationQdrantTextSplitter {
+	typ := DestinationQdrantTextSplitterTypeDestinationQdrantByProgrammingLanguage
+
+	return DestinationQdrantTextSplitter{
+		DestinationQdrantByProgrammingLanguage: &destinationQdrantByProgrammingLanguage,
+		Type:                                   typ,
+	}
+}
+
+func (u *DestinationQdrantTextSplitter) UnmarshalJSON(data []byte) error {
+
+	var destinationQdrantByMarkdownHeader DestinationQdrantByMarkdownHeader = DestinationQdrantByMarkdownHeader{}
+	if err := utils.UnmarshalJSON(data, &destinationQdrantByMarkdownHeader, "", true, true); err == nil {
+		u.DestinationQdrantByMarkdownHeader = &destinationQdrantByMarkdownHeader
+		u.Type = DestinationQdrantTextSplitterTypeDestinationQdrantByMarkdownHeader
+		return nil
+	}
+
+	var destinationQdrantByProgrammingLanguage DestinationQdrantByProgrammingLanguage = DestinationQdrantByProgrammingLanguage{}
+	if err := utils.UnmarshalJSON(data, &destinationQdrantByProgrammingLanguage, "", true, true); err == nil {
+		u.DestinationQdrantByProgrammingLanguage = &destinationQdrantByProgrammingLanguage
+		u.Type = DestinationQdrantTextSplitterTypeDestinationQdrantByProgrammingLanguage
+		return nil
+	}
+
+	var destinationQdrantBySeparator DestinationQdrantBySeparator = DestinationQdrantBySeparator{}
+	if err := utils.UnmarshalJSON(data, &destinationQdrantBySeparator, "", true, true); err == nil {
+		u.DestinationQdrantBySeparator = &destinationQdrantBySeparator
+		u.Type = DestinationQdrantTextSplitterTypeDestinationQdrantBySeparator
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantTextSplitter", string(data))
+}
+
+func (u DestinationQdrantTextSplitter) MarshalJSON() ([]byte, error) {
+	if u.DestinationQdrantBySeparator != nil {
+		return utils.MarshalJSON(u.DestinationQdrantBySeparator, "", true)
+	}
+
+	if u.DestinationQdrantByMarkdownHeader != nil {
+		return utils.MarshalJSON(u.DestinationQdrantByMarkdownHeader, "", true)
+	}
+
+	if u.DestinationQdrantByProgrammingLanguage != nil {
+		return utils.MarshalJSON(u.DestinationQdrantByProgrammingLanguage, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationQdrantTextSplitter: all fields are null")
+}
+
+type DestinationQdrantProcessingConfigModel struct {
+	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
+	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
+	ChunkSize int64 `json:"chunk_size"`
+	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
+	FieldNameMappings []DestinationQdrantFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+	TextFields []string `json:"text_fields,omitempty"`
+	// Split text fields into chunks based on the specified method.
+	TextSplitter *DestinationQdrantTextSplitter `json:"text_splitter,omitempty"`
+}
+
+func (d DestinationQdrantProcessingConfigModel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationQdrantProcessingConfigModel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationQdrantProcessingConfigModel) GetChunkOverlap() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ChunkOverlap
+}
+
+func (o *DestinationQdrantProcessingConfigModel) GetChunkSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ChunkSize
+}
+
+func (o *DestinationQdrantProcessingConfigModel) GetFieldNameMappings() []DestinationQdrantFieldNameMappingConfigModel {
+	if o == nil {
+		return nil
+	}
+	return o.FieldNameMappings
+}
+
+func (o *DestinationQdrantProcessingConfigModel) GetMetadataFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MetadataFields
+}
+
+func (o *DestinationQdrantProcessingConfigModel) GetTextFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TextFields
+}
+
+func (o *DestinationQdrantProcessingConfigModel) GetTextSplitter() *DestinationQdrantTextSplitter {
+	if o == nil {
+		return nil
+	}
+	return o.TextSplitter
 }
 
 type Qdrant string
@@ -1132,13 +1132,13 @@ func (e *Qdrant) UnmarshalJSON(data []byte) error {
 // Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationQdrant struct {
 	// Embedding configuration
-	Embedding  DestinationQdrantEmbedding             `json:"embedding"`
-	Processing DestinationQdrantProcessingConfigModel `json:"processing"`
-	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText *bool `default:"false" json:"omit_raw_text"`
+	Embedding DestinationQdrantEmbedding `json:"embedding"`
 	// Indexing configuration
-	Indexing        DestinationQdrantIndexing `json:"indexing"`
-	destinationType Qdrant                    `const:"qdrant" json:"destinationType"`
+	Indexing DestinationQdrantIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText     *bool                                  `default:"false" json:"omit_raw_text"`
+	Processing      DestinationQdrantProcessingConfigModel `json:"processing"`
+	destinationType Qdrant                                 `const:"qdrant" json:"destinationType"`
 }
 
 func (d DestinationQdrant) MarshalJSON() ([]byte, error) {
@@ -1159,11 +1159,11 @@ func (o *DestinationQdrant) GetEmbedding() DestinationQdrantEmbedding {
 	return o.Embedding
 }
 
-func (o *DestinationQdrant) GetProcessing() DestinationQdrantProcessingConfigModel {
+func (o *DestinationQdrant) GetIndexing() DestinationQdrantIndexing {
 	if o == nil {
-		return DestinationQdrantProcessingConfigModel{}
+		return DestinationQdrantIndexing{}
 	}
-	return o.Processing
+	return o.Indexing
 }
 
 func (o *DestinationQdrant) GetOmitRawText() *bool {
@@ -1173,11 +1173,11 @@ func (o *DestinationQdrant) GetOmitRawText() *bool {
 	return o.OmitRawText
 }
 
-func (o *DestinationQdrant) GetIndexing() DestinationQdrantIndexing {
+func (o *DestinationQdrant) GetProcessing() DestinationQdrantProcessingConfigModel {
 	if o == nil {
-		return DestinationQdrantIndexing{}
+		return DestinationQdrantProcessingConfigModel{}
 	}
-	return o.Indexing
+	return o.Processing
 }
 
 func (o *DestinationQdrant) GetDestinationType() Qdrant {

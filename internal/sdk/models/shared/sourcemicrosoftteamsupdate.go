@@ -34,12 +34,12 @@ func (e *SourceMicrosoftTeamsUpdateSchemasAuthType) UnmarshalJSON(data []byte) e
 
 type SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft struct {
 	authType *SourceMicrosoftTeamsUpdateSchemasAuthType `const:"Token" json:"auth_type"`
-	// A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
-	TenantID string `json:"tenant_id"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Teams developer application.
 	ClientSecret string `json:"client_secret"`
+	// A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
+	TenantID string `json:"tenant_id"`
 }
 
 func (s SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft) MarshalJSON() ([]byte, error) {
@@ -57,13 +57,6 @@ func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft) GetAuthType() *Sour
 	return SourceMicrosoftTeamsUpdateSchemasAuthTypeToken.ToPointer()
 }
 
-func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
 func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft) GetClientID() string {
 	if o == nil {
 		return ""
@@ -76,6 +69,13 @@ func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft) GetClientSecret() s
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
 }
 
 type SourceMicrosoftTeamsUpdateAuthType string
@@ -103,14 +103,14 @@ func (e *SourceMicrosoftTeamsUpdateAuthType) UnmarshalJSON(data []byte) error {
 
 type SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20 struct {
 	authType *SourceMicrosoftTeamsUpdateAuthType `const:"Client" json:"auth_type"`
-	// A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
-	TenantID string `json:"tenant_id"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Teams developer application.
 	ClientSecret string `json:"client_secret"`
 	// A Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
+	// A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
+	TenantID string `json:"tenant_id"`
 }
 
 func (s SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) MarshalJSON() ([]byte, error) {
@@ -126,13 +126,6 @@ func (s *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) UnmarshalJSO
 
 func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) GetAuthType() *SourceMicrosoftTeamsUpdateAuthType {
 	return SourceMicrosoftTeamsUpdateAuthTypeClient.ToPointer()
-}
-
-func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
 }
 
 func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) GetClientID() string {
@@ -154,6 +147,13 @@ func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) GetRefreshTo
 		return ""
 	}
 	return o.RefreshToken
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
 }
 
 type SourceMicrosoftTeamsUpdateAuthenticationMechanismType string
@@ -221,17 +221,10 @@ func (u SourceMicrosoftTeamsUpdateAuthenticationMechanism) MarshalJSON() ([]byte
 }
 
 type SourceMicrosoftTeamsUpdate struct {
-	// Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
-	Period string `json:"period"`
 	// Choose how to authenticate to Microsoft
 	Credentials *SourceMicrosoftTeamsUpdateAuthenticationMechanism `json:"credentials,omitempty"`
-}
-
-func (o *SourceMicrosoftTeamsUpdate) GetPeriod() string {
-	if o == nil {
-		return ""
-	}
-	return o.Period
+	// Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
+	Period string `json:"period"`
 }
 
 func (o *SourceMicrosoftTeamsUpdate) GetCredentials() *SourceMicrosoftTeamsUpdateAuthenticationMechanism {
@@ -239,4 +232,11 @@ func (o *SourceMicrosoftTeamsUpdate) GetCredentials() *SourceMicrosoftTeamsUpdat
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceMicrosoftTeamsUpdate) GetPeriod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Period
 }

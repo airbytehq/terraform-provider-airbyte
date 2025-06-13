@@ -22,21 +22,48 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	checkPrivileges := new(bool)
+	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
+		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
+	} else {
+		checkPrivileges = nil
+	}
+	checkpointTargetIntervalSeconds := new(int64)
+	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
+		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
+	} else {
+		checkpointTargetIntervalSeconds = nil
+	}
+	concurrency := new(int64)
+	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
+		*concurrency = r.Configuration.Concurrency.ValueInt64()
+	} else {
+		concurrency = nil
+	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var replicationMethod shared.SourceMysqlUpdateMethod
 	var sourceMysqlScanChangesWithUserDefinedCursor *shared.SourceMysqlScanChangesWithUserDefinedCursor
 	if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
@@ -62,6 +89,18 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 	}
 	var sourceMysqlReadChangesUsingChangeDataCaptureCDC *shared.SourceMysqlReadChangesUsingChangeDataCaptureCDC
 	if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
+		initialLoadTimeoutHours := new(int64)
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+			*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+		} else {
+			initialLoadTimeoutHours = nil
+		}
+		invalidCdcCursorPositionBehavior := new(shared.SourceMysqlInvalidCDCPositionBehaviorAdvanced)
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+			*invalidCdcCursorPositionBehavior = shared.SourceMysqlInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
+		} else {
+			invalidCdcCursorPositionBehavior = nil
+		}
 		method1 := new(shared.SourceMysqlSchemasMethod)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsNull() {
 			*method1 = shared.SourceMysqlSchemasMethod(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
@@ -74,27 +113,15 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		} else {
 			serverTimezone = nil
 		}
-		invalidCdcCursorPositionBehavior := new(shared.SourceMysqlInvalidCDCPositionBehaviorAdvanced)
-		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-			*invalidCdcCursorPositionBehavior = shared.SourceMysqlInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
-		} else {
-			invalidCdcCursorPositionBehavior = nil
-		}
-		initialLoadTimeoutHours := new(int64)
-		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
-			*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
-		} else {
-			initialLoadTimeoutHours = nil
-		}
 		var additionalProperties1 interface{}
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceMysqlReadChangesUsingChangeDataCaptureCDC = &shared.SourceMysqlReadChangesUsingChangeDataCaptureCDC{
+			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 			Method:                           method1,
 			ServerTimezone:                   serverTimezone,
-			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 			AdditionalProperties:             additionalProperties1,
 		}
 	}
@@ -102,36 +129,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		replicationMethod = shared.SourceMysqlUpdateMethod{
 			SourceMysqlReadChangesUsingChangeDataCaptureCDC: sourceMysqlReadChangesUsingChangeDataCaptureCDC,
 		}
-	}
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
-	checkpointTargetIntervalSeconds := new(int64)
-	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
-		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
-	} else {
-		checkpointTargetIntervalSeconds = nil
-	}
-	concurrency := new(int64)
-	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
-		*concurrency = r.Configuration.Concurrency.ValueInt64()
-	} else {
-		concurrency = nil
-	}
-	checkPrivileges := new(bool)
-	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
-		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
-	} else {
-		checkPrivileges = nil
 	}
 	var sslMode *shared.SourceMysqlEncryption
 	if r.Configuration.SslMode != nil {
@@ -181,12 +178,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		}
 		var verifyCa *shared.VerifyCa
 		if r.Configuration.SslMode.VerifyCa != nil {
-			mode2 := new(shared.SourceMysqlSchemasSslModeMode)
-			if !r.Configuration.SslMode.VerifyCa.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyCa.Mode.IsNull() {
-				*mode2 = shared.SourceMysqlSchemasSslModeMode(r.Configuration.SslMode.VerifyCa.Mode.ValueString())
-			} else {
-				mode2 = nil
-			}
 			var caCertificate string
 			caCertificate = r.Configuration.SslMode.VerifyCa.CaCertificate.ValueString()
 
@@ -208,16 +199,22 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 			} else {
 				clientKeyPassword = nil
 			}
+			mode2 := new(shared.SourceMysqlSchemasSslModeMode)
+			if !r.Configuration.SslMode.VerifyCa.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyCa.Mode.IsNull() {
+				*mode2 = shared.SourceMysqlSchemasSslModeMode(r.Configuration.SslMode.VerifyCa.Mode.ValueString())
+			} else {
+				mode2 = nil
+			}
 			var additionalProperties4 interface{}
 			if !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties4)
 			}
 			verifyCa = &shared.VerifyCa{
-				Mode:                 mode2,
 				CaCertificate:        caCertificate,
 				ClientCertificate:    clientCertificate,
 				ClientKey:            clientKey,
 				ClientKeyPassword:    clientKeyPassword,
+				Mode:                 mode2,
 				AdditionalProperties: additionalProperties4,
 			}
 		}
@@ -228,12 +225,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		}
 		var verifyIdentity *shared.VerifyIdentity
 		if r.Configuration.SslMode.VerifyIdentity != nil {
-			mode3 := new(shared.SourceMysqlSchemasSslModeEncryptionMode)
-			if !r.Configuration.SslMode.VerifyIdentity.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.Mode.IsNull() {
-				*mode3 = shared.SourceMysqlSchemasSslModeEncryptionMode(r.Configuration.SslMode.VerifyIdentity.Mode.ValueString())
-			} else {
-				mode3 = nil
-			}
 			var caCertificate1 string
 			caCertificate1 = r.Configuration.SslMode.VerifyIdentity.CaCertificate.ValueString()
 
@@ -255,16 +246,22 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 			} else {
 				clientKeyPassword1 = nil
 			}
+			mode3 := new(shared.SourceMysqlSchemasSslModeEncryptionMode)
+			if !r.Configuration.SslMode.VerifyIdentity.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.Mode.IsNull() {
+				*mode3 = shared.SourceMysqlSchemasSslModeEncryptionMode(r.Configuration.SslMode.VerifyIdentity.Mode.ValueString())
+			} else {
+				mode3 = nil
+			}
 			var additionalProperties5 interface{}
 			if !r.Configuration.SslMode.VerifyIdentity.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyIdentity.AdditionalProperties.ValueString()), &additionalProperties5)
 			}
 			verifyIdentity = &shared.VerifyIdentity{
-				Mode:                 mode3,
 				CaCertificate:        caCertificate1,
 				ClientCertificate:    clientCertificate1,
 				ClientKey:            clientKey1,
 				ClientKeyPassword:    clientKeyPassword1,
+				Mode:                 mode3,
 				AdditionalProperties: additionalProperties5,
 			}
 		}
@@ -300,15 +297,18 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		}
 		var sourceMysqlSSHKeyAuthentication *shared.SourceMysqlSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
+			var tunnelHost string
+			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+
 			tunnelMethod2 := new(shared.SourceMysqlSchemasTunnelMethod)
 			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
 				*tunnelMethod2 = shared.SourceMysqlSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
 			} else {
 				tunnelMethod2 = nil
 			}
-			var tunnelHost string
-			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
 			tunnelPort := new(int64)
 			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
 				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
@@ -318,19 +318,16 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			var additionalProperties7 interface{}
 			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties7)
 			}
 			sourceMysqlSSHKeyAuthentication = &shared.SourceMysqlSSHKeyAuthentication{
-				TunnelMethod:         tunnelMethod2,
+				SSHKey:               sshKey,
 				TunnelHost:           tunnelHost,
+				TunnelMethod:         tunnelMethod2,
 				TunnelPort:           tunnelPort,
 				TunnelUser:           tunnelUser,
-				SSHKey:               sshKey,
 				AdditionalProperties: additionalProperties7,
 			}
 		}
@@ -341,15 +338,15 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		}
 		var sourceMysqlPasswordAuthentication *shared.SourceMysqlPasswordAuthentication
 		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			var tunnelHost1 string
+			tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+
 			tunnelMethod3 := new(shared.SourceMysqlSchemasTunnelMethodTunnelMethod)
 			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
 				*tunnelMethod3 = shared.SourceMysqlSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
 			} else {
 				tunnelMethod3 = nil
 			}
-			var tunnelHost1 string
-			tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
 			tunnelPort1 := new(int64)
 			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
 				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
@@ -367,8 +364,8 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 				_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties8)
 			}
 			sourceMysqlPasswordAuthentication = &shared.SourceMysqlPasswordAuthentication{
-				TunnelMethod:         tunnelMethod3,
 				TunnelHost:           tunnelHost1,
+				TunnelMethod:         tunnelMethod3,
 				TunnelPort:           tunnelPort1,
 				TunnelUser:           tunnelUser1,
 				TunnelUserPassword:   tunnelUserPassword,
@@ -381,19 +378,22 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMysql{
-		Host:                            host,
-		Port:                            port,
-		Database:                        database,
-		Username:                        username,
-		ReplicationMethod:               replicationMethod,
-		Password:                        password,
-		JdbcURLParams:                   jdbcURLParams,
+		CheckPrivileges:                 checkPrivileges,
 		CheckpointTargetIntervalSeconds: checkpointTargetIntervalSeconds,
 		Concurrency:                     concurrency,
-		CheckPrivileges:                 checkPrivileges,
+		Database:                        database,
+		Host:                            host,
+		JdbcURLParams:                   jdbcURLParams,
+		Password:                        password,
+		Port:                            port,
+		ReplicationMethod:               replicationMethod,
 		SslMode:                         sslMode,
 		TunnelMethod:                    tunnelMethod,
+		Username:                        username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -465,21 +465,48 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	checkPrivileges := new(bool)
+	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
+		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
+	} else {
+		checkPrivileges = nil
+	}
+	checkpointTargetIntervalSeconds := new(int64)
+	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
+		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
+	} else {
+		checkpointTargetIntervalSeconds = nil
+	}
+	concurrency := new(int64)
+	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
+		*concurrency = r.Configuration.Concurrency.ValueInt64()
+	} else {
+		concurrency = nil
+	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var replicationMethod shared.SourceMysqlUpdateUpdateMethod
 	var sourceMysqlUpdateScanChangesWithUserDefinedCursor *shared.SourceMysqlUpdateScanChangesWithUserDefinedCursor
 	if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
@@ -505,6 +532,18 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 	}
 	var sourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC *shared.SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC
 	if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
+		initialLoadTimeoutHours := new(int64)
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+			*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+		} else {
+			initialLoadTimeoutHours = nil
+		}
+		invalidCdcCursorPositionBehavior := new(shared.SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced)
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+			*invalidCdcCursorPositionBehavior = shared.SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
+		} else {
+			invalidCdcCursorPositionBehavior = nil
+		}
 		method1 := new(shared.SourceMysqlUpdateSchemasMethod)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsNull() {
 			*method1 = shared.SourceMysqlUpdateSchemasMethod(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
@@ -517,27 +556,15 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		} else {
 			serverTimezone = nil
 		}
-		invalidCdcCursorPositionBehavior := new(shared.SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced)
-		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-			*invalidCdcCursorPositionBehavior = shared.SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
-		} else {
-			invalidCdcCursorPositionBehavior = nil
-		}
-		initialLoadTimeoutHours := new(int64)
-		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
-			*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
-		} else {
-			initialLoadTimeoutHours = nil
-		}
 		var additionalProperties1 interface{}
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC = &shared.SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC{
+			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 			Method:                           method1,
 			ServerTimezone:                   serverTimezone,
-			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 			AdditionalProperties:             additionalProperties1,
 		}
 	}
@@ -545,36 +572,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		replicationMethod = shared.SourceMysqlUpdateUpdateMethod{
 			SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC: sourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC,
 		}
-	}
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
-	checkpointTargetIntervalSeconds := new(int64)
-	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
-		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
-	} else {
-		checkpointTargetIntervalSeconds = nil
-	}
-	concurrency := new(int64)
-	if !r.Configuration.Concurrency.IsUnknown() && !r.Configuration.Concurrency.IsNull() {
-		*concurrency = r.Configuration.Concurrency.ValueInt64()
-	} else {
-		concurrency = nil
-	}
-	checkPrivileges := new(bool)
-	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
-		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
-	} else {
-		checkPrivileges = nil
 	}
 	var sslMode *shared.SourceMysqlUpdateEncryption
 	if r.Configuration.SslMode != nil {
@@ -624,12 +621,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		}
 		var sourceMysqlUpdateVerifyCa *shared.SourceMysqlUpdateVerifyCa
 		if r.Configuration.SslMode.VerifyCa != nil {
-			mode2 := new(shared.SourceMysqlUpdateSchemasSslModeMode)
-			if !r.Configuration.SslMode.VerifyCa.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyCa.Mode.IsNull() {
-				*mode2 = shared.SourceMysqlUpdateSchemasSslModeMode(r.Configuration.SslMode.VerifyCa.Mode.ValueString())
-			} else {
-				mode2 = nil
-			}
 			var caCertificate string
 			caCertificate = r.Configuration.SslMode.VerifyCa.CaCertificate.ValueString()
 
@@ -651,16 +642,22 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 			} else {
 				clientKeyPassword = nil
 			}
+			mode2 := new(shared.SourceMysqlUpdateSchemasSslModeMode)
+			if !r.Configuration.SslMode.VerifyCa.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyCa.Mode.IsNull() {
+				*mode2 = shared.SourceMysqlUpdateSchemasSslModeMode(r.Configuration.SslMode.VerifyCa.Mode.ValueString())
+			} else {
+				mode2 = nil
+			}
 			var additionalProperties4 interface{}
 			if !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties4)
 			}
 			sourceMysqlUpdateVerifyCa = &shared.SourceMysqlUpdateVerifyCa{
-				Mode:                 mode2,
 				CaCertificate:        caCertificate,
 				ClientCertificate:    clientCertificate,
 				ClientKey:            clientKey,
 				ClientKeyPassword:    clientKeyPassword,
+				Mode:                 mode2,
 				AdditionalProperties: additionalProperties4,
 			}
 		}
@@ -671,12 +668,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		}
 		var sourceMysqlUpdateVerifyIdentity *shared.SourceMysqlUpdateVerifyIdentity
 		if r.Configuration.SslMode.VerifyIdentity != nil {
-			mode3 := new(shared.SourceMysqlUpdateSchemasSslModeEncryptionMode)
-			if !r.Configuration.SslMode.VerifyIdentity.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.Mode.IsNull() {
-				*mode3 = shared.SourceMysqlUpdateSchemasSslModeEncryptionMode(r.Configuration.SslMode.VerifyIdentity.Mode.ValueString())
-			} else {
-				mode3 = nil
-			}
 			var caCertificate1 string
 			caCertificate1 = r.Configuration.SslMode.VerifyIdentity.CaCertificate.ValueString()
 
@@ -698,16 +689,22 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 			} else {
 				clientKeyPassword1 = nil
 			}
+			mode3 := new(shared.SourceMysqlUpdateSchemasSslModeEncryptionMode)
+			if !r.Configuration.SslMode.VerifyIdentity.Mode.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.Mode.IsNull() {
+				*mode3 = shared.SourceMysqlUpdateSchemasSslModeEncryptionMode(r.Configuration.SslMode.VerifyIdentity.Mode.ValueString())
+			} else {
+				mode3 = nil
+			}
 			var additionalProperties5 interface{}
 			if !r.Configuration.SslMode.VerifyIdentity.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyIdentity.AdditionalProperties.ValueString()), &additionalProperties5)
 			}
 			sourceMysqlUpdateVerifyIdentity = &shared.SourceMysqlUpdateVerifyIdentity{
-				Mode:                 mode3,
 				CaCertificate:        caCertificate1,
 				ClientCertificate:    clientCertificate1,
 				ClientKey:            clientKey1,
 				ClientKeyPassword:    clientKeyPassword1,
+				Mode:                 mode3,
 				AdditionalProperties: additionalProperties5,
 			}
 		}
@@ -743,15 +740,18 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		}
 		var sourceMysqlUpdateSSHKeyAuthentication *shared.SourceMysqlUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
+			var tunnelHost string
+			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+
 			tunnelMethod2 := new(shared.SourceMysqlUpdateSchemasTunnelMethod)
 			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
 				*tunnelMethod2 = shared.SourceMysqlUpdateSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
 			} else {
 				tunnelMethod2 = nil
 			}
-			var tunnelHost string
-			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
 			tunnelPort := new(int64)
 			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
 				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
@@ -761,19 +761,16 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			var additionalProperties7 interface{}
 			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties7)
 			}
 			sourceMysqlUpdateSSHKeyAuthentication = &shared.SourceMysqlUpdateSSHKeyAuthentication{
-				TunnelMethod:         tunnelMethod2,
+				SSHKey:               sshKey,
 				TunnelHost:           tunnelHost,
+				TunnelMethod:         tunnelMethod2,
 				TunnelPort:           tunnelPort,
 				TunnelUser:           tunnelUser,
-				SSHKey:               sshKey,
 				AdditionalProperties: additionalProperties7,
 			}
 		}
@@ -784,15 +781,15 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		}
 		var sourceMysqlUpdatePasswordAuthentication *shared.SourceMysqlUpdatePasswordAuthentication
 		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			var tunnelHost1 string
+			tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+
 			tunnelMethod3 := new(shared.SourceMysqlUpdateSchemasTunnelMethodTunnelMethod)
 			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
 				*tunnelMethod3 = shared.SourceMysqlUpdateSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
 			} else {
 				tunnelMethod3 = nil
 			}
-			var tunnelHost1 string
-			tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
 			tunnelPort1 := new(int64)
 			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
 				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
@@ -810,8 +807,8 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 				_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties8)
 			}
 			sourceMysqlUpdatePasswordAuthentication = &shared.SourceMysqlUpdatePasswordAuthentication{
-				TunnelMethod:         tunnelMethod3,
 				TunnelHost:           tunnelHost1,
+				TunnelMethod:         tunnelMethod3,
 				TunnelPort:           tunnelPort1,
 				TunnelUser:           tunnelUser1,
 				TunnelUserPassword:   tunnelUserPassword,
@@ -824,19 +821,22 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMysqlUpdate{
-		Host:                            host,
-		Port:                            port,
-		Database:                        database,
-		Username:                        username,
-		ReplicationMethod:               replicationMethod,
-		Password:                        password,
-		JdbcURLParams:                   jdbcURLParams,
+		CheckPrivileges:                 checkPrivileges,
 		CheckpointTargetIntervalSeconds: checkpointTargetIntervalSeconds,
 		Concurrency:                     concurrency,
-		CheckPrivileges:                 checkPrivileges,
+		Database:                        database,
+		Host:                            host,
+		JdbcURLParams:                   jdbcURLParams,
+		Password:                        password,
+		Port:                            port,
+		ReplicationMethod:               replicationMethod,
 		SslMode:                         sslMode,
 		TunnelMethod:                    tunnelMethod,
+		Username:                        username,
 	}
 	out := shared.SourceMysqlPutRequest{
 		Name:          name,

@@ -9,29 +9,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type SourceMysqlUpdateSchemasMethod string
-
-const (
-	SourceMysqlUpdateSchemasMethodCdc SourceMysqlUpdateSchemasMethod = "CDC"
-)
-
-func (e SourceMysqlUpdateSchemasMethod) ToPointer() *SourceMysqlUpdateSchemasMethod {
-	return &e
-}
-func (e *SourceMysqlUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CDC":
-		*e = SourceMysqlUpdateSchemasMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMysqlUpdateSchemasMethod: %v", v)
-	}
-}
-
 // SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
 type SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced string
 
@@ -59,16 +36,39 @@ func (e *SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data
 	}
 }
 
+type SourceMysqlUpdateSchemasMethod string
+
+const (
+	SourceMysqlUpdateSchemasMethodCdc SourceMysqlUpdateSchemasMethod = "CDC"
+)
+
+func (e SourceMysqlUpdateSchemasMethod) ToPointer() *SourceMysqlUpdateSchemasMethod {
+	return &e
+}
+func (e *SourceMysqlUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CDC":
+		*e = SourceMysqlUpdateSchemasMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMysqlUpdateSchemasMethod: %v", v)
+	}
+}
+
 // SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using MySQL's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc"> change data capture feature</a>. This must be enabled on your database.
 type SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC struct {
-	Method *SourceMysqlUpdateSchemasMethod `default:"CDC" json:"method"`
-	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
-	ServerTimezone *string `json:"server_timezone,omitempty"`
-	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-	InvalidCdcCursorPositionBehavior *SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
 	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
 	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
-	AdditionalProperties    any    `additionalProperties:"true" json:"-"`
+	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+	InvalidCdcCursorPositionBehavior *SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
+	Method                           *SourceMysqlUpdateSchemasMethod                      `default:"CDC" json:"method"`
+	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
+	ServerTimezone       *string `json:"server_timezone,omitempty"`
+	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
@@ -80,6 +80,20 @@ func (s *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(da
 		return err
 	}
 	return nil
+}
+
+func (o *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
+}
+
+func (o *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced {
+	if o == nil {
+		return nil
+	}
+	return o.InvalidCdcCursorPositionBehavior
 }
 
 func (o *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetMethod() *SourceMysqlUpdateSchemasMethod {
@@ -94,20 +108,6 @@ func (o *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetServerTimezon
 		return nil
 	}
 	return o.ServerTimezone
-}
-
-func (o *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced {
-	if o == nil {
-		return nil
-	}
-	return o.InvalidCdcCursorPositionBehavior
-}
-
-func (o *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialLoadTimeoutHours
 }
 
 func (o *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetAdditionalProperties() any {
@@ -260,7 +260,6 @@ func (e *SourceMysqlUpdateSchemasSslModeEncryptionMode) UnmarshalJSON(data []byt
 
 // SourceMysqlUpdateVerifyIdentity - To always require encryption and verify that the source has a valid SSL certificate.
 type SourceMysqlUpdateVerifyIdentity struct {
-	Mode *SourceMysqlUpdateSchemasSslModeEncryptionMode `default:"verify_identity" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)
@@ -268,8 +267,9 @@ type SourceMysqlUpdateVerifyIdentity struct {
 	// Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword    *string `json:"client_key_password,omitempty"`
-	AdditionalProperties any     `additionalProperties:"true" json:"-"`
+	ClientKeyPassword    *string                                        `json:"client_key_password,omitempty"`
+	Mode                 *SourceMysqlUpdateSchemasSslModeEncryptionMode `default:"verify_identity" json:"mode"`
+	AdditionalProperties any                                            `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMysqlUpdateVerifyIdentity) MarshalJSON() ([]byte, error) {
@@ -281,13 +281,6 @@ func (s *SourceMysqlUpdateVerifyIdentity) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceMysqlUpdateVerifyIdentity) GetMode() *SourceMysqlUpdateSchemasSslModeEncryptionMode {
-	if o == nil {
-		return nil
-	}
-	return o.Mode
 }
 
 func (o *SourceMysqlUpdateVerifyIdentity) GetCaCertificate() string {
@@ -316,6 +309,13 @@ func (o *SourceMysqlUpdateVerifyIdentity) GetClientKeyPassword() *string {
 		return nil
 	}
 	return o.ClientKeyPassword
+}
+
+func (o *SourceMysqlUpdateVerifyIdentity) GetMode() *SourceMysqlUpdateSchemasSslModeEncryptionMode {
+	if o == nil {
+		return nil
+	}
+	return o.Mode
 }
 
 func (o *SourceMysqlUpdateVerifyIdentity) GetAdditionalProperties() any {
@@ -350,7 +350,6 @@ func (e *SourceMysqlUpdateSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 
 // SourceMysqlUpdateVerifyCa - To always require encryption and verify that the source has a valid SSL certificate.
 type SourceMysqlUpdateVerifyCa struct {
-	Mode *SourceMysqlUpdateSchemasSslModeMode `default:"verify_ca" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)
@@ -358,8 +357,9 @@ type SourceMysqlUpdateVerifyCa struct {
 	// Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword    *string `json:"client_key_password,omitempty"`
-	AdditionalProperties any     `additionalProperties:"true" json:"-"`
+	ClientKeyPassword    *string                              `json:"client_key_password,omitempty"`
+	Mode                 *SourceMysqlUpdateSchemasSslModeMode `default:"verify_ca" json:"mode"`
+	AdditionalProperties any                                  `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMysqlUpdateVerifyCa) MarshalJSON() ([]byte, error) {
@@ -371,13 +371,6 @@ func (s *SourceMysqlUpdateVerifyCa) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceMysqlUpdateVerifyCa) GetMode() *SourceMysqlUpdateSchemasSslModeMode {
-	if o == nil {
-		return nil
-	}
-	return o.Mode
 }
 
 func (o *SourceMysqlUpdateVerifyCa) GetCaCertificate() string {
@@ -406,6 +399,13 @@ func (o *SourceMysqlUpdateVerifyCa) GetClientKeyPassword() *string {
 		return nil
 	}
 	return o.ClientKeyPassword
+}
+
+func (o *SourceMysqlUpdateVerifyCa) GetMode() *SourceMysqlUpdateSchemasSslModeMode {
+	if o == nil {
+		return nil
+	}
+	return o.Mode
 }
 
 func (o *SourceMysqlUpdateVerifyCa) GetAdditionalProperties() any {
@@ -656,9 +656,9 @@ func (e *SourceMysqlUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []
 
 // SourceMysqlUpdatePasswordAuthentication - Connect through a jump server tunnel host using username and password authentication
 type SourceMysqlUpdatePasswordAuthentication struct {
-	TunnelMethod *SourceMysqlUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                            `json:"tunnel_host"`
+	TunnelMethod *SourceMysqlUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -679,18 +679,18 @@ func (s *SourceMysqlUpdatePasswordAuthentication) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (o *SourceMysqlUpdatePasswordAuthentication) GetTunnelMethod() *SourceMysqlUpdateSchemasTunnelMethodTunnelMethod {
-	if o == nil {
-		return nil
-	}
-	return o.TunnelMethod
-}
-
 func (o *SourceMysqlUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceMysqlUpdatePasswordAuthentication) GetTunnelMethod() *SourceMysqlUpdateSchemasTunnelMethodTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceMysqlUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -746,15 +746,15 @@ func (e *SourceMysqlUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error 
 
 // SourceMysqlUpdateSSHKeyAuthentication - Connect through a jump server tunnel host using username and ssh key
 type SourceMysqlUpdateSSHKeyAuthentication struct {
-	TunnelMethod *SourceMysqlUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                `json:"tunnel_host"`
+	TunnelMethod *SourceMysqlUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
-	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey               string `json:"ssh_key"`
+	TunnelUser           string `json:"tunnel_user"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
@@ -769,11 +769,11 @@ func (s *SourceMysqlUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *SourceMysqlUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceMysqlUpdateSchemasTunnelMethod {
+func (o *SourceMysqlUpdateSSHKeyAuthentication) GetSSHKey() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.TunnelMethod
+	return o.SSHKey
 }
 
 func (o *SourceMysqlUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -781,6 +781,13 @@ func (o *SourceMysqlUpdateSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceMysqlUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceMysqlUpdateSchemasTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceMysqlUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -795,13 +802,6 @@ func (o *SourceMysqlUpdateSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *SourceMysqlUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 func (o *SourceMysqlUpdateSSHKeyAuthentication) GetAdditionalProperties() any {
@@ -952,30 +952,30 @@ func (u SourceMysqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 }
 
 type SourceMysqlUpdate struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// Port of the database.
-	Port *int64 `default:"3306" json:"port"`
-	// The database name.
-	Database string `json:"database"`
-	// The username which is used to access the database.
-	Username string `json:"username"`
-	// Configures how data is extracted from the database.
-	ReplicationMethod SourceMysqlUpdateUpdateMethod `json:"replication_method"`
-	// The password associated with the username.
-	Password *string `json:"password,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
+	CheckPrivileges *bool `default:"true" json:"check_privileges"`
 	// How often (in seconds) a stream should checkpoint, when possible.
 	CheckpointTargetIntervalSeconds *int64 `default:"300" json:"checkpoint_target_interval_seconds"`
 	// Maximum number of concurrent queries to the database.
 	Concurrency *int64 `default:"1" json:"concurrency"`
-	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
-	CheckPrivileges *bool `default:"true" json:"check_privileges"`
+	// The database name.
+	Database string `json:"database"`
+	// Hostname of the database.
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// The password associated with the username.
+	Password *string `json:"password,omitempty"`
+	// Port of the database.
+	Port *int64 `default:"3306" json:"port"`
+	// Configures how data is extracted from the database.
+	ReplicationMethod SourceMysqlUpdateUpdateMethod `json:"replication_method"`
 	// The encryption method which is used when communicating with the database.
 	SslMode *SourceMysqlUpdateEncryption `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceMysqlUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// The username which is used to access the database.
+	Username string `json:"username"`
 }
 
 func (s SourceMysqlUpdate) MarshalJSON() ([]byte, error) {
@@ -989,53 +989,11 @@ func (s *SourceMysqlUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMysqlUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *SourceMysqlUpdate) GetPort() *int64 {
+func (o *SourceMysqlUpdate) GetCheckPrivileges() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Port
-}
-
-func (o *SourceMysqlUpdate) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
-func (o *SourceMysqlUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *SourceMysqlUpdate) GetReplicationMethod() SourceMysqlUpdateUpdateMethod {
-	if o == nil {
-		return SourceMysqlUpdateUpdateMethod{}
-	}
-	return o.ReplicationMethod
-}
-
-func (o *SourceMysqlUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *SourceMysqlUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
+	return o.CheckPrivileges
 }
 
 func (o *SourceMysqlUpdate) GetCheckpointTargetIntervalSeconds() *int64 {
@@ -1052,11 +1010,46 @@ func (o *SourceMysqlUpdate) GetConcurrency() *int64 {
 	return o.Concurrency
 }
 
-func (o *SourceMysqlUpdate) GetCheckPrivileges() *bool {
+func (o *SourceMysqlUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceMysqlUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceMysqlUpdate) GetJdbcURLParams() *string {
 	if o == nil {
 		return nil
 	}
-	return o.CheckPrivileges
+	return o.JdbcURLParams
+}
+
+func (o *SourceMysqlUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMysqlUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceMysqlUpdate) GetReplicationMethod() SourceMysqlUpdateUpdateMethod {
+	if o == nil {
+		return SourceMysqlUpdateUpdateMethod{}
+	}
+	return o.ReplicationMethod
 }
 
 func (o *SourceMysqlUpdate) GetSslMode() *SourceMysqlUpdateEncryption {
@@ -1071,4 +1064,11 @@ func (o *SourceMysqlUpdate) GetTunnelMethod() *SourceMysqlUpdateSSHTunnelMethod 
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *SourceMysqlUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

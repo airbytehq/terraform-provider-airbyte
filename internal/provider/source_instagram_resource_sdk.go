@@ -22,12 +22,6 @@ func (r *SourceInstagramResourceModel) ToSharedSourceInstagramCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
@@ -49,12 +43,18 @@ func (r *SourceInstagramResourceModel) ToSharedSourceInstagramCreateRequest() *s
 	} else {
 		numWorkers = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceInstagram{
-		StartDate:    startDate,
 		AccessToken:  accessToken,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		NumWorkers:   numWorkers,
+		StartDate:    startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -126,12 +126,6 @@ func (r *SourceInstagramResourceModel) ToSharedSourceInstagramPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
@@ -153,12 +147,18 @@ func (r *SourceInstagramResourceModel) ToSharedSourceInstagramPutRequest() *shar
 	} else {
 		numWorkers = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceInstagramUpdate{
-		StartDate:    startDate,
 		AccessToken:  accessToken,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		NumWorkers:   numWorkers,
+		StartDate:    startDate,
 	}
 	out := shared.SourceInstagramPutRequest{
 		Name:          name,

@@ -25,17 +25,17 @@ func (r *SourceHeightResourceModel) ToSharedSourceHeightCreateRequest() *shared.
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	searchQuery := new(string)
 	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
 		*searchQuery = r.Configuration.SearchQuery.ValueString()
 	} else {
 		searchQuery = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHeight{
 		APIKey:      apiKey,
-		StartDate:   startDate,
 		SearchQuery: searchQuery,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,17 +110,17 @@ func (r *SourceHeightResourceModel) ToSharedSourceHeightPutRequest() *shared.Sou
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	searchQuery := new(string)
 	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
 		*searchQuery = r.Configuration.SearchQuery.ValueString()
 	} else {
 		searchQuery = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHeightUpdate{
 		APIKey:      apiKey,
-		StartDate:   startDate,
 		SearchQuery: searchQuery,
+		StartDate:   startDate,
 	}
 	out := shared.SourceHeightPutRequest{
 		Name:          name,

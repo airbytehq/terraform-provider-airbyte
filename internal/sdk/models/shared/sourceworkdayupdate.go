@@ -35,10 +35,10 @@ func (e *SourceWorkdayUpdateREST) UnmarshalJSON(data []byte) error {
 
 type SourceWorkdayUpdateRESTAPIStreams struct {
 	// Follow the instructions in the "OAuth 2.0 in Postman - API Client for Integrations" article in the Workday community docs to obtain access token.
-	AccessToken string `json:"access_token"`
+	AccessToken string                  `json:"access_token"`
+	authType    SourceWorkdayUpdateREST `const:"REST" json:"auth_type"`
 	// Rows after this date will be synced, default 2 years ago.
-	StartDate *time.Time              `json:"start_date,omitempty"`
-	authType  SourceWorkdayUpdateREST `const:"REST" json:"auth_type"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceWorkdayUpdateRESTAPIStreams) MarshalJSON() ([]byte, error) {
@@ -59,15 +59,15 @@ func (o *SourceWorkdayUpdateRESTAPIStreams) GetAccessToken() string {
 	return o.AccessToken
 }
 
+func (o *SourceWorkdayUpdateRESTAPIStreams) GetAuthType() SourceWorkdayUpdateREST {
+	return SourceWorkdayUpdateRESTRest
+}
+
 func (o *SourceWorkdayUpdateRESTAPIStreams) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceWorkdayUpdateRESTAPIStreams) GetAuthType() SourceWorkdayUpdateREST {
-	return SourceWorkdayUpdateRESTRest
 }
 
 type SourceWorkdayUpdateRAAS string
@@ -94,11 +94,11 @@ func (e *SourceWorkdayUpdateRAAS) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWorkdayUpdateReportBasedStreams struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	authType SourceWorkdayUpdateRAAS `const:"RAAS" json:"auth_type"`
+	Password string                  `json:"password"`
 	// Report IDs can be found by clicking the three dots on the right side of the report > Web Service > View URLs > in JSON url copy everything between Workday tenant/ and ?format=json.
-	ReportIds []any                   `json:"report_ids"`
-	authType  SourceWorkdayUpdateRAAS `const:"RAAS" json:"auth_type"`
+	ReportIds []any  `json:"report_ids"`
+	Username  string `json:"username"`
 }
 
 func (s SourceWorkdayUpdateReportBasedStreams) MarshalJSON() ([]byte, error) {
@@ -112,11 +112,8 @@ func (s *SourceWorkdayUpdateReportBasedStreams) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *SourceWorkdayUpdateReportBasedStreams) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+func (o *SourceWorkdayUpdateReportBasedStreams) GetAuthType() SourceWorkdayUpdateRAAS {
+	return SourceWorkdayUpdateRAASRaas
 }
 
 func (o *SourceWorkdayUpdateReportBasedStreams) GetPassword() string {
@@ -133,8 +130,11 @@ func (o *SourceWorkdayUpdateReportBasedStreams) GetReportIds() []any {
 	return o.ReportIds
 }
 
-func (o *SourceWorkdayUpdateReportBasedStreams) GetAuthType() SourceWorkdayUpdateRAAS {
-	return SourceWorkdayUpdateRAASRaas
+func (o *SourceWorkdayUpdateReportBasedStreams) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type SourceWorkdayUpdateAuthenticationType string
@@ -202,17 +202,17 @@ func (u SourceWorkdayUpdateAuthentication) MarshalJSON() ([]byte, error) {
 }
 
 type SourceWorkdayUpdate struct {
-	TenantID string `json:"tenant_id"`
-	Host     string `json:"host"`
 	// Report Based Streams and REST API Streams use different methods of Authentication. Choose streams type you want to sync and provide needed credentials for them.
 	Credentials SourceWorkdayUpdateAuthentication `json:"credentials"`
+	Host        string                            `json:"host"`
+	TenantID    string                            `json:"tenant_id"`
 }
 
-func (o *SourceWorkdayUpdate) GetTenantID() string {
+func (o *SourceWorkdayUpdate) GetCredentials() SourceWorkdayUpdateAuthentication {
 	if o == nil {
-		return ""
+		return SourceWorkdayUpdateAuthentication{}
 	}
-	return o.TenantID
+	return o.Credentials
 }
 
 func (o *SourceWorkdayUpdate) GetHost() string {
@@ -222,9 +222,9 @@ func (o *SourceWorkdayUpdate) GetHost() string {
 	return o.Host
 }
 
-func (o *SourceWorkdayUpdate) GetCredentials() SourceWorkdayUpdateAuthentication {
+func (o *SourceWorkdayUpdate) GetTenantID() string {
 	if o == nil {
-		return SourceWorkdayUpdateAuthentication{}
+		return ""
 	}
-	return o.Credentials
+	return o.TenantID
 }

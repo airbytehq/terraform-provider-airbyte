@@ -32,16 +32,16 @@ func (e *SftpJSON) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationSftpJSON struct {
+	// Path to the directory where json files will be written.
+	DestinationPath string `json:"destination_path"`
 	// Hostname of the SFTP server.
 	Host string `json:"host"`
+	// Password associated with the username.
+	Password string `json:"password"`
 	// Port of the SFTP server.
 	Port *int64 `default:"22" json:"port"`
 	// Username to use to access the SFTP server.
-	Username string `json:"username"`
-	// Password associated with the username.
-	Password string `json:"password"`
-	// Path to the directory where json files will be written.
-	DestinationPath string   `json:"destination_path"`
+	Username        string   `json:"username"`
 	destinationType SftpJSON `const:"sftp-json" json:"destinationType"`
 }
 
@@ -56,11 +56,25 @@ func (d *DestinationSftpJSON) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationSftpJSON) GetDestinationPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationPath
+}
+
 func (o *DestinationSftpJSON) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
+}
+
+func (o *DestinationSftpJSON) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
 }
 
 func (o *DestinationSftpJSON) GetPort() *int64 {
@@ -75,20 +89,6 @@ func (o *DestinationSftpJSON) GetUsername() string {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *DestinationSftpJSON) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
-}
-
-func (o *DestinationSftpJSON) GetDestinationPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.DestinationPath
 }
 
 func (o *DestinationSftpJSON) GetDestinationType() SftpJSON {

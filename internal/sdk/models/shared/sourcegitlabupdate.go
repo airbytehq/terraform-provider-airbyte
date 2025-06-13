@@ -34,9 +34,9 @@ func (e *SourceGitlabUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGitlabUpdatePrivateToken struct {
-	authType *SourceGitlabUpdateSchemasAuthType `const:"access_token" json:"auth_type,omitempty"`
 	// Log into your Gitlab account and then generate a personal Access Token.
-	AccessToken string `json:"access_token"`
+	AccessToken string                             `json:"access_token"`
+	authType    *SourceGitlabUpdateSchemasAuthType `const:"access_token" json:"auth_type,omitempty"`
 }
 
 func (s SourceGitlabUpdatePrivateToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceGitlabUpdatePrivateToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGitlabUpdatePrivateToken) GetAuthType() *SourceGitlabUpdateSchemasAuthType {
-	return SourceGitlabUpdateSchemasAuthTypeAccessToken.ToPointer()
-}
-
 func (o *SourceGitlabUpdatePrivateToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceGitlabUpdatePrivateToken) GetAuthType() *SourceGitlabUpdateSchemasAuthType {
+	return SourceGitlabUpdateSchemasAuthTypeAccessToken.ToPointer()
 }
 
 type SourceGitlabUpdateAuthType string
@@ -85,17 +85,17 @@ func (e *SourceGitlabUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGitlabUpdateOAuth20 struct {
-	authType *SourceGitlabUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	// Access Token for making authenticated requests.
+	AccessToken string                      `json:"access_token"`
+	authType    *SourceGitlabUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API ID of the Gitlab developer application.
 	ClientID string `json:"client_id"`
 	// The API Secret the Gitlab developer application.
 	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
-	// The date-time when the access token should be refreshed.
-	TokenExpiryDate time.Time `json:"token_expiry_date"`
 	// The key to refresh the expired access_token.
 	RefreshToken string `json:"refresh_token"`
+	// The date-time when the access token should be refreshed.
+	TokenExpiryDate time.Time `json:"token_expiry_date"`
 }
 
 func (s SourceGitlabUpdateOAuth20) MarshalJSON() ([]byte, error) {
@@ -107,6 +107,13 @@ func (s *SourceGitlabUpdateOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceGitlabUpdateOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SourceGitlabUpdateOAuth20) GetAuthType() *SourceGitlabUpdateAuthType {
@@ -127,11 +134,11 @@ func (o *SourceGitlabUpdateOAuth20) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceGitlabUpdateOAuth20) GetAccessToken() string {
+func (o *SourceGitlabUpdateOAuth20) GetRefreshToken() string {
 	if o == nil {
 		return ""
 	}
-	return o.AccessToken
+	return o.RefreshToken
 }
 
 func (o *SourceGitlabUpdateOAuth20) GetTokenExpiryDate() time.Time {
@@ -139,13 +146,6 @@ func (o *SourceGitlabUpdateOAuth20) GetTokenExpiryDate() time.Time {
 		return time.Time{}
 	}
 	return o.TokenExpiryDate
-}
-
-func (o *SourceGitlabUpdateOAuth20) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
 }
 
 type SourceGitlabUpdateAuthorizationMethodType string
@@ -212,15 +212,15 @@ func (u SourceGitlabUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGitlabUpdate struct {
-	Credentials SourceGitlabUpdateAuthorizationMethod `json:"credentials"`
-	// The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. Optional. If not set, all data will be replicated. All data generated after this date will be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Please enter your basic URL from GitLab instance.
-	APIURL *string `default:"gitlab.com" json:"api_url"`
+	APIURL      *string                               `default:"gitlab.com" json:"api_url"`
+	Credentials SourceGitlabUpdateAuthorizationMethod `json:"credentials"`
 	// List of groups. e.g. airbyte.io.
 	GroupsList []string `json:"groups_list,omitempty"`
 	// Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
 	ProjectsList []string `json:"projects_list,omitempty"`
+	// The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. Optional. If not set, all data will be replicated. All data generated after this date will be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceGitlabUpdate) MarshalJSON() ([]byte, error) {
@@ -234,25 +234,18 @@ func (s *SourceGitlabUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGitlabUpdate) GetCredentials() SourceGitlabUpdateAuthorizationMethod {
-	if o == nil {
-		return SourceGitlabUpdateAuthorizationMethod{}
-	}
-	return o.Credentials
-}
-
-func (o *SourceGitlabUpdate) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceGitlabUpdate) GetAPIURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.APIURL
+}
+
+func (o *SourceGitlabUpdate) GetCredentials() SourceGitlabUpdateAuthorizationMethod {
+	if o == nil {
+		return SourceGitlabUpdateAuthorizationMethod{}
+	}
+	return o.Credentials
 }
 
 func (o *SourceGitlabUpdate) GetGroupsList() []string {
@@ -267,4 +260,11 @@ func (o *SourceGitlabUpdate) GetProjectsList() []string {
 		return nil
 	}
 	return o.ProjectsList
+}
+
+func (o *SourceGitlabUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

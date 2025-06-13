@@ -8,10 +8,10 @@ import (
 )
 
 type SourceFreshchatUpdate struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
 	// The unique account name for your Freshchat instance
-	AccountName string `json:"account_name"`
+	AccountName string    `json:"account_name"`
+	APIKey      string    `json:"api_key"`
+	StartDate   time.Time `json:"start_date"`
 }
 
 func (s SourceFreshchatUpdate) MarshalJSON() ([]byte, error) {
@@ -23,6 +23,13 @@ func (s *SourceFreshchatUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceFreshchatUpdate) GetAccountName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountName
 }
 
 func (o *SourceFreshchatUpdate) GetAPIKey() string {
@@ -37,11 +44,4 @@ func (o *SourceFreshchatUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceFreshchatUpdate) GetAccountName() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountName
 }

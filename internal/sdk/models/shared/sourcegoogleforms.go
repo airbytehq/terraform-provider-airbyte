@@ -33,8 +33,8 @@ func (e *GoogleForms) UnmarshalJSON(data []byte) error {
 
 type SourceGoogleForms struct {
 	ClientID           string      `json:"client_id"`
-	ClientSecret       string      `json:"client_secret"`
 	ClientRefreshToken string      `json:"client_refresh_token"`
+	ClientSecret       string      `json:"client_secret"`
 	FormID             []any       `json:"form_id"`
 	sourceType         GoogleForms `const:"google-forms" json:"sourceType"`
 }
@@ -57,18 +57,18 @@ func (o *SourceGoogleForms) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceGoogleForms) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceGoogleForms) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceGoogleForms) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceGoogleForms) GetFormID() []any {

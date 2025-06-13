@@ -21,15 +21,15 @@ func (r *SourceN8nResourceModel) ToSharedSourceN8nCreateRequest() *shared.Source
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var host string
+	host = r.Configuration.Host.ValueString()
+
 	configuration := shared.SourceN8n{
-		Host:   host,
 		APIKey: apiKey,
+		Host:   host,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceN8nResourceModel) ToSharedSourceN8nPutRequest() *shared.SourceN8n
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var host string
+	host = r.Configuration.Host.ValueString()
+
 	configuration := shared.SourceN8nUpdate{
-		Host:   host,
 		APIKey: apiKey,
+		Host:   host,
 	}
 	out := shared.SourceN8nPutRequest{
 		Name:          name,

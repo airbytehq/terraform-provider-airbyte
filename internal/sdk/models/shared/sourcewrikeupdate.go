@@ -9,10 +9,10 @@ import (
 type SourceWrikeUpdate struct {
 	// Permanent access token. You can find documentation on how to acquire a permanent access token  <a href="https://developers.wrike.com/oauth-20-authorization/">here</a>
 	AccessToken string `json:"access_token"`
-	// Wrike's instance such as `app-us2.wrike.com`
-	WrikeInstance *string `default:"app-us2.wrike.com" json:"wrike_instance"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Only comments after this date will be replicated.
 	StartDate *string `json:"start_date,omitempty"`
+	// Wrike's instance such as `app-us2.wrike.com`
+	WrikeInstance *string `default:"app-us2.wrike.com" json:"wrike_instance"`
 }
 
 func (s SourceWrikeUpdate) MarshalJSON() ([]byte, error) {
@@ -33,16 +33,16 @@ func (o *SourceWrikeUpdate) GetAccessToken() string {
 	return o.AccessToken
 }
 
-func (o *SourceWrikeUpdate) GetWrikeInstance() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WrikeInstance
-}
-
 func (o *SourceWrikeUpdate) GetStartDate() *string {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceWrikeUpdate) GetWrikeInstance() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WrikeInstance
 }

@@ -22,36 +22,36 @@ func (r *SourceNewsdataResourceModel) ToSharedSourceNewsdataCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var oneOf interface{}
+	if !r.Configuration.OneOf.IsUnknown() && !r.Configuration.OneOf.IsNull() {
+		_ = json.Unmarshal([]byte(r.Configuration.OneOf.ValueString()), &oneOf)
+	}
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var domain []string = []string{}
-	for _, domainItem := range r.Configuration.Domain {
-		domain = append(domain, domainItem.ValueString())
+	var category []shared.SourceNewsdataCategory = []shared.SourceNewsdataCategory{}
+	for _, categoryItem := range r.Configuration.Category {
+		category = append(category, shared.SourceNewsdataCategory(categoryItem.ValueString()))
 	}
 	var country []shared.SourceNewsdataCountry = []shared.SourceNewsdataCountry{}
 	for _, countryItem := range r.Configuration.Country {
 		country = append(country, shared.SourceNewsdataCountry(countryItem.ValueString()))
 	}
-	var category []shared.SourceNewsdataCategory = []shared.SourceNewsdataCategory{}
-	for _, categoryItem := range r.Configuration.Category {
-		category = append(category, shared.SourceNewsdataCategory(categoryItem.ValueString()))
+	var domain []string = []string{}
+	for _, domainItem := range r.Configuration.Domain {
+		domain = append(domain, domainItem.ValueString())
 	}
 	var language []shared.SourceNewsdataLanguage = []shared.SourceNewsdataLanguage{}
 	for _, languageItem := range r.Configuration.Language {
 		language = append(language, shared.SourceNewsdataLanguage(languageItem.ValueString()))
 	}
-	var oneOf interface{}
-	if !r.Configuration.OneOf.IsUnknown() && !r.Configuration.OneOf.IsNull() {
-		_ = json.Unmarshal([]byte(r.Configuration.OneOf.ValueString()), &oneOf)
-	}
 	configuration := shared.SourceNewsdata{
-		APIKey:   apiKey,
-		Domain:   domain,
-		Country:  country,
-		Category: category,
-		Language: language,
 		OneOf:    oneOf,
+		APIKey:   apiKey,
+		Category: category,
+		Country:  country,
+		Domain:   domain,
+		Language: language,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -123,36 +123,36 @@ func (r *SourceNewsdataResourceModel) ToSharedSourceNewsdataPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var oneOf interface{}
+	if !r.Configuration.OneOf.IsUnknown() && !r.Configuration.OneOf.IsNull() {
+		_ = json.Unmarshal([]byte(r.Configuration.OneOf.ValueString()), &oneOf)
+	}
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var domain []string = []string{}
-	for _, domainItem := range r.Configuration.Domain {
-		domain = append(domain, domainItem.ValueString())
+	var category []shared.SourceNewsdataUpdateCategory = []shared.SourceNewsdataUpdateCategory{}
+	for _, categoryItem := range r.Configuration.Category {
+		category = append(category, shared.SourceNewsdataUpdateCategory(categoryItem.ValueString()))
 	}
 	var country []shared.SourceNewsdataUpdateCountry = []shared.SourceNewsdataUpdateCountry{}
 	for _, countryItem := range r.Configuration.Country {
 		country = append(country, shared.SourceNewsdataUpdateCountry(countryItem.ValueString()))
 	}
-	var category []shared.SourceNewsdataUpdateCategory = []shared.SourceNewsdataUpdateCategory{}
-	for _, categoryItem := range r.Configuration.Category {
-		category = append(category, shared.SourceNewsdataUpdateCategory(categoryItem.ValueString()))
+	var domain []string = []string{}
+	for _, domainItem := range r.Configuration.Domain {
+		domain = append(domain, domainItem.ValueString())
 	}
 	var language []shared.SourceNewsdataUpdateLanguage = []shared.SourceNewsdataUpdateLanguage{}
 	for _, languageItem := range r.Configuration.Language {
 		language = append(language, shared.SourceNewsdataUpdateLanguage(languageItem.ValueString()))
 	}
-	var oneOf interface{}
-	if !r.Configuration.OneOf.IsUnknown() && !r.Configuration.OneOf.IsNull() {
-		_ = json.Unmarshal([]byte(r.Configuration.OneOf.ValueString()), &oneOf)
-	}
 	configuration := shared.SourceNewsdataUpdate{
-		APIKey:   apiKey,
-		Domain:   domain,
-		Country:  country,
-		Category: category,
-		Language: language,
 		OneOf:    oneOf,
+		APIKey:   apiKey,
+		Category: category,
+		Country:  country,
+		Domain:   domain,
+		Language: language,
 	}
 	out := shared.SourceNewsdataPutRequest{
 		Name:          name,

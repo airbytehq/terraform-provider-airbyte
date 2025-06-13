@@ -85,15 +85,15 @@ func (e *SourceConvertkitUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceConvertkitUpdateOAuth20 struct {
-	authType SourceConvertkitUpdateAuthType `const:"oauth2.0" json:"auth_type"`
+	// An access token generated using the provided client information and refresh token.
+	AccessToken *string                        `json:"access_token,omitempty"`
+	authType    SourceConvertkitUpdateAuthType `const:"oauth2.0" json:"auth_type"`
 	// The client ID of your OAuth application.
 	ClientID string `json:"client_id"`
-	// The time at which the current access token is set to expire
-	ExpiresAt *time.Time `json:"expires_at,omitempty"`
-	// An access token generated using the provided client information and refresh token.
-	AccessToken *string `json:"access_token,omitempty"`
 	// The client secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
+	// The time at which the current access token is set to expire
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 	// A current, non-expired refresh token genereted using the provided client ID and secret.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -109,6 +109,13 @@ func (s *SourceConvertkitUpdateOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceConvertkitUpdateOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
 func (o *SourceConvertkitUpdateOAuth20) GetAuthType() SourceConvertkitUpdateAuthType {
 	return SourceConvertkitUpdateAuthTypeOauth20
 }
@@ -120,25 +127,18 @@ func (o *SourceConvertkitUpdateOAuth20) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceConvertkitUpdateOAuth20) GetExpiresAt() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.ExpiresAt
-}
-
-func (o *SourceConvertkitUpdateOAuth20) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
-}
-
 func (o *SourceConvertkitUpdateOAuth20) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceConvertkitUpdateOAuth20) GetExpiresAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
 }
 
 func (o *SourceConvertkitUpdateOAuth20) GetRefreshToken() string {
@@ -212,8 +212,8 @@ func (u SourceConvertkitUpdateAuthenticationType) MarshalJSON() ([]byte, error) 
 }
 
 type SourceConvertkitUpdate struct {
-	StartDate   *time.Time                               `default:"2013-01-01T00:00:00Z" json:"start_date"`
 	Credentials SourceConvertkitUpdateAuthenticationType `json:"credentials"`
+	StartDate   *time.Time                               `default:"2013-01-01T00:00:00Z" json:"start_date"`
 }
 
 func (s SourceConvertkitUpdate) MarshalJSON() ([]byte, error) {
@@ -227,16 +227,16 @@ func (s *SourceConvertkitUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceConvertkitUpdate) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceConvertkitUpdate) GetCredentials() SourceConvertkitUpdateAuthenticationType {
 	if o == nil {
 		return SourceConvertkitUpdateAuthenticationType{}
 	}
 	return o.Credentials
+}
+
+func (o *SourceConvertkitUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

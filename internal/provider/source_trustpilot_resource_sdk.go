@@ -22,14 +22,18 @@ func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var businessUnits []string = []string{}
+	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
+		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
+	}
 	var credentials shared.SourceTrustpilotAuthorizationMethod
 	var sourceTrustpilotOAuth20 *shared.SourceTrustpilotOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
-		var clientID string
-		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-
 		var accessToken string
 		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
+		var clientID string
+		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
@@ -39,8 +43,8 @@ func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotCreateRequest() 
 
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceTrustpilotOAuth20 = &shared.SourceTrustpilotOAuth20{
-			ClientID:        clientID,
 			AccessToken:     accessToken,
+			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,
@@ -68,14 +72,10 @@ func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotCreateRequest() 
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
-	var businessUnits []string = []string{}
-	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
-		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
-	}
 	configuration := shared.SourceTrustpilot{
+		BusinessUnits: businessUnits,
 		Credentials:   credentials,
 		StartDate:     startDate,
-		BusinessUnits: businessUnits,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -147,14 +147,18 @@ func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var businessUnits []string = []string{}
+	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
+		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
+	}
 	var credentials shared.SourceTrustpilotUpdateAuthorizationMethod
 	var sourceTrustpilotUpdateOAuth20 *shared.SourceTrustpilotUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
-		var clientID string
-		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-
 		var accessToken string
 		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
+		var clientID string
+		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
@@ -164,8 +168,8 @@ func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotPutRequest() *sh
 
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceTrustpilotUpdateOAuth20 = &shared.SourceTrustpilotUpdateOAuth20{
-			ClientID:        clientID,
 			AccessToken:     accessToken,
+			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,
@@ -193,14 +197,10 @@ func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotPutRequest() *sh
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
-	var businessUnits []string = []string{}
-	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
-		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
-	}
 	configuration := shared.SourceTrustpilotUpdate{
+		BusinessUnits: businessUnits,
 		Credentials:   credentials,
 		StartDate:     startDate,
-		BusinessUnits: businessUnits,
 	}
 	out := shared.SourceTrustpilotPutRequest{
 		Name:          name,

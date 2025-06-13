@@ -34,10 +34,10 @@ func (e *FreeAgentConnector) UnmarshalJSON(data []byte) error {
 
 type SourceFreeAgentConnector struct {
 	ClientID            string             `json:"client_id"`
-	ClientSecret        string             `json:"client_secret"`
 	ClientRefreshToken2 string             `json:"client_refresh_token_2"`
-	UpdatedSince        *time.Time         `json:"updated_since,omitempty"`
+	ClientSecret        string             `json:"client_secret"`
 	PayrollYear         *float64           `json:"payroll_year,omitempty"`
+	UpdatedSince        *time.Time         `json:"updated_since,omitempty"`
 	sourceType          FreeAgentConnector `const:"free-agent-connector" json:"sourceType"`
 }
 
@@ -59,13 +59,6 @@ func (o *SourceFreeAgentConnector) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceFreeAgentConnector) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceFreeAgentConnector) GetClientRefreshToken2() string {
 	if o == nil {
 		return ""
@@ -73,11 +66,11 @@ func (o *SourceFreeAgentConnector) GetClientRefreshToken2() string {
 	return o.ClientRefreshToken2
 }
 
-func (o *SourceFreeAgentConnector) GetUpdatedSince() *time.Time {
+func (o *SourceFreeAgentConnector) GetClientSecret() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.UpdatedSince
+	return o.ClientSecret
 }
 
 func (o *SourceFreeAgentConnector) GetPayrollYear() *float64 {
@@ -85,6 +78,13 @@ func (o *SourceFreeAgentConnector) GetPayrollYear() *float64 {
 		return nil
 	}
 	return o.PayrollYear
+}
+
+func (o *SourceFreeAgentConnector) GetUpdatedSince() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedSince
 }
 
 func (o *SourceFreeAgentConnector) GetSourceType() FreeAgentConnector {

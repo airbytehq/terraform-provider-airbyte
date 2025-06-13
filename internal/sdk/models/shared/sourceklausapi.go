@@ -33,15 +33,15 @@ func (e *KlausAPI) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKlausAPI struct {
-	// API access key used to retrieve data from the KLAUS API.
-	APIKey string `json:"api_key"`
 	// getting data by account
 	Account int64 `json:"account"`
-	// getting data by workspace
-	Workspace int64 `json:"workspace"`
+	// API access key used to retrieve data from the KLAUS API.
+	APIKey string `json:"api_key"`
 	// Start getting data from that date.
-	StartDate  *time.Time `json:"start_date,omitempty"`
-	sourceType KlausAPI   `const:"klaus-api" json:"sourceType"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// getting data by workspace
+	Workspace  int64    `json:"workspace"`
+	sourceType KlausAPI `const:"klaus-api" json:"sourceType"`
 }
 
 func (s SourceKlausAPI) MarshalJSON() ([]byte, error) {
@@ -55,13 +55,6 @@ func (s *SourceKlausAPI) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceKlausAPI) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceKlausAPI) GetAccount() int64 {
 	if o == nil {
 		return 0
@@ -69,11 +62,11 @@ func (o *SourceKlausAPI) GetAccount() int64 {
 	return o.Account
 }
 
-func (o *SourceKlausAPI) GetWorkspace() int64 {
+func (o *SourceKlausAPI) GetAPIKey() string {
 	if o == nil {
-		return 0
+		return ""
 	}
-	return o.Workspace
+	return o.APIKey
 }
 
 func (o *SourceKlausAPI) GetStartDate() *time.Time {
@@ -81,6 +74,13 @@ func (o *SourceKlausAPI) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceKlausAPI) GetWorkspace() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Workspace
 }
 
 func (o *SourceKlausAPI) GetSourceType() KlausAPI {

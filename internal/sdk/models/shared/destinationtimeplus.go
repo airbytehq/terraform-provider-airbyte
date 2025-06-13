@@ -32,10 +32,10 @@ func (e *Timeplus) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationTimeplus struct {
-	// Timeplus workspace endpoint
-	Endpoint *string `default:"https://us-west-2.timeplus.cloud/<workspace_id>" json:"endpoint"`
 	// Personal API key
-	Apikey          string   `json:"apikey"`
+	Apikey string `json:"apikey"`
+	// Timeplus workspace endpoint
+	Endpoint        *string  `default:"https://us-west-2.timeplus.cloud/<workspace_id>" json:"endpoint"`
 	destinationType Timeplus `const:"timeplus" json:"destinationType"`
 }
 
@@ -50,18 +50,18 @@ func (d *DestinationTimeplus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationTimeplus) GetEndpoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Endpoint
-}
-
 func (o *DestinationTimeplus) GetApikey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Apikey
+}
+
+func (o *DestinationTimeplus) GetEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Endpoint
 }
 
 func (o *DestinationTimeplus) GetDestinationType() Timeplus {

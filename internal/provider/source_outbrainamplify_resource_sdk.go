@@ -21,6 +21,12 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyCreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	conversionCount := new(shared.DefinitionOfConversionCountInReports)
+	if !r.Configuration.ConversionCount.IsUnknown() && !r.Configuration.ConversionCount.IsNull() {
+		*conversionCount = shared.DefinitionOfConversionCountInReports(r.Configuration.ConversionCount.ValueString())
+	} else {
+		conversionCount = nil
+	}
 	var credentials shared.SourceOutbrainAmplifyAuthenticationMethod
 	var sourceOutbrainAmplifyAccessToken *shared.SourceOutbrainAmplifyAccessToken
 	if r.Configuration.Credentials.AccessToken != nil {
@@ -36,29 +42,29 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyCreate
 			SourceOutbrainAmplifyAccessToken: sourceOutbrainAmplifyAccessToken,
 		}
 	}
-	var usernamePassword *shared.UsernamePassword
+	var sourceOutbrainAmplifyUsernamePassword *shared.SourceOutbrainAmplifyUsernamePassword
 	if r.Configuration.Credentials.UsernamePassword != nil {
-		var username string
-		username = r.Configuration.Credentials.UsernamePassword.Username.ValueString()
-
 		var password string
 		password = r.Configuration.Credentials.UsernamePassword.Password.ValueString()
 
-		usernamePassword = &shared.UsernamePassword{
-			Username: username,
+		var username string
+		username = r.Configuration.Credentials.UsernamePassword.Username.ValueString()
+
+		sourceOutbrainAmplifyUsernamePassword = &shared.SourceOutbrainAmplifyUsernamePassword{
 			Password: password,
+			Username: username,
 		}
 	}
-	if usernamePassword != nil {
+	if sourceOutbrainAmplifyUsernamePassword != nil {
 		credentials = shared.SourceOutbrainAmplifyAuthenticationMethod{
-			UsernamePassword: usernamePassword,
+			SourceOutbrainAmplifyUsernamePassword: sourceOutbrainAmplifyUsernamePassword,
 		}
 	}
-	reportGranularity := new(shared.GranularityForPeriodicReports)
-	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
-		*reportGranularity = shared.GranularityForPeriodicReports(r.Configuration.ReportGranularity.ValueString())
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
-		reportGranularity = nil
+		endDate = nil
 	}
 	geoLocationBreakdown := new(shared.GranularityForGeoLocationRegion)
 	if !r.Configuration.GeoLocationBreakdown.IsUnknown() && !r.Configuration.GeoLocationBreakdown.IsNull() {
@@ -66,28 +72,22 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyCreate
 	} else {
 		geoLocationBreakdown = nil
 	}
+	reportGranularity := new(shared.GranularityForPeriodicReports)
+	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
+		*reportGranularity = shared.GranularityForPeriodicReports(r.Configuration.ReportGranularity.ValueString())
+	} else {
+		reportGranularity = nil
+	}
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
-	endDate := new(string)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
-	} else {
-		endDate = nil
-	}
-	conversionCount := new(shared.DefinitionOfConversionCountInReports)
-	if !r.Configuration.ConversionCount.IsUnknown() && !r.Configuration.ConversionCount.IsNull() {
-		*conversionCount = shared.DefinitionOfConversionCountInReports(r.Configuration.ConversionCount.ValueString())
-	} else {
-		conversionCount = nil
-	}
 	configuration := shared.SourceOutbrainAmplify{
-		Credentials:          credentials,
-		ReportGranularity:    reportGranularity,
-		GeoLocationBreakdown: geoLocationBreakdown,
-		StartDate:            startDate,
-		EndDate:              endDate,
 		ConversionCount:      conversionCount,
+		Credentials:          credentials,
+		EndDate:              endDate,
+		GeoLocationBreakdown: geoLocationBreakdown,
+		ReportGranularity:    reportGranularity,
+		StartDate:            startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -159,6 +159,12 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyPutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	conversionCount := new(shared.SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports)
+	if !r.Configuration.ConversionCount.IsUnknown() && !r.Configuration.ConversionCount.IsNull() {
+		*conversionCount = shared.SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports(r.Configuration.ConversionCount.ValueString())
+	} else {
+		conversionCount = nil
+	}
 	var credentials shared.SourceOutbrainAmplifyUpdateAuthenticationMethod
 	var sourceOutbrainAmplifyUpdateAccessToken *shared.SourceOutbrainAmplifyUpdateAccessToken
 	if r.Configuration.Credentials.AccessToken != nil {
@@ -176,15 +182,15 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyPutReq
 	}
 	var sourceOutbrainAmplifyUpdateUsernamePassword *shared.SourceOutbrainAmplifyUpdateUsernamePassword
 	if r.Configuration.Credentials.UsernamePassword != nil {
-		var username string
-		username = r.Configuration.Credentials.UsernamePassword.Username.ValueString()
-
 		var password string
 		password = r.Configuration.Credentials.UsernamePassword.Password.ValueString()
 
+		var username string
+		username = r.Configuration.Credentials.UsernamePassword.Username.ValueString()
+
 		sourceOutbrainAmplifyUpdateUsernamePassword = &shared.SourceOutbrainAmplifyUpdateUsernamePassword{
-			Username: username,
 			Password: password,
+			Username: username,
 		}
 	}
 	if sourceOutbrainAmplifyUpdateUsernamePassword != nil {
@@ -192,11 +198,11 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyPutReq
 			SourceOutbrainAmplifyUpdateUsernamePassword: sourceOutbrainAmplifyUpdateUsernamePassword,
 		}
 	}
-	reportGranularity := new(shared.SourceOutbrainAmplifyUpdateGranularityForPeriodicReports)
-	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
-		*reportGranularity = shared.SourceOutbrainAmplifyUpdateGranularityForPeriodicReports(r.Configuration.ReportGranularity.ValueString())
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
-		reportGranularity = nil
+		endDate = nil
 	}
 	geoLocationBreakdown := new(shared.SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion)
 	if !r.Configuration.GeoLocationBreakdown.IsUnknown() && !r.Configuration.GeoLocationBreakdown.IsNull() {
@@ -204,28 +210,22 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyPutReq
 	} else {
 		geoLocationBreakdown = nil
 	}
+	reportGranularity := new(shared.SourceOutbrainAmplifyUpdateGranularityForPeriodicReports)
+	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
+		*reportGranularity = shared.SourceOutbrainAmplifyUpdateGranularityForPeriodicReports(r.Configuration.ReportGranularity.ValueString())
+	} else {
+		reportGranularity = nil
+	}
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
-	endDate := new(string)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
-	} else {
-		endDate = nil
-	}
-	conversionCount := new(shared.SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports)
-	if !r.Configuration.ConversionCount.IsUnknown() && !r.Configuration.ConversionCount.IsNull() {
-		*conversionCount = shared.SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports(r.Configuration.ConversionCount.ValueString())
-	} else {
-		conversionCount = nil
-	}
 	configuration := shared.SourceOutbrainAmplifyUpdate{
-		Credentials:          credentials,
-		ReportGranularity:    reportGranularity,
-		GeoLocationBreakdown: geoLocationBreakdown,
-		StartDate:            startDate,
-		EndDate:              endDate,
 		ConversionCount:      conversionCount,
+		Credentials:          credentials,
+		EndDate:              endDate,
+		GeoLocationBreakdown: geoLocationBreakdown,
+		ReportGranularity:    reportGranularity,
+		StartDate:            startDate,
 	}
 	out := shared.SourceOutbrainAmplifyPutRequest{
 		Name:          name,

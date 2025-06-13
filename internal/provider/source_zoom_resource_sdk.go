@@ -24,23 +24,23 @@ func (r *SourceZoomResourceModel) ToSharedSourceZoomCreateRequest() *shared.Sour
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	authorizationEndpoint := new(string)
 	if !r.Configuration.AuthorizationEndpoint.IsUnknown() && !r.Configuration.AuthorizationEndpoint.IsNull() {
 		*authorizationEndpoint = r.Configuration.AuthorizationEndpoint.ValueString()
 	} else {
 		authorizationEndpoint = nil
 	}
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	configuration := shared.SourceZoom{
 		AccountID:             accountID,
+		AuthorizationEndpoint: authorizationEndpoint,
 		ClientID:              clientID,
 		ClientSecret:          clientSecret,
-		AuthorizationEndpoint: authorizationEndpoint,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,23 +115,23 @@ func (r *SourceZoomResourceModel) ToSharedSourceZoomPutRequest() *shared.SourceZ
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	authorizationEndpoint := new(string)
 	if !r.Configuration.AuthorizationEndpoint.IsUnknown() && !r.Configuration.AuthorizationEndpoint.IsNull() {
 		*authorizationEndpoint = r.Configuration.AuthorizationEndpoint.ValueString()
 	} else {
 		authorizationEndpoint = nil
 	}
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	configuration := shared.SourceZoomUpdate{
 		AccountID:             accountID,
+		AuthorizationEndpoint: authorizationEndpoint,
 		ClientID:              clientID,
 		ClientSecret:          clientSecret,
-		AuthorizationEndpoint: authorizationEndpoint,
 	}
 	out := shared.SourceZoomPutRequest{
 		Name:          name,

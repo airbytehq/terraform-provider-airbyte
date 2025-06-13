@@ -33,11 +33,11 @@ func (e *BunnyInc) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBunnyInc struct {
-	Apikey string `json:"apikey"`
+	Apikey    string     `json:"apikey"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 	// The subdomain specific to your Bunny account or service.
-	Subdomain  string     `json:"subdomain"`
-	StartDate  *time.Time `json:"start_date,omitempty"`
-	sourceType BunnyInc   `const:"bunny-inc" json:"sourceType"`
+	Subdomain  string   `json:"subdomain"`
+	sourceType BunnyInc `const:"bunny-inc" json:"sourceType"`
 }
 
 func (s SourceBunnyInc) MarshalJSON() ([]byte, error) {
@@ -58,18 +58,18 @@ func (o *SourceBunnyInc) GetApikey() string {
 	return o.Apikey
 }
 
-func (o *SourceBunnyInc) GetSubdomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Subdomain
-}
-
 func (o *SourceBunnyInc) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceBunnyInc) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }
 
 func (o *SourceBunnyInc) GetSourceType() BunnyInc {

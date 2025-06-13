@@ -72,9 +72,9 @@ func (e *ZohoAnalyticsMetadataAPI) UnmarshalJSON(data []byte) error {
 type SourceZohoAnalyticsMetadataAPI struct {
 	ClientID     string                                    `json:"client_id"`
 	ClientSecret string                                    `json:"client_secret"`
-	RefreshToken string                                    `json:"refresh_token"`
 	DataCenter   *SourceZohoAnalyticsMetadataAPIDataCenter `default:"com" json:"data_center"`
 	OrgID        float64                                   `json:"org_id"`
+	RefreshToken string                                    `json:"refresh_token"`
 	sourceType   ZohoAnalyticsMetadataAPI                  `const:"zoho-analytics-metadata-api" json:"sourceType"`
 }
 
@@ -103,13 +103,6 @@ func (o *SourceZohoAnalyticsMetadataAPI) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceZohoAnalyticsMetadataAPI) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
-}
-
 func (o *SourceZohoAnalyticsMetadataAPI) GetDataCenter() *SourceZohoAnalyticsMetadataAPIDataCenter {
 	if o == nil {
 		return nil
@@ -122,6 +115,13 @@ func (o *SourceZohoAnalyticsMetadataAPI) GetOrgID() float64 {
 		return 0.0
 	}
 	return o.OrgID
+}
+
+func (o *SourceZohoAnalyticsMetadataAPI) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 func (o *SourceZohoAnalyticsMetadataAPI) GetSourceType() ZohoAnalyticsMetadataAPI {

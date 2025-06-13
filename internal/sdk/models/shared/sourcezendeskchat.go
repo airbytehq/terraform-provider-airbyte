@@ -34,9 +34,9 @@ func (e *SourceZendeskChatSchemasCredentials) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskChatAccessToken struct {
-	credentials SourceZendeskChatSchemasCredentials `const:"access_token" json:"credentials"`
 	// The Access Token to make authenticated requests.
-	AccessToken string `json:"access_token"`
+	AccessToken string                              `json:"access_token"`
+	credentials SourceZendeskChatSchemasCredentials `const:"access_token" json:"credentials"`
 }
 
 func (s SourceZendeskChatAccessToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceZendeskChatAccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZendeskChatAccessToken) GetCredentials() SourceZendeskChatSchemasCredentials {
-	return SourceZendeskChatSchemasCredentialsAccessToken
-}
-
 func (o *SourceZendeskChatAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceZendeskChatAccessToken) GetCredentials() SourceZendeskChatSchemasCredentials {
+	return SourceZendeskChatSchemasCredentialsAccessToken
 }
 
 type SourceZendeskChatCredentials string
@@ -85,13 +85,13 @@ func (e *SourceZendeskChatCredentials) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskChatOAuth20 struct {
-	credentials SourceZendeskChatCredentials `const:"oauth2.0" json:"credentials"`
+	// Access Token for making authenticated requests.
+	AccessToken *string `json:"access_token,omitempty"`
 	// The Client ID of your OAuth application
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
-	ClientSecret *string `json:"client_secret,omitempty"`
-	// Access Token for making authenticated requests.
-	AccessToken *string `json:"access_token,omitempty"`
+	ClientSecret *string                      `json:"client_secret,omitempty"`
+	credentials  SourceZendeskChatCredentials `const:"oauth2.0" json:"credentials"`
 	// Refresh Token to obtain new Access Token, when it's expired.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
@@ -107,8 +107,11 @@ func (s *SourceZendeskChatOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZendeskChatOAuth20) GetCredentials() SourceZendeskChatCredentials {
-	return SourceZendeskChatCredentialsOauth20
+func (o *SourceZendeskChatOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
 }
 
 func (o *SourceZendeskChatOAuth20) GetClientID() *string {
@@ -125,11 +128,8 @@ func (o *SourceZendeskChatOAuth20) GetClientSecret() *string {
 	return o.ClientSecret
 }
 
-func (o *SourceZendeskChatOAuth20) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
+func (o *SourceZendeskChatOAuth20) GetCredentials() SourceZendeskChatCredentials {
+	return SourceZendeskChatCredentialsOauth20
 }
 
 func (o *SourceZendeskChatOAuth20) GetRefreshToken() *string {
@@ -226,12 +226,12 @@ func (e *ZendeskChat) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskChat struct {
+	Credentials *SourceZendeskChatAuthorizationMethod `json:"credentials,omitempty"`
 	// The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate time.Time `json:"start_date"`
 	// The unique subdomain of your Zendesk account (without https://). <a href=\"https://support.zendesk.com/hc/en-us/articles/4409381383578-Where-can-I-find-my-Zendesk-subdomain\">See the Zendesk docs to find your subdomain</a>.
-	Subdomain   string                                `json:"subdomain"`
-	Credentials *SourceZendeskChatAuthorizationMethod `json:"credentials,omitempty"`
-	sourceType  ZendeskChat                           `const:"zendesk-chat" json:"sourceType"`
+	Subdomain  string      `json:"subdomain"`
+	sourceType ZendeskChat `const:"zendesk-chat" json:"sourceType"`
 }
 
 func (s SourceZendeskChat) MarshalJSON() ([]byte, error) {
@@ -243,6 +243,13 @@ func (s *SourceZendeskChat) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceZendeskChat) GetCredentials() *SourceZendeskChatAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }
 
 func (o *SourceZendeskChat) GetStartDate() time.Time {
@@ -257,13 +264,6 @@ func (o *SourceZendeskChat) GetSubdomain() string {
 		return ""
 	}
 	return o.Subdomain
-}
-
-func (o *SourceZendeskChat) GetCredentials() *SourceZendeskChatAuthorizationMethod {
-	if o == nil {
-		return nil
-	}
-	return o.Credentials
 }
 
 func (o *SourceZendeskChat) GetSourceType() ZendeskChat {

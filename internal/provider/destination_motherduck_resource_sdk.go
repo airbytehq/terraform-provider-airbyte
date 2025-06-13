@@ -21,15 +21,15 @@ func (r *DestinationMotherduckResourceModel) ToSharedDestinationMotherduckCreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var motherduckAPIKey string
-	motherduckAPIKey = r.Configuration.MotherduckAPIKey.ValueString()
-
 	destinationPath := new(string)
 	if !r.Configuration.DestinationPath.IsUnknown() && !r.Configuration.DestinationPath.IsNull() {
 		*destinationPath = r.Configuration.DestinationPath.ValueString()
 	} else {
 		destinationPath = nil
 	}
+	var motherduckAPIKey string
+	motherduckAPIKey = r.Configuration.MotherduckAPIKey.ValueString()
+
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
@@ -37,8 +37,8 @@ func (r *DestinationMotherduckResourceModel) ToSharedDestinationMotherduckCreate
 		schema = nil
 	}
 	configuration := shared.DestinationMotherduck{
-		MotherduckAPIKey: motherduckAPIKey,
 		DestinationPath:  destinationPath,
+		MotherduckAPIKey: motherduckAPIKey,
 		Schema:           schema,
 	}
 	out := shared.DestinationMotherduckCreateRequest{
@@ -104,15 +104,15 @@ func (r *DestinationMotherduckResourceModel) ToSharedDestinationMotherduckPutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var motherduckAPIKey string
-	motherduckAPIKey = r.Configuration.MotherduckAPIKey.ValueString()
-
 	destinationPath := new(string)
 	if !r.Configuration.DestinationPath.IsUnknown() && !r.Configuration.DestinationPath.IsNull() {
 		*destinationPath = r.Configuration.DestinationPath.ValueString()
 	} else {
 		destinationPath = nil
 	}
+	var motherduckAPIKey string
+	motherduckAPIKey = r.Configuration.MotherduckAPIKey.ValueString()
+
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
@@ -120,8 +120,8 @@ func (r *DestinationMotherduckResourceModel) ToSharedDestinationMotherduckPutReq
 		schema = nil
 	}
 	configuration := shared.DestinationMotherduckUpdate{
-		MotherduckAPIKey: motherduckAPIKey,
 		DestinationPath:  destinationPath,
+		MotherduckAPIKey: motherduckAPIKey,
 		Schema:           schema,
 	}
 	out := shared.DestinationMotherduckPutRequest{

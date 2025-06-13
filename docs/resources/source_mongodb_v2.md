@@ -20,10 +20,12 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
         additional_properties = "{ \"see\": \"documentation\" }"
         auth_source           = "admin"
         connection_string     = "mongodb://example1.host.com:27017,example2.host.com:27017,example3.host.com:27017/"
-        database              = "...my_database..."
-        password              = "...my_password..."
-        schema_enforced       = false
-        username              = "...my_username..."
+        databases = [
+          "..."
+        ]
+        password        = "...my_password..."
+        schema_enforced = false
+        username        = "...my_username..."
       }
     }
     discover_sample_size                 = 95684
@@ -93,7 +95,7 @@ Optional:
 Required:
 
 - `connection_string` (String) The connection string of the cluster that you want to replicate.
-- `database` (String) The name of the MongoDB database that contains the collection(s) to replicate.
+- `databases` (List of String) The names of the MongoDB databases that contain the collection(s) to replicate.
 - `password` (String, Sensitive) The password associated with this username.
 - `username` (String) The username which is used to access the database.
 
@@ -110,7 +112,7 @@ Optional:
 Required:
 
 - `connection_string` (String) The connection string of the cluster that you want to replicate.  https://www.mongodb.com/docs/manual/reference/connection-string/#find-your-self-hosted-deployment-s-connection-string for more information.
-- `database` (String) The name of the MongoDB database that contains the collection(s) to replicate.
+- `databases` (List of String) The names of the MongoDB databases that contain the collection(s) to replicate.
 
 Optional:
 

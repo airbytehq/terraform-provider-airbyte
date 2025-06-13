@@ -8,11 +8,11 @@ import (
 )
 
 type SourceTestrailUpdate struct {
-	Username  string    `json:"username"`
-	Password  *string   `json:"password,omitempty"`
-	StartDate time.Time `json:"start_date"`
 	// The unique domain name for accessing testrail
-	DomainName string `json:"domain_name"`
+	DomainName string    `json:"domain_name"`
+	Password   *string   `json:"password,omitempty"`
+	StartDate  time.Time `json:"start_date"`
+	Username   string    `json:"username"`
 }
 
 func (s SourceTestrailUpdate) MarshalJSON() ([]byte, error) {
@@ -26,11 +26,11 @@ func (s *SourceTestrailUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceTestrailUpdate) GetUsername() string {
+func (o *SourceTestrailUpdate) GetDomainName() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.DomainName
 }
 
 func (o *SourceTestrailUpdate) GetPassword() *string {
@@ -47,9 +47,9 @@ func (o *SourceTestrailUpdate) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceTestrailUpdate) GetDomainName() string {
+func (o *SourceTestrailUpdate) GetUsername() string {
 	if o == nil {
 		return ""
 	}
-	return o.DomainName
+	return o.Username
 }

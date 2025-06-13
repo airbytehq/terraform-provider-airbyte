@@ -33,13 +33,13 @@ func (e *Paystack) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePaystack struct {
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
 	// When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
 	LookbackWindowDays *int64 `default:"0" json:"lookback_window_days"`
 	// The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
-	SecretKey  string   `json:"secret_key"`
-	sourceType Paystack `const:"paystack" json:"sourceType"`
+	SecretKey string `json:"secret_key"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate  time.Time `json:"start_date"`
+	sourceType Paystack  `const:"paystack" json:"sourceType"`
 }
 
 func (s SourcePaystack) MarshalJSON() ([]byte, error) {
@@ -51,13 +51,6 @@ func (s *SourcePaystack) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourcePaystack) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
 }
 
 func (o *SourcePaystack) GetLookbackWindowDays() *int64 {
@@ -72,6 +65,13 @@ func (o *SourcePaystack) GetSecretKey() string {
 		return ""
 	}
 	return o.SecretKey
+}
+
+func (o *SourcePaystack) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourcePaystack) GetSourceType() Paystack {

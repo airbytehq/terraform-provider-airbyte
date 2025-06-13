@@ -24,23 +24,23 @@ func (r *SourceMyHoursResourceModel) ToSharedSourceMyHoursCreateRequest() *share
 	var email string
 	email = r.Configuration.Email.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	logsBatchSize := new(int64)
 	if !r.Configuration.LogsBatchSize.IsUnknown() && !r.Configuration.LogsBatchSize.IsNull() {
 		*logsBatchSize = r.Configuration.LogsBatchSize.ValueInt64()
 	} else {
 		logsBatchSize = nil
 	}
+	var password string
+	password = r.Configuration.Password.ValueString()
+
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	configuration := shared.SourceMyHours{
 		Email:         email,
+		LogsBatchSize: logsBatchSize,
 		Password:      password,
 		StartDate:     startDate,
-		LogsBatchSize: logsBatchSize,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,23 +115,23 @@ func (r *SourceMyHoursResourceModel) ToSharedSourceMyHoursPutRequest() *shared.S
 	var email string
 	email = r.Configuration.Email.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	logsBatchSize := new(int64)
 	if !r.Configuration.LogsBatchSize.IsUnknown() && !r.Configuration.LogsBatchSize.IsNull() {
 		*logsBatchSize = r.Configuration.LogsBatchSize.ValueInt64()
 	} else {
 		logsBatchSize = nil
 	}
+	var password string
+	password = r.Configuration.Password.ValueString()
+
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	configuration := shared.SourceMyHoursUpdate{
 		Email:         email,
+		LogsBatchSize: logsBatchSize,
 		Password:      password,
 		StartDate:     startDate,
-		LogsBatchSize: logsBatchSize,
 	}
 	out := shared.SourceMyHoursPutRequest{
 		Name:          name,

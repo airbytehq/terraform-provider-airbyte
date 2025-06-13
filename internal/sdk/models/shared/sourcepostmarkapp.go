@@ -32,11 +32,11 @@ func (e *Postmarkapp) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePostmarkapp struct {
-	// API Key for server
-	XPostmarkServerToken string `json:"X-Postmark-Server-Token"`
 	// API Key for account
-	XPostmarkAccountToken string      `json:"X-Postmark-Account-Token"`
-	sourceType            Postmarkapp `const:"postmarkapp" json:"sourceType"`
+	XPostmarkAccountToken string `json:"X-Postmark-Account-Token"`
+	// API Key for server
+	XPostmarkServerToken string      `json:"X-Postmark-Server-Token"`
+	sourceType           Postmarkapp `const:"postmarkapp" json:"sourceType"`
 }
 
 func (s SourcePostmarkapp) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (s *SourcePostmarkapp) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePostmarkapp) GetXPostmarkServerToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.XPostmarkServerToken
-}
-
 func (o *SourcePostmarkapp) GetXPostmarkAccountToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.XPostmarkAccountToken
+}
+
+func (o *SourcePostmarkapp) GetXPostmarkServerToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkServerToken
 }
 
 func (o *SourcePostmarkapp) GetSourceType() Postmarkapp {

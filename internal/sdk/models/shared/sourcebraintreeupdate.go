@@ -43,16 +43,16 @@ func (e *SourceBraintreeUpdateEnvironment) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBraintreeUpdate struct {
-	// The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
-	MerchantID string `json:"merchant_id"`
-	// Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-	PublicKey string `json:"public_key"`
-	// Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-	PrivateKey string `json:"private_key"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Environment specifies where the data will come from.
 	Environment SourceBraintreeUpdateEnvironment `json:"environment"`
+	// The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
+	MerchantID string `json:"merchant_id"`
+	// Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+	PrivateKey string `json:"private_key"`
+	// Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+	PublicKey string `json:"public_key"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceBraintreeUpdate) MarshalJSON() ([]byte, error) {
@@ -66,18 +66,18 @@ func (s *SourceBraintreeUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceBraintreeUpdate) GetEnvironment() SourceBraintreeUpdateEnvironment {
+	if o == nil {
+		return SourceBraintreeUpdateEnvironment("")
+	}
+	return o.Environment
+}
+
 func (o *SourceBraintreeUpdate) GetMerchantID() string {
 	if o == nil {
 		return ""
 	}
 	return o.MerchantID
-}
-
-func (o *SourceBraintreeUpdate) GetPublicKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.PublicKey
 }
 
 func (o *SourceBraintreeUpdate) GetPrivateKey() string {
@@ -87,16 +87,16 @@ func (o *SourceBraintreeUpdate) GetPrivateKey() string {
 	return o.PrivateKey
 }
 
+func (o *SourceBraintreeUpdate) GetPublicKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PublicKey
+}
+
 func (o *SourceBraintreeUpdate) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceBraintreeUpdate) GetEnvironment() SourceBraintreeUpdateEnvironment {
-	if o == nil {
-		return SourceBraintreeUpdateEnvironment("")
-	}
-	return o.Environment
 }

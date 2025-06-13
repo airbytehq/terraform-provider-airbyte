@@ -34,15 +34,15 @@ func (e *Circleci) UnmarshalJSON(data []byte) error {
 
 type SourceCircleci struct {
 	APIKey string `json:"api_key"`
-	// The org ID found in `https://app.circleci.com/settings/organization/circleci/xxxxx/overview`
-	OrgID     string    `json:"org_id"`
-	StartDate time.Time `json:"start_date"`
-	// Project ID found in the project settings, Visit `https://app.circleci.com/settings/project/circleci/ORG_SLUG/YYYYY`
-	ProjectID string `json:"project_id"`
-	// Workflow ID of a project pipeline, Could be seen in the URL of pipeline build, Example `https://app.circleci.com/pipelines/circleci/55555xxxxxx/7yyyyyyyyxxxxx/2/workflows/WORKFLOW_ID`
-	WorkflowID []any `json:"workflow_id,omitempty"`
 	// Job Number of the workflow for `jobs` stream, Auto fetches from `workflow_jobs` stream, if not configured
-	JobNumber  *string  `default:"2" json:"job_number"`
+	JobNumber *string `default:"2" json:"job_number"`
+	// The org ID found in `https://app.circleci.com/settings/organization/circleci/xxxxx/overview`
+	OrgID string `json:"org_id"`
+	// Project ID found in the project settings, Visit `https://app.circleci.com/settings/project/circleci/ORG_SLUG/YYYYY`
+	ProjectID string    `json:"project_id"`
+	StartDate time.Time `json:"start_date"`
+	// Workflow ID of a project pipeline, Could be seen in the URL of pipeline build, Example `https://app.circleci.com/pipelines/circleci/55555xxxxxx/7yyyyyyyyxxxxx/2/workflows/WORKFLOW_ID`
+	WorkflowID []any    `json:"workflow_id,omitempty"`
 	sourceType Circleci `const:"circleci" json:"sourceType"`
 }
 
@@ -64,18 +64,18 @@ func (o *SourceCircleci) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceCircleci) GetJobNumber() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JobNumber
+}
+
 func (o *SourceCircleci) GetOrgID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OrgID
-}
-
-func (o *SourceCircleci) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
 }
 
 func (o *SourceCircleci) GetProjectID() string {
@@ -85,18 +85,18 @@ func (o *SourceCircleci) GetProjectID() string {
 	return o.ProjectID
 }
 
+func (o *SourceCircleci) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
 func (o *SourceCircleci) GetWorkflowID() []any {
 	if o == nil {
 		return nil
 	}
 	return o.WorkflowID
-}
-
-func (o *SourceCircleci) GetJobNumber() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JobNumber
 }
 
 func (o *SourceCircleci) GetSourceType() Circleci {

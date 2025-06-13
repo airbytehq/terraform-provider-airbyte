@@ -25,20 +25,20 @@ func (r *SourcePhylloResourceModel) ToSharedSourcePhylloCreateRequest() *shared.
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	environment := new(shared.SourcePhylloEnvironment)
 	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
 		*environment = shared.SourcePhylloEnvironment(r.Configuration.Environment.ValueString())
 	} else {
 		environment = nil
 	}
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePhyllo{
 		ClientID:     clientID,
-		Environment:  environment,
 		ClientSecret: clientSecret,
+		Environment:  environment,
 		StartDate:    startDate,
 	}
 	secretID := new(string)
@@ -114,20 +114,20 @@ func (r *SourcePhylloResourceModel) ToSharedSourcePhylloPutRequest() *shared.Sou
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	environment := new(shared.SourcePhylloUpdateEnvironment)
 	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
 		*environment = shared.SourcePhylloUpdateEnvironment(r.Configuration.Environment.ValueString())
 	} else {
 		environment = nil
 	}
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePhylloUpdate{
 		ClientID:     clientID,
-		Environment:  environment,
 		ClientSecret: clientSecret,
+		Environment:  environment,
 		StartDate:    startDate,
 	}
 	out := shared.SourcePhylloPutRequest{

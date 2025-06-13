@@ -21,38 +21,35 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	ssl := new(bool)
-	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
-		*ssl = r.Configuration.Ssl.ValueBool()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
 	} else {
-		ssl = nil
-	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
+		port = nil
 	}
 	rawDataSchema := new(string)
 	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
@@ -60,11 +57,11 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 	} else {
 		rawDataSchema = nil
 	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
 	} else {
-		disableTypeDedupe = nil
+		ssl = nil
 	}
 	var tunnelMethod *shared.DestinationMysqlSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -79,6 +76,9 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 		}
 		var destinationMysqlSSHKeyAuthentication *shared.DestinationMysqlSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -91,14 +91,11 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationMysqlSSHKeyAuthentication = &shared.DestinationMysqlSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationMysqlSSHKeyAuthentication != nil {
@@ -136,17 +133,20 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationMysql{
-		Host:              host,
-		Port:              port,
 		Database:          database,
-		Username:          username,
-		Password:          password,
-		Ssl:               ssl,
-		JdbcURLParams:     jdbcURLParams,
-		RawDataSchema:     rawDataSchema,
 		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		Ssl:               ssl,
 		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	out := shared.DestinationMysqlCreateRequest{
 		Name:          name,
@@ -211,38 +211,35 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	ssl := new(bool)
-	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
-		*ssl = r.Configuration.Ssl.ValueBool()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
 	} else {
-		ssl = nil
-	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
+		port = nil
 	}
 	rawDataSchema := new(string)
 	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
@@ -250,11 +247,11 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 	} else {
 		rawDataSchema = nil
 	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
 	} else {
-		disableTypeDedupe = nil
+		ssl = nil
 	}
 	var tunnelMethod *shared.DestinationMysqlUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -269,6 +266,9 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 		}
 		var destinationMysqlUpdateSSHKeyAuthentication *shared.DestinationMysqlUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -281,14 +281,11 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationMysqlUpdateSSHKeyAuthentication = &shared.DestinationMysqlUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationMysqlUpdateSSHKeyAuthentication != nil {
@@ -326,17 +323,20 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationMysqlUpdate{
-		Host:              host,
-		Port:              port,
 		Database:          database,
-		Username:          username,
-		Password:          password,
-		Ssl:               ssl,
-		JdbcURLParams:     jdbcURLParams,
-		RawDataSchema:     rawDataSchema,
 		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		Ssl:               ssl,
 		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	out := shared.DestinationMysqlPutRequest{
 		Name:          name,

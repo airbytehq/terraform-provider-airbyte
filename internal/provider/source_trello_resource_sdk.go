@@ -22,22 +22,22 @@ func (r *SourceTrelloResourceModel) ToSharedSourceTrelloCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var key string
-	key = r.Configuration.Key.ValueString()
-
-	var token string
-	token = r.Configuration.Token.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var boardIds []string = []string{}
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}
+	var key string
+	key = r.Configuration.Key.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var token string
+	token = r.Configuration.Token.ValueString()
+
 	configuration := shared.SourceTrello{
-		Key:       key,
-		Token:     token,
-		StartDate: startDate,
 		BoardIds:  boardIds,
+		Key:       key,
+		StartDate: startDate,
+		Token:     token,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -109,22 +109,22 @@ func (r *SourceTrelloResourceModel) ToSharedSourceTrelloPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var key string
-	key = r.Configuration.Key.ValueString()
-
-	var token string
-	token = r.Configuration.Token.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var boardIds []string = []string{}
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}
+	var key string
+	key = r.Configuration.Key.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var token string
+	token = r.Configuration.Token.ValueString()
+
 	configuration := shared.SourceTrelloUpdate{
-		Key:       key,
-		Token:     token,
-		StartDate: startDate,
 		BoardIds:  boardIds,
+		Key:       key,
+		StartDate: startDate,
+		Token:     token,
 	}
 	out := shared.SourceTrelloPutRequest{
 		Name:          name,

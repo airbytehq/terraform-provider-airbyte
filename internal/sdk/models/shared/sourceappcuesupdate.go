@@ -8,11 +8,11 @@ import (
 )
 
 type SourceAppcuesUpdate struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
 	// Account ID of Appcues found in account settings page (https://studio.appcues.com/settings/account)
 	AccountID string    `json:"account_id"`
+	Password  *string   `json:"password,omitempty"`
 	StartDate time.Time `json:"start_date"`
+	Username  string    `json:"username"`
 }
 
 func (s SourceAppcuesUpdate) MarshalJSON() ([]byte, error) {
@@ -26,11 +26,11 @@ func (s *SourceAppcuesUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceAppcuesUpdate) GetUsername() string {
+func (o *SourceAppcuesUpdate) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.AccountID
 }
 
 func (o *SourceAppcuesUpdate) GetPassword() *string {
@@ -40,16 +40,16 @@ func (o *SourceAppcuesUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceAppcuesUpdate) GetAccountID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountID
-}
-
 func (o *SourceAppcuesUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceAppcuesUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

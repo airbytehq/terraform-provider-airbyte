@@ -28,9 +28,12 @@ func (r *SourceAlpacaBrokerAPIResourceModel) ToSharedSourceAlpacaBrokerAPICreate
 	} else {
 		environment = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
+	limit := new(string)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueString()
+	} else {
+		limit = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -38,18 +41,15 @@ func (r *SourceAlpacaBrokerAPIResourceModel) ToSharedSourceAlpacaBrokerAPICreate
 		password = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	limit := new(string)
-	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
-		*limit = r.Configuration.Limit.ValueString()
-	} else {
-		limit = nil
-	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceAlpacaBrokerAPI{
 		Environment: environment,
-		Username:    username,
+		Limit:       limit,
 		Password:    password,
 		StartDate:   startDate,
-		Limit:       limit,
+		Username:    username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -127,9 +127,12 @@ func (r *SourceAlpacaBrokerAPIResourceModel) ToSharedSourceAlpacaBrokerAPIPutReq
 	} else {
 		environment = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
+	limit := new(string)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueString()
+	} else {
+		limit = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -137,18 +140,15 @@ func (r *SourceAlpacaBrokerAPIResourceModel) ToSharedSourceAlpacaBrokerAPIPutReq
 		password = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	limit := new(string)
-	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
-		*limit = r.Configuration.Limit.ValueString()
-	} else {
-		limit = nil
-	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceAlpacaBrokerAPIUpdate{
 		Environment: environment,
-		Username:    username,
+		Limit:       limit,
 		Password:    password,
 		StartDate:   startDate,
-		Limit:       limit,
+		Username:    username,
 	}
 	out := shared.SourceAlpacaBrokerAPIPutRequest{
 		Name:          name,

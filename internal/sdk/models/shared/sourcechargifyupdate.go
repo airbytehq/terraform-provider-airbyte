@@ -7,8 +7,8 @@ type SourceChargifyUpdate struct {
 	APIKey string `json:"api_key"`
 	// Chargify domain. Normally this domain follows the following format
 	Domain   string  `json:"domain"`
-	Username string  `json:"username"`
 	Password *string `json:"password,omitempty"`
+	Username string  `json:"username"`
 }
 
 func (o *SourceChargifyUpdate) GetAPIKey() string {
@@ -25,16 +25,16 @@ func (o *SourceChargifyUpdate) GetDomain() string {
 	return o.Domain
 }
 
-func (o *SourceChargifyUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceChargifyUpdate) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceChargifyUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

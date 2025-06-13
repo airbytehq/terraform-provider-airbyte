@@ -33,10 +33,10 @@ func (e *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestin
 }
 
 type DestinationDevNullUpdateFailing struct {
-	TestDestinationType *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType `default:"FAILING" json:"test_destination_type"`
 	// Number of messages after which to fail.
-	NumMessages          int64 `json:"num_messages"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
+	NumMessages          int64                                                                             `json:"num_messages"`
+	TestDestinationType  *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType `default:"FAILING" json:"test_destination_type"`
+	AdditionalProperties any                                                                               `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationDevNullUpdateFailing) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (d *DestinationDevNullUpdateFailing) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationDevNullUpdateFailing) GetTestDestinationType() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType {
-	if o == nil {
-		return nil
-	}
-	return o.TestDestinationType
-}
-
 func (o *DestinationDevNullUpdateFailing) GetNumMessages() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.NumMessages
+}
+
+func (o *DestinationDevNullUpdateFailing) GetTestDestinationType() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType {
+	if o == nil {
+		return nil
+	}
+	return o.TestDestinationType
 }
 
 func (o *DestinationDevNullUpdateFailing) GetAdditionalProperties() any {
@@ -95,10 +95,10 @@ func (e *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType) Unma
 }
 
 type DestinationDevNullUpdateThrottled struct {
-	TestDestinationType *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType `default:"THROTTLED" json:"test_destination_type"`
 	// The number of milliseconds to wait between each record.
-	MillisPerRecord      int64 `json:"millis_per_record"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
+	MillisPerRecord      int64                                                              `json:"millis_per_record"`
+	TestDestinationType  *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType `default:"THROTTLED" json:"test_destination_type"`
+	AdditionalProperties any                                                                `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationDevNullUpdateThrottled) MarshalJSON() ([]byte, error) {
@@ -112,18 +112,18 @@ func (d *DestinationDevNullUpdateThrottled) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationDevNullUpdateThrottled) GetTestDestinationType() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType {
-	if o == nil {
-		return nil
-	}
-	return o.TestDestinationType
-}
-
 func (o *DestinationDevNullUpdateThrottled) GetMillisPerRecord() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.MillisPerRecord
+}
+
+func (o *DestinationDevNullUpdateThrottled) GetTestDestinationType() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType {
+	if o == nil {
+		return nil
+	}
+	return o.TestDestinationType
 }
 
 func (o *DestinationDevNullUpdateThrottled) GetAdditionalProperties() any {
@@ -186,29 +186,6 @@ func (o *DestinationDevNullUpdateSilent) GetAdditionalProperties() any {
 	return o.AdditionalProperties
 }
 
-type DestinationDevNullUpdateTestDestinationType string
-
-const (
-	DestinationDevNullUpdateTestDestinationTypeLogging DestinationDevNullUpdateTestDestinationType = "LOGGING"
-)
-
-func (e DestinationDevNullUpdateTestDestinationType) ToPointer() *DestinationDevNullUpdateTestDestinationType {
-	return &e
-}
-func (e *DestinationDevNullUpdateTestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "LOGGING":
-		*e = DestinationDevNullUpdateTestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateTestDestinationType: %v", v)
-	}
-}
-
 type DestinationDevNullUpdateSchemasTestDestinationLoggingType string
 
 const (
@@ -235,12 +212,12 @@ func (e *DestinationDevNullUpdateSchemasTestDestinationLoggingType) UnmarshalJSO
 // DestinationDevNullUpdateRandomSampling - For each stream, randomly log a percentage of the entries with a maximum cap.
 type DestinationDevNullUpdateRandomSampling struct {
 	LoggingType *DestinationDevNullUpdateSchemasTestDestinationLoggingType `default:"RandomSampling" json:"logging_type"`
+	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
+	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
 	// A positive floating number smaller than 1.
 	SamplingRatio *float64 `default:"0.001" json:"sampling_ratio"`
 	// When the seed is unspecified, the current time millis will be used as the seed.
-	Seed *float64 `json:"seed,omitempty"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount        *float64 `default:"100" json:"max_entry_count"`
+	Seed                 *float64 `json:"seed,omitempty"`
 	AdditionalProperties any      `additionalProperties:"true" json:"-"`
 }
 
@@ -262,6 +239,13 @@ func (o *DestinationDevNullUpdateRandomSampling) GetLoggingType() *DestinationDe
 	return o.LoggingType
 }
 
+func (o *DestinationDevNullUpdateRandomSampling) GetMaxEntryCount() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxEntryCount
+}
+
 func (o *DestinationDevNullUpdateRandomSampling) GetSamplingRatio() *float64 {
 	if o == nil {
 		return nil
@@ -274,13 +258,6 @@ func (o *DestinationDevNullUpdateRandomSampling) GetSeed() *float64 {
 		return nil
 	}
 	return o.Seed
-}
-
-func (o *DestinationDevNullUpdateRandomSampling) GetMaxEntryCount() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.MaxEntryCount
 }
 
 func (o *DestinationDevNullUpdateRandomSampling) GetAdditionalProperties() any {
@@ -316,11 +293,11 @@ func (e *DestinationDevNullUpdateSchemasLoggingType) UnmarshalJSON(data []byte) 
 // DestinationDevNullUpdateEveryNThEntry - For each stream, log every N-th entry with a maximum cap.
 type DestinationDevNullUpdateEveryNThEntry struct {
 	LoggingType *DestinationDevNullUpdateSchemasLoggingType `default:"EveryNth" json:"logging_type"`
-	// The N-th entry to log for each stream. N starts from 1. For example, when N = 1, every entry is logged; when N = 2, every other entry is logged; when N = 3, one out of three entries is logged.
-	NthEntryToLog int64 `json:"nth_entry_to_log"`
 	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount        *float64 `default:"100" json:"max_entry_count"`
-	AdditionalProperties any      `additionalProperties:"true" json:"-"`
+	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
+	// The N-th entry to log for each stream. N starts from 1. For example, when N = 1, every entry is logged; when N = 2, every other entry is logged; when N = 3, one out of three entries is logged.
+	NthEntryToLog        int64 `json:"nth_entry_to_log"`
+	AdditionalProperties any   `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationDevNullUpdateEveryNThEntry) MarshalJSON() ([]byte, error) {
@@ -341,18 +318,18 @@ func (o *DestinationDevNullUpdateEveryNThEntry) GetLoggingType() *DestinationDev
 	return o.LoggingType
 }
 
-func (o *DestinationDevNullUpdateEveryNThEntry) GetNthEntryToLog() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.NthEntryToLog
-}
-
 func (o *DestinationDevNullUpdateEveryNThEntry) GetMaxEntryCount() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxEntryCount
+}
+
+func (o *DestinationDevNullUpdateEveryNThEntry) GetNthEntryToLog() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.NthEntryToLog
 }
 
 func (o *DestinationDevNullUpdateEveryNThEntry) GetAdditionalProperties() any {
@@ -511,10 +488,33 @@ func (u DestinationDevNullUpdateLoggingConfiguration) MarshalJSON() ([]byte, err
 	return nil, errors.New("could not marshal union type DestinationDevNullUpdateLoggingConfiguration: all fields are null")
 }
 
+type DestinationDevNullUpdateTestDestinationType string
+
+const (
+	DestinationDevNullUpdateTestDestinationTypeLogging DestinationDevNullUpdateTestDestinationType = "LOGGING"
+)
+
+func (e DestinationDevNullUpdateTestDestinationType) ToPointer() *DestinationDevNullUpdateTestDestinationType {
+	return &e
+}
+func (e *DestinationDevNullUpdateTestDestinationType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "LOGGING":
+		*e = DestinationDevNullUpdateTestDestinationType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationDevNullUpdateTestDestinationType: %v", v)
+	}
+}
+
 type DestinationDevNullUpdateLogging struct {
-	TestDestinationType *DestinationDevNullUpdateTestDestinationType `default:"LOGGING" json:"test_destination_type"`
 	// Configurate how the messages are logged.
 	LoggingConfig        DestinationDevNullUpdateLoggingConfiguration `json:"logging_config"`
+	TestDestinationType  *DestinationDevNullUpdateTestDestinationType `default:"LOGGING" json:"test_destination_type"`
 	AdditionalProperties any                                          `additionalProperties:"true" json:"-"`
 }
 
@@ -529,18 +529,18 @@ func (d *DestinationDevNullUpdateLogging) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationDevNullUpdateLogging) GetTestDestinationType() *DestinationDevNullUpdateTestDestinationType {
-	if o == nil {
-		return nil
-	}
-	return o.TestDestinationType
-}
-
 func (o *DestinationDevNullUpdateLogging) GetLoggingConfig() DestinationDevNullUpdateLoggingConfiguration {
 	if o == nil {
 		return DestinationDevNullUpdateLoggingConfiguration{}
 	}
 	return o.LoggingConfig
+}
+
+func (o *DestinationDevNullUpdateLogging) GetTestDestinationType() *DestinationDevNullUpdateTestDestinationType {
+	if o == nil {
+		return nil
+	}
+	return o.TestDestinationType
 }
 
 func (o *DestinationDevNullUpdateLogging) GetAdditionalProperties() any {

@@ -21,15 +21,15 @@ func (r *SourceGoogleWebfontsResourceModel) ToSharedSourceGoogleWebfontsCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	alt := new(string)
 	if !r.Configuration.Alt.IsUnknown() && !r.Configuration.Alt.IsNull() {
 		*alt = r.Configuration.Alt.ValueString()
 	} else {
 		alt = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	prettyPrint := new(string)
 	if !r.Configuration.PrettyPrint.IsUnknown() && !r.Configuration.PrettyPrint.IsNull() {
 		*prettyPrint = r.Configuration.PrettyPrint.ValueString()
@@ -43,8 +43,8 @@ func (r *SourceGoogleWebfontsResourceModel) ToSharedSourceGoogleWebfontsCreateRe
 		sort = nil
 	}
 	configuration := shared.SourceGoogleWebfonts{
-		APIKey:      apiKey,
 		Alt:         alt,
+		APIKey:      apiKey,
 		PrettyPrint: prettyPrint,
 		Sort:        sort,
 	}
@@ -118,15 +118,15 @@ func (r *SourceGoogleWebfontsResourceModel) ToSharedSourceGoogleWebfontsPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	alt := new(string)
 	if !r.Configuration.Alt.IsUnknown() && !r.Configuration.Alt.IsNull() {
 		*alt = r.Configuration.Alt.ValueString()
 	} else {
 		alt = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	prettyPrint := new(string)
 	if !r.Configuration.PrettyPrint.IsUnknown() && !r.Configuration.PrettyPrint.IsNull() {
 		*prettyPrint = r.Configuration.PrettyPrint.ValueString()
@@ -140,8 +140,8 @@ func (r *SourceGoogleWebfontsResourceModel) ToSharedSourceGoogleWebfontsPutReque
 		sort = nil
 	}
 	configuration := shared.SourceGoogleWebfontsUpdate{
-		APIKey:      apiKey,
 		Alt:         alt,
+		APIKey:      apiKey,
 		PrettyPrint: prettyPrint,
 		Sort:        sort,
 	}

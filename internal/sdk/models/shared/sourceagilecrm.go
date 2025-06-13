@@ -32,12 +32,12 @@ func (e *Agilecrm) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAgilecrm struct {
-	// Your Agile CRM account email address. This is used as the username for authentication.
-	Email string `json:"email"`
+	// API key to use. Find it at Admin Settings -> API & Analytics -> API Key in your Agile CRM account.
+	APIKey string `json:"api_key"`
 	// The specific subdomain for your Agile CRM account
 	Domain string `json:"domain"`
-	// API key to use. Find it at Admin Settings -> API & Analytics -> API Key in your Agile CRM account.
-	APIKey     string   `json:"api_key"`
+	// Your Agile CRM account email address. This is used as the username for authentication.
+	Email      string   `json:"email"`
 	sourceType Agilecrm `const:"agilecrm" json:"sourceType"`
 }
 
@@ -52,11 +52,11 @@ func (s *SourceAgilecrm) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceAgilecrm) GetEmail() string {
+func (o *SourceAgilecrm) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
-	return o.Email
+	return o.APIKey
 }
 
 func (o *SourceAgilecrm) GetDomain() string {
@@ -66,11 +66,11 @@ func (o *SourceAgilecrm) GetDomain() string {
 	return o.Domain
 }
 
-func (o *SourceAgilecrm) GetAPIKey() string {
+func (o *SourceAgilecrm) GetEmail() string {
 	if o == nil {
 		return ""
 	}
-	return o.APIKey
+	return o.Email
 }
 
 func (o *SourceAgilecrm) GetSourceType() Agilecrm {

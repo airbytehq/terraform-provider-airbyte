@@ -8,11 +8,11 @@ import (
 )
 
 type SourceSendowlUpdate struct {
-	// Enter you API Key
-	Username string `json:"username"`
 	// Enter your API secret
 	Password  *string   `json:"password,omitempty"`
 	StartDate time.Time `json:"start_date"`
+	// Enter you API Key
+	Username string `json:"username"`
 }
 
 func (s SourceSendowlUpdate) MarshalJSON() ([]byte, error) {
@@ -24,13 +24,6 @@ func (s *SourceSendowlUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceSendowlUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
 }
 
 func (o *SourceSendowlUpdate) GetPassword() *string {
@@ -45,4 +38,11 @@ func (o *SourceSendowlUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceSendowlUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

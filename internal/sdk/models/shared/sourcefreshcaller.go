@@ -33,10 +33,10 @@ func (e *Freshcaller) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFreshcaller struct {
-	// Used to construct Base URL for the Freshcaller APIs
-	Domain string `json:"domain"`
 	// Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.
 	APIKey string `json:"api_key"`
+	// Used to construct Base URL for the Freshcaller APIs
+	Domain string `json:"domain"`
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
 	RequestsPerMinute *int64 `json:"requests_per_minute,omitempty"`
 	// UTC date and time. Any data created after this date will be replicated.
@@ -57,18 +57,18 @@ func (s *SourceFreshcaller) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFreshcaller) GetDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Domain
-}
-
 func (o *SourceFreshcaller) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceFreshcaller) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
 }
 
 func (o *SourceFreshcaller) GetRequestsPerMinute() *int64 {

@@ -37,11 +37,11 @@ type SourceTwilio struct {
 	AccountSid string `json:"account_sid"`
 	// Twilio Auth Token.
 	AuthToken string `json:"auth_token"`
-	// UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
 	// How far into the past to look for records. (in minutes)
 	LookbackWindow *int64 `default:"0" json:"lookback_window"`
-	sourceType     Twilio `const:"twilio" json:"sourceType"`
+	// UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
+	StartDate  time.Time `json:"start_date"`
+	sourceType Twilio    `const:"twilio" json:"sourceType"`
 }
 
 func (s SourceTwilio) MarshalJSON() ([]byte, error) {
@@ -69,18 +69,18 @@ func (o *SourceTwilio) GetAuthToken() string {
 	return o.AuthToken
 }
 
-func (o *SourceTwilio) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceTwilio) GetLookbackWindow() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LookbackWindow
+}
+
+func (o *SourceTwilio) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceTwilio) GetSourceType() Twilio {

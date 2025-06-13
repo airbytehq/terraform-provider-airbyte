@@ -8,9 +8,16 @@ import (
 )
 
 type SourceOnesignalUpdateApplications struct {
+	AppAPIKey string  `json:"app_api_key"`
 	AppID     string  `json:"app_id"`
 	AppName   *string `json:"app_name,omitempty"`
-	AppAPIKey string  `json:"app_api_key"`
+}
+
+func (o *SourceOnesignalUpdateApplications) GetAppAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppAPIKey
 }
 
 func (o *SourceOnesignalUpdateApplications) GetAppID() string {
@@ -27,22 +34,15 @@ func (o *SourceOnesignalUpdateApplications) GetAppName() *string {
 	return o.AppName
 }
 
-func (o *SourceOnesignalUpdateApplications) GetAppAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.AppAPIKey
-}
-
 type SourceOnesignalUpdate struct {
-	// OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.
-	UserAuthKey string `json:"user_auth_key"`
 	// Applications keys, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys">docs</a> for more information on how to obtain this data
 	Applications []SourceOnesignalUpdateApplications `json:"applications"`
-	// The date from which you'd like to replicate data for OneSignal API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate time.Time `json:"start_date"`
 	// Comma-separated list of names and the value (sum/count) for the returned outcome data. See the <a href="https://documentation.onesignal.com/reference/view-outcomes">docs</a> for more details
 	OutcomeNames string `json:"outcome_names"`
+	// The date from which you'd like to replicate data for OneSignal API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
+	StartDate time.Time `json:"start_date"`
+	// OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.
+	UserAuthKey string `json:"user_auth_key"`
 }
 
 func (s SourceOnesignalUpdate) MarshalJSON() ([]byte, error) {
@@ -56,18 +56,18 @@ func (s *SourceOnesignalUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceOnesignalUpdate) GetUserAuthKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserAuthKey
-}
-
 func (o *SourceOnesignalUpdate) GetApplications() []SourceOnesignalUpdateApplications {
 	if o == nil {
 		return []SourceOnesignalUpdateApplications{}
 	}
 	return o.Applications
+}
+
+func (o *SourceOnesignalUpdate) GetOutcomeNames() string {
+	if o == nil {
+		return ""
+	}
+	return o.OutcomeNames
 }
 
 func (o *SourceOnesignalUpdate) GetStartDate() time.Time {
@@ -77,9 +77,9 @@ func (o *SourceOnesignalUpdate) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceOnesignalUpdate) GetOutcomeNames() string {
+func (o *SourceOnesignalUpdate) GetUserAuthKey() string {
 	if o == nil {
 		return ""
 	}
-	return o.OutcomeNames
+	return o.UserAuthKey
 }

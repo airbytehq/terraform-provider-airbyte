@@ -32,13 +32,13 @@ func (e *Webflow) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWebflow struct {
-	// The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
-	SiteID string `json:"site_id"`
-	// The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
-	APIKey string `json:"api_key"`
 	// The version of the Webflow API to use. See https://developers.webflow.com/#versioning
 	AcceptVersion *string `json:"accept_version,omitempty"`
-	sourceType    Webflow `const:"webflow" json:"sourceType"`
+	// The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
+	APIKey string `json:"api_key"`
+	// The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
+	SiteID     string  `json:"site_id"`
+	sourceType Webflow `const:"webflow" json:"sourceType"`
 }
 
 func (s SourceWebflow) MarshalJSON() ([]byte, error) {
@@ -52,11 +52,11 @@ func (s *SourceWebflow) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceWebflow) GetSiteID() string {
+func (o *SourceWebflow) GetAcceptVersion() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.SiteID
+	return o.AcceptVersion
 }
 
 func (o *SourceWebflow) GetAPIKey() string {
@@ -66,11 +66,11 @@ func (o *SourceWebflow) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceWebflow) GetAcceptVersion() *string {
+func (o *SourceWebflow) GetSiteID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.AcceptVersion
+	return o.SiteID
 }
 
 func (o *SourceWebflow) GetSourceType() Webflow {

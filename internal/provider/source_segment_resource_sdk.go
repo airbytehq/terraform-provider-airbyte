@@ -22,19 +22,19 @@ func (r *SourceSegmentResourceModel) ToSharedSourceSegmentCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiToken string
+	apiToken = r.Configuration.APIToken.ValueString()
+
 	region := new(string)
 	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
 		*region = r.Configuration.Region.ValueString()
 	} else {
 		region = nil
 	}
-	var apiToken string
-	apiToken = r.Configuration.APIToken.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSegment{
-		Region:    region,
 		APIToken:  apiToken,
+		Region:    region,
 		StartDate: startDate,
 	}
 	secretID := new(string)
@@ -107,19 +107,19 @@ func (r *SourceSegmentResourceModel) ToSharedSourceSegmentPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiToken string
+	apiToken = r.Configuration.APIToken.ValueString()
+
 	region := new(string)
 	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
 		*region = r.Configuration.Region.ValueString()
 	} else {
 		region = nil
 	}
-	var apiToken string
-	apiToken = r.Configuration.APIToken.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSegmentUpdate{
-		Region:    region,
 		APIToken:  apiToken,
+		Region:    region,
 		StartDate: startDate,
 	}
 	out := shared.SourceSegmentPutRequest{

@@ -22,48 +22,48 @@ func (r *SourcePolygonStockAPIResourceModel) ToSharedSourcePolygonStockAPICreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	sort := new(string)
-	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
-		*sort = r.Configuration.Sort.ValueString()
-	} else {
-		sort = nil
-	}
-	limit := new(int64)
-	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
-		*limit = r.Configuration.Limit.ValueInt64()
-	} else {
-		limit = nil
-	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	adjusted := new(string)
 	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
 		*adjusted = r.Configuration.Adjusted.ValueString()
 	} else {
 		adjusted = nil
 	}
-	endDate := customTypes.MustDateFromString(r.Configuration.EndDate.ValueString())
-	var timespan string
-	timespan = r.Configuration.Timespan.ValueString()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
+	endDate := customTypes.MustDateFromString(r.Configuration.EndDate.ValueString())
+	limit := new(int64)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueInt64()
+	} else {
+		limit = nil
+	}
 	var multiplier int64
 	multiplier = r.Configuration.Multiplier.ValueInt64()
 
+	sort := new(string)
+	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
+		*sort = r.Configuration.Sort.ValueString()
+	} else {
+		sort = nil
+	}
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	var stocksTicker string
 	stocksTicker = r.Configuration.StocksTicker.ValueString()
 
+	var timespan string
+	timespan = r.Configuration.Timespan.ValueString()
+
 	configuration := shared.SourcePolygonStockAPI{
-		Sort:         sort,
-		Limit:        limit,
-		APIKey:       apiKey,
 		Adjusted:     adjusted,
+		APIKey:       apiKey,
 		EndDate:      endDate,
-		Timespan:     timespan,
+		Limit:        limit,
 		Multiplier:   multiplier,
+		Sort:         sort,
 		StartDate:    startDate,
 		StocksTicker: stocksTicker,
+		Timespan:     timespan,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -135,48 +135,48 @@ func (r *SourcePolygonStockAPIResourceModel) ToSharedSourcePolygonStockAPIPutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	sort := new(string)
-	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
-		*sort = r.Configuration.Sort.ValueString()
-	} else {
-		sort = nil
-	}
-	limit := new(int64)
-	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
-		*limit = r.Configuration.Limit.ValueInt64()
-	} else {
-		limit = nil
-	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	adjusted := new(string)
 	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
 		*adjusted = r.Configuration.Adjusted.ValueString()
 	} else {
 		adjusted = nil
 	}
-	endDate := customTypes.MustDateFromString(r.Configuration.EndDate.ValueString())
-	var timespan string
-	timespan = r.Configuration.Timespan.ValueString()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
+	endDate := customTypes.MustDateFromString(r.Configuration.EndDate.ValueString())
+	limit := new(int64)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueInt64()
+	} else {
+		limit = nil
+	}
 	var multiplier int64
 	multiplier = r.Configuration.Multiplier.ValueInt64()
 
+	sort := new(string)
+	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
+		*sort = r.Configuration.Sort.ValueString()
+	} else {
+		sort = nil
+	}
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	var stocksTicker string
 	stocksTicker = r.Configuration.StocksTicker.ValueString()
 
+	var timespan string
+	timespan = r.Configuration.Timespan.ValueString()
+
 	configuration := shared.SourcePolygonStockAPIUpdate{
-		Sort:         sort,
-		Limit:        limit,
-		APIKey:       apiKey,
 		Adjusted:     adjusted,
+		APIKey:       apiKey,
 		EndDate:      endDate,
-		Timespan:     timespan,
+		Limit:        limit,
 		Multiplier:   multiplier,
+		Sort:         sort,
 		StartDate:    startDate,
 		StocksTicker: stocksTicker,
+		Timespan:     timespan,
 	}
 	out := shared.SourcePolygonStockAPIPutRequest{
 		Name:          name,

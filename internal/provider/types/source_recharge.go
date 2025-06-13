@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceRecharge struct {
 	AccessToken            types.String `tfsdk:"access_token"`
+	LookbackWindowDays     types.Int64  `tfsdk:"lookback_window_days"`
 	StartDate              types.String `tfsdk:"start_date"`
 	UseOrdersDeprecatedAPI types.Bool   `tfsdk:"use_orders_deprecated_api"`
 }

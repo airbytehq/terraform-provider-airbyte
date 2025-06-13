@@ -3,17 +3,10 @@
 package shared
 
 type SourceActivecampaignUpdate struct {
-	// API Key
-	APIKey string `json:"api_key"`
 	// Account Username
 	AccountUsername string `json:"account_username"`
-}
-
-func (o *SourceActivecampaignUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
+	// API Key
+	APIKey string `json:"api_key"`
 }
 
 func (o *SourceActivecampaignUpdate) GetAccountUsername() string {
@@ -21,4 +14,11 @@ func (o *SourceActivecampaignUpdate) GetAccountUsername() string {
 		return ""
 	}
 	return o.AccountUsername
+}
+
+func (o *SourceActivecampaignUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }

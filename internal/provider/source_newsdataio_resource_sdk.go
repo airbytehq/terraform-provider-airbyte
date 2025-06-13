@@ -27,11 +27,11 @@ func (r *SourceNewsdataIoResourceModel) ToSharedSourceNewsdataIoCreateRequest() 
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	searchQuery := new(string)
-	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
-		*searchQuery = r.Configuration.SearchQuery.ValueString()
-	} else {
-		searchQuery = nil
+	var categories []interface{} = []interface{}{}
+	for _, categoriesItem := range r.Configuration.Categories {
+		var categoriesTmp interface{}
+		_ = json.Unmarshal([]byte(categoriesItem.ValueString()), &categoriesTmp)
+		categories = append(categories, categoriesTmp)
 	}
 	var countries []interface{} = []interface{}{}
 	for _, countriesItem := range r.Configuration.Countries {
@@ -39,11 +39,17 @@ func (r *SourceNewsdataIoResourceModel) ToSharedSourceNewsdataIoCreateRequest() 
 		_ = json.Unmarshal([]byte(countriesItem.ValueString()), &countriesTmp)
 		countries = append(countries, countriesTmp)
 	}
-	var categories []interface{} = []interface{}{}
-	for _, categoriesItem := range r.Configuration.Categories {
-		var categoriesTmp interface{}
-		_ = json.Unmarshal([]byte(categoriesItem.ValueString()), &categoriesTmp)
-		categories = append(categories, categoriesTmp)
+	var domains []interface{} = []interface{}{}
+	for _, domainsItem := range r.Configuration.Domains {
+		var domainsTmp interface{}
+		_ = json.Unmarshal([]byte(domainsItem.ValueString()), &domainsTmp)
+		domains = append(domains, domainsTmp)
+	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
 	}
 	var languages []interface{} = []interface{}{}
 	for _, languagesItem := range r.Configuration.Languages {
@@ -51,28 +57,22 @@ func (r *SourceNewsdataIoResourceModel) ToSharedSourceNewsdataIoCreateRequest() 
 		_ = json.Unmarshal([]byte(languagesItem.ValueString()), &languagesTmp)
 		languages = append(languages, languagesTmp)
 	}
-	var domains []interface{} = []interface{}{}
-	for _, domainsItem := range r.Configuration.Domains {
-		var domainsTmp interface{}
-		_ = json.Unmarshal([]byte(domainsItem.ValueString()), &domainsTmp)
-		domains = append(domains, domainsTmp)
+	searchQuery := new(string)
+	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
+		*searchQuery = r.Configuration.SearchQuery.ValueString()
+	} else {
+		searchQuery = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
 	configuration := shared.SourceNewsdataIo{
 		APIKey:      apiKey,
-		SearchQuery: searchQuery,
-		Countries:   countries,
 		Categories:  categories,
-		Languages:   languages,
+		Countries:   countries,
 		Domains:     domains,
-		StartDate:   startDate,
 		EndDate:     endDate,
+		Languages:   languages,
+		SearchQuery: searchQuery,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -147,11 +147,11 @@ func (r *SourceNewsdataIoResourceModel) ToSharedSourceNewsdataIoPutRequest() *sh
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	searchQuery := new(string)
-	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
-		*searchQuery = r.Configuration.SearchQuery.ValueString()
-	} else {
-		searchQuery = nil
+	var categories []interface{} = []interface{}{}
+	for _, categoriesItem := range r.Configuration.Categories {
+		var categoriesTmp interface{}
+		_ = json.Unmarshal([]byte(categoriesItem.ValueString()), &categoriesTmp)
+		categories = append(categories, categoriesTmp)
 	}
 	var countries []interface{} = []interface{}{}
 	for _, countriesItem := range r.Configuration.Countries {
@@ -159,11 +159,17 @@ func (r *SourceNewsdataIoResourceModel) ToSharedSourceNewsdataIoPutRequest() *sh
 		_ = json.Unmarshal([]byte(countriesItem.ValueString()), &countriesTmp)
 		countries = append(countries, countriesTmp)
 	}
-	var categories []interface{} = []interface{}{}
-	for _, categoriesItem := range r.Configuration.Categories {
-		var categoriesTmp interface{}
-		_ = json.Unmarshal([]byte(categoriesItem.ValueString()), &categoriesTmp)
-		categories = append(categories, categoriesTmp)
+	var domains []interface{} = []interface{}{}
+	for _, domainsItem := range r.Configuration.Domains {
+		var domainsTmp interface{}
+		_ = json.Unmarshal([]byte(domainsItem.ValueString()), &domainsTmp)
+		domains = append(domains, domainsTmp)
+	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
 	}
 	var languages []interface{} = []interface{}{}
 	for _, languagesItem := range r.Configuration.Languages {
@@ -171,28 +177,22 @@ func (r *SourceNewsdataIoResourceModel) ToSharedSourceNewsdataIoPutRequest() *sh
 		_ = json.Unmarshal([]byte(languagesItem.ValueString()), &languagesTmp)
 		languages = append(languages, languagesTmp)
 	}
-	var domains []interface{} = []interface{}{}
-	for _, domainsItem := range r.Configuration.Domains {
-		var domainsTmp interface{}
-		_ = json.Unmarshal([]byte(domainsItem.ValueString()), &domainsTmp)
-		domains = append(domains, domainsTmp)
+	searchQuery := new(string)
+	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
+		*searchQuery = r.Configuration.SearchQuery.ValueString()
+	} else {
+		searchQuery = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
 	configuration := shared.SourceNewsdataIoUpdate{
 		APIKey:      apiKey,
-		SearchQuery: searchQuery,
-		Countries:   countries,
 		Categories:  categories,
-		Languages:   languages,
+		Countries:   countries,
 		Domains:     domains,
-		StartDate:   startDate,
 		EndDate:     endDate,
+		Languages:   languages,
+		SearchQuery: searchQuery,
+		StartDate:   startDate,
 	}
 	out := shared.SourceNewsdataIoPutRequest{
 		Name:          name,

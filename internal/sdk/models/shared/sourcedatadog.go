@@ -8,6 +8,69 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+// DataSource - A data source that is powered by the platform.
+type DataSource string
+
+const (
+	DataSourceMetrics   DataSource = "metrics"
+	DataSourceCloudCost DataSource = "cloud_cost"
+	DataSourceLogs      DataSource = "logs"
+	DataSourceRum       DataSource = "rum"
+)
+
+func (e DataSource) ToPointer() *DataSource {
+	return &e
+}
+func (e *DataSource) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "metrics":
+		fallthrough
+	case "cloud_cost":
+		fallthrough
+	case "logs":
+		fallthrough
+	case "rum":
+		*e = DataSource(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DataSource: %v", v)
+	}
+}
+
+type Queries struct {
+	// A data source that is powered by the platform.
+	DataSource DataSource `json:"data_source"`
+	// The variable name for use in queries.
+	Name string `json:"name"`
+	// A classic query string.
+	Query string `json:"query"`
+}
+
+func (o *Queries) GetDataSource() DataSource {
+	if o == nil {
+		return DataSource("")
+	}
+	return o.DataSource
+}
+
+func (o *Queries) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *Queries) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
 // Site - The site where Datadog data resides in.
 type Site string
 
@@ -44,69 +107,6 @@ func (e *Site) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DataSource - A data source that is powered by the platform.
-type DataSource string
-
-const (
-	DataSourceMetrics   DataSource = "metrics"
-	DataSourceCloudCost DataSource = "cloud_cost"
-	DataSourceLogs      DataSource = "logs"
-	DataSourceRum       DataSource = "rum"
-)
-
-func (e DataSource) ToPointer() *DataSource {
-	return &e
-}
-func (e *DataSource) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "metrics":
-		fallthrough
-	case "cloud_cost":
-		fallthrough
-	case "logs":
-		fallthrough
-	case "rum":
-		*e = DataSource(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DataSource: %v", v)
-	}
-}
-
-type Queries struct {
-	// The variable name for use in queries.
-	Name string `json:"name"`
-	// A classic query string.
-	Query string `json:"query"`
-	// A data source that is powered by the platform.
-	DataSource DataSource `json:"data_source"`
-}
-
-func (o *Queries) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Queries) GetQuery() string {
-	if o == nil {
-		return ""
-	}
-	return o.Query
-}
-
-func (o *Queries) GetDataSource() DataSource {
-	if o == nil {
-		return DataSource("")
-	}
-	return o.DataSource
-}
-
 type Datadog string
 
 const (
@@ -135,19 +135,19 @@ type SourceDatadog struct {
 	APIKey string `json:"api_key"`
 	// Datadog application key
 	ApplicationKey string `json:"application_key"`
-	// The search query. This just applies to Incremental syncs. If empty, it'll collect all logs.
-	Query *string `json:"query,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This just applies to Incremental syncs.
-	StartDate *string `default:"2023-12-01T00:00:00Z" json:"start_date"`
-	// The site where Datadog data resides in.
-	Site *Site `default:"datadoghq.com" json:"site"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Data after this date will  not be replicated. An empty value will represent the current datetime for each  execution. This just applies to Incremental syncs.
 	EndDate *string `json:"end_date,omitempty"`
 	// Maximum number of records to collect per request.
 	MaxRecordsPerRequest *int64 `default:"5000" json:"max_records_per_request"`
 	// List of queries to be run and used as inputs.
-	Queries    []Queries `json:"queries,omitempty"`
-	sourceType Datadog   `const:"datadog" json:"sourceType"`
+	Queries []Queries `json:"queries,omitempty"`
+	// The search query. This just applies to Incremental syncs. If empty, it'll collect all logs.
+	Query *string `json:"query,omitempty"`
+	// The site where Datadog data resides in.
+	Site *Site `default:"datadoghq.com" json:"site"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This just applies to Incremental syncs.
+	StartDate  *string `default:"2023-12-01T00:00:00Z" json:"start_date"`
+	sourceType Datadog `const:"datadog" json:"sourceType"`
 }
 
 func (s SourceDatadog) MarshalJSON() ([]byte, error) {
@@ -175,27 +175,6 @@ func (o *SourceDatadog) GetApplicationKey() string {
 	return o.ApplicationKey
 }
 
-func (o *SourceDatadog) GetQuery() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Query
-}
-
-func (o *SourceDatadog) GetStartDate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-func (o *SourceDatadog) GetSite() *Site {
-	if o == nil {
-		return nil
-	}
-	return o.Site
-}
-
 func (o *SourceDatadog) GetEndDate() *string {
 	if o == nil {
 		return nil
@@ -215,6 +194,27 @@ func (o *SourceDatadog) GetQueries() []Queries {
 		return nil
 	}
 	return o.Queries
+}
+
+func (o *SourceDatadog) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}
+
+func (o *SourceDatadog) GetSite() *Site {
+	if o == nil {
+		return nil
+	}
+	return o.Site
+}
+
+func (o *SourceDatadog) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceDatadog) GetSourceType() Datadog {

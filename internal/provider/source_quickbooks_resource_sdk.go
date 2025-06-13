@@ -22,38 +22,38 @@ func (r *SourceQuickbooksResourceModel) ToSharedSourceQuickbooksCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var realmID string
-	realmID = r.Configuration.RealmID.ValueString()
+	var accessToken string
+	accessToken = r.Configuration.AccessToken.ValueString()
 
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var accessToken string
-	accessToken = r.Configuration.AccessToken.ValueString()
-
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	var realmID string
+	realmID = r.Configuration.RealmID.ValueString()
 
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.TokenExpiryDate.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	sandbox := new(bool)
 	if !r.Configuration.Sandbox.IsUnknown() && !r.Configuration.Sandbox.IsNull() {
 		*sandbox = r.Configuration.Sandbox.ValueBool()
 	} else {
 		sandbox = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.TokenExpiryDate.ValueString())
 	configuration := shared.SourceQuickbooks{
-		RealmID:         realmID,
-		ClientID:        clientID,
 		AccessToken:     accessToken,
+		ClientID:        clientID,
 		ClientSecret:    clientSecret,
+		RealmID:         realmID,
 		RefreshToken:    refreshToken,
-		TokenExpiryDate: tokenExpiryDate,
-		StartDate:       startDate,
 		Sandbox:         sandbox,
+		StartDate:       startDate,
+		TokenExpiryDate: tokenExpiryDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -125,38 +125,38 @@ func (r *SourceQuickbooksResourceModel) ToSharedSourceQuickbooksPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var realmID string
-	realmID = r.Configuration.RealmID.ValueString()
+	var accessToken string
+	accessToken = r.Configuration.AccessToken.ValueString()
 
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var accessToken string
-	accessToken = r.Configuration.AccessToken.ValueString()
-
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	var realmID string
+	realmID = r.Configuration.RealmID.ValueString()
 
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.TokenExpiryDate.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	sandbox := new(bool)
 	if !r.Configuration.Sandbox.IsUnknown() && !r.Configuration.Sandbox.IsNull() {
 		*sandbox = r.Configuration.Sandbox.ValueBool()
 	} else {
 		sandbox = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.TokenExpiryDate.ValueString())
 	configuration := shared.SourceQuickbooksUpdate{
-		RealmID:         realmID,
-		ClientID:        clientID,
 		AccessToken:     accessToken,
+		ClientID:        clientID,
 		ClientSecret:    clientSecret,
+		RealmID:         realmID,
 		RefreshToken:    refreshToken,
-		TokenExpiryDate: tokenExpiryDate,
-		StartDate:       startDate,
 		Sandbox:         sandbox,
+		StartDate:       startDate,
+		TokenExpiryDate: tokenExpiryDate,
 	}
 	out := shared.SourceQuickbooksPutRequest{
 		Name:          name,

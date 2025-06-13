@@ -9,10 +9,10 @@ import (
 
 type SourceLobUpdate struct {
 	// API key to use for authentication. You can find your account's API keys in your Dashboard Settings at https://dashboard.lob.com/settings/api-keys.
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Max records per page limit
-	Limit *string `default:"50" json:"limit"`
+	Limit     *string   `default:"50" json:"limit"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceLobUpdate) MarshalJSON() ([]byte, error) {
@@ -33,16 +33,16 @@ func (o *SourceLobUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceLobUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceLobUpdate) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
+}
+
+func (o *SourceLobUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

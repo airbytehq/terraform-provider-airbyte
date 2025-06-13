@@ -21,15 +21,15 @@ func (r *SourceCoassembleResourceModel) ToSharedSourceCoassembleCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var userToken string
-	userToken = r.Configuration.UserToken.ValueString()
-
 	var userID string
 	userID = r.Configuration.UserID.ValueString()
 
+	var userToken string
+	userToken = r.Configuration.UserToken.ValueString()
+
 	configuration := shared.SourceCoassemble{
-		UserToken: userToken,
 		UserID:    userID,
+		UserToken: userToken,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceCoassembleResourceModel) ToSharedSourceCoassemblePutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var userToken string
-	userToken = r.Configuration.UserToken.ValueString()
-
 	var userID string
 	userID = r.Configuration.UserID.ValueString()
 
+	var userToken string
+	userToken = r.Configuration.UserToken.ValueString()
+
 	configuration := shared.SourceCoassembleUpdate{
-		UserToken: userToken,
 		UserID:    userID,
+		UserToken: userToken,
 	}
 	out := shared.SourceCoassemblePutRequest{
 		Name:          name,

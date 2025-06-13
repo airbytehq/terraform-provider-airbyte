@@ -32,10 +32,10 @@ func (e *Motherduck) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationMotherduck struct {
-	// API access token to use for authentication to a MotherDuck database.
-	MotherduckAPIKey string `json:"motherduck_api_key"`
 	// Path to a .duckdb file or 'md:<DATABASE_NAME>' to connect to a MotherDuck database. If 'md:' is specified without a database name, the default MotherDuck database name ('my_db') will be used.
 	DestinationPath *string `default:"md:" json:"destination_path"`
+	// API access token to use for authentication to a MotherDuck database.
+	MotherduckAPIKey string `json:"motherduck_api_key"`
 	// Database schema name, defaults to 'main' if not specified.
 	Schema          *string    `json:"schema,omitempty"`
 	destinationType Motherduck `const:"motherduck" json:"destinationType"`
@@ -52,18 +52,18 @@ func (d *DestinationMotherduck) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationMotherduck) GetMotherduckAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.MotherduckAPIKey
-}
-
 func (o *DestinationMotherduck) GetDestinationPath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DestinationPath
+}
+
+func (o *DestinationMotherduck) GetMotherduckAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.MotherduckAPIKey
 }
 
 func (o *DestinationMotherduck) GetSchema() *string {

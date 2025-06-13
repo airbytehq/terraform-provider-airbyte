@@ -32,11 +32,11 @@ func (e *Partnerize) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePartnerize struct {
-	// The user API key identifies the user on whose behalf the request is made. Find it in your account settings under 'User API Key' at https://console.partnerize.com.
-	UserAPIKey string `json:"user_api_key"`
 	// The application key identifies the network you are making the request against. Find it in your account settings under 'User Application Key' at https://console.partnerize.com.
-	ApplicationKey string     `json:"application_key"`
-	sourceType     Partnerize `const:"partnerize" json:"sourceType"`
+	ApplicationKey string `json:"application_key"`
+	// The user API key identifies the user on whose behalf the request is made. Find it in your account settings under 'User API Key' at https://console.partnerize.com.
+	UserAPIKey string     `json:"user_api_key"`
+	sourceType Partnerize `const:"partnerize" json:"sourceType"`
 }
 
 func (s SourcePartnerize) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (s *SourcePartnerize) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePartnerize) GetUserAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserAPIKey
-}
-
 func (o *SourcePartnerize) GetApplicationKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.ApplicationKey
+}
+
+func (o *SourcePartnerize) GetUserAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserAPIKey
 }
 
 func (o *SourcePartnerize) GetSourceType() Partnerize {

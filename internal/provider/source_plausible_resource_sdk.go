@@ -24,15 +24,15 @@ func (r *SourcePlausibleResourceModel) ToSharedSourcePlausibleCreateRequest() *s
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var siteID string
-	siteID = r.Configuration.SiteID.ValueString()
-
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
 	} else {
 		apiURL = nil
 	}
+	var siteID string
+	siteID = r.Configuration.SiteID.ValueString()
+
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -41,8 +41,8 @@ func (r *SourcePlausibleResourceModel) ToSharedSourcePlausibleCreateRequest() *s
 	}
 	configuration := shared.SourcePlausible{
 		APIKey:    apiKey,
-		SiteID:    siteID,
 		APIURL:    apiURL,
+		SiteID:    siteID,
 		StartDate: startDate,
 	}
 	secretID := new(string)
@@ -118,15 +118,15 @@ func (r *SourcePlausibleResourceModel) ToSharedSourcePlausiblePutRequest() *shar
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var siteID string
-	siteID = r.Configuration.SiteID.ValueString()
-
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
 	} else {
 		apiURL = nil
 	}
+	var siteID string
+	siteID = r.Configuration.SiteID.ValueString()
+
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -135,8 +135,8 @@ func (r *SourcePlausibleResourceModel) ToSharedSourcePlausiblePutRequest() *shar
 	}
 	configuration := shared.SourcePlausibleUpdate{
 		APIKey:    apiKey,
-		SiteID:    siteID,
 		APIURL:    apiURL,
+		SiteID:    siteID,
 		StartDate: startDate,
 	}
 	out := shared.SourcePlausiblePutRequest{

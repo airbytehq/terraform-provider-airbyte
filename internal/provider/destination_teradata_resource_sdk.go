@@ -21,22 +21,40 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	var logmech *shared.AuthorizationMechanism
 	if r.Configuration.Logmech != nil {
 		var td2 *shared.Td2
 		if r.Configuration.Logmech.Td2 != nil {
-			var username string
-			username = r.Configuration.Logmech.Td2.Username.ValueString()
-
 			var password string
 			password = r.Configuration.Logmech.Td2.Password.ValueString()
 
+			var username string
+			username = r.Configuration.Logmech.Td2.Username.ValueString()
+
 			td2 = &shared.Td2{
-				Username: username,
 				Password: password,
+				Username: username,
 			}
 		}
 		if td2 != nil {
@@ -46,15 +64,15 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataCreateRequ
 		}
 		var ldap *shared.Ldap
 		if r.Configuration.Logmech.Ldap != nil {
-			var username1 string
-			username1 = r.Configuration.Logmech.Ldap.Username.ValueString()
-
 			var password1 string
 			password1 = r.Configuration.Logmech.Ldap.Password.ValueString()
 
+			var username1 string
+			username1 = r.Configuration.Logmech.Ldap.Username.ValueString()
+
 			ldap = &shared.Ldap{
-				Username: username1,
 				Password: password1,
+				Username: username1,
 			}
 		}
 		if ldap != nil {
@@ -62,6 +80,18 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataCreateRequ
 				Ldap: ldap,
 			}
 		}
+	}
+	queryBand := new(string)
+	if !r.Configuration.QueryBand.IsUnknown() && !r.Configuration.QueryBand.IsNull() {
+		*queryBand = r.Configuration.QueryBand.ValueString()
+	} else {
+		queryBand = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -142,26 +172,17 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataCreateRequ
 			}
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
-	queryBand := new(string)
-	if !r.Configuration.QueryBand.IsUnknown() && !r.Configuration.QueryBand.IsNull() {
-		*queryBand = r.Configuration.QueryBand.ValueString()
-	} else {
-		queryBand = nil
-	}
 	configuration := shared.DestinationTeradata{
-		Host:          host,
-		Logmech:       logmech,
-		Schema:        schema,
-		Ssl:           ssl,
-		SslMode:       sslMode,
-		JdbcURLParams: jdbcURLParams,
-		QueryBand:     queryBand,
+		DisableTypeDedupe: disableTypeDedupe,
+		DropCascade:       dropCascade,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Logmech:           logmech,
+		QueryBand:         queryBand,
+		RawDataSchema:     rawDataSchema,
+		Schema:            schema,
+		Ssl:               ssl,
+		SslMode:           sslMode,
 	}
 	out := shared.DestinationTeradataCreateRequest{
 		Name:          name,
@@ -226,22 +247,40 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	var logmech *shared.DestinationTeradataUpdateAuthorizationMechanism
 	if r.Configuration.Logmech != nil {
 		var destinationTeradataUpdateTd2 *shared.DestinationTeradataUpdateTd2
 		if r.Configuration.Logmech.Td2 != nil {
-			var username string
-			username = r.Configuration.Logmech.Td2.Username.ValueString()
-
 			var password string
 			password = r.Configuration.Logmech.Td2.Password.ValueString()
 
+			var username string
+			username = r.Configuration.Logmech.Td2.Username.ValueString()
+
 			destinationTeradataUpdateTd2 = &shared.DestinationTeradataUpdateTd2{
-				Username: username,
 				Password: password,
+				Username: username,
 			}
 		}
 		if destinationTeradataUpdateTd2 != nil {
@@ -251,15 +290,15 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataPutRequest
 		}
 		var destinationTeradataUpdateLDAP *shared.DestinationTeradataUpdateLDAP
 		if r.Configuration.Logmech.Ldap != nil {
-			var username1 string
-			username1 = r.Configuration.Logmech.Ldap.Username.ValueString()
-
 			var password1 string
 			password1 = r.Configuration.Logmech.Ldap.Password.ValueString()
 
+			var username1 string
+			username1 = r.Configuration.Logmech.Ldap.Username.ValueString()
+
 			destinationTeradataUpdateLDAP = &shared.DestinationTeradataUpdateLDAP{
-				Username: username1,
 				Password: password1,
+				Username: username1,
 			}
 		}
 		if destinationTeradataUpdateLDAP != nil {
@@ -267,6 +306,18 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataPutRequest
 				DestinationTeradataUpdateLDAP: destinationTeradataUpdateLDAP,
 			}
 		}
+	}
+	queryBand := new(string)
+	if !r.Configuration.QueryBand.IsUnknown() && !r.Configuration.QueryBand.IsNull() {
+		*queryBand = r.Configuration.QueryBand.ValueString()
+	} else {
+		queryBand = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -347,26 +398,17 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataPutRequest
 			}
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
-	queryBand := new(string)
-	if !r.Configuration.QueryBand.IsUnknown() && !r.Configuration.QueryBand.IsNull() {
-		*queryBand = r.Configuration.QueryBand.ValueString()
-	} else {
-		queryBand = nil
-	}
 	configuration := shared.DestinationTeradataUpdate{
-		Host:          host,
-		Logmech:       logmech,
-		Schema:        schema,
-		Ssl:           ssl,
-		SslMode:       sslMode,
-		JdbcURLParams: jdbcURLParams,
-		QueryBand:     queryBand,
+		DisableTypeDedupe: disableTypeDedupe,
+		DropCascade:       dropCascade,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Logmech:           logmech,
+		QueryBand:         queryBand,
+		RawDataSchema:     rawDataSchema,
+		Schema:            schema,
+		Ssl:               ssl,
+		SslMode:           sslMode,
 	}
 	out := shared.DestinationTeradataPutRequest{
 		Name:          name,

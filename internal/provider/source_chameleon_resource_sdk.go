@@ -25,12 +25,11 @@ func (r *SourceChameleonResourceModel) ToSharedSourceChameleonCreateRequest() *s
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	limit := new(string)
-	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
-		*limit = r.Configuration.Limit.ValueString()
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	} else {
-		limit = nil
+		endDate = nil
 	}
 	filter := new(shared.Filter)
 	if !r.Configuration.Filter.IsUnknown() && !r.Configuration.Filter.IsNull() {
@@ -38,18 +37,19 @@ func (r *SourceChameleonResourceModel) ToSharedSourceChameleonCreateRequest() *s
 	} else {
 		filter = nil
 	}
-	endDate := new(time.Time)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	limit := new(string)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueString()
 	} else {
-		endDate = nil
+		limit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChameleon{
 		APIKey:    apiKey,
-		StartDate: startDate,
-		Limit:     limit,
-		Filter:    filter,
 		EndDate:   endDate,
+		Filter:    filter,
+		Limit:     limit,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -124,12 +124,11 @@ func (r *SourceChameleonResourceModel) ToSharedSourceChameleonPutRequest() *shar
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	limit := new(string)
-	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
-		*limit = r.Configuration.Limit.ValueString()
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	} else {
-		limit = nil
+		endDate = nil
 	}
 	filter := new(shared.SourceChameleonUpdateFilter)
 	if !r.Configuration.Filter.IsUnknown() && !r.Configuration.Filter.IsNull() {
@@ -137,18 +136,19 @@ func (r *SourceChameleonResourceModel) ToSharedSourceChameleonPutRequest() *shar
 	} else {
 		filter = nil
 	}
-	endDate := new(time.Time)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	limit := new(string)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueString()
 	} else {
-		endDate = nil
+		limit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChameleonUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
-		Limit:     limit,
-		Filter:    filter,
 		EndDate:   endDate,
+		Filter:    filter,
+		Limit:     limit,
+		StartDate: startDate,
 	}
 	out := shared.SourceChameleonPutRequest{
 		Name:          name,

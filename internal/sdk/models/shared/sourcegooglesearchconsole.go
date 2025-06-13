@@ -35,10 +35,10 @@ func (e *SourceGoogleSearchConsoleSchemasAuthType) UnmarshalJSON(data []byte) er
 
 type SourceGoogleSearchConsoleServiceAccountKeyAuthentication struct {
 	authType SourceGoogleSearchConsoleSchemasAuthType `const:"Service" json:"auth_type"`
-	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
-	ServiceAccountInfo string `json:"service_account_info"`
 	// The email of the user which has permissions to access the Google Workspace Admin APIs.
 	Email string `json:"email"`
+	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
+	ServiceAccountInfo string `json:"service_account_info"`
 }
 
 func (s SourceGoogleSearchConsoleServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -56,18 +56,18 @@ func (o *SourceGoogleSearchConsoleServiceAccountKeyAuthentication) GetAuthType()
 	return SourceGoogleSearchConsoleSchemasAuthTypeService
 }
 
-func (o *SourceGoogleSearchConsoleServiceAccountKeyAuthentication) GetServiceAccountInfo() string {
-	if o == nil {
-		return ""
-	}
-	return o.ServiceAccountInfo
-}
-
 func (o *SourceGoogleSearchConsoleServiceAccountKeyAuthentication) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
+}
+
+func (o *SourceGoogleSearchConsoleServiceAccountKeyAuthentication) GetServiceAccountInfo() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceAccountInfo
 }
 
 type SourceGoogleSearchConsoleAuthType string
@@ -94,13 +94,13 @@ func (e *SourceGoogleSearchConsoleAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleSearchConsoleOAuth struct {
-	authType SourceGoogleSearchConsoleAuthType `const:"Client" json:"auth_type"`
+	// Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+	AccessToken *string                           `json:"access_token,omitempty"`
+	authType    SourceGoogleSearchConsoleAuthType `const:"Client" json:"auth_type"`
 	// The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	ClientID string `json:"client_id"`
 	// The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	ClientSecret string `json:"client_secret"`
-	// Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
-	AccessToken *string `json:"access_token,omitempty"`
 	// The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -114,6 +114,13 @@ func (s *SourceGoogleSearchConsoleOAuth) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceGoogleSearchConsoleOAuth) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
 }
 
 func (o *SourceGoogleSearchConsoleOAuth) GetAuthType() SourceGoogleSearchConsoleAuthType {
@@ -132,13 +139,6 @@ func (o *SourceGoogleSearchConsoleOAuth) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceGoogleSearchConsoleOAuth) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
 }
 
 func (o *SourceGoogleSearchConsoleOAuth) GetRefreshToken() string {
@@ -248,17 +248,10 @@ func (e *SourceGoogleSearchConsoleValidEnums) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleSearchConsoleCustomReportConfig struct {
-	// The name of the custom report, this name would be used as stream name
-	Name string `json:"name"`
 	// A list of available dimensions. Please note, that for technical reasons `date` is the default dimension which will be included in your query whether you specify it or not. Primary key will consist of your custom dimensions and the default dimension along with `site_url` and `search_type`.
 	Dimensions []SourceGoogleSearchConsoleValidEnums `json:"dimensions,omitempty"`
-}
-
-func (o *SourceGoogleSearchConsoleCustomReportConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
+	// The name of the custom report, this name would be used as stream name
+	Name string `json:"name"`
 }
 
 func (o *SourceGoogleSearchConsoleCustomReportConfig) GetDimensions() []SourceGoogleSearchConsoleValidEnums {
@@ -266,6 +259,13 @@ func (o *SourceGoogleSearchConsoleCustomReportConfig) GetDimensions() []SourceGo
 		return nil
 	}
 	return o.Dimensions
+}
+
+func (o *SourceGoogleSearchConsoleCustomReportConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 // DataFreshness - If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
@@ -319,17 +319,21 @@ func (e *GoogleSearchConsole) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleSearchConsole struct {
-	// The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
-	SiteUrls []string `json:"site_urls"`
-	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
-	// UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
-	EndDate       *types.Date                                 `json:"end_date,omitempty"`
-	Authorization SourceGoogleSearchConsoleAuthenticationType `json:"authorization"`
+	// Some search analytics streams fail with a 400 error if the specified `aggregationType` is not supported. This is customer implementation dependent and if this error is encountered, enable this setting which will override the existing `aggregationType` to use `auto` which should resolve the stream errors.
+	AlwaysUseAggregationTypeAuto *bool                                       `default:"false" json:"always_use_aggregation_type_auto"`
+	Authorization                SourceGoogleSearchConsoleAuthenticationType `json:"authorization"`
 	// You can add your Custom Analytics report by creating one.
 	CustomReportsArray []SourceGoogleSearchConsoleCustomReportConfig `json:"custom_reports_array,omitempty"`
 	// If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
-	DataState  *DataFreshness      `default:"final" json:"data_state"`
+	DataState *DataFreshness `default:"final" json:"data_state"`
+	// UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
+	EndDate *types.Date `json:"end_date,omitempty"`
+	// The number of worker threads to use for the sync. For more details on Google Search Console rate limits, refer to the <a href="https://developers.google.com/webmaster-tools/limits">docs</a>.
+	NumWorkers *int64 `default:"40" json:"num_workers"`
+	// The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
+	SiteUrls []string `json:"site_urls"`
+	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
+	StartDate  *types.Date         `default:"2021-01-01" json:"start_date"`
 	sourceType GoogleSearchConsole `const:"google-search-console" json:"sourceType"`
 }
 
@@ -344,25 +348,11 @@ func (s *SourceGoogleSearchConsole) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGoogleSearchConsole) GetSiteUrls() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.SiteUrls
-}
-
-func (o *SourceGoogleSearchConsole) GetStartDate() *types.Date {
+func (o *SourceGoogleSearchConsole) GetAlwaysUseAggregationTypeAuto() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.StartDate
-}
-
-func (o *SourceGoogleSearchConsole) GetEndDate() *types.Date {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
+	return o.AlwaysUseAggregationTypeAuto
 }
 
 func (o *SourceGoogleSearchConsole) GetAuthorization() SourceGoogleSearchConsoleAuthenticationType {
@@ -384,6 +374,34 @@ func (o *SourceGoogleSearchConsole) GetDataState() *DataFreshness {
 		return nil
 	}
 	return o.DataState
+}
+
+func (o *SourceGoogleSearchConsole) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceGoogleSearchConsole) GetNumWorkers() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.NumWorkers
+}
+
+func (o *SourceGoogleSearchConsole) GetSiteUrls() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.SiteUrls
+}
+
+func (o *SourceGoogleSearchConsole) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceGoogleSearchConsole) GetSourceType() GoogleSearchConsole {

@@ -22,17 +22,17 @@ func (r *SourceBrazeResourceModel) ToSharedSourceBrazeCreateRequest() *shared.So
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var url string
-	url = r.Configuration.URL.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	var url string
+	url = r.Configuration.URL.ValueString()
+
 	configuration := shared.SourceBraze{
-		URL:       url,
 		APIKey:    apiKey,
 		StartDate: startDate,
+		URL:       url,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,17 +104,17 @@ func (r *SourceBrazeResourceModel) ToSharedSourceBrazePutRequest() *shared.Sourc
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var url string
-	url = r.Configuration.URL.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	var url string
+	url = r.Configuration.URL.ValueString()
+
 	configuration := shared.SourceBrazeUpdate{
-		URL:       url,
 		APIKey:    apiKey,
 		StartDate: startDate,
+		URL:       url,
 	}
 	out := shared.SourceBrazePutRequest{
 		Name:          name,

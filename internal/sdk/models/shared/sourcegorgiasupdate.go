@@ -8,11 +8,11 @@ import (
 )
 
 type SourceGorgiasUpdate struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
 	// Domain name given for gorgias, found as your url prefix for accessing your website
 	DomainName string    `json:"domain_name"`
+	Password   *string   `json:"password,omitempty"`
 	StartDate  time.Time `json:"start_date"`
+	Username   string    `json:"username"`
 }
 
 func (s SourceGorgiasUpdate) MarshalJSON() ([]byte, error) {
@@ -26,11 +26,11 @@ func (s *SourceGorgiasUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGorgiasUpdate) GetUsername() string {
+func (o *SourceGorgiasUpdate) GetDomainName() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.DomainName
 }
 
 func (o *SourceGorgiasUpdate) GetPassword() *string {
@@ -40,16 +40,16 @@ func (o *SourceGorgiasUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceGorgiasUpdate) GetDomainName() string {
-	if o == nil {
-		return ""
-	}
-	return o.DomainName
-}
-
 func (o *SourceGorgiasUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceGorgiasUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

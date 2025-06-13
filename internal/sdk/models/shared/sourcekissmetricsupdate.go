@@ -3,15 +3,8 @@
 package shared
 
 type SourceKissmetricsUpdate struct {
-	Username string  `json:"username"`
 	Password *string `json:"password,omitempty"`
-}
-
-func (o *SourceKissmetricsUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	Username string  `json:"username"`
 }
 
 func (o *SourceKissmetricsUpdate) GetPassword() *string {
@@ -19,4 +12,11 @@ func (o *SourceKissmetricsUpdate) GetPassword() *string {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceKissmetricsUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

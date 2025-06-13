@@ -28,31 +28,31 @@ func (r *SourceZohoCrmResourceModel) ToSharedSourceZohoCrmCreateRequest() *share
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	dcRegion := shared.DataCenterLocation(r.Configuration.DcRegion.ValueString())
-	environment := shared.SourceZohoCrmEnvironment(r.Configuration.Environment.ValueString())
-	startDatetime := new(time.Time)
-	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
-		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
-	} else {
-		startDatetime = nil
-	}
 	edition := new(shared.ZohoCRMEdition)
 	if !r.Configuration.Edition.IsUnknown() && !r.Configuration.Edition.IsNull() {
 		*edition = shared.ZohoCRMEdition(r.Configuration.Edition.ValueString())
 	} else {
 		edition = nil
 	}
+	environment := shared.SourceZohoCrmEnvironment(r.Configuration.Environment.ValueString())
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
+	startDatetime := new(time.Time)
+	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
+		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
+	} else {
+		startDatetime = nil
+	}
 	configuration := shared.SourceZohoCrm{
 		ClientID:      clientID,
 		ClientSecret:  clientSecret,
-		RefreshToken:  refreshToken,
 		DcRegion:      dcRegion,
-		Environment:   environment,
-		StartDatetime: startDatetime,
 		Edition:       edition,
+		Environment:   environment,
+		RefreshToken:  refreshToken,
+		StartDatetime: startDatetime,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -130,31 +130,31 @@ func (r *SourceZohoCrmResourceModel) ToSharedSourceZohoCrmPutRequest() *shared.S
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	dcRegion := shared.SourceZohoCrmUpdateDataCenterLocation(r.Configuration.DcRegion.ValueString())
-	environment := shared.SourceZohoCrmUpdateEnvironment(r.Configuration.Environment.ValueString())
-	startDatetime := new(time.Time)
-	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
-		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
-	} else {
-		startDatetime = nil
-	}
 	edition := new(shared.SourceZohoCRMUpdateZohoCRMEdition)
 	if !r.Configuration.Edition.IsUnknown() && !r.Configuration.Edition.IsNull() {
 		*edition = shared.SourceZohoCRMUpdateZohoCRMEdition(r.Configuration.Edition.ValueString())
 	} else {
 		edition = nil
 	}
+	environment := shared.SourceZohoCrmUpdateEnvironment(r.Configuration.Environment.ValueString())
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
+	startDatetime := new(time.Time)
+	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
+		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
+	} else {
+		startDatetime = nil
+	}
 	configuration := shared.SourceZohoCrmUpdate{
 		ClientID:      clientID,
 		ClientSecret:  clientSecret,
-		RefreshToken:  refreshToken,
 		DcRegion:      dcRegion,
-		Environment:   environment,
-		StartDatetime: startDatetime,
 		Edition:       edition,
+		Environment:   environment,
+		RefreshToken:  refreshToken,
+		StartDatetime: startDatetime,
 	}
 	out := shared.SourceZohoCrmPutRequest{
 		Name:          name,

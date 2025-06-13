@@ -3,19 +3,12 @@
 package shared
 
 type SourceGreythrUpdate struct {
-	// Your GreytHR Host URL
-	Domain string `json:"domain"`
 	// https://api.greythr.com
-	BaseURL  string  `json:"base_url"`
+	BaseURL string `json:"base_url"`
+	// Your GreytHR Host URL
+	Domain   string  `json:"domain"`
 	Password *string `json:"password,omitempty"`
 	Username string  `json:"username"`
-}
-
-func (o *SourceGreythrUpdate) GetDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Domain
 }
 
 func (o *SourceGreythrUpdate) GetBaseURL() string {
@@ -23,6 +16,13 @@ func (o *SourceGreythrUpdate) GetBaseURL() string {
 		return ""
 	}
 	return o.BaseURL
+}
+
+func (o *SourceGreythrUpdate) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
 }
 
 func (o *SourceGreythrUpdate) GetPassword() *string {

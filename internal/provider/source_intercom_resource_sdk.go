@@ -25,6 +25,12 @@ func (r *SourceIntercomResourceModel) ToSharedSourceIntercomCreateRequest() *sha
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
+	activityLogsTimeStep := new(int64)
+	if !r.Configuration.ActivityLogsTimeStep.IsUnknown() && !r.Configuration.ActivityLogsTimeStep.IsNull() {
+		*activityLogsTimeStep = r.Configuration.ActivityLogsTimeStep.ValueInt64()
+	} else {
+		activityLogsTimeStep = nil
+	}
 	clientID := new(string)
 	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
 		*clientID = r.Configuration.ClientID.ValueString()
@@ -37,12 +43,6 @@ func (r *SourceIntercomResourceModel) ToSharedSourceIntercomCreateRequest() *sha
 	} else {
 		clientSecret = nil
 	}
-	activityLogsTimeStep := new(int64)
-	if !r.Configuration.ActivityLogsTimeStep.IsUnknown() && !r.Configuration.ActivityLogsTimeStep.IsNull() {
-		*activityLogsTimeStep = r.Configuration.ActivityLogsTimeStep.ValueInt64()
-	} else {
-		activityLogsTimeStep = nil
-	}
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
@@ -52,9 +52,9 @@ func (r *SourceIntercomResourceModel) ToSharedSourceIntercomCreateRequest() *sha
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceIntercom{
 		AccessToken:          accessToken,
+		ActivityLogsTimeStep: activityLogsTimeStep,
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
-		ActivityLogsTimeStep: activityLogsTimeStep,
 		LookbackWindow:       lookbackWindow,
 		StartDate:            startDate,
 	}
@@ -131,6 +131,12 @@ func (r *SourceIntercomResourceModel) ToSharedSourceIntercomPutRequest() *shared
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
+	activityLogsTimeStep := new(int64)
+	if !r.Configuration.ActivityLogsTimeStep.IsUnknown() && !r.Configuration.ActivityLogsTimeStep.IsNull() {
+		*activityLogsTimeStep = r.Configuration.ActivityLogsTimeStep.ValueInt64()
+	} else {
+		activityLogsTimeStep = nil
+	}
 	clientID := new(string)
 	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
 		*clientID = r.Configuration.ClientID.ValueString()
@@ -143,12 +149,6 @@ func (r *SourceIntercomResourceModel) ToSharedSourceIntercomPutRequest() *shared
 	} else {
 		clientSecret = nil
 	}
-	activityLogsTimeStep := new(int64)
-	if !r.Configuration.ActivityLogsTimeStep.IsUnknown() && !r.Configuration.ActivityLogsTimeStep.IsNull() {
-		*activityLogsTimeStep = r.Configuration.ActivityLogsTimeStep.ValueInt64()
-	} else {
-		activityLogsTimeStep = nil
-	}
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
@@ -158,9 +158,9 @@ func (r *SourceIntercomResourceModel) ToSharedSourceIntercomPutRequest() *shared
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceIntercomUpdate{
 		AccessToken:          accessToken,
+		ActivityLogsTimeStep: activityLogsTimeStep,
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
-		ActivityLogsTimeStep: activityLogsTimeStep,
 		LookbackWindow:       lookbackWindow,
 		StartDate:            startDate,
 	}

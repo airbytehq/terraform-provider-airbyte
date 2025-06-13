@@ -21,8 +21,8 @@ func (r *SourceHibobResourceModel) ToSharedSourceHibobCreateRequest() *shared.So
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var isSandbox bool
+	isSandbox = r.Configuration.IsSandbox.ValueBool()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -30,13 +30,13 @@ func (r *SourceHibobResourceModel) ToSharedSourceHibobCreateRequest() *shared.So
 	} else {
 		password = nil
 	}
-	var isSandbox bool
-	isSandbox = r.Configuration.IsSandbox.ValueBool()
+	var username string
+	username = r.Configuration.Username.ValueString()
 
 	configuration := shared.SourceHibob{
-		Username:  username,
-		Password:  password,
 		IsSandbox: isSandbox,
+		Password:  password,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,8 +108,8 @@ func (r *SourceHibobResourceModel) ToSharedSourceHibobPutRequest() *shared.Sourc
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var isSandbox bool
+	isSandbox = r.Configuration.IsSandbox.ValueBool()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -117,13 +117,13 @@ func (r *SourceHibobResourceModel) ToSharedSourceHibobPutRequest() *shared.Sourc
 	} else {
 		password = nil
 	}
-	var isSandbox bool
-	isSandbox = r.Configuration.IsSandbox.ValueBool()
+	var username string
+	username = r.Configuration.Username.ValueString()
 
 	configuration := shared.SourceHibobUpdate{
-		Username:  username,
-		Password:  password,
 		IsSandbox: isSandbox,
+		Password:  password,
+		Username:  username,
 	}
 	out := shared.SourceHibobPutRequest{
 		Name:          name,

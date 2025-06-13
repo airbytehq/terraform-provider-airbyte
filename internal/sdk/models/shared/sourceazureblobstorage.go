@@ -10,34 +10,288 @@ import (
 	"time"
 )
 
-// ValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-type ValidationPolicy string
+type SourceAzureBlobStorageSchemasCredentialsAuthType string
 
 const (
-	ValidationPolicyEmitRecord      ValidationPolicy = "Emit Record"
-	ValidationPolicySkipRecord      ValidationPolicy = "Skip Record"
-	ValidationPolicyWaitForDiscover ValidationPolicy = "Wait for Discover"
+	SourceAzureBlobStorageSchemasCredentialsAuthTypeStorageAccountKey SourceAzureBlobStorageSchemasCredentialsAuthType = "storage_account_key"
 )
 
-func (e ValidationPolicy) ToPointer() *ValidationPolicy {
+func (e SourceAzureBlobStorageSchemasCredentialsAuthType) ToPointer() *SourceAzureBlobStorageSchemasCredentialsAuthType {
 	return &e
 }
-func (e *ValidationPolicy) UnmarshalJSON(data []byte) error {
+func (e *SourceAzureBlobStorageSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Emit Record":
-		fallthrough
-	case "Skip Record":
-		fallthrough
-	case "Wait for Discover":
-		*e = ValidationPolicy(v)
+	case "storage_account_key":
+		*e = SourceAzureBlobStorageSchemasCredentialsAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ValidationPolicy: %v", v)
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageSchemasCredentialsAuthType: %v", v)
 	}
+}
+
+type AuthenticateViaStorageAccountKey struct {
+	authType *SourceAzureBlobStorageSchemasCredentialsAuthType `const:"storage_account_key" json:"auth_type"`
+	// The Azure blob storage account key.
+	AzureBlobStorageAccountKey string `json:"azure_blob_storage_account_key"`
+}
+
+func (a AuthenticateViaStorageAccountKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateViaStorageAccountKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateViaStorageAccountKey) GetAuthType() *SourceAzureBlobStorageSchemasCredentialsAuthType {
+	return SourceAzureBlobStorageSchemasCredentialsAuthTypeStorageAccountKey.ToPointer()
+}
+
+func (o *AuthenticateViaStorageAccountKey) GetAzureBlobStorageAccountKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageAccountKey
+}
+
+type SourceAzureBlobStorageSchemasAuthType string
+
+const (
+	SourceAzureBlobStorageSchemasAuthTypeClientCredentials SourceAzureBlobStorageSchemasAuthType = "client_credentials"
+)
+
+func (e SourceAzureBlobStorageSchemasAuthType) ToPointer() *SourceAzureBlobStorageSchemasAuthType {
+	return &e
+}
+func (e *SourceAzureBlobStorageSchemasAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "client_credentials":
+		*e = SourceAzureBlobStorageSchemasAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageSchemasAuthType: %v", v)
+	}
+}
+
+type AuthenticateViaClientCredentials struct {
+	// Client ID of your Microsoft developer application
+	AppClientID string `json:"app_client_id"`
+	// Client Secret of your Microsoft developer application
+	AppClientSecret string `json:"app_client_secret"`
+	// Tenant ID of the Microsoft Azure Application
+	AppTenantID string                                 `json:"app_tenant_id"`
+	authType    *SourceAzureBlobStorageSchemasAuthType `const:"client_credentials" json:"auth_type"`
+}
+
+func (a AuthenticateViaClientCredentials) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateViaClientCredentials) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateViaClientCredentials) GetAppClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppClientID
+}
+
+func (o *AuthenticateViaClientCredentials) GetAppClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppClientSecret
+}
+
+func (o *AuthenticateViaClientCredentials) GetAppTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppTenantID
+}
+
+func (o *AuthenticateViaClientCredentials) GetAuthType() *SourceAzureBlobStorageSchemasAuthType {
+	return SourceAzureBlobStorageSchemasAuthTypeClientCredentials.ToPointer()
+}
+
+type SourceAzureBlobStorageAuthType string
+
+const (
+	SourceAzureBlobStorageAuthTypeOauth2 SourceAzureBlobStorageAuthType = "oauth2"
+)
+
+func (e SourceAzureBlobStorageAuthType) ToPointer() *SourceAzureBlobStorageAuthType {
+	return &e
+}
+func (e *SourceAzureBlobStorageAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "oauth2":
+		*e = SourceAzureBlobStorageAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageAuthType: %v", v)
+	}
+}
+
+type AuthenticateViaOauth2 struct {
+	authType *SourceAzureBlobStorageAuthType `const:"oauth2" json:"auth_type"`
+	// Client ID of your Microsoft developer application
+	ClientID string `json:"client_id"`
+	// Client Secret of your Microsoft developer application
+	ClientSecret string `json:"client_secret"`
+	// Refresh Token of your Microsoft developer application
+	RefreshToken string `json:"refresh_token"`
+	// Tenant ID of the Microsoft Azure Application user
+	TenantID string `json:"tenant_id"`
+}
+
+func (a AuthenticateViaOauth2) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateViaOauth2) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateViaOauth2) GetAuthType() *SourceAzureBlobStorageAuthType {
+	return SourceAzureBlobStorageAuthTypeOauth2.ToPointer()
+}
+
+func (o *AuthenticateViaOauth2) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *AuthenticateViaOauth2) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *AuthenticateViaOauth2) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *AuthenticateViaOauth2) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+type SourceAzureBlobStorageAuthenticationType string
+
+const (
+	SourceAzureBlobStorageAuthenticationTypeAuthenticateViaOauth2            SourceAzureBlobStorageAuthenticationType = "Authenticate via Oauth2"
+	SourceAzureBlobStorageAuthenticationTypeAuthenticateViaClientCredentials SourceAzureBlobStorageAuthenticationType = "Authenticate via Client Credentials"
+	SourceAzureBlobStorageAuthenticationTypeAuthenticateViaStorageAccountKey SourceAzureBlobStorageAuthenticationType = "Authenticate via Storage Account Key"
+)
+
+// SourceAzureBlobStorageAuthentication - Credentials for connecting to the Azure Blob Storage
+type SourceAzureBlobStorageAuthentication struct {
+	AuthenticateViaOauth2            *AuthenticateViaOauth2            `queryParam:"inline"`
+	AuthenticateViaClientCredentials *AuthenticateViaClientCredentials `queryParam:"inline"`
+	AuthenticateViaStorageAccountKey *AuthenticateViaStorageAccountKey `queryParam:"inline"`
+
+	Type SourceAzureBlobStorageAuthenticationType
+}
+
+func CreateSourceAzureBlobStorageAuthenticationAuthenticateViaOauth2(authenticateViaOauth2 AuthenticateViaOauth2) SourceAzureBlobStorageAuthentication {
+	typ := SourceAzureBlobStorageAuthenticationTypeAuthenticateViaOauth2
+
+	return SourceAzureBlobStorageAuthentication{
+		AuthenticateViaOauth2: &authenticateViaOauth2,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceAzureBlobStorageAuthenticationAuthenticateViaClientCredentials(authenticateViaClientCredentials AuthenticateViaClientCredentials) SourceAzureBlobStorageAuthentication {
+	typ := SourceAzureBlobStorageAuthenticationTypeAuthenticateViaClientCredentials
+
+	return SourceAzureBlobStorageAuthentication{
+		AuthenticateViaClientCredentials: &authenticateViaClientCredentials,
+		Type:                             typ,
+	}
+}
+
+func CreateSourceAzureBlobStorageAuthenticationAuthenticateViaStorageAccountKey(authenticateViaStorageAccountKey AuthenticateViaStorageAccountKey) SourceAzureBlobStorageAuthentication {
+	typ := SourceAzureBlobStorageAuthenticationTypeAuthenticateViaStorageAccountKey
+
+	return SourceAzureBlobStorageAuthentication{
+		AuthenticateViaStorageAccountKey: &authenticateViaStorageAccountKey,
+		Type:                             typ,
+	}
+}
+
+func (u *SourceAzureBlobStorageAuthentication) UnmarshalJSON(data []byte) error {
+
+	var authenticateViaStorageAccountKey AuthenticateViaStorageAccountKey = AuthenticateViaStorageAccountKey{}
+	if err := utils.UnmarshalJSON(data, &authenticateViaStorageAccountKey, "", true, true); err == nil {
+		u.AuthenticateViaStorageAccountKey = &authenticateViaStorageAccountKey
+		u.Type = SourceAzureBlobStorageAuthenticationTypeAuthenticateViaStorageAccountKey
+		return nil
+	}
+
+	var authenticateViaClientCredentials AuthenticateViaClientCredentials = AuthenticateViaClientCredentials{}
+	if err := utils.UnmarshalJSON(data, &authenticateViaClientCredentials, "", true, true); err == nil {
+		u.AuthenticateViaClientCredentials = &authenticateViaClientCredentials
+		u.Type = SourceAzureBlobStorageAuthenticationTypeAuthenticateViaClientCredentials
+		return nil
+	}
+
+	var authenticateViaOauth2 AuthenticateViaOauth2 = AuthenticateViaOauth2{}
+	if err := utils.UnmarshalJSON(data, &authenticateViaOauth2, "", true, true); err == nil {
+		u.AuthenticateViaOauth2 = &authenticateViaOauth2
+		u.Type = SourceAzureBlobStorageAuthenticationTypeAuthenticateViaOauth2
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAzureBlobStorageAuthentication", string(data))
+}
+
+func (u SourceAzureBlobStorageAuthentication) MarshalJSON() ([]byte, error) {
+	if u.AuthenticateViaOauth2 != nil {
+		return utils.MarshalJSON(u.AuthenticateViaOauth2, "", true)
+	}
+
+	if u.AuthenticateViaClientCredentials != nil {
+		return utils.MarshalJSON(u.AuthenticateViaClientCredentials, "", true)
+	}
+
+	if u.AuthenticateViaStorageAccountKey != nil {
+		return utils.MarshalJSON(u.AuthenticateViaStorageAccountKey, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceAzureBlobStorageAuthentication: all fields are null")
 }
 
 type SourceAzureBlobStorageSchemasStreamsFormatFiletype string
@@ -60,39 +314,6 @@ func (e *SourceAzureBlobStorageSchemasStreamsFormatFiletype) UnmarshalJSON(data 
 		return nil
 	default:
 		return fmt.Errorf("invalid value for SourceAzureBlobStorageSchemasStreamsFormatFiletype: %v", v)
-	}
-}
-
-// ParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
-type ParsingStrategy string
-
-const (
-	ParsingStrategyAuto    ParsingStrategy = "auto"
-	ParsingStrategyFast    ParsingStrategy = "fast"
-	ParsingStrategyOcrOnly ParsingStrategy = "ocr_only"
-	ParsingStrategyHiRes   ParsingStrategy = "hi_res"
-)
-
-func (e ParsingStrategy) ToPointer() *ParsingStrategy {
-	return &e
-}
-func (e *ParsingStrategy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "auto":
-		fallthrough
-	case "fast":
-		fallthrough
-	case "ocr_only":
-		fallthrough
-	case "hi_res":
-		*e = ParsingStrategy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ParsingStrategy: %v", v)
 	}
 }
 
@@ -181,15 +402,48 @@ func (u Processing) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type Processing: all fields are null")
 }
 
+// ParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type ParsingStrategy string
+
+const (
+	ParsingStrategyAuto    ParsingStrategy = "auto"
+	ParsingStrategyFast    ParsingStrategy = "fast"
+	ParsingStrategyOcrOnly ParsingStrategy = "ocr_only"
+	ParsingStrategyHiRes   ParsingStrategy = "hi_res"
+)
+
+func (e ParsingStrategy) ToPointer() *ParsingStrategy {
+	return &e
+}
+func (e *ParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = ParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ParsingStrategy: %v", v)
+	}
+}
+
 // UnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type UnstructuredDocumentFormat struct {
 	filetype *SourceAzureBlobStorageSchemasStreamsFormatFiletype `const:"unstructured" json:"filetype"`
+	// Processing configuration
+	Processing *Processing `json:"processing,omitempty"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
 	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
 	Strategy *ParsingStrategy `default:"auto" json:"strategy"`
-	// Processing configuration
-	Processing *Processing `json:"processing,omitempty"`
 }
 
 func (u UnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
@@ -207,6 +461,13 @@ func (o *UnstructuredDocumentFormat) GetFiletype() *SourceAzureBlobStorageSchema
 	return SourceAzureBlobStorageSchemasStreamsFormatFiletypeUnstructured.ToPointer()
 }
 
+func (o *UnstructuredDocumentFormat) GetProcessing() *Processing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
 func (o *UnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
@@ -219,13 +480,6 @@ func (o *UnstructuredDocumentFormat) GetStrategy() *ParsingStrategy {
 		return nil
 	}
 	return o.Strategy
-}
-
-func (o *UnstructuredDocumentFormat) GetProcessing() *Processing {
-	if o == nil {
-		return nil
-	}
-	return o.Processing
 }
 
 type SourceAzureBlobStorageSchemasStreamsFiletype string
@@ -252,9 +506,9 @@ func (e *SourceAzureBlobStorageSchemasStreamsFiletype) UnmarshalJSON(data []byte
 }
 
 type ParquetFormat struct {
-	filetype *SourceAzureBlobStorageSchemasStreamsFiletype `const:"parquet" json:"filetype"`
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	DecimalAsFloat *bool                                         `default:"false" json:"decimal_as_float"`
+	filetype       *SourceAzureBlobStorageSchemasStreamsFiletype `const:"parquet" json:"filetype"`
 }
 
 func (p ParquetFormat) MarshalJSON() ([]byte, error) {
@@ -268,15 +522,15 @@ func (p *ParquetFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ParquetFormat) GetFiletype() *SourceAzureBlobStorageSchemasStreamsFiletype {
-	return SourceAzureBlobStorageSchemasStreamsFiletypeParquet.ToPointer()
-}
-
 func (o *ParquetFormat) GetDecimalAsFloat() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DecimalAsFloat
+}
+
+func (o *ParquetFormat) GetFiletype() *SourceAzureBlobStorageSchemasStreamsFiletype {
+	return SourceAzureBlobStorageSchemasStreamsFiletypeParquet.ToPointer()
 }
 
 type SourceAzureBlobStorageSchemasFiletype string
@@ -368,9 +622,9 @@ func (e *SourceAzureBlobStorageSchemasHeaderDefinitionType) UnmarshalJSON(data [
 }
 
 type UserProvided struct {
-	headerDefinitionType *SourceAzureBlobStorageSchemasHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 	// The column names that will be used while emitting the CSV records
-	ColumnNames []string `json:"column_names"`
+	ColumnNames          []string                                           `json:"column_names"`
+	headerDefinitionType *SourceAzureBlobStorageSchemasHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 }
 
 func (u UserProvided) MarshalJSON() ([]byte, error) {
@@ -384,15 +638,15 @@ func (u *UserProvided) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *UserProvided) GetHeaderDefinitionType() *SourceAzureBlobStorageSchemasHeaderDefinitionType {
-	return SourceAzureBlobStorageSchemasHeaderDefinitionTypeUserProvided.ToPointer()
-}
-
 func (o *UserProvided) GetColumnNames() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.ColumnNames
+}
+
+func (o *UserProvided) GetHeaderDefinitionType() *SourceAzureBlobStorageSchemasHeaderDefinitionType {
+	return SourceAzureBlobStorageSchemasHeaderDefinitionTypeUserProvided.ToPointer()
 }
 
 type SourceAzureBlobStorageHeaderDefinitionType string
@@ -566,33 +820,33 @@ func (u CSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 }
 
 type CSVFormat struct {
-	filetype *SourceAzureBlobStorageFiletype `const:"csv" json:"filetype"`
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
-	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:"\"" json:"quote_char"`
-	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string `json:"escape_char,omitempty"`
-	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-	Encoding *string `default:"utf8" json:"encoding"`
 	// Whether two quotes in a quoted CSV value denote a single quote in the data.
 	DoubleQuote *bool `default:"true" json:"double_quote"`
-	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-	NullValues []string `json:"null_values,omitempty"`
-	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
-	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
-	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
-	// The number of rows to skip after the header row.
-	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `default:"utf8" json:"encoding"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                        `json:"false_values,omitempty"`
+	filetype    *SourceAzureBlobStorageFiletype `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *CSVHeaderDefinition `json:"header_definition,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as true values.
-	TrueValues []string `json:"true_values,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string `json:"false_values,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `default:"\"" json:"quote_char"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
 }
 
 func (c CSVFormat) MarshalJSON() ([]byte, error) {
@@ -606,36 +860,11 @@ func (c *CSVFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CSVFormat) GetFiletype() *SourceAzureBlobStorageFiletype {
-	return SourceAzureBlobStorageFiletypeCsv.ToPointer()
-}
-
 func (o *CSVFormat) GetDelimiter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Delimiter
-}
-
-func (o *CSVFormat) GetQuoteChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuoteChar
-}
-
-func (o *CSVFormat) GetEscapeChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EscapeChar
-}
-
-func (o *CSVFormat) GetEncoding() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Encoding
 }
 
 func (o *CSVFormat) GetDoubleQuote() *bool {
@@ -645,46 +874,18 @@ func (o *CSVFormat) GetDoubleQuote() *bool {
 	return o.DoubleQuote
 }
 
-func (o *CSVFormat) GetNullValues() []string {
+func (o *CSVFormat) GetEncoding() *string {
 	if o == nil {
 		return nil
 	}
-	return o.NullValues
+	return o.Encoding
 }
 
-func (o *CSVFormat) GetStringsCanBeNull() *bool {
+func (o *CSVFormat) GetEscapeChar() *string {
 	if o == nil {
 		return nil
 	}
-	return o.StringsCanBeNull
-}
-
-func (o *CSVFormat) GetSkipRowsBeforeHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsBeforeHeader
-}
-
-func (o *CSVFormat) GetSkipRowsAfterHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsAfterHeader
-}
-
-func (o *CSVFormat) GetHeaderDefinition() *CSVHeaderDefinition {
-	if o == nil {
-		return nil
-	}
-	return o.HeaderDefinition
-}
-
-func (o *CSVFormat) GetTrueValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TrueValues
+	return o.EscapeChar
 }
 
 func (o *CSVFormat) GetFalseValues() []string {
@@ -694,11 +895,64 @@ func (o *CSVFormat) GetFalseValues() []string {
 	return o.FalseValues
 }
 
+func (o *CSVFormat) GetFiletype() *SourceAzureBlobStorageFiletype {
+	return SourceAzureBlobStorageFiletypeCsv.ToPointer()
+}
+
+func (o *CSVFormat) GetHeaderDefinition() *CSVHeaderDefinition {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderDefinition
+}
+
 func (o *CSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IgnoreErrorsOnFieldsMismatch
+}
+
+func (o *CSVFormat) GetNullValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.NullValues
+}
+
+func (o *CSVFormat) GetQuoteChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuoteChar
+}
+
+func (o *CSVFormat) GetSkipRowsAfterHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsAfterHeader
+}
+
+func (o *CSVFormat) GetSkipRowsBeforeHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsBeforeHeader
+}
+
+func (o *CSVFormat) GetStringsCanBeNull() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StringsCanBeNull
+}
+
+func (o *CSVFormat) GetTrueValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TrueValues
 }
 
 type Filetype string
@@ -725,9 +979,9 @@ func (e *Filetype) UnmarshalJSON(data []byte) error {
 }
 
 type AvroFormat struct {
-	filetype *Filetype `const:"avro" json:"filetype"`
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	DoubleAsString *bool     `default:"false" json:"double_as_string"`
+	filetype       *Filetype `const:"avro" json:"filetype"`
 }
 
 func (a AvroFormat) MarshalJSON() ([]byte, error) {
@@ -741,15 +995,15 @@ func (a *AvroFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AvroFormat) GetFiletype() *Filetype {
-	return FiletypeAvro.ToPointer()
-}
-
 func (o *AvroFormat) GetDoubleAsString() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DoubleAsString
+}
+
+func (o *AvroFormat) GetFiletype() *Filetype {
+	return FiletypeAvro.ToPointer()
 }
 
 type FormatUnionType string
@@ -882,23 +1136,53 @@ func (u Format) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type Format: all fields are null")
 }
 
+// ValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type ValidationPolicy string
+
+const (
+	ValidationPolicyEmitRecord      ValidationPolicy = "Emit Record"
+	ValidationPolicySkipRecord      ValidationPolicy = "Skip Record"
+	ValidationPolicyWaitForDiscover ValidationPolicy = "Wait for Discover"
+)
+
+func (e ValidationPolicy) ToPointer() *ValidationPolicy {
+	return &e
+}
+func (e *ValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = ValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ValidationPolicy: %v", v)
+	}
+}
+
 type FileBasedStreamConfig struct {
-	// The name of the stream.
-	Name string `json:"name"`
-	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
-	Globs []string `json:"globs,omitempty"`
-	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-	ValidationPolicy *ValidationPolicy `default:"Emit Record" json:"validation_policy"`
-	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-	InputSchema *string `json:"input_schema,omitempty"`
 	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
 	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 	Format Format `json:"format"`
-	// When enabled, syncs will not validate or structure records against the stream's schema.
-	Schemaless *bool `default:"false" json:"schemaless"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
 	// The number of resent files which will be used to discover the schema for this stream.
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
+	// When enabled, syncs will not validate or structure records against the stream's schema.
+	Schemaless *bool `default:"false" json:"schemaless"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *ValidationPolicy `default:"Emit Record" json:"validation_policy"`
 }
 
 func (f FileBasedStreamConfig) MarshalJSON() ([]byte, error) {
@@ -910,34 +1194,6 @@ func (f *FileBasedStreamConfig) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *FileBasedStreamConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *FileBasedStreamConfig) GetGlobs() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Globs
-}
-
-func (o *FileBasedStreamConfig) GetValidationPolicy() *ValidationPolicy {
-	if o == nil {
-		return nil
-	}
-	return o.ValidationPolicy
-}
-
-func (o *FileBasedStreamConfig) GetInputSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InputSchema
 }
 
 func (o *FileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
@@ -954,11 +1210,25 @@ func (o *FileBasedStreamConfig) GetFormat() Format {
 	return o.Format
 }
 
-func (o *FileBasedStreamConfig) GetSchemaless() *bool {
+func (o *FileBasedStreamConfig) GetGlobs() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schemaless
+	return o.Globs
+}
+
+func (o *FileBasedStreamConfig) GetInputSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputSchema
+}
+
+func (o *FileBasedStreamConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *FileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
@@ -968,288 +1238,18 @@ func (o *FileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
-type SourceAzureBlobStorageSchemasCredentialsAuthType string
-
-const (
-	SourceAzureBlobStorageSchemasCredentialsAuthTypeStorageAccountKey SourceAzureBlobStorageSchemasCredentialsAuthType = "storage_account_key"
-)
-
-func (e SourceAzureBlobStorageSchemasCredentialsAuthType) ToPointer() *SourceAzureBlobStorageSchemasCredentialsAuthType {
-	return &e
-}
-func (e *SourceAzureBlobStorageSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "storage_account_key":
-		*e = SourceAzureBlobStorageSchemasCredentialsAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceAzureBlobStorageSchemasCredentialsAuthType: %v", v)
-	}
-}
-
-type AuthenticateViaStorageAccountKey struct {
-	authType *SourceAzureBlobStorageSchemasCredentialsAuthType `const:"storage_account_key" json:"auth_type"`
-	// The Azure blob storage account key.
-	AzureBlobStorageAccountKey string `json:"azure_blob_storage_account_key"`
-}
-
-func (a AuthenticateViaStorageAccountKey) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *AuthenticateViaStorageAccountKey) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *AuthenticateViaStorageAccountKey) GetAuthType() *SourceAzureBlobStorageSchemasCredentialsAuthType {
-	return SourceAzureBlobStorageSchemasCredentialsAuthTypeStorageAccountKey.ToPointer()
-}
-
-func (o *AuthenticateViaStorageAccountKey) GetAzureBlobStorageAccountKey() string {
+func (o *FileBasedStreamConfig) GetSchemaless() *bool {
 	if o == nil {
-		return ""
-	}
-	return o.AzureBlobStorageAccountKey
-}
-
-type SourceAzureBlobStorageSchemasAuthType string
-
-const (
-	SourceAzureBlobStorageSchemasAuthTypeClientCredentials SourceAzureBlobStorageSchemasAuthType = "client_credentials"
-)
-
-func (e SourceAzureBlobStorageSchemasAuthType) ToPointer() *SourceAzureBlobStorageSchemasAuthType {
-	return &e
-}
-func (e *SourceAzureBlobStorageSchemasAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "client_credentials":
-		*e = SourceAzureBlobStorageSchemasAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceAzureBlobStorageSchemasAuthType: %v", v)
-	}
-}
-
-type AuthenticateViaClientCredentials struct {
-	authType *SourceAzureBlobStorageSchemasAuthType `const:"client_credentials" json:"auth_type"`
-	// Tenant ID of the Microsoft Azure Application
-	AppTenantID string `json:"app_tenant_id"`
-	// Client ID of your Microsoft developer application
-	AppClientID string `json:"app_client_id"`
-	// Client Secret of your Microsoft developer application
-	AppClientSecret string `json:"app_client_secret"`
-}
-
-func (a AuthenticateViaClientCredentials) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *AuthenticateViaClientCredentials) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *AuthenticateViaClientCredentials) GetAuthType() *SourceAzureBlobStorageSchemasAuthType {
-	return SourceAzureBlobStorageSchemasAuthTypeClientCredentials.ToPointer()
-}
-
-func (o *AuthenticateViaClientCredentials) GetAppTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AppTenantID
-}
-
-func (o *AuthenticateViaClientCredentials) GetAppClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AppClientID
-}
-
-func (o *AuthenticateViaClientCredentials) GetAppClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.AppClientSecret
-}
-
-type SourceAzureBlobStorageAuthType string
-
-const (
-	SourceAzureBlobStorageAuthTypeOauth2 SourceAzureBlobStorageAuthType = "oauth2"
-)
-
-func (e SourceAzureBlobStorageAuthType) ToPointer() *SourceAzureBlobStorageAuthType {
-	return &e
-}
-func (e *SourceAzureBlobStorageAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "oauth2":
-		*e = SourceAzureBlobStorageAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceAzureBlobStorageAuthType: %v", v)
-	}
-}
-
-type AuthenticateViaOauth2 struct {
-	authType *SourceAzureBlobStorageAuthType `const:"oauth2" json:"auth_type"`
-	// Tenant ID of the Microsoft Azure Application user
-	TenantID string `json:"tenant_id"`
-	// Client ID of your Microsoft developer application
-	ClientID string `json:"client_id"`
-	// Client Secret of your Microsoft developer application
-	ClientSecret string `json:"client_secret"`
-	// Refresh Token of your Microsoft developer application
-	RefreshToken string `json:"refresh_token"`
-}
-
-func (a AuthenticateViaOauth2) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *AuthenticateViaOauth2) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *AuthenticateViaOauth2) GetAuthType() *SourceAzureBlobStorageAuthType {
-	return SourceAzureBlobStorageAuthTypeOauth2.ToPointer()
-}
-
-func (o *AuthenticateViaOauth2) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
-func (o *AuthenticateViaOauth2) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *AuthenticateViaOauth2) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-func (o *AuthenticateViaOauth2) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
-}
-
-type SourceAzureBlobStorageAuthenticationType string
-
-const (
-	SourceAzureBlobStorageAuthenticationTypeAuthenticateViaOauth2            SourceAzureBlobStorageAuthenticationType = "Authenticate via Oauth2"
-	SourceAzureBlobStorageAuthenticationTypeAuthenticateViaClientCredentials SourceAzureBlobStorageAuthenticationType = "Authenticate via Client Credentials"
-	SourceAzureBlobStorageAuthenticationTypeAuthenticateViaStorageAccountKey SourceAzureBlobStorageAuthenticationType = "Authenticate via Storage Account Key"
-)
-
-// SourceAzureBlobStorageAuthentication - Credentials for connecting to the Azure Blob Storage
-type SourceAzureBlobStorageAuthentication struct {
-	AuthenticateViaOauth2            *AuthenticateViaOauth2            `queryParam:"inline"`
-	AuthenticateViaClientCredentials *AuthenticateViaClientCredentials `queryParam:"inline"`
-	AuthenticateViaStorageAccountKey *AuthenticateViaStorageAccountKey `queryParam:"inline"`
-
-	Type SourceAzureBlobStorageAuthenticationType
-}
-
-func CreateSourceAzureBlobStorageAuthenticationAuthenticateViaOauth2(authenticateViaOauth2 AuthenticateViaOauth2) SourceAzureBlobStorageAuthentication {
-	typ := SourceAzureBlobStorageAuthenticationTypeAuthenticateViaOauth2
-
-	return SourceAzureBlobStorageAuthentication{
-		AuthenticateViaOauth2: &authenticateViaOauth2,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceAzureBlobStorageAuthenticationAuthenticateViaClientCredentials(authenticateViaClientCredentials AuthenticateViaClientCredentials) SourceAzureBlobStorageAuthentication {
-	typ := SourceAzureBlobStorageAuthenticationTypeAuthenticateViaClientCredentials
-
-	return SourceAzureBlobStorageAuthentication{
-		AuthenticateViaClientCredentials: &authenticateViaClientCredentials,
-		Type:                             typ,
-	}
-}
-
-func CreateSourceAzureBlobStorageAuthenticationAuthenticateViaStorageAccountKey(authenticateViaStorageAccountKey AuthenticateViaStorageAccountKey) SourceAzureBlobStorageAuthentication {
-	typ := SourceAzureBlobStorageAuthenticationTypeAuthenticateViaStorageAccountKey
-
-	return SourceAzureBlobStorageAuthentication{
-		AuthenticateViaStorageAccountKey: &authenticateViaStorageAccountKey,
-		Type:                             typ,
-	}
-}
-
-func (u *SourceAzureBlobStorageAuthentication) UnmarshalJSON(data []byte) error {
-
-	var authenticateViaStorageAccountKey AuthenticateViaStorageAccountKey = AuthenticateViaStorageAccountKey{}
-	if err := utils.UnmarshalJSON(data, &authenticateViaStorageAccountKey, "", true, true); err == nil {
-		u.AuthenticateViaStorageAccountKey = &authenticateViaStorageAccountKey
-		u.Type = SourceAzureBlobStorageAuthenticationTypeAuthenticateViaStorageAccountKey
 		return nil
 	}
-
-	var authenticateViaClientCredentials AuthenticateViaClientCredentials = AuthenticateViaClientCredentials{}
-	if err := utils.UnmarshalJSON(data, &authenticateViaClientCredentials, "", true, true); err == nil {
-		u.AuthenticateViaClientCredentials = &authenticateViaClientCredentials
-		u.Type = SourceAzureBlobStorageAuthenticationTypeAuthenticateViaClientCredentials
-		return nil
-	}
-
-	var authenticateViaOauth2 AuthenticateViaOauth2 = AuthenticateViaOauth2{}
-	if err := utils.UnmarshalJSON(data, &authenticateViaOauth2, "", true, true); err == nil {
-		u.AuthenticateViaOauth2 = &authenticateViaOauth2
-		u.Type = SourceAzureBlobStorageAuthenticationTypeAuthenticateViaOauth2
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAzureBlobStorageAuthentication", string(data))
+	return o.Schemaless
 }
 
-func (u SourceAzureBlobStorageAuthentication) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaOauth2 != nil {
-		return utils.MarshalJSON(u.AuthenticateViaOauth2, "", true)
+func (o *FileBasedStreamConfig) GetValidationPolicy() *ValidationPolicy {
+	if o == nil {
+		return nil
 	}
-
-	if u.AuthenticateViaClientCredentials != nil {
-		return utils.MarshalJSON(u.AuthenticateViaClientCredentials, "", true)
-	}
-
-	if u.AuthenticateViaStorageAccountKey != nil {
-		return utils.MarshalJSON(u.AuthenticateViaStorageAccountKey, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceAzureBlobStorageAuthentication: all fields are null")
+	return o.ValidationPolicy
 }
 
 type AzureBlobStorage string
@@ -1278,19 +1278,19 @@ func (e *AzureBlobStorage) UnmarshalJSON(data []byte) error {
 // SourceAzureBlobStorage - NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes
 // because it is responsible for converting legacy Azure Blob Storage v0 configs into v1 configs using the File-Based CDK.
 type SourceAzureBlobStorage struct {
-	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
-	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams []FileBasedStreamConfig `json:"streams"`
-	// Credentials for connecting to the Azure Blob Storage
-	Credentials SourceAzureBlobStorageAuthentication `json:"credentials"`
 	// The account's name of the Azure Blob Storage.
 	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
 	// The name of the Azure blob storage container.
 	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
 	// This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-	AzureBlobStorageEndpoint *string          `json:"azure_blob_storage_endpoint,omitempty"`
-	sourceType               AzureBlobStorage `const:"azure-blob-storage" json:"sourceType"`
+	AzureBlobStorageEndpoint *string `json:"azure_blob_storage_endpoint,omitempty"`
+	// Credentials for connecting to the Azure Blob Storage
+	Credentials SourceAzureBlobStorageAuthentication `json:"credentials"`
+	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
+	Streams    []FileBasedStreamConfig `json:"streams"`
+	sourceType AzureBlobStorage        `const:"azure-blob-storage" json:"sourceType"`
 }
 
 func (s SourceAzureBlobStorage) MarshalJSON() ([]byte, error) {
@@ -1302,27 +1302,6 @@ func (s *SourceAzureBlobStorage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceAzureBlobStorage) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-func (o *SourceAzureBlobStorage) GetStreams() []FileBasedStreamConfig {
-	if o == nil {
-		return []FileBasedStreamConfig{}
-	}
-	return o.Streams
-}
-
-func (o *SourceAzureBlobStorage) GetCredentials() SourceAzureBlobStorageAuthentication {
-	if o == nil {
-		return SourceAzureBlobStorageAuthentication{}
-	}
-	return o.Credentials
 }
 
 func (o *SourceAzureBlobStorage) GetAzureBlobStorageAccountName() string {
@@ -1344,6 +1323,27 @@ func (o *SourceAzureBlobStorage) GetAzureBlobStorageEndpoint() *string {
 		return nil
 	}
 	return o.AzureBlobStorageEndpoint
+}
+
+func (o *SourceAzureBlobStorage) GetCredentials() SourceAzureBlobStorageAuthentication {
+	if o == nil {
+		return SourceAzureBlobStorageAuthentication{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceAzureBlobStorage) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceAzureBlobStorage) GetStreams() []FileBasedStreamConfig {
+	if o == nil {
+		return []FileBasedStreamConfig{}
+	}
+	return o.Streams
 }
 
 func (o *SourceAzureBlobStorage) GetSourceType() AzureBlobStorage {

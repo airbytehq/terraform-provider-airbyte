@@ -33,8 +33,8 @@ func (e *ServiceNow) UnmarshalJSON(data []byte) error {
 
 type SourceServiceNow struct {
 	BaseURL    string     `json:"base_url"`
-	Username   string     `json:"username"`
 	Password   *string    `json:"password,omitempty"`
+	Username   string     `json:"username"`
 	sourceType ServiceNow `const:"service-now" json:"sourceType"`
 }
 
@@ -56,18 +56,18 @@ func (o *SourceServiceNow) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *SourceServiceNow) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceServiceNow) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceServiceNow) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceServiceNow) GetSourceType() ServiceNow {

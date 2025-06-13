@@ -40,7 +40,6 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         action_breakdowns = [
           "action_reaction"
         ]
-        action_report_time = "impression"
         breakdowns = [
           "media_type"
         ]
@@ -153,7 +152,6 @@ Required:
 Optional:
 
 - `action_breakdowns` (List of String) A list of chosen action_breakdowns for action_breakdowns
-- `action_report_time` (String) Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. Default: "mixed"; must be one of ["conversion", "impression", "mixed"]
 - `breakdowns` (List of String) A list of chosen breakdowns for breakdowns
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter

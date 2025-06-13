@@ -34,10 +34,10 @@ func (e *Basecamp) UnmarshalJSON(data []byte) error {
 
 type SourceBasecamp struct {
 	AccountID           float64   `json:"account_id"`
-	StartDate           time.Time `json:"start_date"`
 	ClientID            string    `json:"client_id"`
-	ClientSecret        string    `json:"client_secret"`
 	ClientRefreshToken2 string    `json:"client_refresh_token_2"`
+	ClientSecret        string    `json:"client_secret"`
+	StartDate           time.Time `json:"start_date"`
 	sourceType          Basecamp  `const:"basecamp" json:"sourceType"`
 }
 
@@ -59,18 +59,18 @@ func (o *SourceBasecamp) GetAccountID() float64 {
 	return o.AccountID
 }
 
-func (o *SourceBasecamp) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceBasecamp) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
+}
+
+func (o *SourceBasecamp) GetClientRefreshToken2() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientRefreshToken2
 }
 
 func (o *SourceBasecamp) GetClientSecret() string {
@@ -80,11 +80,11 @@ func (o *SourceBasecamp) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceBasecamp) GetClientRefreshToken2() string {
+func (o *SourceBasecamp) GetStartDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ClientRefreshToken2
+	return o.StartDate
 }
 
 func (o *SourceBasecamp) GetSourceType() Basecamp {

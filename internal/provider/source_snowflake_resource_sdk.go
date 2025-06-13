@@ -25,18 +25,18 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 	if r.Configuration.Credentials != nil {
 		var sourceSnowflakeOAuth20 *shared.SourceSnowflakeOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			var clientID string
-			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-
-			var clientSecret string
-			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-
 			accessToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
 				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
+			var clientID string
+			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+
+			var clientSecret string
+			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+
 			refreshToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.RefreshToken.IsNull() {
 				*refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
@@ -44,9 +44,9 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 				refreshToken = nil
 			}
 			sourceSnowflakeOAuth20 = &shared.SourceSnowflakeOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -57,9 +57,6 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 		}
 		var keyPairAuthentication *shared.KeyPairAuthentication
 		if r.Configuration.Credentials.KeyPairAuthentication != nil {
-			var username string
-			username = r.Configuration.Credentials.KeyPairAuthentication.Username.ValueString()
-
 			var privateKey string
 			privateKey = r.Configuration.Credentials.KeyPairAuthentication.PrivateKey.ValueString()
 
@@ -69,10 +66,13 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 			} else {
 				privateKeyPassword = nil
 			}
+			var username string
+			username = r.Configuration.Credentials.KeyPairAuthentication.Username.ValueString()
+
 			keyPairAuthentication = &shared.KeyPairAuthentication{
-				Username:           username,
 				PrivateKey:         privateKey,
 				PrivateKeyPassword: privateKeyPassword,
+				Username:           username,
 			}
 		}
 		if keyPairAuthentication != nil {
@@ -82,15 +82,15 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 		}
 		var usernameAndPassword *shared.UsernameAndPassword
 		if r.Configuration.Credentials.UsernameAndPassword != nil {
-			var username1 string
-			username1 = r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
-
 			var password string
 			password = r.Configuration.Credentials.UsernameAndPassword.Password.ValueString()
 
+			var username1 string
+			username1 = r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
+
 			usernameAndPassword = &shared.UsernameAndPassword{
-				Username: username1,
 				Password: password,
+				Username: username1,
 			}
 		}
 		if usernameAndPassword != nil {
@@ -99,17 +99,20 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 			}
 		}
 	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	var role string
 	role = r.Configuration.Role.ValueString()
-
-	var warehouse string
-	warehouse = r.Configuration.Warehouse.ValueString()
-
-	var database string
-	database = r.Configuration.Database.ValueString()
 
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -117,20 +120,17 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 	} else {
 		schema = nil
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
+	var warehouse string
+	warehouse = r.Configuration.Warehouse.ValueString()
+
 	configuration := shared.SourceSnowflake{
 		Credentials:   credentials,
-		Host:          host,
-		Role:          role,
-		Warehouse:     warehouse,
 		Database:      database,
-		Schema:        schema,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
+		Role:          role,
+		Schema:        schema,
+		Warehouse:     warehouse,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -206,18 +206,18 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 	if r.Configuration.Credentials != nil {
 		var sourceSnowflakeUpdateOAuth20 *shared.SourceSnowflakeUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			var clientID string
-			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-
-			var clientSecret string
-			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-
 			accessToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
 				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
+			var clientID string
+			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+
+			var clientSecret string
+			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+
 			refreshToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.RefreshToken.IsNull() {
 				*refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
@@ -225,9 +225,9 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 				refreshToken = nil
 			}
 			sourceSnowflakeUpdateOAuth20 = &shared.SourceSnowflakeUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -238,9 +238,6 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 		}
 		var sourceSnowflakeUpdateKeyPairAuthentication *shared.SourceSnowflakeUpdateKeyPairAuthentication
 		if r.Configuration.Credentials.KeyPairAuthentication != nil {
-			var username string
-			username = r.Configuration.Credentials.KeyPairAuthentication.Username.ValueString()
-
 			var privateKey string
 			privateKey = r.Configuration.Credentials.KeyPairAuthentication.PrivateKey.ValueString()
 
@@ -250,10 +247,13 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 			} else {
 				privateKeyPassword = nil
 			}
+			var username string
+			username = r.Configuration.Credentials.KeyPairAuthentication.Username.ValueString()
+
 			sourceSnowflakeUpdateKeyPairAuthentication = &shared.SourceSnowflakeUpdateKeyPairAuthentication{
-				Username:           username,
 				PrivateKey:         privateKey,
 				PrivateKeyPassword: privateKeyPassword,
+				Username:           username,
 			}
 		}
 		if sourceSnowflakeUpdateKeyPairAuthentication != nil {
@@ -263,15 +263,15 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 		}
 		var sourceSnowflakeUpdateUsernameAndPassword *shared.SourceSnowflakeUpdateUsernameAndPassword
 		if r.Configuration.Credentials.UsernameAndPassword != nil {
-			var username1 string
-			username1 = r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
-
 			var password string
 			password = r.Configuration.Credentials.UsernameAndPassword.Password.ValueString()
 
+			var username1 string
+			username1 = r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
+
 			sourceSnowflakeUpdateUsernameAndPassword = &shared.SourceSnowflakeUpdateUsernameAndPassword{
-				Username: username1,
 				Password: password,
+				Username: username1,
 			}
 		}
 		if sourceSnowflakeUpdateUsernameAndPassword != nil {
@@ -280,17 +280,20 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 			}
 		}
 	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	var role string
 	role = r.Configuration.Role.ValueString()
-
-	var warehouse string
-	warehouse = r.Configuration.Warehouse.ValueString()
-
-	var database string
-	database = r.Configuration.Database.ValueString()
 
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -298,20 +301,17 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 	} else {
 		schema = nil
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
+	var warehouse string
+	warehouse = r.Configuration.Warehouse.ValueString()
+
 	configuration := shared.SourceSnowflakeUpdate{
 		Credentials:   credentials,
-		Host:          host,
-		Role:          role,
-		Warehouse:     warehouse,
 		Database:      database,
-		Schema:        schema,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
+		Role:          role,
+		Schema:        schema,
+		Warehouse:     warehouse,
 	}
 	out := shared.SourceSnowflakePutRequest{
 		Name:          name,

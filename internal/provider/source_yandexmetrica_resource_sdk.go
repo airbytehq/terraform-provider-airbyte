@@ -28,18 +28,18 @@ func (r *SourceYandexMetricaResourceModel) ToSharedSourceYandexMetricaCreateRequ
 	var counterID string
 	counterID = r.Configuration.CounterID.ValueString()
 
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYandexMetrica{
 		AuthToken: authToken,
 		CounterID: counterID,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,18 +117,18 @@ func (r *SourceYandexMetricaResourceModel) ToSharedSourceYandexMetricaPutRequest
 	var counterID string
 	counterID = r.Configuration.CounterID.ValueString()
 
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYandexMetricaUpdate{
 		AuthToken: authToken,
 		CounterID: counterID,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	out := shared.SourceYandexMetricaPutRequest{
 		Name:          name,

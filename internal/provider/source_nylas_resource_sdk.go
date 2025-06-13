@@ -26,13 +26,13 @@ func (r *SourceNylasResourceModel) ToSharedSourceNylasCreateRequest() *shared.So
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	apiServer := shared.APIServer(r.Configuration.APIServer.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNylas{
 		APIKey:    apiKey,
 		APIServer: apiServer,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,13 +108,13 @@ func (r *SourceNylasResourceModel) ToSharedSourceNylasPutRequest() *shared.Sourc
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	apiServer := shared.SourceNylasUpdateAPIServer(r.Configuration.APIServer.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNylasUpdate{
 		APIKey:    apiKey,
 		APIServer: apiServer,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	out := shared.SourceNylasPutRequest{
 		Name:          name,

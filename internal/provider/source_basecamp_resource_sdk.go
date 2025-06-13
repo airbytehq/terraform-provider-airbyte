@@ -25,22 +25,22 @@ func (r *SourceBasecampResourceModel) ToSharedSourceBasecampCreateRequest() *sha
 	var accountID float64
 	accountID, _ = r.Configuration.AccountID.ValueBigFloat().Float64()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	var clientRefreshToken2 string
 	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceBasecamp{
 		AccountID:           accountID,
-		StartDate:           startDate,
 		ClientID:            clientID,
-		ClientSecret:        clientSecret,
 		ClientRefreshToken2: clientRefreshToken2,
+		ClientSecret:        clientSecret,
+		StartDate:           startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,22 +115,22 @@ func (r *SourceBasecampResourceModel) ToSharedSourceBasecampPutRequest() *shared
 	var accountID float64
 	accountID, _ = r.Configuration.AccountID.ValueBigFloat().Float64()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	var clientRefreshToken2 string
 	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceBasecampUpdate{
 		AccountID:           accountID,
-		StartDate:           startDate,
 		ClientID:            clientID,
-		ClientSecret:        clientSecret,
 		ClientRefreshToken2: clientRefreshToken2,
+		ClientSecret:        clientSecret,
+		StartDate:           startDate,
 	}
 	out := shared.SourceBasecampPutRequest{
 		Name:          name,

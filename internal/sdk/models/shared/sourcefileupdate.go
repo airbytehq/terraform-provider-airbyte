@@ -125,11 +125,11 @@ func (e *SourceFileUpdateSchemasProviderStorageProvider7Storage) UnmarshalJSON(d
 }
 
 type SourceFileUpdateSFTPSecureFileTransferProtocol struct {
+	Host     string                                                 `json:"host"`
+	Password *string                                                `json:"password,omitempty"`
+	Port     *string                                                `default:"22" json:"port"`
 	storage  SourceFileUpdateSchemasProviderStorageProvider7Storage `const:"SFTP" json:"storage"`
 	User     string                                                 `json:"user"`
-	Password *string                                                `json:"password,omitempty"`
-	Host     string                                                 `json:"host"`
-	Port     *string                                                `default:"22" json:"port"`
 }
 
 func (s SourceFileUpdateSFTPSecureFileTransferProtocol) MarshalJSON() ([]byte, error) {
@@ -143,15 +143,11 @@ func (s *SourceFileUpdateSFTPSecureFileTransferProtocol) UnmarshalJSON(data []by
 	return nil
 }
 
-func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetStorage() SourceFileUpdateSchemasProviderStorageProvider7Storage {
-	return SourceFileUpdateSchemasProviderStorageProvider7StorageSftp
-}
-
-func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetUser() string {
+func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetHost() string {
 	if o == nil {
 		return ""
 	}
-	return o.User
+	return o.Host
 }
 
 func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetPassword() *string {
@@ -161,18 +157,22 @@ func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
 func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetPort() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Port
+}
+
+func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetStorage() SourceFileUpdateSchemasProviderStorageProvider7Storage {
+	return SourceFileUpdateSchemasProviderStorageProvider7StorageSftp
+}
+
+func (o *SourceFileUpdateSFTPSecureFileTransferProtocol) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
 }
 
 type SourceFileUpdateSchemasProviderStorageProvider6Storage string
@@ -199,11 +199,11 @@ func (e *SourceFileUpdateSchemasProviderStorageProvider6Storage) UnmarshalJSON(d
 }
 
 type SourceFileUpdateSCPSecureCopyProtocol struct {
+	Host     string                                                 `json:"host"`
+	Password *string                                                `json:"password,omitempty"`
+	Port     *string                                                `default:"22" json:"port"`
 	storage  SourceFileUpdateSchemasProviderStorageProvider6Storage `const:"SCP" json:"storage"`
 	User     string                                                 `json:"user"`
-	Password *string                                                `json:"password,omitempty"`
-	Host     string                                                 `json:"host"`
-	Port     *string                                                `default:"22" json:"port"`
 }
 
 func (s SourceFileUpdateSCPSecureCopyProtocol) MarshalJSON() ([]byte, error) {
@@ -217,15 +217,11 @@ func (s *SourceFileUpdateSCPSecureCopyProtocol) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *SourceFileUpdateSCPSecureCopyProtocol) GetStorage() SourceFileUpdateSchemasProviderStorageProvider6Storage {
-	return SourceFileUpdateSchemasProviderStorageProvider6StorageScp
-}
-
-func (o *SourceFileUpdateSCPSecureCopyProtocol) GetUser() string {
+func (o *SourceFileUpdateSCPSecureCopyProtocol) GetHost() string {
 	if o == nil {
 		return ""
 	}
-	return o.User
+	return o.Host
 }
 
 func (o *SourceFileUpdateSCPSecureCopyProtocol) GetPassword() *string {
@@ -235,18 +231,22 @@ func (o *SourceFileUpdateSCPSecureCopyProtocol) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceFileUpdateSCPSecureCopyProtocol) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
 func (o *SourceFileUpdateSCPSecureCopyProtocol) GetPort() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Port
+}
+
+func (o *SourceFileUpdateSCPSecureCopyProtocol) GetStorage() SourceFileUpdateSchemasProviderStorageProvider6Storage {
+	return SourceFileUpdateSchemasProviderStorageProvider6StorageScp
+}
+
+func (o *SourceFileUpdateSCPSecureCopyProtocol) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
 }
 
 type SourceFileUpdateSchemasProviderStorageProvider5Storage string
@@ -273,11 +273,11 @@ func (e *SourceFileUpdateSchemasProviderStorageProvider5Storage) UnmarshalJSON(d
 }
 
 type SourceFileUpdateSSHSecureShell struct {
+	Host     string                                                 `json:"host"`
+	Password *string                                                `json:"password,omitempty"`
+	Port     *string                                                `default:"22" json:"port"`
 	storage  SourceFileUpdateSchemasProviderStorageProvider5Storage `const:"SSH" json:"storage"`
 	User     string                                                 `json:"user"`
-	Password *string                                                `json:"password,omitempty"`
-	Host     string                                                 `json:"host"`
-	Port     *string                                                `default:"22" json:"port"`
 }
 
 func (s SourceFileUpdateSSHSecureShell) MarshalJSON() ([]byte, error) {
@@ -291,15 +291,11 @@ func (s *SourceFileUpdateSSHSecureShell) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFileUpdateSSHSecureShell) GetStorage() SourceFileUpdateSchemasProviderStorageProvider5Storage {
-	return SourceFileUpdateSchemasProviderStorageProvider5StorageSSH
-}
-
-func (o *SourceFileUpdateSSHSecureShell) GetUser() string {
+func (o *SourceFileUpdateSSHSecureShell) GetHost() string {
 	if o == nil {
 		return ""
 	}
-	return o.User
+	return o.Host
 }
 
 func (o *SourceFileUpdateSSHSecureShell) GetPassword() *string {
@@ -309,18 +305,22 @@ func (o *SourceFileUpdateSSHSecureShell) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceFileUpdateSSHSecureShell) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
 func (o *SourceFileUpdateSSHSecureShell) GetPort() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Port
+}
+
+func (o *SourceFileUpdateSSHSecureShell) GetStorage() SourceFileUpdateSchemasProviderStorageProvider5Storage {
+	return SourceFileUpdateSchemasProviderStorageProvider5StorageSSH
+}
+
+func (o *SourceFileUpdateSSHSecureShell) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
 }
 
 type SourceFileUpdateSchemasProviderStorageProviderStorage string
@@ -347,13 +347,13 @@ func (e *SourceFileUpdateSchemasProviderStorageProviderStorage) UnmarshalJSON(da
 }
 
 type SourceFileUpdateAzBlobAzureBlobStorage struct {
-	storage SourceFileUpdateSchemasProviderStorageProviderStorage `const:"AzBlob" json:"storage"`
-	// The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.
-	StorageAccount string `json:"storage_account"`
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.
 	SasToken *string `json:"sas_token,omitempty"`
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.
-	SharedKey *string `json:"shared_key,omitempty"`
+	SharedKey *string                                               `json:"shared_key,omitempty"`
+	storage   SourceFileUpdateSchemasProviderStorageProviderStorage `const:"AzBlob" json:"storage"`
+	// The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.
+	StorageAccount string `json:"storage_account"`
 }
 
 func (s SourceFileUpdateAzBlobAzureBlobStorage) MarshalJSON() ([]byte, error) {
@@ -365,17 +365,6 @@ func (s *SourceFileUpdateAzBlobAzureBlobStorage) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	return nil
-}
-
-func (o *SourceFileUpdateAzBlobAzureBlobStorage) GetStorage() SourceFileUpdateSchemasProviderStorageProviderStorage {
-	return SourceFileUpdateSchemasProviderStorageProviderStorageAzBlob
-}
-
-func (o *SourceFileUpdateAzBlobAzureBlobStorage) GetStorageAccount() string {
-	if o == nil {
-		return ""
-	}
-	return o.StorageAccount
 }
 
 func (o *SourceFileUpdateAzBlobAzureBlobStorage) GetSasToken() *string {
@@ -390,6 +379,17 @@ func (o *SourceFileUpdateAzBlobAzureBlobStorage) GetSharedKey() *string {
 		return nil
 	}
 	return o.SharedKey
+}
+
+func (o *SourceFileUpdateAzBlobAzureBlobStorage) GetStorage() SourceFileUpdateSchemasProviderStorageProviderStorage {
+	return SourceFileUpdateSchemasProviderStorageProviderStorageAzBlob
+}
+
+func (o *SourceFileUpdateAzBlobAzureBlobStorage) GetStorageAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.StorageAccount
 }
 
 type SourceFileUpdateSchemasProviderStorage string
@@ -416,11 +416,11 @@ func (e *SourceFileUpdateSchemasProviderStorage) UnmarshalJSON(data []byte) erro
 }
 
 type SourceFileUpdateS3AmazonWebServices struct {
-	storage SourceFileUpdateSchemasProviderStorage `const:"S3" json:"storage"`
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
+	AwsSecretAccessKey *string                                `json:"aws_secret_access_key,omitempty"`
+	storage            SourceFileUpdateSchemasProviderStorage `const:"S3" json:"storage"`
 }
 
 func (s SourceFileUpdateS3AmazonWebServices) MarshalJSON() ([]byte, error) {
@@ -432,10 +432,6 @@ func (s *SourceFileUpdateS3AmazonWebServices) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceFileUpdateS3AmazonWebServices) GetStorage() SourceFileUpdateSchemasProviderStorage {
-	return SourceFileUpdateSchemasProviderStorageS3
 }
 
 func (o *SourceFileUpdateS3AmazonWebServices) GetAwsAccessKeyID() *string {
@@ -450,6 +446,10 @@ func (o *SourceFileUpdateS3AmazonWebServices) GetAwsSecretAccessKey() *string {
 		return nil
 	}
 	return o.AwsSecretAccessKey
+}
+
+func (o *SourceFileUpdateS3AmazonWebServices) GetStorage() SourceFileUpdateSchemasProviderStorage {
+	return SourceFileUpdateSchemasProviderStorageS3
 }
 
 type SourceFileUpdateSchemasStorage string
@@ -476,9 +476,9 @@ func (e *SourceFileUpdateSchemasStorage) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFileUpdateGCSGoogleCloudStorage struct {
-	storage SourceFileUpdateSchemasStorage `const:"GCS" json:"storage"`
 	// In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
-	ServiceAccountJSON *string `json:"service_account_json,omitempty"`
+	ServiceAccountJSON *string                        `json:"service_account_json,omitempty"`
+	storage            SourceFileUpdateSchemasStorage `const:"GCS" json:"storage"`
 }
 
 func (s SourceFileUpdateGCSGoogleCloudStorage) MarshalJSON() ([]byte, error) {
@@ -492,15 +492,15 @@ func (s *SourceFileUpdateGCSGoogleCloudStorage) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *SourceFileUpdateGCSGoogleCloudStorage) GetStorage() SourceFileUpdateSchemasStorage {
-	return SourceFileUpdateSchemasStorageGcs
-}
-
 func (o *SourceFileUpdateGCSGoogleCloudStorage) GetServiceAccountJSON() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ServiceAccountJSON
+}
+
+func (o *SourceFileUpdateGCSGoogleCloudStorage) GetStorage() SourceFileUpdateSchemasStorage {
+	return SourceFileUpdateSchemasStorageGcs
 }
 
 type SourceFileUpdateStorage string
@@ -755,12 +755,12 @@ type SourceFileUpdate struct {
 	DatasetName string `json:"dataset_name"`
 	// The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
 	Format *SourceFileUpdateFileFormat `default:"csv" json:"format"`
+	// The storage Provider or Location of the file(s) which should be replicated.
+	Provider SourceFileUpdateStorageProvider `json:"provider"`
 	// This should be a string in JSON format. It depends on the chosen file format to provide additional options and tune its behavior.
 	ReaderOptions *string `json:"reader_options,omitempty"`
 	// The URL path to access the file which should be replicated.
 	URL string `json:"url"`
-	// The storage Provider or Location of the file(s) which should be replicated.
-	Provider SourceFileUpdateStorageProvider `json:"provider"`
 }
 
 func (s SourceFileUpdate) MarshalJSON() ([]byte, error) {
@@ -788,6 +788,13 @@ func (o *SourceFileUpdate) GetFormat() *SourceFileUpdateFileFormat {
 	return o.Format
 }
 
+func (o *SourceFileUpdate) GetProvider() SourceFileUpdateStorageProvider {
+	if o == nil {
+		return SourceFileUpdateStorageProvider{}
+	}
+	return o.Provider
+}
+
 func (o *SourceFileUpdate) GetReaderOptions() *string {
 	if o == nil {
 		return nil
@@ -800,11 +807,4 @@ func (o *SourceFileUpdate) GetURL() string {
 		return ""
 	}
 	return o.URL
-}
-
-func (o *SourceFileUpdate) GetProvider() SourceFileUpdateStorageProvider {
-	if o == nil {
-		return SourceFileUpdateStorageProvider{}
-	}
-	return o.Provider
 }

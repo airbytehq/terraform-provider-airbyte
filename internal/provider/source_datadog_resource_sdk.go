@@ -27,24 +27,6 @@ func (r *SourceDatadogResourceModel) ToSharedSourceDatadogCreateRequest() *share
 	var applicationKey string
 	applicationKey = r.Configuration.ApplicationKey.ValueString()
 
-	query := new(string)
-	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
-		*query = r.Configuration.Query.ValueString()
-	} else {
-		query = nil
-	}
-	startDate := new(string)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
-	} else {
-		startDate = nil
-	}
-	site := new(shared.Site)
-	if !r.Configuration.Site.IsUnknown() && !r.Configuration.Site.IsNull() {
-		*site = shared.Site(r.Configuration.Site.ValueString())
-	} else {
-		site = nil
-	}
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
@@ -59,28 +41,46 @@ func (r *SourceDatadogResourceModel) ToSharedSourceDatadogCreateRequest() *share
 	}
 	var queries []shared.Queries = []shared.Queries{}
 	for _, queriesItem := range r.Configuration.Queries {
+		dataSource := shared.DataSource(queriesItem.DataSource.ValueString())
 		var name1 string
 		name1 = queriesItem.Name.ValueString()
 
-		var query1 string
-		query1 = queriesItem.Query.ValueString()
+		var query string
+		query = queriesItem.Query.ValueString()
 
-		dataSource := shared.DataSource(queriesItem.DataSource.ValueString())
 		queries = append(queries, shared.Queries{
-			Name:       name1,
-			Query:      query1,
 			DataSource: dataSource,
+			Name:       name1,
+			Query:      query,
 		})
+	}
+	query1 := new(string)
+	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
+		*query1 = r.Configuration.Query.ValueString()
+	} else {
+		query1 = nil
+	}
+	site := new(shared.Site)
+	if !r.Configuration.Site.IsUnknown() && !r.Configuration.Site.IsNull() {
+		*site = shared.Site(r.Configuration.Site.ValueString())
+	} else {
+		site = nil
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
 	}
 	configuration := shared.SourceDatadog{
 		APIKey:               apiKey,
 		ApplicationKey:       applicationKey,
-		Query:                query,
-		StartDate:            startDate,
-		Site:                 site,
 		EndDate:              endDate,
 		MaxRecordsPerRequest: maxRecordsPerRequest,
 		Queries:              queries,
+		Query:                query1,
+		Site:                 site,
+		StartDate:            startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -158,24 +158,6 @@ func (r *SourceDatadogResourceModel) ToSharedSourceDatadogPutRequest() *shared.S
 	var applicationKey string
 	applicationKey = r.Configuration.ApplicationKey.ValueString()
 
-	query := new(string)
-	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
-		*query = r.Configuration.Query.ValueString()
-	} else {
-		query = nil
-	}
-	startDate := new(string)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
-	} else {
-		startDate = nil
-	}
-	site := new(shared.SourceDatadogUpdateSite)
-	if !r.Configuration.Site.IsUnknown() && !r.Configuration.Site.IsNull() {
-		*site = shared.SourceDatadogUpdateSite(r.Configuration.Site.ValueString())
-	} else {
-		site = nil
-	}
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
@@ -190,28 +172,46 @@ func (r *SourceDatadogResourceModel) ToSharedSourceDatadogPutRequest() *shared.S
 	}
 	var queries []shared.SourceDatadogUpdateQueries = []shared.SourceDatadogUpdateQueries{}
 	for _, queriesItem := range r.Configuration.Queries {
+		dataSource := shared.SourceDatadogUpdateDataSource(queriesItem.DataSource.ValueString())
 		var name1 string
 		name1 = queriesItem.Name.ValueString()
 
-		var query1 string
-		query1 = queriesItem.Query.ValueString()
+		var query string
+		query = queriesItem.Query.ValueString()
 
-		dataSource := shared.SourceDatadogUpdateDataSource(queriesItem.DataSource.ValueString())
 		queries = append(queries, shared.SourceDatadogUpdateQueries{
-			Name:       name1,
-			Query:      query1,
 			DataSource: dataSource,
+			Name:       name1,
+			Query:      query,
 		})
+	}
+	query1 := new(string)
+	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
+		*query1 = r.Configuration.Query.ValueString()
+	} else {
+		query1 = nil
+	}
+	site := new(shared.SourceDatadogUpdateSite)
+	if !r.Configuration.Site.IsUnknown() && !r.Configuration.Site.IsNull() {
+		*site = shared.SourceDatadogUpdateSite(r.Configuration.Site.ValueString())
+	} else {
+		site = nil
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
 	}
 	configuration := shared.SourceDatadogUpdate{
 		APIKey:               apiKey,
 		ApplicationKey:       applicationKey,
-		Query:                query,
-		StartDate:            startDate,
-		Site:                 site,
 		EndDate:              endDate,
 		MaxRecordsPerRequest: maxRecordsPerRequest,
 		Queries:              queries,
+		Query:                query1,
+		Site:                 site,
+		StartDate:            startDate,
 	}
 	out := shared.SourceDatadogPutRequest{
 		Name:          name,

@@ -9,6 +9,223 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type SourceSapHanaEnterpriseUpdateSchemasCursorMethod string
+
+const (
+	SourceSapHanaEnterpriseUpdateSchemasCursorMethodCdc SourceSapHanaEnterpriseUpdateSchemasCursorMethod = "cdc"
+)
+
+func (e SourceSapHanaEnterpriseUpdateSchemasCursorMethod) ToPointer() *SourceSapHanaEnterpriseUpdateSchemasCursorMethod {
+	return &e
+}
+func (e *SourceSapHanaEnterpriseUpdateSchemasCursorMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "cdc":
+		*e = SourceSapHanaEnterpriseUpdateSchemasCursorMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateSchemasCursorMethod: %v", v)
+	}
+}
+
+// SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+type SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced string
+
+const (
+	SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedFailSync   SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Fail sync"
+	SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedReSyncData SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
+)
+
+func (e SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
+	return &e
+}
+func (e *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Fail sync":
+		fallthrough
+	case "Re-sync data":
+		*e = SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced: %v", v)
+	}
+}
+
+// SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using change data capture feature. This must be enabled on your database.
+type SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC struct {
+	CursorMethod *SourceSapHanaEnterpriseUpdateSchemasCursorMethod `default:"cdc" json:"cursor_method"`
+	// The amount of time an initial load is allowed to continue for before catching up on CDC events.
+	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
+	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+	InvalidCdcCursorPositionBehavior *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
+	AdditionalProperties             any                                                              `additionalProperties:"true" json:"-"`
+}
+
+func (s SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetCursorMethod() *SourceSapHanaEnterpriseUpdateSchemasCursorMethod {
+	if o == nil {
+		return nil
+	}
+	return o.CursorMethod
+}
+
+func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
+}
+
+func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
+	if o == nil {
+		return nil
+	}
+	return o.InvalidCdcCursorPositionBehavior
+}
+
+func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourceSapHanaEnterpriseUpdateCursorMethod string
+
+const (
+	SourceSapHanaEnterpriseUpdateCursorMethodUserDefined SourceSapHanaEnterpriseUpdateCursorMethod = "user_defined"
+)
+
+func (e SourceSapHanaEnterpriseUpdateCursorMethod) ToPointer() *SourceSapHanaEnterpriseUpdateCursorMethod {
+	return &e
+}
+func (e *SourceSapHanaEnterpriseUpdateCursorMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user_defined":
+		*e = SourceSapHanaEnterpriseUpdateCursorMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateCursorMethod: %v", v)
+	}
+}
+
+// SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor struct {
+	CursorMethod         *SourceSapHanaEnterpriseUpdateCursorMethod `default:"user_defined" json:"cursor_method"`
+	AdditionalProperties any                                        `additionalProperties:"true" json:"-"`
+}
+
+func (s SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) GetCursorMethod() *SourceSapHanaEnterpriseUpdateCursorMethod {
+	if o == nil {
+		return nil
+	}
+	return o.CursorMethod
+}
+
+func (o *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourceSapHanaEnterpriseUpdateUpdateMethodType string
+
+const (
+	SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor     SourceSapHanaEnterpriseUpdateUpdateMethodType = "source-sap-hana-enterprise-update_Scan Changes with User Defined Cursor"
+	SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceSapHanaEnterpriseUpdateUpdateMethodType = "source-sap-hana-enterprise-update_Read Changes using Change Data Capture (CDC)"
+)
+
+// SourceSapHanaEnterpriseUpdateUpdateMethod - Configures how data is extracted from the database.
+type SourceSapHanaEnterpriseUpdateUpdateMethod struct {
+	SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor     *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor     `queryParam:"inline"`
+	SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC `queryParam:"inline"`
+
+	Type SourceSapHanaEnterpriseUpdateUpdateMethodType
+}
+
+func CreateSourceSapHanaEnterpriseUpdateUpdateMethodSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor(sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) SourceSapHanaEnterpriseUpdateUpdateMethod {
+	typ := SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor
+
+	return SourceSapHanaEnterpriseUpdateUpdateMethod{
+		SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor: &sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor,
+		Type: typ,
+	}
+}
+
+func CreateSourceSapHanaEnterpriseUpdateUpdateMethodSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC(sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) SourceSapHanaEnterpriseUpdateUpdateMethod {
+	typ := SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
+
+	return SourceSapHanaEnterpriseUpdateUpdateMethod{
+		SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC: &sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC,
+		Type: typ,
+	}
+}
+
+func (u *SourceSapHanaEnterpriseUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor = SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor{}
+	if err := utils.UnmarshalJSON(data, &sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor = &sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor
+		u.Type = SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor
+		return nil
+	}
+
+	var sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC{}
+	if err := utils.UnmarshalJSON(data, &sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
+		u.SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = &sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
+		u.Type = SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSapHanaEnterpriseUpdateUpdateMethod", string(data))
+}
+
+func (u SourceSapHanaEnterpriseUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true)
+	}
+
+	if u.SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC != nil {
+		return utils.MarshalJSON(u.SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceSapHanaEnterpriseUpdateUpdateMethod: all fields are null")
+}
+
 type SourceSapHanaEnterpriseUpdateSchemasEncryptionEncryptionMethod string
 
 const (
@@ -72,29 +289,6 @@ func (o *SourceSapHanaEnterpriseUpdateTLSEncryptedVerifyCertificate) GetAddition
 	return o.AdditionalProperties
 }
 
-type SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod string
-
-const (
-	SourceSapHanaEnterpriseUpdateSchemasEncryptionMethodClientNne SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod = "client_nne"
-)
-
-func (e SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod) ToPointer() *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod {
-	return &e
-}
-func (e *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "client_nne":
-		*e = SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod: %v", v)
-	}
-}
-
 // SourceSapHanaEnterpriseUpdateEncryptionAlgorithm - This parameter defines what encryption algorithm is used.
 type SourceSapHanaEnterpriseUpdateEncryptionAlgorithm string
 
@@ -125,12 +319,35 @@ func (e *SourceSapHanaEnterpriseUpdateEncryptionAlgorithm) UnmarshalJSON(data []
 	}
 }
 
+type SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod string
+
+const (
+	SourceSapHanaEnterpriseUpdateSchemasEncryptionMethodClientNne SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod = "client_nne"
+)
+
+func (e SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod) ToPointer() *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod {
+	return &e
+}
+func (e *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "client_nne":
+		*e = SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod: %v", v)
+	}
+}
+
 // SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
 type SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE struct {
-	EncryptionMethod *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod `default:"client_nne" json:"encryption_method"`
 	// This parameter defines what encryption algorithm is used.
-	EncryptionAlgorithm  *SourceSapHanaEnterpriseUpdateEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
-	AdditionalProperties any                                               `additionalProperties:"true" json:"-"`
+	EncryptionAlgorithm  *SourceSapHanaEnterpriseUpdateEncryptionAlgorithm     `default:"AES256" json:"encryption_algorithm"`
+	EncryptionMethod     *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod `default:"client_nne" json:"encryption_method"`
+	AdditionalProperties any                                                   `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -144,18 +361,18 @@ func (s *SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE) UnmarshalJSON(
 	return nil
 }
 
-func (o *SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE) GetEncryptionMethod() *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod {
-	if o == nil {
-		return nil
-	}
-	return o.EncryptionMethod
-}
-
 func (o *SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *SourceSapHanaEnterpriseUpdateEncryptionAlgorithm {
 	if o == nil {
 		return nil
 	}
 	return o.EncryptionAlgorithm
+}
+
+func (o *SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE) GetEncryptionMethod() *SourceSapHanaEnterpriseUpdateSchemasEncryptionMethod {
+	if o == nil {
+		return nil
+	}
+	return o.EncryptionMethod
 }
 
 func (o *SourceSapHanaEnterpriseUpdateNativeNetworkEncryptionNNE) GetAdditionalProperties() any {
@@ -330,9 +547,9 @@ func (e *SourceSapHanaEnterpriseUpdateSchemasTunnelMethodTunnelMethod) Unmarshal
 
 // SourceSapHanaEnterpriseUpdatePasswordAuthentication - Connect through a jump server tunnel host using username and password authentication
 type SourceSapHanaEnterpriseUpdatePasswordAuthentication struct {
-	TunnelMethod *SourceSapHanaEnterpriseUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                                        `json:"tunnel_host"`
+	TunnelMethod *SourceSapHanaEnterpriseUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -353,18 +570,18 @@ func (s *SourceSapHanaEnterpriseUpdatePasswordAuthentication) UnmarshalJSON(data
 	return nil
 }
 
-func (o *SourceSapHanaEnterpriseUpdatePasswordAuthentication) GetTunnelMethod() *SourceSapHanaEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
-	if o == nil {
-		return nil
-	}
-	return o.TunnelMethod
-}
-
 func (o *SourceSapHanaEnterpriseUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceSapHanaEnterpriseUpdatePasswordAuthentication) GetTunnelMethod() *SourceSapHanaEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceSapHanaEnterpriseUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -420,15 +637,15 @@ func (e *SourceSapHanaEnterpriseUpdateSchemasTunnelMethod) UnmarshalJSON(data []
 
 // SourceSapHanaEnterpriseUpdateSSHKeyAuthentication - Connect through a jump server tunnel host using username and ssh key
 type SourceSapHanaEnterpriseUpdateSSHKeyAuthentication struct {
-	TunnelMethod *SourceSapHanaEnterpriseUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                            `json:"tunnel_host"`
+	TunnelMethod *SourceSapHanaEnterpriseUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
-	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey               string `json:"ssh_key"`
+	TunnelUser           string `json:"tunnel_user"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
@@ -443,11 +660,11 @@ func (s *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) UnmarshalJSON(data [
 	return nil
 }
 
-func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceSapHanaEnterpriseUpdateSchemasTunnelMethod {
+func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetSSHKey() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.TunnelMethod
+	return o.SSHKey
 }
 
 func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -455,6 +672,13 @@ func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetTunnelHost() stri
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceSapHanaEnterpriseUpdateSchemasTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -469,13 +693,6 @@ func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetTunnelUser() stri
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 func (o *SourceSapHanaEnterpriseUpdateSSHKeyAuthentication) GetAdditionalProperties() any {
@@ -625,250 +842,33 @@ func (u SourceSapHanaEnterpriseUpdateSSHTunnelMethod) MarshalJSON() ([]byte, err
 	return nil, errors.New("could not marshal union type SourceSapHanaEnterpriseUpdateSSHTunnelMethod: all fields are null")
 }
 
-type SourceSapHanaEnterpriseUpdateSchemasCursorMethod string
-
-const (
-	SourceSapHanaEnterpriseUpdateSchemasCursorMethodCdc SourceSapHanaEnterpriseUpdateSchemasCursorMethod = "cdc"
-)
-
-func (e SourceSapHanaEnterpriseUpdateSchemasCursorMethod) ToPointer() *SourceSapHanaEnterpriseUpdateSchemasCursorMethod {
-	return &e
-}
-func (e *SourceSapHanaEnterpriseUpdateSchemasCursorMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "cdc":
-		*e = SourceSapHanaEnterpriseUpdateSchemasCursorMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateSchemasCursorMethod: %v", v)
-	}
-}
-
-// SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-type SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced string
-
-const (
-	SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedFailSync   SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Fail sync"
-	SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedReSyncData SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
-)
-
-func (e SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
-	return &e
-}
-func (e *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Fail sync":
-		fallthrough
-	case "Re-sync data":
-		*e = SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced: %v", v)
-	}
-}
-
-// SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using change data capture feature. This must be enabled on your database.
-type SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC struct {
-	CursorMethod *SourceSapHanaEnterpriseUpdateSchemasCursorMethod `default:"cdc" json:"cursor_method"`
-	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-	InvalidCdcCursorPositionBehavior *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	// The amount of time an initial load is allowed to continue for before catching up on CDC events.
-	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
-	AdditionalProperties    any    `additionalProperties:"true" json:"-"`
-}
-
-func (s SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetCursorMethod() *SourceSapHanaEnterpriseUpdateSchemasCursorMethod {
-	if o == nil {
-		return nil
-	}
-	return o.CursorMethod
-}
-
-func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceSapHanaEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
-	if o == nil {
-		return nil
-	}
-	return o.InvalidCdcCursorPositionBehavior
-}
-
-func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialLoadTimeoutHours
-}
-
-func (o *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type SourceSapHanaEnterpriseUpdateCursorMethod string
-
-const (
-	SourceSapHanaEnterpriseUpdateCursorMethodUserDefined SourceSapHanaEnterpriseUpdateCursorMethod = "user_defined"
-)
-
-func (e SourceSapHanaEnterpriseUpdateCursorMethod) ToPointer() *SourceSapHanaEnterpriseUpdateCursorMethod {
-	return &e
-}
-func (e *SourceSapHanaEnterpriseUpdateCursorMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "user_defined":
-		*e = SourceSapHanaEnterpriseUpdateCursorMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSapHanaEnterpriseUpdateCursorMethod: %v", v)
-	}
-}
-
-// SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
-type SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor struct {
-	CursorMethod         *SourceSapHanaEnterpriseUpdateCursorMethod `default:"user_defined" json:"cursor_method"`
-	AdditionalProperties any                                        `additionalProperties:"true" json:"-"`
-}
-
-func (s SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) GetCursorMethod() *SourceSapHanaEnterpriseUpdateCursorMethod {
-	if o == nil {
-		return nil
-	}
-	return o.CursorMethod
-}
-
-func (o *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type SourceSapHanaEnterpriseUpdateUpdateMethodType string
-
-const (
-	SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor     SourceSapHanaEnterpriseUpdateUpdateMethodType = "source-sap-hana-enterprise-update_Scan Changes with User Defined Cursor"
-	SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceSapHanaEnterpriseUpdateUpdateMethodType = "source-sap-hana-enterprise-update_Read Changes using Change Data Capture (CDC)"
-)
-
-// SourceSapHanaEnterpriseUpdateUpdateMethod - Configures how data is extracted from the database.
-type SourceSapHanaEnterpriseUpdateUpdateMethod struct {
-	SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor     *SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor     `queryParam:"inline"`
-	SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC *SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC `queryParam:"inline"`
-
-	Type SourceSapHanaEnterpriseUpdateUpdateMethodType
-}
-
-func CreateSourceSapHanaEnterpriseUpdateUpdateMethodSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor(sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor) SourceSapHanaEnterpriseUpdateUpdateMethod {
-	typ := SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor
-
-	return SourceSapHanaEnterpriseUpdateUpdateMethod{
-		SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor: &sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor,
-		Type: typ,
-	}
-}
-
-func CreateSourceSapHanaEnterpriseUpdateUpdateMethodSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC(sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) SourceSapHanaEnterpriseUpdateUpdateMethod {
-	typ := SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
-
-	return SourceSapHanaEnterpriseUpdateUpdateMethod{
-		SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC: &sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC,
-		Type: typ,
-	}
-}
-
-func (u *SourceSapHanaEnterpriseUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
-
-	var sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor = SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor{}
-	if err := utils.UnmarshalJSON(data, &sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor = &sourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor
-		u.Type = SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor
-		return nil
-	}
-
-	var sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC{}
-	if err := utils.UnmarshalJSON(data, &sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
-		u.SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = &sourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
-		u.Type = SourceSapHanaEnterpriseUpdateUpdateMethodTypeSourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSapHanaEnterpriseUpdateUpdateMethod", string(data))
-}
-
-func (u SourceSapHanaEnterpriseUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.SourceSapHanaEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true)
-	}
-
-	if u.SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC != nil {
-		return utils.MarshalJSON(u.SourceSapHanaEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceSapHanaEnterpriseUpdateUpdateMethod: all fields are null")
-}
-
 type SourceSapHanaEnterpriseUpdate struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// Port of the database.
-	// SapHana Corporations recommends the following port numbers:
-	// 443 - Default listening port for SAP HANA cloud client connections to the listener.
-	Port *int64 `default:"443" json:"port"`
-	// The username which is used to access the database.
-	Username string `json:"username"`
-	// The password associated with the username.
-	Password *string `json:"password,omitempty"`
-	// The list of schemas to sync from. Defaults to user. Case sensitive.
-	Schemas []string `json:"schemas,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The encryption method with is used when communicating with the database.
-	Encryption SourceSapHanaEnterpriseUpdateEncryption `json:"encryption"`
-	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-	TunnelMethod SourceSapHanaEnterpriseUpdateSSHTunnelMethod `json:"tunnel_method"`
-	// Configures how data is extracted from the database.
-	Cursor SourceSapHanaEnterpriseUpdateUpdateMethod `json:"cursor"`
+	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
+	CheckPrivileges *bool `default:"true" json:"check_privileges"`
 	// How often (in seconds) a stream should checkpoint, when possible.
 	CheckpointTargetIntervalSeconds *int64 `default:"300" json:"checkpoint_target_interval_seconds"`
 	// Maximum number of concurrent queries to the database.
 	Concurrency *int64 `default:"1" json:"concurrency"`
-	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
-	CheckPrivileges *bool `default:"true" json:"check_privileges"`
+	// Configures how data is extracted from the database.
+	Cursor SourceSapHanaEnterpriseUpdateUpdateMethod `json:"cursor"`
+	// The encryption method with is used when communicating with the database.
+	Encryption SourceSapHanaEnterpriseUpdateEncryption `json:"encryption"`
+	// Hostname of the database.
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// The password associated with the username.
+	Password *string `json:"password,omitempty"`
+	// Port of the database.
+	// SapHana Corporations recommends the following port numbers:
+	// 443 - Default listening port for SAP HANA cloud client connections to the listener.
+	Port *int64 `default:"443" json:"port"`
+	// The list of schemas to sync from. Defaults to user. Case sensitive.
+	Schemas []string `json:"schemas,omitempty"`
+	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+	TunnelMethod SourceSapHanaEnterpriseUpdateSSHTunnelMethod `json:"tunnel_method"`
+	// The username which is used to access the database.
+	Username string `json:"username"`
 }
 
 func (s SourceSapHanaEnterpriseUpdate) MarshalJSON() ([]byte, error) {
@@ -882,67 +882,11 @@ func (s *SourceSapHanaEnterpriseUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSapHanaEnterpriseUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetPort() *int64 {
+func (o *SourceSapHanaEnterpriseUpdate) GetCheckPrivileges() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Port
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetSchemas() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Schemas
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetEncryption() SourceSapHanaEnterpriseUpdateEncryption {
-	if o == nil {
-		return SourceSapHanaEnterpriseUpdateEncryption{}
-	}
-	return o.Encryption
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetTunnelMethod() SourceSapHanaEnterpriseUpdateSSHTunnelMethod {
-	if o == nil {
-		return SourceSapHanaEnterpriseUpdateSSHTunnelMethod{}
-	}
-	return o.TunnelMethod
-}
-
-func (o *SourceSapHanaEnterpriseUpdate) GetCursor() SourceSapHanaEnterpriseUpdateUpdateMethod {
-	if o == nil {
-		return SourceSapHanaEnterpriseUpdateUpdateMethod{}
-	}
-	return o.Cursor
+	return o.CheckPrivileges
 }
 
 func (o *SourceSapHanaEnterpriseUpdate) GetCheckpointTargetIntervalSeconds() *int64 {
@@ -959,9 +903,65 @@ func (o *SourceSapHanaEnterpriseUpdate) GetConcurrency() *int64 {
 	return o.Concurrency
 }
 
-func (o *SourceSapHanaEnterpriseUpdate) GetCheckPrivileges() *bool {
+func (o *SourceSapHanaEnterpriseUpdate) GetCursor() SourceSapHanaEnterpriseUpdateUpdateMethod {
+	if o == nil {
+		return SourceSapHanaEnterpriseUpdateUpdateMethod{}
+	}
+	return o.Cursor
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetEncryption() SourceSapHanaEnterpriseUpdateEncryption {
+	if o == nil {
+		return SourceSapHanaEnterpriseUpdateEncryption{}
+	}
+	return o.Encryption
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetJdbcURLParams() *string {
 	if o == nil {
 		return nil
 	}
-	return o.CheckPrivileges
+	return o.JdbcURLParams
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetTunnelMethod() SourceSapHanaEnterpriseUpdateSSHTunnelMethod {
+	if o == nil {
+		return SourceSapHanaEnterpriseUpdateSSHTunnelMethod{}
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceSapHanaEnterpriseUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -61,19 +61,19 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusCreateRequest(
 	}
 	var destinationMilvusAzureOpenAI *shared.DestinationMilvusAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationMilvusAzureOpenAI = &shared.DestinationMilvusAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationMilvusAzureOpenAI != nil {
@@ -92,20 +92,20 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusCreateRequest(
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationMilvusOpenAICompatible = &shared.DestinationMilvusOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationMilvusOpenAICompatible != nil {
@@ -113,40 +113,133 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusCreateRequest(
 			DestinationMilvusOpenAICompatible: destinationMilvusOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var auth shared.DestinationMilvusAuthentication
+	var destinationMilvusAPIToken *shared.DestinationMilvusAPIToken
+	if r.Configuration.Indexing.Auth.APIToken != nil {
+		var token string
+		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
 
+		destinationMilvusAPIToken = &shared.DestinationMilvusAPIToken{
+			Token: token,
+		}
+	}
+	if destinationMilvusAPIToken != nil {
+		auth = shared.DestinationMilvusAuthentication{
+			DestinationMilvusAPIToken: destinationMilvusAPIToken,
+		}
+	}
+	var destinationMilvusUsernamePassword *shared.DestinationMilvusUsernamePassword
+	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
+		var password string
+		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
+
+		var username string
+		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
+
+		destinationMilvusUsernamePassword = &shared.DestinationMilvusUsernamePassword{
+			Password: password,
+			Username: username,
+		}
+	}
+	if destinationMilvusUsernamePassword != nil {
+		auth = shared.DestinationMilvusAuthentication{
+			DestinationMilvusUsernamePassword: destinationMilvusUsernamePassword,
+		}
+	}
+	var noAuth *shared.NoAuth
+	if r.Configuration.Indexing.Auth.NoAuth != nil {
+		noAuth = &shared.NoAuth{}
+	}
+	if noAuth != nil {
+		auth = shared.DestinationMilvusAuthentication{
+			NoAuth: noAuth,
+		}
+	}
+	var collection string
+	collection = r.Configuration.Indexing.Collection.ValueString()
+
+	db := new(string)
+	if !r.Configuration.Indexing.Db.IsUnknown() && !r.Configuration.Indexing.Db.IsNull() {
+		*db = r.Configuration.Indexing.Db.ValueString()
+	} else {
+		db = nil
+	}
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	textField := new(string)
+	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
+		*textField = r.Configuration.Indexing.TextField.ValueString()
+	} else {
+		textField = nil
+	}
+	vectorField := new(string)
+	if !r.Configuration.Indexing.VectorField.IsUnknown() && !r.Configuration.Indexing.VectorField.IsNull() {
+		*vectorField = r.Configuration.Indexing.VectorField.ValueString()
+	} else {
+		vectorField = nil
+	}
+	indexing := shared.DestinationMilvusIndexing{
+		Auth:        auth,
+		Collection:  collection,
+		Db:          db,
+		Host:        host,
+		TextField:   textField,
+		VectorField: vectorField,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationMilvusFieldNameMappingConfigModel = []shared.DestinationMilvusFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationMilvusFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationMilvusTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationMilvusBySeparator *shared.DestinationMilvusBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationMilvusBySeparator = &shared.DestinationMilvusBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationMilvusBySeparator != nil {
@@ -184,112 +277,19 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusCreateRequest(
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationMilvusFieldNameMappingConfigModel = []shared.DestinationMilvusFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationMilvusFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationMilvusProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	db := new(string)
-	if !r.Configuration.Indexing.Db.IsUnknown() && !r.Configuration.Indexing.Db.IsNull() {
-		*db = r.Configuration.Indexing.Db.ValueString()
-	} else {
-		db = nil
-	}
-	var collection string
-	collection = r.Configuration.Indexing.Collection.ValueString()
-
-	var auth shared.DestinationMilvusAuthentication
-	var destinationMilvusAPIToken *shared.DestinationMilvusAPIToken
-	if r.Configuration.Indexing.Auth.APIToken != nil {
-		var token string
-		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
-
-		destinationMilvusAPIToken = &shared.DestinationMilvusAPIToken{
-			Token: token,
-		}
-	}
-	if destinationMilvusAPIToken != nil {
-		auth = shared.DestinationMilvusAuthentication{
-			DestinationMilvusAPIToken: destinationMilvusAPIToken,
-		}
-	}
-	var destinationMilvusUsernamePassword *shared.DestinationMilvusUsernamePassword
-	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
-		var username string
-		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
-
-		var password string
-		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
-
-		destinationMilvusUsernamePassword = &shared.DestinationMilvusUsernamePassword{
-			Username: username,
-			Password: password,
-		}
-	}
-	if destinationMilvusUsernamePassword != nil {
-		auth = shared.DestinationMilvusAuthentication{
-			DestinationMilvusUsernamePassword: destinationMilvusUsernamePassword,
-		}
-	}
-	var noAuth *shared.NoAuth
-	if r.Configuration.Indexing.Auth.NoAuth != nil {
-		noAuth = &shared.NoAuth{}
-	}
-	if noAuth != nil {
-		auth = shared.DestinationMilvusAuthentication{
-			NoAuth: noAuth,
-		}
-	}
-	vectorField := new(string)
-	if !r.Configuration.Indexing.VectorField.IsUnknown() && !r.Configuration.Indexing.VectorField.IsNull() {
-		*vectorField = r.Configuration.Indexing.VectorField.ValueString()
-	} else {
-		vectorField = nil
-	}
-	textField := new(string)
-	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
-		*textField = r.Configuration.Indexing.TextField.ValueString()
-	} else {
-		textField = nil
-	}
-	indexing := shared.DestinationMilvusIndexing{
-		Host:        host,
-		Db:          db,
-		Collection:  collection,
-		Auth:        auth,
-		VectorField: vectorField,
-		TextField:   textField,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationMilvus{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationMilvusCreateRequest{
 		Name:          name,
@@ -394,19 +394,19 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusPutRequest() *
 	}
 	var destinationMilvusUpdateAzureOpenAI *shared.DestinationMilvusUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationMilvusUpdateAzureOpenAI = &shared.DestinationMilvusUpdateAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationMilvusUpdateAzureOpenAI != nil {
@@ -425,20 +425,20 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusPutRequest() *
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationMilvusUpdateOpenAICompatible = &shared.DestinationMilvusUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationMilvusUpdateOpenAICompatible != nil {
@@ -446,40 +446,133 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusPutRequest() *
 			DestinationMilvusUpdateOpenAICompatible: destinationMilvusUpdateOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var auth shared.DestinationMilvusUpdateAuthentication
+	var destinationMilvusUpdateAPIToken *shared.DestinationMilvusUpdateAPIToken
+	if r.Configuration.Indexing.Auth.APIToken != nil {
+		var token string
+		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
 
+		destinationMilvusUpdateAPIToken = &shared.DestinationMilvusUpdateAPIToken{
+			Token: token,
+		}
+	}
+	if destinationMilvusUpdateAPIToken != nil {
+		auth = shared.DestinationMilvusUpdateAuthentication{
+			DestinationMilvusUpdateAPIToken: destinationMilvusUpdateAPIToken,
+		}
+	}
+	var destinationMilvusUpdateUsernamePassword *shared.DestinationMilvusUpdateUsernamePassword
+	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
+		var password string
+		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
+
+		var username string
+		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
+
+		destinationMilvusUpdateUsernamePassword = &shared.DestinationMilvusUpdateUsernamePassword{
+			Password: password,
+			Username: username,
+		}
+	}
+	if destinationMilvusUpdateUsernamePassword != nil {
+		auth = shared.DestinationMilvusUpdateAuthentication{
+			DestinationMilvusUpdateUsernamePassword: destinationMilvusUpdateUsernamePassword,
+		}
+	}
+	var destinationMilvusUpdateNoAuth *shared.DestinationMilvusUpdateNoAuth
+	if r.Configuration.Indexing.Auth.NoAuth != nil {
+		destinationMilvusUpdateNoAuth = &shared.DestinationMilvusUpdateNoAuth{}
+	}
+	if destinationMilvusUpdateNoAuth != nil {
+		auth = shared.DestinationMilvusUpdateAuthentication{
+			DestinationMilvusUpdateNoAuth: destinationMilvusUpdateNoAuth,
+		}
+	}
+	var collection string
+	collection = r.Configuration.Indexing.Collection.ValueString()
+
+	db := new(string)
+	if !r.Configuration.Indexing.Db.IsUnknown() && !r.Configuration.Indexing.Db.IsNull() {
+		*db = r.Configuration.Indexing.Db.ValueString()
+	} else {
+		db = nil
+	}
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	textField := new(string)
+	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
+		*textField = r.Configuration.Indexing.TextField.ValueString()
+	} else {
+		textField = nil
+	}
+	vectorField := new(string)
+	if !r.Configuration.Indexing.VectorField.IsUnknown() && !r.Configuration.Indexing.VectorField.IsNull() {
+		*vectorField = r.Configuration.Indexing.VectorField.ValueString()
+	} else {
+		vectorField = nil
+	}
+	indexing := shared.DestinationMilvusUpdateIndexing{
+		Auth:        auth,
+		Collection:  collection,
+		Db:          db,
+		Host:        host,
+		TextField:   textField,
+		VectorField: vectorField,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationMilvusUpdateFieldNameMappingConfigModel = []shared.DestinationMilvusUpdateFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationMilvusUpdateFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationMilvusUpdateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationMilvusUpdateBySeparator *shared.DestinationMilvusUpdateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationMilvusUpdateBySeparator = &shared.DestinationMilvusUpdateBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationMilvusUpdateBySeparator != nil {
@@ -517,112 +610,19 @@ func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusPutRequest() *
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationMilvusUpdateFieldNameMappingConfigModel = []shared.DestinationMilvusUpdateFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationMilvusUpdateFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationMilvusUpdateProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	db := new(string)
-	if !r.Configuration.Indexing.Db.IsUnknown() && !r.Configuration.Indexing.Db.IsNull() {
-		*db = r.Configuration.Indexing.Db.ValueString()
-	} else {
-		db = nil
-	}
-	var collection string
-	collection = r.Configuration.Indexing.Collection.ValueString()
-
-	var auth shared.DestinationMilvusUpdateAuthentication
-	var destinationMilvusUpdateAPIToken *shared.DestinationMilvusUpdateAPIToken
-	if r.Configuration.Indexing.Auth.APIToken != nil {
-		var token string
-		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
-
-		destinationMilvusUpdateAPIToken = &shared.DestinationMilvusUpdateAPIToken{
-			Token: token,
-		}
-	}
-	if destinationMilvusUpdateAPIToken != nil {
-		auth = shared.DestinationMilvusUpdateAuthentication{
-			DestinationMilvusUpdateAPIToken: destinationMilvusUpdateAPIToken,
-		}
-	}
-	var destinationMilvusUpdateUsernamePassword *shared.DestinationMilvusUpdateUsernamePassword
-	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
-		var username string
-		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
-
-		var password string
-		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
-
-		destinationMilvusUpdateUsernamePassword = &shared.DestinationMilvusUpdateUsernamePassword{
-			Username: username,
-			Password: password,
-		}
-	}
-	if destinationMilvusUpdateUsernamePassword != nil {
-		auth = shared.DestinationMilvusUpdateAuthentication{
-			DestinationMilvusUpdateUsernamePassword: destinationMilvusUpdateUsernamePassword,
-		}
-	}
-	var destinationMilvusUpdateNoAuth *shared.DestinationMilvusUpdateNoAuth
-	if r.Configuration.Indexing.Auth.NoAuth != nil {
-		destinationMilvusUpdateNoAuth = &shared.DestinationMilvusUpdateNoAuth{}
-	}
-	if destinationMilvusUpdateNoAuth != nil {
-		auth = shared.DestinationMilvusUpdateAuthentication{
-			DestinationMilvusUpdateNoAuth: destinationMilvusUpdateNoAuth,
-		}
-	}
-	vectorField := new(string)
-	if !r.Configuration.Indexing.VectorField.IsUnknown() && !r.Configuration.Indexing.VectorField.IsNull() {
-		*vectorField = r.Configuration.Indexing.VectorField.ValueString()
-	} else {
-		vectorField = nil
-	}
-	textField := new(string)
-	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
-		*textField = r.Configuration.Indexing.TextField.ValueString()
-	} else {
-		textField = nil
-	}
-	indexing := shared.DestinationMilvusUpdateIndexing{
-		Host:        host,
-		Db:          db,
-		Collection:  collection,
-		Auth:        auth,
-		VectorField: vectorField,
-		TextField:   textField,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationMilvusUpdate{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationMilvusPutRequest{
 		Name:          name,

@@ -34,17 +34,17 @@ func (e *Shutterstock) UnmarshalJSON(data []byte) error {
 
 type SourceShutterstock struct {
 	// Your OAuth 2.0 token for accessing the Shutterstock API. Obtain this token from your Shutterstock developer account.
-	APIToken  string    `json:"api_token"`
-	StartDate time.Time `json:"start_date"`
-	// The query for image search
-	QueryForImageSearch *string `default:"mountain" json:"query_for_image_search"`
-	// The Query for `videos_search` stream
-	QueryForVideoSearch *string `default:"mountain" json:"query_for_video_search"`
+	APIToken string `json:"api_token"`
 	// The query for image search
 	QueryForAudioSearch *string `default:"mountain" json:"query_for_audio_search"`
 	// The query for catalog search
-	QueryForCatalogSearch *string      `default:"mountain" json:"query_for_catalog_search"`
-	sourceType            Shutterstock `const:"shutterstock" json:"sourceType"`
+	QueryForCatalogSearch *string `default:"mountain" json:"query_for_catalog_search"`
+	// The query for image search
+	QueryForImageSearch *string `default:"mountain" json:"query_for_image_search"`
+	// The Query for `videos_search` stream
+	QueryForVideoSearch *string      `default:"mountain" json:"query_for_video_search"`
+	StartDate           time.Time    `json:"start_date"`
+	sourceType          Shutterstock `const:"shutterstock" json:"sourceType"`
 }
 
 func (s SourceShutterstock) MarshalJSON() ([]byte, error) {
@@ -65,11 +65,18 @@ func (o *SourceShutterstock) GetAPIToken() string {
 	return o.APIToken
 }
 
-func (o *SourceShutterstock) GetStartDate() time.Time {
+func (o *SourceShutterstock) GetQueryForAudioSearch() *string {
 	if o == nil {
-		return time.Time{}
+		return nil
 	}
-	return o.StartDate
+	return o.QueryForAudioSearch
+}
+
+func (o *SourceShutterstock) GetQueryForCatalogSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryForCatalogSearch
 }
 
 func (o *SourceShutterstock) GetQueryForImageSearch() *string {
@@ -86,18 +93,11 @@ func (o *SourceShutterstock) GetQueryForVideoSearch() *string {
 	return o.QueryForVideoSearch
 }
 
-func (o *SourceShutterstock) GetQueryForAudioSearch() *string {
+func (o *SourceShutterstock) GetStartDate() time.Time {
 	if o == nil {
-		return nil
+		return time.Time{}
 	}
-	return o.QueryForAudioSearch
-}
-
-func (o *SourceShutterstock) GetQueryForCatalogSearch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QueryForCatalogSearch
+	return o.StartDate
 }
 
 func (o *SourceShutterstock) GetSourceType() Shutterstock {

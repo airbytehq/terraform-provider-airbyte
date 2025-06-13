@@ -25,19 +25,6 @@ func (r *SourceShutterstockResourceModel) ToSharedSourceShutterstockCreateReques
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	queryForImageSearch := new(string)
-	if !r.Configuration.QueryForImageSearch.IsUnknown() && !r.Configuration.QueryForImageSearch.IsNull() {
-		*queryForImageSearch = r.Configuration.QueryForImageSearch.ValueString()
-	} else {
-		queryForImageSearch = nil
-	}
-	queryForVideoSearch := new(string)
-	if !r.Configuration.QueryForVideoSearch.IsUnknown() && !r.Configuration.QueryForVideoSearch.IsNull() {
-		*queryForVideoSearch = r.Configuration.QueryForVideoSearch.ValueString()
-	} else {
-		queryForVideoSearch = nil
-	}
 	queryForAudioSearch := new(string)
 	if !r.Configuration.QueryForAudioSearch.IsUnknown() && !r.Configuration.QueryForAudioSearch.IsNull() {
 		*queryForAudioSearch = r.Configuration.QueryForAudioSearch.ValueString()
@@ -50,13 +37,26 @@ func (r *SourceShutterstockResourceModel) ToSharedSourceShutterstockCreateReques
 	} else {
 		queryForCatalogSearch = nil
 	}
+	queryForImageSearch := new(string)
+	if !r.Configuration.QueryForImageSearch.IsUnknown() && !r.Configuration.QueryForImageSearch.IsNull() {
+		*queryForImageSearch = r.Configuration.QueryForImageSearch.ValueString()
+	} else {
+		queryForImageSearch = nil
+	}
+	queryForVideoSearch := new(string)
+	if !r.Configuration.QueryForVideoSearch.IsUnknown() && !r.Configuration.QueryForVideoSearch.IsNull() {
+		*queryForVideoSearch = r.Configuration.QueryForVideoSearch.ValueString()
+	} else {
+		queryForVideoSearch = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceShutterstock{
 		APIToken:              apiToken,
-		StartDate:             startDate,
-		QueryForImageSearch:   queryForImageSearch,
-		QueryForVideoSearch:   queryForVideoSearch,
 		QueryForAudioSearch:   queryForAudioSearch,
 		QueryForCatalogSearch: queryForCatalogSearch,
+		QueryForImageSearch:   queryForImageSearch,
+		QueryForVideoSearch:   queryForVideoSearch,
+		StartDate:             startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -131,19 +131,6 @@ func (r *SourceShutterstockResourceModel) ToSharedSourceShutterstockPutRequest()
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	queryForImageSearch := new(string)
-	if !r.Configuration.QueryForImageSearch.IsUnknown() && !r.Configuration.QueryForImageSearch.IsNull() {
-		*queryForImageSearch = r.Configuration.QueryForImageSearch.ValueString()
-	} else {
-		queryForImageSearch = nil
-	}
-	queryForVideoSearch := new(string)
-	if !r.Configuration.QueryForVideoSearch.IsUnknown() && !r.Configuration.QueryForVideoSearch.IsNull() {
-		*queryForVideoSearch = r.Configuration.QueryForVideoSearch.ValueString()
-	} else {
-		queryForVideoSearch = nil
-	}
 	queryForAudioSearch := new(string)
 	if !r.Configuration.QueryForAudioSearch.IsUnknown() && !r.Configuration.QueryForAudioSearch.IsNull() {
 		*queryForAudioSearch = r.Configuration.QueryForAudioSearch.ValueString()
@@ -156,13 +143,26 @@ func (r *SourceShutterstockResourceModel) ToSharedSourceShutterstockPutRequest()
 	} else {
 		queryForCatalogSearch = nil
 	}
+	queryForImageSearch := new(string)
+	if !r.Configuration.QueryForImageSearch.IsUnknown() && !r.Configuration.QueryForImageSearch.IsNull() {
+		*queryForImageSearch = r.Configuration.QueryForImageSearch.ValueString()
+	} else {
+		queryForImageSearch = nil
+	}
+	queryForVideoSearch := new(string)
+	if !r.Configuration.QueryForVideoSearch.IsUnknown() && !r.Configuration.QueryForVideoSearch.IsNull() {
+		*queryForVideoSearch = r.Configuration.QueryForVideoSearch.ValueString()
+	} else {
+		queryForVideoSearch = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceShutterstockUpdate{
 		APIToken:              apiToken,
-		StartDate:             startDate,
-		QueryForImageSearch:   queryForImageSearch,
-		QueryForVideoSearch:   queryForVideoSearch,
 		QueryForAudioSearch:   queryForAudioSearch,
 		QueryForCatalogSearch: queryForCatalogSearch,
+		QueryForImageSearch:   queryForImageSearch,
+		QueryForVideoSearch:   queryForVideoSearch,
+		StartDate:             startDate,
 	}
 	out := shared.SourceShutterstockPutRequest{
 		Name:          name,

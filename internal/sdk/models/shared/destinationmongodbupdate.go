@@ -9,281 +9,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type DestinationMongodbUpdateSchemasInstanceTypeInstance string
-
-const (
-	DestinationMongodbUpdateSchemasInstanceTypeInstanceAtlas DestinationMongodbUpdateSchemasInstanceTypeInstance = "atlas"
-)
-
-func (e DestinationMongodbUpdateSchemasInstanceTypeInstance) ToPointer() *DestinationMongodbUpdateSchemasInstanceTypeInstance {
-	return &e
-}
-func (e *DestinationMongodbUpdateSchemasInstanceTypeInstance) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "atlas":
-		*e = DestinationMongodbUpdateSchemasInstanceTypeInstance(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMongodbUpdateSchemasInstanceTypeInstance: %v", v)
-	}
-}
-
-type DestinationMongodbUpdateMongoDBAtlas struct {
-	Instance *DestinationMongodbUpdateSchemasInstanceTypeInstance `default:"atlas" json:"instance"`
-	// URL of a cluster to connect to.
-	ClusterURL string `json:"cluster_url"`
-}
-
-func (d DestinationMongodbUpdateMongoDBAtlas) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMongodbUpdateMongoDBAtlas) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMongodbUpdateMongoDBAtlas) GetInstance() *DestinationMongodbUpdateSchemasInstanceTypeInstance {
-	if o == nil {
-		return nil
-	}
-	return o.Instance
-}
-
-func (o *DestinationMongodbUpdateMongoDBAtlas) GetClusterURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClusterURL
-}
-
-type DestinationMongodbUpdateSchemasInstance string
-
-const (
-	DestinationMongodbUpdateSchemasInstanceReplica DestinationMongodbUpdateSchemasInstance = "replica"
-)
-
-func (e DestinationMongodbUpdateSchemasInstance) ToPointer() *DestinationMongodbUpdateSchemasInstance {
-	return &e
-}
-func (e *DestinationMongodbUpdateSchemasInstance) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "replica":
-		*e = DestinationMongodbUpdateSchemasInstance(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMongodbUpdateSchemasInstance: %v", v)
-	}
-}
-
-type DestinationMongodbUpdateReplicaSet struct {
-	Instance *DestinationMongodbUpdateSchemasInstance `default:"replica" json:"instance"`
-	// The members of a replica set. Please specify `host`:`port` of each member seperated by comma.
-	ServerAddresses string `json:"server_addresses"`
-	// A replica set name.
-	ReplicaSet *string `json:"replica_set,omitempty"`
-}
-
-func (d DestinationMongodbUpdateReplicaSet) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMongodbUpdateReplicaSet) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMongodbUpdateReplicaSet) GetInstance() *DestinationMongodbUpdateSchemasInstance {
-	if o == nil {
-		return nil
-	}
-	return o.Instance
-}
-
-func (o *DestinationMongodbUpdateReplicaSet) GetServerAddresses() string {
-	if o == nil {
-		return ""
-	}
-	return o.ServerAddresses
-}
-
-func (o *DestinationMongodbUpdateReplicaSet) GetReplicaSet() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ReplicaSet
-}
-
-type DestinationMongodbUpdateInstance string
-
-const (
-	DestinationMongodbUpdateInstanceStandalone DestinationMongodbUpdateInstance = "standalone"
-)
-
-func (e DestinationMongodbUpdateInstance) ToPointer() *DestinationMongodbUpdateInstance {
-	return &e
-}
-func (e *DestinationMongodbUpdateInstance) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "standalone":
-		*e = DestinationMongodbUpdateInstance(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMongodbUpdateInstance: %v", v)
-	}
-}
-
-type DestinationMongodbUpdateStandaloneMongoDbInstance struct {
-	Instance *DestinationMongodbUpdateInstance `default:"standalone" json:"instance"`
-	// The Host of a Mongo database to be replicated.
-	Host string `json:"host"`
-	// The Port of a Mongo database to be replicated.
-	Port *int64 `default:"27017" json:"port"`
-	// Indicates whether TLS encryption protocol will be used to connect to MongoDB. It is recommended to use TLS connection if possible. For more information see <a href="https://docs.airbyte.com/integrations/sources/mongodb-v2">documentation</a>.
-	TLS *bool `default:"false" json:"tls"`
-}
-
-func (d DestinationMongodbUpdateStandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMongodbUpdateStandaloneMongoDbInstance) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetInstance() *DestinationMongodbUpdateInstance {
-	if o == nil {
-		return nil
-	}
-	return o.Instance
-}
-
-func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
-func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetTLS() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.TLS
-}
-
-type DestinationMongodbUpdateMongoDbInstanceTypeType string
-
-const (
-	DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateStandaloneMongoDbInstance DestinationMongodbUpdateMongoDbInstanceTypeType = "destination-mongodb-update_Standalone MongoDb Instance"
-	DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateReplicaSet                DestinationMongodbUpdateMongoDbInstanceTypeType = "destination-mongodb-update_Replica Set"
-	DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateMongoDBAtlas              DestinationMongodbUpdateMongoDbInstanceTypeType = "destination-mongodb-update_MongoDB Atlas"
-)
-
-// DestinationMongodbUpdateMongoDbInstanceType - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-type DestinationMongodbUpdateMongoDbInstanceType struct {
-	DestinationMongodbUpdateStandaloneMongoDbInstance *DestinationMongodbUpdateStandaloneMongoDbInstance `queryParam:"inline"`
-	DestinationMongodbUpdateReplicaSet                *DestinationMongodbUpdateReplicaSet                `queryParam:"inline"`
-	DestinationMongodbUpdateMongoDBAtlas              *DestinationMongodbUpdateMongoDBAtlas              `queryParam:"inline"`
-
-	Type DestinationMongodbUpdateMongoDbInstanceTypeType
-}
-
-func CreateDestinationMongodbUpdateMongoDbInstanceTypeDestinationMongodbUpdateStandaloneMongoDbInstance(destinationMongodbUpdateStandaloneMongoDbInstance DestinationMongodbUpdateStandaloneMongoDbInstance) DestinationMongodbUpdateMongoDbInstanceType {
-	typ := DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateStandaloneMongoDbInstance
-
-	return DestinationMongodbUpdateMongoDbInstanceType{
-		DestinationMongodbUpdateStandaloneMongoDbInstance: &destinationMongodbUpdateStandaloneMongoDbInstance,
-		Type: typ,
-	}
-}
-
-func CreateDestinationMongodbUpdateMongoDbInstanceTypeDestinationMongodbUpdateReplicaSet(destinationMongodbUpdateReplicaSet DestinationMongodbUpdateReplicaSet) DestinationMongodbUpdateMongoDbInstanceType {
-	typ := DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateReplicaSet
-
-	return DestinationMongodbUpdateMongoDbInstanceType{
-		DestinationMongodbUpdateReplicaSet: &destinationMongodbUpdateReplicaSet,
-		Type:                               typ,
-	}
-}
-
-func CreateDestinationMongodbUpdateMongoDbInstanceTypeDestinationMongodbUpdateMongoDBAtlas(destinationMongodbUpdateMongoDBAtlas DestinationMongodbUpdateMongoDBAtlas) DestinationMongodbUpdateMongoDbInstanceType {
-	typ := DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateMongoDBAtlas
-
-	return DestinationMongodbUpdateMongoDbInstanceType{
-		DestinationMongodbUpdateMongoDBAtlas: &destinationMongodbUpdateMongoDBAtlas,
-		Type:                                 typ,
-	}
-}
-
-func (u *DestinationMongodbUpdateMongoDbInstanceType) UnmarshalJSON(data []byte) error {
-
-	var destinationMongodbUpdateMongoDBAtlas DestinationMongodbUpdateMongoDBAtlas = DestinationMongodbUpdateMongoDBAtlas{}
-	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateMongoDBAtlas, "", true, true); err == nil {
-		u.DestinationMongodbUpdateMongoDBAtlas = &destinationMongodbUpdateMongoDBAtlas
-		u.Type = DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateMongoDBAtlas
-		return nil
-	}
-
-	var destinationMongodbUpdateReplicaSet DestinationMongodbUpdateReplicaSet = DestinationMongodbUpdateReplicaSet{}
-	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateReplicaSet, "", true, true); err == nil {
-		u.DestinationMongodbUpdateReplicaSet = &destinationMongodbUpdateReplicaSet
-		u.Type = DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateReplicaSet
-		return nil
-	}
-
-	var destinationMongodbUpdateStandaloneMongoDbInstance DestinationMongodbUpdateStandaloneMongoDbInstance = DestinationMongodbUpdateStandaloneMongoDbInstance{}
-	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateStandaloneMongoDbInstance, "", true, true); err == nil {
-		u.DestinationMongodbUpdateStandaloneMongoDbInstance = &destinationMongodbUpdateStandaloneMongoDbInstance
-		u.Type = DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateStandaloneMongoDbInstance
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMongodbUpdateMongoDbInstanceType", string(data))
-}
-
-func (u DestinationMongodbUpdateMongoDbInstanceType) MarshalJSON() ([]byte, error) {
-	if u.DestinationMongodbUpdateStandaloneMongoDbInstance != nil {
-		return utils.MarshalJSON(u.DestinationMongodbUpdateStandaloneMongoDbInstance, "", true)
-	}
-
-	if u.DestinationMongodbUpdateReplicaSet != nil {
-		return utils.MarshalJSON(u.DestinationMongodbUpdateReplicaSet, "", true)
-	}
-
-	if u.DestinationMongodbUpdateMongoDBAtlas != nil {
-		return utils.MarshalJSON(u.DestinationMongodbUpdateMongoDBAtlas, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationMongodbUpdateMongoDbInstanceType: all fields are null")
-}
-
 type DestinationMongodbUpdateSchemasAuthorization string
 
 const (
@@ -310,10 +35,10 @@ func (e *DestinationMongodbUpdateSchemasAuthorization) UnmarshalJSON(data []byte
 // DestinationMongodbUpdateLoginPassword - Login/Password.
 type DestinationMongodbUpdateLoginPassword struct {
 	authorization DestinationMongodbUpdateSchemasAuthorization `const:"login/password" json:"authorization"`
-	// Username to use to access the database.
-	Username string `json:"username"`
 	// Password associated with the username.
 	Password string `json:"password"`
+	// Username to use to access the database.
+	Username string `json:"username"`
 }
 
 func (d DestinationMongodbUpdateLoginPassword) MarshalJSON() ([]byte, error) {
@@ -331,18 +56,18 @@ func (o *DestinationMongodbUpdateLoginPassword) GetAuthorization() DestinationMo
 	return DestinationMongodbUpdateSchemasAuthorizationLoginPassword
 }
 
-func (o *DestinationMongodbUpdateLoginPassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *DestinationMongodbUpdateLoginPassword) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *DestinationMongodbUpdateLoginPassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type DestinationMongodbUpdateAuthorization string
@@ -452,6 +177,281 @@ func (u DestinationMongodbUpdateAuthorizationType) MarshalJSON() ([]byte, error)
 	return nil, errors.New("could not marshal union type DestinationMongodbUpdateAuthorizationType: all fields are null")
 }
 
+type DestinationMongodbUpdateSchemasInstanceTypeInstance string
+
+const (
+	DestinationMongodbUpdateSchemasInstanceTypeInstanceAtlas DestinationMongodbUpdateSchemasInstanceTypeInstance = "atlas"
+)
+
+func (e DestinationMongodbUpdateSchemasInstanceTypeInstance) ToPointer() *DestinationMongodbUpdateSchemasInstanceTypeInstance {
+	return &e
+}
+func (e *DestinationMongodbUpdateSchemasInstanceTypeInstance) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "atlas":
+		*e = DestinationMongodbUpdateSchemasInstanceTypeInstance(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMongodbUpdateSchemasInstanceTypeInstance: %v", v)
+	}
+}
+
+type DestinationMongodbUpdateMongoDBAtlas struct {
+	// URL of a cluster to connect to.
+	ClusterURL string                                               `json:"cluster_url"`
+	Instance   *DestinationMongodbUpdateSchemasInstanceTypeInstance `default:"atlas" json:"instance"`
+}
+
+func (d DestinationMongodbUpdateMongoDBAtlas) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbUpdateMongoDBAtlas) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbUpdateMongoDBAtlas) GetClusterURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClusterURL
+}
+
+func (o *DestinationMongodbUpdateMongoDBAtlas) GetInstance() *DestinationMongodbUpdateSchemasInstanceTypeInstance {
+	if o == nil {
+		return nil
+	}
+	return o.Instance
+}
+
+type DestinationMongodbUpdateSchemasInstance string
+
+const (
+	DestinationMongodbUpdateSchemasInstanceReplica DestinationMongodbUpdateSchemasInstance = "replica"
+)
+
+func (e DestinationMongodbUpdateSchemasInstance) ToPointer() *DestinationMongodbUpdateSchemasInstance {
+	return &e
+}
+func (e *DestinationMongodbUpdateSchemasInstance) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "replica":
+		*e = DestinationMongodbUpdateSchemasInstance(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMongodbUpdateSchemasInstance: %v", v)
+	}
+}
+
+type DestinationMongodbUpdateReplicaSet struct {
+	Instance *DestinationMongodbUpdateSchemasInstance `default:"replica" json:"instance"`
+	// A replica set name.
+	ReplicaSet *string `json:"replica_set,omitempty"`
+	// The members of a replica set. Please specify `host`:`port` of each member seperated by comma.
+	ServerAddresses string `json:"server_addresses"`
+}
+
+func (d DestinationMongodbUpdateReplicaSet) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbUpdateReplicaSet) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbUpdateReplicaSet) GetInstance() *DestinationMongodbUpdateSchemasInstance {
+	if o == nil {
+		return nil
+	}
+	return o.Instance
+}
+
+func (o *DestinationMongodbUpdateReplicaSet) GetReplicaSet() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicaSet
+}
+
+func (o *DestinationMongodbUpdateReplicaSet) GetServerAddresses() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerAddresses
+}
+
+type DestinationMongodbUpdateInstance string
+
+const (
+	DestinationMongodbUpdateInstanceStandalone DestinationMongodbUpdateInstance = "standalone"
+)
+
+func (e DestinationMongodbUpdateInstance) ToPointer() *DestinationMongodbUpdateInstance {
+	return &e
+}
+func (e *DestinationMongodbUpdateInstance) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "standalone":
+		*e = DestinationMongodbUpdateInstance(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMongodbUpdateInstance: %v", v)
+	}
+}
+
+type DestinationMongodbUpdateStandaloneMongoDbInstance struct {
+	// The Host of a Mongo database to be replicated.
+	Host     string                            `json:"host"`
+	Instance *DestinationMongodbUpdateInstance `default:"standalone" json:"instance"`
+	// The Port of a Mongo database to be replicated.
+	Port *int64 `default:"27017" json:"port"`
+	// Indicates whether TLS encryption protocol will be used to connect to MongoDB. It is recommended to use TLS connection if possible. For more information see <a href="https://docs.airbyte.com/integrations/sources/mongodb-v2">documentation</a>.
+	TLS *bool `default:"false" json:"tls"`
+}
+
+func (d DestinationMongodbUpdateStandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbUpdateStandaloneMongoDbInstance) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetInstance() *DestinationMongodbUpdateInstance {
+	if o == nil {
+		return nil
+	}
+	return o.Instance
+}
+
+func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationMongodbUpdateStandaloneMongoDbInstance) GetTLS() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.TLS
+}
+
+type DestinationMongodbUpdateMongoDbInstanceTypeType string
+
+const (
+	DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateStandaloneMongoDbInstance DestinationMongodbUpdateMongoDbInstanceTypeType = "destination-mongodb-update_Standalone MongoDb Instance"
+	DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateReplicaSet                DestinationMongodbUpdateMongoDbInstanceTypeType = "destination-mongodb-update_Replica Set"
+	DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateMongoDBAtlas              DestinationMongodbUpdateMongoDbInstanceTypeType = "destination-mongodb-update_MongoDB Atlas"
+)
+
+// DestinationMongodbUpdateMongoDbInstanceType - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+type DestinationMongodbUpdateMongoDbInstanceType struct {
+	DestinationMongodbUpdateStandaloneMongoDbInstance *DestinationMongodbUpdateStandaloneMongoDbInstance `queryParam:"inline"`
+	DestinationMongodbUpdateReplicaSet                *DestinationMongodbUpdateReplicaSet                `queryParam:"inline"`
+	DestinationMongodbUpdateMongoDBAtlas              *DestinationMongodbUpdateMongoDBAtlas              `queryParam:"inline"`
+
+	Type DestinationMongodbUpdateMongoDbInstanceTypeType
+}
+
+func CreateDestinationMongodbUpdateMongoDbInstanceTypeDestinationMongodbUpdateStandaloneMongoDbInstance(destinationMongodbUpdateStandaloneMongoDbInstance DestinationMongodbUpdateStandaloneMongoDbInstance) DestinationMongodbUpdateMongoDbInstanceType {
+	typ := DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateStandaloneMongoDbInstance
+
+	return DestinationMongodbUpdateMongoDbInstanceType{
+		DestinationMongodbUpdateStandaloneMongoDbInstance: &destinationMongodbUpdateStandaloneMongoDbInstance,
+		Type: typ,
+	}
+}
+
+func CreateDestinationMongodbUpdateMongoDbInstanceTypeDestinationMongodbUpdateReplicaSet(destinationMongodbUpdateReplicaSet DestinationMongodbUpdateReplicaSet) DestinationMongodbUpdateMongoDbInstanceType {
+	typ := DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateReplicaSet
+
+	return DestinationMongodbUpdateMongoDbInstanceType{
+		DestinationMongodbUpdateReplicaSet: &destinationMongodbUpdateReplicaSet,
+		Type:                               typ,
+	}
+}
+
+func CreateDestinationMongodbUpdateMongoDbInstanceTypeDestinationMongodbUpdateMongoDBAtlas(destinationMongodbUpdateMongoDBAtlas DestinationMongodbUpdateMongoDBAtlas) DestinationMongodbUpdateMongoDbInstanceType {
+	typ := DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateMongoDBAtlas
+
+	return DestinationMongodbUpdateMongoDbInstanceType{
+		DestinationMongodbUpdateMongoDBAtlas: &destinationMongodbUpdateMongoDBAtlas,
+		Type:                                 typ,
+	}
+}
+
+func (u *DestinationMongodbUpdateMongoDbInstanceType) UnmarshalJSON(data []byte) error {
+
+	var destinationMongodbUpdateMongoDBAtlas DestinationMongodbUpdateMongoDBAtlas = DestinationMongodbUpdateMongoDBAtlas{}
+	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateMongoDBAtlas, "", true, true); err == nil {
+		u.DestinationMongodbUpdateMongoDBAtlas = &destinationMongodbUpdateMongoDBAtlas
+		u.Type = DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateMongoDBAtlas
+		return nil
+	}
+
+	var destinationMongodbUpdateReplicaSet DestinationMongodbUpdateReplicaSet = DestinationMongodbUpdateReplicaSet{}
+	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateReplicaSet, "", true, true); err == nil {
+		u.DestinationMongodbUpdateReplicaSet = &destinationMongodbUpdateReplicaSet
+		u.Type = DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateReplicaSet
+		return nil
+	}
+
+	var destinationMongodbUpdateStandaloneMongoDbInstance DestinationMongodbUpdateStandaloneMongoDbInstance = DestinationMongodbUpdateStandaloneMongoDbInstance{}
+	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateStandaloneMongoDbInstance, "", true, true); err == nil {
+		u.DestinationMongodbUpdateStandaloneMongoDbInstance = &destinationMongodbUpdateStandaloneMongoDbInstance
+		u.Type = DestinationMongodbUpdateMongoDbInstanceTypeTypeDestinationMongodbUpdateStandaloneMongoDbInstance
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMongodbUpdateMongoDbInstanceType", string(data))
+}
+
+func (u DestinationMongodbUpdateMongoDbInstanceType) MarshalJSON() ([]byte, error) {
+	if u.DestinationMongodbUpdateStandaloneMongoDbInstance != nil {
+		return utils.MarshalJSON(u.DestinationMongodbUpdateStandaloneMongoDbInstance, "", true)
+	}
+
+	if u.DestinationMongodbUpdateReplicaSet != nil {
+		return utils.MarshalJSON(u.DestinationMongodbUpdateReplicaSet, "", true)
+	}
+
+	if u.DestinationMongodbUpdateMongoDBAtlas != nil {
+		return utils.MarshalJSON(u.DestinationMongodbUpdateMongoDBAtlas, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationMongodbUpdateMongoDbInstanceType: all fields are null")
+}
+
 // DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
 type DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod string
 
@@ -477,10 +477,10 @@ func (e *DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(
 }
 
 type DestinationMongodbUpdatePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -500,15 +500,15 @@ func (d *DestinationMongodbUpdatePasswordAuthentication) UnmarshalJSON(data []by
 	return nil
 }
 
-func (o *DestinationMongodbUpdatePasswordAuthentication) GetTunnelMethod() DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod {
-	return DestinationMongodbUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationMongodbUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationMongodbUpdatePasswordAuthentication) GetTunnelMethod() DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod {
+	return DestinationMongodbUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationMongodbUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -557,16 +557,16 @@ func (e *DestinationMongodbUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte)
 }
 
 type DestinationMongodbUpdateSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationMongodbUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationMongodbUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationMongodbUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -580,8 +580,11 @@ func (d *DestinationMongodbUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationMongodbUpdateSchemasTunnelMethod {
-	return DestinationMongodbUpdateSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -589,6 +592,10 @@ func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationMongodbUpdateSchemasTunnelMethod {
+	return DestinationMongodbUpdateSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -603,13 +610,6 @@ func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationMongodbUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationMongodbUpdateTunnelMethod - No ssh tunnel needed to connect to database
@@ -743,21 +743,21 @@ func (u DestinationMongodbUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 }
 
 type DestinationMongodbUpdate struct {
-	// MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-	InstanceType *DestinationMongodbUpdateMongoDbInstanceType `json:"instance_type,omitempty"`
-	// Name of the database.
-	Database string `json:"database"`
 	// Authorization type.
 	AuthType DestinationMongodbUpdateAuthorizationType `json:"auth_type"`
+	// Name of the database.
+	Database string `json:"database"`
+	// MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+	InstanceType *DestinationMongodbUpdateMongoDbInstanceType `json:"instance_type,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationMongodbUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 }
 
-func (o *DestinationMongodbUpdate) GetInstanceType() *DestinationMongodbUpdateMongoDbInstanceType {
+func (o *DestinationMongodbUpdate) GetAuthType() DestinationMongodbUpdateAuthorizationType {
 	if o == nil {
-		return nil
+		return DestinationMongodbUpdateAuthorizationType{}
 	}
-	return o.InstanceType
+	return o.AuthType
 }
 
 func (o *DestinationMongodbUpdate) GetDatabase() string {
@@ -767,11 +767,11 @@ func (o *DestinationMongodbUpdate) GetDatabase() string {
 	return o.Database
 }
 
-func (o *DestinationMongodbUpdate) GetAuthType() DestinationMongodbUpdateAuthorizationType {
+func (o *DestinationMongodbUpdate) GetInstanceType() *DestinationMongodbUpdateMongoDbInstanceType {
 	if o == nil {
-		return DestinationMongodbUpdateAuthorizationType{}
+		return nil
 	}
-	return o.AuthType
+	return o.InstanceType
 }
 
 func (o *DestinationMongodbUpdate) GetTunnelMethod() *DestinationMongodbUpdateSSHTunnelMethod {

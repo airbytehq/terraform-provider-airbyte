@@ -21,15 +21,15 @@ func (r *SourceCalComResourceModel) ToSharedSourceCalComCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var orgID string
-	orgID = r.Configuration.OrgID.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var orgID string
+	orgID = r.Configuration.OrgID.ValueString()
+
 	configuration := shared.SourceCalCom{
-		OrgID:  orgID,
 		APIKey: apiKey,
+		OrgID:  orgID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceCalComResourceModel) ToSharedSourceCalComPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var orgID string
-	orgID = r.Configuration.OrgID.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var orgID string
+	orgID = r.Configuration.OrgID.ValueString()
+
 	configuration := shared.SourceCalComUpdate{
-		OrgID:  orgID,
 		APIKey: apiKey,
+		OrgID:  orgID,
 	}
 	out := shared.SourceCalComPutRequest{
 		Name:          name,

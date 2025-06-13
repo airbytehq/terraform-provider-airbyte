@@ -22,18 +22,24 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	isSandbox := new(bool)
-	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
-		*isSandbox = r.Configuration.IsSandbox.ValueBool()
-	} else {
-		isSandbox = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	forceUseBulkAPI := new(bool)
+	if !r.Configuration.ForceUseBulkAPI.IsUnknown() && !r.Configuration.ForceUseBulkAPI.IsNull() {
+		*forceUseBulkAPI = r.Configuration.ForceUseBulkAPI.ValueBool()
+	} else {
+		forceUseBulkAPI = nil
+	}
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
@@ -42,12 +48,6 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest() 
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
-	}
-	forceUseBulkAPI := new(bool)
-	if !r.Configuration.ForceUseBulkAPI.IsUnknown() && !r.Configuration.ForceUseBulkAPI.IsNull() {
-		*forceUseBulkAPI = r.Configuration.ForceUseBulkAPI.ValueBool()
-	} else {
-		forceUseBulkAPI = nil
 	}
 	streamSliceStep := new(string)
 	if !r.Configuration.StreamSliceStep.IsUnknown() && !r.Configuration.StreamSliceStep.IsNull() {
@@ -72,12 +72,12 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest() 
 		})
 	}
 	configuration := shared.SourceSalesforce{
-		IsSandbox:       isSandbox,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,
+		ForceUseBulkAPI: forceUseBulkAPI,
+		IsSandbox:       isSandbox,
 		RefreshToken:    refreshToken,
 		StartDate:       startDate,
-		ForceUseBulkAPI: forceUseBulkAPI,
 		StreamSliceStep: streamSliceStep,
 		StreamsCriteria: streamsCriteria,
 	}
@@ -151,18 +151,24 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	isSandbox := new(bool)
-	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
-		*isSandbox = r.Configuration.IsSandbox.ValueBool()
-	} else {
-		isSandbox = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	forceUseBulkAPI := new(bool)
+	if !r.Configuration.ForceUseBulkAPI.IsUnknown() && !r.Configuration.ForceUseBulkAPI.IsNull() {
+		*forceUseBulkAPI = r.Configuration.ForceUseBulkAPI.ValueBool()
+	} else {
+		forceUseBulkAPI = nil
+	}
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
@@ -171,12 +177,6 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest() *sh
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
-	}
-	forceUseBulkAPI := new(bool)
-	if !r.Configuration.ForceUseBulkAPI.IsUnknown() && !r.Configuration.ForceUseBulkAPI.IsNull() {
-		*forceUseBulkAPI = r.Configuration.ForceUseBulkAPI.ValueBool()
-	} else {
-		forceUseBulkAPI = nil
 	}
 	streamSliceStep := new(string)
 	if !r.Configuration.StreamSliceStep.IsUnknown() && !r.Configuration.StreamSliceStep.IsNull() {
@@ -201,12 +201,12 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest() *sh
 		})
 	}
 	configuration := shared.SourceSalesforceUpdate{
-		IsSandbox:       isSandbox,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,
+		ForceUseBulkAPI: forceUseBulkAPI,
+		IsSandbox:       isSandbox,
 		RefreshToken:    refreshToken,
 		StartDate:       startDate,
-		ForceUseBulkAPI: forceUseBulkAPI,
 		StreamSliceStep: streamSliceStep,
 		StreamsCriteria: streamsCriteria,
 	}

@@ -33,11 +33,11 @@ func (e *HuggingFaceDatasets) UnmarshalJSON(data []byte) error {
 
 type SourceHuggingFaceDatasets struct {
 	DatasetName string `json:"dataset_name"`
-	// Dataset Subsets to import. Will import all of them if nothing is provided (see https://huggingface.co/docs/dataset-viewer/en/configs_and_splits for more details)
-	DatasetSubsets []any `json:"dataset_subsets,omitempty"`
 	// Splits to import. Will import all of them if nothing is provided (see https://huggingface.co/docs/dataset-viewer/en/configs_and_splits for more details)
-	DatasetSplits []any               `json:"dataset_splits,omitempty"`
-	sourceType    HuggingFaceDatasets `const:"hugging-face-datasets" json:"sourceType"`
+	DatasetSplits []any `json:"dataset_splits,omitempty"`
+	// Dataset Subsets to import. Will import all of them if nothing is provided (see https://huggingface.co/docs/dataset-viewer/en/configs_and_splits for more details)
+	DatasetSubsets []any               `json:"dataset_subsets,omitempty"`
+	sourceType     HuggingFaceDatasets `const:"hugging-face-datasets" json:"sourceType"`
 }
 
 func (s SourceHuggingFaceDatasets) MarshalJSON() ([]byte, error) {
@@ -58,18 +58,18 @@ func (o *SourceHuggingFaceDatasets) GetDatasetName() string {
 	return o.DatasetName
 }
 
-func (o *SourceHuggingFaceDatasets) GetDatasetSubsets() []any {
-	if o == nil {
-		return nil
-	}
-	return o.DatasetSubsets
-}
-
 func (o *SourceHuggingFaceDatasets) GetDatasetSplits() []any {
 	if o == nil {
 		return nil
 	}
 	return o.DatasetSplits
+}
+
+func (o *SourceHuggingFaceDatasets) GetDatasetSubsets() []any {
+	if o == nil {
+		return nil
+	}
+	return o.DatasetSubsets
 }
 
 func (o *SourceHuggingFaceDatasets) GetSourceType() HuggingFaceDatasets {

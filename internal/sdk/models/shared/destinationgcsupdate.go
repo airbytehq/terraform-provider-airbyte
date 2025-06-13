@@ -9,132 +9,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// DestinationGCSUpdateGCSBucketRegion - Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
-type DestinationGCSUpdateGCSBucketRegion string
-
-const (
-	DestinationGCSUpdateGCSBucketRegionNorthamericaNortheast1 DestinationGCSUpdateGCSBucketRegion = "northamerica-northeast1"
-	DestinationGCSUpdateGCSBucketRegionNorthamericaNortheast2 DestinationGCSUpdateGCSBucketRegion = "northamerica-northeast2"
-	DestinationGCSUpdateGCSBucketRegionUsCentral1             DestinationGCSUpdateGCSBucketRegion = "us-central1"
-	DestinationGCSUpdateGCSBucketRegionUsEast1                DestinationGCSUpdateGCSBucketRegion = "us-east1"
-	DestinationGCSUpdateGCSBucketRegionUsEast4                DestinationGCSUpdateGCSBucketRegion = "us-east4"
-	DestinationGCSUpdateGCSBucketRegionUsWest1                DestinationGCSUpdateGCSBucketRegion = "us-west1"
-	DestinationGCSUpdateGCSBucketRegionUsWest2                DestinationGCSUpdateGCSBucketRegion = "us-west2"
-	DestinationGCSUpdateGCSBucketRegionUsWest3                DestinationGCSUpdateGCSBucketRegion = "us-west3"
-	DestinationGCSUpdateGCSBucketRegionUsWest4                DestinationGCSUpdateGCSBucketRegion = "us-west4"
-	DestinationGCSUpdateGCSBucketRegionSouthamericaEast1      DestinationGCSUpdateGCSBucketRegion = "southamerica-east1"
-	DestinationGCSUpdateGCSBucketRegionSouthamericaWest1      DestinationGCSUpdateGCSBucketRegion = "southamerica-west1"
-	DestinationGCSUpdateGCSBucketRegionEuropeCentral2         DestinationGCSUpdateGCSBucketRegion = "europe-central2"
-	DestinationGCSUpdateGCSBucketRegionEuropeNorth1           DestinationGCSUpdateGCSBucketRegion = "europe-north1"
-	DestinationGCSUpdateGCSBucketRegionEuropeWest1            DestinationGCSUpdateGCSBucketRegion = "europe-west1"
-	DestinationGCSUpdateGCSBucketRegionEuropeWest2            DestinationGCSUpdateGCSBucketRegion = "europe-west2"
-	DestinationGCSUpdateGCSBucketRegionEuropeWest3            DestinationGCSUpdateGCSBucketRegion = "europe-west3"
-	DestinationGCSUpdateGCSBucketRegionEuropeWest4            DestinationGCSUpdateGCSBucketRegion = "europe-west4"
-	DestinationGCSUpdateGCSBucketRegionEuropeWest6            DestinationGCSUpdateGCSBucketRegion = "europe-west6"
-	DestinationGCSUpdateGCSBucketRegionAsiaEast1              DestinationGCSUpdateGCSBucketRegion = "asia-east1"
-	DestinationGCSUpdateGCSBucketRegionAsiaEast2              DestinationGCSUpdateGCSBucketRegion = "asia-east2"
-	DestinationGCSUpdateGCSBucketRegionAsiaNortheast1         DestinationGCSUpdateGCSBucketRegion = "asia-northeast1"
-	DestinationGCSUpdateGCSBucketRegionAsiaNortheast2         DestinationGCSUpdateGCSBucketRegion = "asia-northeast2"
-	DestinationGCSUpdateGCSBucketRegionAsiaNortheast3         DestinationGCSUpdateGCSBucketRegion = "asia-northeast3"
-	DestinationGCSUpdateGCSBucketRegionAsiaSouth1             DestinationGCSUpdateGCSBucketRegion = "asia-south1"
-	DestinationGCSUpdateGCSBucketRegionAsiaSouth2             DestinationGCSUpdateGCSBucketRegion = "asia-south2"
-	DestinationGCSUpdateGCSBucketRegionAsiaSoutheast1         DestinationGCSUpdateGCSBucketRegion = "asia-southeast1"
-	DestinationGCSUpdateGCSBucketRegionAsiaSoutheast2         DestinationGCSUpdateGCSBucketRegion = "asia-southeast2"
-	DestinationGCSUpdateGCSBucketRegionAustraliaSoutheast1    DestinationGCSUpdateGCSBucketRegion = "australia-southeast1"
-	DestinationGCSUpdateGCSBucketRegionAustraliaSoutheast2    DestinationGCSUpdateGCSBucketRegion = "australia-southeast2"
-	DestinationGCSUpdateGCSBucketRegionAsia                   DestinationGCSUpdateGCSBucketRegion = "asia"
-	DestinationGCSUpdateGCSBucketRegionEu                     DestinationGCSUpdateGCSBucketRegion = "eu"
-	DestinationGCSUpdateGCSBucketRegionUs                     DestinationGCSUpdateGCSBucketRegion = "us"
-	DestinationGCSUpdateGCSBucketRegionAsia1                  DestinationGCSUpdateGCSBucketRegion = "asia1"
-	DestinationGCSUpdateGCSBucketRegionEur4                   DestinationGCSUpdateGCSBucketRegion = "eur4"
-	DestinationGCSUpdateGCSBucketRegionNam4                   DestinationGCSUpdateGCSBucketRegion = "nam4"
-)
-
-func (e DestinationGCSUpdateGCSBucketRegion) ToPointer() *DestinationGCSUpdateGCSBucketRegion {
-	return &e
-}
-func (e *DestinationGCSUpdateGCSBucketRegion) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "northamerica-northeast1":
-		fallthrough
-	case "northamerica-northeast2":
-		fallthrough
-	case "us-central1":
-		fallthrough
-	case "us-east1":
-		fallthrough
-	case "us-east4":
-		fallthrough
-	case "us-west1":
-		fallthrough
-	case "us-west2":
-		fallthrough
-	case "us-west3":
-		fallthrough
-	case "us-west4":
-		fallthrough
-	case "southamerica-east1":
-		fallthrough
-	case "southamerica-west1":
-		fallthrough
-	case "europe-central2":
-		fallthrough
-	case "europe-north1":
-		fallthrough
-	case "europe-west1":
-		fallthrough
-	case "europe-west2":
-		fallthrough
-	case "europe-west3":
-		fallthrough
-	case "europe-west4":
-		fallthrough
-	case "europe-west6":
-		fallthrough
-	case "asia-east1":
-		fallthrough
-	case "asia-east2":
-		fallthrough
-	case "asia-northeast1":
-		fallthrough
-	case "asia-northeast2":
-		fallthrough
-	case "asia-northeast3":
-		fallthrough
-	case "asia-south1":
-		fallthrough
-	case "asia-south2":
-		fallthrough
-	case "asia-southeast1":
-		fallthrough
-	case "asia-southeast2":
-		fallthrough
-	case "australia-southeast1":
-		fallthrough
-	case "australia-southeast2":
-		fallthrough
-	case "asia":
-		fallthrough
-	case "eu":
-		fallthrough
-	case "us":
-		fallthrough
-	case "asia1":
-		fallthrough
-	case "eur4":
-		fallthrough
-	case "nam4":
-		*e = DestinationGCSUpdateGCSBucketRegion(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGCSUpdateGCSBucketRegion: %v", v)
-	}
-}
-
 type DestinationGcsUpdateCredentialType string
 
 const (
@@ -240,29 +114,6 @@ func (u DestinationGcsUpdateAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationGcsUpdateAuthentication: all fields are null")
 }
 
-type DestinationGcsUpdateSchemasFormatOutputFormatFormatType string
-
-const (
-	DestinationGcsUpdateSchemasFormatOutputFormatFormatTypeParquet DestinationGcsUpdateSchemasFormatOutputFormatFormatType = "Parquet"
-)
-
-func (e DestinationGcsUpdateSchemasFormatOutputFormatFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatOutputFormatFormatType {
-	return &e
-}
-func (e *DestinationGcsUpdateSchemasFormatOutputFormatFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Parquet":
-		*e = DestinationGcsUpdateSchemasFormatOutputFormatFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsUpdateSchemasFormatOutputFormatFormatType: %v", v)
-	}
-}
-
 // DestinationGcsUpdateSchemasCompressionCodec - The compression algorithm used to compress data pages.
 type DestinationGcsUpdateSchemasCompressionCodec string
 
@@ -305,20 +156,43 @@ func (e *DestinationGcsUpdateSchemasCompressionCodec) UnmarshalJSON(data []byte)
 	}
 }
 
+type DestinationGcsUpdateSchemasFormatOutputFormatFormatType string
+
+const (
+	DestinationGcsUpdateSchemasFormatOutputFormatFormatTypeParquet DestinationGcsUpdateSchemasFormatOutputFormatFormatType = "Parquet"
+)
+
+func (e DestinationGcsUpdateSchemasFormatOutputFormatFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatOutputFormatFormatType {
+	return &e
+}
+func (e *DestinationGcsUpdateSchemasFormatOutputFormatFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Parquet":
+		*e = DestinationGcsUpdateSchemasFormatOutputFormatFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGcsUpdateSchemasFormatOutputFormatFormatType: %v", v)
+	}
+}
+
 type DestinationGcsUpdateParquetColumnarStorage struct {
-	FormatType *DestinationGcsUpdateSchemasFormatOutputFormatFormatType `default:"Parquet" json:"format_type"`
-	// The compression algorithm used to compress data pages.
-	CompressionCodec *DestinationGcsUpdateSchemasCompressionCodec `default:"UNCOMPRESSED" json:"compression_codec"`
 	// This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
 	BlockSizeMb *int64 `default:"128" json:"block_size_mb"`
+	// The compression algorithm used to compress data pages.
+	CompressionCodec *DestinationGcsUpdateSchemasCompressionCodec `default:"UNCOMPRESSED" json:"compression_codec"`
+	// Default: true.
+	DictionaryEncoding *bool `default:"true" json:"dictionary_encoding"`
+	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
+	DictionaryPageSizeKb *int64                                                   `default:"1024" json:"dictionary_page_size_kb"`
+	FormatType           *DestinationGcsUpdateSchemasFormatOutputFormatFormatType `default:"Parquet" json:"format_type"`
 	// Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
 	MaxPaddingSizeMb *int64 `default:"8" json:"max_padding_size_mb"`
 	// The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
 	PageSizeKb *int64 `default:"1024" json:"page_size_kb"`
-	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
-	DictionaryPageSizeKb *int64 `default:"1024" json:"dictionary_page_size_kb"`
-	// Default: true.
-	DictionaryEncoding *bool `default:"true" json:"dictionary_encoding"`
 }
 
 func (d DestinationGcsUpdateParquetColumnarStorage) MarshalJSON() ([]byte, error) {
@@ -332,11 +206,11 @@ func (d *DestinationGcsUpdateParquetColumnarStorage) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-func (o *DestinationGcsUpdateParquetColumnarStorage) GetFormatType() *DestinationGcsUpdateSchemasFormatOutputFormatFormatType {
+func (o *DestinationGcsUpdateParquetColumnarStorage) GetBlockSizeMb() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.FormatType
+	return o.BlockSizeMb
 }
 
 func (o *DestinationGcsUpdateParquetColumnarStorage) GetCompressionCodec() *DestinationGcsUpdateSchemasCompressionCodec {
@@ -346,11 +220,25 @@ func (o *DestinationGcsUpdateParquetColumnarStorage) GetCompressionCodec() *Dest
 	return o.CompressionCodec
 }
 
-func (o *DestinationGcsUpdateParquetColumnarStorage) GetBlockSizeMb() *int64 {
+func (o *DestinationGcsUpdateParquetColumnarStorage) GetDictionaryEncoding() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.BlockSizeMb
+	return o.DictionaryEncoding
+}
+
+func (o *DestinationGcsUpdateParquetColumnarStorage) GetDictionaryPageSizeKb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DictionaryPageSizeKb
+}
+
+func (o *DestinationGcsUpdateParquetColumnarStorage) GetFormatType() *DestinationGcsUpdateSchemasFormatOutputFormatFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 func (o *DestinationGcsUpdateParquetColumnarStorage) GetMaxPaddingSizeMb() *int64 {
@@ -365,43 +253,6 @@ func (o *DestinationGcsUpdateParquetColumnarStorage) GetPageSizeKb() *int64 {
 		return nil
 	}
 	return o.PageSizeKb
-}
-
-func (o *DestinationGcsUpdateParquetColumnarStorage) GetDictionaryPageSizeKb() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DictionaryPageSizeKb
-}
-
-func (o *DestinationGcsUpdateParquetColumnarStorage) GetDictionaryEncoding() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DictionaryEncoding
-}
-
-type DestinationGcsUpdateSchemasFormatFormatType string
-
-const (
-	DestinationGcsUpdateSchemasFormatFormatTypeJsonl DestinationGcsUpdateSchemasFormatFormatType = "JSONL"
-)
-
-func (e DestinationGcsUpdateSchemasFormatFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatFormatType {
-	return &e
-}
-func (e *DestinationGcsUpdateSchemasFormatFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "JSONL":
-		*e = DestinationGcsUpdateSchemasFormatFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsUpdateSchemasFormatFormatType: %v", v)
-	}
 }
 
 type DestinationGcsUpdateSchemasFormatOutputFormatCompressionType string
@@ -558,10 +409,33 @@ func (u DestinationGcsUpdateSchemasCompression) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationGcsUpdateSchemasCompression: all fields are null")
 }
 
+type DestinationGcsUpdateSchemasFormatFormatType string
+
+const (
+	DestinationGcsUpdateSchemasFormatFormatTypeJsonl DestinationGcsUpdateSchemasFormatFormatType = "JSONL"
+)
+
+func (e DestinationGcsUpdateSchemasFormatFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatFormatType {
+	return &e
+}
+func (e *DestinationGcsUpdateSchemasFormatFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "JSONL":
+		*e = DestinationGcsUpdateSchemasFormatFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGcsUpdateSchemasFormatFormatType: %v", v)
+	}
+}
+
 type DestinationGcsUpdateJSONLinesNewlineDelimitedJSON struct {
-	FormatType *DestinationGcsUpdateSchemasFormatFormatType `default:"JSONL" json:"format_type"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-	Compression *DestinationGcsUpdateSchemasCompression `json:"compression,omitempty"`
+	Compression *DestinationGcsUpdateSchemasCompression      `json:"compression,omitempty"`
+	FormatType  *DestinationGcsUpdateSchemasFormatFormatType `default:"JSONL" json:"format_type"`
 }
 
 func (d DestinationGcsUpdateJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
@@ -575,13 +449,6 @@ func (d *DestinationGcsUpdateJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data [
 	return nil
 }
 
-func (o *DestinationGcsUpdateJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationGcsUpdateSchemasFormatFormatType {
-	if o == nil {
-		return nil
-	}
-	return o.FormatType
-}
-
 func (o *DestinationGcsUpdateJSONLinesNewlineDelimitedJSON) GetCompression() *DestinationGcsUpdateSchemasCompression {
 	if o == nil {
 		return nil
@@ -589,54 +456,11 @@ func (o *DestinationGcsUpdateJSONLinesNewlineDelimitedJSON) GetCompression() *De
 	return o.Compression
 }
 
-type DestinationGcsUpdateSchemasFormatType string
-
-const (
-	DestinationGcsUpdateSchemasFormatTypeCsv DestinationGcsUpdateSchemasFormatType = "CSV"
-)
-
-func (e DestinationGcsUpdateSchemasFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatType {
-	return &e
-}
-func (e *DestinationGcsUpdateSchemasFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CSV":
-		*e = DestinationGcsUpdateSchemasFormatType(v)
+func (o *DestinationGcsUpdateJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationGcsUpdateSchemasFormatFormatType {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsUpdateSchemasFormatType: %v", v)
 	}
-}
-
-// DestinationGcsUpdateNormalization - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-type DestinationGcsUpdateNormalization string
-
-const (
-	DestinationGcsUpdateNormalizationNoFlattening        DestinationGcsUpdateNormalization = "No flattening"
-	DestinationGcsUpdateNormalizationRootLevelFlattening DestinationGcsUpdateNormalization = "Root level flattening"
-)
-
-func (e DestinationGcsUpdateNormalization) ToPointer() *DestinationGcsUpdateNormalization {
-	return &e
-}
-func (e *DestinationGcsUpdateNormalization) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "No flattening":
-		fallthrough
-	case "Root level flattening":
-		*e = DestinationGcsUpdateNormalization(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsUpdateNormalization: %v", v)
-	}
+	return o.FormatType
 }
 
 type DestinationGcsUpdateSchemasCompressionType string
@@ -793,12 +617,62 @@ func (u DestinationGcsUpdateCompression) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationGcsUpdateCompression: all fields are null")
 }
 
+// DestinationGcsUpdateNormalization - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
+type DestinationGcsUpdateNormalization string
+
+const (
+	DestinationGcsUpdateNormalizationNoFlattening        DestinationGcsUpdateNormalization = "No flattening"
+	DestinationGcsUpdateNormalizationRootLevelFlattening DestinationGcsUpdateNormalization = "Root level flattening"
+)
+
+func (e DestinationGcsUpdateNormalization) ToPointer() *DestinationGcsUpdateNormalization {
+	return &e
+}
+func (e *DestinationGcsUpdateNormalization) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "No flattening":
+		fallthrough
+	case "Root level flattening":
+		*e = DestinationGcsUpdateNormalization(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGcsUpdateNormalization: %v", v)
+	}
+}
+
+type DestinationGcsUpdateSchemasFormatType string
+
+const (
+	DestinationGcsUpdateSchemasFormatTypeCsv DestinationGcsUpdateSchemasFormatType = "CSV"
+)
+
+func (e DestinationGcsUpdateSchemasFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatType {
+	return &e
+}
+func (e *DestinationGcsUpdateSchemasFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CSV":
+		*e = DestinationGcsUpdateSchemasFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGcsUpdateSchemasFormatType: %v", v)
+	}
+}
+
 type DestinationGcsUpdateCSVCommaSeparatedValues struct {
-	FormatType *DestinationGcsUpdateSchemasFormatType `default:"CSV" json:"format_type"`
-	// Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-	Flattening *DestinationGcsUpdateNormalization `default:"No flattening" json:"flattening"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 	Compression *DestinationGcsUpdateCompression `json:"compression,omitempty"`
+	// Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
+	Flattening *DestinationGcsUpdateNormalization     `default:"No flattening" json:"flattening"`
+	FormatType *DestinationGcsUpdateSchemasFormatType `default:"CSV" json:"format_type"`
 }
 
 func (d DestinationGcsUpdateCSVCommaSeparatedValues) MarshalJSON() ([]byte, error) {
@@ -812,11 +686,11 @@ func (d *DestinationGcsUpdateCSVCommaSeparatedValues) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (o *DestinationGcsUpdateCSVCommaSeparatedValues) GetFormatType() *DestinationGcsUpdateSchemasFormatType {
+func (o *DestinationGcsUpdateCSVCommaSeparatedValues) GetCompression() *DestinationGcsUpdateCompression {
 	if o == nil {
 		return nil
 	}
-	return o.FormatType
+	return o.Compression
 }
 
 func (o *DestinationGcsUpdateCSVCommaSeparatedValues) GetFlattening() *DestinationGcsUpdateNormalization {
@@ -826,34 +700,11 @@ func (o *DestinationGcsUpdateCSVCommaSeparatedValues) GetFlattening() *Destinati
 	return o.Flattening
 }
 
-func (o *DestinationGcsUpdateCSVCommaSeparatedValues) GetCompression() *DestinationGcsUpdateCompression {
+func (o *DestinationGcsUpdateCSVCommaSeparatedValues) GetFormatType() *DestinationGcsUpdateSchemasFormatType {
 	if o == nil {
 		return nil
 	}
-	return o.Compression
-}
-
-type DestinationGcsUpdateFormatType string
-
-const (
-	DestinationGcsUpdateFormatTypeAvro DestinationGcsUpdateFormatType = "Avro"
-)
-
-func (e DestinationGcsUpdateFormatType) ToPointer() *DestinationGcsUpdateFormatType {
-	return &e
-}
-func (e *DestinationGcsUpdateFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Avro":
-		*e = DestinationGcsUpdateFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsUpdateFormatType: %v", v)
-	}
+	return o.FormatType
 }
 
 type DestinationGcsUpdateSchemasFormatOutputFormat1CompressionCodecCodec string
@@ -1314,10 +1165,33 @@ func (u DestinationGcsUpdateCompressionCodec) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationGcsUpdateCompressionCodec: all fields are null")
 }
 
+type DestinationGcsUpdateFormatType string
+
+const (
+	DestinationGcsUpdateFormatTypeAvro DestinationGcsUpdateFormatType = "Avro"
+)
+
+func (e DestinationGcsUpdateFormatType) ToPointer() *DestinationGcsUpdateFormatType {
+	return &e
+}
+func (e *DestinationGcsUpdateFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Avro":
+		*e = DestinationGcsUpdateFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGcsUpdateFormatType: %v", v)
+	}
+}
+
 type DestinationGcsUpdateAvroApacheAvro struct {
-	FormatType *DestinationGcsUpdateFormatType `default:"Avro" json:"format_type"`
 	// The compression algorithm used to compress data. Default to no compression.
 	CompressionCodec DestinationGcsUpdateCompressionCodec `json:"compression_codec"`
+	FormatType       *DestinationGcsUpdateFormatType      `default:"Avro" json:"format_type"`
 }
 
 func (d DestinationGcsUpdateAvroApacheAvro) MarshalJSON() ([]byte, error) {
@@ -1331,18 +1205,18 @@ func (d *DestinationGcsUpdateAvroApacheAvro) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationGcsUpdateAvroApacheAvro) GetFormatType() *DestinationGcsUpdateFormatType {
-	if o == nil {
-		return nil
-	}
-	return o.FormatType
-}
-
 func (o *DestinationGcsUpdateAvroApacheAvro) GetCompressionCodec() DestinationGcsUpdateCompressionCodec {
 	if o == nil {
 		return DestinationGcsUpdateCompressionCodec{}
 	}
 	return o.CompressionCodec
+}
+
+func (o *DestinationGcsUpdateAvroApacheAvro) GetFormatType() *DestinationGcsUpdateFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationGcsUpdateOutputFormatType string
@@ -1453,17 +1327,143 @@ func (u DestinationGcsUpdateOutputFormat) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationGcsUpdateOutputFormat: all fields are null")
 }
 
+// DestinationGCSUpdateGCSBucketRegion - Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
+type DestinationGCSUpdateGCSBucketRegion string
+
+const (
+	DestinationGCSUpdateGCSBucketRegionNorthamericaNortheast1 DestinationGCSUpdateGCSBucketRegion = "northamerica-northeast1"
+	DestinationGCSUpdateGCSBucketRegionNorthamericaNortheast2 DestinationGCSUpdateGCSBucketRegion = "northamerica-northeast2"
+	DestinationGCSUpdateGCSBucketRegionUsCentral1             DestinationGCSUpdateGCSBucketRegion = "us-central1"
+	DestinationGCSUpdateGCSBucketRegionUsEast1                DestinationGCSUpdateGCSBucketRegion = "us-east1"
+	DestinationGCSUpdateGCSBucketRegionUsEast4                DestinationGCSUpdateGCSBucketRegion = "us-east4"
+	DestinationGCSUpdateGCSBucketRegionUsWest1                DestinationGCSUpdateGCSBucketRegion = "us-west1"
+	DestinationGCSUpdateGCSBucketRegionUsWest2                DestinationGCSUpdateGCSBucketRegion = "us-west2"
+	DestinationGCSUpdateGCSBucketRegionUsWest3                DestinationGCSUpdateGCSBucketRegion = "us-west3"
+	DestinationGCSUpdateGCSBucketRegionUsWest4                DestinationGCSUpdateGCSBucketRegion = "us-west4"
+	DestinationGCSUpdateGCSBucketRegionSouthamericaEast1      DestinationGCSUpdateGCSBucketRegion = "southamerica-east1"
+	DestinationGCSUpdateGCSBucketRegionSouthamericaWest1      DestinationGCSUpdateGCSBucketRegion = "southamerica-west1"
+	DestinationGCSUpdateGCSBucketRegionEuropeCentral2         DestinationGCSUpdateGCSBucketRegion = "europe-central2"
+	DestinationGCSUpdateGCSBucketRegionEuropeNorth1           DestinationGCSUpdateGCSBucketRegion = "europe-north1"
+	DestinationGCSUpdateGCSBucketRegionEuropeWest1            DestinationGCSUpdateGCSBucketRegion = "europe-west1"
+	DestinationGCSUpdateGCSBucketRegionEuropeWest2            DestinationGCSUpdateGCSBucketRegion = "europe-west2"
+	DestinationGCSUpdateGCSBucketRegionEuropeWest3            DestinationGCSUpdateGCSBucketRegion = "europe-west3"
+	DestinationGCSUpdateGCSBucketRegionEuropeWest4            DestinationGCSUpdateGCSBucketRegion = "europe-west4"
+	DestinationGCSUpdateGCSBucketRegionEuropeWest6            DestinationGCSUpdateGCSBucketRegion = "europe-west6"
+	DestinationGCSUpdateGCSBucketRegionAsiaEast1              DestinationGCSUpdateGCSBucketRegion = "asia-east1"
+	DestinationGCSUpdateGCSBucketRegionAsiaEast2              DestinationGCSUpdateGCSBucketRegion = "asia-east2"
+	DestinationGCSUpdateGCSBucketRegionAsiaNortheast1         DestinationGCSUpdateGCSBucketRegion = "asia-northeast1"
+	DestinationGCSUpdateGCSBucketRegionAsiaNortheast2         DestinationGCSUpdateGCSBucketRegion = "asia-northeast2"
+	DestinationGCSUpdateGCSBucketRegionAsiaNortheast3         DestinationGCSUpdateGCSBucketRegion = "asia-northeast3"
+	DestinationGCSUpdateGCSBucketRegionAsiaSouth1             DestinationGCSUpdateGCSBucketRegion = "asia-south1"
+	DestinationGCSUpdateGCSBucketRegionAsiaSouth2             DestinationGCSUpdateGCSBucketRegion = "asia-south2"
+	DestinationGCSUpdateGCSBucketRegionAsiaSoutheast1         DestinationGCSUpdateGCSBucketRegion = "asia-southeast1"
+	DestinationGCSUpdateGCSBucketRegionAsiaSoutheast2         DestinationGCSUpdateGCSBucketRegion = "asia-southeast2"
+	DestinationGCSUpdateGCSBucketRegionAustraliaSoutheast1    DestinationGCSUpdateGCSBucketRegion = "australia-southeast1"
+	DestinationGCSUpdateGCSBucketRegionAustraliaSoutheast2    DestinationGCSUpdateGCSBucketRegion = "australia-southeast2"
+	DestinationGCSUpdateGCSBucketRegionAsia                   DestinationGCSUpdateGCSBucketRegion = "asia"
+	DestinationGCSUpdateGCSBucketRegionEu                     DestinationGCSUpdateGCSBucketRegion = "eu"
+	DestinationGCSUpdateGCSBucketRegionUs                     DestinationGCSUpdateGCSBucketRegion = "us"
+	DestinationGCSUpdateGCSBucketRegionAsia1                  DestinationGCSUpdateGCSBucketRegion = "asia1"
+	DestinationGCSUpdateGCSBucketRegionEur4                   DestinationGCSUpdateGCSBucketRegion = "eur4"
+	DestinationGCSUpdateGCSBucketRegionNam4                   DestinationGCSUpdateGCSBucketRegion = "nam4"
+)
+
+func (e DestinationGCSUpdateGCSBucketRegion) ToPointer() *DestinationGCSUpdateGCSBucketRegion {
+	return &e
+}
+func (e *DestinationGCSUpdateGCSBucketRegion) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "northamerica-northeast1":
+		fallthrough
+	case "northamerica-northeast2":
+		fallthrough
+	case "us-central1":
+		fallthrough
+	case "us-east1":
+		fallthrough
+	case "us-east4":
+		fallthrough
+	case "us-west1":
+		fallthrough
+	case "us-west2":
+		fallthrough
+	case "us-west3":
+		fallthrough
+	case "us-west4":
+		fallthrough
+	case "southamerica-east1":
+		fallthrough
+	case "southamerica-west1":
+		fallthrough
+	case "europe-central2":
+		fallthrough
+	case "europe-north1":
+		fallthrough
+	case "europe-west1":
+		fallthrough
+	case "europe-west2":
+		fallthrough
+	case "europe-west3":
+		fallthrough
+	case "europe-west4":
+		fallthrough
+	case "europe-west6":
+		fallthrough
+	case "asia-east1":
+		fallthrough
+	case "asia-east2":
+		fallthrough
+	case "asia-northeast1":
+		fallthrough
+	case "asia-northeast2":
+		fallthrough
+	case "asia-northeast3":
+		fallthrough
+	case "asia-south1":
+		fallthrough
+	case "asia-south2":
+		fallthrough
+	case "asia-southeast1":
+		fallthrough
+	case "asia-southeast2":
+		fallthrough
+	case "australia-southeast1":
+		fallthrough
+	case "australia-southeast2":
+		fallthrough
+	case "asia":
+		fallthrough
+	case "eu":
+		fallthrough
+	case "us":
+		fallthrough
+	case "asia1":
+		fallthrough
+	case "eur4":
+		fallthrough
+	case "nam4":
+		*e = DestinationGCSUpdateGCSBucketRegion(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGCSUpdateGCSBucketRegion: %v", v)
+	}
+}
+
 type DestinationGcsUpdate struct {
+	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
+	Credential DestinationGcsUpdateAuthentication `json:"credential"`
+	// Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
+	Format DestinationGcsUpdateOutputFormat `json:"format"`
 	// You can find the bucket name in the App Engine Admin console Application Settings page, under the label Google Cloud Storage Bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
 	GcsBucketName string `json:"gcs_bucket_name"`
 	// GCS Bucket Path string Subdirectory under the above bucket to sync the data into.
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
 	GcsBucketRegion *DestinationGCSUpdateGCSBucketRegion `default:"us" json:"gcs_bucket_region"`
-	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
-	Credential DestinationGcsUpdateAuthentication `json:"credential"`
-	// Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
-	Format DestinationGcsUpdateOutputFormat `json:"format"`
 }
 
 func (d DestinationGcsUpdate) MarshalJSON() ([]byte, error) {
@@ -1475,6 +1475,20 @@ func (d *DestinationGcsUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *DestinationGcsUpdate) GetCredential() DestinationGcsUpdateAuthentication {
+	if o == nil {
+		return DestinationGcsUpdateAuthentication{}
+	}
+	return o.Credential
+}
+
+func (o *DestinationGcsUpdate) GetFormat() DestinationGcsUpdateOutputFormat {
+	if o == nil {
+		return DestinationGcsUpdateOutputFormat{}
+	}
+	return o.Format
 }
 
 func (o *DestinationGcsUpdate) GetGcsBucketName() string {
@@ -1496,18 +1510,4 @@ func (o *DestinationGcsUpdate) GetGcsBucketRegion() *DestinationGCSUpdateGCSBuck
 		return nil
 	}
 	return o.GcsBucketRegion
-}
-
-func (o *DestinationGcsUpdate) GetCredential() DestinationGcsUpdateAuthentication {
-	if o == nil {
-		return DestinationGcsUpdateAuthentication{}
-	}
-	return o.Credential
-}
-
-func (o *DestinationGcsUpdate) GetFormat() DestinationGcsUpdateOutputFormat {
-	if o == nil {
-		return DestinationGcsUpdateOutputFormat{}
-	}
-	return o.Format
 }

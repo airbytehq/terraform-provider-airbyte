@@ -21,13 +21,28 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
-	datasetLocation := shared.DatasetLocation(r.Configuration.DatasetLocation.ValueString())
+	bigQueryClientBufferSizeMb := new(int64)
+	if !r.Configuration.BigQueryClientBufferSizeMb.IsUnknown() && !r.Configuration.BigQueryClientBufferSizeMb.IsNull() {
+		*bigQueryClientBufferSizeMb = r.Configuration.BigQueryClientBufferSizeMb.ValueInt64()
+	} else {
+		bigQueryClientBufferSizeMb = nil
+	}
+	credentialsJSON := new(string)
+	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
+		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+	} else {
+		credentialsJSON = nil
+	}
 	var datasetID string
 	datasetID = r.Configuration.DatasetID.ValueString()
 
+	datasetLocation := shared.DatasetLocation(r.Configuration.DatasetLocation.ValueString())
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
 	var loadingMethod *shared.LoadingMethod
 	if r.Configuration.LoadingMethod != nil {
 		var batchedStandardInserts *shared.BatchedStandardInserts
@@ -85,11 +100,14 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryCreateRequ
 			}
 		}
 	}
-	credentialsJSON := new(string)
-	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
-		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
+	rawDataDataset := new(string)
+	if !r.Configuration.RawDataDataset.IsUnknown() && !r.Configuration.RawDataDataset.IsNull() {
+		*rawDataDataset = r.Configuration.RawDataDataset.ValueString()
 	} else {
-		credentialsJSON = nil
+		rawDataDataset = nil
 	}
 	transformationPriority := new(shared.TransformationQueryRunType)
 	if !r.Configuration.TransformationPriority.IsUnknown() && !r.Configuration.TransformationPriority.IsNull() {
@@ -97,34 +115,16 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryCreateRequ
 	} else {
 		transformationPriority = nil
 	}
-	bigQueryClientBufferSizeMb := new(int64)
-	if !r.Configuration.BigQueryClientBufferSizeMb.IsUnknown() && !r.Configuration.BigQueryClientBufferSizeMb.IsNull() {
-		*bigQueryClientBufferSizeMb = r.Configuration.BigQueryClientBufferSizeMb.ValueInt64()
-	} else {
-		bigQueryClientBufferSizeMb = nil
-	}
-	rawDataDataset := new(string)
-	if !r.Configuration.RawDataDataset.IsUnknown() && !r.Configuration.RawDataDataset.IsNull() {
-		*rawDataDataset = r.Configuration.RawDataDataset.ValueString()
-	} else {
-		rawDataDataset = nil
-	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
-	} else {
-		disableTypeDedupe = nil
-	}
 	configuration := shared.DestinationBigquery{
-		ProjectID:                  projectID,
-		DatasetLocation:            datasetLocation,
-		DatasetID:                  datasetID,
-		LoadingMethod:              loadingMethod,
-		CredentialsJSON:            credentialsJSON,
-		TransformationPriority:     transformationPriority,
 		BigQueryClientBufferSizeMb: bigQueryClientBufferSizeMb,
-		RawDataDataset:             rawDataDataset,
+		CredentialsJSON:            credentialsJSON,
+		DatasetID:                  datasetID,
+		DatasetLocation:            datasetLocation,
 		DisableTypeDedupe:          disableTypeDedupe,
+		LoadingMethod:              loadingMethod,
+		ProjectID:                  projectID,
+		RawDataDataset:             rawDataDataset,
+		TransformationPriority:     transformationPriority,
 	}
 	out := shared.DestinationBigqueryCreateRequest{
 		Name:          name,
@@ -189,13 +189,28 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
-	datasetLocation := shared.DestinationBigqueryUpdateDatasetLocation(r.Configuration.DatasetLocation.ValueString())
+	bigQueryClientBufferSizeMb := new(int64)
+	if !r.Configuration.BigQueryClientBufferSizeMb.IsUnknown() && !r.Configuration.BigQueryClientBufferSizeMb.IsNull() {
+		*bigQueryClientBufferSizeMb = r.Configuration.BigQueryClientBufferSizeMb.ValueInt64()
+	} else {
+		bigQueryClientBufferSizeMb = nil
+	}
+	credentialsJSON := new(string)
+	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
+		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+	} else {
+		credentialsJSON = nil
+	}
 	var datasetID string
 	datasetID = r.Configuration.DatasetID.ValueString()
 
+	datasetLocation := shared.DestinationBigqueryUpdateDatasetLocation(r.Configuration.DatasetLocation.ValueString())
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
 	var loadingMethod *shared.DestinationBigqueryUpdateLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
 		var destinationBigqueryUpdateBatchedStandardInserts *shared.DestinationBigqueryUpdateBatchedStandardInserts
@@ -253,11 +268,14 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryPutRequest
 			}
 		}
 	}
-	credentialsJSON := new(string)
-	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
-		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
+	rawDataDataset := new(string)
+	if !r.Configuration.RawDataDataset.IsUnknown() && !r.Configuration.RawDataDataset.IsNull() {
+		*rawDataDataset = r.Configuration.RawDataDataset.ValueString()
 	} else {
-		credentialsJSON = nil
+		rawDataDataset = nil
 	}
 	transformationPriority := new(shared.DestinationBigqueryUpdateTransformationQueryRunType)
 	if !r.Configuration.TransformationPriority.IsUnknown() && !r.Configuration.TransformationPriority.IsNull() {
@@ -265,34 +283,16 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryPutRequest
 	} else {
 		transformationPriority = nil
 	}
-	bigQueryClientBufferSizeMb := new(int64)
-	if !r.Configuration.BigQueryClientBufferSizeMb.IsUnknown() && !r.Configuration.BigQueryClientBufferSizeMb.IsNull() {
-		*bigQueryClientBufferSizeMb = r.Configuration.BigQueryClientBufferSizeMb.ValueInt64()
-	} else {
-		bigQueryClientBufferSizeMb = nil
-	}
-	rawDataDataset := new(string)
-	if !r.Configuration.RawDataDataset.IsUnknown() && !r.Configuration.RawDataDataset.IsNull() {
-		*rawDataDataset = r.Configuration.RawDataDataset.ValueString()
-	} else {
-		rawDataDataset = nil
-	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
-	} else {
-		disableTypeDedupe = nil
-	}
 	configuration := shared.DestinationBigqueryUpdate{
-		ProjectID:                  projectID,
-		DatasetLocation:            datasetLocation,
-		DatasetID:                  datasetID,
-		LoadingMethod:              loadingMethod,
-		CredentialsJSON:            credentialsJSON,
-		TransformationPriority:     transformationPriority,
 		BigQueryClientBufferSizeMb: bigQueryClientBufferSizeMb,
-		RawDataDataset:             rawDataDataset,
+		CredentialsJSON:            credentialsJSON,
+		DatasetID:                  datasetID,
+		DatasetLocation:            datasetLocation,
 		DisableTypeDedupe:          disableTypeDedupe,
+		LoadingMethod:              loadingMethod,
+		ProjectID:                  projectID,
+		RawDataDataset:             rawDataDataset,
+		TransformationPriority:     transformationPriority,
 	}
 	out := shared.DestinationBigqueryPutRequest{
 		Name:          name,

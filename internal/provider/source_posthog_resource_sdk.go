@@ -22,7 +22,6 @@ func (r *SourcePosthogResourceModel) ToSharedSourcePosthogCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
@@ -38,11 +37,12 @@ func (r *SourcePosthogResourceModel) ToSharedSourcePosthogCreateRequest() *share
 	} else {
 		eventsTimeStep = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePosthog{
-		StartDate:      startDate,
 		APIKey:         apiKey,
 		BaseURL:        baseURL,
 		EventsTimeStep: eventsTimeStep,
+		StartDate:      startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -114,7 +114,6 @@ func (r *SourcePosthogResourceModel) ToSharedSourcePosthogPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
@@ -130,11 +129,12 @@ func (r *SourcePosthogResourceModel) ToSharedSourcePosthogPutRequest() *shared.S
 	} else {
 		eventsTimeStep = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePosthogUpdate{
-		StartDate:      startDate,
 		APIKey:         apiKey,
 		BaseURL:        baseURL,
 		EventsTimeStep: eventsTimeStep,
+		StartDate:      startDate,
 	}
 	out := shared.SourcePosthogPutRequest{
 		Name:          name,

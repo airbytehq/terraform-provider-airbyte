@@ -25,17 +25,17 @@ func (r *SourceLobResourceModel) ToSharedSourceLobCreateRequest() *shared.Source
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
 	} else {
 		limit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLob{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		Limit:     limit,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,17 +110,17 @@ func (r *SourceLobResourceModel) ToSharedSourceLobPutRequest() *shared.SourceLob
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
 	} else {
 		limit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLobUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		Limit:     limit,
+		StartDate: startDate,
 	}
 	out := shared.SourceLobPutRequest{
 		Name:          name,

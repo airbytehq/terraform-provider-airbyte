@@ -33,10 +33,10 @@ func (e *SourceRetentlyUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRetentlyUpdateAuthenticateWithAPIToken struct {
-	authType *SourceRetentlyUpdateSchemasAuthType `const:"Token" json:"auth_type,omitempty"`
 	// Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
-	APIKey               string `json:"api_key"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+	APIKey               string                               `json:"api_key"`
+	authType             *SourceRetentlyUpdateSchemasAuthType `const:"Token" json:"auth_type,omitempty"`
+	AdditionalProperties any                                  `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceRetentlyUpdateAuthenticateWithAPIToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceRetentlyUpdateAuthenticateWithAPIToken) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (o *SourceRetentlyUpdateAuthenticateWithAPIToken) GetAuthType() *SourceRetentlyUpdateSchemasAuthType {
-	return SourceRetentlyUpdateSchemasAuthTypeToken.ToPointer()
-}
-
 func (o *SourceRetentlyUpdateAuthenticateWithAPIToken) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceRetentlyUpdateAuthenticateWithAPIToken) GetAuthType() *SourceRetentlyUpdateSchemasAuthType {
+	return SourceRetentlyUpdateSchemasAuthTypeToken.ToPointer()
 }
 
 func (o *SourceRetentlyUpdateAuthenticateWithAPIToken) GetAdditionalProperties() any {

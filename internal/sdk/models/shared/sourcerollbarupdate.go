@@ -8,9 +8,9 @@ import (
 )
 
 type SourceRollbarUpdate struct {
+	AccountAccessToken string    `json:"account_access_token"`
 	ProjectAccessToken string    `json:"project_access_token"`
 	StartDate          time.Time `json:"start_date"`
-	AccountAccessToken string    `json:"account_access_token"`
 }
 
 func (s SourceRollbarUpdate) MarshalJSON() ([]byte, error) {
@@ -22,6 +22,13 @@ func (s *SourceRollbarUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceRollbarUpdate) GetAccountAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountAccessToken
 }
 
 func (o *SourceRollbarUpdate) GetProjectAccessToken() string {
@@ -36,11 +43,4 @@ func (o *SourceRollbarUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceRollbarUpdate) GetAccountAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountAccessToken
 }

@@ -14,6 +14,8 @@ type StreamConfiguration struct {
 	PrimaryKey [][]string `json:"primaryKey,omitempty"`
 	// Whether to move raw files from the source to the destination during the sync.
 	IncludeFiles *bool `json:"includeFiles,omitempty"`
+	// The name of the destination object that this stream will be written to, used for data activation destinations.
+	DestinationObjectName *string `json:"destinationObjectName,omitempty"`
 	// Paths to the fields that will be included in the configured catalog.
 	SelectedFields []SelectedFieldInfo `json:"selectedFields,omitempty"`
 	// Mappers that should be applied to the stream before writing to the destination.
@@ -60,6 +62,13 @@ func (o *StreamConfiguration) GetIncludeFiles() *bool {
 		return nil
 	}
 	return o.IncludeFiles
+}
+
+func (o *StreamConfiguration) GetDestinationObjectName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DestinationObjectName
 }
 
 func (o *StreamConfiguration) GetSelectedFields() []SelectedFieldInfo {

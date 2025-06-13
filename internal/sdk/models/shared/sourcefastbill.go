@@ -32,10 +32,10 @@ func (e *Fastbill) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFastbill struct {
-	// Username for Fastbill account
-	Username string `json:"username"`
 	// Fastbill API key
-	APIKey     string   `json:"api_key"`
+	APIKey string `json:"api_key"`
+	// Username for Fastbill account
+	Username   string   `json:"username"`
 	sourceType Fastbill `const:"fastbill" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceFastbill) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFastbill) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceFastbill) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceFastbill) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceFastbill) GetSourceType() Fastbill {

@@ -49,9 +49,9 @@ func (e *SourceZohoAnalyticsMetadataAPIUpdateDataCenter) UnmarshalJSON(data []by
 type SourceZohoAnalyticsMetadataAPIUpdate struct {
 	ClientID     string                                          `json:"client_id"`
 	ClientSecret string                                          `json:"client_secret"`
-	RefreshToken string                                          `json:"refresh_token"`
 	DataCenter   *SourceZohoAnalyticsMetadataAPIUpdateDataCenter `default:"com" json:"data_center"`
 	OrgID        float64                                         `json:"org_id"`
+	RefreshToken string                                          `json:"refresh_token"`
 }
 
 func (s SourceZohoAnalyticsMetadataAPIUpdate) MarshalJSON() ([]byte, error) {
@@ -79,13 +79,6 @@ func (o *SourceZohoAnalyticsMetadataAPIUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceZohoAnalyticsMetadataAPIUpdate) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
-}
-
 func (o *SourceZohoAnalyticsMetadataAPIUpdate) GetDataCenter() *SourceZohoAnalyticsMetadataAPIUpdateDataCenter {
 	if o == nil {
 		return nil
@@ -98,4 +91,11 @@ func (o *SourceZohoAnalyticsMetadataAPIUpdate) GetOrgID() float64 {
 		return 0.0
 	}
 	return o.OrgID
+}
+
+func (o *SourceZohoAnalyticsMetadataAPIUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }

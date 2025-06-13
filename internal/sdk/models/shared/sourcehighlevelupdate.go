@@ -8,8 +8,8 @@ import (
 )
 
 type SourceHighLevelUpdate struct {
-	LocationID string    `json:"location_id"`
 	APIKey     string    `json:"api_key"`
+	LocationID string    `json:"location_id"`
 	StartDate  time.Time `json:"start_date"`
 }
 
@@ -24,18 +24,18 @@ func (s *SourceHighLevelUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceHighLevelUpdate) GetLocationID() string {
-	if o == nil {
-		return ""
-	}
-	return o.LocationID
-}
-
 func (o *SourceHighLevelUpdate) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceHighLevelUpdate) GetLocationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.LocationID
 }
 
 func (o *SourceHighLevelUpdate) GetStartDate() time.Time {

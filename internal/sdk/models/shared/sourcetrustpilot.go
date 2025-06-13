@@ -86,11 +86,11 @@ func (e *SourceTrustpilotAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTrustpilotOAuth20 struct {
-	authType *SourceTrustpilotAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	// Access Token for making authenticated requests.
+	AccessToken string                    `json:"access_token"`
+	authType    *SourceTrustpilotAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application. (represents the OAuth Client ID)
 	ClientID string `json:"client_id"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
 	// The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
 	ClientSecret string `json:"client_secret"`
 	// The key to refresh the expired access_token.
@@ -110,6 +110,13 @@ func (s *SourceTrustpilotOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceTrustpilotOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
 func (o *SourceTrustpilotOAuth20) GetAuthType() *SourceTrustpilotAuthType {
 	return SourceTrustpilotAuthTypeOauth20.ToPointer()
 }
@@ -119,13 +126,6 @@ func (o *SourceTrustpilotOAuth20) GetClientID() string {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *SourceTrustpilotOAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
 }
 
 func (o *SourceTrustpilotOAuth20) GetClientSecret() string {
@@ -236,12 +236,12 @@ func (e *Trustpilot) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTrustpilot struct {
-	Credentials SourceTrustpilotAuthorizationMethod `json:"credentials"`
-	// For streams with sync. method incremental the start date time to be used
-	StartDate string `json:"start_date"`
 	// The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.
-	BusinessUnits []string   `json:"business_units"`
-	sourceType    Trustpilot `const:"trustpilot" json:"sourceType"`
+	BusinessUnits []string                            `json:"business_units"`
+	Credentials   SourceTrustpilotAuthorizationMethod `json:"credentials"`
+	// For streams with sync. method incremental the start date time to be used
+	StartDate  string     `json:"start_date"`
+	sourceType Trustpilot `const:"trustpilot" json:"sourceType"`
 }
 
 func (s SourceTrustpilot) MarshalJSON() ([]byte, error) {
@@ -253,6 +253,13 @@ func (s *SourceTrustpilot) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceTrustpilot) GetBusinessUnits() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.BusinessUnits
 }
 
 func (o *SourceTrustpilot) GetCredentials() SourceTrustpilotAuthorizationMethod {
@@ -267,13 +274,6 @@ func (o *SourceTrustpilot) GetStartDate() string {
 		return ""
 	}
 	return o.StartDate
-}
-
-func (o *SourceTrustpilot) GetBusinessUnits() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.BusinessUnits
 }
 
 func (o *SourceTrustpilot) GetSourceType() Trustpilot {

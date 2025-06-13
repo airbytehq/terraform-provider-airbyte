@@ -32,12 +32,12 @@ func (e *Confluence) UnmarshalJSON(data []byte) error {
 }
 
 type SourceConfluence struct {
-	// Your Confluence login email
-	Email string `json:"email"`
 	// Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
 	APIToken string `json:"api_token"`
 	// Your Confluence domain name
-	DomainName string     `json:"domain_name"`
+	DomainName string `json:"domain_name"`
+	// Your Confluence login email
+	Email      string     `json:"email"`
 	sourceType Confluence `const:"confluence" json:"sourceType"`
 }
 
@@ -52,13 +52,6 @@ func (s *SourceConfluence) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceConfluence) GetEmail() string {
-	if o == nil {
-		return ""
-	}
-	return o.Email
-}
-
 func (o *SourceConfluence) GetAPIToken() string {
 	if o == nil {
 		return ""
@@ -71,6 +64,13 @@ func (o *SourceConfluence) GetDomainName() string {
 		return ""
 	}
 	return o.DomainName
+}
+
+func (o *SourceConfluence) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
 }
 
 func (o *SourceConfluence) GetSourceType() Confluence {

@@ -34,11 +34,11 @@ func (e *SourceTiktokMarketingSchemasAuthType) UnmarshalJSON(data []byte) error 
 }
 
 type SandboxAccessToken struct {
-	authType *SourceTiktokMarketingSchemasAuthType `const:"sandbox_access_token" json:"auth_type,omitempty"`
-	// The Advertiser ID which generated for the developer's Sandbox application.
-	AdvertiserID string `json:"advertiser_id"`
 	// The long-term authorized access token.
 	AccessToken string `json:"access_token"`
+	// The Advertiser ID which generated for the developer's Sandbox application.
+	AdvertiserID string                                `json:"advertiser_id"`
+	authType     *SourceTiktokMarketingSchemasAuthType `const:"sandbox_access_token" json:"auth_type,omitempty"`
 }
 
 func (s SandboxAccessToken) MarshalJSON() ([]byte, error) {
@@ -52,8 +52,11 @@ func (s *SandboxAccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SandboxAccessToken) GetAuthType() *SourceTiktokMarketingSchemasAuthType {
-	return SourceTiktokMarketingSchemasAuthTypeSandboxAccessToken.ToPointer()
+func (o *SandboxAccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SandboxAccessToken) GetAdvertiserID() string {
@@ -63,11 +66,8 @@ func (o *SandboxAccessToken) GetAdvertiserID() string {
 	return o.AdvertiserID
 }
 
-func (o *SandboxAccessToken) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
+func (o *SandboxAccessToken) GetAuthType() *SourceTiktokMarketingSchemasAuthType {
+	return SourceTiktokMarketingSchemasAuthTypeSandboxAccessToken.ToPointer()
 }
 
 type SourceTiktokMarketingAuthType string
@@ -94,15 +94,15 @@ func (e *SourceTiktokMarketingAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTiktokMarketingOAuth20 struct {
-	authType *SourceTiktokMarketingAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
-	// The Developer Application App ID.
-	AppID string `json:"app_id"`
-	// The Developer Application Secret.
-	Secret string `json:"secret"`
 	// Long-term Authorized Access Token.
 	AccessToken string `json:"access_token"`
 	// The Advertiser ID to filter reports and streams. Let this empty to retrieve all.
 	AdvertiserID *string `json:"advertiser_id,omitempty"`
+	// The Developer Application App ID.
+	AppID    string                         `json:"app_id"`
+	authType *SourceTiktokMarketingAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	// The Developer Application Secret.
+	Secret string `json:"secret"`
 }
 
 func (s SourceTiktokMarketingOAuth20) MarshalJSON() ([]byte, error) {
@@ -114,24 +114,6 @@ func (s *SourceTiktokMarketingOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceTiktokMarketingOAuth20) GetAuthType() *SourceTiktokMarketingAuthType {
-	return SourceTiktokMarketingAuthTypeOauth20.ToPointer()
-}
-
-func (o *SourceTiktokMarketingOAuth20) GetAppID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AppID
-}
-
-func (o *SourceTiktokMarketingOAuth20) GetSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.Secret
 }
 
 func (o *SourceTiktokMarketingOAuth20) GetAccessToken() string {
@@ -146,6 +128,24 @@ func (o *SourceTiktokMarketingOAuth20) GetAdvertiserID() *string {
 		return nil
 	}
 	return o.AdvertiserID
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetAppID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppID
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetAuthType() *SourceTiktokMarketingAuthType {
+	return SourceTiktokMarketingAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.Secret
 }
 
 type SourceTiktokMarketingAuthenticationMethodType string
@@ -236,17 +236,17 @@ func (e *TiktokMarketing) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTiktokMarketing struct {
-	// Authentication method
-	Credentials *SourceTiktokMarketingAuthenticationMethod `json:"credentials,omitempty"`
-	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
-	StartDate *types.Date `default:"2016-09-01" json:"start_date"`
-	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
-	EndDate *types.Date `json:"end_date,omitempty"`
 	// The attribution window in days.
 	AttributionWindow *int64 `default:"3" json:"attribution_window"`
+	// Authentication method
+	Credentials *SourceTiktokMarketingAuthenticationMethod `json:"credentials,omitempty"`
+	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
+	EndDate *types.Date `json:"end_date,omitempty"`
 	// Set to active if you want to include deleted data in report based streams and Ads, Ad Groups and Campaign streams.
-	IncludeDeleted *bool            `default:"false" json:"include_deleted"`
-	sourceType     *TiktokMarketing `const:"tiktok-marketing" json:"sourceType,omitempty"`
+	IncludeDeleted *bool `default:"false" json:"include_deleted"`
+	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
+	StartDate  *types.Date      `default:"2016-09-01" json:"start_date"`
+	sourceType *TiktokMarketing `const:"tiktok-marketing" json:"sourceType,omitempty"`
 }
 
 func (s SourceTiktokMarketing) MarshalJSON() ([]byte, error) {
@@ -260,18 +260,18 @@ func (s *SourceTiktokMarketing) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceTiktokMarketing) GetAttributionWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AttributionWindow
+}
+
 func (o *SourceTiktokMarketing) GetCredentials() *SourceTiktokMarketingAuthenticationMethod {
 	if o == nil {
 		return nil
 	}
 	return o.Credentials
-}
-
-func (o *SourceTiktokMarketing) GetStartDate() *types.Date {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
 }
 
 func (o *SourceTiktokMarketing) GetEndDate() *types.Date {
@@ -281,18 +281,18 @@ func (o *SourceTiktokMarketing) GetEndDate() *types.Date {
 	return o.EndDate
 }
 
-func (o *SourceTiktokMarketing) GetAttributionWindow() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.AttributionWindow
-}
-
 func (o *SourceTiktokMarketing) GetIncludeDeleted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IncludeDeleted
+}
+
+func (o *SourceTiktokMarketing) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceTiktokMarketing) GetSourceType() *TiktokMarketing {

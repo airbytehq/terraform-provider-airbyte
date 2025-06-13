@@ -38,14 +38,21 @@ func (e *SourceVitallyUpdateStatus) UnmarshalJSON(data []byte) error {
 }
 
 type SourceVitallyUpdate struct {
-	// Provide only the subdomain part, like https://{your-custom-subdomain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
-	Domain string `json:"domain"`
-	// Status of the Vitally accounts. One of the following values; active, churned, activeOrChurned.
-	Status SourceVitallyUpdateStatus `json:"status"`
-	// sk_live_secret_token
-	SecretToken string `json:"secret_token"`
 	// Basic Auth Header
 	BasicAuthHeader *string `json:"basic_auth_header,omitempty"`
+	// Provide only the subdomain part, like https://{your-custom-subdomain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
+	Domain string `json:"domain"`
+	// sk_live_secret_token
+	SecretToken string `json:"secret_token"`
+	// Status of the Vitally accounts. One of the following values; active, churned, activeOrChurned.
+	Status SourceVitallyUpdateStatus `json:"status"`
+}
+
+func (o *SourceVitallyUpdate) GetBasicAuthHeader() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BasicAuthHeader
 }
 
 func (o *SourceVitallyUpdate) GetDomain() string {
@@ -55,13 +62,6 @@ func (o *SourceVitallyUpdate) GetDomain() string {
 	return o.Domain
 }
 
-func (o *SourceVitallyUpdate) GetStatus() SourceVitallyUpdateStatus {
-	if o == nil {
-		return SourceVitallyUpdateStatus("")
-	}
-	return o.Status
-}
-
 func (o *SourceVitallyUpdate) GetSecretToken() string {
 	if o == nil {
 		return ""
@@ -69,9 +69,9 @@ func (o *SourceVitallyUpdate) GetSecretToken() string {
 	return o.SecretToken
 }
 
-func (o *SourceVitallyUpdate) GetBasicAuthHeader() *string {
+func (o *SourceVitallyUpdate) GetStatus() SourceVitallyUpdateStatus {
 	if o == nil {
-		return nil
+		return SourceVitallyUpdateStatus("")
 	}
-	return o.BasicAuthHeader
+	return o.Status
 }

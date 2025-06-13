@@ -24,17 +24,17 @@ func (r *SourceZohoCampaignResourceModel) ToSharedSourceZohoCampaignCreateReques
 	var clientId2 string
 	clientId2 = r.Configuration.ClientID2.ValueString()
 
-	var clientSecret2 string
-	clientSecret2 = r.Configuration.ClientSecret2.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret2 string
+	clientSecret2 = r.Configuration.ClientSecret2.ValueString()
 
 	dataCenter := shared.SourceZohoCampaignDataCenter(r.Configuration.DataCenter.ValueString())
 	configuration := shared.SourceZohoCampaign{
 		ClientID2:          clientId2,
-		ClientSecret2:      clientSecret2,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret2:      clientSecret2,
 		DataCenter:         dataCenter,
 	}
 	secretID := new(string)
@@ -110,17 +110,17 @@ func (r *SourceZohoCampaignResourceModel) ToSharedSourceZohoCampaignPutRequest()
 	var clientId2 string
 	clientId2 = r.Configuration.ClientID2.ValueString()
 
-	var clientSecret2 string
-	clientSecret2 = r.Configuration.ClientSecret2.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret2 string
+	clientSecret2 = r.Configuration.ClientSecret2.ValueString()
 
 	dataCenter := shared.SourceZohoCampaignUpdateDataCenter(r.Configuration.DataCenter.ValueString())
 	configuration := shared.SourceZohoCampaignUpdate{
 		ClientID2:          clientId2,
-		ClientSecret2:      clientSecret2,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret2:      clientSecret2,
 		DataCenter:         dataCenter,
 	}
 	out := shared.SourceZohoCampaignPutRequest{

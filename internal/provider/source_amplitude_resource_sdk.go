@@ -22,38 +22,38 @@ func (r *SourceAmplitudeResourceModel) ToSharedSourceAmplitudeCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	dataRegion := new(shared.DataRegion)
-	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
-		*dataRegion = shared.DataRegion(r.Configuration.DataRegion.ValueString())
-	} else {
-		dataRegion = nil
-	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	var secretKey string
-	secretKey = r.Configuration.SecretKey.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	requestTimeRange := new(int64)
-	if !r.Configuration.RequestTimeRange.IsUnknown() && !r.Configuration.RequestTimeRange.IsNull() {
-		*requestTimeRange = r.Configuration.RequestTimeRange.ValueInt64()
-	} else {
-		requestTimeRange = nil
-	}
 	activeUsersGroupByCountry := new(bool)
 	if !r.Configuration.ActiveUsersGroupByCountry.IsUnknown() && !r.Configuration.ActiveUsersGroupByCountry.IsNull() {
 		*activeUsersGroupByCountry = r.Configuration.ActiveUsersGroupByCountry.ValueBool()
 	} else {
 		activeUsersGroupByCountry = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	dataRegion := new(shared.DataRegion)
+	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
+		*dataRegion = shared.DataRegion(r.Configuration.DataRegion.ValueString())
+	} else {
+		dataRegion = nil
+	}
+	requestTimeRange := new(int64)
+	if !r.Configuration.RequestTimeRange.IsUnknown() && !r.Configuration.RequestTimeRange.IsNull() {
+		*requestTimeRange = r.Configuration.RequestTimeRange.ValueInt64()
+	} else {
+		requestTimeRange = nil
+	}
+	var secretKey string
+	secretKey = r.Configuration.SecretKey.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAmplitude{
-		DataRegion:                dataRegion,
+		ActiveUsersGroupByCountry: activeUsersGroupByCountry,
 		APIKey:                    apiKey,
+		DataRegion:                dataRegion,
+		RequestTimeRange:          requestTimeRange,
 		SecretKey:                 secretKey,
 		StartDate:                 startDate,
-		RequestTimeRange:          requestTimeRange,
-		ActiveUsersGroupByCountry: activeUsersGroupByCountry,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -125,38 +125,38 @@ func (r *SourceAmplitudeResourceModel) ToSharedSourceAmplitudePutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	dataRegion := new(shared.SourceAmplitudeUpdateDataRegion)
-	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
-		*dataRegion = shared.SourceAmplitudeUpdateDataRegion(r.Configuration.DataRegion.ValueString())
-	} else {
-		dataRegion = nil
-	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	var secretKey string
-	secretKey = r.Configuration.SecretKey.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	requestTimeRange := new(int64)
-	if !r.Configuration.RequestTimeRange.IsUnknown() && !r.Configuration.RequestTimeRange.IsNull() {
-		*requestTimeRange = r.Configuration.RequestTimeRange.ValueInt64()
-	} else {
-		requestTimeRange = nil
-	}
 	activeUsersGroupByCountry := new(bool)
 	if !r.Configuration.ActiveUsersGroupByCountry.IsUnknown() && !r.Configuration.ActiveUsersGroupByCountry.IsNull() {
 		*activeUsersGroupByCountry = r.Configuration.ActiveUsersGroupByCountry.ValueBool()
 	} else {
 		activeUsersGroupByCountry = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	dataRegion := new(shared.SourceAmplitudeUpdateDataRegion)
+	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
+		*dataRegion = shared.SourceAmplitudeUpdateDataRegion(r.Configuration.DataRegion.ValueString())
+	} else {
+		dataRegion = nil
+	}
+	requestTimeRange := new(int64)
+	if !r.Configuration.RequestTimeRange.IsUnknown() && !r.Configuration.RequestTimeRange.IsNull() {
+		*requestTimeRange = r.Configuration.RequestTimeRange.ValueInt64()
+	} else {
+		requestTimeRange = nil
+	}
+	var secretKey string
+	secretKey = r.Configuration.SecretKey.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAmplitudeUpdate{
-		DataRegion:                dataRegion,
+		ActiveUsersGroupByCountry: activeUsersGroupByCountry,
 		APIKey:                    apiKey,
+		DataRegion:                dataRegion,
+		RequestTimeRange:          requestTimeRange,
 		SecretKey:                 secretKey,
 		StartDate:                 startDate,
-		RequestTimeRange:          requestTimeRange,
-		ActiveUsersGroupByCountry: activeUsersGroupByCountry,
 	}
 	out := shared.SourceAmplitudePutRequest{
 		Name:          name,

@@ -33,10 +33,10 @@ func (e *Easypost) UnmarshalJSON(data []byte) error {
 }
 
 type SourceEasypost struct {
+	StartDate time.Time `json:"start_date"`
 	// The API Key from your easypost settings
-	Username   string    `json:"username"`
-	StartDate  time.Time `json:"start_date"`
-	sourceType Easypost  `const:"easypost" json:"sourceType"`
+	Username   string   `json:"username"`
+	sourceType Easypost `const:"easypost" json:"sourceType"`
 }
 
 func (s SourceEasypost) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (s *SourceEasypost) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceEasypost) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceEasypost) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceEasypost) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceEasypost) GetSourceType() Easypost {

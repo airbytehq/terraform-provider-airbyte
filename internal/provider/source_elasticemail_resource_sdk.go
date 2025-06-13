@@ -25,23 +25,23 @@ func (r *SourceElasticemailResourceModel) ToSharedSourceElasticemailCreateReques
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	scopeType := new(shared.ScopeType)
-	if !r.Configuration.ScopeType.IsUnknown() && !r.Configuration.ScopeType.IsNull() {
-		*scopeType = shared.ScopeType(r.Configuration.ScopeType.ValueString())
-	} else {
-		scopeType = nil
-	}
 	from := new(time.Time)
 	if !r.Configuration.From.IsUnknown() && !r.Configuration.From.IsNull() {
 		*from, _ = time.Parse(time.RFC3339Nano, r.Configuration.From.ValueString())
 	} else {
 		from = nil
 	}
+	scopeType := new(shared.ScopeType)
+	if !r.Configuration.ScopeType.IsUnknown() && !r.Configuration.ScopeType.IsNull() {
+		*scopeType = shared.ScopeType(r.Configuration.ScopeType.ValueString())
+	} else {
+		scopeType = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceElasticemail{
 		APIKey:    apiKey,
-		ScopeType: scopeType,
 		From:      from,
+		ScopeType: scopeType,
 		StartDate: startDate,
 	}
 	secretID := new(string)
@@ -117,23 +117,23 @@ func (r *SourceElasticemailResourceModel) ToSharedSourceElasticemailPutRequest()
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	scopeType := new(shared.SourceElasticemailUpdateScopeType)
-	if !r.Configuration.ScopeType.IsUnknown() && !r.Configuration.ScopeType.IsNull() {
-		*scopeType = shared.SourceElasticemailUpdateScopeType(r.Configuration.ScopeType.ValueString())
-	} else {
-		scopeType = nil
-	}
 	from := new(time.Time)
 	if !r.Configuration.From.IsUnknown() && !r.Configuration.From.IsNull() {
 		*from, _ = time.Parse(time.RFC3339Nano, r.Configuration.From.ValueString())
 	} else {
 		from = nil
 	}
+	scopeType := new(shared.SourceElasticemailUpdateScopeType)
+	if !r.Configuration.ScopeType.IsUnknown() && !r.Configuration.ScopeType.IsNull() {
+		*scopeType = shared.SourceElasticemailUpdateScopeType(r.Configuration.ScopeType.ValueString())
+	} else {
+		scopeType = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceElasticemailUpdate{
 		APIKey:    apiKey,
-		ScopeType: scopeType,
 		From:      from,
+		ScopeType: scopeType,
 		StartDate: startDate,
 	}
 	out := shared.SourceElasticemailPutRequest{

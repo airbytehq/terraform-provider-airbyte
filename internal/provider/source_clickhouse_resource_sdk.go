@@ -21,32 +21,29 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhouseCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
 	} else {
-		jdbcURLParams = nil
+		port = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -67,6 +64,9 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhouseCreateRequest() 
 		}
 		var sshKeyAuthentication *shared.SSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -79,14 +79,11 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhouseCreateRequest() 
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sshKeyAuthentication = &shared.SSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sshKeyAuthentication != nil {
@@ -124,15 +121,18 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhouseCreateRequest() 
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceClickhouse{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Username:      username,
-		Password:      password,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
 		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -204,32 +204,29 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhousePutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
 	} else {
-		jdbcURLParams = nil
+		port = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -250,6 +247,9 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhousePutRequest() *sh
 		}
 		var sourceClickhouseUpdateSSHKeyAuthentication *shared.SourceClickhouseUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -262,14 +262,11 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhousePutRequest() *sh
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sourceClickhouseUpdateSSHKeyAuthentication = &shared.SourceClickhouseUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sourceClickhouseUpdateSSHKeyAuthentication != nil {
@@ -307,15 +304,18 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhousePutRequest() *sh
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceClickhouseUpdate{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Username:      username,
-		Password:      password,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
 		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	out := shared.SourceClickhousePutRequest{
 		Name:          name,

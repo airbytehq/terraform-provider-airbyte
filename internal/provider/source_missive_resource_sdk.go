@@ -25,6 +25,12 @@ func (r *SourceMissiveResourceModel) ToSharedSourceMissiveCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	kind := new(shared.Kind)
+	if !r.Configuration.Kind.IsUnknown() && !r.Configuration.Kind.IsNull() {
+		*kind = shared.Kind(r.Configuration.Kind.ValueString())
+	} else {
+		kind = nil
+	}
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
@@ -32,17 +38,11 @@ func (r *SourceMissiveResourceModel) ToSharedSourceMissiveCreateRequest() *share
 		limit = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	kind := new(shared.Kind)
-	if !r.Configuration.Kind.IsUnknown() && !r.Configuration.Kind.IsNull() {
-		*kind = shared.Kind(r.Configuration.Kind.ValueString())
-	} else {
-		kind = nil
-	}
 	configuration := shared.SourceMissive{
 		APIKey:    apiKey,
+		Kind:      kind,
 		Limit:     limit,
 		StartDate: startDate,
-		Kind:      kind,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,6 +117,12 @@ func (r *SourceMissiveResourceModel) ToSharedSourceMissivePutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	kind := new(shared.SourceMissiveUpdateKind)
+	if !r.Configuration.Kind.IsUnknown() && !r.Configuration.Kind.IsNull() {
+		*kind = shared.SourceMissiveUpdateKind(r.Configuration.Kind.ValueString())
+	} else {
+		kind = nil
+	}
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
@@ -124,17 +130,11 @@ func (r *SourceMissiveResourceModel) ToSharedSourceMissivePutRequest() *shared.S
 		limit = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	kind := new(shared.SourceMissiveUpdateKind)
-	if !r.Configuration.Kind.IsUnknown() && !r.Configuration.Kind.IsNull() {
-		*kind = shared.SourceMissiveUpdateKind(r.Configuration.Kind.ValueString())
-	} else {
-		kind = nil
-	}
 	configuration := shared.SourceMissiveUpdate{
 		APIKey:    apiKey,
+		Kind:      kind,
 		Limit:     limit,
 		StartDate: startDate,
-		Kind:      kind,
 	}
 	out := shared.SourceMissivePutRequest{
 		Name:          name,

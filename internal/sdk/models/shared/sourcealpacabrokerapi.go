@@ -65,13 +65,13 @@ func (e *AlpacaBrokerAPI) UnmarshalJSON(data []byte) error {
 type SourceAlpacaBrokerAPI struct {
 	// The trading environment, either 'live', 'paper' or 'broker-api.sandbox'.
 	Environment *SourceAlpacaBrokerAPIEnvironment `default:"broker-api.sandbox" json:"environment"`
-	// API Key ID for the alpaca market
-	Username string `json:"username"`
+	// Limit for each response objects
+	Limit *string `default:"20" json:"limit"`
 	// Your Alpaca API Secret Key. You can find this in the Alpaca developer web console under your account settings.
 	Password  *string   `json:"password,omitempty"`
 	StartDate time.Time `json:"start_date"`
-	// Limit for each response objects
-	Limit      *string         `default:"20" json:"limit"`
+	// API Key ID for the alpaca market
+	Username   string          `json:"username"`
 	sourceType AlpacaBrokerAPI `const:"alpaca-broker-api" json:"sourceType"`
 }
 
@@ -93,11 +93,11 @@ func (o *SourceAlpacaBrokerAPI) GetEnvironment() *SourceAlpacaBrokerAPIEnvironme
 	return o.Environment
 }
 
-func (o *SourceAlpacaBrokerAPI) GetUsername() string {
+func (o *SourceAlpacaBrokerAPI) GetLimit() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Username
+	return o.Limit
 }
 
 func (o *SourceAlpacaBrokerAPI) GetPassword() *string {
@@ -114,11 +114,11 @@ func (o *SourceAlpacaBrokerAPI) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceAlpacaBrokerAPI) GetLimit() *string {
+func (o *SourceAlpacaBrokerAPI) GetUsername() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Limit
+	return o.Username
 }
 
 func (o *SourceAlpacaBrokerAPI) GetSourceType() AlpacaBrokerAPI {

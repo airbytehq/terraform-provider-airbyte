@@ -21,15 +21,15 @@ func (r *SourcePostmarkappResourceModel) ToSharedSourcePostmarkappCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var xPostmarkServerToken string
-	xPostmarkServerToken = r.Configuration.XPostmarkServerToken.ValueString()
-
 	var xPostmarkAccountToken string
 	xPostmarkAccountToken = r.Configuration.XPostmarkAccountToken.ValueString()
 
+	var xPostmarkServerToken string
+	xPostmarkServerToken = r.Configuration.XPostmarkServerToken.ValueString()
+
 	configuration := shared.SourcePostmarkapp{
-		XPostmarkServerToken:  xPostmarkServerToken,
 		XPostmarkAccountToken: xPostmarkAccountToken,
+		XPostmarkServerToken:  xPostmarkServerToken,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourcePostmarkappResourceModel) ToSharedSourcePostmarkappPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var xPostmarkServerToken string
-	xPostmarkServerToken = r.Configuration.XPostmarkServerToken.ValueString()
-
 	var xPostmarkAccountToken string
 	xPostmarkAccountToken = r.Configuration.XPostmarkAccountToken.ValueString()
 
+	var xPostmarkServerToken string
+	xPostmarkServerToken = r.Configuration.XPostmarkServerToken.ValueString()
+
 	configuration := shared.SourcePostmarkappUpdate{
-		XPostmarkServerToken:  xPostmarkServerToken,
 		XPostmarkAccountToken: xPostmarkAccountToken,
+		XPostmarkServerToken:  xPostmarkServerToken,
 	}
 	out := shared.SourcePostmarkappPutRequest{
 		Name:          name,

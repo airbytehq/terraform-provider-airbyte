@@ -32,9 +32,9 @@ func (e *Taboola) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTaboola struct {
-	ClientID string `json:"client_id"`
 	// The ID associated with your taboola account
 	AccountID    string  `json:"account_id"`
+	ClientID     string  `json:"client_id"`
 	ClientSecret string  `json:"client_secret"`
 	sourceType   Taboola `const:"taboola" json:"sourceType"`
 }
@@ -50,18 +50,18 @@ func (s *SourceTaboola) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceTaboola) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
 func (o *SourceTaboola) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceTaboola) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
 }
 
 func (o *SourceTaboola) GetClientSecret() string {

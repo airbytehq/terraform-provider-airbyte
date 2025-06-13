@@ -25,6 +25,12 @@ func (r *SourceAssemblyaiResourceModel) ToSharedSourceAssemblyaiCreateRequest() 
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	requestID := new(string)
+	if !r.Configuration.RequestID.IsUnknown() && !r.Configuration.RequestID.IsNull() {
+		*requestID = r.Configuration.RequestID.ValueString()
+	} else {
+		requestID = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subtitleFormat := new(shared.SubtitleFormat)
 	if !r.Configuration.SubtitleFormat.IsUnknown() && !r.Configuration.SubtitleFormat.IsNull() {
@@ -32,17 +38,11 @@ func (r *SourceAssemblyaiResourceModel) ToSharedSourceAssemblyaiCreateRequest() 
 	} else {
 		subtitleFormat = nil
 	}
-	requestID := new(string)
-	if !r.Configuration.RequestID.IsUnknown() && !r.Configuration.RequestID.IsNull() {
-		*requestID = r.Configuration.RequestID.ValueString()
-	} else {
-		requestID = nil
-	}
 	configuration := shared.SourceAssemblyai{
 		APIKey:         apiKey,
+		RequestID:      requestID,
 		StartDate:      startDate,
 		SubtitleFormat: subtitleFormat,
-		RequestID:      requestID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,6 +117,12 @@ func (r *SourceAssemblyaiResourceModel) ToSharedSourceAssemblyaiPutRequest() *sh
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	requestID := new(string)
+	if !r.Configuration.RequestID.IsUnknown() && !r.Configuration.RequestID.IsNull() {
+		*requestID = r.Configuration.RequestID.ValueString()
+	} else {
+		requestID = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subtitleFormat := new(shared.SourceAssemblyaiUpdateSubtitleFormat)
 	if !r.Configuration.SubtitleFormat.IsUnknown() && !r.Configuration.SubtitleFormat.IsNull() {
@@ -124,17 +130,11 @@ func (r *SourceAssemblyaiResourceModel) ToSharedSourceAssemblyaiPutRequest() *sh
 	} else {
 		subtitleFormat = nil
 	}
-	requestID := new(string)
-	if !r.Configuration.RequestID.IsUnknown() && !r.Configuration.RequestID.IsNull() {
-		*requestID = r.Configuration.RequestID.ValueString()
-	} else {
-		requestID = nil
-	}
 	configuration := shared.SourceAssemblyaiUpdate{
 		APIKey:         apiKey,
+		RequestID:      requestID,
 		StartDate:      startDate,
 		SubtitleFormat: subtitleFormat,
-		RequestID:      requestID,
 	}
 	out := shared.SourceAssemblyaiPutRequest{
 		Name:          name,

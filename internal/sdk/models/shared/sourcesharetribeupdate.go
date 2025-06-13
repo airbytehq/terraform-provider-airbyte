@@ -8,13 +8,13 @@ import (
 )
 
 type SourceSharetribeUpdate struct {
-	ClientID     string    `json:"client_id"`
-	ClientSecret string    `json:"client_secret"`
-	StartDate    time.Time `json:"start_date"`
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
 	// The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
 	OauthAccessToken *string `json:"oauth_access_token,omitempty"`
 	// The date the current access token expires in. This field might be overridden by the connector based on the token refresh endpoint response.
 	OauthTokenExpiryDate *time.Time `json:"oauth_token_expiry_date,omitempty"`
+	StartDate            time.Time  `json:"start_date"`
 }
 
 func (s SourceSharetribeUpdate) MarshalJSON() ([]byte, error) {
@@ -42,13 +42,6 @@ func (o *SourceSharetribeUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceSharetribeUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceSharetribeUpdate) GetOauthAccessToken() *string {
 	if o == nil {
 		return nil
@@ -61,4 +54,11 @@ func (o *SourceSharetribeUpdate) GetOauthTokenExpiryDate() *time.Time {
 		return nil
 	}
 	return o.OauthTokenExpiryDate
+}
+
+func (o *SourceSharetribeUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

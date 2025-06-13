@@ -61,6 +61,12 @@ func (r *SourceSquareResourceModel) ToSharedSourceSquareCreateRequest() *shared.
 			}
 		}
 	}
+	includeDeletedObjects := new(bool)
+	if !r.Configuration.IncludeDeletedObjects.IsUnknown() && !r.Configuration.IncludeDeletedObjects.IsNull() {
+		*includeDeletedObjects = r.Configuration.IncludeDeletedObjects.ValueBool()
+	} else {
+		includeDeletedObjects = nil
+	}
 	isSandbox := new(bool)
 	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
 		*isSandbox = r.Configuration.IsSandbox.ValueBool()
@@ -73,17 +79,11 @@ func (r *SourceSquareResourceModel) ToSharedSourceSquareCreateRequest() *shared.
 	} else {
 		startDate = nil
 	}
-	includeDeletedObjects := new(bool)
-	if !r.Configuration.IncludeDeletedObjects.IsUnknown() && !r.Configuration.IncludeDeletedObjects.IsNull() {
-		*includeDeletedObjects = r.Configuration.IncludeDeletedObjects.ValueBool()
-	} else {
-		includeDeletedObjects = nil
-	}
 	configuration := shared.SourceSquare{
 		Credentials:           credentials,
+		IncludeDeletedObjects: includeDeletedObjects,
 		IsSandbox:             isSandbox,
 		StartDate:             startDate,
-		IncludeDeletedObjects: includeDeletedObjects,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -194,6 +194,12 @@ func (r *SourceSquareResourceModel) ToSharedSourceSquarePutRequest() *shared.Sou
 			}
 		}
 	}
+	includeDeletedObjects := new(bool)
+	if !r.Configuration.IncludeDeletedObjects.IsUnknown() && !r.Configuration.IncludeDeletedObjects.IsNull() {
+		*includeDeletedObjects = r.Configuration.IncludeDeletedObjects.ValueBool()
+	} else {
+		includeDeletedObjects = nil
+	}
 	isSandbox := new(bool)
 	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
 		*isSandbox = r.Configuration.IsSandbox.ValueBool()
@@ -206,17 +212,11 @@ func (r *SourceSquareResourceModel) ToSharedSourceSquarePutRequest() *shared.Sou
 	} else {
 		startDate = nil
 	}
-	includeDeletedObjects := new(bool)
-	if !r.Configuration.IncludeDeletedObjects.IsUnknown() && !r.Configuration.IncludeDeletedObjects.IsNull() {
-		*includeDeletedObjects = r.Configuration.IncludeDeletedObjects.ValueBool()
-	} else {
-		includeDeletedObjects = nil
-	}
 	configuration := shared.SourceSquareUpdate{
 		Credentials:           credentials,
+		IncludeDeletedObjects: includeDeletedObjects,
 		IsSandbox:             isSandbox,
 		StartDate:             startDate,
-		IncludeDeletedObjects: includeDeletedObjects,
 	}
 	out := shared.SourceSquarePutRequest{
 		Name:          name,

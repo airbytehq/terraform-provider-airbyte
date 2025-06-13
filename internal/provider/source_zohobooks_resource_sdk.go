@@ -22,7 +22,6 @@ func (r *SourceZohoBooksResourceModel) ToSharedSourceZohoBooksCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	region := shared.SourceZohoBooksRegion(r.Configuration.Region.ValueString())
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -32,12 +31,13 @@ func (r *SourceZohoBooksResourceModel) ToSharedSourceZohoBooksCreateRequest() *s
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
+	region := shared.SourceZohoBooksRegion(r.Configuration.Region.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceZohoBooks{
-		Region:       region,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
+		Region:       region,
 		StartDate:    startDate,
 	}
 	secretID := new(string)
@@ -110,7 +110,6 @@ func (r *SourceZohoBooksResourceModel) ToSharedSourceZohoBooksPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	region := shared.SourceZohoBooksUpdateRegion(r.Configuration.Region.ValueString())
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -120,12 +119,13 @@ func (r *SourceZohoBooksResourceModel) ToSharedSourceZohoBooksPutRequest() *shar
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
+	region := shared.SourceZohoBooksUpdateRegion(r.Configuration.Region.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceZohoBooksUpdate{
-		Region:       region,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
+		Region:       region,
 		StartDate:    startDate,
 	}
 	out := shared.SourceZohoBooksPutRequest{

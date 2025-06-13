@@ -5,10 +5,10 @@ package shared
 type SourceWeatherstackUpdate struct {
 	// API access key used to retrieve data from the Weatherstack API.(https://weatherstack.com/product)
 	AccessKey string `json:"access_key"`
-	// A location to query such as city, IP, latitudeLongitude, or zipcode. Multiple locations with semicolon seperated if using a professional plan or higher. For more info- (https://weatherstack.com/documentation#query_parameter)
-	Query string `json:"query"`
 	// This is required for enabling the Historical date API with format- (YYYY-MM-DD). * Note, only supported by paid accounts
 	HistoricalDate string `json:"historical_date"`
+	// A location to query such as city, IP, latitudeLongitude, or zipcode. Multiple locations with semicolon seperated if using a professional plan or higher. For more info- (https://weatherstack.com/documentation#query_parameter)
+	Query string `json:"query"`
 }
 
 func (o *SourceWeatherstackUpdate) GetAccessKey() string {
@@ -18,16 +18,16 @@ func (o *SourceWeatherstackUpdate) GetAccessKey() string {
 	return o.AccessKey
 }
 
-func (o *SourceWeatherstackUpdate) GetQuery() string {
-	if o == nil {
-		return ""
-	}
-	return o.Query
-}
-
 func (o *SourceWeatherstackUpdate) GetHistoricalDate() string {
 	if o == nil {
 		return ""
 	}
 	return o.HistoricalDate
+}
+
+func (o *SourceWeatherstackUpdate) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
 }

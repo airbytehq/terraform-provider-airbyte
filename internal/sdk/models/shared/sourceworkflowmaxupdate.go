@@ -8,9 +8,9 @@ import (
 )
 
 type SourceWorkflowmaxUpdate struct {
-	APIKey2 string `json:"api_key_2"`
 	// The account id for workflowmax
 	AccountID string    `json:"account_id"`
+	APIKey2   string    `json:"api_key_2"`
 	StartDate time.Time `json:"start_date"`
 }
 
@@ -25,18 +25,18 @@ func (s *SourceWorkflowmaxUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceWorkflowmaxUpdate) GetAPIKey2() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey2
-}
-
 func (o *SourceWorkflowmaxUpdate) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceWorkflowmaxUpdate) GetAPIKey2() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey2
 }
 
 func (o *SourceWorkflowmaxUpdate) GetStartDate() time.Time {

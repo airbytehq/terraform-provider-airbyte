@@ -25,6 +25,12 @@ func (r *SourceAppfiguresResourceModel) ToSharedSourceAppfiguresCreateRequest() 
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	groupBy := new(shared.GroupBy)
+	if !r.Configuration.GroupBy.IsUnknown() && !r.Configuration.GroupBy.IsNull() {
+		*groupBy = shared.GroupBy(r.Configuration.GroupBy.ValueString())
+	} else {
+		groupBy = nil
+	}
 	searchStore := new(string)
 	if !r.Configuration.SearchStore.IsUnknown() && !r.Configuration.SearchStore.IsNull() {
 		*searchStore = r.Configuration.SearchStore.ValueString()
@@ -32,17 +38,11 @@ func (r *SourceAppfiguresResourceModel) ToSharedSourceAppfiguresCreateRequest() 
 		searchStore = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	groupBy := new(shared.GroupBy)
-	if !r.Configuration.GroupBy.IsUnknown() && !r.Configuration.GroupBy.IsNull() {
-		*groupBy = shared.GroupBy(r.Configuration.GroupBy.ValueString())
-	} else {
-		groupBy = nil
-	}
 	configuration := shared.SourceAppfigures{
 		APIKey:      apiKey,
+		GroupBy:     groupBy,
 		SearchStore: searchStore,
 		StartDate:   startDate,
-		GroupBy:     groupBy,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,6 +117,12 @@ func (r *SourceAppfiguresResourceModel) ToSharedSourceAppfiguresPutRequest() *sh
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	groupBy := new(shared.SourceAppfiguresUpdateGroupBy)
+	if !r.Configuration.GroupBy.IsUnknown() && !r.Configuration.GroupBy.IsNull() {
+		*groupBy = shared.SourceAppfiguresUpdateGroupBy(r.Configuration.GroupBy.ValueString())
+	} else {
+		groupBy = nil
+	}
 	searchStore := new(string)
 	if !r.Configuration.SearchStore.IsUnknown() && !r.Configuration.SearchStore.IsNull() {
 		*searchStore = r.Configuration.SearchStore.ValueString()
@@ -124,17 +130,11 @@ func (r *SourceAppfiguresResourceModel) ToSharedSourceAppfiguresPutRequest() *sh
 		searchStore = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	groupBy := new(shared.SourceAppfiguresUpdateGroupBy)
-	if !r.Configuration.GroupBy.IsUnknown() && !r.Configuration.GroupBy.IsNull() {
-		*groupBy = shared.SourceAppfiguresUpdateGroupBy(r.Configuration.GroupBy.ValueString())
-	} else {
-		groupBy = nil
-	}
 	configuration := shared.SourceAppfiguresUpdate{
 		APIKey:      apiKey,
+		GroupBy:     groupBy,
 		SearchStore: searchStore,
 		StartDate:   startDate,
-		GroupBy:     groupBy,
 	}
 	out := shared.SourceAppfiguresPutRequest{
 		Name:          name,

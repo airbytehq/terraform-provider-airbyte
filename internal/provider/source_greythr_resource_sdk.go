@@ -21,11 +21,11 @@ func (r *SourceGreythrResourceModel) ToSharedSourceGreythrCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
 	var baseURL string
 	baseURL = r.Configuration.BaseURL.ValueString()
+
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -37,8 +37,8 @@ func (r *SourceGreythrResourceModel) ToSharedSourceGreythrCreateRequest() *share
 	username = r.Configuration.Username.ValueString()
 
 	configuration := shared.SourceGreythr{
-		Domain:   domain,
 		BaseURL:  baseURL,
+		Domain:   domain,
 		Password: password,
 		Username: username,
 	}
@@ -112,11 +112,11 @@ func (r *SourceGreythrResourceModel) ToSharedSourceGreythrPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
 	var baseURL string
 	baseURL = r.Configuration.BaseURL.ValueString()
+
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -128,8 +128,8 @@ func (r *SourceGreythrResourceModel) ToSharedSourceGreythrPutRequest() *shared.S
 	username = r.Configuration.Username.ValueString()
 
 	configuration := shared.SourceGreythrUpdate{
-		Domain:   domain,
 		BaseURL:  baseURL,
+		Domain:   domain,
 		Password: password,
 		Username: username,
 	}

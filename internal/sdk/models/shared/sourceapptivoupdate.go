@@ -3,16 +3,9 @@
 package shared
 
 type SourceApptivoUpdate struct {
-	// API key to use. Find it in your Apptivo account under Business Settings -> API Access.
-	APIKey    string `json:"api_key"`
 	AccessKey string `json:"access_key"`
-}
-
-func (o *SourceApptivoUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
+	// API key to use. Find it in your Apptivo account under Business Settings -> API Access.
+	APIKey string `json:"api_key"`
 }
 
 func (o *SourceApptivoUpdate) GetAccessKey() string {
@@ -20,4 +13,11 @@ func (o *SourceApptivoUpdate) GetAccessKey() string {
 		return ""
 	}
 	return o.AccessKey
+}
+
+func (o *SourceApptivoUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }

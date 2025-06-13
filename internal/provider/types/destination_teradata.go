@@ -5,11 +5,14 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationTeradata struct {
-	Host          types.String                 `tfsdk:"host"`
-	JdbcURLParams types.String                 `tfsdk:"jdbc_url_params"`
-	Logmech       *AuthorizationMechanism      `tfsdk:"logmech"`
-	QueryBand     types.String                 `tfsdk:"query_band"`
-	Schema        types.String                 `tfsdk:"schema"`
-	Ssl           types.Bool                   `tfsdk:"ssl"`
-	SslMode       *DestinationTeradataSSLModes `tfsdk:"ssl_mode"`
+	DisableTypeDedupe types.Bool                   `tfsdk:"disable_type_dedupe"`
+	DropCascade       types.Bool                   `tfsdk:"drop_cascade"`
+	Host              types.String                 `tfsdk:"host"`
+	JdbcURLParams     types.String                 `tfsdk:"jdbc_url_params"`
+	Logmech           *AuthorizationMechanism      `tfsdk:"logmech"`
+	QueryBand         types.String                 `tfsdk:"query_band"`
+	RawDataSchema     types.String                 `tfsdk:"raw_data_schema"`
+	Schema            types.String                 `tfsdk:"schema"`
+	Ssl               types.Bool                   `tfsdk:"ssl"`
+	SslMode           *DestinationTeradataSSLModes `tfsdk:"ssl_mode"`
 }

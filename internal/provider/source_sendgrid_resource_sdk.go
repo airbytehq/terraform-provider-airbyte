@@ -22,13 +22,13 @@ func (r *SourceSendgridResourceModel) ToSharedSourceSendgridCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSendgrid{
-		StartDate: startDate,
 		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -100,13 +100,13 @@ func (r *SourceSendgridResourceModel) ToSharedSourceSendgridPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSendgridUpdate{
-		StartDate: startDate,
 		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	out := shared.SourceSendgridPutRequest{
 		Name:          name,

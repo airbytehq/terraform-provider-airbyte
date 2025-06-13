@@ -22,13 +22,13 @@ func (r *SourcePennylaneResourceModel) ToSharedSourcePennylaneCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startTime, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startTime, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
 	configuration := shared.SourcePennylane{
-		StartTime: startTime,
 		APIKey:    apiKey,
+		StartTime: startTime,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -100,13 +100,13 @@ func (r *SourcePennylaneResourceModel) ToSharedSourcePennylanePutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startTime, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startTime, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
 	configuration := shared.SourcePennylaneUpdate{
-		StartTime: startTime,
 		APIKey:    apiKey,
+		StartTime: startTime,
 	}
 	out := shared.SourcePennylanePutRequest{
 		Name:          name,

@@ -189,18 +189,18 @@ func (e *Finage) UnmarshalJSON(data []byte) error {
 
 type SourceFinage struct {
 	APIKey string `json:"api_key"`
+	// Time period. Default is 10
+	Period    *string   `json:"period,omitempty"`
+	StartDate time.Time `json:"start_date"`
 	// List of symbols
 	Symbols []any `json:"symbols"`
 	// One of DEMA, EMA, SMA, WMA, RSI, TEMA, Williams, ADX
 	TechIndicatorType *TechnicalIndicatorType `default:"SMA" json:"tech_indicator_type"`
 	Time              *TimeInterval           `default:"daily" json:"time"`
-	// Time period. Default is 10
-	Period *string `json:"period,omitempty"`
 	// Size of the time
 	TimeAggregates *TimeAggregates `default:"day" json:"time_aggregates"`
 	// Time Period for cash flow stmts
 	TimePeriod *TimePeriod `json:"time_period,omitempty"`
-	StartDate  time.Time   `json:"start_date"`
 	sourceType Finage      `const:"finage" json:"sourceType"`
 }
 
@@ -220,6 +220,20 @@ func (o *SourceFinage) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceFinage) GetPeriod() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Period
+}
+
+func (o *SourceFinage) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceFinage) GetSymbols() []any {
@@ -243,13 +257,6 @@ func (o *SourceFinage) GetTime() *TimeInterval {
 	return o.Time
 }
 
-func (o *SourceFinage) GetPeriod() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Period
-}
-
 func (o *SourceFinage) GetTimeAggregates() *TimeAggregates {
 	if o == nil {
 		return nil
@@ -262,13 +269,6 @@ func (o *SourceFinage) GetTimePeriod() *TimePeriod {
 		return nil
 	}
 	return o.TimePeriod
-}
-
-func (o *SourceFinage) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
 }
 
 func (o *SourceFinage) GetSourceType() Finage {

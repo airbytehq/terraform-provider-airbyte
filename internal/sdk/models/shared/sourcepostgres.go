@@ -9,6 +9,388 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type SourcePostgresSchemasReplicationMethodMethod string
+
+const (
+	SourcePostgresSchemasReplicationMethodMethodStandard SourcePostgresSchemasReplicationMethodMethod = "Standard"
+)
+
+func (e SourcePostgresSchemasReplicationMethodMethod) ToPointer() *SourcePostgresSchemasReplicationMethodMethod {
+	return &e
+}
+func (e *SourcePostgresSchemasReplicationMethodMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Standard":
+		*e = SourcePostgresSchemasReplicationMethodMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePostgresSchemasReplicationMethodMethod: %v", v)
+	}
+}
+
+// SourcePostgresScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourcePostgresScanChangesWithUserDefinedCursor struct {
+	method SourcePostgresSchemasReplicationMethodMethod `const:"Standard" json:"method"`
+}
+
+func (s SourcePostgresScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostgresScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostgresScanChangesWithUserDefinedCursor) GetMethod() SourcePostgresSchemasReplicationMethodMethod {
+	return SourcePostgresSchemasReplicationMethodMethodStandard
+}
+
+type SourcePostgresSchemasMethod string
+
+const (
+	SourcePostgresSchemasMethodXmin SourcePostgresSchemasMethod = "Xmin"
+)
+
+func (e SourcePostgresSchemasMethod) ToPointer() *SourcePostgresSchemasMethod {
+	return &e
+}
+func (e *SourcePostgresSchemasMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Xmin":
+		*e = SourcePostgresSchemasMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePostgresSchemasMethod: %v", v)
+	}
+}
+
+// DetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Suitable for databases that have low transaction pressure.
+type DetectChangesWithXminSystemColumn struct {
+	method SourcePostgresSchemasMethod `const:"Xmin" json:"method"`
+}
+
+func (d DetectChangesWithXminSystemColumn) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DetectChangesWithXminSystemColumn) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DetectChangesWithXminSystemColumn) GetMethod() SourcePostgresSchemasMethod {
+	return SourcePostgresSchemasMethodXmin
+}
+
+// SourcePostgresInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+type SourcePostgresInvalidCDCPositionBehaviorAdvanced string
+
+const (
+	SourcePostgresInvalidCDCPositionBehaviorAdvancedFailSync   SourcePostgresInvalidCDCPositionBehaviorAdvanced = "Fail sync"
+	SourcePostgresInvalidCDCPositionBehaviorAdvancedReSyncData SourcePostgresInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
+)
+
+func (e SourcePostgresInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourcePostgresInvalidCDCPositionBehaviorAdvanced {
+	return &e
+}
+func (e *SourcePostgresInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Fail sync":
+		fallthrough
+	case "Re-sync data":
+		*e = SourcePostgresInvalidCDCPositionBehaviorAdvanced(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePostgresInvalidCDCPositionBehaviorAdvanced: %v", v)
+	}
+}
+
+// LSNCommitBehaviour - Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+type LSNCommitBehaviour string
+
+const (
+	LSNCommitBehaviourWhileReadingData                 LSNCommitBehaviour = "While reading Data"
+	LSNCommitBehaviourAfterLoadingDataInTheDestination LSNCommitBehaviour = "After loading Data in the destination"
+)
+
+func (e LSNCommitBehaviour) ToPointer() *LSNCommitBehaviour {
+	return &e
+}
+func (e *LSNCommitBehaviour) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "While reading Data":
+		fallthrough
+	case "After loading Data in the destination":
+		*e = LSNCommitBehaviour(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for LSNCommitBehaviour: %v", v)
+	}
+}
+
+type SourcePostgresMethod string
+
+const (
+	SourcePostgresMethodCdc SourcePostgresMethod = "CDC"
+)
+
+func (e SourcePostgresMethod) ToPointer() *SourcePostgresMethod {
+	return &e
+}
+func (e *SourcePostgresMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CDC":
+		*e = SourcePostgresMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePostgresMethod: %v", v)
+	}
+}
+
+// Plugin - A logical decoding plugin installed on the PostgreSQL server.
+type Plugin string
+
+const (
+	PluginPgoutput Plugin = "pgoutput"
+)
+
+func (e Plugin) ToPointer() *Plugin {
+	return &e
+}
+func (e *Plugin) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "pgoutput":
+		*e = Plugin(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Plugin: %v", v)
+	}
+}
+
+// ReadChangesUsingWriteAheadLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.
+type ReadChangesUsingWriteAheadLogCDC struct {
+	// Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting.
+	HeartbeatActionQuery *string `default:"" json:"heartbeat_action_query"`
+	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
+	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
+	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-setting-up-initial-cdc-waiting-time">initial waiting time</a>.
+	InitialWaitingSeconds *int64 `default:"1200" json:"initial_waiting_seconds"`
+	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+	InvalidCdcCursorPositionBehavior *SourcePostgresInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
+	// Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+	LsnCommitBehaviour *LSNCommitBehaviour  `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
+	method             SourcePostgresMethod `const:"CDC" json:"method"`
+	// A logical decoding plugin installed on the PostgreSQL server.
+	Plugin *Plugin `default:"pgoutput" json:"plugin"`
+	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
+	Publication string `json:"publication"`
+	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+	QueueSize *int64 `default:"10000" json:"queue_size"`
+	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
+	ReplicationSlot      string `json:"replication_slot"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+}
+
+func (r ReadChangesUsingWriteAheadLogCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *ReadChangesUsingWriteAheadLogCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetHeartbeatActionQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.HeartbeatActionQuery
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialWaitingSeconds
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetInvalidCdcCursorPositionBehavior() *SourcePostgresInvalidCDCPositionBehaviorAdvanced {
+	if o == nil {
+		return nil
+	}
+	return o.InvalidCdcCursorPositionBehavior
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetLsnCommitBehaviour() *LSNCommitBehaviour {
+	if o == nil {
+		return nil
+	}
+	return o.LsnCommitBehaviour
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetMethod() SourcePostgresMethod {
+	return SourcePostgresMethodCdc
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetPlugin() *Plugin {
+	if o == nil {
+		return nil
+	}
+	return o.Plugin
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetPublication() string {
+	if o == nil {
+		return ""
+	}
+	return o.Publication
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetQueueSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.QueueSize
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetReplicationSlot() string {
+	if o == nil {
+		return ""
+	}
+	return o.ReplicationSlot
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourcePostgresUpdateMethodType string
+
+const (
+	SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC               SourcePostgresUpdateMethodType = "Read Changes using Write-Ahead Log (CDC)"
+	SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn              SourcePostgresUpdateMethodType = "Detect Changes with Xmin System Column"
+	SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor SourcePostgresUpdateMethodType = "source-postgres_Scan Changes with User Defined Cursor"
+)
+
+// SourcePostgresUpdateMethod - Configures how data is extracted from the database.
+type SourcePostgresUpdateMethod struct {
+	ReadChangesUsingWriteAheadLogCDC               *ReadChangesUsingWriteAheadLogCDC               `queryParam:"inline"`
+	DetectChangesWithXminSystemColumn              *DetectChangesWithXminSystemColumn              `queryParam:"inline"`
+	SourcePostgresScanChangesWithUserDefinedCursor *SourcePostgresScanChangesWithUserDefinedCursor `queryParam:"inline"`
+
+	Type SourcePostgresUpdateMethodType
+}
+
+func CreateSourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC(readChangesUsingWriteAheadLogCDC ReadChangesUsingWriteAheadLogCDC) SourcePostgresUpdateMethod {
+	typ := SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
+
+	return SourcePostgresUpdateMethod{
+		ReadChangesUsingWriteAheadLogCDC: &readChangesUsingWriteAheadLogCDC,
+		Type:                             typ,
+	}
+}
+
+func CreateSourcePostgresUpdateMethodDetectChangesWithXminSystemColumn(detectChangesWithXminSystemColumn DetectChangesWithXminSystemColumn) SourcePostgresUpdateMethod {
+	typ := SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn
+
+	return SourcePostgresUpdateMethod{
+		DetectChangesWithXminSystemColumn: &detectChangesWithXminSystemColumn,
+		Type:                              typ,
+	}
+}
+
+func CreateSourcePostgresUpdateMethodSourcePostgresScanChangesWithUserDefinedCursor(sourcePostgresScanChangesWithUserDefinedCursor SourcePostgresScanChangesWithUserDefinedCursor) SourcePostgresUpdateMethod {
+	typ := SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor
+
+	return SourcePostgresUpdateMethod{
+		SourcePostgresScanChangesWithUserDefinedCursor: &sourcePostgresScanChangesWithUserDefinedCursor,
+		Type: typ,
+	}
+}
+
+func (u *SourcePostgresUpdateMethod) UnmarshalJSON(data []byte) error {
+
+	var detectChangesWithXminSystemColumn DetectChangesWithXminSystemColumn = DetectChangesWithXminSystemColumn{}
+	if err := utils.UnmarshalJSON(data, &detectChangesWithXminSystemColumn, "", true, true); err == nil {
+		u.DetectChangesWithXminSystemColumn = &detectChangesWithXminSystemColumn
+		u.Type = SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn
+		return nil
+	}
+
+	var sourcePostgresScanChangesWithUserDefinedCursor SourcePostgresScanChangesWithUserDefinedCursor = SourcePostgresScanChangesWithUserDefinedCursor{}
+	if err := utils.UnmarshalJSON(data, &sourcePostgresScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourcePostgresScanChangesWithUserDefinedCursor = &sourcePostgresScanChangesWithUserDefinedCursor
+		u.Type = SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor
+		return nil
+	}
+
+	var readChangesUsingWriteAheadLogCDC ReadChangesUsingWriteAheadLogCDC = ReadChangesUsingWriteAheadLogCDC{}
+	if err := utils.UnmarshalJSON(data, &readChangesUsingWriteAheadLogCDC, "", true, true); err == nil {
+		u.ReadChangesUsingWriteAheadLogCDC = &readChangesUsingWriteAheadLogCDC
+		u.Type = SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourcePostgresUpdateMethod", string(data))
+}
+
+func (u SourcePostgresUpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.ReadChangesUsingWriteAheadLogCDC != nil {
+		return utils.MarshalJSON(u.ReadChangesUsingWriteAheadLogCDC, "", true)
+	}
+
+	if u.DetectChangesWithXminSystemColumn != nil {
+		return utils.MarshalJSON(u.DetectChangesWithXminSystemColumn, "", true)
+	}
+
+	if u.SourcePostgresScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourcePostgresScanChangesWithUserDefinedCursor, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourcePostgresUpdateMethod: all fields are null")
+}
+
 type SourcePostgresSchemasSSLModeSSLModes6Mode string
 
 const (
@@ -34,7 +416,6 @@ func (e *SourcePostgresSchemasSSLModeSSLModes6Mode) UnmarshalJSON(data []byte) e
 
 // VerifyFull - This is the most secure mode. Always require encryption and verifies the identity of the source database server.
 type VerifyFull struct {
-	mode SourcePostgresSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -42,8 +423,9 @@ type VerifyFull struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword    *string `json:"client_key_password,omitempty"`
-	AdditionalProperties any     `additionalProperties:"true" json:"-"`
+	ClientKeyPassword    *string                                   `json:"client_key_password,omitempty"`
+	mode                 SourcePostgresSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
+	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
 }
 
 func (v VerifyFull) MarshalJSON() ([]byte, error) {
@@ -55,10 +437,6 @@ func (v *VerifyFull) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *VerifyFull) GetMode() SourcePostgresSchemasSSLModeSSLModes6Mode {
-	return SourcePostgresSchemasSSLModeSSLModes6ModeVerifyFull
 }
 
 func (o *VerifyFull) GetCaCertificate() string {
@@ -87,6 +465,10 @@ func (o *VerifyFull) GetClientKeyPassword() *string {
 		return nil
 	}
 	return o.ClientKeyPassword
+}
+
+func (o *VerifyFull) GetMode() SourcePostgresSchemasSSLModeSSLModes6Mode {
+	return SourcePostgresSchemasSSLModeSSLModes6ModeVerifyFull
 }
 
 func (o *VerifyFull) GetAdditionalProperties() any {
@@ -121,7 +503,6 @@ func (e *SourcePostgresSchemasSSLModeSSLModes5Mode) UnmarshalJSON(data []byte) e
 
 // SourcePostgresVerifyCa - Always require encryption and verifies that the source database server has a valid SSL certificate.
 type SourcePostgresVerifyCa struct {
-	mode SourcePostgresSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -129,8 +510,9 @@ type SourcePostgresVerifyCa struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword    *string `json:"client_key_password,omitempty"`
-	AdditionalProperties any     `additionalProperties:"true" json:"-"`
+	ClientKeyPassword    *string                                   `json:"client_key_password,omitempty"`
+	mode                 SourcePostgresSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
+	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
 }
 
 func (s SourcePostgresVerifyCa) MarshalJSON() ([]byte, error) {
@@ -142,10 +524,6 @@ func (s *SourcePostgresVerifyCa) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourcePostgresVerifyCa) GetMode() SourcePostgresSchemasSSLModeSSLModes5Mode {
-	return SourcePostgresSchemasSSLModeSSLModes5ModeVerifyCa
 }
 
 func (o *SourcePostgresVerifyCa) GetCaCertificate() string {
@@ -174,6 +552,10 @@ func (o *SourcePostgresVerifyCa) GetClientKeyPassword() *string {
 		return nil
 	}
 	return o.ClientKeyPassword
+}
+
+func (o *SourcePostgresVerifyCa) GetMode() SourcePostgresSchemasSSLModeSSLModes5Mode {
+	return SourcePostgresSchemasSSLModeSSLModes5ModeVerifyCa
 }
 
 func (o *SourcePostgresVerifyCa) GetAdditionalProperties() any {
@@ -541,388 +923,6 @@ func (u SSLModes) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SSLModes: all fields are null")
 }
 
-type SourcePostgresSchemasReplicationMethodMethod string
-
-const (
-	SourcePostgresSchemasReplicationMethodMethodStandard SourcePostgresSchemasReplicationMethodMethod = "Standard"
-)
-
-func (e SourcePostgresSchemasReplicationMethodMethod) ToPointer() *SourcePostgresSchemasReplicationMethodMethod {
-	return &e
-}
-func (e *SourcePostgresSchemasReplicationMethodMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Standard":
-		*e = SourcePostgresSchemasReplicationMethodMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePostgresSchemasReplicationMethodMethod: %v", v)
-	}
-}
-
-// SourcePostgresScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
-type SourcePostgresScanChangesWithUserDefinedCursor struct {
-	method SourcePostgresSchemasReplicationMethodMethod `const:"Standard" json:"method"`
-}
-
-func (s SourcePostgresScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourcePostgresScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourcePostgresScanChangesWithUserDefinedCursor) GetMethod() SourcePostgresSchemasReplicationMethodMethod {
-	return SourcePostgresSchemasReplicationMethodMethodStandard
-}
-
-type SourcePostgresSchemasMethod string
-
-const (
-	SourcePostgresSchemasMethodXmin SourcePostgresSchemasMethod = "Xmin"
-)
-
-func (e SourcePostgresSchemasMethod) ToPointer() *SourcePostgresSchemasMethod {
-	return &e
-}
-func (e *SourcePostgresSchemasMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Xmin":
-		*e = SourcePostgresSchemasMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePostgresSchemasMethod: %v", v)
-	}
-}
-
-// DetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Suitable for databases that have low transaction pressure.
-type DetectChangesWithXminSystemColumn struct {
-	method SourcePostgresSchemasMethod `const:"Xmin" json:"method"`
-}
-
-func (d DetectChangesWithXminSystemColumn) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DetectChangesWithXminSystemColumn) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DetectChangesWithXminSystemColumn) GetMethod() SourcePostgresSchemasMethod {
-	return SourcePostgresSchemasMethodXmin
-}
-
-type SourcePostgresMethod string
-
-const (
-	SourcePostgresMethodCdc SourcePostgresMethod = "CDC"
-)
-
-func (e SourcePostgresMethod) ToPointer() *SourcePostgresMethod {
-	return &e
-}
-func (e *SourcePostgresMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CDC":
-		*e = SourcePostgresMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePostgresMethod: %v", v)
-	}
-}
-
-// Plugin - A logical decoding plugin installed on the PostgreSQL server.
-type Plugin string
-
-const (
-	PluginPgoutput Plugin = "pgoutput"
-)
-
-func (e Plugin) ToPointer() *Plugin {
-	return &e
-}
-func (e *Plugin) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "pgoutput":
-		*e = Plugin(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Plugin: %v", v)
-	}
-}
-
-// LSNCommitBehaviour - Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-type LSNCommitBehaviour string
-
-const (
-	LSNCommitBehaviourWhileReadingData                 LSNCommitBehaviour = "While reading Data"
-	LSNCommitBehaviourAfterLoadingDataInTheDestination LSNCommitBehaviour = "After loading Data in the destination"
-)
-
-func (e LSNCommitBehaviour) ToPointer() *LSNCommitBehaviour {
-	return &e
-}
-func (e *LSNCommitBehaviour) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "While reading Data":
-		fallthrough
-	case "After loading Data in the destination":
-		*e = LSNCommitBehaviour(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for LSNCommitBehaviour: %v", v)
-	}
-}
-
-// SourcePostgresInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-type SourcePostgresInvalidCDCPositionBehaviorAdvanced string
-
-const (
-	SourcePostgresInvalidCDCPositionBehaviorAdvancedFailSync   SourcePostgresInvalidCDCPositionBehaviorAdvanced = "Fail sync"
-	SourcePostgresInvalidCDCPositionBehaviorAdvancedReSyncData SourcePostgresInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
-)
-
-func (e SourcePostgresInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourcePostgresInvalidCDCPositionBehaviorAdvanced {
-	return &e
-}
-func (e *SourcePostgresInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Fail sync":
-		fallthrough
-	case "Re-sync data":
-		*e = SourcePostgresInvalidCDCPositionBehaviorAdvanced(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePostgresInvalidCDCPositionBehaviorAdvanced: %v", v)
-	}
-}
-
-// ReadChangesUsingWriteAheadLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.
-type ReadChangesUsingWriteAheadLogCDC struct {
-	method SourcePostgresMethod `const:"CDC" json:"method"`
-	// A logical decoding plugin installed on the PostgreSQL server.
-	Plugin *Plugin `default:"pgoutput" json:"plugin"`
-	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
-	ReplicationSlot string `json:"replication_slot"`
-	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
-	Publication string `json:"publication"`
-	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-setting-up-initial-cdc-waiting-time">initial waiting time</a>.
-	InitialWaitingSeconds *int64 `default:"1200" json:"initial_waiting_seconds"`
-	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
-	QueueSize *int64 `default:"10000" json:"queue_size"`
-	// Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-	LsnCommitBehaviour *LSNCommitBehaviour `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
-	// Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting.
-	HeartbeatActionQuery *string `default:"" json:"heartbeat_action_query"`
-	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-	InvalidCdcCursorPositionBehavior *SourcePostgresInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
-	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
-	AdditionalProperties    any    `additionalProperties:"true" json:"-"`
-}
-
-func (r ReadChangesUsingWriteAheadLogCDC) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(r, "", false)
-}
-
-func (r *ReadChangesUsingWriteAheadLogCDC) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetMethod() SourcePostgresMethod {
-	return SourcePostgresMethodCdc
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetPlugin() *Plugin {
-	if o == nil {
-		return nil
-	}
-	return o.Plugin
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetReplicationSlot() string {
-	if o == nil {
-		return ""
-	}
-	return o.ReplicationSlot
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetPublication() string {
-	if o == nil {
-		return ""
-	}
-	return o.Publication
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetInitialWaitingSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialWaitingSeconds
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetQueueSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.QueueSize
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetLsnCommitBehaviour() *LSNCommitBehaviour {
-	if o == nil {
-		return nil
-	}
-	return o.LsnCommitBehaviour
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetHeartbeatActionQuery() *string {
-	if o == nil {
-		return nil
-	}
-	return o.HeartbeatActionQuery
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetInvalidCdcCursorPositionBehavior() *SourcePostgresInvalidCDCPositionBehaviorAdvanced {
-	if o == nil {
-		return nil
-	}
-	return o.InvalidCdcCursorPositionBehavior
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetInitialLoadTimeoutHours() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialLoadTimeoutHours
-}
-
-func (o *ReadChangesUsingWriteAheadLogCDC) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type SourcePostgresUpdateMethodType string
-
-const (
-	SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC               SourcePostgresUpdateMethodType = "Read Changes using Write-Ahead Log (CDC)"
-	SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn              SourcePostgresUpdateMethodType = "Detect Changes with Xmin System Column"
-	SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor SourcePostgresUpdateMethodType = "source-postgres_Scan Changes with User Defined Cursor"
-)
-
-// SourcePostgresUpdateMethod - Configures how data is extracted from the database.
-type SourcePostgresUpdateMethod struct {
-	ReadChangesUsingWriteAheadLogCDC               *ReadChangesUsingWriteAheadLogCDC               `queryParam:"inline"`
-	DetectChangesWithXminSystemColumn              *DetectChangesWithXminSystemColumn              `queryParam:"inline"`
-	SourcePostgresScanChangesWithUserDefinedCursor *SourcePostgresScanChangesWithUserDefinedCursor `queryParam:"inline"`
-
-	Type SourcePostgresUpdateMethodType
-}
-
-func CreateSourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC(readChangesUsingWriteAheadLogCDC ReadChangesUsingWriteAheadLogCDC) SourcePostgresUpdateMethod {
-	typ := SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
-
-	return SourcePostgresUpdateMethod{
-		ReadChangesUsingWriteAheadLogCDC: &readChangesUsingWriteAheadLogCDC,
-		Type:                             typ,
-	}
-}
-
-func CreateSourcePostgresUpdateMethodDetectChangesWithXminSystemColumn(detectChangesWithXminSystemColumn DetectChangesWithXminSystemColumn) SourcePostgresUpdateMethod {
-	typ := SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn
-
-	return SourcePostgresUpdateMethod{
-		DetectChangesWithXminSystemColumn: &detectChangesWithXminSystemColumn,
-		Type:                              typ,
-	}
-}
-
-func CreateSourcePostgresUpdateMethodSourcePostgresScanChangesWithUserDefinedCursor(sourcePostgresScanChangesWithUserDefinedCursor SourcePostgresScanChangesWithUserDefinedCursor) SourcePostgresUpdateMethod {
-	typ := SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor
-
-	return SourcePostgresUpdateMethod{
-		SourcePostgresScanChangesWithUserDefinedCursor: &sourcePostgresScanChangesWithUserDefinedCursor,
-		Type: typ,
-	}
-}
-
-func (u *SourcePostgresUpdateMethod) UnmarshalJSON(data []byte) error {
-
-	var detectChangesWithXminSystemColumn DetectChangesWithXminSystemColumn = DetectChangesWithXminSystemColumn{}
-	if err := utils.UnmarshalJSON(data, &detectChangesWithXminSystemColumn, "", true, true); err == nil {
-		u.DetectChangesWithXminSystemColumn = &detectChangesWithXminSystemColumn
-		u.Type = SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn
-		return nil
-	}
-
-	var sourcePostgresScanChangesWithUserDefinedCursor SourcePostgresScanChangesWithUserDefinedCursor = SourcePostgresScanChangesWithUserDefinedCursor{}
-	if err := utils.UnmarshalJSON(data, &sourcePostgresScanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.SourcePostgresScanChangesWithUserDefinedCursor = &sourcePostgresScanChangesWithUserDefinedCursor
-		u.Type = SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor
-		return nil
-	}
-
-	var readChangesUsingWriteAheadLogCDC ReadChangesUsingWriteAheadLogCDC = ReadChangesUsingWriteAheadLogCDC{}
-	if err := utils.UnmarshalJSON(data, &readChangesUsingWriteAheadLogCDC, "", true, true); err == nil {
-		u.ReadChangesUsingWriteAheadLogCDC = &readChangesUsingWriteAheadLogCDC
-		u.Type = SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourcePostgresUpdateMethod", string(data))
-}
-
-func (u SourcePostgresUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.ReadChangesUsingWriteAheadLogCDC != nil {
-		return utils.MarshalJSON(u.ReadChangesUsingWriteAheadLogCDC, "", true)
-	}
-
-	if u.DetectChangesWithXminSystemColumn != nil {
-		return utils.MarshalJSON(u.DetectChangesWithXminSystemColumn, "", true)
-	}
-
-	if u.SourcePostgresScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.SourcePostgresScanChangesWithUserDefinedCursor, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourcePostgresUpdateMethod: all fields are null")
-}
-
 // SourcePostgresSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
 type SourcePostgresSchemasTunnelMethodTunnelMethod string
 
@@ -948,10 +948,10 @@ func (e *SourcePostgresSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byt
 }
 
 type SourcePostgresPasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod SourcePostgresSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod SourcePostgresSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -971,15 +971,15 @@ func (s *SourcePostgresPasswordAuthentication) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *SourcePostgresPasswordAuthentication) GetTunnelMethod() SourcePostgresSchemasTunnelMethodTunnelMethod {
-	return SourcePostgresSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *SourcePostgresPasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourcePostgresPasswordAuthentication) GetTunnelMethod() SourcePostgresSchemasTunnelMethodTunnelMethod {
+	return SourcePostgresSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *SourcePostgresPasswordAuthentication) GetTunnelPort() *int64 {
@@ -1028,16 +1028,16 @@ func (e *SourcePostgresSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePostgresSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod SourcePostgresSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod SourcePostgresSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (s SourcePostgresSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -1051,8 +1051,11 @@ func (s *SourcePostgresSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePostgresSSHKeyAuthentication) GetTunnelMethod() SourcePostgresSchemasTunnelMethod {
-	return SourcePostgresSchemasTunnelMethodSSHKeyAuth
+func (o *SourcePostgresSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *SourcePostgresSSHKeyAuthentication) GetTunnelHost() string {
@@ -1060,6 +1063,10 @@ func (o *SourcePostgresSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourcePostgresSSHKeyAuthentication) GetTunnelMethod() SourcePostgresSchemasTunnelMethod {
+	return SourcePostgresSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *SourcePostgresSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -1074,13 +1081,6 @@ func (o *SourcePostgresSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *SourcePostgresSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // SourcePostgresTunnelMethod - No ssh tunnel needed to connect to database
@@ -1237,28 +1237,28 @@ func (e *Postgres) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePostgres struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// Port of the database.
-	Port *int64 `default:"5432" json:"port"`
 	// Name of the database.
 	Database string `json:"database"`
-	// The list of schemas (case sensitive) to sync from. Defaults to public.
-	Schemas []string `json:"schemas,omitempty"`
-	// Username to access the database.
-	Username string `json:"username"`
-	// Password associated with the username.
-	Password *string `json:"password,omitempty"`
+	// Hostname of the database.
+	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// Password associated with the username.
+	Password *string `json:"password,omitempty"`
+	// Port of the database.
+	Port *int64 `default:"5432" json:"port"`
+	// Configures how data is extracted from the database.
+	ReplicationMethod *SourcePostgresUpdateMethod `json:"replication_method,omitempty"`
+	// The list of schemas (case sensitive) to sync from. Defaults to public.
+	Schemas []string `json:"schemas,omitempty"`
 	// SSL connection modes.
 	//   Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *SSLModes `json:"ssl_mode,omitempty"`
-	// Configures how data is extracted from the database.
-	ReplicationMethod *SourcePostgresUpdateMethod `json:"replication_method,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourcePostgresSSHTunnelMethod `json:"tunnel_method,omitempty"`
-	sourceType   Postgres                       `const:"postgres" json:"sourceType"`
+	// Username to access the database.
+	Username   string   `json:"username"`
+	sourceType Postgres `const:"postgres" json:"sourceType"`
 }
 
 func (s SourcePostgres) MarshalJSON() ([]byte, error) {
@@ -1272,20 +1272,6 @@ func (s *SourcePostgres) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePostgres) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *SourcePostgres) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
 func (o *SourcePostgres) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -1293,25 +1279,11 @@ func (o *SourcePostgres) GetDatabase() string {
 	return o.Database
 }
 
-func (o *SourcePostgres) GetSchemas() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Schemas
-}
-
-func (o *SourcePostgres) GetUsername() string {
+func (o *SourcePostgres) GetHost() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
-}
-
-func (o *SourcePostgres) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
+	return o.Host
 }
 
 func (o *SourcePostgres) GetJdbcURLParams() *string {
@@ -1321,11 +1293,18 @@ func (o *SourcePostgres) GetJdbcURLParams() *string {
 	return o.JdbcURLParams
 }
 
-func (o *SourcePostgres) GetSslMode() *SSLModes {
+func (o *SourcePostgres) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SslMode
+	return o.Password
+}
+
+func (o *SourcePostgres) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 func (o *SourcePostgres) GetReplicationMethod() *SourcePostgresUpdateMethod {
@@ -1335,11 +1314,32 @@ func (o *SourcePostgres) GetReplicationMethod() *SourcePostgresUpdateMethod {
 	return o.ReplicationMethod
 }
 
+func (o *SourcePostgres) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourcePostgres) GetSslMode() *SSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
+}
+
 func (o *SourcePostgres) GetTunnelMethod() *SourcePostgresSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *SourcePostgres) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourcePostgres) GetSourceType() Postgres {

@@ -24,24 +24,24 @@ func (r *SourceTogglResourceModel) ToSharedSourceTogglCreateRequest() *shared.So
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
+	var endDate string
+	endDate = r.Configuration.EndDate.ValueString()
+
 	var organizationID int64
 	organizationID = r.Configuration.OrganizationID.ValueInt64()
-
-	var workspaceId1 int64
-	workspaceId1 = r.Configuration.WorkspaceID.ValueInt64()
 
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
-	var endDate string
-	endDate = r.Configuration.EndDate.ValueString()
+	var workspaceId1 int64
+	workspaceId1 = r.Configuration.WorkspaceID.ValueInt64()
 
 	configuration := shared.SourceToggl{
 		APIToken:       apiToken,
-		OrganizationID: organizationID,
-		WorkspaceID:    workspaceId1,
-		StartDate:      startDate,
 		EndDate:        endDate,
+		OrganizationID: organizationID,
+		StartDate:      startDate,
+		WorkspaceID:    workspaceId1,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -116,24 +116,24 @@ func (r *SourceTogglResourceModel) ToSharedSourceTogglPutRequest() *shared.Sourc
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
+	var endDate string
+	endDate = r.Configuration.EndDate.ValueString()
+
 	var organizationID int64
 	organizationID = r.Configuration.OrganizationID.ValueInt64()
-
-	var workspaceId1 int64
-	workspaceId1 = r.Configuration.WorkspaceID.ValueInt64()
 
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
-	var endDate string
-	endDate = r.Configuration.EndDate.ValueString()
+	var workspaceId1 int64
+	workspaceId1 = r.Configuration.WorkspaceID.ValueInt64()
 
 	configuration := shared.SourceTogglUpdate{
 		APIToken:       apiToken,
-		OrganizationID: organizationID,
-		WorkspaceID:    workspaceId1,
-		StartDate:      startDate,
 		EndDate:        endDate,
+		OrganizationID: organizationID,
+		StartDate:      startDate,
+		WorkspaceID:    workspaceId1,
 	}
 	out := shared.SourceTogglPutRequest{
 		Name:          name,

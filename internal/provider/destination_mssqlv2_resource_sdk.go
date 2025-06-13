@@ -22,35 +22,100 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2CreateReques
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	var port int64
-	port = r.Configuration.Port.ValueInt64()
-
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	schema := new(string)
-	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
-		*schema = r.Configuration.Schema.ValueString()
-	} else {
-		schema = nil
-	}
-	var user string
-	user = r.Configuration.User.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	var loadType shared.DestinationMssqlV2LoadType
+	var destinationMssqlV2InsertLoad *shared.DestinationMssqlV2InsertLoad
+	if r.Configuration.LoadType.InsertLoad != nil {
+		loadType1 := new(shared.DestinationMssqlV2SchemasLoadTypeLoadType)
+		if !r.Configuration.LoadType.InsertLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.InsertLoad.LoadType.IsNull() {
+			*loadType1 = shared.DestinationMssqlV2SchemasLoadTypeLoadType(r.Configuration.LoadType.InsertLoad.LoadType.ValueString())
+		} else {
+			loadType1 = nil
+		}
+		var additionalProperties interface{}
+		if !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.InsertLoad.AdditionalProperties.ValueString()), &additionalProperties)
+		}
+		destinationMssqlV2InsertLoad = &shared.DestinationMssqlV2InsertLoad{
+			LoadType:             loadType1,
+			AdditionalProperties: additionalProperties,
+		}
+	}
+	if destinationMssqlV2InsertLoad != nil {
+		loadType = shared.DestinationMssqlV2LoadType{
+			DestinationMssqlV2InsertLoad: destinationMssqlV2InsertLoad,
+		}
+	}
+	var destinationMssqlV2BulkLoad *shared.DestinationMssqlV2BulkLoad
+	if r.Configuration.LoadType.BulkLoad != nil {
+		var azureBlobStorageAccountName string
+		azureBlobStorageAccountName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountName.ValueString()
+
+		var azureBlobStorageContainerName string
+		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
+
+		var bulkLoadDataSource string
+		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
+
+		bulkLoadValidateValuesPreLoad := new(bool)
+		if !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsUnknown() && !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsNull() {
+			*bulkLoadValidateValuesPreLoad = r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.ValueBool()
+		} else {
+			bulkLoadValidateValuesPreLoad = nil
+		}
+		loadType2 := new(shared.DestinationMssqlV2SchemasLoadType)
+		if !r.Configuration.LoadType.BulkLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.BulkLoad.LoadType.IsNull() {
+			*loadType2 = shared.DestinationMssqlV2SchemasLoadType(r.Configuration.LoadType.BulkLoad.LoadType.ValueString())
+		} else {
+			loadType2 = nil
+		}
+		var sharedAccessSignature string
+		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
+
+		var additionalProperties1 interface{}
+		if !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.BulkLoad.AdditionalProperties.ValueString()), &additionalProperties1)
+		}
+		destinationMssqlV2BulkLoad = &shared.DestinationMssqlV2BulkLoad{
+			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
+			AzureBlobStorageContainerName: azureBlobStorageContainerName,
+			BulkLoadDataSource:            bulkLoadDataSource,
+			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
+			LoadType:                      loadType2,
+			SharedAccessSignature:         sharedAccessSignature,
+			AdditionalProperties:          additionalProperties1,
+		}
+	}
+	if destinationMssqlV2BulkLoad != nil {
+		loadType = shared.DestinationMssqlV2LoadType{
+			DestinationMssqlV2BulkLoad: destinationMssqlV2BulkLoad,
+		}
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	var port int64
+	port = r.Configuration.Port.ValueInt64()
+
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
 	} else {
-		jdbcURLParams = nil
+		schema = nil
 	}
 	var sslMethod shared.DestinationMssqlV2SSLMethod
 	var destinationMssqlV2Unencrypted *shared.DestinationMssqlV2Unencrypted
@@ -61,13 +126,13 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2CreateReques
 		} else {
 			name1 = nil
 		}
-		var additionalProperties interface{}
+		var additionalProperties2 interface{}
 		if !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties)
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties2)
 		}
 		destinationMssqlV2Unencrypted = &shared.DestinationMssqlV2Unencrypted{
 			Name:                 name1,
-			AdditionalProperties: additionalProperties,
+			AdditionalProperties: additionalProperties2,
 		}
 	}
 	if destinationMssqlV2Unencrypted != nil {
@@ -83,13 +148,13 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2CreateReques
 		} else {
 			name2 = nil
 		}
-		var additionalProperties1 interface{}
+		var additionalProperties3 interface{}
 		if !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.ValueString()), &additionalProperties1)
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.ValueString()), &additionalProperties3)
 		}
 		destinationMssqlV2EncryptedTrustServerCertificate = &shared.DestinationMssqlV2EncryptedTrustServerCertificate{
 			Name:                 name2,
-			AdditionalProperties: additionalProperties1,
+			AdditionalProperties: additionalProperties3,
 		}
 	}
 	if destinationMssqlV2EncryptedTrustServerCertificate != nil {
@@ -99,6 +164,12 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2CreateReques
 	}
 	var destinationMssqlV2EncryptedVerifyCertificate *shared.DestinationMssqlV2EncryptedVerifyCertificate
 	if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
+		hostNameInCertificate := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+			*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+		} else {
+			hostNameInCertificate = nil
+		}
 		name3 := new(shared.DestinationMssqlV2SchemasSslMethodName)
 		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsNull() {
 			*name3 = shared.DestinationMssqlV2SchemasSslMethodName(r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.ValueString())
@@ -117,22 +188,16 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2CreateReques
 		} else {
 			trustStorePassword = nil
 		}
-		hostNameInCertificate := new(string)
-		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-			*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-		} else {
-			hostNameInCertificate = nil
-		}
-		var additionalProperties2 interface{}
+		var additionalProperties4 interface{}
 		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties2)
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties4)
 		}
 		destinationMssqlV2EncryptedVerifyCertificate = &shared.DestinationMssqlV2EncryptedVerifyCertificate{
+			HostNameInCertificate: hostNameInCertificate,
 			Name:                  name3,
 			TrustStoreName:        trustStoreName,
 			TrustStorePassword:    trustStorePassword,
-			HostNameInCertificate: hostNameInCertificate,
-			AdditionalProperties:  additionalProperties2,
+			AdditionalProperties:  additionalProperties4,
 		}
 	}
 	if destinationMssqlV2EncryptedVerifyCertificate != nil {
@@ -140,84 +205,19 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2CreateReques
 			DestinationMssqlV2EncryptedVerifyCertificate: destinationMssqlV2EncryptedVerifyCertificate,
 		}
 	}
-	var loadType shared.DestinationMssqlV2LoadType
-	var destinationMssqlV2InsertLoad *shared.DestinationMssqlV2InsertLoad
-	if r.Configuration.LoadType.InsertLoad != nil {
-		loadType1 := new(shared.DestinationMssqlV2SchemasLoadTypeLoadType)
-		if !r.Configuration.LoadType.InsertLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.InsertLoad.LoadType.IsNull() {
-			*loadType1 = shared.DestinationMssqlV2SchemasLoadTypeLoadType(r.Configuration.LoadType.InsertLoad.LoadType.ValueString())
-		} else {
-			loadType1 = nil
-		}
-		var additionalProperties3 interface{}
-		if !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.LoadType.InsertLoad.AdditionalProperties.ValueString()), &additionalProperties3)
-		}
-		destinationMssqlV2InsertLoad = &shared.DestinationMssqlV2InsertLoad{
-			LoadType:             loadType1,
-			AdditionalProperties: additionalProperties3,
-		}
-	}
-	if destinationMssqlV2InsertLoad != nil {
-		loadType = shared.DestinationMssqlV2LoadType{
-			DestinationMssqlV2InsertLoad: destinationMssqlV2InsertLoad,
-		}
-	}
-	var destinationMssqlV2BulkLoad *shared.DestinationMssqlV2BulkLoad
-	if r.Configuration.LoadType.BulkLoad != nil {
-		loadType2 := new(shared.DestinationMssqlV2SchemasLoadType)
-		if !r.Configuration.LoadType.BulkLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.BulkLoad.LoadType.IsNull() {
-			*loadType2 = shared.DestinationMssqlV2SchemasLoadType(r.Configuration.LoadType.BulkLoad.LoadType.ValueString())
-		} else {
-			loadType2 = nil
-		}
-		var azureBlobStorageAccountName string
-		azureBlobStorageAccountName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountName.ValueString()
+	var user string
+	user = r.Configuration.User.ValueString()
 
-		var azureBlobStorageContainerName string
-		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
-
-		var sharedAccessSignature string
-		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
-
-		var bulkLoadDataSource string
-		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
-
-		bulkLoadValidateValuesPreLoad := new(bool)
-		if !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsUnknown() && !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsNull() {
-			*bulkLoadValidateValuesPreLoad = r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.ValueBool()
-		} else {
-			bulkLoadValidateValuesPreLoad = nil
-		}
-		var additionalProperties4 interface{}
-		if !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.LoadType.BulkLoad.AdditionalProperties.ValueString()), &additionalProperties4)
-		}
-		destinationMssqlV2BulkLoad = &shared.DestinationMssqlV2BulkLoad{
-			LoadType:                      loadType2,
-			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
-			AzureBlobStorageContainerName: azureBlobStorageContainerName,
-			SharedAccessSignature:         sharedAccessSignature,
-			BulkLoadDataSource:            bulkLoadDataSource,
-			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
-			AdditionalProperties:          additionalProperties4,
-		}
-	}
-	if destinationMssqlV2BulkLoad != nil {
-		loadType = shared.DestinationMssqlV2LoadType{
-			DestinationMssqlV2BulkLoad: destinationMssqlV2BulkLoad,
-		}
-	}
 	configuration := shared.DestinationMssqlV2{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Schema:        schema,
-		User:          user,
-		Password:      password,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
-		SslMethod:     sslMethod,
 		LoadType:      loadType,
+		Password:      password,
+		Port:          port,
+		Schema:        schema,
+		SslMethod:     sslMethod,
+		User:          user,
 	}
 	out := shared.DestinationMssqlV2CreateRequest{
 		Name:          name,
@@ -282,35 +282,100 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2PutRequest()
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	var port int64
-	port = r.Configuration.Port.ValueInt64()
-
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	schema := new(string)
-	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
-		*schema = r.Configuration.Schema.ValueString()
-	} else {
-		schema = nil
-	}
-	var user string
-	user = r.Configuration.User.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	var loadType shared.DestinationMssqlV2UpdateLoadType
+	var destinationMssqlV2UpdateInsertLoad *shared.DestinationMssqlV2UpdateInsertLoad
+	if r.Configuration.LoadType.InsertLoad != nil {
+		loadType1 := new(shared.DestinationMssqlV2UpdateSchemasLoadTypeLoadType)
+		if !r.Configuration.LoadType.InsertLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.InsertLoad.LoadType.IsNull() {
+			*loadType1 = shared.DestinationMssqlV2UpdateSchemasLoadTypeLoadType(r.Configuration.LoadType.InsertLoad.LoadType.ValueString())
+		} else {
+			loadType1 = nil
+		}
+		var additionalProperties interface{}
+		if !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.InsertLoad.AdditionalProperties.ValueString()), &additionalProperties)
+		}
+		destinationMssqlV2UpdateInsertLoad = &shared.DestinationMssqlV2UpdateInsertLoad{
+			LoadType:             loadType1,
+			AdditionalProperties: additionalProperties,
+		}
+	}
+	if destinationMssqlV2UpdateInsertLoad != nil {
+		loadType = shared.DestinationMssqlV2UpdateLoadType{
+			DestinationMssqlV2UpdateInsertLoad: destinationMssqlV2UpdateInsertLoad,
+		}
+	}
+	var destinationMssqlV2UpdateBulkLoad *shared.DestinationMssqlV2UpdateBulkLoad
+	if r.Configuration.LoadType.BulkLoad != nil {
+		var azureBlobStorageAccountName string
+		azureBlobStorageAccountName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountName.ValueString()
+
+		var azureBlobStorageContainerName string
+		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
+
+		var bulkLoadDataSource string
+		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
+
+		bulkLoadValidateValuesPreLoad := new(bool)
+		if !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsUnknown() && !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsNull() {
+			*bulkLoadValidateValuesPreLoad = r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.ValueBool()
+		} else {
+			bulkLoadValidateValuesPreLoad = nil
+		}
+		loadType2 := new(shared.DestinationMssqlV2UpdateSchemasLoadType)
+		if !r.Configuration.LoadType.BulkLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.BulkLoad.LoadType.IsNull() {
+			*loadType2 = shared.DestinationMssqlV2UpdateSchemasLoadType(r.Configuration.LoadType.BulkLoad.LoadType.ValueString())
+		} else {
+			loadType2 = nil
+		}
+		var sharedAccessSignature string
+		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
+
+		var additionalProperties1 interface{}
+		if !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.BulkLoad.AdditionalProperties.ValueString()), &additionalProperties1)
+		}
+		destinationMssqlV2UpdateBulkLoad = &shared.DestinationMssqlV2UpdateBulkLoad{
+			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
+			AzureBlobStorageContainerName: azureBlobStorageContainerName,
+			BulkLoadDataSource:            bulkLoadDataSource,
+			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
+			LoadType:                      loadType2,
+			SharedAccessSignature:         sharedAccessSignature,
+			AdditionalProperties:          additionalProperties1,
+		}
+	}
+	if destinationMssqlV2UpdateBulkLoad != nil {
+		loadType = shared.DestinationMssqlV2UpdateLoadType{
+			DestinationMssqlV2UpdateBulkLoad: destinationMssqlV2UpdateBulkLoad,
+		}
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	var port int64
+	port = r.Configuration.Port.ValueInt64()
+
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
 	} else {
-		jdbcURLParams = nil
+		schema = nil
 	}
 	var sslMethod shared.DestinationMssqlV2UpdateSSLMethod
 	var destinationMssqlV2UpdateUnencrypted *shared.DestinationMssqlV2UpdateUnencrypted
@@ -321,13 +386,13 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2PutRequest()
 		} else {
 			name1 = nil
 		}
-		var additionalProperties interface{}
+		var additionalProperties2 interface{}
 		if !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties)
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties2)
 		}
 		destinationMssqlV2UpdateUnencrypted = &shared.DestinationMssqlV2UpdateUnencrypted{
 			Name:                 name1,
-			AdditionalProperties: additionalProperties,
+			AdditionalProperties: additionalProperties2,
 		}
 	}
 	if destinationMssqlV2UpdateUnencrypted != nil {
@@ -343,13 +408,13 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2PutRequest()
 		} else {
 			name2 = nil
 		}
-		var additionalProperties1 interface{}
+		var additionalProperties3 interface{}
 		if !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.ValueString()), &additionalProperties1)
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.ValueString()), &additionalProperties3)
 		}
 		destinationMssqlV2UpdateEncryptedTrustServerCertificate = &shared.DestinationMssqlV2UpdateEncryptedTrustServerCertificate{
 			Name:                 name2,
-			AdditionalProperties: additionalProperties1,
+			AdditionalProperties: additionalProperties3,
 		}
 	}
 	if destinationMssqlV2UpdateEncryptedTrustServerCertificate != nil {
@@ -359,6 +424,12 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2PutRequest()
 	}
 	var destinationMssqlV2UpdateEncryptedVerifyCertificate *shared.DestinationMssqlV2UpdateEncryptedVerifyCertificate
 	if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
+		hostNameInCertificate := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+			*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+		} else {
+			hostNameInCertificate = nil
+		}
 		name3 := new(shared.DestinationMssqlV2UpdateSchemasSslMethodName)
 		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsNull() {
 			*name3 = shared.DestinationMssqlV2UpdateSchemasSslMethodName(r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.ValueString())
@@ -377,22 +448,16 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2PutRequest()
 		} else {
 			trustStorePassword = nil
 		}
-		hostNameInCertificate := new(string)
-		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-			*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-		} else {
-			hostNameInCertificate = nil
-		}
-		var additionalProperties2 interface{}
+		var additionalProperties4 interface{}
 		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties2)
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties4)
 		}
 		destinationMssqlV2UpdateEncryptedVerifyCertificate = &shared.DestinationMssqlV2UpdateEncryptedVerifyCertificate{
+			HostNameInCertificate: hostNameInCertificate,
 			Name:                  name3,
 			TrustStoreName:        trustStoreName,
 			TrustStorePassword:    trustStorePassword,
-			HostNameInCertificate: hostNameInCertificate,
-			AdditionalProperties:  additionalProperties2,
+			AdditionalProperties:  additionalProperties4,
 		}
 	}
 	if destinationMssqlV2UpdateEncryptedVerifyCertificate != nil {
@@ -400,84 +465,19 @@ func (r *DestinationMssqlV2ResourceModel) ToSharedDestinationMssqlV2PutRequest()
 			DestinationMssqlV2UpdateEncryptedVerifyCertificate: destinationMssqlV2UpdateEncryptedVerifyCertificate,
 		}
 	}
-	var loadType shared.DestinationMssqlV2UpdateLoadType
-	var destinationMssqlV2UpdateInsertLoad *shared.DestinationMssqlV2UpdateInsertLoad
-	if r.Configuration.LoadType.InsertLoad != nil {
-		loadType1 := new(shared.DestinationMssqlV2UpdateSchemasLoadTypeLoadType)
-		if !r.Configuration.LoadType.InsertLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.InsertLoad.LoadType.IsNull() {
-			*loadType1 = shared.DestinationMssqlV2UpdateSchemasLoadTypeLoadType(r.Configuration.LoadType.InsertLoad.LoadType.ValueString())
-		} else {
-			loadType1 = nil
-		}
-		var additionalProperties3 interface{}
-		if !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.LoadType.InsertLoad.AdditionalProperties.ValueString()), &additionalProperties3)
-		}
-		destinationMssqlV2UpdateInsertLoad = &shared.DestinationMssqlV2UpdateInsertLoad{
-			LoadType:             loadType1,
-			AdditionalProperties: additionalProperties3,
-		}
-	}
-	if destinationMssqlV2UpdateInsertLoad != nil {
-		loadType = shared.DestinationMssqlV2UpdateLoadType{
-			DestinationMssqlV2UpdateInsertLoad: destinationMssqlV2UpdateInsertLoad,
-		}
-	}
-	var destinationMssqlV2UpdateBulkLoad *shared.DestinationMssqlV2UpdateBulkLoad
-	if r.Configuration.LoadType.BulkLoad != nil {
-		loadType2 := new(shared.DestinationMssqlV2UpdateSchemasLoadType)
-		if !r.Configuration.LoadType.BulkLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.BulkLoad.LoadType.IsNull() {
-			*loadType2 = shared.DestinationMssqlV2UpdateSchemasLoadType(r.Configuration.LoadType.BulkLoad.LoadType.ValueString())
-		} else {
-			loadType2 = nil
-		}
-		var azureBlobStorageAccountName string
-		azureBlobStorageAccountName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountName.ValueString()
+	var user string
+	user = r.Configuration.User.ValueString()
 
-		var azureBlobStorageContainerName string
-		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
-
-		var sharedAccessSignature string
-		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
-
-		var bulkLoadDataSource string
-		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
-
-		bulkLoadValidateValuesPreLoad := new(bool)
-		if !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsUnknown() && !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsNull() {
-			*bulkLoadValidateValuesPreLoad = r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.ValueBool()
-		} else {
-			bulkLoadValidateValuesPreLoad = nil
-		}
-		var additionalProperties4 interface{}
-		if !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.LoadType.BulkLoad.AdditionalProperties.ValueString()), &additionalProperties4)
-		}
-		destinationMssqlV2UpdateBulkLoad = &shared.DestinationMssqlV2UpdateBulkLoad{
-			LoadType:                      loadType2,
-			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
-			AzureBlobStorageContainerName: azureBlobStorageContainerName,
-			SharedAccessSignature:         sharedAccessSignature,
-			BulkLoadDataSource:            bulkLoadDataSource,
-			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
-			AdditionalProperties:          additionalProperties4,
-		}
-	}
-	if destinationMssqlV2UpdateBulkLoad != nil {
-		loadType = shared.DestinationMssqlV2UpdateLoadType{
-			DestinationMssqlV2UpdateBulkLoad: destinationMssqlV2UpdateBulkLoad,
-		}
-	}
 	configuration := shared.DestinationMssqlV2Update{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Schema:        schema,
-		User:          user,
-		Password:      password,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
-		SslMethod:     sslMethod,
 		LoadType:      loadType,
+		Password:      password,
+		Port:          port,
+		Schema:        schema,
+		SslMethod:     sslMethod,
+		User:          user,
 	}
 	out := shared.DestinationMssqlV2PutRequest{
 		Name:          name,

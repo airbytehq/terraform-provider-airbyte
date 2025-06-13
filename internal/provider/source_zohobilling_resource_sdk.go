@@ -21,7 +21,6 @@ func (r *SourceZohoBillingResourceModel) ToSharedSourceZohoBillingCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	region := shared.SourceZohoBillingRegion(r.Configuration.Region.ValueString())
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -31,11 +30,12 @@ func (r *SourceZohoBillingResourceModel) ToSharedSourceZohoBillingCreateRequest(
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
+	region := shared.SourceZohoBillingRegion(r.Configuration.Region.ValueString())
 	configuration := shared.SourceZohoBilling{
-		Region:       region,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
+		Region:       region,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,7 +107,6 @@ func (r *SourceZohoBillingResourceModel) ToSharedSourceZohoBillingPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	region := shared.SourceZohoBillingUpdateRegion(r.Configuration.Region.ValueString())
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -117,11 +116,12 @@ func (r *SourceZohoBillingResourceModel) ToSharedSourceZohoBillingPutRequest() *
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
+	region := shared.SourceZohoBillingUpdateRegion(r.Configuration.Region.ValueString())
 	configuration := shared.SourceZohoBillingUpdate{
-		Region:       region,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
+		Region:       region,
 	}
 	out := shared.SourceZohoBillingPutRequest{
 		Name:          name,

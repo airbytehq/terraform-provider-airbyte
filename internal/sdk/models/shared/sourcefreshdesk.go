@@ -37,13 +37,13 @@ type SourceFreshdesk struct {
 	APIKey string `json:"api_key"`
 	// Freshdesk domain
 	Domain string `json:"domain"`
+	// Number of days for lookback window for the stream Satisfaction Ratings
+	LookbackWindowInDays *int64 `default:"14" json:"lookback_window_in_days"`
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
 	RequestsPerMinute *int64 `json:"requests_per_minute,omitempty"`
 	// UTC date and time. Any data created after this date will be replicated. If this parameter is not set, all data will be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
-	// Number of days for lookback window for the stream Satisfaction Ratings
-	LookbackWindowInDays *int64    `default:"14" json:"lookback_window_in_days"`
-	sourceType           Freshdesk `const:"freshdesk" json:"sourceType"`
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	sourceType Freshdesk  `const:"freshdesk" json:"sourceType"`
 }
 
 func (s SourceFreshdesk) MarshalJSON() ([]byte, error) {
@@ -71,6 +71,13 @@ func (o *SourceFreshdesk) GetDomain() string {
 	return o.Domain
 }
 
+func (o *SourceFreshdesk) GetLookbackWindowInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindowInDays
+}
+
 func (o *SourceFreshdesk) GetRequestsPerMinute() *int64 {
 	if o == nil {
 		return nil
@@ -83,13 +90,6 @@ func (o *SourceFreshdesk) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceFreshdesk) GetLookbackWindowInDays() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.LookbackWindowInDays
 }
 
 func (o *SourceFreshdesk) GetSourceType() Freshdesk {

@@ -8,9 +8,9 @@ import (
 )
 
 type SourceBrexUpdate struct {
-	// User token to authenticate API requests. Generate it from your Brex dashboard under Developer > Settings.
-	UserToken string    `json:"user_token"`
 	StartDate time.Time `json:"start_date"`
+	// User token to authenticate API requests. Generate it from your Brex dashboard under Developer > Settings.
+	UserToken string `json:"user_token"`
 }
 
 func (s SourceBrexUpdate) MarshalJSON() ([]byte, error) {
@@ -24,16 +24,16 @@ func (s *SourceBrexUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceBrexUpdate) GetUserToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserToken
-}
-
 func (o *SourceBrexUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceBrexUpdate) GetUserToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserToken
 }

@@ -34,10 +34,10 @@ func (e *Plausible) UnmarshalJSON(data []byte) error {
 type SourcePlausible struct {
 	// Plausible API Key. See the <a href="https://plausible.io/docs/stats-api">docs</a> for information on how to generate this key.
 	APIKey string `json:"api_key"`
-	// The domain of the site you want to retrieve data for. Enter the name of your site as configured on Plausible, i.e., excluding "https://" and "www". Can be retrieved from the 'domain' field in your Plausible site settings.
-	SiteID string `json:"site_id"`
 	// The API URL of your plausible instance. Change this if you self-host plausible. The default is https://plausible.io/api/v1/stats
 	APIURL *string `json:"api_url,omitempty"`
+	// The domain of the site you want to retrieve data for. Enter the name of your site as configured on Plausible, i.e., excluding "https://" and "www". Can be retrieved from the 'domain' field in your Plausible site settings.
+	SiteID string `json:"site_id"`
 	// Start date for data to retrieve, in ISO-8601 format.
 	StartDate  *string   `json:"start_date,omitempty"`
 	sourceType Plausible `const:"plausible" json:"sourceType"`
@@ -61,18 +61,18 @@ func (o *SourcePlausible) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourcePlausible) GetSiteID() string {
-	if o == nil {
-		return ""
-	}
-	return o.SiteID
-}
-
 func (o *SourcePlausible) GetAPIURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.APIURL
+}
+
+func (o *SourcePlausible) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
 }
 
 func (o *SourcePlausible) GetStartDate() *string {

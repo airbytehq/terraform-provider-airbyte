@@ -5,7 +5,6 @@ package shared
 type SourceMetabaseUpdate struct {
 	// URL to your metabase instance API
 	InstanceAPIURL string  `json:"instance_api_url"`
-	Username       string  `json:"username"`
 	Password       *string `json:"password,omitempty"`
 	// To generate your session token, you need to run the following command: ``` curl -X POST \
 	//   -H "Content-Type: application/json" \
@@ -14,6 +13,7 @@ type SourceMetabaseUpdate struct {
 	// ``` Then copy the value of the `id` field returned by a successful call to that API.
 	// Note that by default, sessions are good for 14 days and needs to be regenerated.
 	SessionToken *string `json:"session_token,omitempty"`
+	Username     string  `json:"username"`
 }
 
 func (o *SourceMetabaseUpdate) GetInstanceAPIURL() string {
@@ -21,13 +21,6 @@ func (o *SourceMetabaseUpdate) GetInstanceAPIURL() string {
 		return ""
 	}
 	return o.InstanceAPIURL
-}
-
-func (o *SourceMetabaseUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
 }
 
 func (o *SourceMetabaseUpdate) GetPassword() *string {
@@ -42,4 +35,11 @@ func (o *SourceMetabaseUpdate) GetSessionToken() *string {
 		return nil
 	}
 	return o.SessionToken
+}
+
+func (o *SourceMetabaseUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

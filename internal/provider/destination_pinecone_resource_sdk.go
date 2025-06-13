@@ -61,19 +61,19 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconeCreateRequ
 	}
 	var destinationPineconeAzureOpenAI *shared.DestinationPineconeAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationPineconeAzureOpenAI = &shared.DestinationPineconeAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationPineconeAzureOpenAI != nil {
@@ -92,20 +92,20 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconeCreateRequ
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationPineconeOpenAICompatible = &shared.DestinationPineconeOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationPineconeOpenAICompatible != nil {
@@ -113,40 +113,73 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconeCreateRequ
 			DestinationPineconeOpenAICompatible: destinationPineconeOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var index string
+	index = r.Configuration.Indexing.Index.ValueString()
 
+	var pineconeEnvironment string
+	pineconeEnvironment = r.Configuration.Indexing.PineconeEnvironment.ValueString()
+
+	var pineconeKey string
+	pineconeKey = r.Configuration.Indexing.PineconeKey.ValueString()
+
+	indexing := shared.DestinationPineconeIndexing{
+		Index:               index,
+		PineconeEnvironment: pineconeEnvironment,
+		PineconeKey:         pineconeKey,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationPineconeFieldNameMappingConfigModel = []shared.DestinationPineconeFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationPineconeFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationPineconeTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationPineconeBySeparator *shared.DestinationPineconeBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationPineconeBySeparator = &shared.DestinationPineconeBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationPineconeBySeparator != nil {
@@ -184,52 +217,19 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconeCreateRequ
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationPineconeFieldNameMappingConfigModel = []shared.DestinationPineconeFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationPineconeFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationPineconeProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var pineconeKey string
-	pineconeKey = r.Configuration.Indexing.PineconeKey.ValueString()
-
-	var pineconeEnvironment string
-	pineconeEnvironment = r.Configuration.Indexing.PineconeEnvironment.ValueString()
-
-	var index string
-	index = r.Configuration.Indexing.Index.ValueString()
-
-	indexing := shared.DestinationPineconeIndexing{
-		PineconeKey:         pineconeKey,
-		PineconeEnvironment: pineconeEnvironment,
-		Index:               index,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationPinecone{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationPineconeCreateRequest{
 		Name:          name,
@@ -334,19 +334,19 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconePutRequest
 	}
 	var destinationPineconeUpdateAzureOpenAI *shared.DestinationPineconeUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationPineconeUpdateAzureOpenAI = &shared.DestinationPineconeUpdateAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationPineconeUpdateAzureOpenAI != nil {
@@ -365,20 +365,20 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconePutRequest
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationPineconeUpdateOpenAICompatible = &shared.DestinationPineconeUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationPineconeUpdateOpenAICompatible != nil {
@@ -386,40 +386,73 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconePutRequest
 			DestinationPineconeUpdateOpenAICompatible: destinationPineconeUpdateOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var index string
+	index = r.Configuration.Indexing.Index.ValueString()
 
+	var pineconeEnvironment string
+	pineconeEnvironment = r.Configuration.Indexing.PineconeEnvironment.ValueString()
+
+	var pineconeKey string
+	pineconeKey = r.Configuration.Indexing.PineconeKey.ValueString()
+
+	indexing := shared.DestinationPineconeUpdateIndexing{
+		Index:               index,
+		PineconeEnvironment: pineconeEnvironment,
+		PineconeKey:         pineconeKey,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationPineconeUpdateFieldNameMappingConfigModel = []shared.DestinationPineconeUpdateFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationPineconeUpdateFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationPineconeUpdateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationPineconeUpdateBySeparator *shared.DestinationPineconeUpdateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationPineconeUpdateBySeparator = &shared.DestinationPineconeUpdateBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationPineconeUpdateBySeparator != nil {
@@ -457,52 +490,19 @@ func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconePutRequest
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationPineconeUpdateFieldNameMappingConfigModel = []shared.DestinationPineconeUpdateFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationPineconeUpdateFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationPineconeUpdateProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var pineconeKey string
-	pineconeKey = r.Configuration.Indexing.PineconeKey.ValueString()
-
-	var pineconeEnvironment string
-	pineconeEnvironment = r.Configuration.Indexing.PineconeEnvironment.ValueString()
-
-	var index string
-	index = r.Configuration.Indexing.Index.ValueString()
-
-	indexing := shared.DestinationPineconeUpdateIndexing{
-		PineconeKey:         pineconeKey,
-		PineconeEnvironment: pineconeEnvironment,
-		Index:               index,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationPineconeUpdate{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationPineconePutRequest{
 		Name:          name,

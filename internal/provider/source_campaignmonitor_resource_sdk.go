@@ -21,9 +21,6 @@ func (r *SourceCampaignMonitorResourceModel) ToSharedSourceCampaignMonitorCreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -36,10 +33,13 @@ func (r *SourceCampaignMonitorResourceModel) ToSharedSourceCampaignMonitorCreate
 	} else {
 		startDate = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceCampaignMonitor{
-		Username:  username,
 		Password:  password,
 		StartDate: startDate,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,9 +111,6 @@ func (r *SourceCampaignMonitorResourceModel) ToSharedSourceCampaignMonitorPutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -126,10 +123,13 @@ func (r *SourceCampaignMonitorResourceModel) ToSharedSourceCampaignMonitorPutReq
 	} else {
 		startDate = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceCampaignMonitorUpdate{
-		Username:  username,
 		Password:  password,
 		StartDate: startDate,
+		Username:  username,
 	}
 	out := shared.SourceCampaignMonitorPutRequest{
 		Name:          name,

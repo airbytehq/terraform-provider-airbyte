@@ -3,17 +3,10 @@
 package shared
 
 type SourceTaboolaUpdate struct {
-	ClientID string `json:"client_id"`
 	// The ID associated with your taboola account
 	AccountID    string `json:"account_id"`
+	ClientID     string `json:"client_id"`
 	ClientSecret string `json:"client_secret"`
-}
-
-func (o *SourceTaboolaUpdate) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
 }
 
 func (o *SourceTaboolaUpdate) GetAccountID() string {
@@ -21,6 +14,13 @@ func (o *SourceTaboolaUpdate) GetAccountID() string {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceTaboolaUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
 }
 
 func (o *SourceTaboolaUpdate) GetClientSecret() string {

@@ -33,23 +33,23 @@ func (e *SourceQuickbooksUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceQuickbooksUpdate struct {
-	// Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
-	RealmID  string                          `json:"realm_id"`
-	authType *SourceQuickbooksUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	// Access token for making authenticated requests.
+	AccessToken string                          `json:"access_token"`
+	authType    *SourceQuickbooksUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 	ClientID string `json:"client_id"`
-	// Access token for making authenticated requests.
-	AccessToken string `json:"access_token"`
 	//  Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 	ClientSecret string `json:"client_secret"`
+	// Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
+	RealmID string `json:"realm_id"`
 	// A token used when refreshing the access token.
 	RefreshToken string `json:"refresh_token"`
-	// The date-time when the access token should be refreshed.
-	TokenExpiryDate time.Time `json:"token_expiry_date"`
-	// The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
 	// Determines whether to use the sandbox or production environment.
 	Sandbox *bool `default:"false" json:"sandbox"`
+	// The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
+	StartDate time.Time `json:"start_date"`
+	// The date-time when the access token should be refreshed.
+	TokenExpiryDate time.Time `json:"token_expiry_date"`
 }
 
 func (s SourceQuickbooksUpdate) MarshalJSON() ([]byte, error) {
@@ -63,11 +63,11 @@ func (s *SourceQuickbooksUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceQuickbooksUpdate) GetRealmID() string {
+func (o *SourceQuickbooksUpdate) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
-	return o.RealmID
+	return o.AccessToken
 }
 
 func (o *SourceQuickbooksUpdate) GetAuthType() *SourceQuickbooksUpdateAuthType {
@@ -81,18 +81,18 @@ func (o *SourceQuickbooksUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceQuickbooksUpdate) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
-}
-
 func (o *SourceQuickbooksUpdate) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceQuickbooksUpdate) GetRealmID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RealmID
 }
 
 func (o *SourceQuickbooksUpdate) GetRefreshToken() string {
@@ -102,11 +102,11 @@ func (o *SourceQuickbooksUpdate) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-func (o *SourceQuickbooksUpdate) GetTokenExpiryDate() time.Time {
+func (o *SourceQuickbooksUpdate) GetSandbox() *bool {
 	if o == nil {
-		return time.Time{}
+		return nil
 	}
-	return o.TokenExpiryDate
+	return o.Sandbox
 }
 
 func (o *SourceQuickbooksUpdate) GetStartDate() time.Time {
@@ -116,9 +116,9 @@ func (o *SourceQuickbooksUpdate) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceQuickbooksUpdate) GetSandbox() *bool {
+func (o *SourceQuickbooksUpdate) GetTokenExpiryDate() time.Time {
 	if o == nil {
-		return nil
+		return time.Time{}
 	}
-	return o.Sandbox
+	return o.TokenExpiryDate
 }

@@ -28,15 +28,15 @@ func (r *SourceLinnworksResourceModel) ToSharedSourceLinnworksCreateRequest() *s
 	var applicationSecret string
 	applicationSecret = r.Configuration.ApplicationSecret.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var token string
 	token = r.Configuration.Token.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinnworks{
 		ApplicationID:     applicationID,
 		ApplicationSecret: applicationSecret,
-		Token:             token,
 		StartDate:         startDate,
+		Token:             token,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -114,15 +114,15 @@ func (r *SourceLinnworksResourceModel) ToSharedSourceLinnworksPutRequest() *shar
 	var applicationSecret string
 	applicationSecret = r.Configuration.ApplicationSecret.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var token string
 	token = r.Configuration.Token.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinnworksUpdate{
 		ApplicationID:     applicationID,
 		ApplicationSecret: applicationSecret,
-		Token:             token,
 		StartDate:         startDate,
+		Token:             token,
 	}
 	out := shared.SourceLinnworksPutRequest{
 		Name:          name,

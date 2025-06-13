@@ -32,8 +32,8 @@ func (e *ThinkificCourses) UnmarshalJSON(data []byte) error {
 }
 
 type SourceThinkificCourses struct {
-	APIKey         string           `json:"api_key"`
 	XAuthSubdomain string           `json:"X-Auth-Subdomain"`
+	APIKey         string           `json:"api_key"`
 	sourceType     ThinkificCourses `const:"thinkific-courses" json:"sourceType"`
 }
 
@@ -48,18 +48,18 @@ func (s *SourceThinkificCourses) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceThinkificCourses) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceThinkificCourses) GetXAuthSubdomain() string {
 	if o == nil {
 		return ""
 	}
 	return o.XAuthSubdomain
+}
+
+func (o *SourceThinkificCourses) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceThinkificCourses) GetSourceType() ThinkificCourses {

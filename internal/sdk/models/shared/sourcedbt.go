@@ -32,8 +32,8 @@ func (e *Dbt) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDbt struct {
-	APIKey2    string `json:"api_key_2"`
 	AccountID  string `json:"account_id"`
+	APIKey2    string `json:"api_key_2"`
 	sourceType Dbt    `const:"dbt" json:"sourceType"`
 }
 
@@ -48,18 +48,18 @@ func (s *SourceDbt) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceDbt) GetAPIKey2() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey2
-}
-
 func (o *SourceDbt) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceDbt) GetAPIKey2() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey2
 }
 
 func (o *SourceDbt) GetSourceType() Dbt {

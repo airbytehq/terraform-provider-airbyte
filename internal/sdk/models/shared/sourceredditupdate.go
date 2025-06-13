@@ -9,17 +9,17 @@ import (
 
 type SourceRedditUpdate struct {
 	APIKey string `json:"api_key"`
-	// Specifies the query for searching in reddits and subreddits
-	Query *string `default:"airbyte" json:"query"`
-	// Includes mature content
-	IncludeOver18 *bool `default:"false" json:"include_over_18"`
 	// Specifies exact keyword and reduces distractions
 	Exact *bool `json:"exact,omitempty"`
+	// Includes mature content
+	IncludeOver18 *bool `default:"false" json:"include_over_18"`
 	// Max records per page limit
 	Limit *float64 `default:"1000" json:"limit"`
+	// Specifies the query for searching in reddits and subreddits
+	Query     *string   `default:"airbyte" json:"query"`
+	StartDate time.Time `json:"start_date"`
 	// Subreddits for exploration
-	Subreddits []any     `json:"subreddits,omitempty"`
-	StartDate  time.Time `json:"start_date"`
+	Subreddits []any `json:"subreddits,omitempty"`
 }
 
 func (s SourceRedditUpdate) MarshalJSON() ([]byte, error) {
@@ -40,11 +40,11 @@ func (o *SourceRedditUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceRedditUpdate) GetQuery() *string {
+func (o *SourceRedditUpdate) GetExact() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Query
+	return o.Exact
 }
 
 func (o *SourceRedditUpdate) GetIncludeOver18() *bool {
@@ -54,13 +54,6 @@ func (o *SourceRedditUpdate) GetIncludeOver18() *bool {
 	return o.IncludeOver18
 }
 
-func (o *SourceRedditUpdate) GetExact() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Exact
-}
-
 func (o *SourceRedditUpdate) GetLimit() *float64 {
 	if o == nil {
 		return nil
@@ -68,11 +61,11 @@ func (o *SourceRedditUpdate) GetLimit() *float64 {
 	return o.Limit
 }
 
-func (o *SourceRedditUpdate) GetSubreddits() []any {
+func (o *SourceRedditUpdate) GetQuery() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Subreddits
+	return o.Query
 }
 
 func (o *SourceRedditUpdate) GetStartDate() time.Time {
@@ -80,4 +73,11 @@ func (o *SourceRedditUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceRedditUpdate) GetSubreddits() []any {
+	if o == nil {
+		return nil
+	}
+	return o.Subreddits
 }

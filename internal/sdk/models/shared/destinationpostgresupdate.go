@@ -34,7 +34,6 @@ func (e *DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode) UnmarshalJSON(dat
 
 // DestinationPostgresUpdateVerifyFull - Verify-full SSL mode.
 type DestinationPostgresUpdateVerifyFull struct {
-	mode *DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -42,7 +41,8 @@ type DestinationPostgresUpdateVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	ClientKeyPassword *string                                               `json:"client_key_password,omitempty"`
+	mode              *DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 }
 
 func (d DestinationPostgresUpdateVerifyFull) MarshalJSON() ([]byte, error) {
@@ -54,10 +54,6 @@ func (d *DestinationPostgresUpdateVerifyFull) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationPostgresUpdateVerifyFull) GetMode() *DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode {
-	return DestinationPostgresUpdateSchemasSSLModeSSLModes6ModeVerifyFull.ToPointer()
 }
 
 func (o *DestinationPostgresUpdateVerifyFull) GetCaCertificate() string {
@@ -88,6 +84,10 @@ func (o *DestinationPostgresUpdateVerifyFull) GetClientKeyPassword() *string {
 	return o.ClientKeyPassword
 }
 
+func (o *DestinationPostgresUpdateVerifyFull) GetMode() *DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode {
+	return DestinationPostgresUpdateSchemasSSLModeSSLModes6ModeVerifyFull.ToPointer()
+}
+
 type DestinationPostgresUpdateSchemasSSLModeSSLModes5Mode string
 
 const (
@@ -113,11 +113,11 @@ func (e *DestinationPostgresUpdateSchemasSSLModeSSLModes5Mode) UnmarshalJSON(dat
 
 // DestinationPostgresUpdateVerifyCa - Verify-ca SSL mode.
 type DestinationPostgresUpdateVerifyCa struct {
-	mode *DestinationPostgresUpdateSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	ClientKeyPassword *string                                               `json:"client_key_password,omitempty"`
+	mode              *DestinationPostgresUpdateSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 }
 
 func (d DestinationPostgresUpdateVerifyCa) MarshalJSON() ([]byte, error) {
@@ -129,10 +129,6 @@ func (d *DestinationPostgresUpdateVerifyCa) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationPostgresUpdateVerifyCa) GetMode() *DestinationPostgresUpdateSchemasSSLModeSSLModes5Mode {
-	return DestinationPostgresUpdateSchemasSSLModeSSLModes5ModeVerifyCa.ToPointer()
 }
 
 func (o *DestinationPostgresUpdateVerifyCa) GetCaCertificate() string {
@@ -147,6 +143,10 @@ func (o *DestinationPostgresUpdateVerifyCa) GetClientKeyPassword() *string {
 		return nil
 	}
 	return o.ClientKeyPassword
+}
+
+func (o *DestinationPostgresUpdateVerifyCa) GetMode() *DestinationPostgresUpdateSchemasSSLModeSSLModes5Mode {
+	return DestinationPostgresUpdateSchemasSSLModeSSLModes5ModeVerifyCa.ToPointer()
 }
 
 type DestinationPostgresUpdateSchemasSSLModeSSLModesMode string
@@ -506,10 +506,10 @@ func (e *DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON
 }
 
 type DestinationPostgresUpdatePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -529,15 +529,15 @@ func (d *DestinationPostgresUpdatePasswordAuthentication) UnmarshalJSON(data []b
 	return nil
 }
 
-func (o *DestinationPostgresUpdatePasswordAuthentication) GetTunnelMethod() DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod {
-	return DestinationPostgresUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationPostgresUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationPostgresUpdatePasswordAuthentication) GetTunnelMethod() DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod {
+	return DestinationPostgresUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationPostgresUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -586,16 +586,16 @@ func (e *DestinationPostgresUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte
 }
 
 type DestinationPostgresUpdateSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationPostgresUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationPostgresUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationPostgresUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -609,8 +609,11 @@ func (d *DestinationPostgresUpdateSSHKeyAuthentication) UnmarshalJSON(data []byt
 	return nil
 }
 
-func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationPostgresUpdateSchemasTunnelMethod {
-	return DestinationPostgresUpdateSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -618,6 +621,10 @@ func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationPostgresUpdateSchemasTunnelMethod {
+	return DestinationPostgresUpdateSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -632,13 +639,6 @@ func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationPostgresUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationPostgresUpdateTunnelMethod - No ssh tunnel needed to connect to database
@@ -772,18 +772,24 @@ func (u DestinationPostgresUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) 
 }
 
 type DestinationPostgresUpdate struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// Port of the database.
-	Port *int64 `default:"5432" json:"port"`
 	// Name of the database.
 	Database string `json:"database"`
-	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
-	Schema *string `default:"public" json:"schema"`
-	// Username to use to access the database.
-	Username string `json:"username"`
+	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
+	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects.
+	DropCascade *bool `default:"false" json:"drop_cascade"`
+	// Hostname of the database.
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
+	// Port of the database.
+	Port *int64 `default:"5432" json:"port"`
+	// The schema to write raw tables into
+	RawDataSchema *string `json:"raw_data_schema,omitempty"`
+	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
+	Schema *string `default:"public" json:"schema"`
 	// Encrypt data using SSL. When activating SSL, please select one of the connection modes.
 	Ssl *bool `default:"false" json:"ssl"`
 	// SSL connection modes.
@@ -795,18 +801,12 @@ type DestinationPostgresUpdate struct {
 	//   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server
 	//  See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *DestinationPostgresUpdateSSLModes `json:"ssl_mode,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The schema to write raw tables into
-	RawDataSchema *string `json:"raw_data_schema,omitempty"`
-	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
-	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
-	// Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects.
-	DropCascade *bool `default:"false" json:"drop_cascade"`
-	// Create numeric columns as unconstrained DECIMAL instead of NUMBER(38, 9). This will allow increased precision in numeric values. (this is disabled by default for backwards compatibility, but is recommended to enable)
-	UnconstrainedNumber *bool `default:"false" json:"unconstrained_number"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationPostgresUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// Create numeric columns as unconstrained DECIMAL instead of NUMBER(38, 9). This will allow increased precision in numeric values. (this is disabled by default for backwards compatibility, but is recommended to enable)
+	UnconstrainedNumber *bool `default:"false" json:"unconstrained_number"`
+	// Username to use to access the database.
+	Username string `json:"username"`
 }
 
 func (d DestinationPostgresUpdate) MarshalJSON() ([]byte, error) {
@@ -820,74 +820,11 @@ func (d *DestinationPostgresUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationPostgresUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *DestinationPostgresUpdate) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
 func (o *DestinationPostgresUpdate) GetDatabase() string {
 	if o == nil {
 		return ""
 	}
 	return o.Database
-}
-
-func (o *DestinationPostgresUpdate) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
-func (o *DestinationPostgresUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *DestinationPostgresUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *DestinationPostgresUpdate) GetSsl() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Ssl
-}
-
-func (o *DestinationPostgresUpdate) GetSslMode() *DestinationPostgresUpdateSSLModes {
-	if o == nil {
-		return nil
-	}
-	return o.SslMode
-}
-
-func (o *DestinationPostgresUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
-}
-
-func (o *DestinationPostgresUpdate) GetRawDataSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RawDataSchema
 }
 
 func (o *DestinationPostgresUpdate) GetDisableTypeDedupe() *bool {
@@ -904,11 +841,60 @@ func (o *DestinationPostgresUpdate) GetDropCascade() *bool {
 	return o.DropCascade
 }
 
-func (o *DestinationPostgresUpdate) GetUnconstrainedNumber() *bool {
+func (o *DestinationPostgresUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationPostgresUpdate) GetJdbcURLParams() *string {
 	if o == nil {
 		return nil
 	}
-	return o.UnconstrainedNumber
+	return o.JdbcURLParams
+}
+
+func (o *DestinationPostgresUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationPostgresUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationPostgresUpdate) GetRawDataSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataSchema
+}
+
+func (o *DestinationPostgresUpdate) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *DestinationPostgresUpdate) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
+}
+
+func (o *DestinationPostgresUpdate) GetSslMode() *DestinationPostgresUpdateSSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
 }
 
 func (o *DestinationPostgresUpdate) GetTunnelMethod() *DestinationPostgresUpdateSSHTunnelMethod {
@@ -916,4 +902,18 @@ func (o *DestinationPostgresUpdate) GetTunnelMethod() *DestinationPostgresUpdate
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationPostgresUpdate) GetUnconstrainedNumber() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UnconstrainedNumber
+}
+
+func (o *DestinationPostgresUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

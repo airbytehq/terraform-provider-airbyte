@@ -21,15 +21,15 @@ func (r *SourceActivecampaignResourceModel) ToSharedSourceActivecampaignCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountUsername string
 	accountUsername = r.Configuration.AccountUsername.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceActivecampaign{
-		APIKey:          apiKey,
 		AccountUsername: accountUsername,
+		APIKey:          apiKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceActivecampaignResourceModel) ToSharedSourceActivecampaignPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountUsername string
 	accountUsername = r.Configuration.AccountUsername.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceActivecampaignUpdate{
-		APIKey:          apiKey,
 		AccountUsername: accountUsername,
+		APIKey:          apiKey,
 	}
 	out := shared.SourceActivecampaignPutRequest{
 		Name:          name,

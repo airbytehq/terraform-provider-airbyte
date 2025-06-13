@@ -22,17 +22,17 @@ func (r *SourceUservoiceResourceModel) ToSharedSourceUservoiceCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceUservoice{
-		Subdomain: subdomain,
 		APIKey:    apiKey,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,17 +104,17 @@ func (r *SourceUservoiceResourceModel) ToSharedSourceUservoicePutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceUservoiceUpdate{
-		Subdomain: subdomain,
 		APIKey:    apiKey,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	out := shared.SourceUservoicePutRequest{
 		Name:          name,

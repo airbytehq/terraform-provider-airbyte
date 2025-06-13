@@ -8,10 +8,10 @@ import (
 )
 
 type SourceGoogleTasksUpdate struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// The maximum number of records to be returned per request
-	RecordsLimit *string `default:"50" json:"records_limit"`
+	RecordsLimit *string   `default:"50" json:"records_limit"`
+	StartDate    time.Time `json:"start_date"`
 }
 
 func (s SourceGoogleTasksUpdate) MarshalJSON() ([]byte, error) {
@@ -32,16 +32,16 @@ func (o *SourceGoogleTasksUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceGoogleTasksUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceGoogleTasksUpdate) GetRecordsLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RecordsLimit
+}
+
+func (o *SourceGoogleTasksUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

@@ -21,8 +21,14 @@ func (r *DestinationSftpJSONResourceModel) ToSharedDestinationSftpJSONCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var destinationPath string
+	destinationPath = r.Configuration.DestinationPath.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
+
+	var password string
+	password = r.Configuration.Password.ValueString()
 
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
@@ -33,18 +39,12 @@ func (r *DestinationSftpJSONResourceModel) ToSharedDestinationSftpJSONCreateRequ
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
-	var destinationPath string
-	destinationPath = r.Configuration.DestinationPath.ValueString()
-
 	configuration := shared.DestinationSftpJSON{
+		DestinationPath: destinationPath,
 		Host:            host,
+		Password:        password,
 		Port:            port,
 		Username:        username,
-		Password:        password,
-		DestinationPath: destinationPath,
 	}
 	out := shared.DestinationSftpJSONCreateRequest{
 		Name:          name,
@@ -109,8 +109,14 @@ func (r *DestinationSftpJSONResourceModel) ToSharedDestinationSftpJSONPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var destinationPath string
+	destinationPath = r.Configuration.DestinationPath.ValueString()
+
 	var host string
 	host = r.Configuration.Host.ValueString()
+
+	var password string
+	password = r.Configuration.Password.ValueString()
 
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
@@ -121,18 +127,12 @@ func (r *DestinationSftpJSONResourceModel) ToSharedDestinationSftpJSONPutRequest
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
-	var destinationPath string
-	destinationPath = r.Configuration.DestinationPath.ValueString()
-
 	configuration := shared.DestinationSftpJSONUpdate{
+		DestinationPath: destinationPath,
 		Host:            host,
+		Password:        password,
 		Port:            port,
 		Username:        username,
-		Password:        password,
-		DestinationPath: destinationPath,
 	}
 	out := shared.DestinationSftpJSONPutRequest{
 		Name:          name,

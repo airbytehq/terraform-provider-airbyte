@@ -21,35 +21,8 @@ func (r *SourceFaunaResourceModel) ToSharedSourceFaunaCreateRequest() *shared.So
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	domain := new(string)
-	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
-		*domain = r.Configuration.Domain.ValueString()
-	} else {
-		domain = nil
-	}
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	scheme := new(string)
-	if !r.Configuration.Scheme.IsUnknown() && !r.Configuration.Scheme.IsNull() {
-		*scheme = r.Configuration.Scheme.ValueString()
-	} else {
-		scheme = nil
-	}
-	var secret string
-	secret = r.Configuration.Secret.ValueString()
-
 	var collection *shared.Collection
 	if r.Configuration.Collection != nil {
-		pageSize := new(int64)
-		if !r.Configuration.Collection.PageSize.IsUnknown() && !r.Configuration.Collection.PageSize.IsNull() {
-			*pageSize = r.Configuration.Collection.PageSize.ValueInt64()
-		} else {
-			pageSize = nil
-		}
 		var deletions shared.DeletionMode
 		var disabled *shared.Disabled
 		if r.Configuration.Collection.Deletions.Disabled != nil {
@@ -77,17 +50,44 @@ func (r *SourceFaunaResourceModel) ToSharedSourceFaunaCreateRequest() *shared.So
 				Enabled: enabled,
 			}
 		}
+		pageSize := new(int64)
+		if !r.Configuration.Collection.PageSize.IsUnknown() && !r.Configuration.Collection.PageSize.IsNull() {
+			*pageSize = r.Configuration.Collection.PageSize.ValueInt64()
+		} else {
+			pageSize = nil
+		}
 		collection = &shared.Collection{
-			PageSize:  pageSize,
 			Deletions: deletions,
+			PageSize:  pageSize,
 		}
 	}
+	domain := new(string)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = r.Configuration.Domain.ValueString()
+	} else {
+		domain = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	scheme := new(string)
+	if !r.Configuration.Scheme.IsUnknown() && !r.Configuration.Scheme.IsNull() {
+		*scheme = r.Configuration.Scheme.ValueString()
+	} else {
+		scheme = nil
+	}
+	var secret string
+	secret = r.Configuration.Secret.ValueString()
+
 	configuration := shared.SourceFauna{
+		Collection: collection,
 		Domain:     domain,
 		Port:       port,
 		Scheme:     scheme,
 		Secret:     secret,
-		Collection: collection,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -159,35 +159,8 @@ func (r *SourceFaunaResourceModel) ToSharedSourceFaunaPutRequest() *shared.Sourc
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	domain := new(string)
-	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
-		*domain = r.Configuration.Domain.ValueString()
-	} else {
-		domain = nil
-	}
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	scheme := new(string)
-	if !r.Configuration.Scheme.IsUnknown() && !r.Configuration.Scheme.IsNull() {
-		*scheme = r.Configuration.Scheme.ValueString()
-	} else {
-		scheme = nil
-	}
-	var secret string
-	secret = r.Configuration.Secret.ValueString()
-
 	var collection *shared.SourceFaunaUpdateCollection
 	if r.Configuration.Collection != nil {
-		pageSize := new(int64)
-		if !r.Configuration.Collection.PageSize.IsUnknown() && !r.Configuration.Collection.PageSize.IsNull() {
-			*pageSize = r.Configuration.Collection.PageSize.ValueInt64()
-		} else {
-			pageSize = nil
-		}
 		var deletions shared.SourceFaunaUpdateDeletionMode
 		var sourceFaunaUpdateDisabled *shared.SourceFaunaUpdateDisabled
 		if r.Configuration.Collection.Deletions.Disabled != nil {
@@ -215,17 +188,44 @@ func (r *SourceFaunaResourceModel) ToSharedSourceFaunaPutRequest() *shared.Sourc
 				SourceFaunaUpdateEnabled: sourceFaunaUpdateEnabled,
 			}
 		}
+		pageSize := new(int64)
+		if !r.Configuration.Collection.PageSize.IsUnknown() && !r.Configuration.Collection.PageSize.IsNull() {
+			*pageSize = r.Configuration.Collection.PageSize.ValueInt64()
+		} else {
+			pageSize = nil
+		}
 		collection = &shared.SourceFaunaUpdateCollection{
-			PageSize:  pageSize,
 			Deletions: deletions,
+			PageSize:  pageSize,
 		}
 	}
+	domain := new(string)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = r.Configuration.Domain.ValueString()
+	} else {
+		domain = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	scheme := new(string)
+	if !r.Configuration.Scheme.IsUnknown() && !r.Configuration.Scheme.IsNull() {
+		*scheme = r.Configuration.Scheme.ValueString()
+	} else {
+		scheme = nil
+	}
+	var secret string
+	secret = r.Configuration.Secret.ValueString()
+
 	configuration := shared.SourceFaunaUpdate{
+		Collection: collection,
 		Domain:     domain,
 		Port:       port,
 		Scheme:     scheme,
 		Secret:     secret,
-		Collection: collection,
 	}
 	out := shared.SourceFaunaPutRequest{
 		Name:          name,

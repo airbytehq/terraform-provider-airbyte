@@ -9,6 +9,296 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+// DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod string
+
+const (
+	DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
+)
+
+func (e DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod {
+	return &e
+}
+func (e *DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "SSH_PASSWORD_AUTH":
+		*e = DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod: %v", v)
+	}
+}
+
+type DestinationRedshiftUpdatePasswordAuthentication struct {
+	// Hostname of the jump server host that allows inbound ssh tunnel.
+	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
+	// Port on the proxy/jump server that accepts inbound ssh connections.
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
+	// OS-level username for logging into the jump server host
+	TunnelUser string `json:"tunnel_user"`
+	// OS-level password for logging into the jump server host
+	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (d DestinationRedshiftUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelMethod() DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod {
+	return DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// DestinationRedshiftUpdateSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationRedshiftUpdateSchemasTunnelMethod string
+
+const (
+	DestinationRedshiftUpdateSchemasTunnelMethodSSHKeyAuth DestinationRedshiftUpdateSchemasTunnelMethod = "SSH_KEY_AUTH"
+)
+
+func (e DestinationRedshiftUpdateSchemasTunnelMethod) ToPointer() *DestinationRedshiftUpdateSchemasTunnelMethod {
+	return &e
+}
+func (e *DestinationRedshiftUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "SSH_KEY_AUTH":
+		*e = DestinationRedshiftUpdateSchemasTunnelMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationRedshiftUpdateSchemasTunnelMethod: %v", v)
+	}
+}
+
+type DestinationRedshiftUpdateSSHKeyAuthentication struct {
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
+	// Hostname of the jump server host that allows inbound ssh tunnel.
+	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationRedshiftUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// Port on the proxy/jump server that accepts inbound ssh connections.
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
+	// OS-level username for logging into the jump server host.
+	TunnelUser string `json:"tunnel_user"`
+}
+
+func (d DestinationRedshiftUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationRedshiftUpdateSchemasTunnelMethod {
+	return DestinationRedshiftUpdateSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// DestinationRedshiftUpdateTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationRedshiftUpdateTunnelMethod string
+
+const (
+	DestinationRedshiftUpdateTunnelMethodNoTunnel DestinationRedshiftUpdateTunnelMethod = "NO_TUNNEL"
+)
+
+func (e DestinationRedshiftUpdateTunnelMethod) ToPointer() *DestinationRedshiftUpdateTunnelMethod {
+	return &e
+}
+func (e *DestinationRedshiftUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "NO_TUNNEL":
+		*e = DestinationRedshiftUpdateTunnelMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationRedshiftUpdateTunnelMethod: %v", v)
+	}
+}
+
+type DestinationRedshiftUpdateNoTunnel struct {
+	// No ssh tunnel needed to connect to database
+	tunnelMethod DestinationRedshiftUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationRedshiftUpdateNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftUpdateNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftUpdateNoTunnel) GetTunnelMethod() DestinationRedshiftUpdateTunnelMethod {
+	return DestinationRedshiftUpdateTunnelMethodNoTunnel
+}
+
+type DestinationRedshiftUpdateSSHTunnelMethodType string
+
+const (
+	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel               DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_No Tunnel"
+	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication   DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_SSH Key Authentication"
+	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_Password Authentication"
+)
+
+// DestinationRedshiftUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationRedshiftUpdateSSHTunnelMethod struct {
+	DestinationRedshiftUpdateNoTunnel               *DestinationRedshiftUpdateNoTunnel               `queryParam:"inline"`
+	DestinationRedshiftUpdateSSHKeyAuthentication   *DestinationRedshiftUpdateSSHKeyAuthentication   `queryParam:"inline"`
+	DestinationRedshiftUpdatePasswordAuthentication *DestinationRedshiftUpdatePasswordAuthentication `queryParam:"inline"`
+
+	Type DestinationRedshiftUpdateSSHTunnelMethodType
+}
+
+func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdateNoTunnel(destinationRedshiftUpdateNoTunnel DestinationRedshiftUpdateNoTunnel) DestinationRedshiftUpdateSSHTunnelMethod {
+	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel
+
+	return DestinationRedshiftUpdateSSHTunnelMethod{
+		DestinationRedshiftUpdateNoTunnel: &destinationRedshiftUpdateNoTunnel,
+		Type:                              typ,
+	}
+}
+
+func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdateSSHKeyAuthentication(destinationRedshiftUpdateSSHKeyAuthentication DestinationRedshiftUpdateSSHKeyAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
+	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication
+
+	return DestinationRedshiftUpdateSSHTunnelMethod{
+		DestinationRedshiftUpdateSSHKeyAuthentication: &destinationRedshiftUpdateSSHKeyAuthentication,
+		Type: typ,
+	}
+}
+
+func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdatePasswordAuthentication(destinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdatePasswordAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
+	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication
+
+	return DestinationRedshiftUpdateSSHTunnelMethod{
+		DestinationRedshiftUpdatePasswordAuthentication: &destinationRedshiftUpdatePasswordAuthentication,
+		Type: typ,
+	}
+}
+
+func (u *DestinationRedshiftUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
+
+	var destinationRedshiftUpdateNoTunnel DestinationRedshiftUpdateNoTunnel = DestinationRedshiftUpdateNoTunnel{}
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdateNoTunnel, "", true, true); err == nil {
+		u.DestinationRedshiftUpdateNoTunnel = &destinationRedshiftUpdateNoTunnel
+		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel
+		return nil
+	}
+
+	var destinationRedshiftUpdateSSHKeyAuthentication DestinationRedshiftUpdateSSHKeyAuthentication = DestinationRedshiftUpdateSSHKeyAuthentication{}
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftUpdateSSHKeyAuthentication = &destinationRedshiftUpdateSSHKeyAuthentication
+		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication
+		return nil
+	}
+
+	var destinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdatePasswordAuthentication = DestinationRedshiftUpdatePasswordAuthentication{}
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftUpdatePasswordAuthentication = &destinationRedshiftUpdatePasswordAuthentication
+		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedshiftUpdateSSHTunnelMethod", string(data))
+}
+
+func (u DestinationRedshiftUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
+	if u.DestinationRedshiftUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftUpdateNoTunnel, "", true)
+	}
+
+	if u.DestinationRedshiftUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftUpdateSSHKeyAuthentication, "", true)
+	}
+
+	if u.DestinationRedshiftUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftUpdatePasswordAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationRedshiftUpdateSSHTunnelMethod: all fields are null")
+}
+
 type DestinationRedshiftUpdateMethod string
 
 const (
@@ -157,21 +447,21 @@ func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) err
 
 // DestinationRedshiftUpdateAWSS3Staging - <i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
 type DestinationRedshiftUpdateAWSS3Staging struct {
-	method DestinationRedshiftUpdateMethod `const:"S3 Staging" json:"method"`
+	// This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
+	AccessKeyID string `json:"access_key_id"`
+	// The pattern allows you to set the file-name format for the S3 staging file(s)
+	FileNamePattern *string                         `json:"file_name_pattern,omitempty"`
+	method          DestinationRedshiftUpdateMethod `const:"S3 Staging" json:"method"`
+	// Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.
+	PurgeStagingData *bool `default:"true" json:"purge_staging_data"`
 	// The name of the staging S3 bucket.
 	S3BucketName string `json:"s3_bucket_name"`
 	// The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
 	S3BucketPath *string `json:"s3_bucket_path,omitempty"`
 	// The region of the S3 staging bucket.
 	S3BucketRegion *DestinationRedshiftUpdateS3BucketRegion `default:"" json:"s3_bucket_region"`
-	// This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
-	AccessKeyID string `json:"access_key_id"`
 	// The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 	SecretAccessKey string `json:"secret_access_key"`
-	// The pattern allows you to set the file-name format for the S3 staging file(s)
-	FileNamePattern *string `json:"file_name_pattern,omitempty"`
-	// Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.
-	PurgeStagingData *bool `default:"true" json:"purge_staging_data"`
 }
 
 func (d DestinationRedshiftUpdateAWSS3Staging) MarshalJSON() ([]byte, error) {
@@ -185,8 +475,29 @@ func (d *DestinationRedshiftUpdateAWSS3Staging) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+func (o *DestinationRedshiftUpdateAWSS3Staging) GetAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKeyID
+}
+
+func (o *DestinationRedshiftUpdateAWSS3Staging) GetFileNamePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNamePattern
+}
+
 func (o *DestinationRedshiftUpdateAWSS3Staging) GetMethod() DestinationRedshiftUpdateMethod {
 	return DestinationRedshiftUpdateMethodS3Staging
+}
+
+func (o *DestinationRedshiftUpdateAWSS3Staging) GetPurgeStagingData() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PurgeStagingData
 }
 
 func (o *DestinationRedshiftUpdateAWSS3Staging) GetS3BucketName() string {
@@ -210,32 +521,11 @@ func (o *DestinationRedshiftUpdateAWSS3Staging) GetS3BucketRegion() *Destination
 	return o.S3BucketRegion
 }
 
-func (o *DestinationRedshiftUpdateAWSS3Staging) GetAccessKeyID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessKeyID
-}
-
 func (o *DestinationRedshiftUpdateAWSS3Staging) GetSecretAccessKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.SecretAccessKey
-}
-
-func (o *DestinationRedshiftUpdateAWSS3Staging) GetFileNamePattern() *string {
-	if o == nil {
-		return nil
-	}
-	return o.FileNamePattern
-}
-
-func (o *DestinationRedshiftUpdateAWSS3Staging) GetPurgeStagingData() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.PurgeStagingData
 }
 
 type DestinationRedshiftUpdateUploadingMethodType string
@@ -280,321 +570,31 @@ func (u DestinationRedshiftUpdateUploadingMethod) MarshalJSON() ([]byte, error) 
 	return nil, errors.New("could not marshal union type DestinationRedshiftUpdateUploadingMethod: all fields are null")
 }
 
-// DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod string
-
-const (
-	DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
-)
-
-func (e DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod {
-	return &e
-}
-func (e *DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "SSH_PASSWORD_AUTH":
-		*e = DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod: %v", v)
-	}
-}
-
-type DestinationRedshiftUpdatePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
-	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
-	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort *int64 `default:"22" json:"tunnel_port"`
-	// OS-level username for logging into the jump server host
-	TunnelUser string `json:"tunnel_user"`
-	// OS-level password for logging into the jump server host
-	TunnelUserPassword string `json:"tunnel_user_password"`
-}
-
-func (d DestinationRedshiftUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationRedshiftUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelMethod() DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod {
-	return DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
-func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.TunnelHost
-}
-
-func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.TunnelPort
-}
-
-func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelUser() string {
-	if o == nil {
-		return ""
-	}
-	return o.TunnelUser
-}
-
-func (o *DestinationRedshiftUpdatePasswordAuthentication) GetTunnelUserPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.TunnelUserPassword
-}
-
-// DestinationRedshiftUpdateSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type DestinationRedshiftUpdateSchemasTunnelMethod string
-
-const (
-	DestinationRedshiftUpdateSchemasTunnelMethodSSHKeyAuth DestinationRedshiftUpdateSchemasTunnelMethod = "SSH_KEY_AUTH"
-)
-
-func (e DestinationRedshiftUpdateSchemasTunnelMethod) ToPointer() *DestinationRedshiftUpdateSchemasTunnelMethod {
-	return &e
-}
-func (e *DestinationRedshiftUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "SSH_KEY_AUTH":
-		*e = DestinationRedshiftUpdateSchemasTunnelMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUpdateSchemasTunnelMethod: %v", v)
-	}
-}
-
-type DestinationRedshiftUpdateSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationRedshiftUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
-	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
-	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort *int64 `default:"22" json:"tunnel_port"`
-	// OS-level username for logging into the jump server host.
-	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
-}
-
-func (d DestinationRedshiftUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationRedshiftUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationRedshiftUpdateSchemasTunnelMethod {
-	return DestinationRedshiftUpdateSchemasTunnelMethodSSHKeyAuth
-}
-
-func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.TunnelHost
-}
-
-func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.TunnelPort
-}
-
-func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelUser() string {
-	if o == nil {
-		return ""
-	}
-	return o.TunnelUser
-}
-
-func (o *DestinationRedshiftUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
-}
-
-// DestinationRedshiftUpdateTunnelMethod - No ssh tunnel needed to connect to database
-type DestinationRedshiftUpdateTunnelMethod string
-
-const (
-	DestinationRedshiftUpdateTunnelMethodNoTunnel DestinationRedshiftUpdateTunnelMethod = "NO_TUNNEL"
-)
-
-func (e DestinationRedshiftUpdateTunnelMethod) ToPointer() *DestinationRedshiftUpdateTunnelMethod {
-	return &e
-}
-func (e *DestinationRedshiftUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "NO_TUNNEL":
-		*e = DestinationRedshiftUpdateTunnelMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUpdateTunnelMethod: %v", v)
-	}
-}
-
-type DestinationRedshiftUpdateNoTunnel struct {
-	// No ssh tunnel needed to connect to database
-	tunnelMethod DestinationRedshiftUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
-}
-
-func (d DestinationRedshiftUpdateNoTunnel) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationRedshiftUpdateNoTunnel) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationRedshiftUpdateNoTunnel) GetTunnelMethod() DestinationRedshiftUpdateTunnelMethod {
-	return DestinationRedshiftUpdateTunnelMethodNoTunnel
-}
-
-type DestinationRedshiftUpdateSSHTunnelMethodType string
-
-const (
-	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel               DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_No Tunnel"
-	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication   DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_SSH Key Authentication"
-	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_Password Authentication"
-)
-
-// DestinationRedshiftUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationRedshiftUpdateSSHTunnelMethod struct {
-	DestinationRedshiftUpdateNoTunnel               *DestinationRedshiftUpdateNoTunnel               `queryParam:"inline"`
-	DestinationRedshiftUpdateSSHKeyAuthentication   *DestinationRedshiftUpdateSSHKeyAuthentication   `queryParam:"inline"`
-	DestinationRedshiftUpdatePasswordAuthentication *DestinationRedshiftUpdatePasswordAuthentication `queryParam:"inline"`
-
-	Type DestinationRedshiftUpdateSSHTunnelMethodType
-}
-
-func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdateNoTunnel(destinationRedshiftUpdateNoTunnel DestinationRedshiftUpdateNoTunnel) DestinationRedshiftUpdateSSHTunnelMethod {
-	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel
-
-	return DestinationRedshiftUpdateSSHTunnelMethod{
-		DestinationRedshiftUpdateNoTunnel: &destinationRedshiftUpdateNoTunnel,
-		Type:                              typ,
-	}
-}
-
-func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdateSSHKeyAuthentication(destinationRedshiftUpdateSSHKeyAuthentication DestinationRedshiftUpdateSSHKeyAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
-	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication
-
-	return DestinationRedshiftUpdateSSHTunnelMethod{
-		DestinationRedshiftUpdateSSHKeyAuthentication: &destinationRedshiftUpdateSSHKeyAuthentication,
-		Type: typ,
-	}
-}
-
-func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdatePasswordAuthentication(destinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdatePasswordAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
-	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication
-
-	return DestinationRedshiftUpdateSSHTunnelMethod{
-		DestinationRedshiftUpdatePasswordAuthentication: &destinationRedshiftUpdatePasswordAuthentication,
-		Type: typ,
-	}
-}
-
-func (u *DestinationRedshiftUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-
-	var destinationRedshiftUpdateNoTunnel DestinationRedshiftUpdateNoTunnel = DestinationRedshiftUpdateNoTunnel{}
-	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdateNoTunnel, "", true, true); err == nil {
-		u.DestinationRedshiftUpdateNoTunnel = &destinationRedshiftUpdateNoTunnel
-		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel
-		return nil
-	}
-
-	var destinationRedshiftUpdateSSHKeyAuthentication DestinationRedshiftUpdateSSHKeyAuthentication = DestinationRedshiftUpdateSSHKeyAuthentication{}
-	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdateSSHKeyAuthentication, "", true, true); err == nil {
-		u.DestinationRedshiftUpdateSSHKeyAuthentication = &destinationRedshiftUpdateSSHKeyAuthentication
-		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication
-		return nil
-	}
-
-	var destinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdatePasswordAuthentication = DestinationRedshiftUpdatePasswordAuthentication{}
-	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdatePasswordAuthentication, "", true, true); err == nil {
-		u.DestinationRedshiftUpdatePasswordAuthentication = &destinationRedshiftUpdatePasswordAuthentication
-		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedshiftUpdateSSHTunnelMethod", string(data))
-}
-
-func (u DestinationRedshiftUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationRedshiftUpdateNoTunnel != nil {
-		return utils.MarshalJSON(u.DestinationRedshiftUpdateNoTunnel, "", true)
-	}
-
-	if u.DestinationRedshiftUpdateSSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.DestinationRedshiftUpdateSSHKeyAuthentication, "", true)
-	}
-
-	if u.DestinationRedshiftUpdatePasswordAuthentication != nil {
-		return utils.MarshalJSON(u.DestinationRedshiftUpdatePasswordAuthentication, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationRedshiftUpdateSSHTunnelMethod: all fields are null")
-}
-
 type DestinationRedshiftUpdate struct {
-	// Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
-	Host string `json:"host"`
-	// Port of the database.
-	Port *int64 `default:"5439" json:"port"`
-	// Username to use to access the database.
-	Username string `json:"username"`
-	// Password associated with the username.
-	Password string `json:"password"`
 	// Name of the database.
 	Database string `json:"database"`
-	// The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".
-	Schema *string `default:"public" json:"schema"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The way data will be uploaded to Redshift.
-	UploadingMethod *DestinationRedshiftUpdateUploadingMethod `json:"uploading_method,omitempty"`
-	// The schema to write raw tables into (default: airbyte_internal).
-	RawDataSchema *string `json:"raw_data_schema,omitempty"`
 	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
 	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
 	// Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects.
 	DropCascade *bool `default:"false" json:"drop_cascade"`
+	// Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// Password associated with the username.
+	Password string `json:"password"`
+	// Port of the database.
+	Port *int64 `default:"5439" json:"port"`
+	// The schema to write raw tables into (default: airbyte_internal).
+	RawDataSchema *string `json:"raw_data_schema,omitempty"`
+	// The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".
+	Schema *string `default:"public" json:"schema"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationRedshiftUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// The way data will be uploaded to Redshift.
+	UploadingMethod *DestinationRedshiftUpdateUploadingMethod `json:"uploading_method,omitempty"`
+	// Username to use to access the database.
+	Username string `json:"username"`
 }
 
 func (d DestinationRedshiftUpdate) MarshalJSON() ([]byte, error) {
@@ -608,67 +608,11 @@ func (d *DestinationRedshiftUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationRedshiftUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *DestinationRedshiftUpdate) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
-func (o *DestinationRedshiftUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *DestinationRedshiftUpdate) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
-}
-
 func (o *DestinationRedshiftUpdate) GetDatabase() string {
 	if o == nil {
 		return ""
 	}
 	return o.Database
-}
-
-func (o *DestinationRedshiftUpdate) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
-func (o *DestinationRedshiftUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
-}
-
-func (o *DestinationRedshiftUpdate) GetUploadingMethod() *DestinationRedshiftUpdateUploadingMethod {
-	if o == nil {
-		return nil
-	}
-	return o.UploadingMethod
-}
-
-func (o *DestinationRedshiftUpdate) GetRawDataSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RawDataSchema
 }
 
 func (o *DestinationRedshiftUpdate) GetDisableTypeDedupe() *bool {
@@ -685,9 +629,65 @@ func (o *DestinationRedshiftUpdate) GetDropCascade() *bool {
 	return o.DropCascade
 }
 
+func (o *DestinationRedshiftUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationRedshiftUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationRedshiftUpdate) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *DestinationRedshiftUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationRedshiftUpdate) GetRawDataSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataSchema
+}
+
+func (o *DestinationRedshiftUpdate) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
 func (o *DestinationRedshiftUpdate) GetTunnelMethod() *DestinationRedshiftUpdateSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationRedshiftUpdate) GetUploadingMethod() *DestinationRedshiftUpdateUploadingMethod {
+	if o == nil {
+		return nil
+	}
+	return o.UploadingMethod
+}
+
+func (o *DestinationRedshiftUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

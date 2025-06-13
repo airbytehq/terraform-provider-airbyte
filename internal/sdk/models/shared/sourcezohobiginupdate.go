@@ -48,12 +48,12 @@ func (e *SourceZohoBiginUpdateDataCenter) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZohoBiginUpdate struct {
-	ClientID string `json:"client_id"`
+	ClientID           string `json:"client_id"`
+	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	// The data center where the Bigin account's resources are hosted
-	DataCenter         *SourceZohoBiginUpdateDataCenter `default:"com" json:"data_center"`
-	ClientSecret       string                           `json:"client_secret"`
-	ClientRefreshToken string                           `json:"client_refresh_token"`
-	ModuleName         string                           `json:"module_name"`
+	DataCenter *SourceZohoBiginUpdateDataCenter `default:"com" json:"data_center"`
+	ModuleName string                           `json:"module_name"`
 }
 
 func (s SourceZohoBiginUpdate) MarshalJSON() ([]byte, error) {
@@ -74,11 +74,11 @@ func (o *SourceZohoBiginUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceZohoBiginUpdate) GetDataCenter() *SourceZohoBiginUpdateDataCenter {
+func (o *SourceZohoBiginUpdate) GetClientRefreshToken() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.DataCenter
+	return o.ClientRefreshToken
 }
 
 func (o *SourceZohoBiginUpdate) GetClientSecret() string {
@@ -88,11 +88,11 @@ func (o *SourceZohoBiginUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceZohoBiginUpdate) GetClientRefreshToken() string {
+func (o *SourceZohoBiginUpdate) GetDataCenter() *SourceZohoBiginUpdateDataCenter {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.ClientRefreshToken
+	return o.DataCenter
 }
 
 func (o *SourceZohoBiginUpdate) GetModuleName() string {

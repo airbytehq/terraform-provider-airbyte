@@ -22,14 +22,11 @@ func (r *SourceKlausAPIResourceModel) ToSharedSourceKlausAPICreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var account int64
 	account = r.Configuration.Account.ValueInt64()
 
-	var workspace int64
-	workspace = r.Configuration.Workspace.ValueInt64()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -37,11 +34,14 @@ func (r *SourceKlausAPIResourceModel) ToSharedSourceKlausAPICreateRequest() *sha
 	} else {
 		startDate = nil
 	}
+	var workspace int64
+	workspace = r.Configuration.Workspace.ValueInt64()
+
 	configuration := shared.SourceKlausAPI{
-		APIKey:    apiKey,
 		Account:   account,
-		Workspace: workspace,
+		APIKey:    apiKey,
 		StartDate: startDate,
+		Workspace: workspace,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -113,14 +113,11 @@ func (r *SourceKlausAPIResourceModel) ToSharedSourceKlausAPIPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var account int64
 	account = r.Configuration.Account.ValueInt64()
 
-	var workspace int64
-	workspace = r.Configuration.Workspace.ValueInt64()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -128,11 +125,14 @@ func (r *SourceKlausAPIResourceModel) ToSharedSourceKlausAPIPutRequest() *shared
 	} else {
 		startDate = nil
 	}
+	var workspace int64
+	workspace = r.Configuration.Workspace.ValueInt64()
+
 	configuration := shared.SourceKlausAPIUpdate{
-		APIKey:    apiKey,
 		Account:   account,
-		Workspace: workspace,
+		APIKey:    apiKey,
 		StartDate: startDate,
+		Workspace: workspace,
 	}
 	out := shared.SourceKlausAPIPutRequest{
 		Name:          name,

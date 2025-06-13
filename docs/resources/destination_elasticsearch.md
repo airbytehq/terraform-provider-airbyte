@@ -23,6 +23,7 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     }
     ca_certificate = "...my_ca_certificate..."
     endpoint       = "...my_endpoint..."
+    path_prefix    = "...my_path_prefix..."
     tunnel_method = {
       no_tunnel = {
         # ...
@@ -67,6 +68,7 @@ Optional:
 
 - `authentication_method` (Attributes) The type of authentication to be used (see [below for nested schema](#nestedatt--configuration--authentication_method))
 - `ca_certificate` (String, Sensitive) CA certificate
+- `path_prefix` (String) The Path Prefix of the Elasticsearch server
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 - `upsert` (Boolean) If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys. Default: true
 

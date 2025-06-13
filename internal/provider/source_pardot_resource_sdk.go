@@ -22,14 +22,26 @@ func (r *SourcePardotResourceModel) ToSharedSourcePardotCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var pardotBusinessUnitID string
-	pardotBusinessUnitID = r.Configuration.PardotBusinessUnitID.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
+	pageSize := new(string)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueString()
+	} else {
+		pageSize = nil
+	}
+	var pardotBusinessUnitID string
+	pardotBusinessUnitID = r.Configuration.PardotBusinessUnitID.ValueString()
 
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
@@ -40,26 +52,14 @@ func (r *SourcePardotResourceModel) ToSharedSourcePardotCreateRequest() *shared.
 	} else {
 		startDate = nil
 	}
-	pageSize := new(string)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueString()
-	} else {
-		pageSize = nil
-	}
-	isSandbox := new(bool)
-	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
-		*isSandbox = r.Configuration.IsSandbox.ValueBool()
-	} else {
-		isSandbox = nil
-	}
 	configuration := shared.SourcePardot{
-		PardotBusinessUnitID: pardotBusinessUnitID,
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
+		IsSandbox:            isSandbox,
+		PageSize:             pageSize,
+		PardotBusinessUnitID: pardotBusinessUnitID,
 		RefreshToken:         refreshToken,
 		StartDate:            startDate,
-		PageSize:             pageSize,
-		IsSandbox:            isSandbox,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -131,14 +131,26 @@ func (r *SourcePardotResourceModel) ToSharedSourcePardotPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var pardotBusinessUnitID string
-	pardotBusinessUnitID = r.Configuration.PardotBusinessUnitID.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
+	pageSize := new(string)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueString()
+	} else {
+		pageSize = nil
+	}
+	var pardotBusinessUnitID string
+	pardotBusinessUnitID = r.Configuration.PardotBusinessUnitID.ValueString()
 
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
@@ -149,26 +161,14 @@ func (r *SourcePardotResourceModel) ToSharedSourcePardotPutRequest() *shared.Sou
 	} else {
 		startDate = nil
 	}
-	pageSize := new(string)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueString()
-	} else {
-		pageSize = nil
-	}
-	isSandbox := new(bool)
-	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
-		*isSandbox = r.Configuration.IsSandbox.ValueBool()
-	} else {
-		isSandbox = nil
-	}
 	configuration := shared.SourcePardotUpdate{
-		PardotBusinessUnitID: pardotBusinessUnitID,
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
+		IsSandbox:            isSandbox,
+		PageSize:             pageSize,
+		PardotBusinessUnitID: pardotBusinessUnitID,
 		RefreshToken:         refreshToken,
 		StartDate:            startDate,
-		PageSize:             pageSize,
-		IsSandbox:            isSandbox,
 	}
 	out := shared.SourcePardotPutRequest{
 		Name:          name,

@@ -12,10 +12,10 @@ type SourceYandexMetricaUpdate struct {
 	AuthToken string `json:"auth_token"`
 	// Counter ID
 	CounterID string `json:"counter_id"`
-	// Starting point for your data replication, in format of "YYYY-MM-DD".
-	StartDate types.Date `json:"start_date"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
 	EndDate *types.Date `json:"end_date,omitempty"`
+	// Starting point for your data replication, in format of "YYYY-MM-DD".
+	StartDate types.Date `json:"start_date"`
 }
 
 func (s SourceYandexMetricaUpdate) MarshalJSON() ([]byte, error) {
@@ -43,16 +43,16 @@ func (o *SourceYandexMetricaUpdate) GetCounterID() string {
 	return o.CounterID
 }
 
-func (o *SourceYandexMetricaUpdate) GetStartDate() types.Date {
-	if o == nil {
-		return types.Date{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceYandexMetricaUpdate) GetEndDate() *types.Date {
 	if o == nil {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourceYandexMetricaUpdate) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

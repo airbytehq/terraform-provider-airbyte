@@ -34,7 +34,6 @@ func (e *DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode) UnmarshalJSON(
 
 // DestinationYellowbrickUpdateVerifyFull - Verify-full SSL mode.
 type DestinationYellowbrickUpdateVerifyFull struct {
-	mode *DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -42,7 +41,8 @@ type DestinationYellowbrickUpdateVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	ClientKeyPassword *string                                                  `json:"client_key_password,omitempty"`
+	mode              *DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 }
 
 func (d DestinationYellowbrickUpdateVerifyFull) MarshalJSON() ([]byte, error) {
@@ -54,10 +54,6 @@ func (d *DestinationYellowbrickUpdateVerifyFull) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationYellowbrickUpdateVerifyFull) GetMode() *DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode {
-	return DestinationYellowbrickUpdateSchemasSSLModeSSLModes6ModeVerifyFull.ToPointer()
 }
 
 func (o *DestinationYellowbrickUpdateVerifyFull) GetCaCertificate() string {
@@ -88,6 +84,10 @@ func (o *DestinationYellowbrickUpdateVerifyFull) GetClientKeyPassword() *string 
 	return o.ClientKeyPassword
 }
 
+func (o *DestinationYellowbrickUpdateVerifyFull) GetMode() *DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode {
+	return DestinationYellowbrickUpdateSchemasSSLModeSSLModes6ModeVerifyFull.ToPointer()
+}
+
 type DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode string
 
 const (
@@ -113,11 +113,11 @@ func (e *DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode) UnmarshalJSON(
 
 // DestinationYellowbrickUpdateVerifyCa - Verify-ca SSL mode.
 type DestinationYellowbrickUpdateVerifyCa struct {
-	mode *DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	ClientKeyPassword *string                                                  `json:"client_key_password,omitempty"`
+	mode              *DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 }
 
 func (d DestinationYellowbrickUpdateVerifyCa) MarshalJSON() ([]byte, error) {
@@ -129,10 +129,6 @@ func (d *DestinationYellowbrickUpdateVerifyCa) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationYellowbrickUpdateVerifyCa) GetMode() *DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode {
-	return DestinationYellowbrickUpdateSchemasSSLModeSSLModes5ModeVerifyCa.ToPointer()
 }
 
 func (o *DestinationYellowbrickUpdateVerifyCa) GetCaCertificate() string {
@@ -147,6 +143,10 @@ func (o *DestinationYellowbrickUpdateVerifyCa) GetClientKeyPassword() *string {
 		return nil
 	}
 	return o.ClientKeyPassword
+}
+
+func (o *DestinationYellowbrickUpdateVerifyCa) GetMode() *DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode {
+	return DestinationYellowbrickUpdateSchemasSSLModeSSLModes5ModeVerifyCa.ToPointer()
 }
 
 type DestinationYellowbrickUpdateSchemasSSLModeSSLModesMode string
@@ -506,10 +506,10 @@ func (e *DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJ
 }
 
 type DestinationYellowbrickUpdatePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -529,15 +529,15 @@ func (d *DestinationYellowbrickUpdatePasswordAuthentication) UnmarshalJSON(data 
 	return nil
 }
 
-func (o *DestinationYellowbrickUpdatePasswordAuthentication) GetTunnelMethod() DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod {
-	return DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationYellowbrickUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationYellowbrickUpdatePasswordAuthentication) GetTunnelMethod() DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod {
+	return DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationYellowbrickUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -586,16 +586,16 @@ func (e *DestinationYellowbrickUpdateSchemasTunnelMethod) UnmarshalJSON(data []b
 }
 
 type DestinationYellowbrickUpdateSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationYellowbrickUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationYellowbrickUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationYellowbrickUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -609,8 +609,11 @@ func (d *DestinationYellowbrickUpdateSSHKeyAuthentication) UnmarshalJSON(data []
 	return nil
 }
 
-func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationYellowbrickUpdateSchemasTunnelMethod {
-	return DestinationYellowbrickUpdateSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -618,6 +621,10 @@ func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetTunnelHost() strin
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationYellowbrickUpdateSchemasTunnelMethod {
+	return DestinationYellowbrickUpdateSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -632,13 +639,6 @@ func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetTunnelUser() strin
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationYellowbrickUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationYellowbrickUpdateTunnelMethod - No ssh tunnel needed to connect to database
@@ -772,18 +772,18 @@ func (u DestinationYellowbrickUpdateSSHTunnelMethod) MarshalJSON() ([]byte, erro
 }
 
 type DestinationYellowbrickUpdate struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// Port of the database.
-	Port *int64 `default:"5432" json:"port"`
 	// Name of the database.
 	Database string `json:"database"`
-	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
-	Schema *string `default:"public" json:"schema"`
-	// Username to use to access the database.
-	Username string `json:"username"`
+	// Hostname of the database.
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
+	// Port of the database.
+	Port *int64 `default:"5432" json:"port"`
+	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
+	Schema *string `default:"public" json:"schema"`
 	// Encrypt data using SSL. When activating SSL, please select one of the connection modes.
 	Ssl *bool `default:"false" json:"ssl"`
 	// SSL connection modes.
@@ -795,10 +795,10 @@ type DestinationYellowbrickUpdate struct {
 	//   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server
 	//  See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *DestinationYellowbrickUpdateSSLModes `json:"ssl_mode,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationYellowbrickUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// Username to use to access the database.
+	Username string `json:"username"`
 }
 
 func (d DestinationYellowbrickUpdate) MarshalJSON() ([]byte, error) {
@@ -812,11 +812,32 @@ func (d *DestinationYellowbrickUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationYellowbrickUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
 func (o *DestinationYellowbrickUpdate) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
+}
+
+func (o *DestinationYellowbrickUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationYellowbrickUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
 }
 
 func (o *DestinationYellowbrickUpdate) GetPort() *int64 {
@@ -826,32 +847,11 @@ func (o *DestinationYellowbrickUpdate) GetPort() *int64 {
 	return o.Port
 }
 
-func (o *DestinationYellowbrickUpdate) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *DestinationYellowbrickUpdate) GetSchema() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Schema
-}
-
-func (o *DestinationYellowbrickUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *DestinationYellowbrickUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
 }
 
 func (o *DestinationYellowbrickUpdate) GetSsl() *bool {
@@ -868,16 +868,16 @@ func (o *DestinationYellowbrickUpdate) GetSslMode() *DestinationYellowbrickUpdat
 	return o.SslMode
 }
 
-func (o *DestinationYellowbrickUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
-}
-
 func (o *DestinationYellowbrickUpdate) GetTunnelMethod() *DestinationYellowbrickUpdateSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationYellowbrickUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -35,9 +35,9 @@ func (e *SourceShopifySchemasAuthMethod) UnmarshalJSON(data []byte) error {
 
 // APIPassword - API Password Auth
 type APIPassword struct {
-	authMethod SourceShopifySchemasAuthMethod `const:"api_password" json:"auth_method"`
 	// The API Password for your private application in the `Shopify` store.
-	APIPassword string `json:"api_password"`
+	APIPassword string                         `json:"api_password"`
+	authMethod  SourceShopifySchemasAuthMethod `const:"api_password" json:"auth_method"`
 }
 
 func (a APIPassword) MarshalJSON() ([]byte, error) {
@@ -51,15 +51,15 @@ func (a *APIPassword) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *APIPassword) GetAuthMethod() SourceShopifySchemasAuthMethod {
-	return SourceShopifySchemasAuthMethodAPIPassword
-}
-
 func (o *APIPassword) GetAPIPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIPassword
+}
+
+func (o *APIPassword) GetAuthMethod() SourceShopifySchemasAuthMethod {
+	return SourceShopifySchemasAuthMethodAPIPassword
 }
 
 type SourceShopifyAuthMethod string
@@ -87,13 +87,13 @@ func (e *SourceShopifyAuthMethod) UnmarshalJSON(data []byte) error {
 
 // SourceShopifyOAuth20 - OAuth2.0
 type SourceShopifyOAuth20 struct {
-	authMethod SourceShopifyAuthMethod `const:"oauth2.0" json:"auth_method"`
+	// The Access Token for making authenticated requests.
+	AccessToken *string                 `json:"access_token,omitempty"`
+	authMethod  SourceShopifyAuthMethod `const:"oauth2.0" json:"auth_method"`
 	// The Client ID of the Shopify developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of the Shopify developer application.
 	ClientSecret *string `json:"client_secret,omitempty"`
-	// The Access Token for making authenticated requests.
-	AccessToken *string `json:"access_token,omitempty"`
 }
 
 func (s SourceShopifyOAuth20) MarshalJSON() ([]byte, error) {
@@ -105,6 +105,13 @@ func (s *SourceShopifyOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceShopifyOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
 }
 
 func (o *SourceShopifyOAuth20) GetAuthMethod() SourceShopifyAuthMethod {
@@ -123,13 +130,6 @@ func (o *SourceShopifyOAuth20) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceShopifyOAuth20) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
 }
 
 type ShopifyAuthorizationMethodType string
@@ -220,23 +220,23 @@ func (e *Shopify) UnmarshalJSON(data []byte) error {
 }
 
 type SourceShopify struct {
-	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
-	Shop string `json:"shop"`
-	// The authorization method to use to retrieve data from Shopify
-	Credentials *ShopifyAuthorizationMethod `json:"credentials,omitempty"`
-	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate *types.Date `default:"2020-01-01" json:"start_date"`
 	// Defines what would be a date range per single BULK Job
 	BulkWindowInDays *int64 `default:"30" json:"bulk_window_in_days"`
+	// The authorization method to use to retrieve data from Shopify
+	Credentials *ShopifyAuthorizationMethod `json:"credentials,omitempty"`
 	// Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch.
 	FetchTransactionsUserID *bool `default:"false" json:"fetch_transactions_user_id"`
+	// The threshold, after which the single BULK Job should be checkpointed (min: 15k, max: 1M)
+	JobCheckpointInterval *int64 `default:"100000" json:"job_checkpoint_interval"`
 	// If enabled, the `Product Variants` stream attempts to include `Presentment prices` field (may affect the performance).
 	JobProductVariantsIncludePresPrices *bool `default:"true" json:"job_product_variants_include_pres_prices"`
 	// The max time in seconds, after which the single BULK Job should be `CANCELED` and retried. The bigger the value the longer the BULK Job is allowed to run.
 	JobTerminationThreshold *int64 `default:"7200" json:"job_termination_threshold"`
-	// The threshold, after which the single BULK Job should be checkpointed (min: 15k, max: 1M)
-	JobCheckpointInterval *int64  `default:"100000" json:"job_checkpoint_interval"`
-	sourceType            Shopify `const:"shopify" json:"sourceType"`
+	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
+	Shop string `json:"shop"`
+	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
+	StartDate  *types.Date `default:"2020-01-01" json:"start_date"`
+	sourceType Shopify     `const:"shopify" json:"sourceType"`
 }
 
 func (s SourceShopify) MarshalJSON() ([]byte, error) {
@@ -250,11 +250,11 @@ func (s *SourceShopify) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceShopify) GetShop() string {
+func (o *SourceShopify) GetBulkWindowInDays() *int64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Shop
+	return o.BulkWindowInDays
 }
 
 func (o *SourceShopify) GetCredentials() *ShopifyAuthorizationMethod {
@@ -264,25 +264,18 @@ func (o *SourceShopify) GetCredentials() *ShopifyAuthorizationMethod {
 	return o.Credentials
 }
 
-func (o *SourceShopify) GetStartDate() *types.Date {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-func (o *SourceShopify) GetBulkWindowInDays() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.BulkWindowInDays
-}
-
 func (o *SourceShopify) GetFetchTransactionsUserID() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.FetchTransactionsUserID
+}
+
+func (o *SourceShopify) GetJobCheckpointInterval() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.JobCheckpointInterval
 }
 
 func (o *SourceShopify) GetJobProductVariantsIncludePresPrices() *bool {
@@ -299,11 +292,18 @@ func (o *SourceShopify) GetJobTerminationThreshold() *int64 {
 	return o.JobTerminationThreshold
 }
 
-func (o *SourceShopify) GetJobCheckpointInterval() *int64 {
+func (o *SourceShopify) GetShop() string {
+	if o == nil {
+		return ""
+	}
+	return o.Shop
+}
+
+func (o *SourceShopify) GetStartDate() *types.Date {
 	if o == nil {
 		return nil
 	}
-	return o.JobCheckpointInterval
+	return o.StartDate
 }
 
 func (o *SourceShopify) GetSourceType() Shopify {

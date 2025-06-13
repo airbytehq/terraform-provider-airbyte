@@ -59,6 +59,12 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.Conn
 			} else {
 				includeFiles = nil
 			}
+			destinationObjectName := new(string)
+			if !streamsItem.DestinationObjectName.IsUnknown() && !streamsItem.DestinationObjectName.IsNull() {
+				*destinationObjectName = streamsItem.DestinationObjectName.ValueString()
+			} else {
+				destinationObjectName = nil
+			}
 			var selectedFields []shared.SelectedFieldInfo = []shared.SelectedFieldInfo{}
 			for _, selectedFieldsItem := range streamsItem.SelectedFields {
 				var fieldPath []string = []string{}
@@ -197,14 +203,15 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.Conn
 				})
 			}
 			streams = append(streams, shared.StreamConfiguration{
-				Name:           name1,
-				Namespace:      namespace,
-				SyncMode:       syncMode,
-				CursorField:    cursorField,
-				PrimaryKey:     primaryKey,
-				IncludeFiles:   includeFiles,
-				SelectedFields: selectedFields,
-				Mappers:        mappers,
+				Name:                  name1,
+				Namespace:             namespace,
+				SyncMode:              syncMode,
+				CursorField:           cursorField,
+				PrimaryKey:            primaryKey,
+				IncludeFiles:          includeFiles,
+				DestinationObjectName: destinationObjectName,
+				SelectedFields:        selectedFields,
+				Mappers:               mappers,
 			})
 		}
 		configurations = &shared.StreamConfigurations{
@@ -314,6 +321,7 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 			for _, v := range streamsItem.CursorField {
 				streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
 			}
+			streams1.DestinationObjectName = types.StringPointerValue(streamsItem.DestinationObjectName)
 			streams1.IncludeFiles = types.BoolPointerValue(streamsItem.IncludeFiles)
 			streams1.Mappers = []tfTypes.ConfiguredStreamMapper{}
 			for mappersCount, mappersItem := range streamsItem.Mappers {
@@ -396,6 +404,7 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 				r.Configurations.Streams = append(r.Configurations.Streams, streams1)
 			} else {
 				r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
+				r.Configurations.Streams[streamsCount].DestinationObjectName = streams1.DestinationObjectName
 				r.Configurations.Streams[streamsCount].IncludeFiles = streams1.IncludeFiles
 				r.Configurations.Streams[streamsCount].Mappers = streams1.Mappers
 				r.Configurations.Streams[streamsCount].Name = streams1.Name
@@ -407,7 +416,6 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 		}
 		r.ConnectionID = types.StringValue(resp.ConnectionID)
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.DestinationID = types.StringValue(resp.DestinationID)
 		r.Name = types.StringValue(resp.Name)
 		if resp.NamespaceDefinition != nil {
@@ -496,6 +504,12 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.Conne
 				*includeFiles = streamsItem.IncludeFiles.ValueBool()
 			} else {
 				includeFiles = nil
+			}
+			destinationObjectName := new(string)
+			if !streamsItem.DestinationObjectName.IsUnknown() && !streamsItem.DestinationObjectName.IsNull() {
+				*destinationObjectName = streamsItem.DestinationObjectName.ValueString()
+			} else {
+				destinationObjectName = nil
 			}
 			var selectedFields []shared.SelectedFieldInfo = []shared.SelectedFieldInfo{}
 			for _, selectedFieldsItem := range streamsItem.SelectedFields {
@@ -635,14 +649,15 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.Conne
 				})
 			}
 			streams = append(streams, shared.StreamConfiguration{
-				Name:           name1,
-				Namespace:      namespace,
-				SyncMode:       syncMode,
-				CursorField:    cursorField,
-				PrimaryKey:     primaryKey,
-				IncludeFiles:   includeFiles,
-				SelectedFields: selectedFields,
-				Mappers:        mappers,
+				Name:                  name1,
+				Namespace:             namespace,
+				SyncMode:              syncMode,
+				CursorField:           cursorField,
+				PrimaryKey:            primaryKey,
+				IncludeFiles:          includeFiles,
+				DestinationObjectName: destinationObjectName,
+				SelectedFields:        selectedFields,
+				Mappers:               mappers,
 			})
 		}
 		configurations = &shared.StreamConfigurations{

@@ -7,14 +7,14 @@ import (
 )
 
 type SourceYouniumUpdate struct {
-	// Username for Younium account
-	Username string `json:"username"`
-	// Account password for younium account API key
-	Password string `json:"password"`
 	// Legal Entity that data should be pulled from
 	LegalEntity string `json:"legal_entity"`
+	// Account password for younium account API key
+	Password string `json:"password"`
 	// Property defining if connector is used against playground or production environment
 	Playground *bool `default:"false" json:"playground"`
+	// Username for Younium account
+	Username string `json:"username"`
 }
 
 func (s SourceYouniumUpdate) MarshalJSON() ([]byte, error) {
@@ -28,11 +28,11 @@ func (s *SourceYouniumUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceYouniumUpdate) GetUsername() string {
+func (o *SourceYouniumUpdate) GetLegalEntity() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.LegalEntity
 }
 
 func (o *SourceYouniumUpdate) GetPassword() string {
@@ -42,16 +42,16 @@ func (o *SourceYouniumUpdate) GetPassword() string {
 	return o.Password
 }
 
-func (o *SourceYouniumUpdate) GetLegalEntity() string {
-	if o == nil {
-		return ""
-	}
-	return o.LegalEntity
-}
-
 func (o *SourceYouniumUpdate) GetPlayground() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Playground
+}
+
+func (o *SourceYouniumUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

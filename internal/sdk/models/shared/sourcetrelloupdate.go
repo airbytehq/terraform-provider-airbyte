@@ -8,14 +8,14 @@ import (
 )
 
 type SourceTrelloUpdate struct {
-	// Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
-	Key string `json:"key"`
-	// Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
-	Token string `json:"token"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
 	// IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated. Please note that this is not the 8-character ID in the board's shortLink (URL of the board). Rather, what is required here is the 24-character ID usually returned by the API
 	BoardIds []string `json:"board_ids,omitempty"`
+	// Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
+	Key string `json:"key"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate time.Time `json:"start_date"`
+	// Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
+	Token string `json:"token"`
 }
 
 func (s SourceTrelloUpdate) MarshalJSON() ([]byte, error) {
@@ -29,18 +29,18 @@ func (s *SourceTrelloUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceTrelloUpdate) GetBoardIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.BoardIds
+}
+
 func (o *SourceTrelloUpdate) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
-}
-
-func (o *SourceTrelloUpdate) GetToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.Token
 }
 
 func (o *SourceTrelloUpdate) GetStartDate() time.Time {
@@ -50,9 +50,9 @@ func (o *SourceTrelloUpdate) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceTrelloUpdate) GetBoardIds() []string {
+func (o *SourceTrelloUpdate) GetToken() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.BoardIds
+	return o.Token
 }

@@ -34,10 +34,10 @@ func (e *DestinationTeradataSchemasAuthType) UnmarshalJSON(data []byte) error {
 
 type Ldap struct {
 	authType *DestinationTeradataSchemasAuthType `const:"LDAP" json:"auth_type"`
-	// Username to use to access the database.
-	Username string `json:"username"`
 	// Enter the password associated with the username.
 	Password string `json:"password"`
+	// Username to use to access the database.
+	Username string `json:"username"`
 }
 
 func (l Ldap) MarshalJSON() ([]byte, error) {
@@ -55,18 +55,18 @@ func (o *Ldap) GetAuthType() *DestinationTeradataSchemasAuthType {
 	return DestinationTeradataSchemasAuthTypeLdap.ToPointer()
 }
 
-func (o *Ldap) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *Ldap) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *Ldap) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type DestinationTeradataAuthType string
@@ -94,10 +94,10 @@ func (e *DestinationTeradataAuthType) UnmarshalJSON(data []byte) error {
 
 type Td2 struct {
 	authType *DestinationTeradataAuthType `const:"TD2" json:"auth_type"`
-	// Username to use to access the database.
-	Username string `json:"username"`
 	// Enter the password associated with the username.
 	Password string `json:"password"`
+	// Username to use to access the database.
+	Username string `json:"username"`
 }
 
 func (t Td2) MarshalJSON() ([]byte, error) {
@@ -115,18 +115,18 @@ func (o *Td2) GetAuthType() *DestinationTeradataAuthType {
 	return DestinationTeradataAuthTypeTd2.ToPointer()
 }
 
-func (o *Td2) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *Td2) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *Td2) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type AuthorizationMechanismType string
@@ -654,9 +654,19 @@ func (e *Teradata) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationTeradata struct {
+	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
+	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects.
+	DropCascade *bool `default:"false" json:"drop_cascade"`
 	// Hostname of the database.
-	Host    string                  `json:"host"`
-	Logmech *AuthorizationMechanism `json:"logmech,omitempty"`
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string                 `json:"jdbc_url_params,omitempty"`
+	Logmech       *AuthorizationMechanism `json:"logmech,omitempty"`
+	// Defines the custom session query band using name-value pairs. For example, 'org=Finance;report=Fin123;'
+	QueryBand *string `json:"query_band,omitempty"`
+	// The database to write raw tables into
+	RawDataSchema *string `json:"raw_data_schema,omitempty"`
 	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
 	Schema *string `default:"airbyte_td" json:"schema"`
 	// Encrypt data using SSL. When activating SSL, please select one of the SSL modes.
@@ -669,12 +679,8 @@ type DestinationTeradata struct {
 	//   <b>verify-ca</b> - Chose this mode to always require encryption and to verify that the destination database server has a valid SSL certificate
 	//   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the destination database server
 	//  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLMODE"> in the docs</a>.
-	SslMode *DestinationTeradataSSLModes `json:"ssl_mode,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// Defines the custom session query band using name-value pairs. For example, 'org=Finance;report=Fin123;'
-	QueryBand       *string  `json:"query_band,omitempty"`
-	destinationType Teradata `const:"teradata" json:"destinationType"`
+	SslMode         *DestinationTeradataSSLModes `json:"ssl_mode,omitempty"`
+	destinationType Teradata                     `const:"teradata" json:"destinationType"`
 }
 
 func (d DestinationTeradata) MarshalJSON() ([]byte, error) {
@@ -688,6 +694,20 @@ func (d *DestinationTeradata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationTeradata) GetDisableTypeDedupe() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DisableTypeDedupe
+}
+
+func (o *DestinationTeradata) GetDropCascade() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DropCascade
+}
+
 func (o *DestinationTeradata) GetHost() string {
 	if o == nil {
 		return ""
@@ -695,11 +715,32 @@ func (o *DestinationTeradata) GetHost() string {
 	return o.Host
 }
 
+func (o *DestinationTeradata) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
 func (o *DestinationTeradata) GetLogmech() *AuthorizationMechanism {
 	if o == nil {
 		return nil
 	}
 	return o.Logmech
+}
+
+func (o *DestinationTeradata) GetQueryBand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryBand
+}
+
+func (o *DestinationTeradata) GetRawDataSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataSchema
 }
 
 func (o *DestinationTeradata) GetSchema() *string {
@@ -721,20 +762,6 @@ func (o *DestinationTeradata) GetSslMode() *DestinationTeradataSSLModes {
 		return nil
 	}
 	return o.SslMode
-}
-
-func (o *DestinationTeradata) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
-}
-
-func (o *DestinationTeradata) GetQueryBand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QueryBand
 }
 
 func (o *DestinationTeradata) GetDestinationType() Teradata {

@@ -21,11 +21,14 @@ func (r *SourceTheGuardianAPIResourceModel) ToSharedSourceTheGuardianAPICreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	tag := new(string)
-	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
-		*tag = r.Configuration.Tag.ValueString()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
-		tag = nil
+		endDate = nil
 	}
 	query := new(string)
 	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
@@ -33,31 +36,28 @@ func (r *SourceTheGuardianAPIResourceModel) ToSharedSourceTheGuardianAPICreateRe
 	} else {
 		query = nil
 	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	section := new(string)
 	if !r.Configuration.Section.IsUnknown() && !r.Configuration.Section.IsNull() {
 		*section = r.Configuration.Section.ValueString()
 	} else {
 		section = nil
 	}
-	endDate := new(string)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
-	} else {
-		endDate = nil
-	}
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
+	tag := new(string)
+	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
+		*tag = r.Configuration.Tag.ValueString()
+	} else {
+		tag = nil
+	}
 	configuration := shared.SourceTheGuardianAPI{
-		Tag:       tag,
-		Query:     query,
 		APIKey:    apiKey,
-		Section:   section,
 		EndDate:   endDate,
+		Query:     query,
+		Section:   section,
 		StartDate: startDate,
+		Tag:       tag,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -129,11 +129,14 @@ func (r *SourceTheGuardianAPIResourceModel) ToSharedSourceTheGuardianAPIPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	tag := new(string)
-	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
-		*tag = r.Configuration.Tag.ValueString()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
-		tag = nil
+		endDate = nil
 	}
 	query := new(string)
 	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
@@ -141,31 +144,28 @@ func (r *SourceTheGuardianAPIResourceModel) ToSharedSourceTheGuardianAPIPutReque
 	} else {
 		query = nil
 	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	section := new(string)
 	if !r.Configuration.Section.IsUnknown() && !r.Configuration.Section.IsNull() {
 		*section = r.Configuration.Section.ValueString()
 	} else {
 		section = nil
 	}
-	endDate := new(string)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
-	} else {
-		endDate = nil
-	}
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
+	tag := new(string)
+	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
+		*tag = r.Configuration.Tag.ValueString()
+	} else {
+		tag = nil
+	}
 	configuration := shared.SourceTheGuardianAPIUpdate{
-		Tag:       tag,
-		Query:     query,
 		APIKey:    apiKey,
-		Section:   section,
 		EndDate:   endDate,
+		Query:     query,
+		Section:   section,
 		StartDate: startDate,
+		Tag:       tag,
 	}
 	out := shared.SourceTheGuardianAPIPutRequest{
 		Name:          name,

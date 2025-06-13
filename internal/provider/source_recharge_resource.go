@@ -18,6 +18,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -69,6 +70,12 @@ func (r *SourceRechargeResource) Schema(ctx context.Context, req resource.Schema
 						Required:    true,
 						Sensitive:   true,
 						Description: `The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.`,
+					},
+					"lookback_window_days": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(0),
+						Description: `Specifies how many days of historical data should be reloaded each time the recharge connector runs. Default: 0`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

@@ -24,23 +24,11 @@ func (r *SourceBreezometerResourceModel) ToSharedSourceBreezometerCreateRequest(
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var latitude string
-	latitude = r.Configuration.Latitude.ValueString()
-
-	var longitude string
-	longitude = r.Configuration.Longitude.ValueString()
-
 	daysToForecast := new(int64)
 	if !r.Configuration.DaysToForecast.IsUnknown() && !r.Configuration.DaysToForecast.IsNull() {
 		*daysToForecast = r.Configuration.DaysToForecast.ValueInt64()
 	} else {
 		daysToForecast = nil
-	}
-	hoursToForecast := new(int64)
-	if !r.Configuration.HoursToForecast.IsUnknown() && !r.Configuration.HoursToForecast.IsNull() {
-		*hoursToForecast = r.Configuration.HoursToForecast.ValueInt64()
-	} else {
-		hoursToForecast = nil
 	}
 	historicHours := new(int64)
 	if !r.Configuration.HistoricHours.IsUnknown() && !r.Configuration.HistoricHours.IsNull() {
@@ -48,6 +36,18 @@ func (r *SourceBreezometerResourceModel) ToSharedSourceBreezometerCreateRequest(
 	} else {
 		historicHours = nil
 	}
+	hoursToForecast := new(int64)
+	if !r.Configuration.HoursToForecast.IsUnknown() && !r.Configuration.HoursToForecast.IsNull() {
+		*hoursToForecast = r.Configuration.HoursToForecast.ValueInt64()
+	} else {
+		hoursToForecast = nil
+	}
+	var latitude string
+	latitude = r.Configuration.Latitude.ValueString()
+
+	var longitude string
+	longitude = r.Configuration.Longitude.ValueString()
+
 	radius := new(int64)
 	if !r.Configuration.Radius.IsUnknown() && !r.Configuration.Radius.IsNull() {
 		*radius = r.Configuration.Radius.ValueInt64()
@@ -56,11 +56,11 @@ func (r *SourceBreezometerResourceModel) ToSharedSourceBreezometerCreateRequest(
 	}
 	configuration := shared.SourceBreezometer{
 		APIKey:          apiKey,
+		DaysToForecast:  daysToForecast,
+		HistoricHours:   historicHours,
+		HoursToForecast: hoursToForecast,
 		Latitude:        latitude,
 		Longitude:       longitude,
-		DaysToForecast:  daysToForecast,
-		HoursToForecast: hoursToForecast,
-		HistoricHours:   historicHours,
 		Radius:          radius,
 	}
 	secretID := new(string)
@@ -136,23 +136,11 @@ func (r *SourceBreezometerResourceModel) ToSharedSourceBreezometerPutRequest() *
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var latitude string
-	latitude = r.Configuration.Latitude.ValueString()
-
-	var longitude string
-	longitude = r.Configuration.Longitude.ValueString()
-
 	daysToForecast := new(int64)
 	if !r.Configuration.DaysToForecast.IsUnknown() && !r.Configuration.DaysToForecast.IsNull() {
 		*daysToForecast = r.Configuration.DaysToForecast.ValueInt64()
 	} else {
 		daysToForecast = nil
-	}
-	hoursToForecast := new(int64)
-	if !r.Configuration.HoursToForecast.IsUnknown() && !r.Configuration.HoursToForecast.IsNull() {
-		*hoursToForecast = r.Configuration.HoursToForecast.ValueInt64()
-	} else {
-		hoursToForecast = nil
 	}
 	historicHours := new(int64)
 	if !r.Configuration.HistoricHours.IsUnknown() && !r.Configuration.HistoricHours.IsNull() {
@@ -160,6 +148,18 @@ func (r *SourceBreezometerResourceModel) ToSharedSourceBreezometerPutRequest() *
 	} else {
 		historicHours = nil
 	}
+	hoursToForecast := new(int64)
+	if !r.Configuration.HoursToForecast.IsUnknown() && !r.Configuration.HoursToForecast.IsNull() {
+		*hoursToForecast = r.Configuration.HoursToForecast.ValueInt64()
+	} else {
+		hoursToForecast = nil
+	}
+	var latitude string
+	latitude = r.Configuration.Latitude.ValueString()
+
+	var longitude string
+	longitude = r.Configuration.Longitude.ValueString()
+
 	radius := new(int64)
 	if !r.Configuration.Radius.IsUnknown() && !r.Configuration.Radius.IsNull() {
 		*radius = r.Configuration.Radius.ValueInt64()
@@ -168,11 +168,11 @@ func (r *SourceBreezometerResourceModel) ToSharedSourceBreezometerPutRequest() *
 	}
 	configuration := shared.SourceBreezometerUpdate{
 		APIKey:          apiKey,
+		DaysToForecast:  daysToForecast,
+		HistoricHours:   historicHours,
+		HoursToForecast: hoursToForecast,
 		Latitude:        latitude,
 		Longitude:       longitude,
-		DaysToForecast:  daysToForecast,
-		HoursToForecast: hoursToForecast,
-		HistoricHours:   historicHours,
 		Radius:          radius,
 	}
 	out := shared.SourceBreezometerPutRequest{

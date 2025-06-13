@@ -3,17 +3,17 @@
 package shared
 
 type SourceHibobUpdate struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
 	// Toggle true if this instance is a HiBob sandbox
-	IsSandbox bool `json:"is_sandbox"`
+	IsSandbox bool    `json:"is_sandbox"`
+	Password  *string `json:"password,omitempty"`
+	Username  string  `json:"username"`
 }
 
-func (o *SourceHibobUpdate) GetUsername() string {
+func (o *SourceHibobUpdate) GetIsSandbox() bool {
 	if o == nil {
-		return ""
+		return false
 	}
-	return o.Username
+	return o.IsSandbox
 }
 
 func (o *SourceHibobUpdate) GetPassword() *string {
@@ -23,9 +23,9 @@ func (o *SourceHibobUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceHibobUpdate) GetIsSandbox() bool {
+func (o *SourceHibobUpdate) GetUsername() string {
 	if o == nil {
-		return false
+		return ""
 	}
-	return o.IsSandbox
+	return o.Username
 }

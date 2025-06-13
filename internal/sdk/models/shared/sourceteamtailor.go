@@ -32,9 +32,9 @@ func (e *Teamtailor) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTeamtailor struct {
+	API string `json:"api"`
 	// The version of the API
 	XAPIVersion string     `json:"x_api_version"`
-	API         string     `json:"api"`
 	sourceType  Teamtailor `const:"teamtailor" json:"sourceType"`
 }
 
@@ -49,18 +49,18 @@ func (s *SourceTeamtailor) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceTeamtailor) GetXAPIVersion() string {
-	if o == nil {
-		return ""
-	}
-	return o.XAPIVersion
-}
-
 func (o *SourceTeamtailor) GetAPI() string {
 	if o == nil {
 		return ""
 	}
 	return o.API
+}
+
+func (o *SourceTeamtailor) GetXAPIVersion() string {
+	if o == nil {
+		return ""
+	}
+	return o.XAPIVersion
 }
 
 func (o *SourceTeamtailor) GetSourceType() Teamtailor {

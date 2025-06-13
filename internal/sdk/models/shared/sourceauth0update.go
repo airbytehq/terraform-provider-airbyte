@@ -33,9 +33,9 @@ func (e *SourceAuth0UpdateSchemasAuthenticationMethod) UnmarshalJSON(data []byte
 }
 
 type SourceAuth0UpdateOAuth2AccessToken struct {
-	authType SourceAuth0UpdateSchemasAuthenticationMethod `const:"oauth2_access_token" json:"auth_type"`
 	// Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.
-	AccessToken string `json:"access_token"`
+	AccessToken string                                       `json:"access_token"`
+	authType    SourceAuth0UpdateSchemasAuthenticationMethod `const:"oauth2_access_token" json:"auth_type"`
 }
 
 func (s SourceAuth0UpdateOAuth2AccessToken) MarshalJSON() ([]byte, error) {
@@ -49,15 +49,15 @@ func (s *SourceAuth0UpdateOAuth2AccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceAuth0UpdateOAuth2AccessToken) GetAuthType() SourceAuth0UpdateSchemasAuthenticationMethod {
-	return SourceAuth0UpdateSchemasAuthenticationMethodOauth2AccessToken
-}
-
 func (o *SourceAuth0UpdateOAuth2AccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceAuth0UpdateOAuth2AccessToken) GetAuthType() SourceAuth0UpdateSchemasAuthenticationMethod {
+	return SourceAuth0UpdateSchemasAuthenticationMethodOauth2AccessToken
 }
 
 type SourceAuth0UpdateSchemasCredentialsAuthenticationMethod string
@@ -84,13 +84,13 @@ func (e *SourceAuth0UpdateSchemasCredentialsAuthenticationMethod) UnmarshalJSON(
 }
 
 type SourceAuth0UpdateOAuth2ConfidentialApplication struct {
+	// The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>
+	Audience string                                                  `json:"audience"`
 	authType SourceAuth0UpdateSchemasCredentialsAuthenticationMethod `const:"oauth2_confidential_application" json:"auth_type"`
 	// Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
 	ClientID string `json:"client_id"`
 	// Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
 	ClientSecret string `json:"client_secret"`
-	// The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>
-	Audience string `json:"audience"`
 }
 
 func (s SourceAuth0UpdateOAuth2ConfidentialApplication) MarshalJSON() ([]byte, error) {
@@ -102,6 +102,13 @@ func (s *SourceAuth0UpdateOAuth2ConfidentialApplication) UnmarshalJSON(data []by
 		return err
 	}
 	return nil
+}
+
+func (o *SourceAuth0UpdateOAuth2ConfidentialApplication) GetAudience() string {
+	if o == nil {
+		return ""
+	}
+	return o.Audience
 }
 
 func (o *SourceAuth0UpdateOAuth2ConfidentialApplication) GetAuthType() SourceAuth0UpdateSchemasCredentialsAuthenticationMethod {
@@ -120,13 +127,6 @@ func (o *SourceAuth0UpdateOAuth2ConfidentialApplication) GetClientSecret() strin
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceAuth0UpdateOAuth2ConfidentialApplication) GetAudience() string {
-	if o == nil {
-		return ""
-	}
-	return o.Audience
 }
 
 type SourceAuth0UpdateAuthenticationMethodType string

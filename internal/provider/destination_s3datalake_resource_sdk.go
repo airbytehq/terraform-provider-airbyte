@@ -28,61 +28,36 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 	} else {
 		accessKeyID = nil
 	}
-	secretAccessKey := new(string)
-	if !r.Configuration.SecretAccessKey.IsUnknown() && !r.Configuration.SecretAccessKey.IsNull() {
-		*secretAccessKey = r.Configuration.SecretAccessKey.ValueString()
-	} else {
-		secretAccessKey = nil
-	}
-	var s3BucketName string
-	s3BucketName = r.Configuration.S3BucketName.ValueString()
-
-	s3BucketRegion := shared.DestinationS3DataLakeS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
-	s3Endpoint := new(string)
-	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
-		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()
-	} else {
-		s3Endpoint = nil
-	}
-	var warehouseLocation string
-	warehouseLocation = r.Configuration.WarehouseLocation.ValueString()
-
-	mainBranchName := new(string)
-	if !r.Configuration.MainBranchName.IsUnknown() && !r.Configuration.MainBranchName.IsNull() {
-		*mainBranchName = r.Configuration.MainBranchName.ValueString()
-	} else {
-		mainBranchName = nil
-	}
 	var catalogType shared.CatalogType
 	var nessieCatalog *shared.NessieCatalog
 	if r.Configuration.CatalogType.NessieCatalog != nil {
-		catalogType1 := new(shared.DestinationS3DataLakeSchemasCatalogTypeCatalogType)
-		if !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsNull() {
-			*catalogType1 = shared.DestinationS3DataLakeSchemasCatalogTypeCatalogType(r.Configuration.CatalogType.NessieCatalog.CatalogType.ValueString())
-		} else {
-			catalogType1 = nil
-		}
-		var serverURI string
-		serverURI = r.Configuration.CatalogType.NessieCatalog.ServerURI.ValueString()
-
 		accessToken := new(string)
 		if !r.Configuration.CatalogType.NessieCatalog.AccessToken.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.AccessToken.IsNull() {
 			*accessToken = r.Configuration.CatalogType.NessieCatalog.AccessToken.ValueString()
 		} else {
 			accessToken = nil
 		}
+		catalogType1 := new(shared.DestinationS3DataLakeSchemasCatalogTypeCatalogType)
+		if !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsNull() {
+			*catalogType1 = shared.DestinationS3DataLakeSchemasCatalogTypeCatalogType(r.Configuration.CatalogType.NessieCatalog.CatalogType.ValueString())
+		} else {
+			catalogType1 = nil
+		}
 		var namespace string
 		namespace = r.Configuration.CatalogType.NessieCatalog.Namespace.ValueString()
+
+		var serverURI string
+		serverURI = r.Configuration.CatalogType.NessieCatalog.ServerURI.ValueString()
 
 		var additionalProperties interface{}
 		if !r.Configuration.CatalogType.NessieCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.CatalogType.NessieCatalog.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		nessieCatalog = &shared.NessieCatalog{
-			CatalogType:          catalogType1,
-			ServerURI:            serverURI,
 			AccessToken:          accessToken,
+			CatalogType:          catalogType1,
 			Namespace:            namespace,
+			ServerURI:            serverURI,
 			AdditionalProperties: additionalProperties,
 		}
 	}
@@ -99,6 +74,9 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 		} else {
 			catalogType2 = nil
 		}
+		var databaseName string
+		databaseName = r.Configuration.CatalogType.GlueCatalog.DatabaseName.ValueString()
+
 		var glueID string
 		glueID = r.Configuration.CatalogType.GlueCatalog.GlueID.ValueString()
 
@@ -108,18 +86,15 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 		} else {
 			roleArn = nil
 		}
-		var databaseName string
-		databaseName = r.Configuration.CatalogType.GlueCatalog.DatabaseName.ValueString()
-
 		var additionalProperties1 interface{}
 		if !r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		glueCatalog = &shared.GlueCatalog{
 			CatalogType:          catalogType2,
+			DatabaseName:         databaseName,
 			GlueID:               glueID,
 			RoleArn:              roleArn,
-			DatabaseName:         databaseName,
 			AdditionalProperties: additionalProperties1,
 		}
 	}
@@ -136,11 +111,11 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 		} else {
 			catalogType3 = nil
 		}
-		var serverUri1 string
-		serverUri1 = r.Configuration.CatalogType.RestCatalog.ServerURI.ValueString()
-
 		var namespace1 string
 		namespace1 = r.Configuration.CatalogType.RestCatalog.Namespace.ValueString()
+
+		var serverUri1 string
+		serverUri1 = r.Configuration.CatalogType.RestCatalog.ServerURI.ValueString()
 
 		var additionalProperties2 interface{}
 		if !r.Configuration.CatalogType.RestCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.RestCatalog.AdditionalProperties.IsNull() {
@@ -148,8 +123,8 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 		}
 		restCatalog = &shared.RestCatalog{
 			CatalogType:          catalogType3,
-			ServerURI:            serverUri1,
 			Namespace:            namespace1,
+			ServerURI:            serverUri1,
 			AdditionalProperties: additionalProperties2,
 		}
 	}
@@ -158,15 +133,40 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 			RestCatalog: restCatalog,
 		}
 	}
+	mainBranchName := new(string)
+	if !r.Configuration.MainBranchName.IsUnknown() && !r.Configuration.MainBranchName.IsNull() {
+		*mainBranchName = r.Configuration.MainBranchName.ValueString()
+	} else {
+		mainBranchName = nil
+	}
+	var s3BucketName string
+	s3BucketName = r.Configuration.S3BucketName.ValueString()
+
+	s3BucketRegion := shared.DestinationS3DataLakeS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	s3Endpoint := new(string)
+	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
+		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()
+	} else {
+		s3Endpoint = nil
+	}
+	secretAccessKey := new(string)
+	if !r.Configuration.SecretAccessKey.IsUnknown() && !r.Configuration.SecretAccessKey.IsNull() {
+		*secretAccessKey = r.Configuration.SecretAccessKey.ValueString()
+	} else {
+		secretAccessKey = nil
+	}
+	var warehouseLocation string
+	warehouseLocation = r.Configuration.WarehouseLocation.ValueString()
+
 	configuration := shared.DestinationS3DataLake{
 		AccessKeyID:       accessKeyID,
-		SecretAccessKey:   secretAccessKey,
+		CatalogType:       catalogType,
+		MainBranchName:    mainBranchName,
 		S3BucketName:      s3BucketName,
 		S3BucketRegion:    s3BucketRegion,
 		S3Endpoint:        s3Endpoint,
+		SecretAccessKey:   secretAccessKey,
 		WarehouseLocation: warehouseLocation,
-		MainBranchName:    mainBranchName,
-		CatalogType:       catalogType,
 	}
 	out := shared.DestinationS3DataLakeCreateRequest{
 		Name:          name,
@@ -237,61 +237,36 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakePutReq
 	} else {
 		accessKeyID = nil
 	}
-	secretAccessKey := new(string)
-	if !r.Configuration.SecretAccessKey.IsUnknown() && !r.Configuration.SecretAccessKey.IsNull() {
-		*secretAccessKey = r.Configuration.SecretAccessKey.ValueString()
-	} else {
-		secretAccessKey = nil
-	}
-	var s3BucketName string
-	s3BucketName = r.Configuration.S3BucketName.ValueString()
-
-	s3BucketRegion := shared.DestinationS3DataLakeUpdateS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
-	s3Endpoint := new(string)
-	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
-		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()
-	} else {
-		s3Endpoint = nil
-	}
-	var warehouseLocation string
-	warehouseLocation = r.Configuration.WarehouseLocation.ValueString()
-
-	mainBranchName := new(string)
-	if !r.Configuration.MainBranchName.IsUnknown() && !r.Configuration.MainBranchName.IsNull() {
-		*mainBranchName = r.Configuration.MainBranchName.ValueString()
-	} else {
-		mainBranchName = nil
-	}
 	var catalogType shared.DestinationS3DataLakeUpdateCatalogType
 	var destinationS3DataLakeUpdateNessieCatalog *shared.DestinationS3DataLakeUpdateNessieCatalog
 	if r.Configuration.CatalogType.NessieCatalog != nil {
-		catalogType1 := new(shared.DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType)
-		if !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsNull() {
-			*catalogType1 = shared.DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType(r.Configuration.CatalogType.NessieCatalog.CatalogType.ValueString())
-		} else {
-			catalogType1 = nil
-		}
-		var serverURI string
-		serverURI = r.Configuration.CatalogType.NessieCatalog.ServerURI.ValueString()
-
 		accessToken := new(string)
 		if !r.Configuration.CatalogType.NessieCatalog.AccessToken.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.AccessToken.IsNull() {
 			*accessToken = r.Configuration.CatalogType.NessieCatalog.AccessToken.ValueString()
 		} else {
 			accessToken = nil
 		}
+		catalogType1 := new(shared.DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType)
+		if !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.CatalogType.IsNull() {
+			*catalogType1 = shared.DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType(r.Configuration.CatalogType.NessieCatalog.CatalogType.ValueString())
+		} else {
+			catalogType1 = nil
+		}
 		var namespace string
 		namespace = r.Configuration.CatalogType.NessieCatalog.Namespace.ValueString()
+
+		var serverURI string
+		serverURI = r.Configuration.CatalogType.NessieCatalog.ServerURI.ValueString()
 
 		var additionalProperties interface{}
 		if !r.Configuration.CatalogType.NessieCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.NessieCatalog.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.CatalogType.NessieCatalog.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		destinationS3DataLakeUpdateNessieCatalog = &shared.DestinationS3DataLakeUpdateNessieCatalog{
-			CatalogType:          catalogType1,
-			ServerURI:            serverURI,
 			AccessToken:          accessToken,
+			CatalogType:          catalogType1,
 			Namespace:            namespace,
+			ServerURI:            serverURI,
 			AdditionalProperties: additionalProperties,
 		}
 	}
@@ -308,6 +283,9 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakePutReq
 		} else {
 			catalogType2 = nil
 		}
+		var databaseName string
+		databaseName = r.Configuration.CatalogType.GlueCatalog.DatabaseName.ValueString()
+
 		var glueID string
 		glueID = r.Configuration.CatalogType.GlueCatalog.GlueID.ValueString()
 
@@ -317,18 +295,15 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakePutReq
 		} else {
 			roleArn = nil
 		}
-		var databaseName string
-		databaseName = r.Configuration.CatalogType.GlueCatalog.DatabaseName.ValueString()
-
 		var additionalProperties1 interface{}
 		if !r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		destinationS3DataLakeUpdateGlueCatalog = &shared.DestinationS3DataLakeUpdateGlueCatalog{
 			CatalogType:          catalogType2,
+			DatabaseName:         databaseName,
 			GlueID:               glueID,
 			RoleArn:              roleArn,
-			DatabaseName:         databaseName,
 			AdditionalProperties: additionalProperties1,
 		}
 	}
@@ -345,11 +320,11 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakePutReq
 		} else {
 			catalogType3 = nil
 		}
-		var serverUri1 string
-		serverUri1 = r.Configuration.CatalogType.RestCatalog.ServerURI.ValueString()
-
 		var namespace1 string
 		namespace1 = r.Configuration.CatalogType.RestCatalog.Namespace.ValueString()
+
+		var serverUri1 string
+		serverUri1 = r.Configuration.CatalogType.RestCatalog.ServerURI.ValueString()
 
 		var additionalProperties2 interface{}
 		if !r.Configuration.CatalogType.RestCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.RestCatalog.AdditionalProperties.IsNull() {
@@ -357,8 +332,8 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakePutReq
 		}
 		destinationS3DataLakeUpdateRestCatalog = &shared.DestinationS3DataLakeUpdateRestCatalog{
 			CatalogType:          catalogType3,
-			ServerURI:            serverUri1,
 			Namespace:            namespace1,
+			ServerURI:            serverUri1,
 			AdditionalProperties: additionalProperties2,
 		}
 	}
@@ -367,15 +342,40 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakePutReq
 			DestinationS3DataLakeUpdateRestCatalog: destinationS3DataLakeUpdateRestCatalog,
 		}
 	}
+	mainBranchName := new(string)
+	if !r.Configuration.MainBranchName.IsUnknown() && !r.Configuration.MainBranchName.IsNull() {
+		*mainBranchName = r.Configuration.MainBranchName.ValueString()
+	} else {
+		mainBranchName = nil
+	}
+	var s3BucketName string
+	s3BucketName = r.Configuration.S3BucketName.ValueString()
+
+	s3BucketRegion := shared.DestinationS3DataLakeUpdateS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	s3Endpoint := new(string)
+	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
+		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()
+	} else {
+		s3Endpoint = nil
+	}
+	secretAccessKey := new(string)
+	if !r.Configuration.SecretAccessKey.IsUnknown() && !r.Configuration.SecretAccessKey.IsNull() {
+		*secretAccessKey = r.Configuration.SecretAccessKey.ValueString()
+	} else {
+		secretAccessKey = nil
+	}
+	var warehouseLocation string
+	warehouseLocation = r.Configuration.WarehouseLocation.ValueString()
+
 	configuration := shared.DestinationS3DataLakeUpdate{
 		AccessKeyID:       accessKeyID,
-		SecretAccessKey:   secretAccessKey,
+		CatalogType:       catalogType,
+		MainBranchName:    mainBranchName,
 		S3BucketName:      s3BucketName,
 		S3BucketRegion:    s3BucketRegion,
 		S3Endpoint:        s3Endpoint,
+		SecretAccessKey:   secretAccessKey,
 		WarehouseLocation: warehouseLocation,
-		MainBranchName:    mainBranchName,
-		CatalogType:       catalogType,
 	}
 	out := shared.DestinationS3DataLakePutRequest{
 		Name:          name,

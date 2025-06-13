@@ -4,8 +4,8 @@ package shared
 
 type SourceServiceNowUpdate struct {
 	BaseURL  string  `json:"base_url"`
-	Username string  `json:"username"`
 	Password *string `json:"password,omitempty"`
+	Username string  `json:"username"`
 }
 
 func (o *SourceServiceNowUpdate) GetBaseURL() string {
@@ -15,16 +15,16 @@ func (o *SourceServiceNowUpdate) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *SourceServiceNowUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceServiceNowUpdate) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceServiceNowUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

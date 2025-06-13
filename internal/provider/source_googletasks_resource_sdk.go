@@ -25,17 +25,17 @@ func (r *SourceGoogleTasksResourceModel) ToSharedSourceGoogleTasksCreateRequest(
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	recordsLimit := new(string)
 	if !r.Configuration.RecordsLimit.IsUnknown() && !r.Configuration.RecordsLimit.IsNull() {
 		*recordsLimit = r.Configuration.RecordsLimit.ValueString()
 	} else {
 		recordsLimit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGoogleTasks{
 		APIKey:       apiKey,
-		StartDate:    startDate,
 		RecordsLimit: recordsLimit,
+		StartDate:    startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,17 +110,17 @@ func (r *SourceGoogleTasksResourceModel) ToSharedSourceGoogleTasksPutRequest() *
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	recordsLimit := new(string)
 	if !r.Configuration.RecordsLimit.IsUnknown() && !r.Configuration.RecordsLimit.IsNull() {
 		*recordsLimit = r.Configuration.RecordsLimit.ValueString()
 	} else {
 		recordsLimit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGoogleTasksUpdate{
 		APIKey:       apiKey,
-		StartDate:    startDate,
 		RecordsLimit: recordsLimit,
+		StartDate:    startDate,
 	}
 	out := shared.SourceGoogleTasksPutRequest{
 		Name:          name,

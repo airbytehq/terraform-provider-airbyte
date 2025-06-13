@@ -21,15 +21,15 @@ func (r *DestinationConvexResourceModel) ToSharedDestinationConvexCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var deploymentURL string
-	deploymentURL = r.Configuration.DeploymentURL.ValueString()
-
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	var deploymentURL string
+	deploymentURL = r.Configuration.DeploymentURL.ValueString()
+
 	configuration := shared.DestinationConvex{
-		DeploymentURL: deploymentURL,
 		AccessKey:     accessKey,
+		DeploymentURL: deploymentURL,
 	}
 	out := shared.DestinationConvexCreateRequest{
 		Name:          name,
@@ -94,15 +94,15 @@ func (r *DestinationConvexResourceModel) ToSharedDestinationConvexPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var deploymentURL string
-	deploymentURL = r.Configuration.DeploymentURL.ValueString()
-
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	var deploymentURL string
+	deploymentURL = r.Configuration.DeploymentURL.ValueString()
+
 	configuration := shared.DestinationConvexUpdate{
-		DeploymentURL: deploymentURL,
 		AccessKey:     accessKey,
+		DeploymentURL: deploymentURL,
 	}
 	out := shared.DestinationConvexPutRequest{
 		Name:          name,

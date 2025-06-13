@@ -32,10 +32,10 @@ func (e *GoogleCalendar) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleCalendar struct {
-	ClientID            string         `json:"client_id"`
-	ClientSecret        string         `json:"client_secret"`
-	ClientRefreshToken2 string         `json:"client_refresh_token_2"`
 	Calendarid          string         `json:"calendarid"`
+	ClientID            string         `json:"client_id"`
+	ClientRefreshToken2 string         `json:"client_refresh_token_2"`
+	ClientSecret        string         `json:"client_secret"`
 	sourceType          GoogleCalendar `const:"google-calendar" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceGoogleCalendar) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceGoogleCalendar) GetCalendarid() string {
+	if o == nil {
+		return ""
+	}
+	return o.Calendarid
+}
+
 func (o *SourceGoogleCalendar) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *SourceGoogleCalendar) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
 }
 
 func (o *SourceGoogleCalendar) GetClientRefreshToken2() string {
@@ -71,11 +71,11 @@ func (o *SourceGoogleCalendar) GetClientRefreshToken2() string {
 	return o.ClientRefreshToken2
 }
 
-func (o *SourceGoogleCalendar) GetCalendarid() string {
+func (o *SourceGoogleCalendar) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
-	return o.Calendarid
+	return o.ClientSecret
 }
 
 func (o *SourceGoogleCalendar) GetSourceType() GoogleCalendar {

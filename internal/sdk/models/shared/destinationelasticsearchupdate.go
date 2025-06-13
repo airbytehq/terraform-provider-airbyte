@@ -35,10 +35,10 @@ func (e *DestinationElasticsearchUpdateSchemasAuthenticationMethodMethod) Unmars
 // DestinationElasticsearchUpdateUsernamePassword - Basic auth header with a username and password
 type DestinationElasticsearchUpdateUsernamePassword struct {
 	method DestinationElasticsearchUpdateSchemasAuthenticationMethodMethod `const:"basic" json:"method"`
-	// Basic auth username to access a secure Elasticsearch server
-	Username string `json:"username"`
 	// Basic auth password to access a secure Elasticsearch server
 	Password string `json:"password"`
+	// Basic auth username to access a secure Elasticsearch server
+	Username string `json:"username"`
 }
 
 func (d DestinationElasticsearchUpdateUsernamePassword) MarshalJSON() ([]byte, error) {
@@ -56,18 +56,18 @@ func (o *DestinationElasticsearchUpdateUsernamePassword) GetMethod() Destination
 	return DestinationElasticsearchUpdateSchemasAuthenticationMethodMethodBasic
 }
 
-func (o *DestinationElasticsearchUpdateUsernamePassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *DestinationElasticsearchUpdateUsernamePassword) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *DestinationElasticsearchUpdateUsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type DestinationElasticsearchUpdateSchemasMethod string
@@ -95,11 +95,11 @@ func (e *DestinationElasticsearchUpdateSchemasMethod) UnmarshalJSON(data []byte)
 
 // DestinationElasticsearchUpdateAPIKeySecret - Use a api key and secret combination to authenticate
 type DestinationElasticsearchUpdateAPIKeySecret struct {
-	method DestinationElasticsearchUpdateSchemasMethod `const:"secret" json:"method"`
 	// The Key ID to used when accessing an enterprise Elasticsearch instance.
 	APIKeyID string `json:"apiKeyId"`
 	// The secret associated with the API Key ID.
-	APIKeySecret string `json:"apiKeySecret"`
+	APIKeySecret string                                      `json:"apiKeySecret"`
+	method       DestinationElasticsearchUpdateSchemasMethod `const:"secret" json:"method"`
 }
 
 func (d DestinationElasticsearchUpdateAPIKeySecret) MarshalJSON() ([]byte, error) {
@@ -111,10 +111,6 @@ func (d *DestinationElasticsearchUpdateAPIKeySecret) UnmarshalJSON(data []byte) 
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationElasticsearchUpdateAPIKeySecret) GetMethod() DestinationElasticsearchUpdateSchemasMethod {
-	return DestinationElasticsearchUpdateSchemasMethodSecret
 }
 
 func (o *DestinationElasticsearchUpdateAPIKeySecret) GetAPIKeyID() string {
@@ -129,6 +125,10 @@ func (o *DestinationElasticsearchUpdateAPIKeySecret) GetAPIKeySecret() string {
 		return ""
 	}
 	return o.APIKeySecret
+}
+
+func (o *DestinationElasticsearchUpdateAPIKeySecret) GetMethod() DestinationElasticsearchUpdateSchemasMethod {
+	return DestinationElasticsearchUpdateSchemasMethodSecret
 }
 
 type DestinationElasticsearchUpdateMethod string
@@ -285,10 +285,10 @@ func (e *DestinationElasticsearchUpdateSchemasTunnelMethodTunnelMethod) Unmarsha
 }
 
 type DestinationElasticsearchUpdatePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationElasticsearchUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationElasticsearchUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -308,15 +308,15 @@ func (d *DestinationElasticsearchUpdatePasswordAuthentication) UnmarshalJSON(dat
 	return nil
 }
 
-func (o *DestinationElasticsearchUpdatePasswordAuthentication) GetTunnelMethod() DestinationElasticsearchUpdateSchemasTunnelMethodTunnelMethod {
-	return DestinationElasticsearchUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationElasticsearchUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationElasticsearchUpdatePasswordAuthentication) GetTunnelMethod() DestinationElasticsearchUpdateSchemasTunnelMethodTunnelMethod {
+	return DestinationElasticsearchUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationElasticsearchUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -365,16 +365,16 @@ func (e *DestinationElasticsearchUpdateSchemasTunnelMethod) UnmarshalJSON(data [
 }
 
 type DestinationElasticsearchUpdateSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationElasticsearchUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationElasticsearchUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationElasticsearchUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -388,8 +388,11 @@ func (d *DestinationElasticsearchUpdateSSHKeyAuthentication) UnmarshalJSON(data 
 	return nil
 }
 
-func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationElasticsearchUpdateSchemasTunnelMethod {
-	return DestinationElasticsearchUpdateSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -397,6 +400,10 @@ func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetTunnelHost() str
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationElasticsearchUpdateSchemasTunnelMethod {
+	return DestinationElasticsearchUpdateSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -411,13 +418,6 @@ func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetTunnelUser() str
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationElasticsearchUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationElasticsearchUpdateTunnelMethod - No ssh tunnel needed to connect to database
@@ -551,16 +551,18 @@ func (u DestinationElasticsearchUpdateSSHTunnelMethod) MarshalJSON() ([]byte, er
 }
 
 type DestinationElasticsearchUpdate struct {
-	// The full url of the Elasticsearch server
-	Endpoint string `json:"endpoint"`
-	// If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
-	Upsert *bool `default:"true" json:"upsert"`
-	// CA certificate
-	CaCertificate *string `json:"ca_certificate,omitempty"`
 	// The type of authentication to be used
 	AuthenticationMethod *DestinationElasticsearchUpdateAuthenticationMethod `json:"authenticationMethod,omitempty"`
+	// CA certificate
+	CaCertificate *string `json:"ca_certificate,omitempty"`
+	// The full url of the Elasticsearch server
+	Endpoint string `json:"endpoint"`
+	// The Path Prefix of the Elasticsearch server
+	PathPrefix *string `json:"pathPrefix,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationElasticsearchUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
+	Upsert *bool `default:"true" json:"upsert"`
 }
 
 func (d DestinationElasticsearchUpdate) MarshalJSON() ([]byte, error) {
@@ -574,18 +576,11 @@ func (d *DestinationElasticsearchUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationElasticsearchUpdate) GetEndpoint() string {
-	if o == nil {
-		return ""
-	}
-	return o.Endpoint
-}
-
-func (o *DestinationElasticsearchUpdate) GetUpsert() *bool {
+func (o *DestinationElasticsearchUpdate) GetAuthenticationMethod() *DestinationElasticsearchUpdateAuthenticationMethod {
 	if o == nil {
 		return nil
 	}
-	return o.Upsert
+	return o.AuthenticationMethod
 }
 
 func (o *DestinationElasticsearchUpdate) GetCaCertificate() *string {
@@ -595,11 +590,18 @@ func (o *DestinationElasticsearchUpdate) GetCaCertificate() *string {
 	return o.CaCertificate
 }
 
-func (o *DestinationElasticsearchUpdate) GetAuthenticationMethod() *DestinationElasticsearchUpdateAuthenticationMethod {
+func (o *DestinationElasticsearchUpdate) GetEndpoint() string {
+	if o == nil {
+		return ""
+	}
+	return o.Endpoint
+}
+
+func (o *DestinationElasticsearchUpdate) GetPathPrefix() *string {
 	if o == nil {
 		return nil
 	}
-	return o.AuthenticationMethod
+	return o.PathPrefix
 }
 
 func (o *DestinationElasticsearchUpdate) GetTunnelMethod() *DestinationElasticsearchUpdateSSHTunnelMethod {
@@ -607,4 +609,11 @@ func (o *DestinationElasticsearchUpdate) GetTunnelMethod() *DestinationElasticse
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationElasticsearchUpdate) GetUpsert() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Upsert
 }

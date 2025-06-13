@@ -83,9 +83,9 @@ func (e *SourceDynamodbAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type AuthenticateViaAccessKeys struct {
-	authType *SourceDynamodbAuthType `const:"User" json:"auth_type,omitempty"`
 	// The access key id to access Dynamodb. Airbyte requires read permissions to the database
-	AccessKeyID string `json:"access_key_id"`
+	AccessKeyID string                  `json:"access_key_id"`
+	authType    *SourceDynamodbAuthType `const:"User" json:"auth_type,omitempty"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey      string `json:"secret_access_key"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
@@ -102,15 +102,15 @@ func (a *AuthenticateViaAccessKeys) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AuthenticateViaAccessKeys) GetAuthType() *SourceDynamodbAuthType {
-	return SourceDynamodbAuthTypeUser.ToPointer()
-}
-
 func (o *AuthenticateViaAccessKeys) GetAccessKeyID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessKeyID
+}
+
+func (o *AuthenticateViaAccessKeys) GetAuthType() *SourceDynamodbAuthType {
+	return SourceDynamodbAuthTypeUser.ToPointer()
 }
 
 func (o *AuthenticateViaAccessKeys) GetSecretAccessKey() string {
@@ -342,13 +342,13 @@ type SourceDynamodb struct {
 	Credentials *Credentials `json:"credentials,omitempty"`
 	// the URL of the Dynamodb database
 	Endpoint *string `default:"" json:"endpoint"`
+	// Ignore tables with missing scan/read permissions
+	IgnoreMissingReadPermissionsTables *bool `default:"false" json:"ignore_missing_read_permissions_tables"`
 	// The region of the Dynamodb database
 	Region *DynamodbRegion `default:"" json:"region"`
 	// Comma separated reserved attribute names present in your tables
-	ReservedAttributeNames *string `json:"reserved_attribute_names,omitempty"`
-	// Ignore tables with missing scan/read permissions
-	IgnoreMissingReadPermissionsTables *bool     `default:"false" json:"ignore_missing_read_permissions_tables"`
-	sourceType                         *Dynamodb `const:"dynamodb" json:"sourceType,omitempty"`
+	ReservedAttributeNames *string   `json:"reserved_attribute_names,omitempty"`
+	sourceType             *Dynamodb `const:"dynamodb" json:"sourceType,omitempty"`
 }
 
 func (s SourceDynamodb) MarshalJSON() ([]byte, error) {
@@ -376,6 +376,13 @@ func (o *SourceDynamodb) GetEndpoint() *string {
 	return o.Endpoint
 }
 
+func (o *SourceDynamodb) GetIgnoreMissingReadPermissionsTables() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IgnoreMissingReadPermissionsTables
+}
+
 func (o *SourceDynamodb) GetRegion() *DynamodbRegion {
 	if o == nil {
 		return nil
@@ -388,13 +395,6 @@ func (o *SourceDynamodb) GetReservedAttributeNames() *string {
 		return nil
 	}
 	return o.ReservedAttributeNames
-}
-
-func (o *SourceDynamodb) GetIgnoreMissingReadPermissionsTables() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IgnoreMissingReadPermissionsTables
 }
 
 func (o *SourceDynamodb) GetSourceType() *Dynamodb {

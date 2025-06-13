@@ -77,10 +77,10 @@ func (e *ZohoExpense) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZohoExpense struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
 	// The domain suffix for the Zoho Expense API based on your data center location (e.g., 'com', 'eu', 'in', etc.)
 	DataCenter   *SourceZohoExpenseDataCenter `default:"com" json:"data_center"`
-	ClientID     string                       `json:"client_id"`
-	ClientSecret string                       `json:"client_secret"`
 	RefreshToken string                       `json:"refresh_token"`
 	sourceType   ZohoExpense                  `const:"zoho-expense" json:"sourceType"`
 }
@@ -96,13 +96,6 @@ func (s *SourceZohoExpense) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZohoExpense) GetDataCenter() *SourceZohoExpenseDataCenter {
-	if o == nil {
-		return nil
-	}
-	return o.DataCenter
-}
-
 func (o *SourceZohoExpense) GetClientID() string {
 	if o == nil {
 		return ""
@@ -115,6 +108,13 @@ func (o *SourceZohoExpense) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceZohoExpense) GetDataCenter() *SourceZohoExpenseDataCenter {
+	if o == nil {
+		return nil
+	}
+	return o.DataCenter
 }
 
 func (o *SourceZohoExpense) GetRefreshToken() string {

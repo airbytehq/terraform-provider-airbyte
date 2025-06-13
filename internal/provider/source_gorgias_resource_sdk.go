@@ -22,8 +22,8 @@ func (r *SourceGorgiasResourceModel) ToSharedSourceGorgiasCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var domainName string
+	domainName = r.Configuration.DomainName.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -31,15 +31,15 @@ func (r *SourceGorgiasResourceModel) ToSharedSourceGorgiasCreateRequest() *share
 	} else {
 		password = nil
 	}
-	var domainName string
-	domainName = r.Configuration.DomainName.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceGorgias{
-		Username:   username,
-		Password:   password,
 		DomainName: domainName,
+		Password:   password,
 		StartDate:  startDate,
+		Username:   username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,8 +111,8 @@ func (r *SourceGorgiasResourceModel) ToSharedSourceGorgiasPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var domainName string
+	domainName = r.Configuration.DomainName.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -120,15 +120,15 @@ func (r *SourceGorgiasResourceModel) ToSharedSourceGorgiasPutRequest() *shared.S
 	} else {
 		password = nil
 	}
-	var domainName string
-	domainName = r.Configuration.DomainName.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceGorgiasUpdate{
-		Username:   username,
-		Password:   password,
 		DomainName: domainName,
+		Password:   password,
 		StartDate:  startDate,
+		Username:   username,
 	}
 	out := shared.SourceGorgiasPutRequest{
 		Name:          name,

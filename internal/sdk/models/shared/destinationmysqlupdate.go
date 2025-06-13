@@ -34,10 +34,10 @@ func (e *DestinationMysqlUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(da
 }
 
 type DestinationMysqlUpdatePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationMysqlUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationMysqlUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -57,15 +57,15 @@ func (d *DestinationMysqlUpdatePasswordAuthentication) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (o *DestinationMysqlUpdatePasswordAuthentication) GetTunnelMethod() DestinationMysqlUpdateSchemasTunnelMethodTunnelMethod {
-	return DestinationMysqlUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationMysqlUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationMysqlUpdatePasswordAuthentication) GetTunnelMethod() DestinationMysqlUpdateSchemasTunnelMethodTunnelMethod {
+	return DestinationMysqlUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationMysqlUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -114,16 +114,16 @@ func (e *DestinationMysqlUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) e
 }
 
 type DestinationMysqlUpdateSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationMysqlUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationMysqlUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationMysqlUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -137,8 +137,11 @@ func (d *DestinationMysqlUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationMysqlUpdateSchemasTunnelMethod {
-	return DestinationMysqlUpdateSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -146,6 +149,10 @@ func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationMysqlUpdateSchemasTunnelMethod {
+	return DestinationMysqlUpdateSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -160,13 +167,6 @@ func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationMysqlUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationMysqlUpdateTunnelMethod - No ssh tunnel needed to connect to database
@@ -300,26 +300,26 @@ func (u DestinationMysqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 }
 
 type DestinationMysqlUpdate struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// Port of the database.
-	Port *int64 `default:"3306" json:"port"`
 	// Name of the database.
 	Database string `json:"database"`
-	// Username to use to access the database.
-	Username string `json:"username"`
-	// Password associated with the username.
-	Password *string `json:"password,omitempty"`
-	// Encrypt data using SSL.
-	Ssl *bool `default:"true" json:"ssl"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The database to write raw tables into
-	RawDataSchema *string `json:"raw_data_schema,omitempty"`
 	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
 	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// Hostname of the database.
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// Password associated with the username.
+	Password *string `json:"password,omitempty"`
+	// Port of the database.
+	Port *int64 `default:"3306" json:"port"`
+	// The database to write raw tables into
+	RawDataSchema *string `json:"raw_data_schema,omitempty"`
+	// Encrypt data using SSL.
+	Ssl *bool `default:"true" json:"ssl"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationMysqlUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// Username to use to access the database.
+	Username string `json:"username"`
 }
 
 func (d DestinationMysqlUpdate) MarshalJSON() ([]byte, error) {
@@ -333,60 +333,11 @@ func (d *DestinationMysqlUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationMysqlUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *DestinationMysqlUpdate) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
 func (o *DestinationMysqlUpdate) GetDatabase() string {
 	if o == nil {
 		return ""
 	}
 	return o.Database
-}
-
-func (o *DestinationMysqlUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *DestinationMysqlUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *DestinationMysqlUpdate) GetSsl() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Ssl
-}
-
-func (o *DestinationMysqlUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
-}
-
-func (o *DestinationMysqlUpdate) GetRawDataSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RawDataSchema
 }
 
 func (o *DestinationMysqlUpdate) GetDisableTypeDedupe() *bool {
@@ -396,9 +347,58 @@ func (o *DestinationMysqlUpdate) GetDisableTypeDedupe() *bool {
 	return o.DisableTypeDedupe
 }
 
+func (o *DestinationMysqlUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationMysqlUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationMysqlUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationMysqlUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationMysqlUpdate) GetRawDataSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataSchema
+}
+
+func (o *DestinationMysqlUpdate) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
+}
+
 func (o *DestinationMysqlUpdate) GetTunnelMethod() *DestinationMysqlUpdateSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationMysqlUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

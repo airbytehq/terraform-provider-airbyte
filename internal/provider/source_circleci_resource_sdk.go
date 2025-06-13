@@ -26,32 +26,32 @@ func (r *SourceCircleciResourceModel) ToSharedSourceCircleciCreateRequest() *sha
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var orgID string
-	orgID = r.Configuration.OrgID.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
-	var workflowID []interface{} = []interface{}{}
-	for _, workflowIDItem := range r.Configuration.WorkflowID {
-		var workflowIDTmp interface{}
-		_ = json.Unmarshal([]byte(workflowIDItem.ValueString()), &workflowIDTmp)
-		workflowID = append(workflowID, workflowIDTmp)
-	}
 	jobNumber := new(string)
 	if !r.Configuration.JobNumber.IsUnknown() && !r.Configuration.JobNumber.IsNull() {
 		*jobNumber = r.Configuration.JobNumber.ValueString()
 	} else {
 		jobNumber = nil
 	}
+	var orgID string
+	orgID = r.Configuration.OrgID.ValueString()
+
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var workflowID []interface{} = []interface{}{}
+	for _, workflowIDItem := range r.Configuration.WorkflowID {
+		var workflowIDTmp interface{}
+		_ = json.Unmarshal([]byte(workflowIDItem.ValueString()), &workflowIDTmp)
+		workflowID = append(workflowID, workflowIDTmp)
+	}
 	configuration := shared.SourceCircleci{
 		APIKey:     apiKey,
-		OrgID:      orgID,
-		StartDate:  startDate,
-		ProjectID:  projectID,
-		WorkflowID: workflowID,
 		JobNumber:  jobNumber,
+		OrgID:      orgID,
+		ProjectID:  projectID,
+		StartDate:  startDate,
+		WorkflowID: workflowID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -126,32 +126,32 @@ func (r *SourceCircleciResourceModel) ToSharedSourceCircleciPutRequest() *shared
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var orgID string
-	orgID = r.Configuration.OrgID.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
-	var workflowID []interface{} = []interface{}{}
-	for _, workflowIDItem := range r.Configuration.WorkflowID {
-		var workflowIDTmp interface{}
-		_ = json.Unmarshal([]byte(workflowIDItem.ValueString()), &workflowIDTmp)
-		workflowID = append(workflowID, workflowIDTmp)
-	}
 	jobNumber := new(string)
 	if !r.Configuration.JobNumber.IsUnknown() && !r.Configuration.JobNumber.IsNull() {
 		*jobNumber = r.Configuration.JobNumber.ValueString()
 	} else {
 		jobNumber = nil
 	}
+	var orgID string
+	orgID = r.Configuration.OrgID.ValueString()
+
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var workflowID []interface{} = []interface{}{}
+	for _, workflowIDItem := range r.Configuration.WorkflowID {
+		var workflowIDTmp interface{}
+		_ = json.Unmarshal([]byte(workflowIDItem.ValueString()), &workflowIDTmp)
+		workflowID = append(workflowID, workflowIDTmp)
+	}
 	configuration := shared.SourceCircleciUpdate{
 		APIKey:     apiKey,
-		OrgID:      orgID,
-		StartDate:  startDate,
-		ProjectID:  projectID,
-		WorkflowID: workflowID,
 		JobNumber:  jobNumber,
+		OrgID:      orgID,
+		ProjectID:  projectID,
+		StartDate:  startDate,
+		WorkflowID: workflowID,
 	}
 	out := shared.SourceCircleciPutRequest{
 		Name:          name,

@@ -32,10 +32,10 @@ func (e *Mailosaur) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMailosaur struct {
-	// Enter "api" here
-	Username string `json:"username"`
 	// Enter your api key here
-	Password   *string   `json:"password,omitempty"`
+	Password *string `json:"password,omitempty"`
+	// Enter "api" here
+	Username   string    `json:"username"`
 	sourceType Mailosaur `const:"mailosaur" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceMailosaur) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMailosaur) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceMailosaur) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceMailosaur) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceMailosaur) GetSourceType() Mailosaur {

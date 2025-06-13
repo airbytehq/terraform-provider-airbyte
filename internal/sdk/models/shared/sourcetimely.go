@@ -35,11 +35,11 @@ func (e *Timely) UnmarshalJSON(data []byte) error {
 type SourceTimely struct {
 	// The Account ID for your Timely account
 	AccountID string `json:"account_id"`
-	// Earliest date from which you want to pull data from.
-	StartDate time.Time `json:"start_date"`
 	// The Bearer Token for your Timely account
 	BearerToken string `json:"bearer_token"`
-	sourceType  Timely `const:"timely" json:"sourceType"`
+	// Earliest date from which you want to pull data from.
+	StartDate  time.Time `json:"start_date"`
+	sourceType Timely    `const:"timely" json:"sourceType"`
 }
 
 func (s SourceTimely) MarshalJSON() ([]byte, error) {
@@ -60,18 +60,18 @@ func (o *SourceTimely) GetAccountID() string {
 	return o.AccountID
 }
 
-func (o *SourceTimely) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceTimely) GetBearerToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.BearerToken
+}
+
+func (o *SourceTimely) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceTimely) GetSourceType() Timely {

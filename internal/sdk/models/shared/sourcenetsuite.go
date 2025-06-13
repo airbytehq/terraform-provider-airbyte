@@ -32,20 +32,20 @@ func (e *Netsuite) UnmarshalJSON(data []byte) error {
 }
 
 type SourceNetsuite struct {
-	// Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
-	Realm string `json:"realm"`
 	// Consumer key associated with your integration
 	ConsumerKey string `json:"consumer_key"`
 	// Consumer secret associated with your integration
 	ConsumerSecret string `json:"consumer_secret"`
+	// The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
+	ObjectTypes []string `json:"object_types,omitempty"`
+	// Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
+	Realm string `json:"realm"`
+	// Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
+	StartDatetime string `json:"start_datetime"`
 	// Access token key
 	TokenKey string `json:"token_key"`
 	// Access token secret
 	TokenSecret string `json:"token_secret"`
-	// The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
-	ObjectTypes []string `json:"object_types,omitempty"`
-	// Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
-	StartDatetime string `json:"start_datetime"`
 	// The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
 	WindowInDays *int64   `default:"30" json:"window_in_days"`
 	sourceType   Netsuite `const:"netsuite" json:"sourceType"`
@@ -62,13 +62,6 @@ func (s *SourceNetsuite) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceNetsuite) GetRealm() string {
-	if o == nil {
-		return ""
-	}
-	return o.Realm
-}
-
 func (o *SourceNetsuite) GetConsumerKey() string {
 	if o == nil {
 		return ""
@@ -83,6 +76,27 @@ func (o *SourceNetsuite) GetConsumerSecret() string {
 	return o.ConsumerSecret
 }
 
+func (o *SourceNetsuite) GetObjectTypes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ObjectTypes
+}
+
+func (o *SourceNetsuite) GetRealm() string {
+	if o == nil {
+		return ""
+	}
+	return o.Realm
+}
+
+func (o *SourceNetsuite) GetStartDatetime() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDatetime
+}
+
 func (o *SourceNetsuite) GetTokenKey() string {
 	if o == nil {
 		return ""
@@ -95,20 +109,6 @@ func (o *SourceNetsuite) GetTokenSecret() string {
 		return ""
 	}
 	return o.TokenSecret
-}
-
-func (o *SourceNetsuite) GetObjectTypes() []string {
-	if o == nil {
-		return nil
-	}
-	return o.ObjectTypes
-}
-
-func (o *SourceNetsuite) GetStartDatetime() string {
-	if o == nil {
-		return ""
-	}
-	return o.StartDatetime
 }
 
 func (o *SourceNetsuite) GetWindowInDays() *int64 {

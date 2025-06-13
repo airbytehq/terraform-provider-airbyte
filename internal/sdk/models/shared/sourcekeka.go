@@ -32,13 +32,13 @@ func (e *Keka) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKeka struct {
-	Scope  string `json:"scope"`
 	APIKey string `json:"api_key"`
 	// Your client identifier for authentication.
-	ClientID  string `json:"client_id"`
-	GrantType string `json:"grant_type"`
+	ClientID string `json:"client_id"`
 	// Your client secret for secure authentication.
 	ClientSecret string `json:"client_secret"`
+	GrantType    string `json:"grant_type"`
+	Scope        string `json:"scope"`
 	sourceType   Keka   `const:"keka" json:"sourceType"`
 }
 
@@ -51,13 +51,6 @@ func (s *SourceKeka) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceKeka) GetScope() string {
-	if o == nil {
-		return ""
-	}
-	return o.Scope
 }
 
 func (o *SourceKeka) GetAPIKey() string {
@@ -74,6 +67,13 @@ func (o *SourceKeka) GetClientID() string {
 	return o.ClientID
 }
 
+func (o *SourceKeka) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
 func (o *SourceKeka) GetGrantType() string {
 	if o == nil {
 		return ""
@@ -81,11 +81,11 @@ func (o *SourceKeka) GetGrantType() string {
 	return o.GrantType
 }
 
-func (o *SourceKeka) GetClientSecret() string {
+func (o *SourceKeka) GetScope() string {
 	if o == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return o.Scope
 }
 
 func (o *SourceKeka) GetSourceType() Keka {

@@ -21,15 +21,15 @@ func (r *SourceCampaynResourceModel) ToSharedSourceCampaynCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subDomain string
-	subDomain = r.Configuration.SubDomain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var subDomain string
+	subDomain = r.Configuration.SubDomain.ValueString()
+
 	configuration := shared.SourceCampayn{
-		SubDomain: subDomain,
 		APIKey:    apiKey,
+		SubDomain: subDomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceCampaynResourceModel) ToSharedSourceCampaynPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subDomain string
-	subDomain = r.Configuration.SubDomain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var subDomain string
+	subDomain = r.Configuration.SubDomain.ValueString()
+
 	configuration := shared.SourceCampaynUpdate{
-		SubDomain: subDomain,
 		APIKey:    apiKey,
+		SubDomain: subDomain,
 	}
 	out := shared.SourceCampaynPutRequest{
 		Name:          name,

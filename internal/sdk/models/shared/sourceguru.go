@@ -33,14 +33,14 @@ func (e *Guru) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGuru struct {
-	Username  string    `json:"username"`
-	Password  *string   `json:"password,omitempty"`
-	StartDate time.Time `json:"start_date"`
-	// Team ID received through response of /teams streams, make sure about access to the team
-	TeamID *string `json:"team_id,omitempty"`
+	Password *string `json:"password,omitempty"`
 	// Query for searching cards
-	SearchCardsQuery *string `json:"search_cards_query,omitempty"`
-	sourceType       Guru    `const:"guru" json:"sourceType"`
+	SearchCardsQuery *string   `json:"search_cards_query,omitempty"`
+	StartDate        time.Time `json:"start_date"`
+	// Team ID received through response of /teams streams, make sure about access to the team
+	TeamID     *string `json:"team_id,omitempty"`
+	Username   string  `json:"username"`
+	sourceType Guru    `const:"guru" json:"sourceType"`
 }
 
 func (s SourceGuru) MarshalJSON() ([]byte, error) {
@@ -54,18 +54,18 @@ func (s *SourceGuru) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGuru) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceGuru) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceGuru) GetSearchCardsQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SearchCardsQuery
 }
 
 func (o *SourceGuru) GetStartDate() time.Time {
@@ -82,11 +82,11 @@ func (o *SourceGuru) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *SourceGuru) GetSearchCardsQuery() *string {
+func (o *SourceGuru) GetUsername() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.SearchCardsQuery
+	return o.Username
 }
 
 func (o *SourceGuru) GetSourceType() Guru {

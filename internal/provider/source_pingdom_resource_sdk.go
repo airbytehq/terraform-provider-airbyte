@@ -22,15 +22,15 @@ func (r *SourcePingdomResourceModel) ToSharedSourcePingdomCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	probes := new(string)
 	if !r.Configuration.Probes.IsUnknown() && !r.Configuration.Probes.IsNull() {
 		*probes = r.Configuration.Probes.ValueString()
 	} else {
 		probes = nil
 	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	resolution := new(shared.Resolution)
 	if !r.Configuration.Resolution.IsUnknown() && !r.Configuration.Resolution.IsNull() {
 		*resolution = shared.Resolution(r.Configuration.Resolution.ValueString())
@@ -39,8 +39,8 @@ func (r *SourcePingdomResourceModel) ToSharedSourcePingdomCreateRequest() *share
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePingdom{
-		Probes:     probes,
 		APIKey:     apiKey,
+		Probes:     probes,
 		Resolution: resolution,
 		StartDate:  startDate,
 	}
@@ -114,15 +114,15 @@ func (r *SourcePingdomResourceModel) ToSharedSourcePingdomPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	probes := new(string)
 	if !r.Configuration.Probes.IsUnknown() && !r.Configuration.Probes.IsNull() {
 		*probes = r.Configuration.Probes.ValueString()
 	} else {
 		probes = nil
 	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	resolution := new(shared.SourcePingdomUpdateResolution)
 	if !r.Configuration.Resolution.IsUnknown() && !r.Configuration.Resolution.IsNull() {
 		*resolution = shared.SourcePingdomUpdateResolution(r.Configuration.Resolution.ValueString())
@@ -131,8 +131,8 @@ func (r *SourcePingdomResourceModel) ToSharedSourcePingdomPutRequest() *shared.S
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePingdomUpdate{
-		Probes:     probes,
 		APIKey:     apiKey,
+		Probes:     probes,
 		Resolution: resolution,
 		StartDate:  startDate,
 	}

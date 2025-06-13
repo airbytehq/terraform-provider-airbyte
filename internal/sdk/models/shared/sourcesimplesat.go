@@ -34,10 +34,10 @@ func (e *Simplesat) UnmarshalJSON(data []byte) error {
 
 type SourceSimplesat struct {
 	APIKey string `json:"api_key"`
-	// Date from when the sync should start
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Date till when the sync should end
-	EndDate    *time.Time `json:"end_date,omitempty"`
+	EndDate *time.Time `json:"end_date,omitempty"`
+	// Date from when the sync should start
+	StartDate  *time.Time `json:"start_date,omitempty"`
 	sourceType Simplesat  `const:"simplesat" json:"sourceType"`
 }
 
@@ -59,18 +59,18 @@ func (o *SourceSimplesat) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceSimplesat) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceSimplesat) GetEndDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourceSimplesat) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceSimplesat) GetSourceType() Simplesat {

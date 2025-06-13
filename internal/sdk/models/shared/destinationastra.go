@@ -34,14 +34,14 @@ func (e *DestinationAstraSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []by
 
 // OpenAICompatible - Use a service that's compatible with the OpenAI API to embed text.
 type OpenAICompatible struct {
-	mode   *DestinationAstraSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
-	APIKey *string                                         `default:"" json:"api_key"`
+	APIKey *string `default:"" json:"api_key"`
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
+	// The number of dimensions the embedding model is generating
+	Dimensions int64                                           `json:"dimensions"`
+	mode       *DestinationAstraSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
 }
 
 func (o OpenAICompatible) MarshalJSON() ([]byte, error) {
@@ -53,10 +53,6 @@ func (o *OpenAICompatible) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *OpenAICompatible) GetMode() *DestinationAstraSchemasEmbeddingEmbedding5Mode {
-	return DestinationAstraSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *OpenAICompatible) GetAPIKey() *string {
@@ -73,18 +69,22 @@ func (o *OpenAICompatible) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *OpenAICompatible) GetModelName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ModelName
-}
-
 func (o *OpenAICompatible) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
+}
+
+func (o *OpenAICompatible) GetMode() *DestinationAstraSchemasEmbeddingEmbedding5Mode {
+	return DestinationAstraSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
+}
+
+func (o *OpenAICompatible) GetModelName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ModelName
 }
 
 type DestinationAstraSchemasEmbeddingEmbeddingMode string
@@ -112,13 +112,13 @@ func (e *DestinationAstraSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byt
 
 // AzureOpenAI - Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type AzureOpenAI struct {
-	mode *DestinationAstraSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
-	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	OpenaiKey string `json:"openai_key"`
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string `json:"deployment"`
+	Deployment string                                         `json:"deployment"`
+	mode       *DestinationAstraSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+	OpenaiKey string `json:"openai_key"`
 }
 
 func (a AzureOpenAI) MarshalJSON() ([]byte, error) {
@@ -130,17 +130,6 @@ func (a *AzureOpenAI) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *AzureOpenAI) GetMode() *DestinationAstraSchemasEmbeddingEmbeddingMode {
-	return DestinationAstraSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
-}
-
-func (o *AzureOpenAI) GetOpenaiKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.OpenaiKey
 }
 
 func (o *AzureOpenAI) GetAPIBase() string {
@@ -155,6 +144,17 @@ func (o *AzureOpenAI) GetDeployment() string {
 		return ""
 	}
 	return o.Deployment
+}
+
+func (o *AzureOpenAI) GetMode() *DestinationAstraSchemasEmbeddingEmbeddingMode {
+	return DestinationAstraSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
+}
+
+func (o *AzureOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationAstraSchemasEmbeddingMode string
@@ -225,8 +225,8 @@ func (e *DestinationAstraSchemasMode) UnmarshalJSON(data []byte) error {
 
 // Cohere - Use the Cohere API to embed text.
 type Cohere struct {
-	mode      *DestinationAstraSchemasMode `const:"cohere" json:"mode"`
 	CohereKey string                       `json:"cohere_key"`
+	mode      *DestinationAstraSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (c Cohere) MarshalJSON() ([]byte, error) {
@@ -240,15 +240,15 @@ func (c *Cohere) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Cohere) GetMode() *DestinationAstraSchemasMode {
-	return DestinationAstraSchemasModeCohere.ToPointer()
-}
-
 func (o *Cohere) GetCohereKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.CohereKey
+}
+
+func (o *Cohere) GetMode() *DestinationAstraSchemasMode {
+	return DestinationAstraSchemasModeCohere.ToPointer()
 }
 
 type DestinationAstraMode string
@@ -432,27 +432,65 @@ func (u Embedding) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type Embedding: all fields are null")
 }
 
-type DestinationAstraSchemasProcessingTextSplitterTextSplitterMode string
-
-const (
-	DestinationAstraSchemasProcessingTextSplitterTextSplitterModeCode DestinationAstraSchemasProcessingTextSplitterTextSplitterMode = "code"
-)
-
-func (e DestinationAstraSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode {
-	return &e
+// Indexing - Astra DB gives developers the APIs, real-time data and ecosystem integrations to put accurate RAG and Gen AI apps with fewer hallucinations in production.
+type Indexing struct {
+	// The application token authorizes a user to connect to a specific Astra DB database. It is created when the user clicks the Generate Token button on the Overview tab of the Database page in the Astra UI.
+	AstraDbAppToken string `json:"astra_db_app_token"`
+	// The endpoint specifies which Astra DB database queries are sent to. It can be copied from the Database Details section of the Overview tab of the Database page in the Astra UI.
+	AstraDbEndpoint string `json:"astra_db_endpoint"`
+	// Keyspaces (or Namespaces) serve as containers for organizing data within a database. You can create a new keyspace uisng the Data Explorer tab in the Astra UI. The keyspace default_keyspace is created for you when you create a Vector Database in Astra DB.
+	AstraDbKeyspace string `json:"astra_db_keyspace"`
+	// Collections hold data. They are analagous to tables in traditional Cassandra terminology. This tool will create the collection with the provided name automatically if it does not already exist. Alternatively, you can create one thorugh the Data Explorer tab in the Astra UI.
+	Collection string `json:"collection"`
 }
-func (e *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+
+func (o *Indexing) GetAstraDbAppToken() string {
+	if o == nil {
+		return ""
 	}
-	switch v {
-	case "code":
-		*e = DestinationAstraSchemasProcessingTextSplitterTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationAstraSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	return o.AstraDbAppToken
+}
+
+func (o *Indexing) GetAstraDbEndpoint() string {
+	if o == nil {
+		return ""
 	}
+	return o.AstraDbEndpoint
+}
+
+func (o *Indexing) GetAstraDbKeyspace() string {
+	if o == nil {
+		return ""
+	}
+	return o.AstraDbKeyspace
+}
+
+func (o *Indexing) GetCollection() string {
+	if o == nil {
+		return ""
+	}
+	return o.Collection
+}
+
+type FieldNameMappingConfigModel struct {
+	// The field name in the source
+	FromField string `json:"from_field"`
+	// The field name to use in the destination
+	ToField string `json:"to_field"`
+}
+
+func (o *FieldNameMappingConfigModel) GetFromField() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromField
+}
+
+func (o *FieldNameMappingConfigModel) GetToField() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToField
 }
 
 // DestinationAstraLanguage - Split code in suitable places based on the programming language
@@ -524,11 +562,34 @@ func (e *DestinationAstraLanguage) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type DestinationAstraSchemasProcessingTextSplitterTextSplitterMode string
+
+const (
+	DestinationAstraSchemasProcessingTextSplitterTextSplitterModeCode DestinationAstraSchemasProcessingTextSplitterTextSplitterMode = "code"
+)
+
+func (e DestinationAstraSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode {
+	return &e
+}
+func (e *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = DestinationAstraSchemasProcessingTextSplitterTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationAstraSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	}
+}
+
 // ByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type ByProgrammingLanguage struct {
-	mode *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 	// Split code in suitable places based on the programming language
-	Language DestinationAstraLanguage `json:"language"`
+	Language DestinationAstraLanguage                                       `json:"language"`
+	mode     *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (b ByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -542,15 +603,15 @@ func (b *ByProgrammingLanguage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ByProgrammingLanguage) GetMode() *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode {
-	return DestinationAstraSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
-}
-
 func (o *ByProgrammingLanguage) GetLanguage() DestinationAstraLanguage {
 	if o == nil {
 		return DestinationAstraLanguage("")
 	}
 	return o.Language
+}
+
+func (o *ByProgrammingLanguage) GetMode() *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode {
+	return DestinationAstraSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
 }
 
 type DestinationAstraSchemasProcessingTextSplitterMode string
@@ -630,11 +691,11 @@ func (e *DestinationAstraSchemasProcessingMode) UnmarshalJSON(data []byte) error
 
 // BySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type BySeparator struct {
-	mode *DestinationAstraSchemasProcessingMode `const:"separator" json:"mode"`
+	// Whether to keep the separator in the resulting chunks
+	KeepSeparator *bool                                  `default:"false" json:"keep_separator"`
+	mode          *DestinationAstraSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
-	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool `default:"false" json:"keep_separator"`
 }
 
 func (b BySeparator) MarshalJSON() ([]byte, error) {
@@ -648,6 +709,13 @@ func (b *BySeparator) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *BySeparator) GetKeepSeparator() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepSeparator
+}
+
 func (o *BySeparator) GetMode() *DestinationAstraSchemasProcessingMode {
 	return DestinationAstraSchemasProcessingModeSeparator.ToPointer()
 }
@@ -657,13 +725,6 @@ func (o *BySeparator) GetSeparators() []string {
 		return nil
 	}
 	return o.Separators
-}
-
-func (o *BySeparator) GetKeepSeparator() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KeepSeparator
 }
 
 type TextSplitterType string
@@ -752,40 +813,19 @@ func (u TextSplitter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type TextSplitter: all fields are null")
 }
 
-type FieldNameMappingConfigModel struct {
-	// The field name in the source
-	FromField string `json:"from_field"`
-	// The field name to use in the destination
-	ToField string `json:"to_field"`
-}
-
-func (o *FieldNameMappingConfigModel) GetFromField() string {
-	if o == nil {
-		return ""
-	}
-	return o.FromField
-}
-
-func (o *FieldNameMappingConfigModel) GetToField() string {
-	if o == nil {
-		return ""
-	}
-	return o.ToField
-}
-
 type ProcessingConfigModel struct {
-	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
-	ChunkSize int64 `json:"chunk_size"`
 	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
-	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TextFields []string `json:"text_fields,omitempty"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
-	// Split text fields into chunks based on the specified method.
-	TextSplitter *TextSplitter `json:"text_splitter,omitempty"`
+	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
+	ChunkSize int64 `json:"chunk_size"`
 	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
 	FieldNameMappings []FieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+	TextFields []string `json:"text_fields,omitempty"`
+	// Split text fields into chunks based on the specified method.
+	TextSplitter *TextSplitter `json:"text_splitter,omitempty"`
 }
 
 func (p ProcessingConfigModel) MarshalJSON() ([]byte, error) {
@@ -799,13 +839,6 @@ func (p *ProcessingConfigModel) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProcessingConfigModel) GetChunkSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ChunkSize
-}
-
 func (o *ProcessingConfigModel) GetChunkOverlap() *int64 {
 	if o == nil {
 		return nil
@@ -813,25 +846,11 @@ func (o *ProcessingConfigModel) GetChunkOverlap() *int64 {
 	return o.ChunkOverlap
 }
 
-func (o *ProcessingConfigModel) GetTextFields() []string {
+func (o *ProcessingConfigModel) GetChunkSize() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.TextFields
-}
-
-func (o *ProcessingConfigModel) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
-}
-
-func (o *ProcessingConfigModel) GetTextSplitter() *TextSplitter {
-	if o == nil {
-		return nil
-	}
-	return o.TextSplitter
+	return o.ChunkSize
 }
 
 func (o *ProcessingConfigModel) GetFieldNameMappings() []FieldNameMappingConfigModel {
@@ -841,44 +860,25 @@ func (o *ProcessingConfigModel) GetFieldNameMappings() []FieldNameMappingConfigM
 	return o.FieldNameMappings
 }
 
-// Indexing - Astra DB gives developers the APIs, real-time data and ecosystem integrations to put accurate RAG and Gen AI apps with fewer hallucinations in production.
-type Indexing struct {
-	// The application token authorizes a user to connect to a specific Astra DB database. It is created when the user clicks the Generate Token button on the Overview tab of the Database page in the Astra UI.
-	AstraDbAppToken string `json:"astra_db_app_token"`
-	// The endpoint specifies which Astra DB database queries are sent to. It can be copied from the Database Details section of the Overview tab of the Database page in the Astra UI.
-	AstraDbEndpoint string `json:"astra_db_endpoint"`
-	// Keyspaces (or Namespaces) serve as containers for organizing data within a database. You can create a new keyspace uisng the Data Explorer tab in the Astra UI. The keyspace default_keyspace is created for you when you create a Vector Database in Astra DB.
-	AstraDbKeyspace string `json:"astra_db_keyspace"`
-	// Collections hold data. They are analagous to tables in traditional Cassandra terminology. This tool will create the collection with the provided name automatically if it does not already exist. Alternatively, you can create one thorugh the Data Explorer tab in the Astra UI.
-	Collection string `json:"collection"`
+func (o *ProcessingConfigModel) GetMetadataFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MetadataFields
 }
 
-func (o *Indexing) GetAstraDbAppToken() string {
+func (o *ProcessingConfigModel) GetTextFields() []string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.AstraDbAppToken
+	return o.TextFields
 }
 
-func (o *Indexing) GetAstraDbEndpoint() string {
+func (o *ProcessingConfigModel) GetTextSplitter() *TextSplitter {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.AstraDbEndpoint
-}
-
-func (o *Indexing) GetAstraDbKeyspace() string {
-	if o == nil {
-		return ""
-	}
-	return o.AstraDbKeyspace
-}
-
-func (o *Indexing) GetCollection() string {
-	if o == nil {
-		return ""
-	}
-	return o.Collection
+	return o.TextSplitter
 }
 
 type Astra string
@@ -916,13 +916,13 @@ func (e *Astra) UnmarshalJSON(data []byte) error {
 // Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationAstra struct {
 	// Embedding configuration
-	Embedding  Embedding             `json:"embedding"`
-	Processing ProcessingConfigModel `json:"processing"`
-	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText *bool `default:"false" json:"omit_raw_text"`
+	Embedding Embedding `json:"embedding"`
 	// Astra DB gives developers the APIs, real-time data and ecosystem integrations to put accurate RAG and Gen AI apps with fewer hallucinations in production.
-	Indexing        Indexing `json:"indexing"`
-	destinationType Astra    `const:"astra" json:"destinationType"`
+	Indexing Indexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText     *bool                 `default:"false" json:"omit_raw_text"`
+	Processing      ProcessingConfigModel `json:"processing"`
+	destinationType Astra                 `const:"astra" json:"destinationType"`
 }
 
 func (d DestinationAstra) MarshalJSON() ([]byte, error) {
@@ -943,11 +943,11 @@ func (o *DestinationAstra) GetEmbedding() Embedding {
 	return o.Embedding
 }
 
-func (o *DestinationAstra) GetProcessing() ProcessingConfigModel {
+func (o *DestinationAstra) GetIndexing() Indexing {
 	if o == nil {
-		return ProcessingConfigModel{}
+		return Indexing{}
 	}
-	return o.Processing
+	return o.Indexing
 }
 
 func (o *DestinationAstra) GetOmitRawText() *bool {
@@ -957,11 +957,11 @@ func (o *DestinationAstra) GetOmitRawText() *bool {
 	return o.OmitRawText
 }
 
-func (o *DestinationAstra) GetIndexing() Indexing {
+func (o *DestinationAstra) GetProcessing() ProcessingConfigModel {
 	if o == nil {
-		return Indexing{}
+		return ProcessingConfigModel{}
 	}
-	return o.Indexing
+	return o.Processing
 }
 
 func (o *DestinationAstra) GetDestinationType() Astra {

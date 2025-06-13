@@ -21,11 +21,11 @@ func (r *SourceAzureTableResourceModel) ToSharedSourceAzureTableCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var storageAccountName string
-	storageAccountName = r.Configuration.StorageAccountName.ValueString()
-
 	var storageAccessKey string
 	storageAccessKey = r.Configuration.StorageAccessKey.ValueString()
+
+	var storageAccountName string
+	storageAccountName = r.Configuration.StorageAccountName.ValueString()
 
 	storageEndpointSuffix := new(string)
 	if !r.Configuration.StorageEndpointSuffix.IsUnknown() && !r.Configuration.StorageEndpointSuffix.IsNull() {
@@ -34,8 +34,8 @@ func (r *SourceAzureTableResourceModel) ToSharedSourceAzureTableCreateRequest() 
 		storageEndpointSuffix = nil
 	}
 	configuration := shared.SourceAzureTable{
-		StorageAccountName:    storageAccountName,
 		StorageAccessKey:      storageAccessKey,
+		StorageAccountName:    storageAccountName,
 		StorageEndpointSuffix: storageEndpointSuffix,
 	}
 	secretID := new(string)
@@ -108,11 +108,11 @@ func (r *SourceAzureTableResourceModel) ToSharedSourceAzureTablePutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var storageAccountName string
-	storageAccountName = r.Configuration.StorageAccountName.ValueString()
-
 	var storageAccessKey string
 	storageAccessKey = r.Configuration.StorageAccessKey.ValueString()
+
+	var storageAccountName string
+	storageAccountName = r.Configuration.StorageAccountName.ValueString()
 
 	storageEndpointSuffix := new(string)
 	if !r.Configuration.StorageEndpointSuffix.IsUnknown() && !r.Configuration.StorageEndpointSuffix.IsNull() {
@@ -121,8 +121,8 @@ func (r *SourceAzureTableResourceModel) ToSharedSourceAzureTablePutRequest() *sh
 		storageEndpointSuffix = nil
 	}
 	configuration := shared.SourceAzureTableUpdate{
-		StorageAccountName:    storageAccountName,
 		StorageAccessKey:      storageAccessKey,
+		StorageAccountName:    storageAccountName,
 		StorageEndpointSuffix: storageEndpointSuffix,
 	}
 	out := shared.SourceAzureTablePutRequest{

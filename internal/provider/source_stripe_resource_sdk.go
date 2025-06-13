@@ -25,26 +25,20 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripeCreateRequest() *shared.
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	callRateLimit := new(int64)
+	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
+		*callRateLimit = r.Configuration.CallRateLimit.ValueInt64()
+	} else {
+		callRateLimit = nil
+	}
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
 	} else {
 		lookbackWindowDays = nil
-	}
-	sliceRange := new(int64)
-	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
-		*sliceRange = r.Configuration.SliceRange.ValueInt64()
-	} else {
-		sliceRange = nil
 	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
@@ -52,20 +46,26 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripeCreateRequest() *shared.
 	} else {
 		numWorkers = nil
 	}
-	callRateLimit := new(int64)
-	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
-		*callRateLimit = r.Configuration.CallRateLimit.ValueInt64()
+	sliceRange := new(int64)
+	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
+		*sliceRange = r.Configuration.SliceRange.ValueInt64()
 	} else {
-		callRateLimit = nil
+		sliceRange = nil
+	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
 	}
 	configuration := shared.SourceStripe{
 		AccountID:          accountID,
-		ClientSecret:       clientSecret,
-		StartDate:          startDate,
-		LookbackWindowDays: lookbackWindowDays,
-		SliceRange:         sliceRange,
-		NumWorkers:         numWorkers,
 		CallRateLimit:      callRateLimit,
+		ClientSecret:       clientSecret,
+		LookbackWindowDays: lookbackWindowDays,
+		NumWorkers:         numWorkers,
+		SliceRange:         sliceRange,
+		StartDate:          startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -140,26 +140,20 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripePutRequest() *shared.Sou
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	callRateLimit := new(int64)
+	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
+		*callRateLimit = r.Configuration.CallRateLimit.ValueInt64()
+	} else {
+		callRateLimit = nil
+	}
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
 	} else {
 		lookbackWindowDays = nil
-	}
-	sliceRange := new(int64)
-	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
-		*sliceRange = r.Configuration.SliceRange.ValueInt64()
-	} else {
-		sliceRange = nil
 	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
@@ -167,20 +161,26 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripePutRequest() *shared.Sou
 	} else {
 		numWorkers = nil
 	}
-	callRateLimit := new(int64)
-	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
-		*callRateLimit = r.Configuration.CallRateLimit.ValueInt64()
+	sliceRange := new(int64)
+	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
+		*sliceRange = r.Configuration.SliceRange.ValueInt64()
 	} else {
-		callRateLimit = nil
+		sliceRange = nil
+	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
 	}
 	configuration := shared.SourceStripeUpdate{
 		AccountID:          accountID,
-		ClientSecret:       clientSecret,
-		StartDate:          startDate,
-		LookbackWindowDays: lookbackWindowDays,
-		SliceRange:         sliceRange,
-		NumWorkers:         numWorkers,
 		CallRateLimit:      callRateLimit,
+		ClientSecret:       clientSecret,
+		LookbackWindowDays: lookbackWindowDays,
+		NumWorkers:         numWorkers,
+		SliceRange:         sliceRange,
+		StartDate:          startDate,
 	}
 	out := shared.SourceStripePutRequest{
 		Name:          name,

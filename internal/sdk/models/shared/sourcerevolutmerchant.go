@@ -62,12 +62,12 @@ func (e *RevolutMerchant) UnmarshalJSON(data []byte) error {
 type SourceRevolutMerchant struct {
 	// Specify the API version to use. This is required for certain API calls. Example: '2024-09-01'.
 	APIVersion string `json:"api_version"`
-	// Secret API key to use for authenticating with the Revolut Merchant API. Find it in your Revolut Business account under APIs > Merchant API.
-	SecretAPIKey string    `json:"secret_api_key"`
-	StartDate    time.Time `json:"start_date"`
 	// The base url of your environment. Either sandbox or production
 	Environment SourceRevolutMerchantEnvironment `json:"environment"`
-	sourceType  RevolutMerchant                  `const:"revolut-merchant" json:"sourceType"`
+	// Secret API key to use for authenticating with the Revolut Merchant API. Find it in your Revolut Business account under APIs > Merchant API.
+	SecretAPIKey string          `json:"secret_api_key"`
+	StartDate    time.Time       `json:"start_date"`
+	sourceType   RevolutMerchant `const:"revolut-merchant" json:"sourceType"`
 }
 
 func (s SourceRevolutMerchant) MarshalJSON() ([]byte, error) {
@@ -88,6 +88,13 @@ func (o *SourceRevolutMerchant) GetAPIVersion() string {
 	return o.APIVersion
 }
 
+func (o *SourceRevolutMerchant) GetEnvironment() SourceRevolutMerchantEnvironment {
+	if o == nil {
+		return SourceRevolutMerchantEnvironment("")
+	}
+	return o.Environment
+}
+
 func (o *SourceRevolutMerchant) GetSecretAPIKey() string {
 	if o == nil {
 		return ""
@@ -100,13 +107,6 @@ func (o *SourceRevolutMerchant) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceRevolutMerchant) GetEnvironment() SourceRevolutMerchantEnvironment {
-	if o == nil {
-		return SourceRevolutMerchantEnvironment("")
-	}
-	return o.Environment
 }
 
 func (o *SourceRevolutMerchant) GetSourceType() RevolutMerchant {

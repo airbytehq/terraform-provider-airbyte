@@ -33,8 +33,8 @@ func (e *Blogger) UnmarshalJSON(data []byte) error {
 
 type SourceBlogger struct {
 	ClientID           string  `json:"client_id"`
-	ClientSecret       string  `json:"client_secret"`
 	ClientRefreshToken string  `json:"client_refresh_token"`
+	ClientSecret       string  `json:"client_secret"`
 	sourceType         Blogger `const:"blogger" json:"sourceType"`
 }
 
@@ -56,18 +56,18 @@ func (o *SourceBlogger) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceBlogger) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceBlogger) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceBlogger) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceBlogger) GetSourceType() Blogger {

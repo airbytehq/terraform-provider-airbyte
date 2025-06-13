@@ -22,14 +22,16 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var credentials *shared.SourceZendeskChatAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskChatOAuth20 *shared.SourceZendeskChatOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -42,12 +44,6 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatCreateRequest(
 			} else {
 				clientSecret = nil
 			}
-			accessToken := new(string)
-			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-			} else {
-				accessToken = nil
-			}
 			refreshToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.RefreshToken.IsNull() {
 				*refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
@@ -55,9 +51,9 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatCreateRequest(
 				refreshToken = nil
 			}
 			sourceZendeskChatOAuth20 = &shared.SourceZendeskChatOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -81,10 +77,14 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatCreateRequest(
 			}
 		}
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskChat{
+		Credentials: credentials,
 		StartDate:   startDate,
 		Subdomain:   subdomain,
-		Credentials: credentials,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -156,14 +156,16 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var credentials *shared.SourceZendeskChatUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskChatUpdateOAuth20 *shared.SourceZendeskChatUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -176,12 +178,6 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatPutRequest() *
 			} else {
 				clientSecret = nil
 			}
-			accessToken := new(string)
-			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-			} else {
-				accessToken = nil
-			}
 			refreshToken := new(string)
 			if !r.Configuration.Credentials.OAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.RefreshToken.IsNull() {
 				*refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
@@ -189,9 +185,9 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatPutRequest() *
 				refreshToken = nil
 			}
 			sourceZendeskChatUpdateOAuth20 = &shared.SourceZendeskChatUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -215,10 +211,14 @@ func (r *SourceZendeskChatResourceModel) ToSharedSourceZendeskChatPutRequest() *
 			}
 		}
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskChatUpdate{
+		Credentials: credentials,
 		StartDate:   startDate,
 		Subdomain:   subdomain,
-		Credentials: credentials,
 	}
 	out := shared.SourceZendeskChatPutRequest{
 		Name:          name,

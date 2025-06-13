@@ -3,17 +3,10 @@
 package shared
 
 type SourcePypiUpdate struct {
-	// Version of the project/package.  Use it to find a particular release instead of all releases.
-	Version *string `json:"version,omitempty"`
 	// Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
 	ProjectName string `json:"project_name"`
-}
-
-func (o *SourcePypiUpdate) GetVersion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Version
+	// Version of the project/package.  Use it to find a particular release instead of all releases.
+	Version *string `json:"version,omitempty"`
 }
 
 func (o *SourcePypiUpdate) GetProjectName() string {
@@ -21,4 +14,11 @@ func (o *SourcePypiUpdate) GetProjectName() string {
 		return ""
 	}
 	return o.ProjectName
+}
+
+func (o *SourcePypiUpdate) GetVersion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Version
 }

@@ -15,12 +15,11 @@ SourceJira Resource
 ```terraform
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
-    api_token                   = "...my_api_token..."
-    domain                      = "<your-domain>.atlassian.net"
-    email                       = "...my_email..."
-    enable_experimental_streams = false
-    lookback_window_minutes     = 60
-    num_workers                 = 1
+    api_token               = "...my_api_token..."
+    domain                  = "<your-domain>.atlassian.net"
+    email                   = "...my_email..."
+    lookback_window_minutes = 60
+    num_workers             = 1
     projects = [
       "..."
     ]
@@ -65,7 +64,6 @@ Required:
 
 Optional:
 
-- `enable_experimental_streams` (Boolean) Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info. Default: false
 - `lookback_window_minutes` (Number) When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced. Default: 0
 - `num_workers` (Number) The number of worker threads to use for the sync. Default: 3
 - `projects` (List of String) List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.

@@ -8,12 +8,12 @@ import (
 
 type SourceZoomUpdate struct {
 	// The account ID for your Zoom account. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
-	AccountID string `json:"account_id"`
+	AccountID             string  `json:"account_id"`
+	AuthorizationEndpoint *string `default:"https://zoom.us/oauth/token" json:"authorization_endpoint"`
 	// The client ID for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
 	ClientID string `json:"client_id"`
 	// The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
-	ClientSecret          string  `json:"client_secret"`
-	AuthorizationEndpoint *string `default:"https://zoom.us/oauth/token" json:"authorization_endpoint"`
+	ClientSecret string `json:"client_secret"`
 }
 
 func (s SourceZoomUpdate) MarshalJSON() ([]byte, error) {
@@ -34,6 +34,13 @@ func (o *SourceZoomUpdate) GetAccountID() string {
 	return o.AccountID
 }
 
+func (o *SourceZoomUpdate) GetAuthorizationEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthorizationEndpoint
+}
+
 func (o *SourceZoomUpdate) GetClientID() string {
 	if o == nil {
 		return ""
@@ -46,11 +53,4 @@ func (o *SourceZoomUpdate) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceZoomUpdate) GetAuthorizationEndpoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AuthorizationEndpoint
 }

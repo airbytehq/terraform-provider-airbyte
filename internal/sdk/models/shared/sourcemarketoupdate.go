@@ -8,12 +8,12 @@ import (
 )
 
 type SourceMarketoUpdate struct {
-	// Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
-	DomainURL string `json:"domain_url"`
 	// The Client ID of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 	ClientSecret string `json:"client_secret"`
+	// Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
+	DomainURL string `json:"domain_url"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }
@@ -29,13 +29,6 @@ func (s *SourceMarketoUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMarketoUpdate) GetDomainURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.DomainURL
-}
-
 func (o *SourceMarketoUpdate) GetClientID() string {
 	if o == nil {
 		return ""
@@ -48,6 +41,13 @@ func (o *SourceMarketoUpdate) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceMarketoUpdate) GetDomainURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainURL
 }
 
 func (o *SourceMarketoUpdate) GetStartDate() time.Time {

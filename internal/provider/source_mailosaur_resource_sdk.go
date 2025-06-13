@@ -21,18 +21,18 @@ func (r *SourceMailosaurResourceModel) ToSharedSourceMailosaurCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMailosaur{
-		Username: username,
 		Password: password,
+		Username: username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,18 +104,18 @@ func (r *SourceMailosaurResourceModel) ToSharedSourceMailosaurPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMailosaurUpdate{
-		Username: username,
 		Password: password,
+		Username: username,
 	}
 	out := shared.SourceMailosaurPutRequest{
 		Name:          name,

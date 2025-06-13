@@ -3,6 +3,6 @@
 package types
 
 type SourceOutbrainAmplifyAuthenticationMethod struct {
-	AccessToken      *SourceOutbrainAmplifyAccessToken `queryParam:"inline" tfsdk:"access_token" tfPlanOnly:"true"`
-	UsernamePassword *UsernamePassword                 `queryParam:"inline" tfsdk:"username_password" tfPlanOnly:"true"`
+	AccessToken      *SourceOutbrainAmplifyAccessToken      `queryParam:"inline" tfsdk:"access_token" tfPlanOnly:"true"`
+	UsernamePassword *SourceOutbrainAmplifyUsernamePassword `queryParam:"inline" tfsdk:"username_password" tfPlanOnly:"true"`
 }

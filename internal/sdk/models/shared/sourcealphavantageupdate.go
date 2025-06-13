@@ -72,19 +72,19 @@ func (e *SourceAlphaVantageUpdateOutputSize) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAlphaVantageUpdate struct {
-	// API Key
-	APIKey string `json:"api_key"`
-	// Stock symbol (with exchange code)
-	Symbol string `json:"symbol"`
-	// Time-series data point interval. Required for intraday endpoints.
-	//
-	Interval *SourceAlphaVantageUpdateInterval `default:"1min" json:"interval"`
 	// Whether to return adjusted data. Only applicable to intraday endpoints.
 	//
 	Adjusted *bool `default:"false" json:"adjusted"`
+	// API Key
+	APIKey string `json:"api_key"`
+	// Time-series data point interval. Required for intraday endpoints.
+	//
+	Interval *SourceAlphaVantageUpdateInterval `default:"1min" json:"interval"`
 	// Whether to return full or compact data (the last 100 data points).
 	//
 	Outputsize *SourceAlphaVantageUpdateOutputSize `default:"compact" json:"outputsize"`
+	// Stock symbol (with exchange code)
+	Symbol string `json:"symbol"`
 }
 
 func (s SourceAlphaVantageUpdate) MarshalJSON() ([]byte, error) {
@@ -98,18 +98,18 @@ func (s *SourceAlphaVantageUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceAlphaVantageUpdate) GetAdjusted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Adjusted
+}
+
 func (o *SourceAlphaVantageUpdate) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
-}
-
-func (o *SourceAlphaVantageUpdate) GetSymbol() string {
-	if o == nil {
-		return ""
-	}
-	return o.Symbol
 }
 
 func (o *SourceAlphaVantageUpdate) GetInterval() *SourceAlphaVantageUpdateInterval {
@@ -119,16 +119,16 @@ func (o *SourceAlphaVantageUpdate) GetInterval() *SourceAlphaVantageUpdateInterv
 	return o.Interval
 }
 
-func (o *SourceAlphaVantageUpdate) GetAdjusted() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Adjusted
-}
-
 func (o *SourceAlphaVantageUpdate) GetOutputsize() *SourceAlphaVantageUpdateOutputSize {
 	if o == nil {
 		return nil
 	}
 	return o.Outputsize
+}
+
+func (o *SourceAlphaVantageUpdate) GetSymbol() string {
+	if o == nil {
+		return ""
+	}
+	return o.Symbol
 }

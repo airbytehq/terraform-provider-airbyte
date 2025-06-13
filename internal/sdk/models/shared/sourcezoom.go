@@ -33,13 +33,13 @@ func (e *Zoom) UnmarshalJSON(data []byte) error {
 
 type SourceZoom struct {
 	// The account ID for your Zoom account. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
-	AccountID string `json:"account_id"`
+	AccountID             string  `json:"account_id"`
+	AuthorizationEndpoint *string `default:"https://zoom.us/oauth/token" json:"authorization_endpoint"`
 	// The client ID for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
 	ClientID string `json:"client_id"`
 	// The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
-	ClientSecret          string  `json:"client_secret"`
-	AuthorizationEndpoint *string `default:"https://zoom.us/oauth/token" json:"authorization_endpoint"`
-	sourceType            Zoom    `const:"zoom" json:"sourceType"`
+	ClientSecret string `json:"client_secret"`
+	sourceType   Zoom   `const:"zoom" json:"sourceType"`
 }
 
 func (s SourceZoom) MarshalJSON() ([]byte, error) {
@@ -60,6 +60,13 @@ func (o *SourceZoom) GetAccountID() string {
 	return o.AccountID
 }
 
+func (o *SourceZoom) GetAuthorizationEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthorizationEndpoint
+}
+
 func (o *SourceZoom) GetClientID() string {
 	if o == nil {
 		return ""
@@ -72,13 +79,6 @@ func (o *SourceZoom) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceZoom) GetAuthorizationEndpoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AuthorizationEndpoint
 }
 
 func (o *SourceZoom) GetSourceType() Zoom {

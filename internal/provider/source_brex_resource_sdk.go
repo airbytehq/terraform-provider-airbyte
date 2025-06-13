@@ -22,13 +22,13 @@ func (r *SourceBrexResourceModel) ToSharedSourceBrexCreateRequest() *shared.Sour
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var userToken string
 	userToken = r.Configuration.UserToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceBrex{
-		UserToken: userToken,
 		StartDate: startDate,
+		UserToken: userToken,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -100,13 +100,13 @@ func (r *SourceBrexResourceModel) ToSharedSourceBrexPutRequest() *shared.SourceB
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var userToken string
 	userToken = r.Configuration.UserToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceBrexUpdate{
-		UserToken: userToken,
 		StartDate: startDate,
+		UserToken: userToken,
 	}
 	out := shared.SourceBrexPutRequest{
 		Name:          name,

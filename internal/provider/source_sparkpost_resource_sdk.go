@@ -25,17 +25,17 @@ func (r *SourceSparkpostResourceModel) ToSharedSourceSparkpostCreateRequest() *s
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	apiPrefix := new(shared.APIEndpointPrefix)
 	if !r.Configuration.APIPrefix.IsUnknown() && !r.Configuration.APIPrefix.IsNull() {
 		*apiPrefix = shared.APIEndpointPrefix(r.Configuration.APIPrefix.ValueString())
 	} else {
 		apiPrefix = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSparkpost{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		APIPrefix: apiPrefix,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,17 +110,17 @@ func (r *SourceSparkpostResourceModel) ToSharedSourceSparkpostPutRequest() *shar
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	apiPrefix := new(shared.SourceSparkpostUpdateAPIEndpointPrefix)
 	if !r.Configuration.APIPrefix.IsUnknown() && !r.Configuration.APIPrefix.IsNull() {
 		*apiPrefix = shared.SourceSparkpostUpdateAPIEndpointPrefix(r.Configuration.APIPrefix.ValueString())
 	} else {
 		apiPrefix = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSparkpostUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		APIPrefix: apiPrefix,
+		StartDate: startDate,
 	}
 	out := shared.SourceSparkpostPutRequest{
 		Name:          name,

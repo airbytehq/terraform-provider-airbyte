@@ -7,92 +7,6 @@ import (
 	"fmt"
 )
 
-type SourceGnewsUpdateLanguage string
-
-const (
-	SourceGnewsUpdateLanguageAr SourceGnewsUpdateLanguage = "ar"
-	SourceGnewsUpdateLanguageZh SourceGnewsUpdateLanguage = "zh"
-	SourceGnewsUpdateLanguageNl SourceGnewsUpdateLanguage = "nl"
-	SourceGnewsUpdateLanguageEn SourceGnewsUpdateLanguage = "en"
-	SourceGnewsUpdateLanguageFr SourceGnewsUpdateLanguage = "fr"
-	SourceGnewsUpdateLanguageDe SourceGnewsUpdateLanguage = "de"
-	SourceGnewsUpdateLanguageEl SourceGnewsUpdateLanguage = "el"
-	SourceGnewsUpdateLanguageHe SourceGnewsUpdateLanguage = "he"
-	SourceGnewsUpdateLanguageHi SourceGnewsUpdateLanguage = "hi"
-	SourceGnewsUpdateLanguageIt SourceGnewsUpdateLanguage = "it"
-	SourceGnewsUpdateLanguageJa SourceGnewsUpdateLanguage = "ja"
-	SourceGnewsUpdateLanguageMl SourceGnewsUpdateLanguage = "ml"
-	SourceGnewsUpdateLanguageMr SourceGnewsUpdateLanguage = "mr"
-	SourceGnewsUpdateLanguageNo SourceGnewsUpdateLanguage = "no"
-	SourceGnewsUpdateLanguagePt SourceGnewsUpdateLanguage = "pt"
-	SourceGnewsUpdateLanguageRo SourceGnewsUpdateLanguage = "ro"
-	SourceGnewsUpdateLanguageRu SourceGnewsUpdateLanguage = "ru"
-	SourceGnewsUpdateLanguageEs SourceGnewsUpdateLanguage = "es"
-	SourceGnewsUpdateLanguageSv SourceGnewsUpdateLanguage = "sv"
-	SourceGnewsUpdateLanguageTa SourceGnewsUpdateLanguage = "ta"
-	SourceGnewsUpdateLanguageTe SourceGnewsUpdateLanguage = "te"
-	SourceGnewsUpdateLanguageUk SourceGnewsUpdateLanguage = "uk"
-)
-
-func (e SourceGnewsUpdateLanguage) ToPointer() *SourceGnewsUpdateLanguage {
-	return &e
-}
-func (e *SourceGnewsUpdateLanguage) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ar":
-		fallthrough
-	case "zh":
-		fallthrough
-	case "nl":
-		fallthrough
-	case "en":
-		fallthrough
-	case "fr":
-		fallthrough
-	case "de":
-		fallthrough
-	case "el":
-		fallthrough
-	case "he":
-		fallthrough
-	case "hi":
-		fallthrough
-	case "it":
-		fallthrough
-	case "ja":
-		fallthrough
-	case "ml":
-		fallthrough
-	case "mr":
-		fallthrough
-	case "no":
-		fallthrough
-	case "pt":
-		fallthrough
-	case "ro":
-		fallthrough
-	case "ru":
-		fallthrough
-	case "es":
-		fallthrough
-	case "sv":
-		fallthrough
-	case "ta":
-		fallthrough
-	case "te":
-		fallthrough
-	case "uk":
-		*e = SourceGnewsUpdateLanguage(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceGnewsUpdateLanguage: %v", v)
-	}
-}
-
 // SourceGnewsUpdateCountry - This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
 type SourceGnewsUpdateCountry string
 
@@ -233,6 +147,92 @@ func (e *SourceGnewsUpdateIn) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type SourceGnewsUpdateLanguage string
+
+const (
+	SourceGnewsUpdateLanguageAr SourceGnewsUpdateLanguage = "ar"
+	SourceGnewsUpdateLanguageZh SourceGnewsUpdateLanguage = "zh"
+	SourceGnewsUpdateLanguageNl SourceGnewsUpdateLanguage = "nl"
+	SourceGnewsUpdateLanguageEn SourceGnewsUpdateLanguage = "en"
+	SourceGnewsUpdateLanguageFr SourceGnewsUpdateLanguage = "fr"
+	SourceGnewsUpdateLanguageDe SourceGnewsUpdateLanguage = "de"
+	SourceGnewsUpdateLanguageEl SourceGnewsUpdateLanguage = "el"
+	SourceGnewsUpdateLanguageHe SourceGnewsUpdateLanguage = "he"
+	SourceGnewsUpdateLanguageHi SourceGnewsUpdateLanguage = "hi"
+	SourceGnewsUpdateLanguageIt SourceGnewsUpdateLanguage = "it"
+	SourceGnewsUpdateLanguageJa SourceGnewsUpdateLanguage = "ja"
+	SourceGnewsUpdateLanguageMl SourceGnewsUpdateLanguage = "ml"
+	SourceGnewsUpdateLanguageMr SourceGnewsUpdateLanguage = "mr"
+	SourceGnewsUpdateLanguageNo SourceGnewsUpdateLanguage = "no"
+	SourceGnewsUpdateLanguagePt SourceGnewsUpdateLanguage = "pt"
+	SourceGnewsUpdateLanguageRo SourceGnewsUpdateLanguage = "ro"
+	SourceGnewsUpdateLanguageRu SourceGnewsUpdateLanguage = "ru"
+	SourceGnewsUpdateLanguageEs SourceGnewsUpdateLanguage = "es"
+	SourceGnewsUpdateLanguageSv SourceGnewsUpdateLanguage = "sv"
+	SourceGnewsUpdateLanguageTa SourceGnewsUpdateLanguage = "ta"
+	SourceGnewsUpdateLanguageTe SourceGnewsUpdateLanguage = "te"
+	SourceGnewsUpdateLanguageUk SourceGnewsUpdateLanguage = "uk"
+)
+
+func (e SourceGnewsUpdateLanguage) ToPointer() *SourceGnewsUpdateLanguage {
+	return &e
+}
+func (e *SourceGnewsUpdateLanguage) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ar":
+		fallthrough
+	case "zh":
+		fallthrough
+	case "nl":
+		fallthrough
+	case "en":
+		fallthrough
+	case "fr":
+		fallthrough
+	case "de":
+		fallthrough
+	case "el":
+		fallthrough
+	case "he":
+		fallthrough
+	case "hi":
+		fallthrough
+	case "it":
+		fallthrough
+	case "ja":
+		fallthrough
+	case "ml":
+		fallthrough
+	case "mr":
+		fallthrough
+	case "no":
+		fallthrough
+	case "pt":
+		fallthrough
+	case "ro":
+		fallthrough
+	case "ru":
+		fallthrough
+	case "es":
+		fallthrough
+	case "sv":
+		fallthrough
+	case "ta":
+		fallthrough
+	case "te":
+		fallthrough
+	case "uk":
+		*e = SourceGnewsUpdateLanguage(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGnewsUpdateLanguage: %v", v)
+	}
+}
+
 type SourceGnewsUpdateNullable string
 
 const (
@@ -346,6 +346,15 @@ func (e *SourceGnewsUpdateTopHeadlinesTopic) UnmarshalJSON(data []byte) error {
 type SourceGnewsUpdate struct {
 	// API Key
 	APIKey string `json:"api_key"`
+	// This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
+	Country *SourceGnewsUpdateCountry `json:"country,omitempty"`
+	// This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
+	EndDate *string `json:"end_date,omitempty"`
+	// This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.
+	In       []SourceGnewsUpdateIn      `json:"in,omitempty"`
+	Language *SourceGnewsUpdateLanguage `json:"language,omitempty"`
+	// This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
+	Nullable []SourceGnewsUpdateNullable `json:"nullable,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
 	//   quotation marks are used to search for articles with the exact same keyword
 	// sequence.
@@ -366,24 +375,15 @@ type SourceGnewsUpdate struct {
 	//   For example the query: Apple NOT iPhone will return all articles matching
 	// the keyword Apple but not the keyword
 	//   iPhone
-	Query    string                     `json:"query"`
-	Language *SourceGnewsUpdateLanguage `json:"language,omitempty"`
-	// This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
-	Country *SourceGnewsUpdateCountry `json:"country,omitempty"`
-	// This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.
-	In []SourceGnewsUpdateIn `json:"in,omitempty"`
-	// This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
-	Nullable []SourceGnewsUpdateNullable `json:"nullable,omitempty"`
-	// This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
-	StartDate *string `json:"start_date,omitempty"`
-	// This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
-	EndDate *string `json:"end_date,omitempty"`
+	Query string `json:"query"`
 	// This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
 	//   - publishedAt = sort by publication date, the articles with the most recent
 	// publication date are returned first
 	//   - relevance = sort by best match to keywords, the articles with the best
 	// match are returned first
 	Sortby *SourceGnewsUpdateSortBy `json:"sortby,omitempty"`
+	// This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
+	StartDate *string `json:"start_date,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
 	//   quotation marks are used to search for articles with the exact same keyword
 	// sequence.
@@ -416,46 +416,11 @@ func (o *SourceGnewsUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceGnewsUpdate) GetQuery() string {
-	if o == nil {
-		return ""
-	}
-	return o.Query
-}
-
-func (o *SourceGnewsUpdate) GetLanguage() *SourceGnewsUpdateLanguage {
-	if o == nil {
-		return nil
-	}
-	return o.Language
-}
-
 func (o *SourceGnewsUpdate) GetCountry() *SourceGnewsUpdateCountry {
 	if o == nil {
 		return nil
 	}
 	return o.Country
-}
-
-func (o *SourceGnewsUpdate) GetIn() []SourceGnewsUpdateIn {
-	if o == nil {
-		return nil
-	}
-	return o.In
-}
-
-func (o *SourceGnewsUpdate) GetNullable() []SourceGnewsUpdateNullable {
-	if o == nil {
-		return nil
-	}
-	return o.Nullable
-}
-
-func (o *SourceGnewsUpdate) GetStartDate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
 }
 
 func (o *SourceGnewsUpdate) GetEndDate() *string {
@@ -465,11 +430,46 @@ func (o *SourceGnewsUpdate) GetEndDate() *string {
 	return o.EndDate
 }
 
+func (o *SourceGnewsUpdate) GetIn() []SourceGnewsUpdateIn {
+	if o == nil {
+		return nil
+	}
+	return o.In
+}
+
+func (o *SourceGnewsUpdate) GetLanguage() *SourceGnewsUpdateLanguage {
+	if o == nil {
+		return nil
+	}
+	return o.Language
+}
+
+func (o *SourceGnewsUpdate) GetNullable() []SourceGnewsUpdateNullable {
+	if o == nil {
+		return nil
+	}
+	return o.Nullable
+}
+
+func (o *SourceGnewsUpdate) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
 func (o *SourceGnewsUpdate) GetSortby() *SourceGnewsUpdateSortBy {
 	if o == nil {
 		return nil
 	}
 	return o.Sortby
+}
+
+func (o *SourceGnewsUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceGnewsUpdate) GetTopHeadlinesQuery() *string {

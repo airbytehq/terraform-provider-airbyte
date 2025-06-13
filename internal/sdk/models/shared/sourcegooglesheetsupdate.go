@@ -193,15 +193,59 @@ func (u SourceGoogleSheetsUpdateAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceGoogleSheetsUpdateAuthentication: all fields are null")
 }
 
+type SourceGoogleSheetsUpdateStreamNameOverrides struct {
+	// The name you want this stream to appear as in Airbyte and your destination.
+	CustomStreamName string `json:"custom_stream_name"`
+	// The exact name of the sheet/tab in your Google Spreadsheet.
+	SourceStreamName string `json:"source_stream_name"`
+}
+
+func (o *SourceGoogleSheetsUpdateStreamNameOverrides) GetCustomStreamName() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomStreamName
+}
+
+func (o *SourceGoogleSheetsUpdateStreamNameOverrides) GetSourceStreamName() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceStreamName
+}
+
 type SourceGoogleSheetsUpdate struct {
+	// Allows column names to start with numbers. Example: "50th Percentile" → "50_th_percentile" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled.
+	AllowLeadingNumbers *bool `default:"false" json:"allow_leading_numbers"`
 	// Default value is 1000000. An integer representing row batch size for each sent request to Google Sheets API. Row batch size means how many rows are processed from the google sheet, for example default value 1000000 would process rows 2-1000002, then 1000003-2000003 and so on. Based on <a href='https://developers.google.com/sheets/api/limits'>Google Sheets API limits documentation</a>, it is possible to send up to 300 requests per minute, but each individual request has to be processed under 180 seconds, otherwise the request returns a timeout error. In regards to this information, consider network speed and number of columns of the google sheet when deciding a batch_size value.
 	BatchSize *int64 `default:"1000000" json:"batch_size"`
-	// Enter the link to the Google spreadsheet you want to sync. To copy the link, click the 'Share' button in the top-right corner of the spreadsheet, then click 'Copy link'.
-	SpreadsheetID string `json:"spreadsheet_id"`
-	// Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.
-	NamesConversion *bool `default:"false" json:"names_conversion"`
+	// Combines adjacent letters and numbers. Example: "Q3 2023" → "q3_2023" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled.
+	CombineLetterNumberPairs *bool `default:"false" json:"combine_letter_number_pairs"`
+	// Combines adjacent numbers and words. Example: "50th Percentile?" → "_50th_percentile_" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled.
+	CombineNumberWordPairs *bool `default:"false" json:"combine_number_word_pairs"`
 	// Credentials for connecting to the Google Sheets API
 	Credentials SourceGoogleSheetsUpdateAuthentication `json:"credentials"`
+	// Converts column names to a SQL-compliant format (snake_case, lowercase, etc). If enabled, you can further customize the sanitization using the options below.
+	NamesConversion *bool `default:"false" json:"names_conversion"`
+	// Removes leading and trailing underscores from column names. Does not remove leading underscores from column names that start with a number. Example: "50th Percentile? "→ "_50_th_percentile" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled.
+	RemoveLeadingTrailingUnderscores *bool `default:"false" json:"remove_leading_trailing_underscores"`
+	// Removes all special characters from column names. Example: "Example ID*" → "example_id" This option will only work if "Convert Column Names to SQL-Compliant Format (names_conversion)" is enabled.
+	RemoveSpecialCharacters *bool `default:"false" json:"remove_special_characters"`
+	// Enter the link to the Google spreadsheet you want to sync. To copy the link, click the 'Share' button in the top-right corner of the spreadsheet, then click 'Copy link'.
+	SpreadsheetID string `json:"spreadsheet_id"`
+	// **Overridden streams will default to Sync Mode: Full Refresh (Append), which does not support primary keys. If you want to use primary keys and deduplication, update the sync mode to "Full Refresh | Overwrite + Deduped" in your connection settings.**
+	// Allows you to rename streams (Google Sheet tab names) as they appear in Airbyte.
+	// Each item should be an object with a `source_stream_name` (the exact name of the sheet/tab in your spreadsheet)  and a `custom_stream_name` (the name you want it to appear as in Airbyte and the destination).
+	// If a `source_stream_name` is not found in your spreadsheet, it will be ignored and the default name will be used. This feature only affects stream (sheet/tab) names, not field/column names.
+	// If you want to rename fields or column names, you can do so using the Airbyte Mappings feature after your connection is created. See the Airbyte documentation for more details on how to use Mappings.
+	// Examples:
+	//   - To rename a sheet called "Sheet1" to "sales_data", and "2024 Q1" to "q1_2024":
+	//     [
+	//       { "source_stream_name": "Sheet1", "custom_stream_name": "sales_data" },
+	//       { "source_stream_name": "2024 Q1", "custom_stream_name": "q1_2024" }
+	//     ]
+	//   - If you do not wish to rename any streams, leave this blank.
+	StreamNameOverrides []SourceGoogleSheetsUpdateStreamNameOverrides `json:"stream_name_overrides,omitempty"`
 }
 
 func (s SourceGoogleSheetsUpdate) MarshalJSON() ([]byte, error) {
@@ -215,6 +259,13 @@ func (s *SourceGoogleSheetsUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceGoogleSheetsUpdate) GetAllowLeadingNumbers() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowLeadingNumbers
+}
+
 func (o *SourceGoogleSheetsUpdate) GetBatchSize() *int64 {
 	if o == nil {
 		return nil
@@ -222,11 +273,25 @@ func (o *SourceGoogleSheetsUpdate) GetBatchSize() *int64 {
 	return o.BatchSize
 }
 
-func (o *SourceGoogleSheetsUpdate) GetSpreadsheetID() string {
+func (o *SourceGoogleSheetsUpdate) GetCombineLetterNumberPairs() *bool {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.SpreadsheetID
+	return o.CombineLetterNumberPairs
+}
+
+func (o *SourceGoogleSheetsUpdate) GetCombineNumberWordPairs() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CombineNumberWordPairs
+}
+
+func (o *SourceGoogleSheetsUpdate) GetCredentials() SourceGoogleSheetsUpdateAuthentication {
+	if o == nil {
+		return SourceGoogleSheetsUpdateAuthentication{}
+	}
+	return o.Credentials
 }
 
 func (o *SourceGoogleSheetsUpdate) GetNamesConversion() *bool {
@@ -236,9 +301,30 @@ func (o *SourceGoogleSheetsUpdate) GetNamesConversion() *bool {
 	return o.NamesConversion
 }
 
-func (o *SourceGoogleSheetsUpdate) GetCredentials() SourceGoogleSheetsUpdateAuthentication {
+func (o *SourceGoogleSheetsUpdate) GetRemoveLeadingTrailingUnderscores() *bool {
 	if o == nil {
-		return SourceGoogleSheetsUpdateAuthentication{}
+		return nil
 	}
-	return o.Credentials
+	return o.RemoveLeadingTrailingUnderscores
+}
+
+func (o *SourceGoogleSheetsUpdate) GetRemoveSpecialCharacters() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RemoveSpecialCharacters
+}
+
+func (o *SourceGoogleSheetsUpdate) GetSpreadsheetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SpreadsheetID
+}
+
+func (o *SourceGoogleSheetsUpdate) GetStreamNameOverrides() []SourceGoogleSheetsUpdateStreamNameOverrides {
+	if o == nil {
+		return nil
+	}
+	return o.StreamNameOverrides
 }

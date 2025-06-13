@@ -35,10 +35,10 @@ func (e *DestinationElasticsearchSchemasAuthenticationMethodMethod) UnmarshalJSO
 // DestinationElasticsearchUsernamePassword - Basic auth header with a username and password
 type DestinationElasticsearchUsernamePassword struct {
 	method DestinationElasticsearchSchemasAuthenticationMethodMethod `const:"basic" json:"method"`
-	// Basic auth username to access a secure Elasticsearch server
-	Username string `json:"username"`
 	// Basic auth password to access a secure Elasticsearch server
 	Password string `json:"password"`
+	// Basic auth username to access a secure Elasticsearch server
+	Username string `json:"username"`
 }
 
 func (d DestinationElasticsearchUsernamePassword) MarshalJSON() ([]byte, error) {
@@ -56,18 +56,18 @@ func (o *DestinationElasticsearchUsernamePassword) GetMethod() DestinationElasti
 	return DestinationElasticsearchSchemasAuthenticationMethodMethodBasic
 }
 
-func (o *DestinationElasticsearchUsernamePassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *DestinationElasticsearchUsernamePassword) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *DestinationElasticsearchUsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type DestinationElasticsearchSchemasMethod string
@@ -93,42 +93,42 @@ func (e *DestinationElasticsearchSchemasMethod) UnmarshalJSON(data []byte) error
 	}
 }
 
-// APIKeySecret - Use a api key and secret combination to authenticate
-type APIKeySecret struct {
-	method DestinationElasticsearchSchemasMethod `const:"secret" json:"method"`
+// DestinationElasticsearchAPIKeySecret - Use a api key and secret combination to authenticate
+type DestinationElasticsearchAPIKeySecret struct {
 	// The Key ID to used when accessing an enterprise Elasticsearch instance.
 	APIKeyID string `json:"apiKeyId"`
 	// The secret associated with the API Key ID.
-	APIKeySecret string `json:"apiKeySecret"`
+	APIKeySecret string                                `json:"apiKeySecret"`
+	method       DestinationElasticsearchSchemasMethod `const:"secret" json:"method"`
 }
 
-func (a APIKeySecret) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
+func (d DestinationElasticsearchAPIKeySecret) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
 }
 
-func (a *APIKeySecret) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+func (d *DestinationElasticsearchAPIKeySecret) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *APIKeySecret) GetMethod() DestinationElasticsearchSchemasMethod {
-	return DestinationElasticsearchSchemasMethodSecret
-}
-
-func (o *APIKeySecret) GetAPIKeyID() string {
+func (o *DestinationElasticsearchAPIKeySecret) GetAPIKeyID() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKeyID
 }
 
-func (o *APIKeySecret) GetAPIKeySecret() string {
+func (o *DestinationElasticsearchAPIKeySecret) GetAPIKeySecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKeySecret
+}
+
+func (o *DestinationElasticsearchAPIKeySecret) GetMethod() DestinationElasticsearchSchemasMethod {
+	return DestinationElasticsearchSchemasMethodSecret
 }
 
 type DestinationElasticsearchMethod string
@@ -154,58 +154,58 @@ func (e *DestinationElasticsearchMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// None - No authentication will be used
-type None struct {
+// DestinationElasticsearchNone - No authentication will be used
+type DestinationElasticsearchNone struct {
 	method DestinationElasticsearchMethod `const:"none" json:"method"`
 }
 
-func (n None) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(n, "", false)
+func (d DestinationElasticsearchNone) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
 }
 
-func (n *None) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
+func (d *DestinationElasticsearchNone) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *None) GetMethod() DestinationElasticsearchMethod {
+func (o *DestinationElasticsearchNone) GetMethod() DestinationElasticsearchMethod {
 	return DestinationElasticsearchMethodNone
 }
 
 type DestinationElasticsearchAuthenticationMethodType string
 
 const (
-	DestinationElasticsearchAuthenticationMethodTypeNone                                     DestinationElasticsearchAuthenticationMethodType = "None"
-	DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret                             DestinationElasticsearchAuthenticationMethodType = "Api Key/Secret"
+	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchNone             DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_None"
+	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret     DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_Api Key/Secret"
 	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchUsernamePassword DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_Username/Password"
 )
 
 // DestinationElasticsearchAuthenticationMethod - The type of authentication to be used
 type DestinationElasticsearchAuthenticationMethod struct {
-	None                                     *None                                     `queryParam:"inline"`
-	APIKeySecret                             *APIKeySecret                             `queryParam:"inline"`
+	DestinationElasticsearchNone             *DestinationElasticsearchNone             `queryParam:"inline"`
+	DestinationElasticsearchAPIKeySecret     *DestinationElasticsearchAPIKeySecret     `queryParam:"inline"`
 	DestinationElasticsearchUsernamePassword *DestinationElasticsearchUsernamePassword `queryParam:"inline"`
 
 	Type DestinationElasticsearchAuthenticationMethodType
 }
 
-func CreateDestinationElasticsearchAuthenticationMethodNone(none None) DestinationElasticsearchAuthenticationMethod {
-	typ := DestinationElasticsearchAuthenticationMethodTypeNone
+func CreateDestinationElasticsearchAuthenticationMethodDestinationElasticsearchNone(destinationElasticsearchNone DestinationElasticsearchNone) DestinationElasticsearchAuthenticationMethod {
+	typ := DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchNone
 
 	return DestinationElasticsearchAuthenticationMethod{
-		None: &none,
-		Type: typ,
+		DestinationElasticsearchNone: &destinationElasticsearchNone,
+		Type:                         typ,
 	}
 }
 
-func CreateDestinationElasticsearchAuthenticationMethodAPIKeySecret(apiKeySecret APIKeySecret) DestinationElasticsearchAuthenticationMethod {
-	typ := DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret
+func CreateDestinationElasticsearchAuthenticationMethodDestinationElasticsearchAPIKeySecret(destinationElasticsearchAPIKeySecret DestinationElasticsearchAPIKeySecret) DestinationElasticsearchAuthenticationMethod {
+	typ := DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret
 
 	return DestinationElasticsearchAuthenticationMethod{
-		APIKeySecret: &apiKeySecret,
-		Type:         typ,
+		DestinationElasticsearchAPIKeySecret: &destinationElasticsearchAPIKeySecret,
+		Type:                                 typ,
 	}
 }
 
@@ -220,17 +220,17 @@ func CreateDestinationElasticsearchAuthenticationMethodDestinationElasticsearchU
 
 func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte) error {
 
-	var none None = None{}
-	if err := utils.UnmarshalJSON(data, &none, "", true, true); err == nil {
-		u.None = &none
-		u.Type = DestinationElasticsearchAuthenticationMethodTypeNone
+	var destinationElasticsearchNone DestinationElasticsearchNone = DestinationElasticsearchNone{}
+	if err := utils.UnmarshalJSON(data, &destinationElasticsearchNone, "", true, true); err == nil {
+		u.DestinationElasticsearchNone = &destinationElasticsearchNone
+		u.Type = DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchNone
 		return nil
 	}
 
-	var apiKeySecret APIKeySecret = APIKeySecret{}
-	if err := utils.UnmarshalJSON(data, &apiKeySecret, "", true, true); err == nil {
-		u.APIKeySecret = &apiKeySecret
-		u.Type = DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret
+	var destinationElasticsearchAPIKeySecret DestinationElasticsearchAPIKeySecret = DestinationElasticsearchAPIKeySecret{}
+	if err := utils.UnmarshalJSON(data, &destinationElasticsearchAPIKeySecret, "", true, true); err == nil {
+		u.DestinationElasticsearchAPIKeySecret = &destinationElasticsearchAPIKeySecret
+		u.Type = DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret
 		return nil
 	}
 
@@ -245,12 +245,12 @@ func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte
 }
 
 func (u DestinationElasticsearchAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.None != nil {
-		return utils.MarshalJSON(u.None, "", true)
+	if u.DestinationElasticsearchNone != nil {
+		return utils.MarshalJSON(u.DestinationElasticsearchNone, "", true)
 	}
 
-	if u.APIKeySecret != nil {
-		return utils.MarshalJSON(u.APIKeySecret, "", true)
+	if u.DestinationElasticsearchAPIKeySecret != nil {
+		return utils.MarshalJSON(u.DestinationElasticsearchAPIKeySecret, "", true)
 	}
 
 	if u.DestinationElasticsearchUsernamePassword != nil {
@@ -285,10 +285,10 @@ func (e *DestinationElasticsearchSchemasTunnelMethodTunnelMethod) UnmarshalJSON(
 }
 
 type DestinationElasticsearchPasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationElasticsearchSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationElasticsearchSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -308,15 +308,15 @@ func (d *DestinationElasticsearchPasswordAuthentication) UnmarshalJSON(data []by
 	return nil
 }
 
-func (o *DestinationElasticsearchPasswordAuthentication) GetTunnelMethod() DestinationElasticsearchSchemasTunnelMethodTunnelMethod {
-	return DestinationElasticsearchSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationElasticsearchPasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationElasticsearchPasswordAuthentication) GetTunnelMethod() DestinationElasticsearchSchemasTunnelMethodTunnelMethod {
+	return DestinationElasticsearchSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationElasticsearchPasswordAuthentication) GetTunnelPort() *int64 {
@@ -365,16 +365,16 @@ func (e *DestinationElasticsearchSchemasTunnelMethod) UnmarshalJSON(data []byte)
 }
 
 type DestinationElasticsearchSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationElasticsearchSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationElasticsearchSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationElasticsearchSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -388,8 +388,11 @@ func (d *DestinationElasticsearchSSHKeyAuthentication) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (o *DestinationElasticsearchSSHKeyAuthentication) GetTunnelMethod() DestinationElasticsearchSchemasTunnelMethod {
-	return DestinationElasticsearchSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationElasticsearchSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationElasticsearchSSHKeyAuthentication) GetTunnelHost() string {
@@ -397,6 +400,10 @@ func (o *DestinationElasticsearchSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationElasticsearchSSHKeyAuthentication) GetTunnelMethod() DestinationElasticsearchSchemasTunnelMethod {
+	return DestinationElasticsearchSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationElasticsearchSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -411,13 +418,6 @@ func (o *DestinationElasticsearchSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationElasticsearchSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationElasticsearchTunnelMethod - No ssh tunnel needed to connect to database
@@ -550,41 +550,43 @@ func (u DestinationElasticsearchSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationElasticsearchSSHTunnelMethod: all fields are null")
 }
 
-type Elasticsearch string
+type DestinationElasticsearchElasticsearch string
 
 const (
-	ElasticsearchElasticsearch Elasticsearch = "elasticsearch"
+	DestinationElasticsearchElasticsearchElasticsearch DestinationElasticsearchElasticsearch = "elasticsearch"
 )
 
-func (e Elasticsearch) ToPointer() *Elasticsearch {
+func (e DestinationElasticsearchElasticsearch) ToPointer() *DestinationElasticsearchElasticsearch {
 	return &e
 }
-func (e *Elasticsearch) UnmarshalJSON(data []byte) error {
+func (e *DestinationElasticsearchElasticsearch) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "elasticsearch":
-		*e = Elasticsearch(v)
+		*e = DestinationElasticsearchElasticsearch(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Elasticsearch: %v", v)
+		return fmt.Errorf("invalid value for DestinationElasticsearchElasticsearch: %v", v)
 	}
 }
 
 type DestinationElasticsearch struct {
-	// The full url of the Elasticsearch server
-	Endpoint string `json:"endpoint"`
-	// If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
-	Upsert *bool `default:"true" json:"upsert"`
-	// CA certificate
-	CaCertificate *string `json:"ca_certificate,omitempty"`
 	// The type of authentication to be used
 	AuthenticationMethod *DestinationElasticsearchAuthenticationMethod `json:"authenticationMethod,omitempty"`
+	// CA certificate
+	CaCertificate *string `json:"ca_certificate,omitempty"`
+	// The full url of the Elasticsearch server
+	Endpoint string `json:"endpoint"`
+	// The Path Prefix of the Elasticsearch server
+	PathPrefix *string `json:"pathPrefix,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-	TunnelMethod    *DestinationElasticsearchSSHTunnelMethod `json:"tunnel_method,omitempty"`
-	destinationType Elasticsearch                            `const:"elasticsearch" json:"destinationType"`
+	TunnelMethod *DestinationElasticsearchSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
+	Upsert          *bool                                 `default:"true" json:"upsert"`
+	destinationType DestinationElasticsearchElasticsearch `const:"elasticsearch" json:"destinationType"`
 }
 
 func (d DestinationElasticsearch) MarshalJSON() ([]byte, error) {
@@ -598,18 +600,11 @@ func (d *DestinationElasticsearch) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationElasticsearch) GetEndpoint() string {
-	if o == nil {
-		return ""
-	}
-	return o.Endpoint
-}
-
-func (o *DestinationElasticsearch) GetUpsert() *bool {
+func (o *DestinationElasticsearch) GetAuthenticationMethod() *DestinationElasticsearchAuthenticationMethod {
 	if o == nil {
 		return nil
 	}
-	return o.Upsert
+	return o.AuthenticationMethod
 }
 
 func (o *DestinationElasticsearch) GetCaCertificate() *string {
@@ -619,11 +614,18 @@ func (o *DestinationElasticsearch) GetCaCertificate() *string {
 	return o.CaCertificate
 }
 
-func (o *DestinationElasticsearch) GetAuthenticationMethod() *DestinationElasticsearchAuthenticationMethod {
+func (o *DestinationElasticsearch) GetEndpoint() string {
+	if o == nil {
+		return ""
+	}
+	return o.Endpoint
+}
+
+func (o *DestinationElasticsearch) GetPathPrefix() *string {
 	if o == nil {
 		return nil
 	}
-	return o.AuthenticationMethod
+	return o.PathPrefix
 }
 
 func (o *DestinationElasticsearch) GetTunnelMethod() *DestinationElasticsearchSSHTunnelMethod {
@@ -633,6 +635,13 @@ func (o *DestinationElasticsearch) GetTunnelMethod() *DestinationElasticsearchSS
 	return o.TunnelMethod
 }
 
-func (o *DestinationElasticsearch) GetDestinationType() Elasticsearch {
-	return ElasticsearchElasticsearch
+func (o *DestinationElasticsearch) GetUpsert() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Upsert
+}
+
+func (o *DestinationElasticsearch) GetDestinationType() DestinationElasticsearchElasticsearch {
+	return DestinationElasticsearchElasticsearchElasticsearch
 }

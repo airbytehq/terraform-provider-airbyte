@@ -33,13 +33,13 @@ func (e *Stockdata) UnmarshalJSON(data []byte) error {
 }
 
 type SourceStockdata struct {
-	APIKey  string `json:"api_key"`
-	Symbols []any  `json:"symbols,omitempty"`
+	APIKey         string `json:"api_key"`
+	FilterEntities *bool  `default:"false" json:"filter_entities"`
 	// Specify the industries of entities which have been identified within the article.
-	Industries     []any     `json:"industries,omitempty"`
-	FilterEntities *bool     `default:"false" json:"filter_entities"`
-	StartDate      time.Time `json:"start_date"`
-	sourceType     Stockdata `const:"stockdata" json:"sourceType"`
+	Industries []any     `json:"industries,omitempty"`
+	StartDate  time.Time `json:"start_date"`
+	Symbols    []any     `json:"symbols,omitempty"`
+	sourceType Stockdata `const:"stockdata" json:"sourceType"`
 }
 
 func (s SourceStockdata) MarshalJSON() ([]byte, error) {
@@ -60,11 +60,11 @@ func (o *SourceStockdata) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceStockdata) GetSymbols() []any {
+func (o *SourceStockdata) GetFilterEntities() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Symbols
+	return o.FilterEntities
 }
 
 func (o *SourceStockdata) GetIndustries() []any {
@@ -74,18 +74,18 @@ func (o *SourceStockdata) GetIndustries() []any {
 	return o.Industries
 }
 
-func (o *SourceStockdata) GetFilterEntities() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.FilterEntities
-}
-
 func (o *SourceStockdata) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceStockdata) GetSymbols() []any {
+	if o == nil {
+		return nil
+	}
+	return o.Symbols
 }
 
 func (o *SourceStockdata) GetSourceType() Stockdata {

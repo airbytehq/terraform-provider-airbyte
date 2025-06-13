@@ -34,9 +34,9 @@ func (e *SourceSlackSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSlackAPIToken struct {
-	optionTitle SourceSlackSchemasOptionTitle `const:"API Token Credentials" json:"option_title"`
 	// A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.
-	APIToken string `json:"api_token"`
+	APIToken    string                        `json:"api_token"`
+	optionTitle SourceSlackSchemasOptionTitle `const:"API Token Credentials" json:"option_title"`
 }
 
 func (s SourceSlackAPIToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceSlackAPIToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSlackAPIToken) GetOptionTitle() SourceSlackSchemasOptionTitle {
-	return SourceSlackSchemasOptionTitleAPITokenCredentials
-}
-
 func (o *SourceSlackAPIToken) GetAPIToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIToken
+}
+
+func (o *SourceSlackAPIToken) GetOptionTitle() SourceSlackSchemasOptionTitle {
+	return SourceSlackSchemasOptionTitleAPITokenCredentials
 }
 
 type SourceSlackOptionTitle string
@@ -85,13 +85,13 @@ func (e *SourceSlackOptionTitle) UnmarshalJSON(data []byte) error {
 }
 
 type SignInViaSlackOAuth struct {
-	optionTitle SourceSlackOptionTitle `const:"Default OAuth2.0 authorization" json:"option_title"`
+	// Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.
+	AccessToken string `json:"access_token"`
 	// Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.
 	ClientID string `json:"client_id"`
 	// Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
-	ClientSecret string `json:"client_secret"`
-	// Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.
-	AccessToken string `json:"access_token"`
+	ClientSecret string                 `json:"client_secret"`
+	optionTitle  SourceSlackOptionTitle `const:"Default OAuth2.0 authorization" json:"option_title"`
 }
 
 func (s SignInViaSlackOAuth) MarshalJSON() ([]byte, error) {
@@ -105,8 +105,11 @@ func (s *SignInViaSlackOAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SignInViaSlackOAuth) GetOptionTitle() SourceSlackOptionTitle {
-	return SourceSlackOptionTitleDefaultOAuth20Authorization
+func (o *SignInViaSlackOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SignInViaSlackOAuth) GetClientID() string {
@@ -123,11 +126,8 @@ func (o *SignInViaSlackOAuth) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SignInViaSlackOAuth) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
+func (o *SignInViaSlackOAuth) GetOptionTitle() SourceSlackOptionTitle {
+	return SourceSlackOptionTitleDefaultOAuth20Authorization
 }
 
 type SourceSlackAuthenticationMechanismType string
@@ -218,19 +218,19 @@ func (e *Slack) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSlack struct {
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
-	// How far into the past to look for messages in threads, default is 0 days
-	LookbackWindow *int64 `default:"0" json:"lookback_window"`
-	// Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages.
-	JoinChannels *bool `default:"true" json:"join_channels"`
-	// Whether to read information from private channels that the bot is already in.  If false, only public channels will be read.  If true, the bot must be manually added to private channels.
-	IncludePrivateChannels *bool `default:"false" json:"include_private_channels"`
 	// A channel name list (without leading '#' char) which limit the channels from which you'd like to sync. Empty list means no filter.
 	ChannelFilter []string `json:"channel_filter,omitempty"`
 	// Choose how to authenticate into Slack
 	Credentials *SourceSlackAuthenticationMechanism `json:"credentials,omitempty"`
-	sourceType  Slack                               `const:"slack" json:"sourceType"`
+	// Whether to read information from private channels that the bot is already in.  If false, only public channels will be read.  If true, the bot must be manually added to private channels.
+	IncludePrivateChannels *bool `default:"false" json:"include_private_channels"`
+	// Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages.
+	JoinChannels *bool `default:"true" json:"join_channels"`
+	// How far into the past to look for messages in threads, default is 0 days
+	LookbackWindow *int64 `default:"0" json:"lookback_window"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate  time.Time `json:"start_date"`
+	sourceType Slack     `const:"slack" json:"sourceType"`
 }
 
 func (s SourceSlack) MarshalJSON() ([]byte, error) {
@@ -242,34 +242,6 @@ func (s *SourceSlack) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceSlack) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
-func (o *SourceSlack) GetLookbackWindow() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.LookbackWindow
-}
-
-func (o *SourceSlack) GetJoinChannels() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.JoinChannels
-}
-
-func (o *SourceSlack) GetIncludePrivateChannels() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IncludePrivateChannels
 }
 
 func (o *SourceSlack) GetChannelFilter() []string {
@@ -284,6 +256,34 @@ func (o *SourceSlack) GetCredentials() *SourceSlackAuthenticationMechanism {
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceSlack) GetIncludePrivateChannels() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludePrivateChannels
+}
+
+func (o *SourceSlack) GetJoinChannels() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.JoinChannels
+}
+
+func (o *SourceSlack) GetLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindow
+}
+
+func (o *SourceSlack) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceSlack) GetSourceType() Slack {

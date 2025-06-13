@@ -32,8 +32,8 @@ func (e *Coassemble) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCoassemble struct {
-	UserToken  string     `json:"user_token"`
 	UserID     string     `json:"user_id"`
+	UserToken  string     `json:"user_token"`
 	sourceType Coassemble `const:"coassemble" json:"sourceType"`
 }
 
@@ -48,18 +48,18 @@ func (s *SourceCoassemble) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceCoassemble) GetUserToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserToken
-}
-
 func (o *SourceCoassemble) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
+}
+
+func (o *SourceCoassemble) GetUserToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserToken
 }
 
 func (o *SourceCoassemble) GetSourceType() Coassemble {

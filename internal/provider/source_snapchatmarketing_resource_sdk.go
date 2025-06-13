@@ -23,12 +23,36 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingCr
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	actionReportTime := new(shared.ActionReportTime)
+	if !r.Configuration.ActionReportTime.IsUnknown() && !r.Configuration.ActionReportTime.IsNull() {
+		*actionReportTime = shared.ActionReportTime(r.Configuration.ActionReportTime.ValueString())
+	} else {
+		actionReportTime = nil
+	}
+	var adAccountIds []interface{} = []interface{}{}
+	for _, adAccountIdsItem := range r.Configuration.AdAccountIds {
+		var adAccountIdsTmp interface{}
+		_ = json.Unmarshal([]byte(adAccountIdsItem.ValueString()), &adAccountIdsTmp)
+		adAccountIds = append(adAccountIds, adAccountIdsTmp)
+	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	var organizationIds []interface{} = []interface{}{}
+	for _, organizationIdsItem := range r.Configuration.OrganizationIds {
+		var organizationIdsTmp interface{}
+		_ = json.Unmarshal([]byte(organizationIdsItem.ValueString()), &organizationIdsTmp)
+		organizationIds = append(organizationIds, organizationIdsTmp)
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
@@ -37,18 +61,6 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingCr
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
-	}
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
-	actionReportTime := new(shared.ActionReportTime)
-	if !r.Configuration.ActionReportTime.IsUnknown() && !r.Configuration.ActionReportTime.IsNull() {
-		*actionReportTime = shared.ActionReportTime(r.Configuration.ActionReportTime.ValueString())
-	} else {
-		actionReportTime = nil
 	}
 	swipeUpAttributionWindow := new(shared.SwipeUpAttributionWindow)
 	if !r.Configuration.SwipeUpAttributionWindow.IsUnknown() && !r.Configuration.SwipeUpAttributionWindow.IsNull() {
@@ -62,29 +74,17 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingCr
 	} else {
 		viewAttributionWindow = nil
 	}
-	var organizationIds []interface{} = []interface{}{}
-	for _, organizationIdsItem := range r.Configuration.OrganizationIds {
-		var organizationIdsTmp interface{}
-		_ = json.Unmarshal([]byte(organizationIdsItem.ValueString()), &organizationIdsTmp)
-		organizationIds = append(organizationIds, organizationIdsTmp)
-	}
-	var adAccountIds []interface{} = []interface{}{}
-	for _, adAccountIdsItem := range r.Configuration.AdAccountIds {
-		var adAccountIdsTmp interface{}
-		_ = json.Unmarshal([]byte(adAccountIdsItem.ValueString()), &adAccountIdsTmp)
-		adAccountIds = append(adAccountIds, adAccountIdsTmp)
-	}
 	configuration := shared.SourceSnapchatMarketing{
+		ActionReportTime:         actionReportTime,
+		AdAccountIds:             adAccountIds,
 		ClientID:                 clientID,
 		ClientSecret:             clientSecret,
+		EndDate:                  endDate,
+		OrganizationIds:          organizationIds,
 		RefreshToken:             refreshToken,
 		StartDate:                startDate,
-		EndDate:                  endDate,
-		ActionReportTime:         actionReportTime,
 		SwipeUpAttributionWindow: swipeUpAttributionWindow,
 		ViewAttributionWindow:    viewAttributionWindow,
-		OrganizationIds:          organizationIds,
-		AdAccountIds:             adAccountIds,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -156,12 +156,36 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingPu
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	actionReportTime := new(shared.SourceSnapchatMarketingUpdateActionReportTime)
+	if !r.Configuration.ActionReportTime.IsUnknown() && !r.Configuration.ActionReportTime.IsNull() {
+		*actionReportTime = shared.SourceSnapchatMarketingUpdateActionReportTime(r.Configuration.ActionReportTime.ValueString())
+	} else {
+		actionReportTime = nil
+	}
+	var adAccountIds []interface{} = []interface{}{}
+	for _, adAccountIdsItem := range r.Configuration.AdAccountIds {
+		var adAccountIdsTmp interface{}
+		_ = json.Unmarshal([]byte(adAccountIdsItem.ValueString()), &adAccountIdsTmp)
+		adAccountIds = append(adAccountIds, adAccountIdsTmp)
+	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	var organizationIds []interface{} = []interface{}{}
+	for _, organizationIdsItem := range r.Configuration.OrganizationIds {
+		var organizationIdsTmp interface{}
+		_ = json.Unmarshal([]byte(organizationIdsItem.ValueString()), &organizationIdsTmp)
+		organizationIds = append(organizationIds, organizationIdsTmp)
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
@@ -170,18 +194,6 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingPu
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
-	}
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
-	actionReportTime := new(shared.SourceSnapchatMarketingUpdateActionReportTime)
-	if !r.Configuration.ActionReportTime.IsUnknown() && !r.Configuration.ActionReportTime.IsNull() {
-		*actionReportTime = shared.SourceSnapchatMarketingUpdateActionReportTime(r.Configuration.ActionReportTime.ValueString())
-	} else {
-		actionReportTime = nil
 	}
 	swipeUpAttributionWindow := new(shared.SourceSnapchatMarketingUpdateSwipeUpAttributionWindow)
 	if !r.Configuration.SwipeUpAttributionWindow.IsUnknown() && !r.Configuration.SwipeUpAttributionWindow.IsNull() {
@@ -195,29 +207,17 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingPu
 	} else {
 		viewAttributionWindow = nil
 	}
-	var organizationIds []interface{} = []interface{}{}
-	for _, organizationIdsItem := range r.Configuration.OrganizationIds {
-		var organizationIdsTmp interface{}
-		_ = json.Unmarshal([]byte(organizationIdsItem.ValueString()), &organizationIdsTmp)
-		organizationIds = append(organizationIds, organizationIdsTmp)
-	}
-	var adAccountIds []interface{} = []interface{}{}
-	for _, adAccountIdsItem := range r.Configuration.AdAccountIds {
-		var adAccountIdsTmp interface{}
-		_ = json.Unmarshal([]byte(adAccountIdsItem.ValueString()), &adAccountIdsTmp)
-		adAccountIds = append(adAccountIds, adAccountIdsTmp)
-	}
 	configuration := shared.SourceSnapchatMarketingUpdate{
+		ActionReportTime:         actionReportTime,
+		AdAccountIds:             adAccountIds,
 		ClientID:                 clientID,
 		ClientSecret:             clientSecret,
+		EndDate:                  endDate,
+		OrganizationIds:          organizationIds,
 		RefreshToken:             refreshToken,
 		StartDate:                startDate,
-		EndDate:                  endDate,
-		ActionReportTime:         actionReportTime,
 		SwipeUpAttributionWindow: swipeUpAttributionWindow,
 		ViewAttributionWindow:    viewAttributionWindow,
-		OrganizationIds:          organizationIds,
-		AdAccountIds:             adAccountIds,
 	}
 	out := shared.SourceSnapchatMarketingPutRequest{
 		Name:          name,

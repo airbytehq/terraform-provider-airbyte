@@ -8,9 +8,9 @@ type SourceUnleashUpdate struct {
 	// Your API URL. No trailing slash. ex: https://unleash.host.com/api
 	APIURL string `json:"api_url"`
 	// Use this if you want to filter the API call for only one given project (can be used in addition to the "Feature Name Prefix" field). See <a href="https://docs.getunleash.io/reference/api/legacy/unleash/client/features#filter-feature-toggles">here</a>
-	ProjectName *string `json:"project_name,omitempty"`
-	// Use this if you want to filter the API call for only one given project (can be used in addition to the "Feature Name Prefix" field). See <a href="https://docs.getunleash.io/reference/api/legacy/unleash/client/features#filter-feature-toggles">here</a>
 	Nameprefix *string `json:"nameprefix,omitempty"`
+	// Use this if you want to filter the API call for only one given project (can be used in addition to the "Feature Name Prefix" field). See <a href="https://docs.getunleash.io/reference/api/legacy/unleash/client/features#filter-feature-toggles">here</a>
+	ProjectName *string `json:"project_name,omitempty"`
 }
 
 func (o *SourceUnleashUpdate) GetAPIToken() string {
@@ -27,16 +27,16 @@ func (o *SourceUnleashUpdate) GetAPIURL() string {
 	return o.APIURL
 }
 
-func (o *SourceUnleashUpdate) GetProjectName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectName
-}
-
 func (o *SourceUnleashUpdate) GetNameprefix() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Nameprefix
+}
+
+func (o *SourceUnleashUpdate) GetProjectName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectName
 }

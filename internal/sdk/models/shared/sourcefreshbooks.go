@@ -33,16 +33,16 @@ func (e *Freshbooks) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFreshbooks struct {
-	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
-	RedirectURI        string `json:"redirect_uri"`
 	AccountID          string `json:"account_id"`
+	BusinessUUID       string `json:"business_uuid"`
+	ClientID           string `json:"client_id"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	// The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
 	OauthAccessToken *string `json:"oauth_access_token,omitempty"`
 	// The date the current access token expires in. This field might be overridden by the connector based on the token refresh endpoint response.
 	OauthTokenExpiryDate *time.Time `json:"oauth_token_expiry_date,omitempty"`
-	BusinessUUID         string     `json:"business_uuid"`
+	RedirectURI          string     `json:"redirect_uri"`
 	sourceType           Freshbooks `const:"freshbooks" json:"sourceType"`
 }
 
@@ -57,27 +57,6 @@ func (s *SourceFreshbooks) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFreshbooks) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *SourceFreshbooks) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-func (o *SourceFreshbooks) GetRedirectURI() string {
-	if o == nil {
-		return ""
-	}
-	return o.RedirectURI
-}
-
 func (o *SourceFreshbooks) GetAccountID() string {
 	if o == nil {
 		return ""
@@ -85,11 +64,32 @@ func (o *SourceFreshbooks) GetAccountID() string {
 	return o.AccountID
 }
 
+func (o *SourceFreshbooks) GetBusinessUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.BusinessUUID
+}
+
+func (o *SourceFreshbooks) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
 func (o *SourceFreshbooks) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceFreshbooks) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceFreshbooks) GetOauthAccessToken() *string {
@@ -106,11 +106,11 @@ func (o *SourceFreshbooks) GetOauthTokenExpiryDate() *time.Time {
 	return o.OauthTokenExpiryDate
 }
 
-func (o *SourceFreshbooks) GetBusinessUUID() string {
+func (o *SourceFreshbooks) GetRedirectURI() string {
 	if o == nil {
 		return ""
 	}
-	return o.BusinessUUID
+	return o.RedirectURI
 }
 
 func (o *SourceFreshbooks) GetSourceType() Freshbooks {

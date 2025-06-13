@@ -34,12 +34,12 @@ func (e *DestinationAwsDatalakeSchemasCredentialsTitle) UnmarshalJSON(data []byt
 }
 
 type IAMUser struct {
-	// Name of the credentials
-	credentialsTitle *DestinationAwsDatalakeSchemasCredentialsTitle `const:"IAM User" json:"credentials_title"`
 	// AWS User Access Key Id
 	AwsAccessKeyID string `json:"aws_access_key_id"`
 	// Secret Access Key
 	AwsSecretAccessKey string `json:"aws_secret_access_key"`
+	// Name of the credentials
+	credentialsTitle *DestinationAwsDatalakeSchemasCredentialsTitle `const:"IAM User" json:"credentials_title"`
 }
 
 func (i IAMUser) MarshalJSON() ([]byte, error) {
@@ -51,10 +51,6 @@ func (i *IAMUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *IAMUser) GetCredentialsTitle() *DestinationAwsDatalakeSchemasCredentialsTitle {
-	return DestinationAwsDatalakeSchemasCredentialsTitleIamUser.ToPointer()
 }
 
 func (o *IAMUser) GetAwsAccessKeyID() string {
@@ -69,6 +65,10 @@ func (o *IAMUser) GetAwsSecretAccessKey() string {
 		return ""
 	}
 	return o.AwsSecretAccessKey
+}
+
+func (o *IAMUser) GetCredentialsTitle() *DestinationAwsDatalakeSchemasCredentialsTitle {
+	return DestinationAwsDatalakeSchemasCredentialsTitleIamUser.ToPointer()
 }
 
 // DestinationAwsDatalakeCredentialsTitle - Name of the credentials
@@ -186,6 +186,280 @@ func (u AuthenticationMode) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type AuthenticationMode: all fields are null")
+}
+
+// DestinationAwsDatalakeCompressionCodecOptional - The compression algorithm used to compress data.
+type DestinationAwsDatalakeCompressionCodecOptional string
+
+const (
+	DestinationAwsDatalakeCompressionCodecOptionalUncompressed DestinationAwsDatalakeCompressionCodecOptional = "UNCOMPRESSED"
+	DestinationAwsDatalakeCompressionCodecOptionalSnappy       DestinationAwsDatalakeCompressionCodecOptional = "SNAPPY"
+	DestinationAwsDatalakeCompressionCodecOptionalGzip         DestinationAwsDatalakeCompressionCodecOptional = "GZIP"
+	DestinationAwsDatalakeCompressionCodecOptionalZstd         DestinationAwsDatalakeCompressionCodecOptional = "ZSTD"
+)
+
+func (e DestinationAwsDatalakeCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeCompressionCodecOptional {
+	return &e
+}
+func (e *DestinationAwsDatalakeCompressionCodecOptional) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "UNCOMPRESSED":
+		fallthrough
+	case "SNAPPY":
+		fallthrough
+	case "GZIP":
+		fallthrough
+	case "ZSTD":
+		*e = DestinationAwsDatalakeCompressionCodecOptional(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeCompressionCodecOptional: %v", v)
+	}
+}
+
+type DestinationAwsDatalakeFormatTypeWildcard string
+
+const (
+	DestinationAwsDatalakeFormatTypeWildcardParquet DestinationAwsDatalakeFormatTypeWildcard = "Parquet"
+)
+
+func (e DestinationAwsDatalakeFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeFormatTypeWildcard {
+	return &e
+}
+func (e *DestinationAwsDatalakeFormatTypeWildcard) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Parquet":
+		*e = DestinationAwsDatalakeFormatTypeWildcard(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeFormatTypeWildcard: %v", v)
+	}
+}
+
+type ParquetColumnarStorage struct {
+	// The compression algorithm used to compress data.
+	CompressionCodec *DestinationAwsDatalakeCompressionCodecOptional `default:"SNAPPY" json:"compression_codec"`
+	FormatType       *DestinationAwsDatalakeFormatTypeWildcard       `default:"Parquet" json:"format_type"`
+}
+
+func (p ParquetColumnarStorage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *ParquetColumnarStorage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ParquetColumnarStorage) GetCompressionCodec() *DestinationAwsDatalakeCompressionCodecOptional {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionCodec
+}
+
+func (o *ParquetColumnarStorage) GetFormatType() *DestinationAwsDatalakeFormatTypeWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
+// CompressionCodecOptional - The compression algorithm used to compress data.
+type CompressionCodecOptional string
+
+const (
+	CompressionCodecOptionalUncompressed CompressionCodecOptional = "UNCOMPRESSED"
+	CompressionCodecOptionalGzip         CompressionCodecOptional = "GZIP"
+)
+
+func (e CompressionCodecOptional) ToPointer() *CompressionCodecOptional {
+	return &e
+}
+func (e *CompressionCodecOptional) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "UNCOMPRESSED":
+		fallthrough
+	case "GZIP":
+		*e = CompressionCodecOptional(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CompressionCodecOptional: %v", v)
+	}
+}
+
+type FormatTypeWildcard string
+
+const (
+	FormatTypeWildcardJsonl FormatTypeWildcard = "JSONL"
+)
+
+func (e FormatTypeWildcard) ToPointer() *FormatTypeWildcard {
+	return &e
+}
+func (e *FormatTypeWildcard) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "JSONL":
+		*e = FormatTypeWildcard(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for FormatTypeWildcard: %v", v)
+	}
+}
+
+type JSONLinesNewlineDelimitedJSON struct {
+	// The compression algorithm used to compress data.
+	CompressionCodec *CompressionCodecOptional `default:"UNCOMPRESSED" json:"compression_codec"`
+	FormatType       *FormatTypeWildcard       `default:"JSONL" json:"format_type"`
+}
+
+func (j JSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(j, "", false)
+}
+
+func (j *JSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &j, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *JSONLinesNewlineDelimitedJSON) GetCompressionCodec() *CompressionCodecOptional {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionCodec
+}
+
+func (o *JSONLinesNewlineDelimitedJSON) GetFormatType() *FormatTypeWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
+type OutputFormatWildcardType string
+
+const (
+	OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON OutputFormatWildcardType = "JSON Lines: Newline-delimited JSON"
+	OutputFormatWildcardTypeParquetColumnarStorage        OutputFormatWildcardType = "Parquet: Columnar Storage"
+)
+
+// OutputFormatWildcard - Format of the data output.
+type OutputFormatWildcard struct {
+	JSONLinesNewlineDelimitedJSON *JSONLinesNewlineDelimitedJSON `queryParam:"inline"`
+	ParquetColumnarStorage        *ParquetColumnarStorage        `queryParam:"inline"`
+
+	Type OutputFormatWildcardType
+}
+
+func CreateOutputFormatWildcardJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON JSONLinesNewlineDelimitedJSON) OutputFormatWildcard {
+	typ := OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON
+
+	return OutputFormatWildcard{
+		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
+		Type:                          typ,
+	}
+}
+
+func CreateOutputFormatWildcardParquetColumnarStorage(parquetColumnarStorage ParquetColumnarStorage) OutputFormatWildcard {
+	typ := OutputFormatWildcardTypeParquetColumnarStorage
+
+	return OutputFormatWildcard{
+		ParquetColumnarStorage: &parquetColumnarStorage,
+		Type:                   typ,
+	}
+}
+
+func (u *OutputFormatWildcard) UnmarshalJSON(data []byte) error {
+
+	var jsonLinesNewlineDelimitedJSON JSONLinesNewlineDelimitedJSON = JSONLinesNewlineDelimitedJSON{}
+	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.JSONLinesNewlineDelimitedJSON = &jsonLinesNewlineDelimitedJSON
+		u.Type = OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON
+		return nil
+	}
+
+	var parquetColumnarStorage ParquetColumnarStorage = ParquetColumnarStorage{}
+	if err := utils.UnmarshalJSON(data, &parquetColumnarStorage, "", true, true); err == nil {
+		u.ParquetColumnarStorage = &parquetColumnarStorage
+		u.Type = OutputFormatWildcardTypeParquetColumnarStorage
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OutputFormatWildcard", string(data))
+}
+
+func (u OutputFormatWildcard) MarshalJSON() ([]byte, error) {
+	if u.JSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
+	}
+
+	if u.ParquetColumnarStorage != nil {
+		return utils.MarshalJSON(u.ParquetColumnarStorage, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type OutputFormatWildcard: all fields are null")
+}
+
+// ChooseHowToPartitionData - Partition data by cursor fields when a cursor field is a date
+type ChooseHowToPartitionData string
+
+const (
+	ChooseHowToPartitionDataNoPartitioning ChooseHowToPartitionData = "NO PARTITIONING"
+	ChooseHowToPartitionDataDate           ChooseHowToPartitionData = "DATE"
+	ChooseHowToPartitionDataYear           ChooseHowToPartitionData = "YEAR"
+	ChooseHowToPartitionDataMonth          ChooseHowToPartitionData = "MONTH"
+	ChooseHowToPartitionDataDay            ChooseHowToPartitionData = "DAY"
+	ChooseHowToPartitionDataYearMonth      ChooseHowToPartitionData = "YEAR/MONTH"
+	ChooseHowToPartitionDataYearMonthDay   ChooseHowToPartitionData = "YEAR/MONTH/DAY"
+)
+
+func (e ChooseHowToPartitionData) ToPointer() *ChooseHowToPartitionData {
+	return &e
+}
+func (e *ChooseHowToPartitionData) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "NO PARTITIONING":
+		fallthrough
+	case "DATE":
+		fallthrough
+	case "YEAR":
+		fallthrough
+	case "MONTH":
+		fallthrough
+	case "DAY":
+		fallthrough
+	case "YEAR/MONTH":
+		fallthrough
+	case "YEAR/MONTH/DAY":
+		*e = ChooseHowToPartitionData(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ChooseHowToPartitionData: %v", v)
+	}
 }
 
 // S3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
@@ -311,280 +585,6 @@ func (e *S3BucketRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationAwsDatalakeFormatTypeWildcard string
-
-const (
-	DestinationAwsDatalakeFormatTypeWildcardParquet DestinationAwsDatalakeFormatTypeWildcard = "Parquet"
-)
-
-func (e DestinationAwsDatalakeFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeFormatTypeWildcard {
-	return &e
-}
-func (e *DestinationAwsDatalakeFormatTypeWildcard) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Parquet":
-		*e = DestinationAwsDatalakeFormatTypeWildcard(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeFormatTypeWildcard: %v", v)
-	}
-}
-
-// DestinationAwsDatalakeCompressionCodecOptional - The compression algorithm used to compress data.
-type DestinationAwsDatalakeCompressionCodecOptional string
-
-const (
-	DestinationAwsDatalakeCompressionCodecOptionalUncompressed DestinationAwsDatalakeCompressionCodecOptional = "UNCOMPRESSED"
-	DestinationAwsDatalakeCompressionCodecOptionalSnappy       DestinationAwsDatalakeCompressionCodecOptional = "SNAPPY"
-	DestinationAwsDatalakeCompressionCodecOptionalGzip         DestinationAwsDatalakeCompressionCodecOptional = "GZIP"
-	DestinationAwsDatalakeCompressionCodecOptionalZstd         DestinationAwsDatalakeCompressionCodecOptional = "ZSTD"
-)
-
-func (e DestinationAwsDatalakeCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeCompressionCodecOptional {
-	return &e
-}
-func (e *DestinationAwsDatalakeCompressionCodecOptional) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "UNCOMPRESSED":
-		fallthrough
-	case "SNAPPY":
-		fallthrough
-	case "GZIP":
-		fallthrough
-	case "ZSTD":
-		*e = DestinationAwsDatalakeCompressionCodecOptional(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeCompressionCodecOptional: %v", v)
-	}
-}
-
-type ParquetColumnarStorage struct {
-	FormatType *DestinationAwsDatalakeFormatTypeWildcard `default:"Parquet" json:"format_type"`
-	// The compression algorithm used to compress data.
-	CompressionCodec *DestinationAwsDatalakeCompressionCodecOptional `default:"SNAPPY" json:"compression_codec"`
-}
-
-func (p ParquetColumnarStorage) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(p, "", false)
-}
-
-func (p *ParquetColumnarStorage) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *ParquetColumnarStorage) GetFormatType() *DestinationAwsDatalakeFormatTypeWildcard {
-	if o == nil {
-		return nil
-	}
-	return o.FormatType
-}
-
-func (o *ParquetColumnarStorage) GetCompressionCodec() *DestinationAwsDatalakeCompressionCodecOptional {
-	if o == nil {
-		return nil
-	}
-	return o.CompressionCodec
-}
-
-type FormatTypeWildcard string
-
-const (
-	FormatTypeWildcardJsonl FormatTypeWildcard = "JSONL"
-)
-
-func (e FormatTypeWildcard) ToPointer() *FormatTypeWildcard {
-	return &e
-}
-func (e *FormatTypeWildcard) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "JSONL":
-		*e = FormatTypeWildcard(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for FormatTypeWildcard: %v", v)
-	}
-}
-
-// CompressionCodecOptional - The compression algorithm used to compress data.
-type CompressionCodecOptional string
-
-const (
-	CompressionCodecOptionalUncompressed CompressionCodecOptional = "UNCOMPRESSED"
-	CompressionCodecOptionalGzip         CompressionCodecOptional = "GZIP"
-)
-
-func (e CompressionCodecOptional) ToPointer() *CompressionCodecOptional {
-	return &e
-}
-func (e *CompressionCodecOptional) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "UNCOMPRESSED":
-		fallthrough
-	case "GZIP":
-		*e = CompressionCodecOptional(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CompressionCodecOptional: %v", v)
-	}
-}
-
-type JSONLinesNewlineDelimitedJSON struct {
-	FormatType *FormatTypeWildcard `default:"JSONL" json:"format_type"`
-	// The compression algorithm used to compress data.
-	CompressionCodec *CompressionCodecOptional `default:"UNCOMPRESSED" json:"compression_codec"`
-}
-
-func (j JSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(j, "", false)
-}
-
-func (j *JSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &j, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *JSONLinesNewlineDelimitedJSON) GetFormatType() *FormatTypeWildcard {
-	if o == nil {
-		return nil
-	}
-	return o.FormatType
-}
-
-func (o *JSONLinesNewlineDelimitedJSON) GetCompressionCodec() *CompressionCodecOptional {
-	if o == nil {
-		return nil
-	}
-	return o.CompressionCodec
-}
-
-type OutputFormatWildcardType string
-
-const (
-	OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON OutputFormatWildcardType = "JSON Lines: Newline-delimited JSON"
-	OutputFormatWildcardTypeParquetColumnarStorage        OutputFormatWildcardType = "Parquet: Columnar Storage"
-)
-
-// OutputFormatWildcard - Format of the data output.
-type OutputFormatWildcard struct {
-	JSONLinesNewlineDelimitedJSON *JSONLinesNewlineDelimitedJSON `queryParam:"inline"`
-	ParquetColumnarStorage        *ParquetColumnarStorage        `queryParam:"inline"`
-
-	Type OutputFormatWildcardType
-}
-
-func CreateOutputFormatWildcardJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON JSONLinesNewlineDelimitedJSON) OutputFormatWildcard {
-	typ := OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON
-
-	return OutputFormatWildcard{
-		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
-		Type:                          typ,
-	}
-}
-
-func CreateOutputFormatWildcardParquetColumnarStorage(parquetColumnarStorage ParquetColumnarStorage) OutputFormatWildcard {
-	typ := OutputFormatWildcardTypeParquetColumnarStorage
-
-	return OutputFormatWildcard{
-		ParquetColumnarStorage: &parquetColumnarStorage,
-		Type:                   typ,
-	}
-}
-
-func (u *OutputFormatWildcard) UnmarshalJSON(data []byte) error {
-
-	var jsonLinesNewlineDelimitedJSON JSONLinesNewlineDelimitedJSON = JSONLinesNewlineDelimitedJSON{}
-	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
-		u.JSONLinesNewlineDelimitedJSON = &jsonLinesNewlineDelimitedJSON
-		u.Type = OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON
-		return nil
-	}
-
-	var parquetColumnarStorage ParquetColumnarStorage = ParquetColumnarStorage{}
-	if err := utils.UnmarshalJSON(data, &parquetColumnarStorage, "", true, true); err == nil {
-		u.ParquetColumnarStorage = &parquetColumnarStorage
-		u.Type = OutputFormatWildcardTypeParquetColumnarStorage
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OutputFormatWildcard", string(data))
-}
-
-func (u OutputFormatWildcard) MarshalJSON() ([]byte, error) {
-	if u.JSONLinesNewlineDelimitedJSON != nil {
-		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
-	}
-
-	if u.ParquetColumnarStorage != nil {
-		return utils.MarshalJSON(u.ParquetColumnarStorage, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type OutputFormatWildcard: all fields are null")
-}
-
-// ChooseHowToPartitionData - Partition data by cursor fields when a cursor field is a date
-type ChooseHowToPartitionData string
-
-const (
-	ChooseHowToPartitionDataNoPartitioning ChooseHowToPartitionData = "NO PARTITIONING"
-	ChooseHowToPartitionDataDate           ChooseHowToPartitionData = "DATE"
-	ChooseHowToPartitionDataYear           ChooseHowToPartitionData = "YEAR"
-	ChooseHowToPartitionDataMonth          ChooseHowToPartitionData = "MONTH"
-	ChooseHowToPartitionDataDay            ChooseHowToPartitionData = "DAY"
-	ChooseHowToPartitionDataYearMonth      ChooseHowToPartitionData = "YEAR/MONTH"
-	ChooseHowToPartitionDataYearMonthDay   ChooseHowToPartitionData = "YEAR/MONTH/DAY"
-)
-
-func (e ChooseHowToPartitionData) ToPointer() *ChooseHowToPartitionData {
-	return &e
-}
-func (e *ChooseHowToPartitionData) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "NO PARTITIONING":
-		fallthrough
-	case "DATE":
-		fallthrough
-	case "YEAR":
-		fallthrough
-	case "MONTH":
-		fallthrough
-	case "DAY":
-		fallthrough
-	case "YEAR/MONTH":
-		fallthrough
-	case "YEAR/MONTH/DAY":
-		*e = ChooseHowToPartitionData(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ChooseHowToPartitionData: %v", v)
-	}
-}
-
 type AwsDatalake string
 
 const (
@@ -611,29 +611,29 @@ func (e *AwsDatalake) UnmarshalJSON(data []byte) error {
 type DestinationAwsDatalake struct {
 	// target aws account id
 	AwsAccountID *string `json:"aws_account_id,omitempty"`
-	// Choose How to Authenticate to AWS.
-	Credentials AuthenticationMode `json:"credentials"`
-	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-	Region *S3BucketRegion `default:"" json:"region"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 	BucketName string `json:"bucket_name"`
 	// S3 prefix
 	BucketPrefix *string `json:"bucket_prefix,omitempty"`
-	// The default database this destination will use to create tables in per stream. Can be changed per connection by customizing the namespace.
-	LakeformationDatabaseName string `json:"lakeformation_database_name"`
+	// Choose How to Authenticate to AWS.
+	Credentials AuthenticationMode `json:"credentials"`
+	// Format of the data output.
+	Format *OutputFormatWildcard `json:"format,omitempty"`
+	// Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source.
+	GlueCatalogFloatAsDecimal *bool `default:"false" json:"glue_catalog_float_as_decimal"`
 	// Add a default tag key to databases created by this destination
 	LakeformationDatabaseDefaultTagKey *string `json:"lakeformation_database_default_tag_key,omitempty"`
 	// Add default values for the `Tag Key` to databases created by this destination. Comma separate for multiple values.
 	LakeformationDatabaseDefaultTagValues *string `json:"lakeformation_database_default_tag_values,omitempty"`
+	// The default database this destination will use to create tables in per stream. Can be changed per connection by customizing the namespace.
+	LakeformationDatabaseName string `json:"lakeformation_database_name"`
 	// Whether to create tables as LF governed tables.
 	LakeformationGovernedTables *bool `default:"false" json:"lakeformation_governed_tables"`
-	// Format of the data output.
-	Format *OutputFormatWildcard `json:"format,omitempty"`
 	// Partition data by cursor fields when a cursor field is a date
 	Partitioning *ChooseHowToPartitionData `default:"NO PARTITIONING" json:"partitioning"`
-	// Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source.
-	GlueCatalogFloatAsDecimal *bool       `default:"false" json:"glue_catalog_float_as_decimal"`
-	destinationType           AwsDatalake `const:"aws-datalake" json:"destinationType"`
+	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
+	Region          *S3BucketRegion `default:"" json:"region"`
+	destinationType AwsDatalake     `const:"aws-datalake" json:"destinationType"`
 }
 
 func (d DestinationAwsDatalake) MarshalJSON() ([]byte, error) {
@@ -654,20 +654,6 @@ func (o *DestinationAwsDatalake) GetAwsAccountID() *string {
 	return o.AwsAccountID
 }
 
-func (o *DestinationAwsDatalake) GetCredentials() AuthenticationMode {
-	if o == nil {
-		return AuthenticationMode{}
-	}
-	return o.Credentials
-}
-
-func (o *DestinationAwsDatalake) GetRegion() *S3BucketRegion {
-	if o == nil {
-		return nil
-	}
-	return o.Region
-}
-
 func (o *DestinationAwsDatalake) GetBucketName() string {
 	if o == nil {
 		return ""
@@ -682,11 +668,25 @@ func (o *DestinationAwsDatalake) GetBucketPrefix() *string {
 	return o.BucketPrefix
 }
 
-func (o *DestinationAwsDatalake) GetLakeformationDatabaseName() string {
+func (o *DestinationAwsDatalake) GetCredentials() AuthenticationMode {
 	if o == nil {
-		return ""
+		return AuthenticationMode{}
 	}
-	return o.LakeformationDatabaseName
+	return o.Credentials
+}
+
+func (o *DestinationAwsDatalake) GetFormat() *OutputFormatWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.Format
+}
+
+func (o *DestinationAwsDatalake) GetGlueCatalogFloatAsDecimal() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.GlueCatalogFloatAsDecimal
 }
 
 func (o *DestinationAwsDatalake) GetLakeformationDatabaseDefaultTagKey() *string {
@@ -703,18 +703,18 @@ func (o *DestinationAwsDatalake) GetLakeformationDatabaseDefaultTagValues() *str
 	return o.LakeformationDatabaseDefaultTagValues
 }
 
+func (o *DestinationAwsDatalake) GetLakeformationDatabaseName() string {
+	if o == nil {
+		return ""
+	}
+	return o.LakeformationDatabaseName
+}
+
 func (o *DestinationAwsDatalake) GetLakeformationGovernedTables() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.LakeformationGovernedTables
-}
-
-func (o *DestinationAwsDatalake) GetFormat() *OutputFormatWildcard {
-	if o == nil {
-		return nil
-	}
-	return o.Format
 }
 
 func (o *DestinationAwsDatalake) GetPartitioning() *ChooseHowToPartitionData {
@@ -724,11 +724,11 @@ func (o *DestinationAwsDatalake) GetPartitioning() *ChooseHowToPartitionData {
 	return o.Partitioning
 }
 
-func (o *DestinationAwsDatalake) GetGlueCatalogFloatAsDecimal() *bool {
+func (o *DestinationAwsDatalake) GetRegion() *S3BucketRegion {
 	if o == nil {
 		return nil
 	}
-	return o.GlueCatalogFloatAsDecimal
+	return o.Region
 }
 
 func (o *DestinationAwsDatalake) GetDestinationType() AwsDatalake {

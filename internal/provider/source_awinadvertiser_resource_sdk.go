@@ -28,22 +28,22 @@ func (r *SourceAwinAdvertiserResourceModel) ToSharedSourceAwinAdvertiserCreateRe
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var lookbackDays int64
+	lookbackDays = r.Configuration.LookbackDays.ValueInt64()
+
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	stepIncrement := new(string)
 	if !r.Configuration.StepIncrement.IsUnknown() && !r.Configuration.StepIncrement.IsNull() {
 		*stepIncrement = r.Configuration.StepIncrement.ValueString()
 	} else {
 		stepIncrement = nil
 	}
-	var lookbackDays int64
-	lookbackDays = r.Configuration.LookbackDays.ValueInt64()
-
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAwinAdvertiser{
 		AdvertiserID:  advertiserID,
 		APIKey:        apiKey,
-		StepIncrement: stepIncrement,
 		LookbackDays:  lookbackDays,
 		StartDate:     startDate,
+		StepIncrement: stepIncrement,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -121,22 +121,22 @@ func (r *SourceAwinAdvertiserResourceModel) ToSharedSourceAwinAdvertiserPutReque
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var lookbackDays int64
+	lookbackDays = r.Configuration.LookbackDays.ValueInt64()
+
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	stepIncrement := new(string)
 	if !r.Configuration.StepIncrement.IsUnknown() && !r.Configuration.StepIncrement.IsNull() {
 		*stepIncrement = r.Configuration.StepIncrement.ValueString()
 	} else {
 		stepIncrement = nil
 	}
-	var lookbackDays int64
-	lookbackDays = r.Configuration.LookbackDays.ValueInt64()
-
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAwinAdvertiserUpdate{
 		AdvertiserID:  advertiserID,
 		APIKey:        apiKey,
-		StepIncrement: stepIncrement,
 		LookbackDays:  lookbackDays,
 		StartDate:     startDate,
+		StepIncrement: stepIncrement,
 	}
 	out := shared.SourceAwinAdvertiserPutRequest{
 		Name:          name,

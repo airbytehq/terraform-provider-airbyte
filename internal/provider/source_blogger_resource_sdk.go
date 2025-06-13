@@ -24,16 +24,16 @@ func (r *SourceBloggerResourceModel) ToSharedSourceBloggerCreateRequest() *share
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	configuration := shared.SourceBlogger{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,16 +108,16 @@ func (r *SourceBloggerResourceModel) ToSharedSourceBloggerPutRequest() *shared.S
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	configuration := shared.SourceBloggerUpdate{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 	}
 	out := shared.SourceBloggerPutRequest{
 		Name:          name,

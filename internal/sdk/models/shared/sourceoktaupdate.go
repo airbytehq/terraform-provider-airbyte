@@ -34,9 +34,9 @@ func (e *SourceOktaUpdateSchemasCredentialsAuthType) UnmarshalJSON(data []byte) 
 }
 
 type SourceOktaUpdateAPIToken struct {
-	authType SourceOktaUpdateSchemasCredentialsAuthType `const:"api_token" json:"auth_type"`
 	// An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
-	APIToken string `json:"api_token"`
+	APIToken string                                     `json:"api_token"`
+	authType SourceOktaUpdateSchemasCredentialsAuthType `const:"api_token" json:"auth_type"`
 }
 
 func (s SourceOktaUpdateAPIToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceOktaUpdateAPIToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceOktaUpdateAPIToken) GetAuthType() SourceOktaUpdateSchemasCredentialsAuthType {
-	return SourceOktaUpdateSchemasCredentialsAuthTypeAPIToken
-}
-
 func (o *SourceOktaUpdateAPIToken) GetAPIToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIToken
+}
+
+func (o *SourceOktaUpdateAPIToken) GetAuthType() SourceOktaUpdateSchemasCredentialsAuthType {
+	return SourceOktaUpdateSchemasCredentialsAuthTypeAPIToken
 }
 
 type SourceOktaUpdateSchemasAuthType string

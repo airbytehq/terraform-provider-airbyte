@@ -35,13 +35,13 @@ func (e *Oura) UnmarshalJSON(data []byte) error {
 type SourceOura struct {
 	// API Key
 	APIKey string `json:"api_key"`
+	// End datetime to sync until. Default is current UTC datetime.
+	EndDatetime *time.Time `json:"end_datetime,omitempty"`
 	// Start datetime to sync from. Default is current UTC datetime minus 1
 	// day.
 	//
 	StartDatetime *time.Time `json:"start_datetime,omitempty"`
-	// End datetime to sync until. Default is current UTC datetime.
-	EndDatetime *time.Time `json:"end_datetime,omitempty"`
-	sourceType  Oura       `const:"oura" json:"sourceType"`
+	sourceType    Oura       `const:"oura" json:"sourceType"`
 }
 
 func (s SourceOura) MarshalJSON() ([]byte, error) {
@@ -62,18 +62,18 @@ func (o *SourceOura) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceOura) GetStartDatetime() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDatetime
-}
-
 func (o *SourceOura) GetEndDatetime() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.EndDatetime
+}
+
+func (o *SourceOura) GetStartDatetime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDatetime
 }
 
 func (o *SourceOura) GetSourceType() Oura {

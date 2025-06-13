@@ -8,11 +8,11 @@ import (
 )
 
 type SourceTeamworkUpdate struct {
-	Username string  `json:"username"`
 	Password *string `json:"password,omitempty"`
 	// The teamwork site name appearing at the url
 	SiteName  string    `json:"site_name"`
 	StartDate time.Time `json:"start_date"`
+	Username  string    `json:"username"`
 }
 
 func (s SourceTeamworkUpdate) MarshalJSON() ([]byte, error) {
@@ -24,13 +24,6 @@ func (s *SourceTeamworkUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceTeamworkUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
 }
 
 func (o *SourceTeamworkUpdate) GetPassword() *string {
@@ -52,4 +45,11 @@ func (o *SourceTeamworkUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceTeamworkUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -48,36 +48,6 @@ func (e *SourceZohoCrmUpdateDataCenterLocation) UnmarshalJSON(data []byte) error
 	}
 }
 
-// SourceZohoCrmUpdateEnvironment - Please choose the environment
-type SourceZohoCrmUpdateEnvironment string
-
-const (
-	SourceZohoCrmUpdateEnvironmentProduction SourceZohoCrmUpdateEnvironment = "Production"
-	SourceZohoCrmUpdateEnvironmentDeveloper  SourceZohoCrmUpdateEnvironment = "Developer"
-	SourceZohoCrmUpdateEnvironmentSandbox    SourceZohoCrmUpdateEnvironment = "Sandbox"
-)
-
-func (e SourceZohoCrmUpdateEnvironment) ToPointer() *SourceZohoCrmUpdateEnvironment {
-	return &e
-}
-func (e *SourceZohoCrmUpdateEnvironment) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Production":
-		fallthrough
-	case "Developer":
-		fallthrough
-	case "Sandbox":
-		*e = SourceZohoCrmUpdateEnvironment(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmUpdateEnvironment: %v", v)
-	}
-}
-
 // SourceZohoCRMUpdateZohoCRMEdition - Choose your Edition of Zoho CRM to determine API Concurrency Limits
 type SourceZohoCRMUpdateZohoCRMEdition string
 
@@ -114,21 +84,51 @@ func (e *SourceZohoCRMUpdateZohoCRMEdition) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// SourceZohoCrmUpdateEnvironment - Please choose the environment
+type SourceZohoCrmUpdateEnvironment string
+
+const (
+	SourceZohoCrmUpdateEnvironmentProduction SourceZohoCrmUpdateEnvironment = "Production"
+	SourceZohoCrmUpdateEnvironmentDeveloper  SourceZohoCrmUpdateEnvironment = "Developer"
+	SourceZohoCrmUpdateEnvironmentSandbox    SourceZohoCrmUpdateEnvironment = "Sandbox"
+)
+
+func (e SourceZohoCrmUpdateEnvironment) ToPointer() *SourceZohoCrmUpdateEnvironment {
+	return &e
+}
+func (e *SourceZohoCrmUpdateEnvironment) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Production":
+		fallthrough
+	case "Developer":
+		fallthrough
+	case "Sandbox":
+		*e = SourceZohoCrmUpdateEnvironment(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceZohoCrmUpdateEnvironment: %v", v)
+	}
+}
+
 type SourceZohoCrmUpdate struct {
 	// OAuth2.0 Client ID
 	ClientID string `json:"client_id"`
 	// OAuth2.0 Client Secret
 	ClientSecret string `json:"client_secret"`
-	// OAuth2.0 Refresh Token
-	RefreshToken string `json:"refresh_token"`
 	// Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
 	DcRegion SourceZohoCrmUpdateDataCenterLocation `json:"dc_region"`
-	// Please choose the environment
-	Environment SourceZohoCrmUpdateEnvironment `json:"environment"`
-	// ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
-	StartDatetime *time.Time `json:"start_datetime,omitempty"`
 	// Choose your Edition of Zoho CRM to determine API Concurrency Limits
 	Edition *SourceZohoCRMUpdateZohoCRMEdition `default:"Free" json:"edition"`
+	// Please choose the environment
+	Environment SourceZohoCrmUpdateEnvironment `json:"environment"`
+	// OAuth2.0 Refresh Token
+	RefreshToken string `json:"refresh_token"`
+	// ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
+	StartDatetime *time.Time `json:"start_datetime,omitempty"`
 }
 
 func (s SourceZohoCrmUpdate) MarshalJSON() ([]byte, error) {
@@ -156,18 +156,18 @@ func (o *SourceZohoCrmUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceZohoCrmUpdate) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
-}
-
 func (o *SourceZohoCrmUpdate) GetDcRegion() SourceZohoCrmUpdateDataCenterLocation {
 	if o == nil {
 		return SourceZohoCrmUpdateDataCenterLocation("")
 	}
 	return o.DcRegion
+}
+
+func (o *SourceZohoCrmUpdate) GetEdition() *SourceZohoCRMUpdateZohoCRMEdition {
+	if o == nil {
+		return nil
+	}
+	return o.Edition
 }
 
 func (o *SourceZohoCrmUpdate) GetEnvironment() SourceZohoCrmUpdateEnvironment {
@@ -177,16 +177,16 @@ func (o *SourceZohoCrmUpdate) GetEnvironment() SourceZohoCrmUpdateEnvironment {
 	return o.Environment
 }
 
+func (o *SourceZohoCrmUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
 func (o *SourceZohoCrmUpdate) GetStartDatetime() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDatetime
-}
-
-func (o *SourceZohoCrmUpdate) GetEdition() *SourceZohoCRMUpdateZohoCRMEdition {
-	if o == nil {
-		return nil
-	}
-	return o.Edition
 }

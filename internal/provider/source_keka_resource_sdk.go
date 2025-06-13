@@ -21,27 +21,27 @@ func (r *SourceKekaResourceModel) ToSharedSourceKekaCreateRequest() *shared.Sour
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var scope string
-	scope = r.Configuration.Scope.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var grantType string
-	grantType = r.Configuration.GrantType.ValueString()
-
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	var grantType string
+	grantType = r.Configuration.GrantType.ValueString()
+
+	var scope string
+	scope = r.Configuration.Scope.ValueString()
+
 	configuration := shared.SourceKeka{
-		Scope:        scope,
 		APIKey:       apiKey,
 		ClientID:     clientID,
-		GrantType:    grantType,
 		ClientSecret: clientSecret,
+		GrantType:    grantType,
+		Scope:        scope,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -113,27 +113,27 @@ func (r *SourceKekaResourceModel) ToSharedSourceKekaPutRequest() *shared.SourceK
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var scope string
-	scope = r.Configuration.Scope.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var grantType string
-	grantType = r.Configuration.GrantType.ValueString()
-
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	var grantType string
+	grantType = r.Configuration.GrantType.ValueString()
+
+	var scope string
+	scope = r.Configuration.Scope.ValueString()
+
 	configuration := shared.SourceKekaUpdate{
-		Scope:        scope,
 		APIKey:       apiKey,
 		ClientID:     clientID,
-		GrantType:    grantType,
 		ClientSecret: clientSecret,
+		GrantType:    grantType,
+		Scope:        scope,
 	}
 	out := shared.SourceKekaPutRequest{
 		Name:          name,

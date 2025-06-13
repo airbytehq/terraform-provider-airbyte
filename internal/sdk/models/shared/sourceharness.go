@@ -32,11 +32,11 @@ func (e *Harness) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHarness struct {
-	APIKey string `json:"api_key"`
-	// The API URL for fetching data from Harness
-	APIURL *string `default:"https://app.harness.io" json:"api_url"`
 	// Harness Account ID
-	AccountID  string  `json:"account_id"`
+	AccountID string `json:"account_id"`
+	APIKey    string `json:"api_key"`
+	// The API URL for fetching data from Harness
+	APIURL     *string `default:"https://app.harness.io" json:"api_url"`
 	sourceType Harness `const:"harness" json:"sourceType"`
 }
 
@@ -51,6 +51,13 @@ func (s *SourceHarness) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceHarness) GetAccountID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountID
+}
+
 func (o *SourceHarness) GetAPIKey() string {
 	if o == nil {
 		return ""
@@ -63,13 +70,6 @@ func (o *SourceHarness) GetAPIURL() *string {
 		return nil
 	}
 	return o.APIURL
-}
-
-func (o *SourceHarness) GetAccountID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountID
 }
 
 func (o *SourceHarness) GetSourceType() Harness {

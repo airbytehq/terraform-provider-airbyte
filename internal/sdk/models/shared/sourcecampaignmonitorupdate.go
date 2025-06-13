@@ -3,17 +3,10 @@
 package shared
 
 type SourceCampaignMonitorUpdate struct {
-	Username string  `json:"username"`
 	Password *string `json:"password,omitempty"`
 	// Date from when the sync should start
 	StartDate *string `json:"start_date,omitempty"`
-}
-
-func (o *SourceCampaignMonitorUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	Username  string  `json:"username"`
 }
 
 func (o *SourceCampaignMonitorUpdate) GetPassword() *string {
@@ -28,4 +21,11 @@ func (o *SourceCampaignMonitorUpdate) GetStartDate() *string {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceCampaignMonitorUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

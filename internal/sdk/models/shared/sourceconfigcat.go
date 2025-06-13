@@ -32,10 +32,10 @@ func (e *Configcat) UnmarshalJSON(data []byte) error {
 }
 
 type SourceConfigcat struct {
-	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-	Username string `json:"username"`
 	// Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-	Password   string    `json:"password"`
+	Password string `json:"password"`
+	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
+	Username   string    `json:"username"`
 	sourceType Configcat `const:"configcat" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceConfigcat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceConfigcat) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceConfigcat) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *SourceConfigcat) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceConfigcat) GetSourceType() Configcat {

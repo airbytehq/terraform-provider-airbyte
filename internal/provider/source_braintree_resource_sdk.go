@@ -22,14 +22,15 @@ func (r *SourceBraintreeResourceModel) ToSharedSourceBraintreeCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	environment := shared.SourceBraintreeEnvironment(r.Configuration.Environment.ValueString())
 	var merchantID string
 	merchantID = r.Configuration.MerchantID.ValueString()
 
-	var publicKey string
-	publicKey = r.Configuration.PublicKey.ValueString()
-
 	var privateKey string
 	privateKey = r.Configuration.PrivateKey.ValueString()
+
+	var publicKey string
+	publicKey = r.Configuration.PublicKey.ValueString()
 
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -37,13 +38,12 @@ func (r *SourceBraintreeResourceModel) ToSharedSourceBraintreeCreateRequest() *s
 	} else {
 		startDate = nil
 	}
-	environment := shared.SourceBraintreeEnvironment(r.Configuration.Environment.ValueString())
 	configuration := shared.SourceBraintree{
-		MerchantID:  merchantID,
-		PublicKey:   publicKey,
-		PrivateKey:  privateKey,
-		StartDate:   startDate,
 		Environment: environment,
+		MerchantID:  merchantID,
+		PrivateKey:  privateKey,
+		PublicKey:   publicKey,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,14 +115,15 @@ func (r *SourceBraintreeResourceModel) ToSharedSourceBraintreePutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	environment := shared.SourceBraintreeUpdateEnvironment(r.Configuration.Environment.ValueString())
 	var merchantID string
 	merchantID = r.Configuration.MerchantID.ValueString()
 
-	var publicKey string
-	publicKey = r.Configuration.PublicKey.ValueString()
-
 	var privateKey string
 	privateKey = r.Configuration.PrivateKey.ValueString()
+
+	var publicKey string
+	publicKey = r.Configuration.PublicKey.ValueString()
 
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -130,13 +131,12 @@ func (r *SourceBraintreeResourceModel) ToSharedSourceBraintreePutRequest() *shar
 	} else {
 		startDate = nil
 	}
-	environment := shared.SourceBraintreeUpdateEnvironment(r.Configuration.Environment.ValueString())
 	configuration := shared.SourceBraintreeUpdate{
-		MerchantID:  merchantID,
-		PublicKey:   publicKey,
-		PrivateKey:  privateKey,
-		StartDate:   startDate,
 		Environment: environment,
+		MerchantID:  merchantID,
+		PrivateKey:  privateKey,
+		PublicKey:   publicKey,
+		StartDate:   startDate,
 	}
 	out := shared.SourceBraintreePutRequest{
 		Name:          name,

@@ -4,8 +4,8 @@ package shared
 
 type SourceGoogleFormsUpdate struct {
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	FormID             []any  `json:"form_id"`
 }
 
@@ -16,18 +16,18 @@ func (o *SourceGoogleFormsUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceGoogleFormsUpdate) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceGoogleFormsUpdate) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceGoogleFormsUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceGoogleFormsUpdate) GetFormID() []any {

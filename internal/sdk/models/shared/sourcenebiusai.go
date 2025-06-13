@@ -34,11 +34,11 @@ func (e *NebiusAi) UnmarshalJSON(data []byte) error {
 
 type SourceNebiusAi struct {
 	// API key or access token
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Limit for each response objects
-	Limit      *string  `default:"20" json:"limit"`
-	sourceType NebiusAi `const:"nebius-ai" json:"sourceType"`
+	Limit      *string   `default:"20" json:"limit"`
+	StartDate  time.Time `json:"start_date"`
+	sourceType NebiusAi  `const:"nebius-ai" json:"sourceType"`
 }
 
 func (s SourceNebiusAi) MarshalJSON() ([]byte, error) {
@@ -59,18 +59,18 @@ func (o *SourceNebiusAi) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceNebiusAi) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceNebiusAi) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
+}
+
+func (o *SourceNebiusAi) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceNebiusAi) GetSourceType() NebiusAi {

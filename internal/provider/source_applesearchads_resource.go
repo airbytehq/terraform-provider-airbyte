@@ -118,6 +118,12 @@ func (r *SourceAppleSearchAdsResource) Schema(ctx context.Context, req resource.
 							),
 						},
 					},
+					"token_refresh_endpoint": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(`https://appleid.apple.com/auth/oauth2/token?grant_type=client_credentials&scope=searchadsorg`),
+						Description: `Token Refresh Endpoint. You should override the default value in scenarios  where it's required to proxy requests to Apple's token endpoint. Default: "https://appleid.apple.com/auth/oauth2/token?grant_type=client_credentials&scope=searchadsorg"`,
+					},
 				},
 			},
 			"created_at": schema.Int64Attribute{

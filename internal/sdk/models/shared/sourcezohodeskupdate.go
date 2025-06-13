@@ -5,9 +5,9 @@ package shared
 type SourceZohoDeskUpdate struct {
 	ClientID             string `json:"client_id"`
 	ClientSecret         string `json:"client_secret"`
-	TokenRefreshEndpoint string `json:"token_refresh_endpoint"`
-	RefreshToken         string `json:"refresh_token"`
 	IncludeCustomDomain  *bool  `json:"include_custom_domain,omitempty"`
+	RefreshToken         string `json:"refresh_token"`
+	TokenRefreshEndpoint string `json:"token_refresh_endpoint"`
 }
 
 func (o *SourceZohoDeskUpdate) GetClientID() string {
@@ -24,11 +24,11 @@ func (o *SourceZohoDeskUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceZohoDeskUpdate) GetTokenRefreshEndpoint() string {
+func (o *SourceZohoDeskUpdate) GetIncludeCustomDomain() *bool {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.TokenRefreshEndpoint
+	return o.IncludeCustomDomain
 }
 
 func (o *SourceZohoDeskUpdate) GetRefreshToken() string {
@@ -38,9 +38,9 @@ func (o *SourceZohoDeskUpdate) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-func (o *SourceZohoDeskUpdate) GetIncludeCustomDomain() *bool {
+func (o *SourceZohoDeskUpdate) GetTokenRefreshEndpoint() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.IncludeCustomDomain
+	return o.TokenRefreshEndpoint
 }

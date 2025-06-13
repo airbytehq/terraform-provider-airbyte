@@ -87,10 +87,10 @@ func (e *SourceAsanaUpdateCredentialsTitle) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAsanaUpdateAuthenticateViaAsanaOauth struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
 	// OAuth Credentials
 	optionTitle  *SourceAsanaUpdateCredentialsTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
-	ClientID     string                             `json:"client_id"`
-	ClientSecret string                             `json:"client_secret"`
 	RefreshToken string                             `json:"refresh_token"`
 }
 
@@ -105,10 +105,6 @@ func (s *SourceAsanaUpdateAuthenticateViaAsanaOauth) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-func (o *SourceAsanaUpdateAuthenticateViaAsanaOauth) GetOptionTitle() *SourceAsanaUpdateCredentialsTitle {
-	return SourceAsanaUpdateCredentialsTitleOAuthCredentials.ToPointer()
-}
-
 func (o *SourceAsanaUpdateAuthenticateViaAsanaOauth) GetClientID() string {
 	if o == nil {
 		return ""
@@ -121,6 +117,10 @@ func (o *SourceAsanaUpdateAuthenticateViaAsanaOauth) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceAsanaUpdateAuthenticateViaAsanaOauth) GetOptionTitle() *SourceAsanaUpdateCredentialsTitle {
+	return SourceAsanaUpdateCredentialsTitleOAuthCredentials.ToPointer()
 }
 
 func (o *SourceAsanaUpdateAuthenticateViaAsanaOauth) GetRefreshToken() string {
@@ -197,10 +197,10 @@ func (u SourceAsanaUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) 
 type SourceAsanaUpdate struct {
 	// Choose how to authenticate to Github
 	Credentials *SourceAsanaUpdateAuthenticationMechanism `json:"credentials,omitempty"`
-	// Globally unique identifiers for the organization exports
-	OrganizationExportIds []any `json:"organization_export_ids,omitempty"`
 	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Asana pricing plan. More info about the rate limit tiers can be found on Asana's API <a href="https://developers.asana.com/docs/rate-limits">docs</a>.
 	NumWorkers *int64 `default:"10" json:"num_workers"`
+	// Globally unique identifiers for the organization exports
+	OrganizationExportIds []any `json:"organization_export_ids,omitempty"`
 }
 
 func (s SourceAsanaUpdate) MarshalJSON() ([]byte, error) {
@@ -221,16 +221,16 @@ func (o *SourceAsanaUpdate) GetCredentials() *SourceAsanaUpdateAuthenticationMec
 	return o.Credentials
 }
 
-func (o *SourceAsanaUpdate) GetOrganizationExportIds() []any {
-	if o == nil {
-		return nil
-	}
-	return o.OrganizationExportIds
-}
-
 func (o *SourceAsanaUpdate) GetNumWorkers() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.NumWorkers
+}
+
+func (o *SourceAsanaUpdate) GetOrganizationExportIds() []any {
+	if o == nil {
+		return nil
+	}
+	return o.OrganizationExportIds
 }

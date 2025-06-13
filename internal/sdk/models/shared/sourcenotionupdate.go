@@ -85,13 +85,13 @@ func (e *SourceNotionUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceNotionUpdateOAuth20 struct {
-	authType SourceNotionUpdateAuthType `const:"OAuth2.0" json:"auth_type"`
+	// The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+	AccessToken string                     `json:"access_token"`
+	authType    SourceNotionUpdateAuthType `const:"OAuth2.0" json:"auth_type"`
 	// The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 	ClientSecret string `json:"client_secret"`
-	// The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
-	AccessToken string `json:"access_token"`
 }
 
 func (s SourceNotionUpdateOAuth20) MarshalJSON() ([]byte, error) {
@@ -103,6 +103,13 @@ func (s *SourceNotionUpdateOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceNotionUpdateOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SourceNotionUpdateOAuth20) GetAuthType() SourceNotionUpdateAuthType {
@@ -121,13 +128,6 @@ func (o *SourceNotionUpdateOAuth20) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceNotionUpdateOAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
 }
 
 type SourceNotionUpdateAuthenticationMethodType string
@@ -195,10 +195,10 @@ func (u SourceNotionUpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
 }
 
 type SourceNotionUpdate struct {
-	// UTC date and time in the format YYYY-MM-DDTHH:MM:SS.000Z. During incremental sync, any data generated before this date will not be replicated. If left blank, the start date will be set to 2 years before the present date.
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information.
 	Credentials *SourceNotionUpdateAuthenticationMethod `json:"credentials,omitempty"`
+	// UTC date and time in the format YYYY-MM-DDTHH:MM:SS.000Z. During incremental sync, any data generated before this date will not be replicated. If left blank, the start date will be set to 2 years before the present date.
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceNotionUpdate) MarshalJSON() ([]byte, error) {
@@ -212,16 +212,16 @@ func (s *SourceNotionUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceNotionUpdate) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceNotionUpdate) GetCredentials() *SourceNotionUpdateAuthenticationMethod {
 	if o == nil {
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceNotionUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

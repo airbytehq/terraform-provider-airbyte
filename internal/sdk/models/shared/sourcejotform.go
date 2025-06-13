@@ -61,6 +61,29 @@ func (o *Enterprise) GetEnterpriseURL() string {
 	return o.EnterpriseURL
 }
 
+type SourceJotformSchemasAPIEndpoint string
+
+const (
+	SourceJotformSchemasAPIEndpointBasic SourceJotformSchemasAPIEndpoint = "basic"
+)
+
+func (e SourceJotformSchemasAPIEndpoint) ToPointer() *SourceJotformSchemasAPIEndpoint {
+	return &e
+}
+func (e *SourceJotformSchemasAPIEndpoint) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "basic":
+		*e = SourceJotformSchemasAPIEndpoint(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceJotformSchemasAPIEndpoint: %v", v)
+	}
+}
+
 // BaseURLPrefix - You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
 type BaseURLPrefix string
 
@@ -91,33 +114,10 @@ func (e *BaseURLPrefix) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceJotformSchemasAPIEndpoint string
-
-const (
-	SourceJotformSchemasAPIEndpointBasic SourceJotformSchemasAPIEndpoint = "basic"
-)
-
-func (e SourceJotformSchemasAPIEndpoint) ToPointer() *SourceJotformSchemasAPIEndpoint {
-	return &e
-}
-func (e *SourceJotformSchemasAPIEndpoint) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "basic":
-		*e = SourceJotformSchemasAPIEndpoint(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceJotformSchemasAPIEndpoint: %v", v)
-	}
-}
-
 type Basic struct {
-	// You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
-	URLPrefix   *BaseURLPrefix                   `default:"Standard" json:"url_prefix"`
 	apiEndpoint *SourceJotformSchemasAPIEndpoint `const:"basic" json:"api_endpoint,omitempty"`
+	// You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
+	URLPrefix *BaseURLPrefix `default:"Standard" json:"url_prefix"`
 }
 
 func (b Basic) MarshalJSON() ([]byte, error) {
@@ -131,15 +131,15 @@ func (b *Basic) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *Basic) GetAPIEndpoint() *SourceJotformSchemasAPIEndpoint {
+	return SourceJotformSchemasAPIEndpointBasic.ToPointer()
+}
+
 func (o *Basic) GetURLPrefix() *BaseURLPrefix {
 	if o == nil {
 		return nil
 	}
 	return o.URLPrefix
-}
-
-func (o *Basic) GetAPIEndpoint() *SourceJotformSchemasAPIEndpoint {
-	return SourceJotformSchemasAPIEndpointBasic.ToPointer()
 }
 
 type APIEndpointType string
@@ -229,10 +229,10 @@ func (e *Jotform) UnmarshalJSON(data []byte) error {
 }
 
 type SourceJotform struct {
+	APIEndpoint APIEndpoint `json:"api_endpoint"`
 	APIKey      string      `json:"api_key"`
 	EndDate     time.Time   `json:"end_date"`
 	StartDate   time.Time   `json:"start_date"`
-	APIEndpoint APIEndpoint `json:"api_endpoint"`
 	sourceType  Jotform     `const:"jotform" json:"sourceType"`
 }
 
@@ -245,6 +245,13 @@ func (s *SourceJotform) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceJotform) GetAPIEndpoint() APIEndpoint {
+	if o == nil {
+		return APIEndpoint{}
+	}
+	return o.APIEndpoint
 }
 
 func (o *SourceJotform) GetAPIKey() string {
@@ -266,13 +273,6 @@ func (o *SourceJotform) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceJotform) GetAPIEndpoint() APIEndpoint {
-	if o == nil {
-		return APIEndpoint{}
-	}
-	return o.APIEndpoint
 }
 
 func (o *SourceJotform) GetSourceType() Jotform {

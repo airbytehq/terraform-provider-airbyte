@@ -61,19 +61,19 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorCreateRequ
 	}
 	var destinationPgvectorAzureOpenAI *shared.DestinationPgvectorAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationPgvectorAzureOpenAI = &shared.DestinationPgvectorAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationPgvectorAzureOpenAI != nil {
@@ -92,20 +92,20 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorCreateRequ
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationPgvectorOpenAICompatible = &shared.DestinationPgvectorOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationPgvectorOpenAICompatible != nil {
@@ -113,40 +113,94 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorCreateRequ
 			DestinationPgvectorOpenAICompatible: destinationPgvectorOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var password string
+	password = r.Configuration.Indexing.Credentials.Password.ValueString()
 
+	credentials := shared.DestinationPgvectorCredentials{
+		Password: password,
+	}
+	var database string
+	database = r.Configuration.Indexing.Database.ValueString()
+
+	defaultSchema := new(string)
+	if !r.Configuration.Indexing.DefaultSchema.IsUnknown() && !r.Configuration.Indexing.DefaultSchema.IsNull() {
+		*defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
+	} else {
+		defaultSchema = nil
+	}
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Indexing.Port.IsUnknown() && !r.Configuration.Indexing.Port.IsNull() {
+		*port = r.Configuration.Indexing.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var username string
+	username = r.Configuration.Indexing.Username.ValueString()
+
+	indexing := shared.PostgresConnection{
+		Credentials:   credentials,
+		Database:      database,
+		DefaultSchema: defaultSchema,
+		Host:          host,
+		Port:          port,
+		Username:      username,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationPgvectorFieldNameMappingConfigModel = []shared.DestinationPgvectorFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationPgvectorFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationPgvectorTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationPgvectorBySeparator *shared.DestinationPgvectorBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationPgvectorBySeparator = &shared.DestinationPgvectorBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationPgvectorBySeparator != nil {
@@ -184,73 +238,19 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorCreateRequ
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationPgvectorFieldNameMappingConfigModel = []shared.DestinationPgvectorFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationPgvectorFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationPgvectorProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Indexing.Port.IsUnknown() && !r.Configuration.Indexing.Port.IsNull() {
-		*port = r.Configuration.Indexing.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	var database string
-	database = r.Configuration.Indexing.Database.ValueString()
-
-	defaultSchema := new(string)
-	if !r.Configuration.Indexing.DefaultSchema.IsUnknown() && !r.Configuration.Indexing.DefaultSchema.IsNull() {
-		*defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
-	} else {
-		defaultSchema = nil
-	}
-	var username string
-	username = r.Configuration.Indexing.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Indexing.Credentials.Password.ValueString()
-
-	credentials := shared.DestinationPgvectorCredentials{
-		Password: password,
-	}
-	indexing := shared.PostgresConnection{
-		Host:          host,
-		Port:          port,
-		Database:      database,
-		DefaultSchema: defaultSchema,
-		Username:      username,
-		Credentials:   credentials,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationPgvector{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationPgvectorCreateRequest{
 		Name:          name,
@@ -355,19 +355,19 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorPutRequest
 	}
 	var destinationPgvectorUpdateAzureOpenAI *shared.DestinationPgvectorUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey1 string
-		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey1 string
+		openaiKey1 = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationPgvectorUpdateAzureOpenAI = &shared.DestinationPgvectorUpdateAzureOpenAI{
-			OpenaiKey:  openaiKey1,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey1,
 		}
 	}
 	if destinationPgvectorUpdateAzureOpenAI != nil {
@@ -386,20 +386,20 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorPutRequest
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions int64
+		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions int64
-		dimensions = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationPgvectorUpdateOpenAICompatible = &shared.DestinationPgvectorUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions,
+			ModelName:  modelName,
 		}
 	}
 	if destinationPgvectorUpdateOpenAICompatible != nil {
@@ -407,40 +407,94 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorPutRequest
 			DestinationPgvectorUpdateOpenAICompatible: destinationPgvectorUpdateOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var password string
+	password = r.Configuration.Indexing.Credentials.Password.ValueString()
 
+	credentials := shared.DestinationPgvectorUpdateCredentials{
+		Password: password,
+	}
+	var database string
+	database = r.Configuration.Indexing.Database.ValueString()
+
+	defaultSchema := new(string)
+	if !r.Configuration.Indexing.DefaultSchema.IsUnknown() && !r.Configuration.Indexing.DefaultSchema.IsNull() {
+		*defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
+	} else {
+		defaultSchema = nil
+	}
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Indexing.Port.IsUnknown() && !r.Configuration.Indexing.Port.IsNull() {
+		*port = r.Configuration.Indexing.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var username string
+	username = r.Configuration.Indexing.Username.ValueString()
+
+	indexing := shared.DestinationPgvectorUpdatePostgresConnection{
+		Credentials:   credentials,
+		Database:      database,
+		DefaultSchema: defaultSchema,
+		Host:          host,
+		Port:          port,
+		Username:      username,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationPgvectorUpdateFieldNameMappingConfigModel = []shared.DestinationPgvectorUpdateFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationPgvectorUpdateFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationPgvectorUpdateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationPgvectorUpdateBySeparator *shared.DestinationPgvectorUpdateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationPgvectorUpdateBySeparator = &shared.DestinationPgvectorUpdateBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationPgvectorUpdateBySeparator != nil {
@@ -478,73 +532,19 @@ func (r *DestinationPgvectorResourceModel) ToSharedDestinationPgvectorPutRequest
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationPgvectorUpdateFieldNameMappingConfigModel = []shared.DestinationPgvectorUpdateFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationPgvectorUpdateFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationPgvectorUpdateProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Indexing.Port.IsUnknown() && !r.Configuration.Indexing.Port.IsNull() {
-		*port = r.Configuration.Indexing.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	var database string
-	database = r.Configuration.Indexing.Database.ValueString()
-
-	defaultSchema := new(string)
-	if !r.Configuration.Indexing.DefaultSchema.IsUnknown() && !r.Configuration.Indexing.DefaultSchema.IsNull() {
-		*defaultSchema = r.Configuration.Indexing.DefaultSchema.ValueString()
-	} else {
-		defaultSchema = nil
-	}
-	var username string
-	username = r.Configuration.Indexing.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Indexing.Credentials.Password.ValueString()
-
-	credentials := shared.DestinationPgvectorUpdateCredentials{
-		Password: password,
-	}
-	indexing := shared.DestinationPgvectorUpdatePostgresConnection{
-		Host:          host,
-		Port:          port,
-		Database:      database,
-		DefaultSchema: defaultSchema,
-		Username:      username,
-		Credentials:   credentials,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationPgvectorUpdate{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationPgvectorPutRequest{
 		Name:          name,

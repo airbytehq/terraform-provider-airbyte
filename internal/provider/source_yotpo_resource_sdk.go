@@ -28,18 +28,18 @@ func (r *SourceYotpoResourceModel) ToSharedSourceYotpoCreateRequest() *shared.So
 	var appKey string
 	appKey = r.Configuration.AppKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	email := new(string)
 	if !r.Configuration.Email.IsUnknown() && !r.Configuration.Email.IsNull() {
 		*email = r.Configuration.Email.ValueString()
 	} else {
 		email = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYotpo{
 		AccessToken: accessToken,
 		AppKey:      appKey,
-		StartDate:   startDate,
 		Email:       email,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,18 +117,18 @@ func (r *SourceYotpoResourceModel) ToSharedSourceYotpoPutRequest() *shared.Sourc
 	var appKey string
 	appKey = r.Configuration.AppKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	email := new(string)
 	if !r.Configuration.Email.IsUnknown() && !r.Configuration.Email.IsNull() {
 		*email = r.Configuration.Email.ValueString()
 	} else {
 		email = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYotpoUpdate{
 		AccessToken: accessToken,
 		AppKey:      appKey,
-		StartDate:   startDate,
 		Email:       email,
+		StartDate:   startDate,
 	}
 	out := shared.SourceYotpoPutRequest{
 		Name:          name,

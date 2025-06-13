@@ -3,13 +3,13 @@
 package shared
 
 type SourceTvmazeScheduleUpdate struct {
-	// Start date for TV schedule retrieval. May be in the future.
-	StartDate string `json:"start_date"`
+	// Country code for domestic TV schedule retrieval.
+	DomesticScheduleCountryCode string `json:"domestic_schedule_country_code"`
 	// End date for TV schedule retrieval. May be in the future. Optional.
 	//
 	EndDate *string `json:"end_date,omitempty"`
-	// Country code for domestic TV schedule retrieval.
-	DomesticScheduleCountryCode string `json:"domestic_schedule_country_code"`
+	// Start date for TV schedule retrieval. May be in the future.
+	StartDate string `json:"start_date"`
 	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for
 	// all countries plus global web channels (e.g. Netflix). Alternatively,
 	// set to 'global' for just global web channels.
@@ -17,11 +17,11 @@ type SourceTvmazeScheduleUpdate struct {
 	WebScheduleCountryCode *string `json:"web_schedule_country_code,omitempty"`
 }
 
-func (o *SourceTvmazeScheduleUpdate) GetStartDate() string {
+func (o *SourceTvmazeScheduleUpdate) GetDomesticScheduleCountryCode() string {
 	if o == nil {
 		return ""
 	}
-	return o.StartDate
+	return o.DomesticScheduleCountryCode
 }
 
 func (o *SourceTvmazeScheduleUpdate) GetEndDate() *string {
@@ -31,11 +31,11 @@ func (o *SourceTvmazeScheduleUpdate) GetEndDate() *string {
 	return o.EndDate
 }
 
-func (o *SourceTvmazeScheduleUpdate) GetDomesticScheduleCountryCode() string {
+func (o *SourceTvmazeScheduleUpdate) GetStartDate() string {
 	if o == nil {
 		return ""
 	}
-	return o.DomesticScheduleCountryCode
+	return o.StartDate
 }
 
 func (o *SourceTvmazeScheduleUpdate) GetWebScheduleCountryCode() *string {

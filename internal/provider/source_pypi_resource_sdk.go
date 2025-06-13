@@ -21,18 +21,18 @@ func (r *SourcePypiResourceModel) ToSharedSourcePypiCreateRequest() *shared.Sour
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var projectName string
+	projectName = r.Configuration.ProjectName.ValueString()
+
 	version := new(string)
 	if !r.Configuration.Version.IsUnknown() && !r.Configuration.Version.IsNull() {
 		*version = r.Configuration.Version.ValueString()
 	} else {
 		version = nil
 	}
-	var projectName string
-	projectName = r.Configuration.ProjectName.ValueString()
-
 	configuration := shared.SourcePypi{
-		Version:     version,
 		ProjectName: projectName,
+		Version:     version,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,18 +104,18 @@ func (r *SourcePypiResourceModel) ToSharedSourcePypiPutRequest() *shared.SourceP
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var projectName string
+	projectName = r.Configuration.ProjectName.ValueString()
+
 	version := new(string)
 	if !r.Configuration.Version.IsUnknown() && !r.Configuration.Version.IsNull() {
 		*version = r.Configuration.Version.ValueString()
 	} else {
 		version = nil
 	}
-	var projectName string
-	projectName = r.Configuration.ProjectName.ValueString()
-
 	configuration := shared.SourcePypiUpdate{
-		Version:     version,
 		ProjectName: projectName,
+		Version:     version,
 	}
 	out := shared.SourcePypiPutRequest{
 		Name:          name,

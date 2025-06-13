@@ -32,10 +32,10 @@ func (e *Firestore) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationFirestore struct {
-	// The GCP project ID for the project containing the target BigQuery dataset.
-	ProjectID string `json:"project_id"`
 	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
-	CredentialsJSON *string   `json:"credentials_json,omitempty"`
+	CredentialsJSON *string `json:"credentials_json,omitempty"`
+	// The GCP project ID for the project containing the target BigQuery dataset.
+	ProjectID       string    `json:"project_id"`
 	destinationType Firestore `const:"firestore" json:"destinationType"`
 }
 
@@ -50,18 +50,18 @@ func (d *DestinationFirestore) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationFirestore) GetProjectID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProjectID
-}
-
 func (o *DestinationFirestore) GetCredentialsJSON() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CredentialsJSON
+}
+
+func (o *DestinationFirestore) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
 }
 
 func (o *DestinationFirestore) GetDestinationType() Firestore {

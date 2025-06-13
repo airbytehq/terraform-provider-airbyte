@@ -8,36 +8,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// SourcePocketUpdateState - Select the state of the items to retrieve.
-type SourcePocketUpdateState string
-
-const (
-	SourcePocketUpdateStateUnread  SourcePocketUpdateState = "unread"
-	SourcePocketUpdateStateArchive SourcePocketUpdateState = "archive"
-	SourcePocketUpdateStateAll     SourcePocketUpdateState = "all"
-)
-
-func (e SourcePocketUpdateState) ToPointer() *SourcePocketUpdateState {
-	return &e
-}
-func (e *SourcePocketUpdateState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "unread":
-		fallthrough
-	case "archive":
-		fallthrough
-	case "all":
-		*e = SourcePocketUpdateState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePocketUpdateState: %v", v)
-	}
-}
-
 // SourcePocketUpdateContentType - Select the content type of the items to retrieve.
 type SourcePocketUpdateContentType string
 
@@ -65,6 +35,33 @@ func (e *SourcePocketUpdateContentType) UnmarshalJSON(data []byte) error {
 		return nil
 	default:
 		return fmt.Errorf("invalid value for SourcePocketUpdateContentType: %v", v)
+	}
+}
+
+// SourcePocketUpdateDetailType - Select the granularity of the information about each item.
+type SourcePocketUpdateDetailType string
+
+const (
+	SourcePocketUpdateDetailTypeSimple   SourcePocketUpdateDetailType = "simple"
+	SourcePocketUpdateDetailTypeComplete SourcePocketUpdateDetailType = "complete"
+)
+
+func (e SourcePocketUpdateDetailType) ToPointer() *SourcePocketUpdateDetailType {
+	return &e
+}
+func (e *SourcePocketUpdateDetailType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "simple":
+		fallthrough
+	case "complete":
+		*e = SourcePocketUpdateDetailType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePocketUpdateDetailType: %v", v)
 	}
 }
 
@@ -101,56 +98,59 @@ func (e *SourcePocketUpdateSortBy) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePocketUpdateDetailType - Select the granularity of the information about each item.
-type SourcePocketUpdateDetailType string
+// SourcePocketUpdateState - Select the state of the items to retrieve.
+type SourcePocketUpdateState string
 
 const (
-	SourcePocketUpdateDetailTypeSimple   SourcePocketUpdateDetailType = "simple"
-	SourcePocketUpdateDetailTypeComplete SourcePocketUpdateDetailType = "complete"
+	SourcePocketUpdateStateUnread  SourcePocketUpdateState = "unread"
+	SourcePocketUpdateStateArchive SourcePocketUpdateState = "archive"
+	SourcePocketUpdateStateAll     SourcePocketUpdateState = "all"
 )
 
-func (e SourcePocketUpdateDetailType) ToPointer() *SourcePocketUpdateDetailType {
+func (e SourcePocketUpdateState) ToPointer() *SourcePocketUpdateState {
 	return &e
 }
-func (e *SourcePocketUpdateDetailType) UnmarshalJSON(data []byte) error {
+func (e *SourcePocketUpdateState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "simple":
+	case "unread":
 		fallthrough
-	case "complete":
-		*e = SourcePocketUpdateDetailType(v)
+	case "archive":
+		fallthrough
+	case "all":
+		*e = SourcePocketUpdateState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketUpdateDetailType: %v", v)
+		return fmt.Errorf("invalid value for SourcePocketUpdateState: %v", v)
 	}
 }
 
 type SourcePocketUpdate struct {
-	// Your application's Consumer Key.
-	ConsumerKey string `json:"consumer_key"`
 	// The user's Pocket access token.
 	AccessToken string `json:"access_token"`
-	// Select the state of the items to retrieve.
-	State *SourcePocketUpdateState `json:"state,omitempty"`
-	// Retrieve only favorited items.
-	Favorite *bool `default:"false" json:"favorite"`
-	// Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
-	Tag *string `json:"tag,omitempty"`
+	// Your application's Consumer Key.
+	ConsumerKey string `json:"consumer_key"`
 	// Select the content type of the items to retrieve.
 	ContentType *SourcePocketUpdateContentType `json:"content_type,omitempty"`
-	// Sort retrieved items by the given criteria.
-	Sort *SourcePocketUpdateSortBy `json:"sort,omitempty"`
 	// Select the granularity of the information about each item.
 	DetailType *SourcePocketUpdateDetailType `json:"detail_type,omitempty"`
-	// Only return items whose title or url contain the `search` string.
-	Search *string `json:"search,omitempty"`
 	// Only return items from a particular `domain`.
 	Domain *string `json:"domain,omitempty"`
+	// Retrieve only favorited items.
+	Favorite *bool `default:"false" json:"favorite"`
+	// Only return items whose title or url contain the `search` string.
+	Search *string `json:"search,omitempty"`
 	// Only return items modified since the given timestamp.
 	Since *string `json:"since,omitempty"`
+	// Sort retrieved items by the given criteria.
+	Sort *SourcePocketUpdateSortBy `json:"sort,omitempty"`
+	// Select the state of the items to retrieve.
+	State *SourcePocketUpdateState `json:"state,omitempty"`
+	// Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
+	Tag *string `json:"tag,omitempty"`
 }
 
 func (s SourcePocketUpdate) MarshalJSON() ([]byte, error) {
@@ -164,13 +164,6 @@ func (s *SourcePocketUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePocketUpdate) GetConsumerKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConsumerKey
-}
-
 func (o *SourcePocketUpdate) GetAccessToken() string {
 	if o == nil {
 		return ""
@@ -178,25 +171,11 @@ func (o *SourcePocketUpdate) GetAccessToken() string {
 	return o.AccessToken
 }
 
-func (o *SourcePocketUpdate) GetState() *SourcePocketUpdateState {
+func (o *SourcePocketUpdate) GetConsumerKey() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.State
-}
-
-func (o *SourcePocketUpdate) GetFavorite() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Favorite
-}
-
-func (o *SourcePocketUpdate) GetTag() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Tag
+	return o.ConsumerKey
 }
 
 func (o *SourcePocketUpdate) GetContentType() *SourcePocketUpdateContentType {
@@ -206,25 +185,11 @@ func (o *SourcePocketUpdate) GetContentType() *SourcePocketUpdateContentType {
 	return o.ContentType
 }
 
-func (o *SourcePocketUpdate) GetSort() *SourcePocketUpdateSortBy {
-	if o == nil {
-		return nil
-	}
-	return o.Sort
-}
-
 func (o *SourcePocketUpdate) GetDetailType() *SourcePocketUpdateDetailType {
 	if o == nil {
 		return nil
 	}
 	return o.DetailType
-}
-
-func (o *SourcePocketUpdate) GetSearch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Search
 }
 
 func (o *SourcePocketUpdate) GetDomain() *string {
@@ -234,9 +199,44 @@ func (o *SourcePocketUpdate) GetDomain() *string {
 	return o.Domain
 }
 
+func (o *SourcePocketUpdate) GetFavorite() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Favorite
+}
+
+func (o *SourcePocketUpdate) GetSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Search
+}
+
 func (o *SourcePocketUpdate) GetSince() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Since
+}
+
+func (o *SourcePocketUpdate) GetSort() *SourcePocketUpdateSortBy {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}
+
+func (o *SourcePocketUpdate) GetState() *SourcePocketUpdateState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
+func (o *SourcePocketUpdate) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
 }

@@ -3,19 +3,12 @@
 package shared
 
 type SourceConfluenceUpdate struct {
-	// Your Confluence login email
-	Email string `json:"email"`
 	// Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
 	APIToken string `json:"api_token"`
 	// Your Confluence domain name
 	DomainName string `json:"domain_name"`
-}
-
-func (o *SourceConfluenceUpdate) GetEmail() string {
-	if o == nil {
-		return ""
-	}
-	return o.Email
+	// Your Confluence login email
+	Email string `json:"email"`
 }
 
 func (o *SourceConfluenceUpdate) GetAPIToken() string {
@@ -30,4 +23,11 @@ func (o *SourceConfluenceUpdate) GetDomainName() string {
 		return ""
 	}
 	return o.DomainName
+}
+
+func (o *SourceConfluenceUpdate) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
 }

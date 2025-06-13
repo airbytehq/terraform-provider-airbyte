@@ -26,11 +26,11 @@ func (r *SourceFinnhubResourceModel) ToSharedSourceFinnhubCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var symbols []interface{} = []interface{}{}
-	for _, symbolsItem := range r.Configuration.Symbols {
-		var symbolsTmp interface{}
-		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
-		symbols = append(symbols, symbolsTmp)
+	exchange := new(string)
+	if !r.Configuration.Exchange.IsUnknown() && !r.Configuration.Exchange.IsNull() {
+		*exchange = r.Configuration.Exchange.ValueString()
+	} else {
+		exchange = nil
 	}
 	marketNewsCategory := new(shared.MarketNewsCategory)
 	if !r.Configuration.MarketNewsCategory.IsUnknown() && !r.Configuration.MarketNewsCategory.IsNull() {
@@ -38,19 +38,19 @@ func (r *SourceFinnhubResourceModel) ToSharedSourceFinnhubCreateRequest() *share
 	} else {
 		marketNewsCategory = nil
 	}
-	exchange := new(string)
-	if !r.Configuration.Exchange.IsUnknown() && !r.Configuration.Exchange.IsNull() {
-		*exchange = r.Configuration.Exchange.ValueString()
-	} else {
-		exchange = nil
-	}
 	startDate2, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate2.ValueString())
+	var symbols []interface{} = []interface{}{}
+	for _, symbolsItem := range r.Configuration.Symbols {
+		var symbolsTmp interface{}
+		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
+		symbols = append(symbols, symbolsTmp)
+	}
 	configuration := shared.SourceFinnhub{
 		APIKey:             apiKey,
-		Symbols:            symbols,
-		MarketNewsCategory: marketNewsCategory,
 		Exchange:           exchange,
+		MarketNewsCategory: marketNewsCategory,
 		StartDate2:         startDate2,
+		Symbols:            symbols,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -125,11 +125,11 @@ func (r *SourceFinnhubResourceModel) ToSharedSourceFinnhubPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var symbols []interface{} = []interface{}{}
-	for _, symbolsItem := range r.Configuration.Symbols {
-		var symbolsTmp interface{}
-		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
-		symbols = append(symbols, symbolsTmp)
+	exchange := new(string)
+	if !r.Configuration.Exchange.IsUnknown() && !r.Configuration.Exchange.IsNull() {
+		*exchange = r.Configuration.Exchange.ValueString()
+	} else {
+		exchange = nil
 	}
 	marketNewsCategory := new(shared.SourceFinnhubUpdateMarketNewsCategory)
 	if !r.Configuration.MarketNewsCategory.IsUnknown() && !r.Configuration.MarketNewsCategory.IsNull() {
@@ -137,19 +137,19 @@ func (r *SourceFinnhubResourceModel) ToSharedSourceFinnhubPutRequest() *shared.S
 	} else {
 		marketNewsCategory = nil
 	}
-	exchange := new(string)
-	if !r.Configuration.Exchange.IsUnknown() && !r.Configuration.Exchange.IsNull() {
-		*exchange = r.Configuration.Exchange.ValueString()
-	} else {
-		exchange = nil
-	}
 	startDate2, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate2.ValueString())
+	var symbols []interface{} = []interface{}{}
+	for _, symbolsItem := range r.Configuration.Symbols {
+		var symbolsTmp interface{}
+		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
+		symbols = append(symbols, symbolsTmp)
+	}
 	configuration := shared.SourceFinnhubUpdate{
 		APIKey:             apiKey,
-		Symbols:            symbols,
-		MarketNewsCategory: marketNewsCategory,
 		Exchange:           exchange,
+		MarketNewsCategory: marketNewsCategory,
 		StartDate2:         startDate2,
+		Symbols:            symbols,
 	}
 	out := shared.SourceFinnhubPutRequest{
 		Name:          name,

@@ -12,10 +12,10 @@ type SourceWordpressUpdate struct {
 	Domain string `json:"domain"`
 	// Placeholder for basic HTTP auth password - should be set to empty string
 	Password *string `default:"x" json:"password"`
-	// Placeholder for basic HTTP auth username - should be set to empty string
-	Username *string `default:"x" json:"username"`
 	// Minimal Date to Retrieve Records when stream allow incremental.
 	StartDate time.Time `json:"start_date"`
+	// Placeholder for basic HTTP auth username - should be set to empty string
+	Username *string `default:"x" json:"username"`
 }
 
 func (s SourceWordpressUpdate) MarshalJSON() ([]byte, error) {
@@ -43,16 +43,16 @@ func (o *SourceWordpressUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceWordpressUpdate) GetUsername() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Username
-}
-
 func (o *SourceWordpressUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceWordpressUpdate) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
 }

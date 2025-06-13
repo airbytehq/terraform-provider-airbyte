@@ -22,20 +22,8 @@ func (r *SourceSentryResourceModel) ToSharedSourceSentryCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var project string
-	project = r.Configuration.Project.ValueString()
-
-	hostname := new(string)
-	if !r.Configuration.Hostname.IsUnknown() && !r.Configuration.Hostname.IsNull() {
-		*hostname = r.Configuration.Hostname.ValueString()
-	} else {
-		hostname = nil
-	}
 	var authToken string
 	authToken = r.Configuration.AuthToken.ValueString()
-
-	var organization string
-	organization = r.Configuration.Organization.ValueString()
 
 	var discoverFields []interface{} = []interface{}{}
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
@@ -43,12 +31,24 @@ func (r *SourceSentryResourceModel) ToSharedSourceSentryCreateRequest() *shared.
 		_ = json.Unmarshal([]byte(discoverFieldsItem.ValueString()), &discoverFieldsTmp)
 		discoverFields = append(discoverFields, discoverFieldsTmp)
 	}
+	hostname := new(string)
+	if !r.Configuration.Hostname.IsUnknown() && !r.Configuration.Hostname.IsNull() {
+		*hostname = r.Configuration.Hostname.ValueString()
+	} else {
+		hostname = nil
+	}
+	var organization string
+	organization = r.Configuration.Organization.ValueString()
+
+	var project string
+	project = r.Configuration.Project.ValueString()
+
 	configuration := shared.SourceSentry{
-		Project:        project,
-		Hostname:       hostname,
 		AuthToken:      authToken,
-		Organization:   organization,
 		DiscoverFields: discoverFields,
+		Hostname:       hostname,
+		Organization:   organization,
+		Project:        project,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -120,20 +120,8 @@ func (r *SourceSentryResourceModel) ToSharedSourceSentryPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var project string
-	project = r.Configuration.Project.ValueString()
-
-	hostname := new(string)
-	if !r.Configuration.Hostname.IsUnknown() && !r.Configuration.Hostname.IsNull() {
-		*hostname = r.Configuration.Hostname.ValueString()
-	} else {
-		hostname = nil
-	}
 	var authToken string
 	authToken = r.Configuration.AuthToken.ValueString()
-
-	var organization string
-	organization = r.Configuration.Organization.ValueString()
 
 	var discoverFields []interface{} = []interface{}{}
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
@@ -141,12 +129,24 @@ func (r *SourceSentryResourceModel) ToSharedSourceSentryPutRequest() *shared.Sou
 		_ = json.Unmarshal([]byte(discoverFieldsItem.ValueString()), &discoverFieldsTmp)
 		discoverFields = append(discoverFields, discoverFieldsTmp)
 	}
+	hostname := new(string)
+	if !r.Configuration.Hostname.IsUnknown() && !r.Configuration.Hostname.IsNull() {
+		*hostname = r.Configuration.Hostname.ValueString()
+	} else {
+		hostname = nil
+	}
+	var organization string
+	organization = r.Configuration.Organization.ValueString()
+
+	var project string
+	project = r.Configuration.Project.ValueString()
+
 	configuration := shared.SourceSentryUpdate{
-		Project:        project,
-		Hostname:       hostname,
 		AuthToken:      authToken,
-		Organization:   organization,
 		DiscoverFields: discoverFields,
+		Hostname:       hostname,
+		Organization:   organization,
+		Project:        project,
 	}
 	out := shared.SourceSentryPutRequest{
 		Name:          name,

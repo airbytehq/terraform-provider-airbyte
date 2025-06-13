@@ -33,9 +33,9 @@ func (e *SourceLeverHiringUpdateSchemasAuthType) UnmarshalJSON(data []byte) erro
 }
 
 type SourceLeverHiringUpdateAuthenticateViaLeverAPIKey struct {
-	authType *SourceLeverHiringUpdateSchemasAuthType `const:"Api Key" json:"auth_type,omitempty"`
 	// The Api Key of your Lever Hiring account.
-	APIKey string `json:"api_key"`
+	APIKey   string                                  `json:"api_key"`
+	authType *SourceLeverHiringUpdateSchemasAuthType `const:"Api Key" json:"auth_type,omitempty"`
 }
 
 func (s SourceLeverHiringUpdateAuthenticateViaLeverAPIKey) MarshalJSON() ([]byte, error) {
@@ -49,15 +49,15 @@ func (s *SourceLeverHiringUpdateAuthenticateViaLeverAPIKey) UnmarshalJSON(data [
 	return nil
 }
 
-func (o *SourceLeverHiringUpdateAuthenticateViaLeverAPIKey) GetAuthType() *SourceLeverHiringUpdateSchemasAuthType {
-	return SourceLeverHiringUpdateSchemasAuthTypeAPIKey.ToPointer()
-}
-
 func (o *SourceLeverHiringUpdateAuthenticateViaLeverAPIKey) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceLeverHiringUpdateAuthenticateViaLeverAPIKey) GetAuthType() *SourceLeverHiringUpdateSchemasAuthType {
+	return SourceLeverHiringUpdateSchemasAuthTypeAPIKey.ToPointer()
 }
 
 type SourceLeverHiringUpdateAuthType string
@@ -223,10 +223,10 @@ func (e *SourceLeverHiringUpdateEnvironment) UnmarshalJSON(data []byte) error {
 type SourceLeverHiringUpdate struct {
 	// Choose how to authenticate to Lever Hiring.
 	Credentials *SourceLeverHiringUpdateAuthenticationMechanism `json:"credentials,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Note that it will be used only in the following incremental streams: comments, commits, and issues.
-	StartDate string `json:"start_date"`
 	// The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.
 	Environment *SourceLeverHiringUpdateEnvironment `default:"Sandbox" json:"environment"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Note that it will be used only in the following incremental streams: comments, commits, and issues.
+	StartDate string `json:"start_date"`
 }
 
 func (s SourceLeverHiringUpdate) MarshalJSON() ([]byte, error) {
@@ -247,16 +247,16 @@ func (o *SourceLeverHiringUpdate) GetCredentials() *SourceLeverHiringUpdateAuthe
 	return o.Credentials
 }
 
-func (o *SourceLeverHiringUpdate) GetStartDate() string {
-	if o == nil {
-		return ""
-	}
-	return o.StartDate
-}
-
 func (o *SourceLeverHiringUpdate) GetEnvironment() *SourceLeverHiringUpdateEnvironment {
 	if o == nil {
 		return nil
 	}
 	return o.Environment
+}
+
+func (o *SourceLeverHiringUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

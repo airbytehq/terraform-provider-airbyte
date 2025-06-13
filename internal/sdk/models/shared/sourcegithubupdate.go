@@ -85,13 +85,13 @@ func (e *SourceGithubUpdateOptionTitle) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGithubUpdateOAuth struct {
-	optionTitle *SourceGithubUpdateOptionTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
 	// OAuth access token
 	AccessToken string `json:"access_token"`
 	// OAuth Client Id
 	ClientID *string `json:"client_id,omitempty"`
 	// OAuth Client secret
-	ClientSecret *string `json:"client_secret,omitempty"`
+	ClientSecret *string                        `json:"client_secret,omitempty"`
+	optionTitle  *SourceGithubUpdateOptionTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
 }
 
 func (s SourceGithubUpdateOAuth) MarshalJSON() ([]byte, error) {
@@ -103,10 +103,6 @@ func (s *SourceGithubUpdateOAuth) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceGithubUpdateOAuth) GetOptionTitle() *SourceGithubUpdateOptionTitle {
-	return SourceGithubUpdateOptionTitleOAuthCredentials.ToPointer()
 }
 
 func (o *SourceGithubUpdateOAuth) GetAccessToken() string {
@@ -128,6 +124,10 @@ func (o *SourceGithubUpdateOAuth) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceGithubUpdateOAuth) GetOptionTitle() *SourceGithubUpdateOptionTitle {
+	return SourceGithubUpdateOptionTitleOAuthCredentials.ToPointer()
 }
 
 type SourceGithubUpdateAuthenticationType string
@@ -195,18 +195,18 @@ func (u SourceGithubUpdateAuthentication) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGithubUpdate struct {
-	// Choose how to authenticate to GitHub
-	Credentials SourceGithubUpdateAuthentication `json:"credentials"`
-	// List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
-	Repositories []string `json:"repositories"`
-	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Please enter your basic URL from self-hosted GitHub instance or leave it empty to use GitHub.
 	APIURL *string `default:"https://api.github.com/" json:"api_url"`
 	// List of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
 	Branches []string `json:"branches,omitempty"`
+	// Choose how to authenticate to GitHub
+	Credentials SourceGithubUpdateAuthentication `json:"credentials"`
 	// Max Waiting Time for rate limit. Set higher value to wait till rate limits will be resetted to continue sync
 	MaxWaitingTime *int64 `default:"10" json:"max_waiting_time"`
+	// List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
+	Repositories []string `json:"repositories"`
+	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceGithubUpdate) MarshalJSON() ([]byte, error) {
@@ -218,27 +218,6 @@ func (s *SourceGithubUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceGithubUpdate) GetCredentials() SourceGithubUpdateAuthentication {
-	if o == nil {
-		return SourceGithubUpdateAuthentication{}
-	}
-	return o.Credentials
-}
-
-func (o *SourceGithubUpdate) GetRepositories() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Repositories
-}
-
-func (o *SourceGithubUpdate) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
 }
 
 func (o *SourceGithubUpdate) GetAPIURL() *string {
@@ -255,9 +234,30 @@ func (o *SourceGithubUpdate) GetBranches() []string {
 	return o.Branches
 }
 
+func (o *SourceGithubUpdate) GetCredentials() SourceGithubUpdateAuthentication {
+	if o == nil {
+		return SourceGithubUpdateAuthentication{}
+	}
+	return o.Credentials
+}
+
 func (o *SourceGithubUpdate) GetMaxWaitingTime() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxWaitingTime
+}
+
+func (o *SourceGithubUpdate) GetRepositories() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Repositories
+}
+
+func (o *SourceGithubUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

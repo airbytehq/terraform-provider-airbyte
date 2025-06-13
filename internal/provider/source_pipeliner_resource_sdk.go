@@ -21,9 +21,6 @@ func (r *SourcePipelinerResourceModel) ToSharedSourcePipelinerCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -34,11 +31,14 @@ func (r *SourcePipelinerResourceModel) ToSharedSourcePipelinerCreateRequest() *s
 	var spaceid string
 	spaceid = r.Configuration.Spaceid.ValueString()
 
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourcePipeliner{
-		Username: username,
 		Password: password,
 		Service:  service,
 		Spaceid:  spaceid,
+		Username: username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,9 +110,6 @@ func (r *SourcePipelinerResourceModel) ToSharedSourcePipelinerPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -123,11 +120,14 @@ func (r *SourcePipelinerResourceModel) ToSharedSourcePipelinerPutRequest() *shar
 	var spaceid string
 	spaceid = r.Configuration.Spaceid.ValueString()
 
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourcePipelinerUpdate{
-		Username: username,
 		Password: password,
 		Service:  service,
 		Spaceid:  spaceid,
+		Username: username,
 	}
 	out := shared.SourcePipelinerPutRequest{
 		Name:          name,

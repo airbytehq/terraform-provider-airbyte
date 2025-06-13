@@ -32,11 +32,11 @@ func (e *Hibob) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHibob struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
 	// Toggle true if this instance is a HiBob sandbox
-	IsSandbox  bool  `json:"is_sandbox"`
-	sourceType Hibob `const:"hibob" json:"sourceType"`
+	IsSandbox  bool    `json:"is_sandbox"`
+	Password   *string `json:"password,omitempty"`
+	Username   string  `json:"username"`
+	sourceType Hibob   `const:"hibob" json:"sourceType"`
 }
 
 func (s SourceHibob) MarshalJSON() ([]byte, error) {
@@ -50,11 +50,11 @@ func (s *SourceHibob) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceHibob) GetUsername() string {
+func (o *SourceHibob) GetIsSandbox() bool {
 	if o == nil {
-		return ""
+		return false
 	}
-	return o.Username
+	return o.IsSandbox
 }
 
 func (o *SourceHibob) GetPassword() *string {
@@ -64,11 +64,11 @@ func (o *SourceHibob) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceHibob) GetIsSandbox() bool {
+func (o *SourceHibob) GetUsername() string {
 	if o == nil {
-		return false
+		return ""
 	}
-	return o.IsSandbox
+	return o.Username
 }
 
 func (o *SourceHibob) GetSourceType() Hibob {

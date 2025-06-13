@@ -5,12 +5,12 @@ package shared
 type SourceTyntecSmsUpdate struct {
 	// Your Tyntec API Key. See <a href="https://www.tyntec.com/docs/docs-center-sms-api-quick-start">here</a>
 	APIKey string `json:"api_key"`
-	// The phone number of the SMS message recipient (international).
-	To string `json:"to"`
 	// The phone number of the SMS message sender (international).
 	From string `json:"from"`
 	// The content of the SMS message to be sent.
 	Message *string `json:"message,omitempty"`
+	// The phone number of the SMS message recipient (international).
+	To string `json:"to"`
 }
 
 func (o *SourceTyntecSmsUpdate) GetAPIKey() string {
@@ -18,13 +18,6 @@ func (o *SourceTyntecSmsUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
-}
-
-func (o *SourceTyntecSmsUpdate) GetTo() string {
-	if o == nil {
-		return ""
-	}
-	return o.To
 }
 
 func (o *SourceTyntecSmsUpdate) GetFrom() string {
@@ -39,4 +32,11 @@ func (o *SourceTyntecSmsUpdate) GetMessage() *string {
 		return nil
 	}
 	return o.Message
+}
+
+func (o *SourceTyntecSmsUpdate) GetTo() string {
+	if o == nil {
+		return ""
+	}
+	return o.To
 }

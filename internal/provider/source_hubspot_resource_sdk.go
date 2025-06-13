@@ -22,12 +22,6 @@ func (r *SourceHubspotResourceModel) ToSharedSourceHubspotCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var credentials shared.SourceHubspotAuthentication
 	var sourceHubspotOAuth *shared.SourceHubspotOAuth
 	if r.Configuration.Credentials.OAuth != nil {
@@ -77,11 +71,17 @@ func (r *SourceHubspotResourceModel) ToSharedSourceHubspotCreateRequest() *share
 	} else {
 		numWorker = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceHubspot{
-		StartDate:                 startDate,
 		Credentials:               credentials,
 		EnableExperimentalStreams: enableExperimentalStreams,
 		NumWorker:                 numWorker,
+		StartDate:                 startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -153,12 +153,6 @@ func (r *SourceHubspotResourceModel) ToSharedSourceHubspotPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var credentials shared.SourceHubspotUpdateAuthentication
 	var sourceHubspotUpdateOAuth *shared.SourceHubspotUpdateOAuth
 	if r.Configuration.Credentials.OAuth != nil {
@@ -208,11 +202,17 @@ func (r *SourceHubspotResourceModel) ToSharedSourceHubspotPutRequest() *shared.S
 	} else {
 		numWorker = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceHubspotUpdate{
-		StartDate:                 startDate,
 		Credentials:               credentials,
 		EnableExperimentalStreams: enableExperimentalStreams,
 		NumWorker:                 numWorker,
+		StartDate:                 startDate,
 	}
 	out := shared.SourceHubspotPutRequest{
 		Name:          name,

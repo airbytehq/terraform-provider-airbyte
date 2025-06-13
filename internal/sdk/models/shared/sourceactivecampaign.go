@@ -32,11 +32,11 @@ func (e *Activecampaign) UnmarshalJSON(data []byte) error {
 }
 
 type SourceActivecampaign struct {
-	// API Key
-	APIKey string `json:"api_key"`
 	// Account Username
-	AccountUsername string         `json:"account_username"`
-	sourceType      Activecampaign `const:"activecampaign" json:"sourceType"`
+	AccountUsername string `json:"account_username"`
+	// API Key
+	APIKey     string         `json:"api_key"`
+	sourceType Activecampaign `const:"activecampaign" json:"sourceType"`
 }
 
 func (s SourceActivecampaign) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (s *SourceActivecampaign) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceActivecampaign) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceActivecampaign) GetAccountUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountUsername
+}
+
+func (o *SourceActivecampaign) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceActivecampaign) GetSourceType() Activecampaign {

@@ -60,8 +60,8 @@ func (e *Elasticemail) UnmarshalJSON(data []byte) error {
 
 type SourceElasticemail struct {
 	APIKey     string       `json:"api_key"`
-	ScopeType  *ScopeType   `json:"scope_type,omitempty"`
 	From       *time.Time   `json:"from,omitempty"`
+	ScopeType  *ScopeType   `json:"scope_type,omitempty"`
 	StartDate  time.Time    `json:"start_date"`
 	sourceType Elasticemail `const:"elasticemail" json:"sourceType"`
 }
@@ -84,18 +84,18 @@ func (o *SourceElasticemail) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceElasticemail) GetScopeType() *ScopeType {
-	if o == nil {
-		return nil
-	}
-	return o.ScopeType
-}
-
 func (o *SourceElasticemail) GetFrom() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.From
+}
+
+func (o *SourceElasticemail) GetScopeType() *ScopeType {
+	if o == nil {
+		return nil
+	}
+	return o.ScopeType
 }
 
 func (o *SourceElasticemail) GetStartDate() time.Time {

@@ -33,8 +33,8 @@ func (e *HighLevel) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHighLevel struct {
-	LocationID string    `json:"location_id"`
 	APIKey     string    `json:"api_key"`
+	LocationID string    `json:"location_id"`
 	StartDate  time.Time `json:"start_date"`
 	sourceType HighLevel `const:"high-level" json:"sourceType"`
 }
@@ -50,18 +50,18 @@ func (s *SourceHighLevel) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceHighLevel) GetLocationID() string {
-	if o == nil {
-		return ""
-	}
-	return o.LocationID
-}
-
 func (o *SourceHighLevel) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceHighLevel) GetLocationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.LocationID
 }
 
 func (o *SourceHighLevel) GetStartDate() time.Time {

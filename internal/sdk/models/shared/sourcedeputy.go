@@ -32,9 +32,9 @@ func (e *Deputy) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDeputy struct {
+	APIKey string `json:"api_key"`
 	// The base url for your deputy account to make API requests
 	BaseURL    string `json:"base_url"`
-	APIKey     string `json:"api_key"`
 	sourceType Deputy `const:"deputy" json:"sourceType"`
 }
 
@@ -49,18 +49,18 @@ func (s *SourceDeputy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceDeputy) GetBaseURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseURL
-}
-
 func (o *SourceDeputy) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceDeputy) GetBaseURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.BaseURL
 }
 
 func (o *SourceDeputy) GetSourceType() Deputy {

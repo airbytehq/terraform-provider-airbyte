@@ -39,8 +39,8 @@ func (e *SourcePingdomUpdateResolution) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePingdomUpdate struct {
-	Probes     *string                        `json:"probes,omitempty"`
 	APIKey     string                         `json:"api_key"`
+	Probes     *string                        `json:"probes,omitempty"`
 	Resolution *SourcePingdomUpdateResolution `default:"hour" json:"resolution"`
 	StartDate  time.Time                      `json:"start_date"`
 }
@@ -56,18 +56,18 @@ func (s *SourcePingdomUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePingdomUpdate) GetProbes() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Probes
-}
-
 func (o *SourcePingdomUpdate) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourcePingdomUpdate) GetProbes() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Probes
 }
 
 func (o *SourcePingdomUpdate) GetResolution() *SourcePingdomUpdateResolution {

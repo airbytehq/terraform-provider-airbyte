@@ -69,6 +69,12 @@ func (r *SourceDynamodbResourceModel) ToSharedSourceDynamodbCreateRequest() *sha
 	} else {
 		endpoint = nil
 	}
+	ignoreMissingReadPermissionsTables := new(bool)
+	if !r.Configuration.IgnoreMissingReadPermissionsTables.IsUnknown() && !r.Configuration.IgnoreMissingReadPermissionsTables.IsNull() {
+		*ignoreMissingReadPermissionsTables = r.Configuration.IgnoreMissingReadPermissionsTables.ValueBool()
+	} else {
+		ignoreMissingReadPermissionsTables = nil
+	}
 	region := new(shared.DynamodbRegion)
 	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
 		*region = shared.DynamodbRegion(r.Configuration.Region.ValueString())
@@ -81,18 +87,12 @@ func (r *SourceDynamodbResourceModel) ToSharedSourceDynamodbCreateRequest() *sha
 	} else {
 		reservedAttributeNames = nil
 	}
-	ignoreMissingReadPermissionsTables := new(bool)
-	if !r.Configuration.IgnoreMissingReadPermissionsTables.IsUnknown() && !r.Configuration.IgnoreMissingReadPermissionsTables.IsNull() {
-		*ignoreMissingReadPermissionsTables = r.Configuration.IgnoreMissingReadPermissionsTables.ValueBool()
-	} else {
-		ignoreMissingReadPermissionsTables = nil
-	}
 	configuration := shared.SourceDynamodb{
 		Credentials:                        credentials,
 		Endpoint:                           endpoint,
+		IgnoreMissingReadPermissionsTables: ignoreMissingReadPermissionsTables,
 		Region:                             region,
 		ReservedAttributeNames:             reservedAttributeNames,
-		IgnoreMissingReadPermissionsTables: ignoreMissingReadPermissionsTables,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -211,6 +211,12 @@ func (r *SourceDynamodbResourceModel) ToSharedSourceDynamodbPutRequest() *shared
 	} else {
 		endpoint = nil
 	}
+	ignoreMissingReadPermissionsTables := new(bool)
+	if !r.Configuration.IgnoreMissingReadPermissionsTables.IsUnknown() && !r.Configuration.IgnoreMissingReadPermissionsTables.IsNull() {
+		*ignoreMissingReadPermissionsTables = r.Configuration.IgnoreMissingReadPermissionsTables.ValueBool()
+	} else {
+		ignoreMissingReadPermissionsTables = nil
+	}
 	region := new(shared.SourceDynamodbUpdateDynamodbRegion)
 	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
 		*region = shared.SourceDynamodbUpdateDynamodbRegion(r.Configuration.Region.ValueString())
@@ -223,18 +229,12 @@ func (r *SourceDynamodbResourceModel) ToSharedSourceDynamodbPutRequest() *shared
 	} else {
 		reservedAttributeNames = nil
 	}
-	ignoreMissingReadPermissionsTables := new(bool)
-	if !r.Configuration.IgnoreMissingReadPermissionsTables.IsUnknown() && !r.Configuration.IgnoreMissingReadPermissionsTables.IsNull() {
-		*ignoreMissingReadPermissionsTables = r.Configuration.IgnoreMissingReadPermissionsTables.ValueBool()
-	} else {
-		ignoreMissingReadPermissionsTables = nil
-	}
 	configuration := shared.SourceDynamodbUpdate{
 		Credentials:                        credentials,
 		Endpoint:                           endpoint,
+		IgnoreMissingReadPermissionsTables: ignoreMissingReadPermissionsTables,
 		Region:                             region,
 		ReservedAttributeNames:             reservedAttributeNames,
-		IgnoreMissingReadPermissionsTables: ignoreMissingReadPermissionsTables,
 	}
 	out := shared.SourceDynamodbPutRequest{
 		Name:          name,

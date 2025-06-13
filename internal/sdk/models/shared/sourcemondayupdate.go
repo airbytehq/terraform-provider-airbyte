@@ -33,9 +33,9 @@ func (e *SourceMondayUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMondayUpdateAPIToken struct {
-	authType SourceMondayUpdateSchemasAuthType `const:"api_token" json:"auth_type"`
 	// API Token for making authenticated requests.
-	APIToken string `json:"api_token"`
+	APIToken string                            `json:"api_token"`
+	authType SourceMondayUpdateSchemasAuthType `const:"api_token" json:"auth_type"`
 }
 
 func (s SourceMondayUpdateAPIToken) MarshalJSON() ([]byte, error) {
@@ -49,15 +49,15 @@ func (s *SourceMondayUpdateAPIToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMondayUpdateAPIToken) GetAuthType() SourceMondayUpdateSchemasAuthType {
-	return SourceMondayUpdateSchemasAuthTypeAPIToken
-}
-
 func (o *SourceMondayUpdateAPIToken) GetAPIToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIToken
+}
+
+func (o *SourceMondayUpdateAPIToken) GetAuthType() SourceMondayUpdateSchemasAuthType {
+	return SourceMondayUpdateSchemasAuthTypeAPIToken
 }
 
 type SourceMondayUpdateAuthType string
@@ -84,15 +84,15 @@ func (e *SourceMondayUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMondayUpdateOAuth20 struct {
-	// Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
-	Subdomain *string                    `default:"" json:"subdomain"`
-	authType  SourceMondayUpdateAuthType `const:"oauth2.0" json:"auth_type"`
+	// Access Token for making authenticated requests.
+	AccessToken string                     `json:"access_token"`
+	authType    SourceMondayUpdateAuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	// Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+	Subdomain *string `default:"" json:"subdomain"`
 }
 
 func (s SourceMondayUpdateOAuth20) MarshalJSON() ([]byte, error) {
@@ -106,11 +106,11 @@ func (s *SourceMondayUpdateOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMondayUpdateOAuth20) GetSubdomain() *string {
+func (o *SourceMondayUpdateOAuth20) GetAccessToken() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Subdomain
+	return o.AccessToken
 }
 
 func (o *SourceMondayUpdateOAuth20) GetAuthType() SourceMondayUpdateAuthType {
@@ -131,11 +131,11 @@ func (o *SourceMondayUpdateOAuth20) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceMondayUpdateOAuth20) GetAccessToken() string {
+func (o *SourceMondayUpdateOAuth20) GetSubdomain() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.AccessToken
+	return o.Subdomain
 }
 
 type SourceMondayUpdateAuthorizationMethodType string
@@ -202,9 +202,9 @@ func (u SourceMondayUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
 }
 
 type SourceMondayUpdate struct {
-	Credentials *SourceMondayUpdateAuthorizationMethod `json:"credentials,omitempty"`
 	// The IDs of the boards that the Items and Boards streams will extract records from. When left empty, streams will extract records from all boards that exist within the account.
-	BoardIds []int64 `json:"board_ids,omitempty"`
+	BoardIds    []int64                                `json:"board_ids,omitempty"`
+	Credentials *SourceMondayUpdateAuthorizationMethod `json:"credentials,omitempty"`
 	// The number of worker threads to use for the sync.
 	NumWorkers *int64 `default:"4" json:"num_workers"`
 }
@@ -220,18 +220,18 @@ func (s *SourceMondayUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMondayUpdate) GetCredentials() *SourceMondayUpdateAuthorizationMethod {
-	if o == nil {
-		return nil
-	}
-	return o.Credentials
-}
-
 func (o *SourceMondayUpdate) GetBoardIds() []int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BoardIds
+}
+
+func (o *SourceMondayUpdate) GetCredentials() *SourceMondayUpdateAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }
 
 func (o *SourceMondayUpdate) GetNumWorkers() *int64 {

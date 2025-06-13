@@ -23,18 +23,9 @@ func (r *SourceWorkdayResourceModel) ToSharedSourceWorkdayCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var tenantID string
-	tenantID = r.Configuration.TenantID.ValueString()
-
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var credentials shared.SourceWorkdayAuthentication
 	var reportBasedStreams *shared.ReportBasedStreams
 	if r.Configuration.Credentials.ReportBasedStreams != nil {
-		var username string
-		username = r.Configuration.Credentials.ReportBasedStreams.Username.ValueString()
-
 		var password string
 		password = r.Configuration.Credentials.ReportBasedStreams.Password.ValueString()
 
@@ -44,10 +35,13 @@ func (r *SourceWorkdayResourceModel) ToSharedSourceWorkdayCreateRequest() *share
 			_ = json.Unmarshal([]byte(reportIdsItem.ValueString()), &reportIdsTmp)
 			reportIds = append(reportIds, reportIdsTmp)
 		}
+		var username string
+		username = r.Configuration.Credentials.ReportBasedStreams.Username.ValueString()
+
 		reportBasedStreams = &shared.ReportBasedStreams{
-			Username:  username,
 			Password:  password,
 			ReportIds: reportIds,
+			Username:  username,
 		}
 	}
 	if reportBasedStreams != nil {
@@ -76,10 +70,16 @@ func (r *SourceWorkdayResourceModel) ToSharedSourceWorkdayCreateRequest() *share
 			RESTAPIStreams: restAPIStreams,
 		}
 	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	var tenantID string
+	tenantID = r.Configuration.TenantID.ValueString()
+
 	configuration := shared.SourceWorkday{
-		TenantID:    tenantID,
-		Host:        host,
 		Credentials: credentials,
+		Host:        host,
+		TenantID:    tenantID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -151,18 +151,9 @@ func (r *SourceWorkdayResourceModel) ToSharedSourceWorkdayPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var tenantID string
-	tenantID = r.Configuration.TenantID.ValueString()
-
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var credentials shared.SourceWorkdayUpdateAuthentication
 	var sourceWorkdayUpdateReportBasedStreams *shared.SourceWorkdayUpdateReportBasedStreams
 	if r.Configuration.Credentials.ReportBasedStreams != nil {
-		var username string
-		username = r.Configuration.Credentials.ReportBasedStreams.Username.ValueString()
-
 		var password string
 		password = r.Configuration.Credentials.ReportBasedStreams.Password.ValueString()
 
@@ -172,10 +163,13 @@ func (r *SourceWorkdayResourceModel) ToSharedSourceWorkdayPutRequest() *shared.S
 			_ = json.Unmarshal([]byte(reportIdsItem.ValueString()), &reportIdsTmp)
 			reportIds = append(reportIds, reportIdsTmp)
 		}
+		var username string
+		username = r.Configuration.Credentials.ReportBasedStreams.Username.ValueString()
+
 		sourceWorkdayUpdateReportBasedStreams = &shared.SourceWorkdayUpdateReportBasedStreams{
-			Username:  username,
 			Password:  password,
 			ReportIds: reportIds,
+			Username:  username,
 		}
 	}
 	if sourceWorkdayUpdateReportBasedStreams != nil {
@@ -204,10 +198,16 @@ func (r *SourceWorkdayResourceModel) ToSharedSourceWorkdayPutRequest() *shared.S
 			SourceWorkdayUpdateRESTAPIStreams: sourceWorkdayUpdateRESTAPIStreams,
 		}
 	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	var tenantID string
+	tenantID = r.Configuration.TenantID.ValueString()
+
 	configuration := shared.SourceWorkdayUpdate{
-		TenantID:    tenantID,
-		Host:        host,
 		Credentials: credentials,
+		Host:        host,
+		TenantID:    tenantID,
 	}
 	out := shared.SourceWorkdayPutRequest{
 		Name:          name,

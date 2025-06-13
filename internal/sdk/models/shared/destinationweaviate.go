@@ -34,14 +34,14 @@ func (e *DestinationWeaviateSchemasEmbeddingEmbedding7Mode) UnmarshalJSON(data [
 
 // DestinationWeaviateOpenAICompatible - Use a service that's compatible with the OpenAI API to embed text.
 type DestinationWeaviateOpenAICompatible struct {
-	mode   *DestinationWeaviateSchemasEmbeddingEmbedding7Mode `const:"openai_compatible" json:"mode"`
-	APIKey *string                                            `default:"" json:"api_key"`
+	APIKey *string `default:"" json:"api_key"`
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
+	// The number of dimensions the embedding model is generating
+	Dimensions int64                                              `json:"dimensions"`
+	mode       *DestinationWeaviateSchemasEmbeddingEmbedding7Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
 }
 
 func (d DestinationWeaviateOpenAICompatible) MarshalJSON() ([]byte, error) {
@@ -53,10 +53,6 @@ func (d *DestinationWeaviateOpenAICompatible) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationWeaviateOpenAICompatible) GetMode() *DestinationWeaviateSchemasEmbeddingEmbedding7Mode {
-	return DestinationWeaviateSchemasEmbeddingEmbedding7ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationWeaviateOpenAICompatible) GetAPIKey() *string {
@@ -73,18 +69,22 @@ func (o *DestinationWeaviateOpenAICompatible) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *DestinationWeaviateOpenAICompatible) GetModelName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ModelName
-}
-
 func (o *DestinationWeaviateOpenAICompatible) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
+}
+
+func (o *DestinationWeaviateOpenAICompatible) GetMode() *DestinationWeaviateSchemasEmbeddingEmbedding7Mode {
+	return DestinationWeaviateSchemasEmbeddingEmbedding7ModeOpenaiCompatible.ToPointer()
+}
+
+func (o *DestinationWeaviateOpenAICompatible) GetModelName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ModelName
 }
 
 type DestinationWeaviateSchemasEmbeddingEmbedding6Mode string
@@ -155,11 +155,11 @@ func (e *DestinationWeaviateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data [
 
 // FromField - Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.
 type FromField struct {
-	mode *DestinationWeaviateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
-	// Name of the field in the record that contains the embedding
-	FieldName string `json:"field_name"`
 	// The number of dimensions the embedding model is generating
 	Dimensions int64 `json:"dimensions"`
+	// Name of the field in the record that contains the embedding
+	FieldName string                                             `json:"field_name"`
+	mode      *DestinationWeaviateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
 }
 
 func (f FromField) MarshalJSON() ([]byte, error) {
@@ -173,8 +173,11 @@ func (f *FromField) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FromField) GetMode() *DestinationWeaviateSchemasEmbeddingEmbedding5Mode {
-	return DestinationWeaviateSchemasEmbeddingEmbedding5ModeFromField.ToPointer()
+func (o *FromField) GetDimensions() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Dimensions
 }
 
 func (o *FromField) GetFieldName() string {
@@ -184,11 +187,8 @@ func (o *FromField) GetFieldName() string {
 	return o.FieldName
 }
 
-func (o *FromField) GetDimensions() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Dimensions
+func (o *FromField) GetMode() *DestinationWeaviateSchemasEmbeddingEmbedding5Mode {
+	return DestinationWeaviateSchemasEmbeddingEmbedding5ModeFromField.ToPointer()
 }
 
 type DestinationWeaviateSchemasEmbeddingEmbeddingMode string
@@ -216,8 +216,8 @@ func (e *DestinationWeaviateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []
 
 // DestinationWeaviateCohere - Use the Cohere API to embed text.
 type DestinationWeaviateCohere struct {
-	mode      *DestinationWeaviateSchemasEmbeddingEmbeddingMode `const:"cohere" json:"mode"`
 	CohereKey string                                            `json:"cohere_key"`
+	mode      *DestinationWeaviateSchemasEmbeddingEmbeddingMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationWeaviateCohere) MarshalJSON() ([]byte, error) {
@@ -231,15 +231,15 @@ func (d *DestinationWeaviateCohere) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationWeaviateCohere) GetMode() *DestinationWeaviateSchemasEmbeddingEmbeddingMode {
-	return DestinationWeaviateSchemasEmbeddingEmbeddingModeCohere.ToPointer()
-}
-
 func (o *DestinationWeaviateCohere) GetCohereKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.CohereKey
+}
+
+func (o *DestinationWeaviateCohere) GetMode() *DestinationWeaviateSchemasEmbeddingEmbeddingMode {
+	return DestinationWeaviateSchemasEmbeddingEmbeddingModeCohere.ToPointer()
 }
 
 type DestinationWeaviateSchemasEmbeddingMode string
@@ -318,13 +318,13 @@ func (e *DestinationWeaviateSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationWeaviateAzureOpenAI - Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationWeaviateAzureOpenAI struct {
-	mode *DestinationWeaviateSchemasMode `const:"azure_openai" json:"mode"`
-	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	OpenaiKey string `json:"openai_key"`
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string `json:"deployment"`
+	Deployment string                          `json:"deployment"`
+	mode       *DestinationWeaviateSchemasMode `const:"azure_openai" json:"mode"`
+	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+	OpenaiKey string `json:"openai_key"`
 }
 
 func (d DestinationWeaviateAzureOpenAI) MarshalJSON() ([]byte, error) {
@@ -336,17 +336,6 @@ func (d *DestinationWeaviateAzureOpenAI) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationWeaviateAzureOpenAI) GetMode() *DestinationWeaviateSchemasMode {
-	return DestinationWeaviateSchemasModeAzureOpenai.ToPointer()
-}
-
-func (o *DestinationWeaviateAzureOpenAI) GetOpenaiKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.OpenaiKey
 }
 
 func (o *DestinationWeaviateAzureOpenAI) GetAPIBase() string {
@@ -361,6 +350,17 @@ func (o *DestinationWeaviateAzureOpenAI) GetDeployment() string {
 		return ""
 	}
 	return o.Deployment
+}
+
+func (o *DestinationWeaviateAzureOpenAI) GetMode() *DestinationWeaviateSchemasMode {
+	return DestinationWeaviateSchemasModeAzureOpenai.ToPointer()
+}
+
+func (o *DestinationWeaviateAzureOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationWeaviateMode string
@@ -580,413 +580,23 @@ func (u DestinationWeaviateEmbedding) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationWeaviateEmbedding: all fields are null")
 }
 
-type DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode string
-
-const (
-	DestinationWeaviateSchemasProcessingTextSplitterTextSplitterModeCode DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode = "code"
-)
-
-func (e DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode {
-	return &e
-}
-func (e *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "code":
-		*e = DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode: %v", v)
-	}
+type Header struct {
+	HeaderKey string `json:"header_key"`
+	Value     string `json:"value"`
 }
 
-// DestinationWeaviateLanguage - Split code in suitable places based on the programming language
-type DestinationWeaviateLanguage string
-
-const (
-	DestinationWeaviateLanguageCpp      DestinationWeaviateLanguage = "cpp"
-	DestinationWeaviateLanguageGo       DestinationWeaviateLanguage = "go"
-	DestinationWeaviateLanguageJava     DestinationWeaviateLanguage = "java"
-	DestinationWeaviateLanguageJs       DestinationWeaviateLanguage = "js"
-	DestinationWeaviateLanguagePhp      DestinationWeaviateLanguage = "php"
-	DestinationWeaviateLanguageProto    DestinationWeaviateLanguage = "proto"
-	DestinationWeaviateLanguagePython   DestinationWeaviateLanguage = "python"
-	DestinationWeaviateLanguageRst      DestinationWeaviateLanguage = "rst"
-	DestinationWeaviateLanguageRuby     DestinationWeaviateLanguage = "ruby"
-	DestinationWeaviateLanguageRust     DestinationWeaviateLanguage = "rust"
-	DestinationWeaviateLanguageScala    DestinationWeaviateLanguage = "scala"
-	DestinationWeaviateLanguageSwift    DestinationWeaviateLanguage = "swift"
-	DestinationWeaviateLanguageMarkdown DestinationWeaviateLanguage = "markdown"
-	DestinationWeaviateLanguageLatex    DestinationWeaviateLanguage = "latex"
-	DestinationWeaviateLanguageHTML     DestinationWeaviateLanguage = "html"
-	DestinationWeaviateLanguageSol      DestinationWeaviateLanguage = "sol"
-)
-
-func (e DestinationWeaviateLanguage) ToPointer() *DestinationWeaviateLanguage {
-	return &e
-}
-func (e *DestinationWeaviateLanguage) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "cpp":
-		fallthrough
-	case "go":
-		fallthrough
-	case "java":
-		fallthrough
-	case "js":
-		fallthrough
-	case "php":
-		fallthrough
-	case "proto":
-		fallthrough
-	case "python":
-		fallthrough
-	case "rst":
-		fallthrough
-	case "ruby":
-		fallthrough
-	case "rust":
-		fallthrough
-	case "scala":
-		fallthrough
-	case "swift":
-		fallthrough
-	case "markdown":
-		fallthrough
-	case "latex":
-		fallthrough
-	case "html":
-		fallthrough
-	case "sol":
-		*e = DestinationWeaviateLanguage(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationWeaviateLanguage: %v", v)
-	}
-}
-
-// DestinationWeaviateByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
-type DestinationWeaviateByProgrammingLanguage struct {
-	mode *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
-	// Split code in suitable places based on the programming language
-	Language DestinationWeaviateLanguage `json:"language"`
-}
-
-func (d DestinationWeaviateByProgrammingLanguage) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationWeaviateByProgrammingLanguage) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationWeaviateByProgrammingLanguage) GetMode() *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode {
-	return DestinationWeaviateSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
-}
-
-func (o *DestinationWeaviateByProgrammingLanguage) GetLanguage() DestinationWeaviateLanguage {
-	if o == nil {
-		return DestinationWeaviateLanguage("")
-	}
-	return o.Language
-}
-
-type DestinationWeaviateSchemasProcessingTextSplitterMode string
-
-const (
-	DestinationWeaviateSchemasProcessingTextSplitterModeMarkdown DestinationWeaviateSchemasProcessingTextSplitterMode = "markdown"
-)
-
-func (e DestinationWeaviateSchemasProcessingTextSplitterMode) ToPointer() *DestinationWeaviateSchemasProcessingTextSplitterMode {
-	return &e
-}
-func (e *DestinationWeaviateSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "markdown":
-		*e = DestinationWeaviateSchemasProcessingTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationWeaviateSchemasProcessingTextSplitterMode: %v", v)
-	}
-}
-
-// DestinationWeaviateByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
-type DestinationWeaviateByMarkdownHeader struct {
-	mode *DestinationWeaviateSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
-	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
-	SplitLevel *int64 `default:"1" json:"split_level"`
-}
-
-func (d DestinationWeaviateByMarkdownHeader) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationWeaviateByMarkdownHeader) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationWeaviateByMarkdownHeader) GetMode() *DestinationWeaviateSchemasProcessingTextSplitterMode {
-	return DestinationWeaviateSchemasProcessingTextSplitterModeMarkdown.ToPointer()
-}
-
-func (o *DestinationWeaviateByMarkdownHeader) GetSplitLevel() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SplitLevel
-}
-
-type DestinationWeaviateSchemasProcessingMode string
-
-const (
-	DestinationWeaviateSchemasProcessingModeSeparator DestinationWeaviateSchemasProcessingMode = "separator"
-)
-
-func (e DestinationWeaviateSchemasProcessingMode) ToPointer() *DestinationWeaviateSchemasProcessingMode {
-	return &e
-}
-func (e *DestinationWeaviateSchemasProcessingMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "separator":
-		*e = DestinationWeaviateSchemasProcessingMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationWeaviateSchemasProcessingMode: %v", v)
-	}
-}
-
-// DestinationWeaviateBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
-type DestinationWeaviateBySeparator struct {
-	mode *DestinationWeaviateSchemasProcessingMode `const:"separator" json:"mode"`
-	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
-	Separators []string `json:"separators,omitempty"`
-	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool `default:"false" json:"keep_separator"`
-}
-
-func (d DestinationWeaviateBySeparator) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationWeaviateBySeparator) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationWeaviateBySeparator) GetMode() *DestinationWeaviateSchemasProcessingMode {
-	return DestinationWeaviateSchemasProcessingModeSeparator.ToPointer()
-}
-
-func (o *DestinationWeaviateBySeparator) GetSeparators() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Separators
-}
-
-func (o *DestinationWeaviateBySeparator) GetKeepSeparator() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KeepSeparator
-}
-
-type DestinationWeaviateTextSplitterType string
-
-const (
-	DestinationWeaviateTextSplitterTypeDestinationWeaviateBySeparator           DestinationWeaviateTextSplitterType = "destination-weaviate_By Separator"
-	DestinationWeaviateTextSplitterTypeDestinationWeaviateByMarkdownHeader      DestinationWeaviateTextSplitterType = "destination-weaviate_By Markdown header"
-	DestinationWeaviateTextSplitterTypeDestinationWeaviateByProgrammingLanguage DestinationWeaviateTextSplitterType = "destination-weaviate_By Programming Language"
-)
-
-// DestinationWeaviateTextSplitter - Split text fields into chunks based on the specified method.
-type DestinationWeaviateTextSplitter struct {
-	DestinationWeaviateBySeparator           *DestinationWeaviateBySeparator           `queryParam:"inline"`
-	DestinationWeaviateByMarkdownHeader      *DestinationWeaviateByMarkdownHeader      `queryParam:"inline"`
-	DestinationWeaviateByProgrammingLanguage *DestinationWeaviateByProgrammingLanguage `queryParam:"inline"`
-
-	Type DestinationWeaviateTextSplitterType
-}
-
-func CreateDestinationWeaviateTextSplitterDestinationWeaviateBySeparator(destinationWeaviateBySeparator DestinationWeaviateBySeparator) DestinationWeaviateTextSplitter {
-	typ := DestinationWeaviateTextSplitterTypeDestinationWeaviateBySeparator
-
-	return DestinationWeaviateTextSplitter{
-		DestinationWeaviateBySeparator: &destinationWeaviateBySeparator,
-		Type:                           typ,
-	}
-}
-
-func CreateDestinationWeaviateTextSplitterDestinationWeaviateByMarkdownHeader(destinationWeaviateByMarkdownHeader DestinationWeaviateByMarkdownHeader) DestinationWeaviateTextSplitter {
-	typ := DestinationWeaviateTextSplitterTypeDestinationWeaviateByMarkdownHeader
-
-	return DestinationWeaviateTextSplitter{
-		DestinationWeaviateByMarkdownHeader: &destinationWeaviateByMarkdownHeader,
-		Type:                                typ,
-	}
-}
-
-func CreateDestinationWeaviateTextSplitterDestinationWeaviateByProgrammingLanguage(destinationWeaviateByProgrammingLanguage DestinationWeaviateByProgrammingLanguage) DestinationWeaviateTextSplitter {
-	typ := DestinationWeaviateTextSplitterTypeDestinationWeaviateByProgrammingLanguage
-
-	return DestinationWeaviateTextSplitter{
-		DestinationWeaviateByProgrammingLanguage: &destinationWeaviateByProgrammingLanguage,
-		Type:                                     typ,
-	}
-}
-
-func (u *DestinationWeaviateTextSplitter) UnmarshalJSON(data []byte) error {
-
-	var destinationWeaviateByMarkdownHeader DestinationWeaviateByMarkdownHeader = DestinationWeaviateByMarkdownHeader{}
-	if err := utils.UnmarshalJSON(data, &destinationWeaviateByMarkdownHeader, "", true, true); err == nil {
-		u.DestinationWeaviateByMarkdownHeader = &destinationWeaviateByMarkdownHeader
-		u.Type = DestinationWeaviateTextSplitterTypeDestinationWeaviateByMarkdownHeader
-		return nil
-	}
-
-	var destinationWeaviateByProgrammingLanguage DestinationWeaviateByProgrammingLanguage = DestinationWeaviateByProgrammingLanguage{}
-	if err := utils.UnmarshalJSON(data, &destinationWeaviateByProgrammingLanguage, "", true, true); err == nil {
-		u.DestinationWeaviateByProgrammingLanguage = &destinationWeaviateByProgrammingLanguage
-		u.Type = DestinationWeaviateTextSplitterTypeDestinationWeaviateByProgrammingLanguage
-		return nil
-	}
-
-	var destinationWeaviateBySeparator DestinationWeaviateBySeparator = DestinationWeaviateBySeparator{}
-	if err := utils.UnmarshalJSON(data, &destinationWeaviateBySeparator, "", true, true); err == nil {
-		u.DestinationWeaviateBySeparator = &destinationWeaviateBySeparator
-		u.Type = DestinationWeaviateTextSplitterTypeDestinationWeaviateBySeparator
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationWeaviateTextSplitter", string(data))
-}
-
-func (u DestinationWeaviateTextSplitter) MarshalJSON() ([]byte, error) {
-	if u.DestinationWeaviateBySeparator != nil {
-		return utils.MarshalJSON(u.DestinationWeaviateBySeparator, "", true)
-	}
-
-	if u.DestinationWeaviateByMarkdownHeader != nil {
-		return utils.MarshalJSON(u.DestinationWeaviateByMarkdownHeader, "", true)
-	}
-
-	if u.DestinationWeaviateByProgrammingLanguage != nil {
-		return utils.MarshalJSON(u.DestinationWeaviateByProgrammingLanguage, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationWeaviateTextSplitter: all fields are null")
-}
-
-type DestinationWeaviateFieldNameMappingConfigModel struct {
-	// The field name in the source
-	FromField string `json:"from_field"`
-	// The field name to use in the destination
-	ToField string `json:"to_field"`
-}
-
-func (o *DestinationWeaviateFieldNameMappingConfigModel) GetFromField() string {
+func (o *Header) GetHeaderKey() string {
 	if o == nil {
 		return ""
 	}
-	return o.FromField
+	return o.HeaderKey
 }
 
-func (o *DestinationWeaviateFieldNameMappingConfigModel) GetToField() string {
+func (o *Header) GetValue() string {
 	if o == nil {
 		return ""
 	}
-	return o.ToField
-}
-
-type DestinationWeaviateProcessingConfigModel struct {
-	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
-	ChunkSize int64 `json:"chunk_size"`
-	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
-	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
-	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TextFields []string `json:"text_fields,omitempty"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
-	// Split text fields into chunks based on the specified method.
-	TextSplitter *DestinationWeaviateTextSplitter `json:"text_splitter,omitempty"`
-	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
-	FieldNameMappings []DestinationWeaviateFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
-}
-
-func (d DestinationWeaviateProcessingConfigModel) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationWeaviateProcessingConfigModel) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationWeaviateProcessingConfigModel) GetChunkSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ChunkSize
-}
-
-func (o *DestinationWeaviateProcessingConfigModel) GetChunkOverlap() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ChunkOverlap
-}
-
-func (o *DestinationWeaviateProcessingConfigModel) GetTextFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TextFields
-}
-
-func (o *DestinationWeaviateProcessingConfigModel) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
-}
-
-func (o *DestinationWeaviateProcessingConfigModel) GetTextSplitter() *DestinationWeaviateTextSplitter {
-	if o == nil {
-		return nil
-	}
-	return o.TextSplitter
-}
-
-func (o *DestinationWeaviateProcessingConfigModel) GetFieldNameMappings() []DestinationWeaviateFieldNameMappingConfigModel {
-	if o == nil {
-		return nil
-	}
-	return o.FieldNameMappings
+	return o.Value
 }
 
 type DestinationWeaviateSchemasIndexingAuthAuthenticationMode string
@@ -1058,10 +668,10 @@ func (e *DestinationWeaviateSchemasIndexingAuthMode) UnmarshalJSON(data []byte) 
 // DestinationWeaviateUsernamePassword - Authenticate using username and password (suitable for self-managed Weaviate clusters)
 type DestinationWeaviateUsernamePassword struct {
 	mode *DestinationWeaviateSchemasIndexingAuthMode `const:"username_password" json:"mode"`
-	// Username for the Weaviate cluster
-	Username string `json:"username"`
 	// Password for the Weaviate cluster
 	Password string `json:"password"`
+	// Username for the Weaviate cluster
+	Username string `json:"username"`
 }
 
 func (d DestinationWeaviateUsernamePassword) MarshalJSON() ([]byte, error) {
@@ -1079,18 +689,18 @@ func (o *DestinationWeaviateUsernamePassword) GetMode() *DestinationWeaviateSche
 	return DestinationWeaviateSchemasIndexingAuthModeUsernamePassword.ToPointer()
 }
 
-func (o *DestinationWeaviateUsernamePassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *DestinationWeaviateUsernamePassword) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *DestinationWeaviateUsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type DestinationWeaviateSchemasIndexingMode string
@@ -1276,41 +886,22 @@ func (e *DefaultVectorizer) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type Header struct {
-	HeaderKey string `json:"header_key"`
-	Value     string `json:"value"`
-}
-
-func (o *Header) GetHeaderKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.HeaderKey
-}
-
-func (o *Header) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
 // DestinationWeaviateIndexing - Indexing configuration
 type DestinationWeaviateIndexing struct {
-	// The public endpoint of the Weaviate cluster.
-	Host string `json:"host"`
+	// Additional HTTP headers to send with every request.
+	AdditionalHeaders []Header `json:"additional_headers,omitempty"`
 	// Authentication method
 	Auth DestinationWeaviateAuthentication `json:"auth"`
 	// The number of records to send to Weaviate in each batch
 	BatchSize *int64 `default:"128" json:"batch_size"`
-	// The field in the object that contains the embedded text
-	TextField *string `default:"text" json:"text_field"`
-	// The tenant ID to use for multi tenancy
-	TenantID *string `default:"" json:"tenant_id"`
 	// The vectorizer to use if new classes need to be created
 	DefaultVectorizer *DefaultVectorizer `default:"none" json:"default_vectorizer"`
-	// Additional HTTP headers to send with every request.
-	AdditionalHeaders []Header `json:"additional_headers,omitempty"`
+	// The public endpoint of the Weaviate cluster.
+	Host string `json:"host"`
+	// The tenant ID to use for multi tenancy
+	TenantID *string `default:"" json:"tenant_id"`
+	// The field in the object that contains the embedded text
+	TextField *string `default:"text" json:"text_field"`
 }
 
 func (d DestinationWeaviateIndexing) MarshalJSON() ([]byte, error) {
@@ -1324,11 +915,11 @@ func (d *DestinationWeaviateIndexing) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationWeaviateIndexing) GetHost() string {
+func (o *DestinationWeaviateIndexing) GetAdditionalHeaders() []Header {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Host
+	return o.AdditionalHeaders
 }
 
 func (o *DestinationWeaviateIndexing) GetAuth() DestinationWeaviateAuthentication {
@@ -1345,11 +936,18 @@ func (o *DestinationWeaviateIndexing) GetBatchSize() *int64 {
 	return o.BatchSize
 }
 
-func (o *DestinationWeaviateIndexing) GetTextField() *string {
+func (o *DestinationWeaviateIndexing) GetDefaultVectorizer() *DefaultVectorizer {
 	if o == nil {
 		return nil
 	}
-	return o.TextField
+	return o.DefaultVectorizer
+}
+
+func (o *DestinationWeaviateIndexing) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
 }
 
 func (o *DestinationWeaviateIndexing) GetTenantID() *string {
@@ -1359,18 +957,420 @@ func (o *DestinationWeaviateIndexing) GetTenantID() *string {
 	return o.TenantID
 }
 
-func (o *DestinationWeaviateIndexing) GetDefaultVectorizer() *DefaultVectorizer {
+func (o *DestinationWeaviateIndexing) GetTextField() *string {
 	if o == nil {
 		return nil
 	}
-	return o.DefaultVectorizer
+	return o.TextField
 }
 
-func (o *DestinationWeaviateIndexing) GetAdditionalHeaders() []Header {
+type DestinationWeaviateFieldNameMappingConfigModel struct {
+	// The field name in the source
+	FromField string `json:"from_field"`
+	// The field name to use in the destination
+	ToField string `json:"to_field"`
+}
+
+func (o *DestinationWeaviateFieldNameMappingConfigModel) GetFromField() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromField
+}
+
+func (o *DestinationWeaviateFieldNameMappingConfigModel) GetToField() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToField
+}
+
+// DestinationWeaviateLanguage - Split code in suitable places based on the programming language
+type DestinationWeaviateLanguage string
+
+const (
+	DestinationWeaviateLanguageCpp      DestinationWeaviateLanguage = "cpp"
+	DestinationWeaviateLanguageGo       DestinationWeaviateLanguage = "go"
+	DestinationWeaviateLanguageJava     DestinationWeaviateLanguage = "java"
+	DestinationWeaviateLanguageJs       DestinationWeaviateLanguage = "js"
+	DestinationWeaviateLanguagePhp      DestinationWeaviateLanguage = "php"
+	DestinationWeaviateLanguageProto    DestinationWeaviateLanguage = "proto"
+	DestinationWeaviateLanguagePython   DestinationWeaviateLanguage = "python"
+	DestinationWeaviateLanguageRst      DestinationWeaviateLanguage = "rst"
+	DestinationWeaviateLanguageRuby     DestinationWeaviateLanguage = "ruby"
+	DestinationWeaviateLanguageRust     DestinationWeaviateLanguage = "rust"
+	DestinationWeaviateLanguageScala    DestinationWeaviateLanguage = "scala"
+	DestinationWeaviateLanguageSwift    DestinationWeaviateLanguage = "swift"
+	DestinationWeaviateLanguageMarkdown DestinationWeaviateLanguage = "markdown"
+	DestinationWeaviateLanguageLatex    DestinationWeaviateLanguage = "latex"
+	DestinationWeaviateLanguageHTML     DestinationWeaviateLanguage = "html"
+	DestinationWeaviateLanguageSol      DestinationWeaviateLanguage = "sol"
+)
+
+func (e DestinationWeaviateLanguage) ToPointer() *DestinationWeaviateLanguage {
+	return &e
+}
+func (e *DestinationWeaviateLanguage) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "cpp":
+		fallthrough
+	case "go":
+		fallthrough
+	case "java":
+		fallthrough
+	case "js":
+		fallthrough
+	case "php":
+		fallthrough
+	case "proto":
+		fallthrough
+	case "python":
+		fallthrough
+	case "rst":
+		fallthrough
+	case "ruby":
+		fallthrough
+	case "rust":
+		fallthrough
+	case "scala":
+		fallthrough
+	case "swift":
+		fallthrough
+	case "markdown":
+		fallthrough
+	case "latex":
+		fallthrough
+	case "html":
+		fallthrough
+	case "sol":
+		*e = DestinationWeaviateLanguage(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationWeaviateLanguage: %v", v)
+	}
+}
+
+type DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode string
+
+const (
+	DestinationWeaviateSchemasProcessingTextSplitterTextSplitterModeCode DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode = "code"
+)
+
+func (e DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode {
+	return &e
+}
+func (e *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	}
+}
+
+// DestinationWeaviateByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
+type DestinationWeaviateByProgrammingLanguage struct {
+	// Split code in suitable places based on the programming language
+	Language DestinationWeaviateLanguage                                       `json:"language"`
+	mode     *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+}
+
+func (d DestinationWeaviateByProgrammingLanguage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationWeaviateByProgrammingLanguage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationWeaviateByProgrammingLanguage) GetLanguage() DestinationWeaviateLanguage {
+	if o == nil {
+		return DestinationWeaviateLanguage("")
+	}
+	return o.Language
+}
+
+func (o *DestinationWeaviateByProgrammingLanguage) GetMode() *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode {
+	return DestinationWeaviateSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
+}
+
+type DestinationWeaviateSchemasProcessingTextSplitterMode string
+
+const (
+	DestinationWeaviateSchemasProcessingTextSplitterModeMarkdown DestinationWeaviateSchemasProcessingTextSplitterMode = "markdown"
+)
+
+func (e DestinationWeaviateSchemasProcessingTextSplitterMode) ToPointer() *DestinationWeaviateSchemasProcessingTextSplitterMode {
+	return &e
+}
+func (e *DestinationWeaviateSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "markdown":
+		*e = DestinationWeaviateSchemasProcessingTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationWeaviateSchemasProcessingTextSplitterMode: %v", v)
+	}
+}
+
+// DestinationWeaviateByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
+type DestinationWeaviateByMarkdownHeader struct {
+	mode *DestinationWeaviateSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
+	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
+	SplitLevel *int64 `default:"1" json:"split_level"`
+}
+
+func (d DestinationWeaviateByMarkdownHeader) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationWeaviateByMarkdownHeader) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationWeaviateByMarkdownHeader) GetMode() *DestinationWeaviateSchemasProcessingTextSplitterMode {
+	return DestinationWeaviateSchemasProcessingTextSplitterModeMarkdown.ToPointer()
+}
+
+func (o *DestinationWeaviateByMarkdownHeader) GetSplitLevel() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.AdditionalHeaders
+	return o.SplitLevel
+}
+
+type DestinationWeaviateSchemasProcessingMode string
+
+const (
+	DestinationWeaviateSchemasProcessingModeSeparator DestinationWeaviateSchemasProcessingMode = "separator"
+)
+
+func (e DestinationWeaviateSchemasProcessingMode) ToPointer() *DestinationWeaviateSchemasProcessingMode {
+	return &e
+}
+func (e *DestinationWeaviateSchemasProcessingMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "separator":
+		*e = DestinationWeaviateSchemasProcessingMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationWeaviateSchemasProcessingMode: %v", v)
+	}
+}
+
+// DestinationWeaviateBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
+type DestinationWeaviateBySeparator struct {
+	// Whether to keep the separator in the resulting chunks
+	KeepSeparator *bool                                     `default:"false" json:"keep_separator"`
+	mode          *DestinationWeaviateSchemasProcessingMode `const:"separator" json:"mode"`
+	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
+	Separators []string `json:"separators,omitempty"`
+}
+
+func (d DestinationWeaviateBySeparator) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationWeaviateBySeparator) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationWeaviateBySeparator) GetKeepSeparator() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepSeparator
+}
+
+func (o *DestinationWeaviateBySeparator) GetMode() *DestinationWeaviateSchemasProcessingMode {
+	return DestinationWeaviateSchemasProcessingModeSeparator.ToPointer()
+}
+
+func (o *DestinationWeaviateBySeparator) GetSeparators() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Separators
+}
+
+type DestinationWeaviateTextSplitterType string
+
+const (
+	DestinationWeaviateTextSplitterTypeDestinationWeaviateBySeparator           DestinationWeaviateTextSplitterType = "destination-weaviate_By Separator"
+	DestinationWeaviateTextSplitterTypeDestinationWeaviateByMarkdownHeader      DestinationWeaviateTextSplitterType = "destination-weaviate_By Markdown header"
+	DestinationWeaviateTextSplitterTypeDestinationWeaviateByProgrammingLanguage DestinationWeaviateTextSplitterType = "destination-weaviate_By Programming Language"
+)
+
+// DestinationWeaviateTextSplitter - Split text fields into chunks based on the specified method.
+type DestinationWeaviateTextSplitter struct {
+	DestinationWeaviateBySeparator           *DestinationWeaviateBySeparator           `queryParam:"inline"`
+	DestinationWeaviateByMarkdownHeader      *DestinationWeaviateByMarkdownHeader      `queryParam:"inline"`
+	DestinationWeaviateByProgrammingLanguage *DestinationWeaviateByProgrammingLanguage `queryParam:"inline"`
+
+	Type DestinationWeaviateTextSplitterType
+}
+
+func CreateDestinationWeaviateTextSplitterDestinationWeaviateBySeparator(destinationWeaviateBySeparator DestinationWeaviateBySeparator) DestinationWeaviateTextSplitter {
+	typ := DestinationWeaviateTextSplitterTypeDestinationWeaviateBySeparator
+
+	return DestinationWeaviateTextSplitter{
+		DestinationWeaviateBySeparator: &destinationWeaviateBySeparator,
+		Type:                           typ,
+	}
+}
+
+func CreateDestinationWeaviateTextSplitterDestinationWeaviateByMarkdownHeader(destinationWeaviateByMarkdownHeader DestinationWeaviateByMarkdownHeader) DestinationWeaviateTextSplitter {
+	typ := DestinationWeaviateTextSplitterTypeDestinationWeaviateByMarkdownHeader
+
+	return DestinationWeaviateTextSplitter{
+		DestinationWeaviateByMarkdownHeader: &destinationWeaviateByMarkdownHeader,
+		Type:                                typ,
+	}
+}
+
+func CreateDestinationWeaviateTextSplitterDestinationWeaviateByProgrammingLanguage(destinationWeaviateByProgrammingLanguage DestinationWeaviateByProgrammingLanguage) DestinationWeaviateTextSplitter {
+	typ := DestinationWeaviateTextSplitterTypeDestinationWeaviateByProgrammingLanguage
+
+	return DestinationWeaviateTextSplitter{
+		DestinationWeaviateByProgrammingLanguage: &destinationWeaviateByProgrammingLanguage,
+		Type:                                     typ,
+	}
+}
+
+func (u *DestinationWeaviateTextSplitter) UnmarshalJSON(data []byte) error {
+
+	var destinationWeaviateByMarkdownHeader DestinationWeaviateByMarkdownHeader = DestinationWeaviateByMarkdownHeader{}
+	if err := utils.UnmarshalJSON(data, &destinationWeaviateByMarkdownHeader, "", true, true); err == nil {
+		u.DestinationWeaviateByMarkdownHeader = &destinationWeaviateByMarkdownHeader
+		u.Type = DestinationWeaviateTextSplitterTypeDestinationWeaviateByMarkdownHeader
+		return nil
+	}
+
+	var destinationWeaviateByProgrammingLanguage DestinationWeaviateByProgrammingLanguage = DestinationWeaviateByProgrammingLanguage{}
+	if err := utils.UnmarshalJSON(data, &destinationWeaviateByProgrammingLanguage, "", true, true); err == nil {
+		u.DestinationWeaviateByProgrammingLanguage = &destinationWeaviateByProgrammingLanguage
+		u.Type = DestinationWeaviateTextSplitterTypeDestinationWeaviateByProgrammingLanguage
+		return nil
+	}
+
+	var destinationWeaviateBySeparator DestinationWeaviateBySeparator = DestinationWeaviateBySeparator{}
+	if err := utils.UnmarshalJSON(data, &destinationWeaviateBySeparator, "", true, true); err == nil {
+		u.DestinationWeaviateBySeparator = &destinationWeaviateBySeparator
+		u.Type = DestinationWeaviateTextSplitterTypeDestinationWeaviateBySeparator
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationWeaviateTextSplitter", string(data))
+}
+
+func (u DestinationWeaviateTextSplitter) MarshalJSON() ([]byte, error) {
+	if u.DestinationWeaviateBySeparator != nil {
+		return utils.MarshalJSON(u.DestinationWeaviateBySeparator, "", true)
+	}
+
+	if u.DestinationWeaviateByMarkdownHeader != nil {
+		return utils.MarshalJSON(u.DestinationWeaviateByMarkdownHeader, "", true)
+	}
+
+	if u.DestinationWeaviateByProgrammingLanguage != nil {
+		return utils.MarshalJSON(u.DestinationWeaviateByProgrammingLanguage, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationWeaviateTextSplitter: all fields are null")
+}
+
+type DestinationWeaviateProcessingConfigModel struct {
+	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
+	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
+	ChunkSize int64 `json:"chunk_size"`
+	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
+	FieldNameMappings []DestinationWeaviateFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+	TextFields []string `json:"text_fields,omitempty"`
+	// Split text fields into chunks based on the specified method.
+	TextSplitter *DestinationWeaviateTextSplitter `json:"text_splitter,omitempty"`
+}
+
+func (d DestinationWeaviateProcessingConfigModel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationWeaviateProcessingConfigModel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationWeaviateProcessingConfigModel) GetChunkOverlap() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ChunkOverlap
+}
+
+func (o *DestinationWeaviateProcessingConfigModel) GetChunkSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ChunkSize
+}
+
+func (o *DestinationWeaviateProcessingConfigModel) GetFieldNameMappings() []DestinationWeaviateFieldNameMappingConfigModel {
+	if o == nil {
+		return nil
+	}
+	return o.FieldNameMappings
+}
+
+func (o *DestinationWeaviateProcessingConfigModel) GetMetadataFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MetadataFields
+}
+
+func (o *DestinationWeaviateProcessingConfigModel) GetTextFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TextFields
+}
+
+func (o *DestinationWeaviateProcessingConfigModel) GetTextSplitter() *DestinationWeaviateTextSplitter {
+	if o == nil {
+		return nil
+	}
+	return o.TextSplitter
 }
 
 type Weaviate string
@@ -1408,13 +1408,13 @@ func (e *Weaviate) UnmarshalJSON(data []byte) error {
 // Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationWeaviate struct {
 	// Embedding configuration
-	Embedding  DestinationWeaviateEmbedding             `json:"embedding"`
-	Processing DestinationWeaviateProcessingConfigModel `json:"processing"`
-	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText *bool `default:"false" json:"omit_raw_text"`
+	Embedding DestinationWeaviateEmbedding `json:"embedding"`
 	// Indexing configuration
-	Indexing        DestinationWeaviateIndexing `json:"indexing"`
-	destinationType Weaviate                    `const:"weaviate" json:"destinationType"`
+	Indexing DestinationWeaviateIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText     *bool                                    `default:"false" json:"omit_raw_text"`
+	Processing      DestinationWeaviateProcessingConfigModel `json:"processing"`
+	destinationType Weaviate                                 `const:"weaviate" json:"destinationType"`
 }
 
 func (d DestinationWeaviate) MarshalJSON() ([]byte, error) {
@@ -1435,11 +1435,11 @@ func (o *DestinationWeaviate) GetEmbedding() DestinationWeaviateEmbedding {
 	return o.Embedding
 }
 
-func (o *DestinationWeaviate) GetProcessing() DestinationWeaviateProcessingConfigModel {
+func (o *DestinationWeaviate) GetIndexing() DestinationWeaviateIndexing {
 	if o == nil {
-		return DestinationWeaviateProcessingConfigModel{}
+		return DestinationWeaviateIndexing{}
 	}
-	return o.Processing
+	return o.Indexing
 }
 
 func (o *DestinationWeaviate) GetOmitRawText() *bool {
@@ -1449,11 +1449,11 @@ func (o *DestinationWeaviate) GetOmitRawText() *bool {
 	return o.OmitRawText
 }
 
-func (o *DestinationWeaviate) GetIndexing() DestinationWeaviateIndexing {
+func (o *DestinationWeaviate) GetProcessing() DestinationWeaviateProcessingConfigModel {
 	if o == nil {
-		return DestinationWeaviateIndexing{}
+		return DestinationWeaviateProcessingConfigModel{}
 	}
-	return o.Indexing
+	return o.Processing
 }
 
 func (o *DestinationWeaviate) GetDestinationType() Weaviate {

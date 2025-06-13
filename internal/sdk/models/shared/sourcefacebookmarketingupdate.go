@@ -10,6 +10,144 @@ import (
 	"time"
 )
 
+// SourceFacebookMarketingUpdateValidAdStatuses - An enumeration.
+type SourceFacebookMarketingUpdateValidAdStatuses string
+
+const (
+	SourceFacebookMarketingUpdateValidAdStatusesActive             SourceFacebookMarketingUpdateValidAdStatuses = "ACTIVE"
+	SourceFacebookMarketingUpdateValidAdStatusesAdsetPaused        SourceFacebookMarketingUpdateValidAdStatuses = "ADSET_PAUSED"
+	SourceFacebookMarketingUpdateValidAdStatusesArchived           SourceFacebookMarketingUpdateValidAdStatuses = "ARCHIVED"
+	SourceFacebookMarketingUpdateValidAdStatusesCampaignPaused     SourceFacebookMarketingUpdateValidAdStatuses = "CAMPAIGN_PAUSED"
+	SourceFacebookMarketingUpdateValidAdStatusesDeleted            SourceFacebookMarketingUpdateValidAdStatuses = "DELETED"
+	SourceFacebookMarketingUpdateValidAdStatusesDisapproved        SourceFacebookMarketingUpdateValidAdStatuses = "DISAPPROVED"
+	SourceFacebookMarketingUpdateValidAdStatusesInProcess          SourceFacebookMarketingUpdateValidAdStatuses = "IN_PROCESS"
+	SourceFacebookMarketingUpdateValidAdStatusesPaused             SourceFacebookMarketingUpdateValidAdStatuses = "PAUSED"
+	SourceFacebookMarketingUpdateValidAdStatusesPendingBillingInfo SourceFacebookMarketingUpdateValidAdStatuses = "PENDING_BILLING_INFO"
+	SourceFacebookMarketingUpdateValidAdStatusesPendingReview      SourceFacebookMarketingUpdateValidAdStatuses = "PENDING_REVIEW"
+	SourceFacebookMarketingUpdateValidAdStatusesPreapproved        SourceFacebookMarketingUpdateValidAdStatuses = "PREAPPROVED"
+	SourceFacebookMarketingUpdateValidAdStatusesWithIssues         SourceFacebookMarketingUpdateValidAdStatuses = "WITH_ISSUES"
+)
+
+func (e SourceFacebookMarketingUpdateValidAdStatuses) ToPointer() *SourceFacebookMarketingUpdateValidAdStatuses {
+	return &e
+}
+func (e *SourceFacebookMarketingUpdateValidAdStatuses) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ACTIVE":
+		fallthrough
+	case "ADSET_PAUSED":
+		fallthrough
+	case "ARCHIVED":
+		fallthrough
+	case "CAMPAIGN_PAUSED":
+		fallthrough
+	case "DELETED":
+		fallthrough
+	case "DISAPPROVED":
+		fallthrough
+	case "IN_PROCESS":
+		fallthrough
+	case "PAUSED":
+		fallthrough
+	case "PENDING_BILLING_INFO":
+		fallthrough
+	case "PENDING_REVIEW":
+		fallthrough
+	case "PREAPPROVED":
+		fallthrough
+	case "WITH_ISSUES":
+		*e = SourceFacebookMarketingUpdateValidAdStatuses(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidAdStatuses: %v", v)
+	}
+}
+
+// SourceFacebookMarketingUpdateValidAdSetStatuses - An enumeration.
+type SourceFacebookMarketingUpdateValidAdSetStatuses string
+
+const (
+	SourceFacebookMarketingUpdateValidAdSetStatusesActive         SourceFacebookMarketingUpdateValidAdSetStatuses = "ACTIVE"
+	SourceFacebookMarketingUpdateValidAdSetStatusesArchived       SourceFacebookMarketingUpdateValidAdSetStatuses = "ARCHIVED"
+	SourceFacebookMarketingUpdateValidAdSetStatusesCampaignPaused SourceFacebookMarketingUpdateValidAdSetStatuses = "CAMPAIGN_PAUSED"
+	SourceFacebookMarketingUpdateValidAdSetStatusesDeleted        SourceFacebookMarketingUpdateValidAdSetStatuses = "DELETED"
+	SourceFacebookMarketingUpdateValidAdSetStatusesInProcess      SourceFacebookMarketingUpdateValidAdSetStatuses = "IN_PROCESS"
+	SourceFacebookMarketingUpdateValidAdSetStatusesPaused         SourceFacebookMarketingUpdateValidAdSetStatuses = "PAUSED"
+	SourceFacebookMarketingUpdateValidAdSetStatusesWithIssues     SourceFacebookMarketingUpdateValidAdSetStatuses = "WITH_ISSUES"
+)
+
+func (e SourceFacebookMarketingUpdateValidAdSetStatuses) ToPointer() *SourceFacebookMarketingUpdateValidAdSetStatuses {
+	return &e
+}
+func (e *SourceFacebookMarketingUpdateValidAdSetStatuses) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ACTIVE":
+		fallthrough
+	case "ARCHIVED":
+		fallthrough
+	case "CAMPAIGN_PAUSED":
+		fallthrough
+	case "DELETED":
+		fallthrough
+	case "IN_PROCESS":
+		fallthrough
+	case "PAUSED":
+		fallthrough
+	case "WITH_ISSUES":
+		*e = SourceFacebookMarketingUpdateValidAdSetStatuses(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidAdSetStatuses: %v", v)
+	}
+}
+
+// SourceFacebookMarketingUpdateValidCampaignStatuses - An enumeration.
+type SourceFacebookMarketingUpdateValidCampaignStatuses string
+
+const (
+	SourceFacebookMarketingUpdateValidCampaignStatusesActive     SourceFacebookMarketingUpdateValidCampaignStatuses = "ACTIVE"
+	SourceFacebookMarketingUpdateValidCampaignStatusesArchived   SourceFacebookMarketingUpdateValidCampaignStatuses = "ARCHIVED"
+	SourceFacebookMarketingUpdateValidCampaignStatusesDeleted    SourceFacebookMarketingUpdateValidCampaignStatuses = "DELETED"
+	SourceFacebookMarketingUpdateValidCampaignStatusesInProcess  SourceFacebookMarketingUpdateValidCampaignStatuses = "IN_PROCESS"
+	SourceFacebookMarketingUpdateValidCampaignStatusesPaused     SourceFacebookMarketingUpdateValidCampaignStatuses = "PAUSED"
+	SourceFacebookMarketingUpdateValidCampaignStatusesWithIssues SourceFacebookMarketingUpdateValidCampaignStatuses = "WITH_ISSUES"
+)
+
+func (e SourceFacebookMarketingUpdateValidCampaignStatuses) ToPointer() *SourceFacebookMarketingUpdateValidCampaignStatuses {
+	return &e
+}
+func (e *SourceFacebookMarketingUpdateValidCampaignStatuses) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ACTIVE":
+		fallthrough
+	case "ARCHIVED":
+		fallthrough
+	case "DELETED":
+		fallthrough
+	case "IN_PROCESS":
+		fallthrough
+	case "PAUSED":
+		fallthrough
+	case "WITH_ISSUES":
+		*e = SourceFacebookMarketingUpdateValidCampaignStatuses(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidCampaignStatuses: %v", v)
+	}
+}
+
 type SourceFacebookMarketingUpdateSchemasAuthType string
 
 const (
@@ -34,9 +172,9 @@ func (e *SourceFacebookMarketingUpdateSchemasAuthType) UnmarshalJSON(data []byte
 }
 
 type SourceFacebookMarketingUpdateServiceAccountKeyAuthentication struct {
-	authType *SourceFacebookMarketingUpdateSchemasAuthType `const:"Service" json:"auth_type"`
 	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-	AccessToken string `json:"access_token"`
+	AccessToken string                                        `json:"access_token"`
+	authType    *SourceFacebookMarketingUpdateSchemasAuthType `const:"Service" json:"auth_type"`
 }
 
 func (s SourceFacebookMarketingUpdateServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -50,15 +188,15 @@ func (s *SourceFacebookMarketingUpdateServiceAccountKeyAuthentication) Unmarshal
 	return nil
 }
 
-func (o *SourceFacebookMarketingUpdateServiceAccountKeyAuthentication) GetAuthType() *SourceFacebookMarketingUpdateSchemasAuthType {
-	return SourceFacebookMarketingUpdateSchemasAuthTypeService.ToPointer()
-}
-
 func (o *SourceFacebookMarketingUpdateServiceAccountKeyAuthentication) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceFacebookMarketingUpdateServiceAccountKeyAuthentication) GetAuthType() *SourceFacebookMarketingUpdateSchemasAuthType {
+	return SourceFacebookMarketingUpdateSchemasAuthTypeService.ToPointer()
 }
 
 type SourceFacebookMarketingUpdateAuthType string
@@ -85,13 +223,13 @@ func (e *SourceFacebookMarketingUpdateAuthType) UnmarshalJSON(data []byte) error
 }
 
 type SourceFacebookMarketingUpdateAuthenticateViaFacebookMarketingOauth struct {
-	authType *SourceFacebookMarketingUpdateAuthType `const:"Client" json:"auth_type"`
+	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
+	AccessToken *string                                `json:"access_token,omitempty"`
+	authType    *SourceFacebookMarketingUpdateAuthType `const:"Client" json:"auth_type"`
 	// Client ID for the Facebook Marketing API
 	ClientID string `json:"client_id"`
 	// Client Secret for the Facebook Marketing API
 	ClientSecret string `json:"client_secret"`
-	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-	AccessToken *string `json:"access_token,omitempty"`
 }
 
 func (s SourceFacebookMarketingUpdateAuthenticateViaFacebookMarketingOauth) MarshalJSON() ([]byte, error) {
@@ -103,6 +241,13 @@ func (s *SourceFacebookMarketingUpdateAuthenticateViaFacebookMarketingOauth) Unm
 		return err
 	}
 	return nil
+}
+
+func (o *SourceFacebookMarketingUpdateAuthenticateViaFacebookMarketingOauth) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
 }
 
 func (o *SourceFacebookMarketingUpdateAuthenticateViaFacebookMarketingOauth) GetAuthType() *SourceFacebookMarketingUpdateAuthType {
@@ -121,13 +266,6 @@ func (o *SourceFacebookMarketingUpdateAuthenticateViaFacebookMarketingOauth) Get
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceFacebookMarketingUpdateAuthenticateViaFacebookMarketingOauth) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
 }
 
 type SourceFacebookMarketingUpdateAuthenticationType string
@@ -194,174 +332,255 @@ func (u SourceFacebookMarketingUpdateAuthentication) MarshalJSON() ([]byte, erro
 	return nil, errors.New("could not marshal union type SourceFacebookMarketingUpdateAuthentication: all fields are null")
 }
 
-// SourceFacebookMarketingUpdateValidCampaignStatuses - An enumeration.
-type SourceFacebookMarketingUpdateValidCampaignStatuses string
+// SourceFacebookMarketingUpdateValidActionBreakdowns - An enumeration.
+type SourceFacebookMarketingUpdateValidActionBreakdowns string
 
 const (
-	SourceFacebookMarketingUpdateValidCampaignStatusesActive     SourceFacebookMarketingUpdateValidCampaignStatuses = "ACTIVE"
-	SourceFacebookMarketingUpdateValidCampaignStatusesArchived   SourceFacebookMarketingUpdateValidCampaignStatuses = "ARCHIVED"
-	SourceFacebookMarketingUpdateValidCampaignStatusesDeleted    SourceFacebookMarketingUpdateValidCampaignStatuses = "DELETED"
-	SourceFacebookMarketingUpdateValidCampaignStatusesInProcess  SourceFacebookMarketingUpdateValidCampaignStatuses = "IN_PROCESS"
-	SourceFacebookMarketingUpdateValidCampaignStatusesPaused     SourceFacebookMarketingUpdateValidCampaignStatuses = "PAUSED"
-	SourceFacebookMarketingUpdateValidCampaignStatusesWithIssues SourceFacebookMarketingUpdateValidCampaignStatuses = "WITH_ISSUES"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionCanvasComponentName SourceFacebookMarketingUpdateValidActionBreakdowns = "action_canvas_component_name"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionCarouselCardID      SourceFacebookMarketingUpdateValidActionBreakdowns = "action_carousel_card_id"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionCarouselCardName    SourceFacebookMarketingUpdateValidActionBreakdowns = "action_carousel_card_name"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionDestination         SourceFacebookMarketingUpdateValidActionBreakdowns = "action_destination"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionDevice              SourceFacebookMarketingUpdateValidActionBreakdowns = "action_device"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionReaction            SourceFacebookMarketingUpdateValidActionBreakdowns = "action_reaction"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionTargetID            SourceFacebookMarketingUpdateValidActionBreakdowns = "action_target_id"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionType                SourceFacebookMarketingUpdateValidActionBreakdowns = "action_type"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionVideoSound          SourceFacebookMarketingUpdateValidActionBreakdowns = "action_video_sound"
+	SourceFacebookMarketingUpdateValidActionBreakdownsActionVideoType           SourceFacebookMarketingUpdateValidActionBreakdowns = "action_video_type"
+	SourceFacebookMarketingUpdateValidActionBreakdownsConversionDestination     SourceFacebookMarketingUpdateValidActionBreakdowns = "conversion_destination"
+	SourceFacebookMarketingUpdateValidActionBreakdownsMatchedPersonaID          SourceFacebookMarketingUpdateValidActionBreakdowns = "matched_persona_id"
+	SourceFacebookMarketingUpdateValidActionBreakdownsMatchedPersonaName        SourceFacebookMarketingUpdateValidActionBreakdowns = "matched_persona_name"
+	SourceFacebookMarketingUpdateValidActionBreakdownsSignalSourceBucket        SourceFacebookMarketingUpdateValidActionBreakdowns = "signal_source_bucket"
+	SourceFacebookMarketingUpdateValidActionBreakdownsStandardEventContentType  SourceFacebookMarketingUpdateValidActionBreakdowns = "standard_event_content_type"
 )
 
-func (e SourceFacebookMarketingUpdateValidCampaignStatuses) ToPointer() *SourceFacebookMarketingUpdateValidCampaignStatuses {
+func (e SourceFacebookMarketingUpdateValidActionBreakdowns) ToPointer() *SourceFacebookMarketingUpdateValidActionBreakdowns {
 	return &e
 }
-func (e *SourceFacebookMarketingUpdateValidCampaignStatuses) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingUpdateValidActionBreakdowns) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "ACTIVE":
+	case "action_canvas_component_name":
 		fallthrough
-	case "ARCHIVED":
+	case "action_carousel_card_id":
 		fallthrough
-	case "DELETED":
+	case "action_carousel_card_name":
 		fallthrough
-	case "IN_PROCESS":
+	case "action_destination":
 		fallthrough
-	case "PAUSED":
+	case "action_device":
 		fallthrough
-	case "WITH_ISSUES":
-		*e = SourceFacebookMarketingUpdateValidCampaignStatuses(v)
+	case "action_reaction":
+		fallthrough
+	case "action_target_id":
+		fallthrough
+	case "action_type":
+		fallthrough
+	case "action_video_sound":
+		fallthrough
+	case "action_video_type":
+		fallthrough
+	case "conversion_destination":
+		fallthrough
+	case "matched_persona_id":
+		fallthrough
+	case "matched_persona_name":
+		fallthrough
+	case "signal_source_bucket":
+		fallthrough
+	case "standard_event_content_type":
+		*e = SourceFacebookMarketingUpdateValidActionBreakdowns(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidCampaignStatuses: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidActionBreakdowns: %v", v)
 	}
 }
 
-// SourceFacebookMarketingUpdateValidAdSetStatuses - An enumeration.
-type SourceFacebookMarketingUpdateValidAdSetStatuses string
+// SourceFacebookMarketingUpdateValidBreakdowns - An enumeration.
+type SourceFacebookMarketingUpdateValidBreakdowns string
 
 const (
-	SourceFacebookMarketingUpdateValidAdSetStatusesActive         SourceFacebookMarketingUpdateValidAdSetStatuses = "ACTIVE"
-	SourceFacebookMarketingUpdateValidAdSetStatusesArchived       SourceFacebookMarketingUpdateValidAdSetStatuses = "ARCHIVED"
-	SourceFacebookMarketingUpdateValidAdSetStatusesCampaignPaused SourceFacebookMarketingUpdateValidAdSetStatuses = "CAMPAIGN_PAUSED"
-	SourceFacebookMarketingUpdateValidAdSetStatusesDeleted        SourceFacebookMarketingUpdateValidAdSetStatuses = "DELETED"
-	SourceFacebookMarketingUpdateValidAdSetStatusesInProcess      SourceFacebookMarketingUpdateValidAdSetStatuses = "IN_PROCESS"
-	SourceFacebookMarketingUpdateValidAdSetStatusesPaused         SourceFacebookMarketingUpdateValidAdSetStatuses = "PAUSED"
-	SourceFacebookMarketingUpdateValidAdSetStatusesWithIssues     SourceFacebookMarketingUpdateValidAdSetStatuses = "WITH_ISSUES"
+	SourceFacebookMarketingUpdateValidBreakdownsAdFormatAsset                             SourceFacebookMarketingUpdateValidBreakdowns = "ad_format_asset"
+	SourceFacebookMarketingUpdateValidBreakdownsAge                                       SourceFacebookMarketingUpdateValidBreakdowns = "age"
+	SourceFacebookMarketingUpdateValidBreakdownsAppID                                     SourceFacebookMarketingUpdateValidBreakdowns = "app_id"
+	SourceFacebookMarketingUpdateValidBreakdownsBodyAsset                                 SourceFacebookMarketingUpdateValidBreakdowns = "body_asset"
+	SourceFacebookMarketingUpdateValidBreakdownsBreakdownReportingAdID                    SourceFacebookMarketingUpdateValidBreakdowns = "breakdown_reporting_ad_id"
+	SourceFacebookMarketingUpdateValidBreakdownsCallToActionAsset                         SourceFacebookMarketingUpdateValidBreakdowns = "call_to_action_asset"
+	SourceFacebookMarketingUpdateValidBreakdownsCoarseConversionValue                     SourceFacebookMarketingUpdateValidBreakdowns = "coarse_conversion_value"
+	SourceFacebookMarketingUpdateValidBreakdownsConversionDestination                     SourceFacebookMarketingUpdateValidBreakdowns = "conversion_destination"
+	SourceFacebookMarketingUpdateValidBreakdownsCountry                                   SourceFacebookMarketingUpdateValidBreakdowns = "country"
+	SourceFacebookMarketingUpdateValidBreakdownsDescriptionAsset                          SourceFacebookMarketingUpdateValidBreakdowns = "description_asset"
+	SourceFacebookMarketingUpdateValidBreakdownsDevicePlatform                            SourceFacebookMarketingUpdateValidBreakdowns = "device_platform"
+	SourceFacebookMarketingUpdateValidBreakdownsDma                                       SourceFacebookMarketingUpdateValidBreakdowns = "dma"
+	SourceFacebookMarketingUpdateValidBreakdownsFidelityType                              SourceFacebookMarketingUpdateValidBreakdowns = "fidelity_type"
+	SourceFacebookMarketingUpdateValidBreakdownsFrequencyValue                            SourceFacebookMarketingUpdateValidBreakdowns = "frequency_value"
+	SourceFacebookMarketingUpdateValidBreakdownsGender                                    SourceFacebookMarketingUpdateValidBreakdowns = "gender"
+	SourceFacebookMarketingUpdateValidBreakdownsHourlyStatsAggregatedByAdvertiserTimeZone SourceFacebookMarketingUpdateValidBreakdowns = "hourly_stats_aggregated_by_advertiser_time_zone"
+	SourceFacebookMarketingUpdateValidBreakdownsHourlyStatsAggregatedByAudienceTimeZone   SourceFacebookMarketingUpdateValidBreakdowns = "hourly_stats_aggregated_by_audience_time_zone"
+	SourceFacebookMarketingUpdateValidBreakdownsHsid                                      SourceFacebookMarketingUpdateValidBreakdowns = "hsid"
+	SourceFacebookMarketingUpdateValidBreakdownsImageAsset                                SourceFacebookMarketingUpdateValidBreakdowns = "image_asset"
+	SourceFacebookMarketingUpdateValidBreakdownsImpressionDevice                          SourceFacebookMarketingUpdateValidBreakdowns = "impression_device"
+	SourceFacebookMarketingUpdateValidBreakdownsIsConversionIDModeled                     SourceFacebookMarketingUpdateValidBreakdowns = "is_conversion_id_modeled"
+	SourceFacebookMarketingUpdateValidBreakdownsIsRenderedAsDelayedSkipAd                 SourceFacebookMarketingUpdateValidBreakdowns = "is_rendered_as_delayed_skip_ad"
+	SourceFacebookMarketingUpdateValidBreakdownsLandingDestination                        SourceFacebookMarketingUpdateValidBreakdowns = "landing_destination"
+	SourceFacebookMarketingUpdateValidBreakdownsLinkURLAsset                              SourceFacebookMarketingUpdateValidBreakdowns = "link_url_asset"
+	SourceFacebookMarketingUpdateValidBreakdownsMarketingMessagesBtnName                  SourceFacebookMarketingUpdateValidBreakdowns = "marketing_messages_btn_name"
+	SourceFacebookMarketingUpdateValidBreakdownsMdsaLandingDestination                    SourceFacebookMarketingUpdateValidBreakdowns = "mdsa_landing_destination"
+	SourceFacebookMarketingUpdateValidBreakdownsMediaAssetURL                             SourceFacebookMarketingUpdateValidBreakdowns = "media_asset_url"
+	SourceFacebookMarketingUpdateValidBreakdownsMediaCreator                              SourceFacebookMarketingUpdateValidBreakdowns = "media_creator"
+	SourceFacebookMarketingUpdateValidBreakdownsMediaDestinationURL                       SourceFacebookMarketingUpdateValidBreakdowns = "media_destination_url"
+	SourceFacebookMarketingUpdateValidBreakdownsMediaFormat                               SourceFacebookMarketingUpdateValidBreakdowns = "media_format"
+	SourceFacebookMarketingUpdateValidBreakdownsMediaOriginURL                            SourceFacebookMarketingUpdateValidBreakdowns = "media_origin_url"
+	SourceFacebookMarketingUpdateValidBreakdownsMediaTextContent                          SourceFacebookMarketingUpdateValidBreakdowns = "media_text_content"
+	SourceFacebookMarketingUpdateValidBreakdownsMediaType                                 SourceFacebookMarketingUpdateValidBreakdowns = "media_type"
+	SourceFacebookMarketingUpdateValidBreakdownsMmm                                       SourceFacebookMarketingUpdateValidBreakdowns = "mmm"
+	SourceFacebookMarketingUpdateValidBreakdownsPlacePageID                               SourceFacebookMarketingUpdateValidBreakdowns = "place_page_id"
+	SourceFacebookMarketingUpdateValidBreakdownsPlatformPosition                          SourceFacebookMarketingUpdateValidBreakdowns = "platform_position"
+	SourceFacebookMarketingUpdateValidBreakdownsPostbackSequenceIndex                     SourceFacebookMarketingUpdateValidBreakdowns = "postback_sequence_index"
+	SourceFacebookMarketingUpdateValidBreakdownsProductID                                 SourceFacebookMarketingUpdateValidBreakdowns = "product_id"
+	SourceFacebookMarketingUpdateValidBreakdownsPublisherPlatform                         SourceFacebookMarketingUpdateValidBreakdowns = "publisher_platform"
+	SourceFacebookMarketingUpdateValidBreakdownsRedownload                                SourceFacebookMarketingUpdateValidBreakdowns = "redownload"
+	SourceFacebookMarketingUpdateValidBreakdownsRegion                                    SourceFacebookMarketingUpdateValidBreakdowns = "region"
+	SourceFacebookMarketingUpdateValidBreakdownsSignalSourceBucket                        SourceFacebookMarketingUpdateValidBreakdowns = "signal_source_bucket"
+	SourceFacebookMarketingUpdateValidBreakdownsSkanCampaignID                            SourceFacebookMarketingUpdateValidBreakdowns = "skan_campaign_id"
+	SourceFacebookMarketingUpdateValidBreakdownsSkanConversionID                          SourceFacebookMarketingUpdateValidBreakdowns = "skan_conversion_id"
+	SourceFacebookMarketingUpdateValidBreakdownsSkanVersion                               SourceFacebookMarketingUpdateValidBreakdowns = "skan_version"
+	SourceFacebookMarketingUpdateValidBreakdownsSotAttributionModelType                   SourceFacebookMarketingUpdateValidBreakdowns = "sot_attribution_model_type"
+	SourceFacebookMarketingUpdateValidBreakdownsSotAttributionWindow                      SourceFacebookMarketingUpdateValidBreakdowns = "sot_attribution_window"
+	SourceFacebookMarketingUpdateValidBreakdownsSotChannel                                SourceFacebookMarketingUpdateValidBreakdowns = "sot_channel"
+	SourceFacebookMarketingUpdateValidBreakdownsSotEventType                              SourceFacebookMarketingUpdateValidBreakdowns = "sot_event_type"
+	SourceFacebookMarketingUpdateValidBreakdownsSotSource                                 SourceFacebookMarketingUpdateValidBreakdowns = "sot_source"
+	SourceFacebookMarketingUpdateValidBreakdownsStandardEventContentType                  SourceFacebookMarketingUpdateValidBreakdowns = "standard_event_content_type"
+	SourceFacebookMarketingUpdateValidBreakdownsTitleAsset                                SourceFacebookMarketingUpdateValidBreakdowns = "title_asset"
+	SourceFacebookMarketingUpdateValidBreakdownsUserPersonaID                             SourceFacebookMarketingUpdateValidBreakdowns = "user_persona_id"
+	SourceFacebookMarketingUpdateValidBreakdownsUserPersonaName                           SourceFacebookMarketingUpdateValidBreakdowns = "user_persona_name"
+	SourceFacebookMarketingUpdateValidBreakdownsVideoAsset                                SourceFacebookMarketingUpdateValidBreakdowns = "video_asset"
 )
 
-func (e SourceFacebookMarketingUpdateValidAdSetStatuses) ToPointer() *SourceFacebookMarketingUpdateValidAdSetStatuses {
+func (e SourceFacebookMarketingUpdateValidBreakdowns) ToPointer() *SourceFacebookMarketingUpdateValidBreakdowns {
 	return &e
 }
-func (e *SourceFacebookMarketingUpdateValidAdSetStatuses) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingUpdateValidBreakdowns) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "ACTIVE":
+	case "ad_format_asset":
 		fallthrough
-	case "ARCHIVED":
+	case "age":
 		fallthrough
-	case "CAMPAIGN_PAUSED":
+	case "app_id":
 		fallthrough
-	case "DELETED":
+	case "body_asset":
 		fallthrough
-	case "IN_PROCESS":
+	case "breakdown_reporting_ad_id":
 		fallthrough
-	case "PAUSED":
+	case "call_to_action_asset":
 		fallthrough
-	case "WITH_ISSUES":
-		*e = SourceFacebookMarketingUpdateValidAdSetStatuses(v)
+	case "coarse_conversion_value":
+		fallthrough
+	case "conversion_destination":
+		fallthrough
+	case "country":
+		fallthrough
+	case "description_asset":
+		fallthrough
+	case "device_platform":
+		fallthrough
+	case "dma":
+		fallthrough
+	case "fidelity_type":
+		fallthrough
+	case "frequency_value":
+		fallthrough
+	case "gender":
+		fallthrough
+	case "hourly_stats_aggregated_by_advertiser_time_zone":
+		fallthrough
+	case "hourly_stats_aggregated_by_audience_time_zone":
+		fallthrough
+	case "hsid":
+		fallthrough
+	case "image_asset":
+		fallthrough
+	case "impression_device":
+		fallthrough
+	case "is_conversion_id_modeled":
+		fallthrough
+	case "is_rendered_as_delayed_skip_ad":
+		fallthrough
+	case "landing_destination":
+		fallthrough
+	case "link_url_asset":
+		fallthrough
+	case "marketing_messages_btn_name":
+		fallthrough
+	case "mdsa_landing_destination":
+		fallthrough
+	case "media_asset_url":
+		fallthrough
+	case "media_creator":
+		fallthrough
+	case "media_destination_url":
+		fallthrough
+	case "media_format":
+		fallthrough
+	case "media_origin_url":
+		fallthrough
+	case "media_text_content":
+		fallthrough
+	case "media_type":
+		fallthrough
+	case "mmm":
+		fallthrough
+	case "place_page_id":
+		fallthrough
+	case "platform_position":
+		fallthrough
+	case "postback_sequence_index":
+		fallthrough
+	case "product_id":
+		fallthrough
+	case "publisher_platform":
+		fallthrough
+	case "redownload":
+		fallthrough
+	case "region":
+		fallthrough
+	case "signal_source_bucket":
+		fallthrough
+	case "skan_campaign_id":
+		fallthrough
+	case "skan_conversion_id":
+		fallthrough
+	case "skan_version":
+		fallthrough
+	case "sot_attribution_model_type":
+		fallthrough
+	case "sot_attribution_window":
+		fallthrough
+	case "sot_channel":
+		fallthrough
+	case "sot_event_type":
+		fallthrough
+	case "sot_source":
+		fallthrough
+	case "standard_event_content_type":
+		fallthrough
+	case "title_asset":
+		fallthrough
+	case "user_persona_id":
+		fallthrough
+	case "user_persona_name":
+		fallthrough
+	case "video_asset":
+		*e = SourceFacebookMarketingUpdateValidBreakdowns(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidAdSetStatuses: %v", v)
-	}
-}
-
-// SourceFacebookMarketingUpdateValidAdStatuses - An enumeration.
-type SourceFacebookMarketingUpdateValidAdStatuses string
-
-const (
-	SourceFacebookMarketingUpdateValidAdStatusesActive             SourceFacebookMarketingUpdateValidAdStatuses = "ACTIVE"
-	SourceFacebookMarketingUpdateValidAdStatusesAdsetPaused        SourceFacebookMarketingUpdateValidAdStatuses = "ADSET_PAUSED"
-	SourceFacebookMarketingUpdateValidAdStatusesArchived           SourceFacebookMarketingUpdateValidAdStatuses = "ARCHIVED"
-	SourceFacebookMarketingUpdateValidAdStatusesCampaignPaused     SourceFacebookMarketingUpdateValidAdStatuses = "CAMPAIGN_PAUSED"
-	SourceFacebookMarketingUpdateValidAdStatusesDeleted            SourceFacebookMarketingUpdateValidAdStatuses = "DELETED"
-	SourceFacebookMarketingUpdateValidAdStatusesDisapproved        SourceFacebookMarketingUpdateValidAdStatuses = "DISAPPROVED"
-	SourceFacebookMarketingUpdateValidAdStatusesInProcess          SourceFacebookMarketingUpdateValidAdStatuses = "IN_PROCESS"
-	SourceFacebookMarketingUpdateValidAdStatusesPaused             SourceFacebookMarketingUpdateValidAdStatuses = "PAUSED"
-	SourceFacebookMarketingUpdateValidAdStatusesPendingBillingInfo SourceFacebookMarketingUpdateValidAdStatuses = "PENDING_BILLING_INFO"
-	SourceFacebookMarketingUpdateValidAdStatusesPendingReview      SourceFacebookMarketingUpdateValidAdStatuses = "PENDING_REVIEW"
-	SourceFacebookMarketingUpdateValidAdStatusesPreapproved        SourceFacebookMarketingUpdateValidAdStatuses = "PREAPPROVED"
-	SourceFacebookMarketingUpdateValidAdStatusesWithIssues         SourceFacebookMarketingUpdateValidAdStatuses = "WITH_ISSUES"
-)
-
-func (e SourceFacebookMarketingUpdateValidAdStatuses) ToPointer() *SourceFacebookMarketingUpdateValidAdStatuses {
-	return &e
-}
-func (e *SourceFacebookMarketingUpdateValidAdStatuses) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ACTIVE":
-		fallthrough
-	case "ADSET_PAUSED":
-		fallthrough
-	case "ARCHIVED":
-		fallthrough
-	case "CAMPAIGN_PAUSED":
-		fallthrough
-	case "DELETED":
-		fallthrough
-	case "DISAPPROVED":
-		fallthrough
-	case "IN_PROCESS":
-		fallthrough
-	case "PAUSED":
-		fallthrough
-	case "PENDING_BILLING_INFO":
-		fallthrough
-	case "PENDING_REVIEW":
-		fallthrough
-	case "PREAPPROVED":
-		fallthrough
-	case "WITH_ISSUES":
-		*e = SourceFacebookMarketingUpdateValidAdStatuses(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidAdStatuses: %v", v)
-	}
-}
-
-// SourceFacebookMarketingUpdateLevel - Chosen level for API
-type SourceFacebookMarketingUpdateLevel string
-
-const (
-	SourceFacebookMarketingUpdateLevelAd       SourceFacebookMarketingUpdateLevel = "ad"
-	SourceFacebookMarketingUpdateLevelAdset    SourceFacebookMarketingUpdateLevel = "adset"
-	SourceFacebookMarketingUpdateLevelCampaign SourceFacebookMarketingUpdateLevel = "campaign"
-	SourceFacebookMarketingUpdateLevelAccount  SourceFacebookMarketingUpdateLevel = "account"
-)
-
-func (e SourceFacebookMarketingUpdateLevel) ToPointer() *SourceFacebookMarketingUpdateLevel {
-	return &e
-}
-func (e *SourceFacebookMarketingUpdateLevel) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ad":
-		fallthrough
-	case "adset":
-		fallthrough
-	case "campaign":
-		fallthrough
-	case "account":
-		*e = SourceFacebookMarketingUpdateLevel(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateLevel: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidBreakdowns: %v", v)
 	}
 }
 
@@ -809,312 +1028,61 @@ func (e *SourceFacebookMarketingUpdateValidEnums) UnmarshalJSON(data []byte) err
 	}
 }
 
-// SourceFacebookMarketingUpdateValidBreakdowns - An enumeration.
-type SourceFacebookMarketingUpdateValidBreakdowns string
+// SourceFacebookMarketingUpdateLevel - Chosen level for API
+type SourceFacebookMarketingUpdateLevel string
 
 const (
-	SourceFacebookMarketingUpdateValidBreakdownsAdFormatAsset                             SourceFacebookMarketingUpdateValidBreakdowns = "ad_format_asset"
-	SourceFacebookMarketingUpdateValidBreakdownsAge                                       SourceFacebookMarketingUpdateValidBreakdowns = "age"
-	SourceFacebookMarketingUpdateValidBreakdownsAppID                                     SourceFacebookMarketingUpdateValidBreakdowns = "app_id"
-	SourceFacebookMarketingUpdateValidBreakdownsBodyAsset                                 SourceFacebookMarketingUpdateValidBreakdowns = "body_asset"
-	SourceFacebookMarketingUpdateValidBreakdownsBreakdownReportingAdID                    SourceFacebookMarketingUpdateValidBreakdowns = "breakdown_reporting_ad_id"
-	SourceFacebookMarketingUpdateValidBreakdownsCallToActionAsset                         SourceFacebookMarketingUpdateValidBreakdowns = "call_to_action_asset"
-	SourceFacebookMarketingUpdateValidBreakdownsCoarseConversionValue                     SourceFacebookMarketingUpdateValidBreakdowns = "coarse_conversion_value"
-	SourceFacebookMarketingUpdateValidBreakdownsConversionDestination                     SourceFacebookMarketingUpdateValidBreakdowns = "conversion_destination"
-	SourceFacebookMarketingUpdateValidBreakdownsCountry                                   SourceFacebookMarketingUpdateValidBreakdowns = "country"
-	SourceFacebookMarketingUpdateValidBreakdownsDescriptionAsset                          SourceFacebookMarketingUpdateValidBreakdowns = "description_asset"
-	SourceFacebookMarketingUpdateValidBreakdownsDevicePlatform                            SourceFacebookMarketingUpdateValidBreakdowns = "device_platform"
-	SourceFacebookMarketingUpdateValidBreakdownsDma                                       SourceFacebookMarketingUpdateValidBreakdowns = "dma"
-	SourceFacebookMarketingUpdateValidBreakdownsFidelityType                              SourceFacebookMarketingUpdateValidBreakdowns = "fidelity_type"
-	SourceFacebookMarketingUpdateValidBreakdownsFrequencyValue                            SourceFacebookMarketingUpdateValidBreakdowns = "frequency_value"
-	SourceFacebookMarketingUpdateValidBreakdownsGender                                    SourceFacebookMarketingUpdateValidBreakdowns = "gender"
-	SourceFacebookMarketingUpdateValidBreakdownsHourlyStatsAggregatedByAdvertiserTimeZone SourceFacebookMarketingUpdateValidBreakdowns = "hourly_stats_aggregated_by_advertiser_time_zone"
-	SourceFacebookMarketingUpdateValidBreakdownsHourlyStatsAggregatedByAudienceTimeZone   SourceFacebookMarketingUpdateValidBreakdowns = "hourly_stats_aggregated_by_audience_time_zone"
-	SourceFacebookMarketingUpdateValidBreakdownsHsid                                      SourceFacebookMarketingUpdateValidBreakdowns = "hsid"
-	SourceFacebookMarketingUpdateValidBreakdownsImageAsset                                SourceFacebookMarketingUpdateValidBreakdowns = "image_asset"
-	SourceFacebookMarketingUpdateValidBreakdownsImpressionDevice                          SourceFacebookMarketingUpdateValidBreakdowns = "impression_device"
-	SourceFacebookMarketingUpdateValidBreakdownsIsConversionIDModeled                     SourceFacebookMarketingUpdateValidBreakdowns = "is_conversion_id_modeled"
-	SourceFacebookMarketingUpdateValidBreakdownsIsRenderedAsDelayedSkipAd                 SourceFacebookMarketingUpdateValidBreakdowns = "is_rendered_as_delayed_skip_ad"
-	SourceFacebookMarketingUpdateValidBreakdownsLandingDestination                        SourceFacebookMarketingUpdateValidBreakdowns = "landing_destination"
-	SourceFacebookMarketingUpdateValidBreakdownsLinkURLAsset                              SourceFacebookMarketingUpdateValidBreakdowns = "link_url_asset"
-	SourceFacebookMarketingUpdateValidBreakdownsMarketingMessagesBtnName                  SourceFacebookMarketingUpdateValidBreakdowns = "marketing_messages_btn_name"
-	SourceFacebookMarketingUpdateValidBreakdownsMdsaLandingDestination                    SourceFacebookMarketingUpdateValidBreakdowns = "mdsa_landing_destination"
-	SourceFacebookMarketingUpdateValidBreakdownsMediaAssetURL                             SourceFacebookMarketingUpdateValidBreakdowns = "media_asset_url"
-	SourceFacebookMarketingUpdateValidBreakdownsMediaCreator                              SourceFacebookMarketingUpdateValidBreakdowns = "media_creator"
-	SourceFacebookMarketingUpdateValidBreakdownsMediaDestinationURL                       SourceFacebookMarketingUpdateValidBreakdowns = "media_destination_url"
-	SourceFacebookMarketingUpdateValidBreakdownsMediaFormat                               SourceFacebookMarketingUpdateValidBreakdowns = "media_format"
-	SourceFacebookMarketingUpdateValidBreakdownsMediaOriginURL                            SourceFacebookMarketingUpdateValidBreakdowns = "media_origin_url"
-	SourceFacebookMarketingUpdateValidBreakdownsMediaTextContent                          SourceFacebookMarketingUpdateValidBreakdowns = "media_text_content"
-	SourceFacebookMarketingUpdateValidBreakdownsMediaType                                 SourceFacebookMarketingUpdateValidBreakdowns = "media_type"
-	SourceFacebookMarketingUpdateValidBreakdownsMmm                                       SourceFacebookMarketingUpdateValidBreakdowns = "mmm"
-	SourceFacebookMarketingUpdateValidBreakdownsPlacePageID                               SourceFacebookMarketingUpdateValidBreakdowns = "place_page_id"
-	SourceFacebookMarketingUpdateValidBreakdownsPlatformPosition                          SourceFacebookMarketingUpdateValidBreakdowns = "platform_position"
-	SourceFacebookMarketingUpdateValidBreakdownsPostbackSequenceIndex                     SourceFacebookMarketingUpdateValidBreakdowns = "postback_sequence_index"
-	SourceFacebookMarketingUpdateValidBreakdownsProductID                                 SourceFacebookMarketingUpdateValidBreakdowns = "product_id"
-	SourceFacebookMarketingUpdateValidBreakdownsPublisherPlatform                         SourceFacebookMarketingUpdateValidBreakdowns = "publisher_platform"
-	SourceFacebookMarketingUpdateValidBreakdownsRedownload                                SourceFacebookMarketingUpdateValidBreakdowns = "redownload"
-	SourceFacebookMarketingUpdateValidBreakdownsRegion                                    SourceFacebookMarketingUpdateValidBreakdowns = "region"
-	SourceFacebookMarketingUpdateValidBreakdownsSignalSourceBucket                        SourceFacebookMarketingUpdateValidBreakdowns = "signal_source_bucket"
-	SourceFacebookMarketingUpdateValidBreakdownsSkanCampaignID                            SourceFacebookMarketingUpdateValidBreakdowns = "skan_campaign_id"
-	SourceFacebookMarketingUpdateValidBreakdownsSkanConversionID                          SourceFacebookMarketingUpdateValidBreakdowns = "skan_conversion_id"
-	SourceFacebookMarketingUpdateValidBreakdownsSkanVersion                               SourceFacebookMarketingUpdateValidBreakdowns = "skan_version"
-	SourceFacebookMarketingUpdateValidBreakdownsSotAttributionModelType                   SourceFacebookMarketingUpdateValidBreakdowns = "sot_attribution_model_type"
-	SourceFacebookMarketingUpdateValidBreakdownsSotAttributionWindow                      SourceFacebookMarketingUpdateValidBreakdowns = "sot_attribution_window"
-	SourceFacebookMarketingUpdateValidBreakdownsSotChannel                                SourceFacebookMarketingUpdateValidBreakdowns = "sot_channel"
-	SourceFacebookMarketingUpdateValidBreakdownsSotEventType                              SourceFacebookMarketingUpdateValidBreakdowns = "sot_event_type"
-	SourceFacebookMarketingUpdateValidBreakdownsSotSource                                 SourceFacebookMarketingUpdateValidBreakdowns = "sot_source"
-	SourceFacebookMarketingUpdateValidBreakdownsStandardEventContentType                  SourceFacebookMarketingUpdateValidBreakdowns = "standard_event_content_type"
-	SourceFacebookMarketingUpdateValidBreakdownsTitleAsset                                SourceFacebookMarketingUpdateValidBreakdowns = "title_asset"
-	SourceFacebookMarketingUpdateValidBreakdownsUserPersonaID                             SourceFacebookMarketingUpdateValidBreakdowns = "user_persona_id"
-	SourceFacebookMarketingUpdateValidBreakdownsUserPersonaName                           SourceFacebookMarketingUpdateValidBreakdowns = "user_persona_name"
-	SourceFacebookMarketingUpdateValidBreakdownsVideoAsset                                SourceFacebookMarketingUpdateValidBreakdowns = "video_asset"
+	SourceFacebookMarketingUpdateLevelAd       SourceFacebookMarketingUpdateLevel = "ad"
+	SourceFacebookMarketingUpdateLevelAdset    SourceFacebookMarketingUpdateLevel = "adset"
+	SourceFacebookMarketingUpdateLevelCampaign SourceFacebookMarketingUpdateLevel = "campaign"
+	SourceFacebookMarketingUpdateLevelAccount  SourceFacebookMarketingUpdateLevel = "account"
 )
 
-func (e SourceFacebookMarketingUpdateValidBreakdowns) ToPointer() *SourceFacebookMarketingUpdateValidBreakdowns {
+func (e SourceFacebookMarketingUpdateLevel) ToPointer() *SourceFacebookMarketingUpdateLevel {
 	return &e
 }
-func (e *SourceFacebookMarketingUpdateValidBreakdowns) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingUpdateLevel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "ad_format_asset":
+	case "ad":
 		fallthrough
-	case "age":
+	case "adset":
 		fallthrough
-	case "app_id":
+	case "campaign":
 		fallthrough
-	case "body_asset":
-		fallthrough
-	case "breakdown_reporting_ad_id":
-		fallthrough
-	case "call_to_action_asset":
-		fallthrough
-	case "coarse_conversion_value":
-		fallthrough
-	case "conversion_destination":
-		fallthrough
-	case "country":
-		fallthrough
-	case "description_asset":
-		fallthrough
-	case "device_platform":
-		fallthrough
-	case "dma":
-		fallthrough
-	case "fidelity_type":
-		fallthrough
-	case "frequency_value":
-		fallthrough
-	case "gender":
-		fallthrough
-	case "hourly_stats_aggregated_by_advertiser_time_zone":
-		fallthrough
-	case "hourly_stats_aggregated_by_audience_time_zone":
-		fallthrough
-	case "hsid":
-		fallthrough
-	case "image_asset":
-		fallthrough
-	case "impression_device":
-		fallthrough
-	case "is_conversion_id_modeled":
-		fallthrough
-	case "is_rendered_as_delayed_skip_ad":
-		fallthrough
-	case "landing_destination":
-		fallthrough
-	case "link_url_asset":
-		fallthrough
-	case "marketing_messages_btn_name":
-		fallthrough
-	case "mdsa_landing_destination":
-		fallthrough
-	case "media_asset_url":
-		fallthrough
-	case "media_creator":
-		fallthrough
-	case "media_destination_url":
-		fallthrough
-	case "media_format":
-		fallthrough
-	case "media_origin_url":
-		fallthrough
-	case "media_text_content":
-		fallthrough
-	case "media_type":
-		fallthrough
-	case "mmm":
-		fallthrough
-	case "place_page_id":
-		fallthrough
-	case "platform_position":
-		fallthrough
-	case "postback_sequence_index":
-		fallthrough
-	case "product_id":
-		fallthrough
-	case "publisher_platform":
-		fallthrough
-	case "redownload":
-		fallthrough
-	case "region":
-		fallthrough
-	case "signal_source_bucket":
-		fallthrough
-	case "skan_campaign_id":
-		fallthrough
-	case "skan_conversion_id":
-		fallthrough
-	case "skan_version":
-		fallthrough
-	case "sot_attribution_model_type":
-		fallthrough
-	case "sot_attribution_window":
-		fallthrough
-	case "sot_channel":
-		fallthrough
-	case "sot_event_type":
-		fallthrough
-	case "sot_source":
-		fallthrough
-	case "standard_event_content_type":
-		fallthrough
-	case "title_asset":
-		fallthrough
-	case "user_persona_id":
-		fallthrough
-	case "user_persona_name":
-		fallthrough
-	case "video_asset":
-		*e = SourceFacebookMarketingUpdateValidBreakdowns(v)
+	case "account":
+		*e = SourceFacebookMarketingUpdateLevel(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidBreakdowns: %v", v)
-	}
-}
-
-// SourceFacebookMarketingUpdateValidActionBreakdowns - An enumeration.
-type SourceFacebookMarketingUpdateValidActionBreakdowns string
-
-const (
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionCanvasComponentName SourceFacebookMarketingUpdateValidActionBreakdowns = "action_canvas_component_name"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionCarouselCardID      SourceFacebookMarketingUpdateValidActionBreakdowns = "action_carousel_card_id"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionCarouselCardName    SourceFacebookMarketingUpdateValidActionBreakdowns = "action_carousel_card_name"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionDestination         SourceFacebookMarketingUpdateValidActionBreakdowns = "action_destination"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionDevice              SourceFacebookMarketingUpdateValidActionBreakdowns = "action_device"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionReaction            SourceFacebookMarketingUpdateValidActionBreakdowns = "action_reaction"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionTargetID            SourceFacebookMarketingUpdateValidActionBreakdowns = "action_target_id"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionType                SourceFacebookMarketingUpdateValidActionBreakdowns = "action_type"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionVideoSound          SourceFacebookMarketingUpdateValidActionBreakdowns = "action_video_sound"
-	SourceFacebookMarketingUpdateValidActionBreakdownsActionVideoType           SourceFacebookMarketingUpdateValidActionBreakdowns = "action_video_type"
-	SourceFacebookMarketingUpdateValidActionBreakdownsConversionDestination     SourceFacebookMarketingUpdateValidActionBreakdowns = "conversion_destination"
-	SourceFacebookMarketingUpdateValidActionBreakdownsMatchedPersonaID          SourceFacebookMarketingUpdateValidActionBreakdowns = "matched_persona_id"
-	SourceFacebookMarketingUpdateValidActionBreakdownsMatchedPersonaName        SourceFacebookMarketingUpdateValidActionBreakdowns = "matched_persona_name"
-	SourceFacebookMarketingUpdateValidActionBreakdownsSignalSourceBucket        SourceFacebookMarketingUpdateValidActionBreakdowns = "signal_source_bucket"
-	SourceFacebookMarketingUpdateValidActionBreakdownsStandardEventContentType  SourceFacebookMarketingUpdateValidActionBreakdowns = "standard_event_content_type"
-)
-
-func (e SourceFacebookMarketingUpdateValidActionBreakdowns) ToPointer() *SourceFacebookMarketingUpdateValidActionBreakdowns {
-	return &e
-}
-func (e *SourceFacebookMarketingUpdateValidActionBreakdowns) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "action_canvas_component_name":
-		fallthrough
-	case "action_carousel_card_id":
-		fallthrough
-	case "action_carousel_card_name":
-		fallthrough
-	case "action_destination":
-		fallthrough
-	case "action_device":
-		fallthrough
-	case "action_reaction":
-		fallthrough
-	case "action_target_id":
-		fallthrough
-	case "action_type":
-		fallthrough
-	case "action_video_sound":
-		fallthrough
-	case "action_video_type":
-		fallthrough
-	case "conversion_destination":
-		fallthrough
-	case "matched_persona_id":
-		fallthrough
-	case "matched_persona_name":
-		fallthrough
-	case "signal_source_bucket":
-		fallthrough
-	case "standard_event_content_type":
-		*e = SourceFacebookMarketingUpdateValidActionBreakdowns(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateValidActionBreakdowns: %v", v)
-	}
-}
-
-// SourceFacebookMarketingUpdateActionReportTime - Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
-type SourceFacebookMarketingUpdateActionReportTime string
-
-const (
-	SourceFacebookMarketingUpdateActionReportTimeConversion SourceFacebookMarketingUpdateActionReportTime = "conversion"
-	SourceFacebookMarketingUpdateActionReportTimeImpression SourceFacebookMarketingUpdateActionReportTime = "impression"
-	SourceFacebookMarketingUpdateActionReportTimeMixed      SourceFacebookMarketingUpdateActionReportTime = "mixed"
-)
-
-func (e SourceFacebookMarketingUpdateActionReportTime) ToPointer() *SourceFacebookMarketingUpdateActionReportTime {
-	return &e
-}
-func (e *SourceFacebookMarketingUpdateActionReportTime) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "conversion":
-		fallthrough
-	case "impression":
-		fallthrough
-	case "mixed":
-		*e = SourceFacebookMarketingUpdateActionReportTime(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateActionReportTime: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateLevel: %v", v)
 	}
 }
 
 // SourceFacebookMarketingUpdateInsightConfig - Config for custom insights
 type SourceFacebookMarketingUpdateInsightConfig struct {
-	// The name value of insight
-	Name string `json:"name"`
-	// Chosen level for API
-	Level *SourceFacebookMarketingUpdateLevel `default:"ad" json:"level"`
-	// A list of chosen fields for fields parameter
-	Fields []SourceFacebookMarketingUpdateValidEnums `json:"fields,omitempty"`
-	// A list of chosen breakdowns for breakdowns
-	Breakdowns []SourceFacebookMarketingUpdateValidBreakdowns `json:"breakdowns,omitempty"`
 	// A list of chosen action_breakdowns for action_breakdowns
 	ActionBreakdowns []SourceFacebookMarketingUpdateValidActionBreakdowns `json:"action_breakdowns,omitempty"`
-	// Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
-	ActionReportTime *SourceFacebookMarketingUpdateActionReportTime `default:"mixed" json:"action_report_time"`
-	// Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89.
-	TimeIncrement *int64 `default:"1" json:"time_increment"`
-	// The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
-	StartDate *time.Time `json:"start_date,omitempty"`
+	// A list of chosen breakdowns for breakdowns
+	Breakdowns []SourceFacebookMarketingUpdateValidBreakdowns `json:"breakdowns,omitempty"`
 	// The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 	EndDate *time.Time `json:"end_date,omitempty"`
-	// The attribution window
-	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
+	// A list of chosen fields for fields parameter
+	Fields []SourceFacebookMarketingUpdateValidEnums `json:"fields,omitempty"`
 	// The insights job timeout
 	InsightsJobTimeout *int64 `default:"60" json:"insights_job_timeout"`
+	// The attribution window
+	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
+	// Chosen level for API
+	Level *SourceFacebookMarketingUpdateLevel `default:"ad" json:"level"`
+	// The name value of insight
+	Name string `json:"name"`
+	// The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89.
+	TimeIncrement *int64 `default:"1" json:"time_increment"`
 }
 
 func (s SourceFacebookMarketingUpdateInsightConfig) MarshalJSON() ([]byte, error) {
@@ -1128,25 +1096,11 @@ func (s *SourceFacebookMarketingUpdateInsightConfig) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetLevel() *SourceFacebookMarketingUpdateLevel {
+func (o *SourceFacebookMarketingUpdateInsightConfig) GetActionBreakdowns() []SourceFacebookMarketingUpdateValidActionBreakdowns {
 	if o == nil {
 		return nil
 	}
-	return o.Level
-}
-
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetFields() []SourceFacebookMarketingUpdateValidEnums {
-	if o == nil {
-		return nil
-	}
-	return o.Fields
+	return o.ActionBreakdowns
 }
 
 func (o *SourceFacebookMarketingUpdateInsightConfig) GetBreakdowns() []SourceFacebookMarketingUpdateValidBreakdowns {
@@ -1156,34 +1110,6 @@ func (o *SourceFacebookMarketingUpdateInsightConfig) GetBreakdowns() []SourceFac
 	return o.Breakdowns
 }
 
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetActionBreakdowns() []SourceFacebookMarketingUpdateValidActionBreakdowns {
-	if o == nil {
-		return nil
-	}
-	return o.ActionBreakdowns
-}
-
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetActionReportTime() *SourceFacebookMarketingUpdateActionReportTime {
-	if o == nil {
-		return nil
-	}
-	return o.ActionReportTime
-}
-
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetTimeIncrement() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.TimeIncrement
-}
-
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceFacebookMarketingUpdateInsightConfig) GetEndDate() *time.Time {
 	if o == nil {
 		return nil
@@ -1191,11 +1117,11 @@ func (o *SourceFacebookMarketingUpdateInsightConfig) GetEndDate() *time.Time {
 	return o.EndDate
 }
 
-func (o *SourceFacebookMarketingUpdateInsightConfig) GetInsightsLookbackWindow() *int64 {
+func (o *SourceFacebookMarketingUpdateInsightConfig) GetFields() []SourceFacebookMarketingUpdateValidEnums {
 	if o == nil {
 		return nil
 	}
-	return o.InsightsLookbackWindow
+	return o.Fields
 }
 
 func (o *SourceFacebookMarketingUpdateInsightConfig) GetInsightsJobTimeout() *int64 {
@@ -1205,33 +1131,68 @@ func (o *SourceFacebookMarketingUpdateInsightConfig) GetInsightsJobTimeout() *in
 	return o.InsightsJobTimeout
 }
 
+func (o *SourceFacebookMarketingUpdateInsightConfig) GetInsightsLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InsightsLookbackWindow
+}
+
+func (o *SourceFacebookMarketingUpdateInsightConfig) GetLevel() *SourceFacebookMarketingUpdateLevel {
+	if o == nil {
+		return nil
+	}
+	return o.Level
+}
+
+func (o *SourceFacebookMarketingUpdateInsightConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFacebookMarketingUpdateInsightConfig) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceFacebookMarketingUpdateInsightConfig) GetTimeIncrement() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TimeIncrement
+}
+
 type SourceFacebookMarketingUpdate struct {
-	// The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
-	AccountIds []string `json:"account_ids"`
 	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 	AccessToken *string `json:"access_token,omitempty"`
-	// Credentials for connecting to the Facebook Marketing API
-	Credentials SourceFacebookMarketingUpdateAuthentication `json:"credentials"`
-	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. If not set then all data will be replicated for usual streams and only last 2 years for insight streams.
-	StartDate *time.Time `json:"start_date,omitempty"`
-	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
-	EndDate *time.Time `json:"end_date,omitempty"`
+	// The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
+	AccountIds []string `json:"account_ids"`
 	// Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
-	CampaignStatuses []SourceFacebookMarketingUpdateValidCampaignStatuses `json:"campaign_statuses,omitempty"`
+	AdStatuses []SourceFacebookMarketingUpdateValidAdStatuses `json:"ad_statuses,omitempty"`
 	// Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
 	AdsetStatuses []SourceFacebookMarketingUpdateValidAdSetStatuses `json:"adset_statuses,omitempty"`
 	// Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
-	AdStatuses []SourceFacebookMarketingUpdateValidAdStatuses `json:"ad_statuses,omitempty"`
-	// Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
-	FetchThumbnailImages *bool `default:"false" json:"fetch_thumbnail_images"`
+	CampaignStatuses []SourceFacebookMarketingUpdateValidCampaignStatuses `json:"campaign_statuses,omitempty"`
+	// Credentials for connecting to the Facebook Marketing API
+	Credentials SourceFacebookMarketingUpdateAuthentication `json:"credentials"`
 	// A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.
 	CustomInsights []SourceFacebookMarketingUpdateInsightConfig `json:"custom_insights,omitempty"`
-	// Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
-	PageSize *int64 `default:"100" json:"page_size"`
-	// The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.
-	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
+	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
+	EndDate *time.Time `json:"end_date,omitempty"`
+	// Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
+	FetchThumbnailImages *bool `default:"false" json:"fetch_thumbnail_images"`
 	// Insights Job Timeout establishes the maximum amount of time (in minutes) of waiting for the report job to complete. When timeout is reached the job is considered failed and we are trying to request smaller amount of data by breaking the job to few smaller ones. If you definitely know that 60 minutes is not enough for your report to be processed then you can decrease the timeout value, so we start breaking job to smaller parts faster.
 	InsightsJobTimeout *int64 `default:"60" json:"insights_job_timeout"`
+	// The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.
+	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
+	// Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
+	PageSize *int64 `default:"100" json:"page_size"`
+	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. If not set then all data will be replicated for usual streams and only last 2 years for insight streams.
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceFacebookMarketingUpdate) MarshalJSON() ([]byte, error) {
@@ -1245,13 +1206,6 @@ func (s *SourceFacebookMarketingUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFacebookMarketingUpdate) GetAccountIds() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.AccountIds
-}
-
 func (o *SourceFacebookMarketingUpdate) GetAccessToken() *string {
 	if o == nil {
 		return nil
@@ -1259,39 +1213,11 @@ func (o *SourceFacebookMarketingUpdate) GetAccessToken() *string {
 	return o.AccessToken
 }
 
-func (o *SourceFacebookMarketingUpdate) GetCredentials() SourceFacebookMarketingUpdateAuthentication {
+func (o *SourceFacebookMarketingUpdate) GetAccountIds() []string {
 	if o == nil {
-		return SourceFacebookMarketingUpdateAuthentication{}
+		return []string{}
 	}
-	return o.Credentials
-}
-
-func (o *SourceFacebookMarketingUpdate) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-func (o *SourceFacebookMarketingUpdate) GetEndDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
-}
-
-func (o *SourceFacebookMarketingUpdate) GetCampaignStatuses() []SourceFacebookMarketingUpdateValidCampaignStatuses {
-	if o == nil {
-		return nil
-	}
-	return o.CampaignStatuses
-}
-
-func (o *SourceFacebookMarketingUpdate) GetAdsetStatuses() []SourceFacebookMarketingUpdateValidAdSetStatuses {
-	if o == nil {
-		return nil
-	}
-	return o.AdsetStatuses
+	return o.AccountIds
 }
 
 func (o *SourceFacebookMarketingUpdate) GetAdStatuses() []SourceFacebookMarketingUpdateValidAdStatuses {
@@ -1301,11 +1227,25 @@ func (o *SourceFacebookMarketingUpdate) GetAdStatuses() []SourceFacebookMarketin
 	return o.AdStatuses
 }
 
-func (o *SourceFacebookMarketingUpdate) GetFetchThumbnailImages() *bool {
+func (o *SourceFacebookMarketingUpdate) GetAdsetStatuses() []SourceFacebookMarketingUpdateValidAdSetStatuses {
 	if o == nil {
 		return nil
 	}
-	return o.FetchThumbnailImages
+	return o.AdsetStatuses
+}
+
+func (o *SourceFacebookMarketingUpdate) GetCampaignStatuses() []SourceFacebookMarketingUpdateValidCampaignStatuses {
+	if o == nil {
+		return nil
+	}
+	return o.CampaignStatuses
+}
+
+func (o *SourceFacebookMarketingUpdate) GetCredentials() SourceFacebookMarketingUpdateAuthentication {
+	if o == nil {
+		return SourceFacebookMarketingUpdateAuthentication{}
+	}
+	return o.Credentials
 }
 
 func (o *SourceFacebookMarketingUpdate) GetCustomInsights() []SourceFacebookMarketingUpdateInsightConfig {
@@ -1315,11 +1255,25 @@ func (o *SourceFacebookMarketingUpdate) GetCustomInsights() []SourceFacebookMark
 	return o.CustomInsights
 }
 
-func (o *SourceFacebookMarketingUpdate) GetPageSize() *int64 {
+func (o *SourceFacebookMarketingUpdate) GetEndDate() *time.Time {
 	if o == nil {
 		return nil
 	}
-	return o.PageSize
+	return o.EndDate
+}
+
+func (o *SourceFacebookMarketingUpdate) GetFetchThumbnailImages() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FetchThumbnailImages
+}
+
+func (o *SourceFacebookMarketingUpdate) GetInsightsJobTimeout() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InsightsJobTimeout
 }
 
 func (o *SourceFacebookMarketingUpdate) GetInsightsLookbackWindow() *int64 {
@@ -1329,9 +1283,16 @@ func (o *SourceFacebookMarketingUpdate) GetInsightsLookbackWindow() *int64 {
 	return o.InsightsLookbackWindow
 }
 
-func (o *SourceFacebookMarketingUpdate) GetInsightsJobTimeout() *int64 {
+func (o *SourceFacebookMarketingUpdate) GetPageSize() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.InsightsJobTimeout
+	return o.PageSize
+}
+
+func (o *SourceFacebookMarketingUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

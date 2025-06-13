@@ -21,44 +21,41 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
 	} else {
 		jdbcURLParams = nil
 	}
-	ssl := new(bool)
-	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
-		*ssl = r.Configuration.Ssl.ValueBool()
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
 	} else {
-		ssl = nil
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
 	}
 	rawDataSchema := new(string)
 	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
 		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
 	} else {
 		rawDataSchema = nil
+	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
 	}
 	var tunnelMethod *shared.DestinationClickhouseSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -73,6 +70,9 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 		}
 		var destinationClickhouseSSHKeyAuthentication *shared.DestinationClickhouseSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -85,14 +85,11 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationClickhouseSSHKeyAuthentication = &shared.DestinationClickhouseSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationClickhouseSSHKeyAuthentication != nil {
@@ -130,16 +127,19 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationClickhouse{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Username:      username,
-		Password:      password,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
-		Ssl:           ssl,
+		Password:      password,
+		Port:          port,
 		RawDataSchema: rawDataSchema,
+		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	out := shared.DestinationClickhouseCreateRequest{
 		Name:          name,
@@ -204,44 +204,41 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
 	} else {
 		jdbcURLParams = nil
 	}
-	ssl := new(bool)
-	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
-		*ssl = r.Configuration.Ssl.ValueBool()
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
 	} else {
-		ssl = nil
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
 	}
 	rawDataSchema := new(string)
 	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
 		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
 	} else {
 		rawDataSchema = nil
+	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
 	}
 	var tunnelMethod *shared.DestinationClickhouseUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -256,6 +253,9 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 		}
 		var destinationClickhouseUpdateSSHKeyAuthentication *shared.DestinationClickhouseUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -268,14 +268,11 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationClickhouseUpdateSSHKeyAuthentication = &shared.DestinationClickhouseUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationClickhouseUpdateSSHKeyAuthentication != nil {
@@ -313,16 +310,19 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationClickhouseUpdate{
-		Host:          host,
-		Port:          port,
 		Database:      database,
-		Username:      username,
-		Password:      password,
+		Host:          host,
 		JdbcURLParams: jdbcURLParams,
-		Ssl:           ssl,
+		Password:      password,
+		Port:          port,
 		RawDataSchema: rawDataSchema,
+		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	out := shared.DestinationClickhousePutRequest{
 		Name:          name,

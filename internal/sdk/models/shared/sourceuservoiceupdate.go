@@ -8,9 +8,9 @@ import (
 )
 
 type SourceUservoiceUpdate struct {
-	Subdomain string    `json:"subdomain"`
 	APIKey    string    `json:"api_key"`
 	StartDate time.Time `json:"start_date"`
+	Subdomain string    `json:"subdomain"`
 }
 
 func (s SourceUservoiceUpdate) MarshalJSON() ([]byte, error) {
@@ -22,13 +22,6 @@ func (s *SourceUservoiceUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceUservoiceUpdate) GetSubdomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Subdomain
 }
 
 func (o *SourceUservoiceUpdate) GetAPIKey() string {
@@ -43,4 +36,11 @@ func (o *SourceUservoiceUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceUservoiceUpdate) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }

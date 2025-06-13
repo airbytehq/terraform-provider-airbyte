@@ -33,16 +33,16 @@ func (e *SigmaComputing) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSigmaComputing struct {
+	// The base url of your sigma organization
+	BaseURL            string `json:"base_url"`
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	// The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
 	OauthAccessToken *string `json:"oauth_access_token,omitempty"`
 	// The date the current access token expires in. This field might be overridden by the connector based on the token refresh endpoint response.
-	OauthTokenExpiryDate *time.Time `json:"oauth_token_expiry_date,omitempty"`
-	// The base url of your sigma organization
-	BaseURL    string         `json:"base_url"`
-	sourceType SigmaComputing `const:"sigma-computing" json:"sourceType"`
+	OauthTokenExpiryDate *time.Time     `json:"oauth_token_expiry_date,omitempty"`
+	sourceType           SigmaComputing `const:"sigma-computing" json:"sourceType"`
 }
 
 func (s SourceSigmaComputing) MarshalJSON() ([]byte, error) {
@@ -56,6 +56,13 @@ func (s *SourceSigmaComputing) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceSigmaComputing) GetBaseURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.BaseURL
+}
+
 func (o *SourceSigmaComputing) GetClientID() string {
 	if o == nil {
 		return ""
@@ -63,18 +70,18 @@ func (o *SourceSigmaComputing) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceSigmaComputing) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceSigmaComputing) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceSigmaComputing) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceSigmaComputing) GetOauthAccessToken() *string {
@@ -89,13 +96,6 @@ func (o *SourceSigmaComputing) GetOauthTokenExpiryDate() *time.Time {
 		return nil
 	}
 	return o.OauthTokenExpiryDate
-}
-
-func (o *SourceSigmaComputing) GetBaseURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseURL
 }
 
 func (o *SourceSigmaComputing) GetSourceType() SigmaComputing {

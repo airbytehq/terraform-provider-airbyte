@@ -10,33 +10,415 @@ import (
 	"time"
 )
 
-// SourceMicrosoftSharepointUpdateValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-type SourceMicrosoftSharepointUpdateValidationPolicy string
+type SourceMicrosoftSharepointUpdateSchemasAuthType string
 
 const (
-	SourceMicrosoftSharepointUpdateValidationPolicyEmitRecord      SourceMicrosoftSharepointUpdateValidationPolicy = "Emit Record"
-	SourceMicrosoftSharepointUpdateValidationPolicySkipRecord      SourceMicrosoftSharepointUpdateValidationPolicy = "Skip Record"
-	SourceMicrosoftSharepointUpdateValidationPolicyWaitForDiscover SourceMicrosoftSharepointUpdateValidationPolicy = "Wait for Discover"
+	SourceMicrosoftSharepointUpdateSchemasAuthTypeService SourceMicrosoftSharepointUpdateSchemasAuthType = "Service"
 )
 
-func (e SourceMicrosoftSharepointUpdateValidationPolicy) ToPointer() *SourceMicrosoftSharepointUpdateValidationPolicy {
+func (e SourceMicrosoftSharepointUpdateSchemasAuthType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasAuthType {
 	return &e
 }
-func (e *SourceMicrosoftSharepointUpdateValidationPolicy) UnmarshalJSON(data []byte) error {
+func (e *SourceMicrosoftSharepointUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Emit Record":
-		fallthrough
-	case "Skip Record":
-		fallthrough
-	case "Wait for Discover":
-		*e = SourceMicrosoftSharepointUpdateValidationPolicy(v)
+	case "Service":
+		*e = SourceMicrosoftSharepointUpdateSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateValidationPolicy: %v", v)
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSchemasAuthType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointUpdateServiceKeyAuthentication - ServiceCredentials class for service key authentication.
+// This class is structured similarly to OAuthCredentials but for a different authentication method.
+type SourceMicrosoftSharepointUpdateServiceKeyAuthentication struct {
+	authType *SourceMicrosoftSharepointUpdateSchemasAuthType `const:"Service" json:"auth_type"`
+	// Client ID of your Microsoft developer application
+	ClientID string `json:"client_id"`
+	// Client Secret of your Microsoft developer application
+	ClientSecret string `json:"client_secret"`
+	// Tenant ID of the Microsoft SharePoint user
+	TenantID string `json:"tenant_id"`
+	// Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
+	UserPrincipalName string `json:"user_principal_name"`
+}
+
+func (s SourceMicrosoftSharepointUpdateServiceKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetAuthType() *SourceMicrosoftSharepointUpdateSchemasAuthType {
+	return SourceMicrosoftSharepointUpdateSchemasAuthTypeService.ToPointer()
+}
+
+func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetUserPrincipalName() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserPrincipalName
+}
+
+type SourceMicrosoftSharepointUpdateAuthType string
+
+const (
+	SourceMicrosoftSharepointUpdateAuthTypeClient SourceMicrosoftSharepointUpdateAuthType = "Client"
+)
+
+func (e SourceMicrosoftSharepointUpdateAuthType) ToPointer() *SourceMicrosoftSharepointUpdateAuthType {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Client":
+		*e = SourceMicrosoftSharepointUpdateAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateAuthType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth - OAuthCredentials class to hold authentication details for Microsoft OAuth authentication.
+// This class uses pydantic for data validation and settings management.
+type SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth struct {
+	authType *SourceMicrosoftSharepointUpdateAuthType `const:"Client" json:"auth_type"`
+	// Client ID of your Microsoft developer application
+	ClientID string `json:"client_id"`
+	// Client Secret of your Microsoft developer application
+	ClientSecret string `json:"client_secret"`
+	// Refresh Token of your Microsoft developer application
+	RefreshToken *string `json:"refresh_token,omitempty"`
+	// Tenant ID of the Microsoft SharePoint user
+	TenantID string `json:"tenant_id"`
+}
+
+func (s SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetAuthType() *SourceMicrosoftSharepointUpdateAuthType {
+	return SourceMicrosoftSharepointUpdateAuthTypeClient.ToPointer()
+}
+
+func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetRefreshToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+type SourceMicrosoftSharepointUpdateAuthenticationType string
+
+const (
+	SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth SourceMicrosoftSharepointUpdateAuthenticationType = "source-microsoft-sharepoint-update_Authenticate via Microsoft (OAuth)"
+	SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateServiceKeyAuthentication      SourceMicrosoftSharepointUpdateAuthenticationType = "source-microsoft-sharepoint-update_Service Key Authentication"
+)
+
+// SourceMicrosoftSharepointUpdateAuthentication - Credentials for connecting to the One Drive API
+type SourceMicrosoftSharepointUpdateAuthentication struct {
+	SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth `queryParam:"inline"`
+	SourceMicrosoftSharepointUpdateServiceKeyAuthentication      *SourceMicrosoftSharepointUpdateServiceKeyAuthentication      `queryParam:"inline"`
+
+	Type SourceMicrosoftSharepointUpdateAuthenticationType
+}
+
+func CreateSourceMicrosoftSharepointUpdateAuthenticationSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth(sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) SourceMicrosoftSharepointUpdateAuthentication {
+	typ := SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
+
+	return SourceMicrosoftSharepointUpdateAuthentication{
+		SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth: &sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth,
+		Type: typ,
+	}
+}
+
+func CreateSourceMicrosoftSharepointUpdateAuthenticationSourceMicrosoftSharepointUpdateServiceKeyAuthentication(sourceMicrosoftSharepointUpdateServiceKeyAuthentication SourceMicrosoftSharepointUpdateServiceKeyAuthentication) SourceMicrosoftSharepointUpdateAuthentication {
+	typ := SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateServiceKeyAuthentication
+
+	return SourceMicrosoftSharepointUpdateAuthentication{
+		SourceMicrosoftSharepointUpdateServiceKeyAuthentication: &sourceMicrosoftSharepointUpdateServiceKeyAuthentication,
+		Type: typ,
+	}
+}
+
+func (u *SourceMicrosoftSharepointUpdateAuthentication) UnmarshalJSON(data []byte) error {
+
+	var sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth = SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth = &sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
+		u.Type = SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
+		return nil
+	}
+
+	var sourceMicrosoftSharepointUpdateServiceKeyAuthentication SourceMicrosoftSharepointUpdateServiceKeyAuthentication = SourceMicrosoftSharepointUpdateServiceKeyAuthentication{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateServiceKeyAuthentication, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUpdateServiceKeyAuthentication = &sourceMicrosoftSharepointUpdateServiceKeyAuthentication
+		u.Type = SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateServiceKeyAuthentication
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateAuthentication", string(data))
+}
+
+func (u SourceMicrosoftSharepointUpdateAuthentication) MarshalJSON() ([]byte, error) {
+	if u.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth, "", true)
+	}
+
+	if u.SourceMicrosoftSharepointUpdateServiceKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateServiceKeyAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateAuthentication: all fields are null")
+}
+
+type SourceMicrosoftSharepointUpdateSchemasDeliveryType string
+
+const (
+	SourceMicrosoftSharepointUpdateSchemasDeliveryTypeUseFileTransfer SourceMicrosoftSharepointUpdateSchemasDeliveryType = "use_file_transfer"
+)
+
+func (e SourceMicrosoftSharepointUpdateSchemasDeliveryType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasDeliveryType {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateSchemasDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_file_transfer":
+		*e = SourceMicrosoftSharepointUpdateSchemasDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSchemasDeliveryType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointUpdateCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
+type SourceMicrosoftSharepointUpdateCopyRawFiles struct {
+	deliveryType *SourceMicrosoftSharepointUpdateSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
+	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
+	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
+}
+
+func (s SourceMicrosoftSharepointUpdateCopyRawFiles) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointUpdateCopyRawFiles) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointUpdateCopyRawFiles) GetDeliveryType() *SourceMicrosoftSharepointUpdateSchemasDeliveryType {
+	return SourceMicrosoftSharepointUpdateSchemasDeliveryTypeUseFileTransfer.ToPointer()
+}
+
+func (o *SourceMicrosoftSharepointUpdateCopyRawFiles) GetPreserveDirectoryStructure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreserveDirectoryStructure
+}
+
+type SourceMicrosoftSharepointUpdateDeliveryType string
+
+const (
+	SourceMicrosoftSharepointUpdateDeliveryTypeUseRecordsTransfer SourceMicrosoftSharepointUpdateDeliveryType = "use_records_transfer"
+)
+
+func (e SourceMicrosoftSharepointUpdateDeliveryType) ToPointer() *SourceMicrosoftSharepointUpdateDeliveryType {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_records_transfer":
+		*e = SourceMicrosoftSharepointUpdateDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateDeliveryType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointUpdateReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
+type SourceMicrosoftSharepointUpdateReplicateRecords struct {
+	deliveryType *SourceMicrosoftSharepointUpdateDeliveryType `const:"use_records_transfer" json:"delivery_type"`
+}
+
+func (s SourceMicrosoftSharepointUpdateReplicateRecords) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointUpdateReplicateRecords) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointUpdateReplicateRecords) GetDeliveryType() *SourceMicrosoftSharepointUpdateDeliveryType {
+	return SourceMicrosoftSharepointUpdateDeliveryTypeUseRecordsTransfer.ToPointer()
+}
+
+type SourceMicrosoftSharepointUpdateDeliveryMethodType string
+
+const (
+	SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateDeliveryMethodType = "source-microsoft-sharepoint-update_Replicate Records"
+	SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles     SourceMicrosoftSharepointUpdateDeliveryMethodType = "source-microsoft-sharepoint-update_Copy Raw Files"
+)
+
+type SourceMicrosoftSharepointUpdateDeliveryMethod struct {
+	SourceMicrosoftSharepointUpdateReplicateRecords *SourceMicrosoftSharepointUpdateReplicateRecords `queryParam:"inline"`
+	SourceMicrosoftSharepointUpdateCopyRawFiles     *SourceMicrosoftSharepointUpdateCopyRawFiles     `queryParam:"inline"`
+
+	Type SourceMicrosoftSharepointUpdateDeliveryMethodType
+}
+
+func CreateSourceMicrosoftSharepointUpdateDeliveryMethodSourceMicrosoftSharepointUpdateReplicateRecords(sourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateReplicateRecords) SourceMicrosoftSharepointUpdateDeliveryMethod {
+	typ := SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords
+
+	return SourceMicrosoftSharepointUpdateDeliveryMethod{
+		SourceMicrosoftSharepointUpdateReplicateRecords: &sourceMicrosoftSharepointUpdateReplicateRecords,
+		Type: typ,
+	}
+}
+
+func CreateSourceMicrosoftSharepointUpdateDeliveryMethodSourceMicrosoftSharepointUpdateCopyRawFiles(sourceMicrosoftSharepointUpdateCopyRawFiles SourceMicrosoftSharepointUpdateCopyRawFiles) SourceMicrosoftSharepointUpdateDeliveryMethod {
+	typ := SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles
+
+	return SourceMicrosoftSharepointUpdateDeliveryMethod{
+		SourceMicrosoftSharepointUpdateCopyRawFiles: &sourceMicrosoftSharepointUpdateCopyRawFiles,
+		Type: typ,
+	}
+}
+
+func (u *SourceMicrosoftSharepointUpdateDeliveryMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateReplicateRecords = SourceMicrosoftSharepointUpdateReplicateRecords{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateReplicateRecords, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUpdateReplicateRecords = &sourceMicrosoftSharepointUpdateReplicateRecords
+		u.Type = SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords
+		return nil
+	}
+
+	var sourceMicrosoftSharepointUpdateCopyRawFiles SourceMicrosoftSharepointUpdateCopyRawFiles = SourceMicrosoftSharepointUpdateCopyRawFiles{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateCopyRawFiles, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUpdateCopyRawFiles = &sourceMicrosoftSharepointUpdateCopyRawFiles
+		u.Type = SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateDeliveryMethod", string(data))
+}
+
+func (u SourceMicrosoftSharepointUpdateDeliveryMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceMicrosoftSharepointUpdateReplicateRecords != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateReplicateRecords, "", true)
+	}
+
+	if u.SourceMicrosoftSharepointUpdateCopyRawFiles != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateCopyRawFiles, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateDeliveryMethod: all fields are null")
+}
+
+// SourceMicrosoftSharepointUpdateSearchScope - Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
+type SourceMicrosoftSharepointUpdateSearchScope string
+
+const (
+	SourceMicrosoftSharepointUpdateSearchScopeAccessibleDrives SourceMicrosoftSharepointUpdateSearchScope = "ACCESSIBLE_DRIVES"
+	SourceMicrosoftSharepointUpdateSearchScopeSharedItems      SourceMicrosoftSharepointUpdateSearchScope = "SHARED_ITEMS"
+	SourceMicrosoftSharepointUpdateSearchScopeAll              SourceMicrosoftSharepointUpdateSearchScope = "ALL"
+)
+
+func (e SourceMicrosoftSharepointUpdateSearchScope) ToPointer() *SourceMicrosoftSharepointUpdateSearchScope {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateSearchScope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ACCESSIBLE_DRIVES":
+		fallthrough
+	case "SHARED_ITEMS":
+		fallthrough
+	case "ALL":
+		*e = SourceMicrosoftSharepointUpdateSearchScope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSearchScope: %v", v)
 	}
 }
 
@@ -102,39 +484,6 @@ func (e *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype) Unma
 		return nil
 	default:
 		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype: %v", v)
-	}
-}
-
-// SourceMicrosoftSharepointUpdateParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
-type SourceMicrosoftSharepointUpdateParsingStrategy string
-
-const (
-	SourceMicrosoftSharepointUpdateParsingStrategyAuto    SourceMicrosoftSharepointUpdateParsingStrategy = "auto"
-	SourceMicrosoftSharepointUpdateParsingStrategyFast    SourceMicrosoftSharepointUpdateParsingStrategy = "fast"
-	SourceMicrosoftSharepointUpdateParsingStrategyOcrOnly SourceMicrosoftSharepointUpdateParsingStrategy = "ocr_only"
-	SourceMicrosoftSharepointUpdateParsingStrategyHiRes   SourceMicrosoftSharepointUpdateParsingStrategy = "hi_res"
-)
-
-func (e SourceMicrosoftSharepointUpdateParsingStrategy) ToPointer() *SourceMicrosoftSharepointUpdateParsingStrategy {
-	return &e
-}
-func (e *SourceMicrosoftSharepointUpdateParsingStrategy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "auto":
-		fallthrough
-	case "fast":
-		fallthrough
-	case "ocr_only":
-		fallthrough
-	case "hi_res":
-		*e = SourceMicrosoftSharepointUpdateParsingStrategy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateParsingStrategy: %v", v)
 	}
 }
 
@@ -223,15 +572,48 @@ func (u SourceMicrosoftSharepointUpdateProcessing) MarshalJSON() ([]byte, error)
 	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateProcessing: all fields are null")
 }
 
+// SourceMicrosoftSharepointUpdateParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceMicrosoftSharepointUpdateParsingStrategy string
+
+const (
+	SourceMicrosoftSharepointUpdateParsingStrategyAuto    SourceMicrosoftSharepointUpdateParsingStrategy = "auto"
+	SourceMicrosoftSharepointUpdateParsingStrategyFast    SourceMicrosoftSharepointUpdateParsingStrategy = "fast"
+	SourceMicrosoftSharepointUpdateParsingStrategyOcrOnly SourceMicrosoftSharepointUpdateParsingStrategy = "ocr_only"
+	SourceMicrosoftSharepointUpdateParsingStrategyHiRes   SourceMicrosoftSharepointUpdateParsingStrategy = "hi_res"
+)
+
+func (e SourceMicrosoftSharepointUpdateParsingStrategy) ToPointer() *SourceMicrosoftSharepointUpdateParsingStrategy {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceMicrosoftSharepointUpdateParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateParsingStrategy: %v", v)
+	}
+}
+
 // SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat struct {
 	filetype *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
+	// Processing configuration
+	Processing *SourceMicrosoftSharepointUpdateProcessing `json:"processing,omitempty"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
 	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
 	Strategy *SourceMicrosoftSharepointUpdateParsingStrategy `default:"auto" json:"strategy"`
-	// Processing configuration
-	Processing *SourceMicrosoftSharepointUpdateProcessing `json:"processing,omitempty"`
 }
 
 func (s SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
@@ -249,6 +631,13 @@ func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetFiletype(
 	return SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
+func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetProcessing() *SourceMicrosoftSharepointUpdateProcessing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
 func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
@@ -261,13 +650,6 @@ func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetStrategy(
 		return nil
 	}
 	return o.Strategy
-}
-
-func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetProcessing() *SourceMicrosoftSharepointUpdateProcessing {
-	if o == nil {
-		return nil
-	}
-	return o.Processing
 }
 
 type SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype string
@@ -294,9 +676,9 @@ func (e *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype) UnmarshalJ
 }
 
 type SourceMicrosoftSharepointUpdateParquetFormat struct {
-	filetype *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	DecimalAsFloat *bool                                                        `default:"false" json:"decimal_as_float"`
+	filetype       *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 }
 
 func (s SourceMicrosoftSharepointUpdateParquetFormat) MarshalJSON() ([]byte, error) {
@@ -310,15 +692,15 @@ func (s *SourceMicrosoftSharepointUpdateParquetFormat) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (o *SourceMicrosoftSharepointUpdateParquetFormat) GetFiletype() *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype {
-	return SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletypeParquet.ToPointer()
-}
-
 func (o *SourceMicrosoftSharepointUpdateParquetFormat) GetDecimalAsFloat() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DecimalAsFloat
+}
+
+func (o *SourceMicrosoftSharepointUpdateParquetFormat) GetFiletype() *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype {
+	return SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletypeParquet.ToPointer()
 }
 
 type SourceMicrosoftSharepointUpdateSchemasStreamsFiletype string
@@ -410,9 +792,9 @@ func (e *SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType) Unma
 }
 
 type SourceMicrosoftSharepointUpdateUserProvided struct {
-	headerDefinitionType *SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 	// The column names that will be used while emitting the CSV records
-	ColumnNames []string `json:"column_names"`
+	ColumnNames          []string                                                           `json:"column_names"`
+	headerDefinitionType *SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceMicrosoftSharepointUpdateUserProvided) MarshalJSON() ([]byte, error) {
@@ -426,15 +808,15 @@ func (s *SourceMicrosoftSharepointUpdateUserProvided) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (o *SourceMicrosoftSharepointUpdateUserProvided) GetHeaderDefinitionType() *SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType {
-	return SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
-}
-
 func (o *SourceMicrosoftSharepointUpdateUserProvided) GetColumnNames() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.ColumnNames
+}
+
+func (o *SourceMicrosoftSharepointUpdateUserProvided) GetHeaderDefinitionType() *SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType {
+	return SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
 }
 
 type SourceMicrosoftSharepointUpdateSchemasHeaderDefinitionType string
@@ -608,33 +990,33 @@ func (u SourceMicrosoftSharepointUpdateCSVHeaderDefinition) MarshalJSON() ([]byt
 }
 
 type SourceMicrosoftSharepointUpdateCSVFormat struct {
-	filetype *SourceMicrosoftSharepointUpdateSchemasFiletype `const:"csv" json:"filetype"`
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
-	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:"\"" json:"quote_char"`
-	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string `json:"escape_char,omitempty"`
-	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-	Encoding *string `default:"utf8" json:"encoding"`
 	// Whether two quotes in a quoted CSV value denote a single quote in the data.
 	DoubleQuote *bool `default:"true" json:"double_quote"`
-	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-	NullValues []string `json:"null_values,omitempty"`
-	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
-	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
-	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
-	// The number of rows to skip after the header row.
-	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `default:"utf8" json:"encoding"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                                        `json:"false_values,omitempty"`
+	filetype    *SourceMicrosoftSharepointUpdateSchemasFiletype `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceMicrosoftSharepointUpdateCSVHeaderDefinition `json:"header_definition,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as true values.
-	TrueValues []string `json:"true_values,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string `json:"false_values,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `default:"\"" json:"quote_char"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
 }
 
 func (s SourceMicrosoftSharepointUpdateCSVFormat) MarshalJSON() ([]byte, error) {
@@ -648,36 +1030,11 @@ func (s *SourceMicrosoftSharepointUpdateCSVFormat) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetFiletype() *SourceMicrosoftSharepointUpdateSchemasFiletype {
-	return SourceMicrosoftSharepointUpdateSchemasFiletypeCsv.ToPointer()
-}
-
 func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetDelimiter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Delimiter
-}
-
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetQuoteChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuoteChar
-}
-
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetEscapeChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EscapeChar
-}
-
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetEncoding() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Encoding
 }
 
 func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetDoubleQuote() *bool {
@@ -687,46 +1044,18 @@ func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetDoubleQuote() *bool {
 	return o.DoubleQuote
 }
 
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetNullValues() []string {
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetEncoding() *string {
 	if o == nil {
 		return nil
 	}
-	return o.NullValues
+	return o.Encoding
 }
 
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetStringsCanBeNull() *bool {
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetEscapeChar() *string {
 	if o == nil {
 		return nil
 	}
-	return o.StringsCanBeNull
-}
-
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetSkipRowsBeforeHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsBeforeHeader
-}
-
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetSkipRowsAfterHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsAfterHeader
-}
-
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetHeaderDefinition() *SourceMicrosoftSharepointUpdateCSVHeaderDefinition {
-	if o == nil {
-		return nil
-	}
-	return o.HeaderDefinition
-}
-
-func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetTrueValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TrueValues
+	return o.EscapeChar
 }
 
 func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetFalseValues() []string {
@@ -736,11 +1065,64 @@ func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetFalseValues() []string {
 	return o.FalseValues
 }
 
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetFiletype() *SourceMicrosoftSharepointUpdateSchemasFiletype {
+	return SourceMicrosoftSharepointUpdateSchemasFiletypeCsv.ToPointer()
+}
+
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetHeaderDefinition() *SourceMicrosoftSharepointUpdateCSVHeaderDefinition {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderDefinition
+}
+
 func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IgnoreErrorsOnFieldsMismatch
+}
+
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetNullValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.NullValues
+}
+
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetQuoteChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuoteChar
+}
+
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetSkipRowsAfterHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsAfterHeader
+}
+
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetSkipRowsBeforeHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsBeforeHeader
+}
+
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetStringsCanBeNull() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StringsCanBeNull
+}
+
+func (o *SourceMicrosoftSharepointUpdateCSVFormat) GetTrueValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TrueValues
 }
 
 type SourceMicrosoftSharepointUpdateFiletype string
@@ -767,9 +1149,9 @@ func (e *SourceMicrosoftSharepointUpdateFiletype) UnmarshalJSON(data []byte) err
 }
 
 type SourceMicrosoftSharepointUpdateAvroFormat struct {
-	filetype *SourceMicrosoftSharepointUpdateFiletype `const:"avro" json:"filetype"`
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	DoubleAsString *bool                                    `default:"false" json:"double_as_string"`
+	filetype       *SourceMicrosoftSharepointUpdateFiletype `const:"avro" json:"filetype"`
 }
 
 func (s SourceMicrosoftSharepointUpdateAvroFormat) MarshalJSON() ([]byte, error) {
@@ -783,15 +1165,15 @@ func (s *SourceMicrosoftSharepointUpdateAvroFormat) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (o *SourceMicrosoftSharepointUpdateAvroFormat) GetFiletype() *SourceMicrosoftSharepointUpdateFiletype {
-	return SourceMicrosoftSharepointUpdateFiletypeAvro.ToPointer()
-}
-
 func (o *SourceMicrosoftSharepointUpdateAvroFormat) GetDoubleAsString() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DoubleAsString
+}
+
+func (o *SourceMicrosoftSharepointUpdateAvroFormat) GetFiletype() *SourceMicrosoftSharepointUpdateFiletype {
+	return SourceMicrosoftSharepointUpdateFiletypeAvro.ToPointer()
 }
 
 type SourceMicrosoftSharepointUpdateFormatType string
@@ -946,23 +1328,53 @@ func (u SourceMicrosoftSharepointUpdateFormat) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateFormat: all fields are null")
 }
 
+// SourceMicrosoftSharepointUpdateValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type SourceMicrosoftSharepointUpdateValidationPolicy string
+
+const (
+	SourceMicrosoftSharepointUpdateValidationPolicyEmitRecord      SourceMicrosoftSharepointUpdateValidationPolicy = "Emit Record"
+	SourceMicrosoftSharepointUpdateValidationPolicySkipRecord      SourceMicrosoftSharepointUpdateValidationPolicy = "Skip Record"
+	SourceMicrosoftSharepointUpdateValidationPolicyWaitForDiscover SourceMicrosoftSharepointUpdateValidationPolicy = "Wait for Discover"
+)
+
+func (e SourceMicrosoftSharepointUpdateValidationPolicy) ToPointer() *SourceMicrosoftSharepointUpdateValidationPolicy {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = SourceMicrosoftSharepointUpdateValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateValidationPolicy: %v", v)
+	}
+}
+
 type SourceMicrosoftSharepointUpdateFileBasedStreamConfig struct {
-	// The name of the stream.
-	Name string `json:"name"`
-	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
-	Globs []string `json:"globs,omitempty"`
-	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-	ValidationPolicy *SourceMicrosoftSharepointUpdateValidationPolicy `default:"Emit Record" json:"validation_policy"`
-	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-	InputSchema *string `json:"input_schema,omitempty"`
 	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
 	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 	Format SourceMicrosoftSharepointUpdateFormat `json:"format"`
-	// When enabled, syncs will not validate or structure records against the stream's schema.
-	Schemaless *bool `default:"false" json:"schemaless"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
 	// The number of resent files which will be used to discover the schema for this stream.
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
+	// When enabled, syncs will not validate or structure records against the stream's schema.
+	Schemaless *bool `default:"false" json:"schemaless"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *SourceMicrosoftSharepointUpdateValidationPolicy `default:"Emit Record" json:"validation_policy"`
 }
 
 func (s SourceMicrosoftSharepointUpdateFileBasedStreamConfig) MarshalJSON() ([]byte, error) {
@@ -974,34 +1386,6 @@ func (s *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) UnmarshalJSON(dat
 		return err
 	}
 	return nil
-}
-
-func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetGlobs() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Globs
-}
-
-func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetValidationPolicy() *SourceMicrosoftSharepointUpdateValidationPolicy {
-	if o == nil {
-		return nil
-	}
-	return o.ValidationPolicy
-}
-
-func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetInputSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InputSchema
 }
 
 func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
@@ -1018,11 +1402,25 @@ func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetFormat() Sourc
 	return o.Format
 }
 
-func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetSchemaless() *bool {
+func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetGlobs() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schemaless
+	return o.Globs
+}
+
+func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetInputSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputSchema
+}
+
+func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
@@ -1032,434 +1430,36 @@ func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetRecentNFilesTo
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
-type SourceMicrosoftSharepointUpdateSchemasDeliveryType string
-
-const (
-	SourceMicrosoftSharepointUpdateSchemasDeliveryTypeUseFileTransfer SourceMicrosoftSharepointUpdateSchemasDeliveryType = "use_file_transfer"
-)
-
-func (e SourceMicrosoftSharepointUpdateSchemasDeliveryType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasDeliveryType {
-	return &e
-}
-func (e *SourceMicrosoftSharepointUpdateSchemasDeliveryType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "use_file_transfer":
-		*e = SourceMicrosoftSharepointUpdateSchemasDeliveryType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSchemasDeliveryType: %v", v)
-	}
-}
-
-// SourceMicrosoftSharepointUpdateCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
-type SourceMicrosoftSharepointUpdateCopyRawFiles struct {
-	deliveryType *SourceMicrosoftSharepointUpdateSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
-	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
-	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
-}
-
-func (s SourceMicrosoftSharepointUpdateCopyRawFiles) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceMicrosoftSharepointUpdateCopyRawFiles) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceMicrosoftSharepointUpdateCopyRawFiles) GetDeliveryType() *SourceMicrosoftSharepointUpdateSchemasDeliveryType {
-	return SourceMicrosoftSharepointUpdateSchemasDeliveryTypeUseFileTransfer.ToPointer()
-}
-
-func (o *SourceMicrosoftSharepointUpdateCopyRawFiles) GetPreserveDirectoryStructure() *bool {
+func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetSchemaless() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.PreserveDirectoryStructure
+	return o.Schemaless
 }
 
-type SourceMicrosoftSharepointUpdateDeliveryType string
-
-const (
-	SourceMicrosoftSharepointUpdateDeliveryTypeUseRecordsTransfer SourceMicrosoftSharepointUpdateDeliveryType = "use_records_transfer"
-)
-
-func (e SourceMicrosoftSharepointUpdateDeliveryType) ToPointer() *SourceMicrosoftSharepointUpdateDeliveryType {
-	return &e
-}
-func (e *SourceMicrosoftSharepointUpdateDeliveryType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "use_records_transfer":
-		*e = SourceMicrosoftSharepointUpdateDeliveryType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateDeliveryType: %v", v)
-	}
-}
-
-// SourceMicrosoftSharepointUpdateReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
-type SourceMicrosoftSharepointUpdateReplicateRecords struct {
-	deliveryType *SourceMicrosoftSharepointUpdateDeliveryType `const:"use_records_transfer" json:"delivery_type"`
-}
-
-func (s SourceMicrosoftSharepointUpdateReplicateRecords) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceMicrosoftSharepointUpdateReplicateRecords) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceMicrosoftSharepointUpdateReplicateRecords) GetDeliveryType() *SourceMicrosoftSharepointUpdateDeliveryType {
-	return SourceMicrosoftSharepointUpdateDeliveryTypeUseRecordsTransfer.ToPointer()
-}
-
-type SourceMicrosoftSharepointUpdateDeliveryMethodType string
-
-const (
-	SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateDeliveryMethodType = "source-microsoft-sharepoint-update_Replicate Records"
-	SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles     SourceMicrosoftSharepointUpdateDeliveryMethodType = "source-microsoft-sharepoint-update_Copy Raw Files"
-)
-
-type SourceMicrosoftSharepointUpdateDeliveryMethod struct {
-	SourceMicrosoftSharepointUpdateReplicateRecords *SourceMicrosoftSharepointUpdateReplicateRecords `queryParam:"inline"`
-	SourceMicrosoftSharepointUpdateCopyRawFiles     *SourceMicrosoftSharepointUpdateCopyRawFiles     `queryParam:"inline"`
-
-	Type SourceMicrosoftSharepointUpdateDeliveryMethodType
-}
-
-func CreateSourceMicrosoftSharepointUpdateDeliveryMethodSourceMicrosoftSharepointUpdateReplicateRecords(sourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateReplicateRecords) SourceMicrosoftSharepointUpdateDeliveryMethod {
-	typ := SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords
-
-	return SourceMicrosoftSharepointUpdateDeliveryMethod{
-		SourceMicrosoftSharepointUpdateReplicateRecords: &sourceMicrosoftSharepointUpdateReplicateRecords,
-		Type: typ,
-	}
-}
-
-func CreateSourceMicrosoftSharepointUpdateDeliveryMethodSourceMicrosoftSharepointUpdateCopyRawFiles(sourceMicrosoftSharepointUpdateCopyRawFiles SourceMicrosoftSharepointUpdateCopyRawFiles) SourceMicrosoftSharepointUpdateDeliveryMethod {
-	typ := SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles
-
-	return SourceMicrosoftSharepointUpdateDeliveryMethod{
-		SourceMicrosoftSharepointUpdateCopyRawFiles: &sourceMicrosoftSharepointUpdateCopyRawFiles,
-		Type: typ,
-	}
-}
-
-func (u *SourceMicrosoftSharepointUpdateDeliveryMethod) UnmarshalJSON(data []byte) error {
-
-	var sourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateReplicateRecords = SourceMicrosoftSharepointUpdateReplicateRecords{}
-	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateReplicateRecords, "", true, true); err == nil {
-		u.SourceMicrosoftSharepointUpdateReplicateRecords = &sourceMicrosoftSharepointUpdateReplicateRecords
-		u.Type = SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords
-		return nil
-	}
-
-	var sourceMicrosoftSharepointUpdateCopyRawFiles SourceMicrosoftSharepointUpdateCopyRawFiles = SourceMicrosoftSharepointUpdateCopyRawFiles{}
-	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateCopyRawFiles, "", true, true); err == nil {
-		u.SourceMicrosoftSharepointUpdateCopyRawFiles = &sourceMicrosoftSharepointUpdateCopyRawFiles
-		u.Type = SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateDeliveryMethod", string(data))
-}
-
-func (u SourceMicrosoftSharepointUpdateDeliveryMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMicrosoftSharepointUpdateReplicateRecords != nil {
-		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateReplicateRecords, "", true)
-	}
-
-	if u.SourceMicrosoftSharepointUpdateCopyRawFiles != nil {
-		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateCopyRawFiles, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateDeliveryMethod: all fields are null")
-}
-
-type SourceMicrosoftSharepointUpdateSchemasAuthType string
-
-const (
-	SourceMicrosoftSharepointUpdateSchemasAuthTypeService SourceMicrosoftSharepointUpdateSchemasAuthType = "Service"
-)
-
-func (e SourceMicrosoftSharepointUpdateSchemasAuthType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasAuthType {
-	return &e
-}
-func (e *SourceMicrosoftSharepointUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Service":
-		*e = SourceMicrosoftSharepointUpdateSchemasAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSchemasAuthType: %v", v)
-	}
-}
-
-// SourceMicrosoftSharepointUpdateServiceKeyAuthentication - ServiceCredentials class for service key authentication.
-// This class is structured similarly to OAuthCredentials but for a different authentication method.
-type SourceMicrosoftSharepointUpdateServiceKeyAuthentication struct {
-	authType *SourceMicrosoftSharepointUpdateSchemasAuthType `const:"Service" json:"auth_type"`
-	// Tenant ID of the Microsoft SharePoint user
-	TenantID string `json:"tenant_id"`
-	// Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
-	UserPrincipalName string `json:"user_principal_name"`
-	// Client ID of your Microsoft developer application
-	ClientID string `json:"client_id"`
-	// Client Secret of your Microsoft developer application
-	ClientSecret string `json:"client_secret"`
-}
-
-func (s SourceMicrosoftSharepointUpdateServiceKeyAuthentication) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetAuthType() *SourceMicrosoftSharepointUpdateSchemasAuthType {
-	return SourceMicrosoftSharepointUpdateSchemasAuthTypeService.ToPointer()
-}
-
-func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
-func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetUserPrincipalName() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserPrincipalName
-}
-
-func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *SourceMicrosoftSharepointUpdateServiceKeyAuthentication) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-type SourceMicrosoftSharepointUpdateAuthType string
-
-const (
-	SourceMicrosoftSharepointUpdateAuthTypeClient SourceMicrosoftSharepointUpdateAuthType = "Client"
-)
-
-func (e SourceMicrosoftSharepointUpdateAuthType) ToPointer() *SourceMicrosoftSharepointUpdateAuthType {
-	return &e
-}
-func (e *SourceMicrosoftSharepointUpdateAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Client":
-		*e = SourceMicrosoftSharepointUpdateAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateAuthType: %v", v)
-	}
-}
-
-// SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth - OAuthCredentials class to hold authentication details for Microsoft OAuth authentication.
-// This class uses pydantic for data validation and settings management.
-type SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth struct {
-	authType *SourceMicrosoftSharepointUpdateAuthType `const:"Client" json:"auth_type"`
-	// Tenant ID of the Microsoft SharePoint user
-	TenantID string `json:"tenant_id"`
-	// Client ID of your Microsoft developer application
-	ClientID string `json:"client_id"`
-	// Client Secret of your Microsoft developer application
-	ClientSecret string `json:"client_secret"`
-	// Refresh Token of your Microsoft developer application
-	RefreshToken *string `json:"refresh_token,omitempty"`
-}
-
-func (s SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetAuthType() *SourceMicrosoftSharepointUpdateAuthType {
-	return SourceMicrosoftSharepointUpdateAuthTypeClient.ToPointer()
-}
-
-func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
-func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-func (o *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) GetRefreshToken() *string {
+func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetValidationPolicy() *SourceMicrosoftSharepointUpdateValidationPolicy {
 	if o == nil {
 		return nil
 	}
-	return o.RefreshToken
-}
-
-type SourceMicrosoftSharepointUpdateAuthenticationType string
-
-const (
-	SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth SourceMicrosoftSharepointUpdateAuthenticationType = "source-microsoft-sharepoint-update_Authenticate via Microsoft (OAuth)"
-	SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateServiceKeyAuthentication      SourceMicrosoftSharepointUpdateAuthenticationType = "source-microsoft-sharepoint-update_Service Key Authentication"
-)
-
-// SourceMicrosoftSharepointUpdateAuthentication - Credentials for connecting to the One Drive API
-type SourceMicrosoftSharepointUpdateAuthentication struct {
-	SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth *SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth `queryParam:"inline"`
-	SourceMicrosoftSharepointUpdateServiceKeyAuthentication      *SourceMicrosoftSharepointUpdateServiceKeyAuthentication      `queryParam:"inline"`
-
-	Type SourceMicrosoftSharepointUpdateAuthenticationType
-}
-
-func CreateSourceMicrosoftSharepointUpdateAuthenticationSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth(sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth) SourceMicrosoftSharepointUpdateAuthentication {
-	typ := SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
-
-	return SourceMicrosoftSharepointUpdateAuthentication{
-		SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth: &sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth,
-		Type: typ,
-	}
-}
-
-func CreateSourceMicrosoftSharepointUpdateAuthenticationSourceMicrosoftSharepointUpdateServiceKeyAuthentication(sourceMicrosoftSharepointUpdateServiceKeyAuthentication SourceMicrosoftSharepointUpdateServiceKeyAuthentication) SourceMicrosoftSharepointUpdateAuthentication {
-	typ := SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateServiceKeyAuthentication
-
-	return SourceMicrosoftSharepointUpdateAuthentication{
-		SourceMicrosoftSharepointUpdateServiceKeyAuthentication: &sourceMicrosoftSharepointUpdateServiceKeyAuthentication,
-		Type: typ,
-	}
-}
-
-func (u *SourceMicrosoftSharepointUpdateAuthentication) UnmarshalJSON(data []byte) error {
-
-	var sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth = SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth{}
-	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth, "", true, true); err == nil {
-		u.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth = &sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
-		u.Type = SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
-		return nil
-	}
-
-	var sourceMicrosoftSharepointUpdateServiceKeyAuthentication SourceMicrosoftSharepointUpdateServiceKeyAuthentication = SourceMicrosoftSharepointUpdateServiceKeyAuthentication{}
-	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateServiceKeyAuthentication, "", true, true); err == nil {
-		u.SourceMicrosoftSharepointUpdateServiceKeyAuthentication = &sourceMicrosoftSharepointUpdateServiceKeyAuthentication
-		u.Type = SourceMicrosoftSharepointUpdateAuthenticationTypeSourceMicrosoftSharepointUpdateServiceKeyAuthentication
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateAuthentication", string(data))
-}
-
-func (u SourceMicrosoftSharepointUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth != nil {
-		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth, "", true)
-	}
-
-	if u.SourceMicrosoftSharepointUpdateServiceKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateServiceKeyAuthentication, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateAuthentication: all fields are null")
-}
-
-// SourceMicrosoftSharepointUpdateSearchScope - Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
-type SourceMicrosoftSharepointUpdateSearchScope string
-
-const (
-	SourceMicrosoftSharepointUpdateSearchScopeAccessibleDrives SourceMicrosoftSharepointUpdateSearchScope = "ACCESSIBLE_DRIVES"
-	SourceMicrosoftSharepointUpdateSearchScopeSharedItems      SourceMicrosoftSharepointUpdateSearchScope = "SHARED_ITEMS"
-	SourceMicrosoftSharepointUpdateSearchScopeAll              SourceMicrosoftSharepointUpdateSearchScope = "ALL"
-)
-
-func (e SourceMicrosoftSharepointUpdateSearchScope) ToPointer() *SourceMicrosoftSharepointUpdateSearchScope {
-	return &e
-}
-func (e *SourceMicrosoftSharepointUpdateSearchScope) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ACCESSIBLE_DRIVES":
-		fallthrough
-	case "SHARED_ITEMS":
-		fallthrough
-	case "ALL":
-		*e = SourceMicrosoftSharepointUpdateSearchScope(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSearchScope: %v", v)
-	}
+	return o.ValidationPolicy
 }
 
 // SourceMicrosoftSharepointUpdate - SourceMicrosoftSharePointSpec class for Microsoft SharePoint Source Specification.
 // This class combines the authentication details with additional configuration for the SharePoint API.
 type SourceMicrosoftSharepointUpdate struct {
+	// Credentials for connecting to the One Drive API
+	Credentials    SourceMicrosoftSharepointUpdateAuthentication  `json:"credentials"`
+	DeliveryMethod *SourceMicrosoftSharepointUpdateDeliveryMethod `json:"delivery_method,omitempty"`
+	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
+	FolderPath *string `default:"." json:"folder_path"`
+	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
+	SearchScope *SourceMicrosoftSharepointUpdateSearchScope `default:"ALL" json:"search_scope"`
+	// Url of SharePoint site to search for files. Leave empty to search in the main site. Use 'https://<tenant_name>.sharepoint.com/sites/' to iterate over all sites.
+	SiteURL *string `default:"" json:"site_url"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams        []SourceMicrosoftSharepointUpdateFileBasedStreamConfig `json:"streams"`
-	DeliveryMethod *SourceMicrosoftSharepointUpdateDeliveryMethod         `json:"delivery_method,omitempty"`
-	// Credentials for connecting to the One Drive API
-	Credentials SourceMicrosoftSharepointUpdateAuthentication `json:"credentials"`
-	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
-	SearchScope *SourceMicrosoftSharepointUpdateSearchScope `default:"ALL" json:"search_scope"`
-	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
-	FolderPath *string `default:"." json:"folder_path"`
-	// Url of SharePoint site to search for files. Leave empty to search in the main site. Use 'https://<tenant_name>.sharepoint.com/sites/' to iterate over all sites.
-	SiteURL *string `default:"" json:"site_url"`
+	Streams []SourceMicrosoftSharepointUpdateFileBasedStreamConfig `json:"streams"`
 }
 
 func (s SourceMicrosoftSharepointUpdate) MarshalJSON() ([]byte, error) {
@@ -1471,6 +1471,41 @@ func (s *SourceMicrosoftSharepointUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceMicrosoftSharepointUpdate) GetCredentials() SourceMicrosoftSharepointUpdateAuthentication {
+	if o == nil {
+		return SourceMicrosoftSharepointUpdateAuthentication{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceMicrosoftSharepointUpdate) GetDeliveryMethod() *SourceMicrosoftSharepointUpdateDeliveryMethod {
+	if o == nil {
+		return nil
+	}
+	return o.DeliveryMethod
+}
+
+func (o *SourceMicrosoftSharepointUpdate) GetFolderPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FolderPath
+}
+
+func (o *SourceMicrosoftSharepointUpdate) GetSearchScope() *SourceMicrosoftSharepointUpdateSearchScope {
+	if o == nil {
+		return nil
+	}
+	return o.SearchScope
+}
+
+func (o *SourceMicrosoftSharepointUpdate) GetSiteURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SiteURL
 }
 
 func (o *SourceMicrosoftSharepointUpdate) GetStartDate() *time.Time {
@@ -1485,39 +1520,4 @@ func (o *SourceMicrosoftSharepointUpdate) GetStreams() []SourceMicrosoftSharepoi
 		return []SourceMicrosoftSharepointUpdateFileBasedStreamConfig{}
 	}
 	return o.Streams
-}
-
-func (o *SourceMicrosoftSharepointUpdate) GetDeliveryMethod() *SourceMicrosoftSharepointUpdateDeliveryMethod {
-	if o == nil {
-		return nil
-	}
-	return o.DeliveryMethod
-}
-
-func (o *SourceMicrosoftSharepointUpdate) GetCredentials() SourceMicrosoftSharepointUpdateAuthentication {
-	if o == nil {
-		return SourceMicrosoftSharepointUpdateAuthentication{}
-	}
-	return o.Credentials
-}
-
-func (o *SourceMicrosoftSharepointUpdate) GetSearchScope() *SourceMicrosoftSharepointUpdateSearchScope {
-	if o == nil {
-		return nil
-	}
-	return o.SearchScope
-}
-
-func (o *SourceMicrosoftSharepointUpdate) GetFolderPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.FolderPath
-}
-
-func (o *SourceMicrosoftSharepointUpdate) GetSiteURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SiteURL
 }

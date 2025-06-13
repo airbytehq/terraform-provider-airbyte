@@ -21,12 +21,6 @@ func (r *SourceMicrosoftDataverseResourceModel) ToSharedSourceMicrosoftDataverse
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var url string
-	url = r.Configuration.URL.ValueString()
-
-	var tenantID string
-	tenantID = r.Configuration.TenantID.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -39,12 +33,18 @@ func (r *SourceMicrosoftDataverseResourceModel) ToSharedSourceMicrosoftDataverse
 	} else {
 		odataMaxpagesize = nil
 	}
+	var tenantID string
+	tenantID = r.Configuration.TenantID.ValueString()
+
+	var url string
+	url = r.Configuration.URL.ValueString()
+
 	configuration := shared.SourceMicrosoftDataverse{
-		URL:               url,
-		TenantID:          tenantID,
 		ClientID:          clientID,
 		ClientSecretValue: clientSecretValue,
 		OdataMaxpagesize:  odataMaxpagesize,
+		TenantID:          tenantID,
+		URL:               url,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -116,12 +116,6 @@ func (r *SourceMicrosoftDataverseResourceModel) ToSharedSourceMicrosoftDataverse
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var url string
-	url = r.Configuration.URL.ValueString()
-
-	var tenantID string
-	tenantID = r.Configuration.TenantID.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -134,12 +128,18 @@ func (r *SourceMicrosoftDataverseResourceModel) ToSharedSourceMicrosoftDataverse
 	} else {
 		odataMaxpagesize = nil
 	}
+	var tenantID string
+	tenantID = r.Configuration.TenantID.ValueString()
+
+	var url string
+	url = r.Configuration.URL.ValueString()
+
 	configuration := shared.SourceMicrosoftDataverseUpdate{
-		URL:               url,
-		TenantID:          tenantID,
 		ClientID:          clientID,
 		ClientSecretValue: clientSecretValue,
 		OdataMaxpagesize:  odataMaxpagesize,
+		TenantID:          tenantID,
+		URL:               url,
 	}
 	out := shared.SourceMicrosoftDataversePutRequest{
 		Name:          name,

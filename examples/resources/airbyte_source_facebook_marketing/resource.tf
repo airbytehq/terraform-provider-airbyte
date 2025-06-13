@@ -25,7 +25,6 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         action_breakdowns = [
           "action_reaction"
         ]
-        action_report_time = "impression"
         breakdowns = [
           "media_type"
         ]

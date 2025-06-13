@@ -9,6 +9,223 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type DestinationMssqlV2SchemasLoadType string
+
+const (
+	DestinationMssqlV2SchemasLoadTypeBulk DestinationMssqlV2SchemasLoadType = "BULK"
+)
+
+func (e DestinationMssqlV2SchemasLoadType) ToPointer() *DestinationMssqlV2SchemasLoadType {
+	return &e
+}
+func (e *DestinationMssqlV2SchemasLoadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "BULK":
+		*e = DestinationMssqlV2SchemasLoadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMssqlV2SchemasLoadType: %v", v)
+	}
+}
+
+// DestinationMssqlV2BulkLoad - Configuration details for using the BULK loading mechanism.
+type DestinationMssqlV2BulkLoad struct {
+	// The name of the Azure Blob Storage account. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#storage-accounts
+	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
+	// The name of the Azure Blob Storage container. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#containers
+	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
+	// Specifies the external data source name configured in MSSQL, which references the Azure Blob container. See: https://learn.microsoft.com/sql/t-sql/statements/bulk-insert-transact-sql
+	BulkLoadDataSource string `json:"bulk_load_data_source"`
+	// When enabled, Airbyte will validate all values before loading them into the destination table. This provides stronger data integrity guarantees but may significantly impact performance.
+	BulkLoadValidateValuesPreLoad *bool                              `default:"false" json:"bulk_load_validate_values_pre_load"`
+	LoadType                      *DestinationMssqlV2SchemasLoadType `default:"BULK" json:"load_type"`
+	// A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview
+	SharedAccessSignature string `json:"shared_access_signature"`
+	AdditionalProperties  any    `additionalProperties:"true" json:"-"`
+}
+
+func (d DestinationMssqlV2BulkLoad) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlV2BulkLoad) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlV2BulkLoad) GetAzureBlobStorageAccountName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageAccountName
+}
+
+func (o *DestinationMssqlV2BulkLoad) GetAzureBlobStorageContainerName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageContainerName
+}
+
+func (o *DestinationMssqlV2BulkLoad) GetBulkLoadDataSource() string {
+	if o == nil {
+		return ""
+	}
+	return o.BulkLoadDataSource
+}
+
+func (o *DestinationMssqlV2BulkLoad) GetBulkLoadValidateValuesPreLoad() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.BulkLoadValidateValuesPreLoad
+}
+
+func (o *DestinationMssqlV2BulkLoad) GetLoadType() *DestinationMssqlV2SchemasLoadType {
+	if o == nil {
+		return nil
+	}
+	return o.LoadType
+}
+
+func (o *DestinationMssqlV2BulkLoad) GetSharedAccessSignature() string {
+	if o == nil {
+		return ""
+	}
+	return o.SharedAccessSignature
+}
+
+func (o *DestinationMssqlV2BulkLoad) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type DestinationMssqlV2SchemasLoadTypeLoadType string
+
+const (
+	DestinationMssqlV2SchemasLoadTypeLoadTypeInsert DestinationMssqlV2SchemasLoadTypeLoadType = "INSERT"
+)
+
+func (e DestinationMssqlV2SchemasLoadTypeLoadType) ToPointer() *DestinationMssqlV2SchemasLoadTypeLoadType {
+	return &e
+}
+func (e *DestinationMssqlV2SchemasLoadTypeLoadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INSERT":
+		*e = DestinationMssqlV2SchemasLoadTypeLoadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMssqlV2SchemasLoadTypeLoadType: %v", v)
+	}
+}
+
+// DestinationMssqlV2InsertLoad - Configuration details for using the INSERT loading mechanism.
+type DestinationMssqlV2InsertLoad struct {
+	LoadType             *DestinationMssqlV2SchemasLoadTypeLoadType `default:"INSERT" json:"load_type"`
+	AdditionalProperties any                                        `additionalProperties:"true" json:"-"`
+}
+
+func (d DestinationMssqlV2InsertLoad) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlV2InsertLoad) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlV2InsertLoad) GetLoadType() *DestinationMssqlV2SchemasLoadTypeLoadType {
+	if o == nil {
+		return nil
+	}
+	return o.LoadType
+}
+
+func (o *DestinationMssqlV2InsertLoad) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type DestinationMssqlV2LoadTypeType string
+
+const (
+	DestinationMssqlV2LoadTypeTypeDestinationMssqlV2InsertLoad DestinationMssqlV2LoadTypeType = "destination-mssql-v2_Insert Load"
+	DestinationMssqlV2LoadTypeTypeDestinationMssqlV2BulkLoad   DestinationMssqlV2LoadTypeType = "destination-mssql-v2_Bulk Load"
+)
+
+// DestinationMssqlV2LoadType - Specifies the type of load mechanism (e.g., BULK, INSERT) and its associated configuration.
+type DestinationMssqlV2LoadType struct {
+	DestinationMssqlV2InsertLoad *DestinationMssqlV2InsertLoad `queryParam:"inline"`
+	DestinationMssqlV2BulkLoad   *DestinationMssqlV2BulkLoad   `queryParam:"inline"`
+
+	Type DestinationMssqlV2LoadTypeType
+}
+
+func CreateDestinationMssqlV2LoadTypeDestinationMssqlV2InsertLoad(destinationMssqlV2InsertLoad DestinationMssqlV2InsertLoad) DestinationMssqlV2LoadType {
+	typ := DestinationMssqlV2LoadTypeTypeDestinationMssqlV2InsertLoad
+
+	return DestinationMssqlV2LoadType{
+		DestinationMssqlV2InsertLoad: &destinationMssqlV2InsertLoad,
+		Type:                         typ,
+	}
+}
+
+func CreateDestinationMssqlV2LoadTypeDestinationMssqlV2BulkLoad(destinationMssqlV2BulkLoad DestinationMssqlV2BulkLoad) DestinationMssqlV2LoadType {
+	typ := DestinationMssqlV2LoadTypeTypeDestinationMssqlV2BulkLoad
+
+	return DestinationMssqlV2LoadType{
+		DestinationMssqlV2BulkLoad: &destinationMssqlV2BulkLoad,
+		Type:                       typ,
+	}
+}
+
+func (u *DestinationMssqlV2LoadType) UnmarshalJSON(data []byte) error {
+
+	var destinationMssqlV2InsertLoad DestinationMssqlV2InsertLoad = DestinationMssqlV2InsertLoad{}
+	if err := utils.UnmarshalJSON(data, &destinationMssqlV2InsertLoad, "", true, true); err == nil {
+		u.DestinationMssqlV2InsertLoad = &destinationMssqlV2InsertLoad
+		u.Type = DestinationMssqlV2LoadTypeTypeDestinationMssqlV2InsertLoad
+		return nil
+	}
+
+	var destinationMssqlV2BulkLoad DestinationMssqlV2BulkLoad = DestinationMssqlV2BulkLoad{}
+	if err := utils.UnmarshalJSON(data, &destinationMssqlV2BulkLoad, "", true, true); err == nil {
+		u.DestinationMssqlV2BulkLoad = &destinationMssqlV2BulkLoad
+		u.Type = DestinationMssqlV2LoadTypeTypeDestinationMssqlV2BulkLoad
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMssqlV2LoadType", string(data))
+}
+
+func (u DestinationMssqlV2LoadType) MarshalJSON() ([]byte, error) {
+	if u.DestinationMssqlV2InsertLoad != nil {
+		return utils.MarshalJSON(u.DestinationMssqlV2InsertLoad, "", true)
+	}
+
+	if u.DestinationMssqlV2BulkLoad != nil {
+		return utils.MarshalJSON(u.DestinationMssqlV2BulkLoad, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationMssqlV2LoadType: all fields are null")
+}
+
 type DestinationMssqlV2SchemasSslMethodName string
 
 const (
@@ -34,14 +251,14 @@ func (e *DestinationMssqlV2SchemasSslMethodName) UnmarshalJSON(data []byte) erro
 
 // DestinationMssqlV2EncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type DestinationMssqlV2EncryptedVerifyCertificate struct {
-	Name *DestinationMssqlV2SchemasSslMethodName `default:"encrypted_verify_certificate" json:"name"`
+	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
+	HostNameInCertificate *string                                 `json:"hostNameInCertificate,omitempty"`
+	Name                  *DestinationMssqlV2SchemasSslMethodName `default:"encrypted_verify_certificate" json:"name"`
 	// Specifies the name of the trust store.
 	TrustStoreName *string `json:"trustStoreName,omitempty"`
 	// Specifies the password of the trust store.
-	TrustStorePassword *string `json:"trustStorePassword,omitempty"`
-	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
-	HostNameInCertificate *string `json:"hostNameInCertificate,omitempty"`
-	AdditionalProperties  any     `additionalProperties:"true" json:"-"`
+	TrustStorePassword   *string `json:"trustStorePassword,omitempty"`
+	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationMssqlV2EncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
@@ -53,6 +270,13 @@ func (d *DestinationMssqlV2EncryptedVerifyCertificate) UnmarshalJSON(data []byte
 		return err
 	}
 	return nil
+}
+
+func (o *DestinationMssqlV2EncryptedVerifyCertificate) GetHostNameInCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.HostNameInCertificate
 }
 
 func (o *DestinationMssqlV2EncryptedVerifyCertificate) GetName() *DestinationMssqlV2SchemasSslMethodName {
@@ -74,13 +298,6 @@ func (o *DestinationMssqlV2EncryptedVerifyCertificate) GetTrustStorePassword() *
 		return nil
 	}
 	return o.TrustStorePassword
-}
-
-func (o *DestinationMssqlV2EncryptedVerifyCertificate) GetHostNameInCertificate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.HostNameInCertificate
 }
 
 func (o *DestinationMssqlV2EncryptedVerifyCertificate) GetAdditionalProperties() any {
@@ -284,223 +501,6 @@ func (u DestinationMssqlV2SSLMethod) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationMssqlV2SSLMethod: all fields are null")
 }
 
-type DestinationMssqlV2SchemasLoadType string
-
-const (
-	DestinationMssqlV2SchemasLoadTypeBulk DestinationMssqlV2SchemasLoadType = "BULK"
-)
-
-func (e DestinationMssqlV2SchemasLoadType) ToPointer() *DestinationMssqlV2SchemasLoadType {
-	return &e
-}
-func (e *DestinationMssqlV2SchemasLoadType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "BULK":
-		*e = DestinationMssqlV2SchemasLoadType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMssqlV2SchemasLoadType: %v", v)
-	}
-}
-
-// DestinationMssqlV2BulkLoad - Configuration details for using the BULK loading mechanism.
-type DestinationMssqlV2BulkLoad struct {
-	LoadType *DestinationMssqlV2SchemasLoadType `default:"BULK" json:"load_type"`
-	// The name of the Azure Blob Storage account. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#storage-accounts
-	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
-	// The name of the Azure Blob Storage container. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#containers
-	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
-	// A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview
-	SharedAccessSignature string `json:"shared_access_signature"`
-	// Specifies the external data source name configured in MSSQL, which references the Azure Blob container. See: https://learn.microsoft.com/sql/t-sql/statements/bulk-insert-transact-sql
-	BulkLoadDataSource string `json:"bulk_load_data_source"`
-	// When enabled, Airbyte will validate all values before loading them into the destination table. This provides stronger data integrity guarantees but may significantly impact performance.
-	BulkLoadValidateValuesPreLoad *bool `default:"false" json:"bulk_load_validate_values_pre_load"`
-	AdditionalProperties          any   `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationMssqlV2BulkLoad) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMssqlV2BulkLoad) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMssqlV2BulkLoad) GetLoadType() *DestinationMssqlV2SchemasLoadType {
-	if o == nil {
-		return nil
-	}
-	return o.LoadType
-}
-
-func (o *DestinationMssqlV2BulkLoad) GetAzureBlobStorageAccountName() string {
-	if o == nil {
-		return ""
-	}
-	return o.AzureBlobStorageAccountName
-}
-
-func (o *DestinationMssqlV2BulkLoad) GetAzureBlobStorageContainerName() string {
-	if o == nil {
-		return ""
-	}
-	return o.AzureBlobStorageContainerName
-}
-
-func (o *DestinationMssqlV2BulkLoad) GetSharedAccessSignature() string {
-	if o == nil {
-		return ""
-	}
-	return o.SharedAccessSignature
-}
-
-func (o *DestinationMssqlV2BulkLoad) GetBulkLoadDataSource() string {
-	if o == nil {
-		return ""
-	}
-	return o.BulkLoadDataSource
-}
-
-func (o *DestinationMssqlV2BulkLoad) GetBulkLoadValidateValuesPreLoad() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.BulkLoadValidateValuesPreLoad
-}
-
-func (o *DestinationMssqlV2BulkLoad) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type DestinationMssqlV2SchemasLoadTypeLoadType string
-
-const (
-	DestinationMssqlV2SchemasLoadTypeLoadTypeInsert DestinationMssqlV2SchemasLoadTypeLoadType = "INSERT"
-)
-
-func (e DestinationMssqlV2SchemasLoadTypeLoadType) ToPointer() *DestinationMssqlV2SchemasLoadTypeLoadType {
-	return &e
-}
-func (e *DestinationMssqlV2SchemasLoadTypeLoadType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "INSERT":
-		*e = DestinationMssqlV2SchemasLoadTypeLoadType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMssqlV2SchemasLoadTypeLoadType: %v", v)
-	}
-}
-
-// DestinationMssqlV2InsertLoad - Configuration details for using the INSERT loading mechanism.
-type DestinationMssqlV2InsertLoad struct {
-	LoadType             *DestinationMssqlV2SchemasLoadTypeLoadType `default:"INSERT" json:"load_type"`
-	AdditionalProperties any                                        `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationMssqlV2InsertLoad) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMssqlV2InsertLoad) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMssqlV2InsertLoad) GetLoadType() *DestinationMssqlV2SchemasLoadTypeLoadType {
-	if o == nil {
-		return nil
-	}
-	return o.LoadType
-}
-
-func (o *DestinationMssqlV2InsertLoad) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type DestinationMssqlV2LoadTypeType string
-
-const (
-	DestinationMssqlV2LoadTypeTypeDestinationMssqlV2InsertLoad DestinationMssqlV2LoadTypeType = "destination-mssql-v2_Insert Load"
-	DestinationMssqlV2LoadTypeTypeDestinationMssqlV2BulkLoad   DestinationMssqlV2LoadTypeType = "destination-mssql-v2_Bulk Load"
-)
-
-// DestinationMssqlV2LoadType - Specifies the type of load mechanism (e.g., BULK, INSERT) and its associated configuration.
-type DestinationMssqlV2LoadType struct {
-	DestinationMssqlV2InsertLoad *DestinationMssqlV2InsertLoad `queryParam:"inline"`
-	DestinationMssqlV2BulkLoad   *DestinationMssqlV2BulkLoad   `queryParam:"inline"`
-
-	Type DestinationMssqlV2LoadTypeType
-}
-
-func CreateDestinationMssqlV2LoadTypeDestinationMssqlV2InsertLoad(destinationMssqlV2InsertLoad DestinationMssqlV2InsertLoad) DestinationMssqlV2LoadType {
-	typ := DestinationMssqlV2LoadTypeTypeDestinationMssqlV2InsertLoad
-
-	return DestinationMssqlV2LoadType{
-		DestinationMssqlV2InsertLoad: &destinationMssqlV2InsertLoad,
-		Type:                         typ,
-	}
-}
-
-func CreateDestinationMssqlV2LoadTypeDestinationMssqlV2BulkLoad(destinationMssqlV2BulkLoad DestinationMssqlV2BulkLoad) DestinationMssqlV2LoadType {
-	typ := DestinationMssqlV2LoadTypeTypeDestinationMssqlV2BulkLoad
-
-	return DestinationMssqlV2LoadType{
-		DestinationMssqlV2BulkLoad: &destinationMssqlV2BulkLoad,
-		Type:                       typ,
-	}
-}
-
-func (u *DestinationMssqlV2LoadType) UnmarshalJSON(data []byte) error {
-
-	var destinationMssqlV2InsertLoad DestinationMssqlV2InsertLoad = DestinationMssqlV2InsertLoad{}
-	if err := utils.UnmarshalJSON(data, &destinationMssqlV2InsertLoad, "", true, true); err == nil {
-		u.DestinationMssqlV2InsertLoad = &destinationMssqlV2InsertLoad
-		u.Type = DestinationMssqlV2LoadTypeTypeDestinationMssqlV2InsertLoad
-		return nil
-	}
-
-	var destinationMssqlV2BulkLoad DestinationMssqlV2BulkLoad = DestinationMssqlV2BulkLoad{}
-	if err := utils.UnmarshalJSON(data, &destinationMssqlV2BulkLoad, "", true, true); err == nil {
-		u.DestinationMssqlV2BulkLoad = &destinationMssqlV2BulkLoad
-		u.Type = DestinationMssqlV2LoadTypeTypeDestinationMssqlV2BulkLoad
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMssqlV2LoadType", string(data))
-}
-
-func (u DestinationMssqlV2LoadType) MarshalJSON() ([]byte, error) {
-	if u.DestinationMssqlV2InsertLoad != nil {
-		return utils.MarshalJSON(u.DestinationMssqlV2InsertLoad, "", true)
-	}
-
-	if u.DestinationMssqlV2BulkLoad != nil {
-		return utils.MarshalJSON(u.DestinationMssqlV2BulkLoad, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationMssqlV2LoadType: all fields are null")
-}
-
 type MssqlV2 string
 
 const (
@@ -525,25 +525,25 @@ func (e *MssqlV2) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationMssqlV2 struct {
-	// The host name of the MSSQL database.
-	Host string `json:"host"`
-	// The port of the MSSQL database.
-	Port int64 `json:"port"`
 	// The name of the MSSQL database.
 	Database string `json:"database"`
-	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
-	Schema *string `default:"public" json:"schema"`
-	// The username which is used to access the database.
-	User string `json:"user"`
-	// The password associated with this username.
-	Password *string `json:"password,omitempty"`
+	// The host name of the MSSQL database.
+	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// Specifies the type of load mechanism (e.g., BULK, INSERT) and its associated configuration.
+	LoadType DestinationMssqlV2LoadType `json:"load_type"`
+	// The password associated with this username.
+	Password *string `json:"password,omitempty"`
+	// The port of the MSSQL database.
+	Port int64 `json:"port"`
+	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
+	Schema *string `default:"public" json:"schema"`
 	// The encryption method which is used to communicate with the database.
 	SslMethod DestinationMssqlV2SSLMethod `json:"ssl_method"`
-	// Specifies the type of load mechanism (e.g., BULK, INSERT) and its associated configuration.
-	LoadType        DestinationMssqlV2LoadType `json:"load_type"`
-	destinationType MssqlV2                    `const:"mssql-v2" json:"destinationType"`
+	// The username which is used to access the database.
+	User            string  `json:"user"`
+	destinationType MssqlV2 `const:"mssql-v2" json:"destinationType"`
 }
 
 func (d DestinationMssqlV2) MarshalJSON() ([]byte, error) {
@@ -557,20 +557,6 @@ func (d *DestinationMssqlV2) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationMssqlV2) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *DestinationMssqlV2) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
-}
-
 func (o *DestinationMssqlV2) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -578,25 +564,11 @@ func (o *DestinationMssqlV2) GetDatabase() string {
 	return o.Database
 }
 
-func (o *DestinationMssqlV2) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
-func (o *DestinationMssqlV2) GetUser() string {
+func (o *DestinationMssqlV2) GetHost() string {
 	if o == nil {
 		return ""
 	}
-	return o.User
-}
-
-func (o *DestinationMssqlV2) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
+	return o.Host
 }
 
 func (o *DestinationMssqlV2) GetJdbcURLParams() *string {
@@ -606,6 +578,34 @@ func (o *DestinationMssqlV2) GetJdbcURLParams() *string {
 	return o.JdbcURLParams
 }
 
+func (o *DestinationMssqlV2) GetLoadType() DestinationMssqlV2LoadType {
+	if o == nil {
+		return DestinationMssqlV2LoadType{}
+	}
+	return o.LoadType
+}
+
+func (o *DestinationMssqlV2) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationMssqlV2) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
+}
+
+func (o *DestinationMssqlV2) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
 func (o *DestinationMssqlV2) GetSslMethod() DestinationMssqlV2SSLMethod {
 	if o == nil {
 		return DestinationMssqlV2SSLMethod{}
@@ -613,11 +613,11 @@ func (o *DestinationMssqlV2) GetSslMethod() DestinationMssqlV2SSLMethod {
 	return o.SslMethod
 }
 
-func (o *DestinationMssqlV2) GetLoadType() DestinationMssqlV2LoadType {
+func (o *DestinationMssqlV2) GetUser() string {
 	if o == nil {
-		return DestinationMssqlV2LoadType{}
+		return ""
 	}
-	return o.LoadType
+	return o.User
 }
 
 func (o *DestinationMssqlV2) GetDestinationType() MssqlV2 {

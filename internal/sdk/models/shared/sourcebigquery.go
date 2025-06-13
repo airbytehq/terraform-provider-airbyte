@@ -32,13 +32,13 @@ func (e *Bigquery) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBigquery struct {
-	// The GCP project ID for the project containing the target BigQuery dataset.
-	ProjectID string `json:"project_id"`
+	// The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
+	CredentialsJSON string `json:"credentials_json"`
 	// The dataset ID to search for tables and views. If you are only loading data from one dataset, setting this option could result in much faster schema discovery.
 	DatasetID *string `json:"dataset_id,omitempty"`
-	// The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
-	CredentialsJSON string   `json:"credentials_json"`
-	sourceType      Bigquery `const:"bigquery" json:"sourceType"`
+	// The GCP project ID for the project containing the target BigQuery dataset.
+	ProjectID  string   `json:"project_id"`
+	sourceType Bigquery `const:"bigquery" json:"sourceType"`
 }
 
 func (s SourceBigquery) MarshalJSON() ([]byte, error) {
@@ -52,11 +52,11 @@ func (s *SourceBigquery) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceBigquery) GetProjectID() string {
+func (o *SourceBigquery) GetCredentialsJSON() string {
 	if o == nil {
 		return ""
 	}
-	return o.ProjectID
+	return o.CredentialsJSON
 }
 
 func (o *SourceBigquery) GetDatasetID() *string {
@@ -66,11 +66,11 @@ func (o *SourceBigquery) GetDatasetID() *string {
 	return o.DatasetID
 }
 
-func (o *SourceBigquery) GetCredentialsJSON() string {
+func (o *SourceBigquery) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
-	return o.CredentialsJSON
+	return o.ProjectID
 }
 
 func (o *SourceBigquery) GetSourceType() Bigquery {

@@ -38,8 +38,8 @@ func (e *SourceNylasUpdateAPIServer) UnmarshalJSON(data []byte) error {
 type SourceNylasUpdate struct {
 	APIKey    string                     `json:"api_key"`
 	APIServer SourceNylasUpdateAPIServer `json:"api_server"`
-	StartDate time.Time                  `json:"start_date"`
 	EndDate   time.Time                  `json:"end_date"`
+	StartDate time.Time                  `json:"start_date"`
 }
 
 func (s SourceNylasUpdate) MarshalJSON() ([]byte, error) {
@@ -67,16 +67,16 @@ func (o *SourceNylasUpdate) GetAPIServer() SourceNylasUpdateAPIServer {
 	return o.APIServer
 }
 
-func (o *SourceNylasUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceNylasUpdate) GetEndDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.EndDate
+}
+
+func (o *SourceNylasUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

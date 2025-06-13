@@ -24,11 +24,11 @@ func (r *SourceZohoInvoiceResourceModel) ToSharedSourceZohoInvoiceCreateRequest(
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	organizationID := new(string)
 	if !r.Configuration.OrganizationID.IsUnknown() && !r.Configuration.OrganizationID.IsNull() {
@@ -39,8 +39,8 @@ func (r *SourceZohoInvoiceResourceModel) ToSharedSourceZohoInvoiceCreateRequest(
 	region := shared.SourceZohoInvoiceRegion(r.Configuration.Region.ValueString())
 	configuration := shared.SourceZohoInvoice{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 		OrganizationID:     organizationID,
 		Region:             region,
 	}
@@ -117,11 +117,11 @@ func (r *SourceZohoInvoiceResourceModel) ToSharedSourceZohoInvoicePutRequest() *
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	organizationID := new(string)
 	if !r.Configuration.OrganizationID.IsUnknown() && !r.Configuration.OrganizationID.IsNull() {
@@ -132,8 +132,8 @@ func (r *SourceZohoInvoiceResourceModel) ToSharedSourceZohoInvoicePutRequest() *
 	region := shared.SourceZohoInvoiceUpdateRegion(r.Configuration.Region.ValueString())
 	configuration := shared.SourceZohoInvoiceUpdate{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 		OrganizationID:     organizationID,
 		Region:             region,
 	}

@@ -21,6 +21,9 @@ func (r *SourceUsCensusResourceModel) ToSharedSourceUsCensusCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	queryParams := new(string)
 	if !r.Configuration.QueryParams.IsUnknown() && !r.Configuration.QueryParams.IsNull() {
 		*queryParams = r.Configuration.QueryParams.ValueString()
@@ -30,13 +33,10 @@ func (r *SourceUsCensusResourceModel) ToSharedSourceUsCensusCreateRequest() *sha
 	var queryPath string
 	queryPath = r.Configuration.QueryPath.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	configuration := shared.SourceUsCensus{
+		APIKey:      apiKey,
 		QueryParams: queryParams,
 		QueryPath:   queryPath,
-		APIKey:      apiKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,6 +108,9 @@ func (r *SourceUsCensusResourceModel) ToSharedSourceUsCensusPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	queryParams := new(string)
 	if !r.Configuration.QueryParams.IsUnknown() && !r.Configuration.QueryParams.IsNull() {
 		*queryParams = r.Configuration.QueryParams.ValueString()
@@ -117,13 +120,10 @@ func (r *SourceUsCensusResourceModel) ToSharedSourceUsCensusPutRequest() *shared
 	var queryPath string
 	queryPath = r.Configuration.QueryPath.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	configuration := shared.SourceUsCensusUpdate{
+		APIKey:      apiKey,
 		QueryParams: queryParams,
 		QueryPath:   queryPath,
-		APIKey:      apiKey,
 	}
 	out := shared.SourceUsCensusPutRequest{
 		Name:          name,

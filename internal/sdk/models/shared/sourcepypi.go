@@ -32,11 +32,11 @@ func (e *Pypi) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePypi struct {
-	// Version of the project/package.  Use it to find a particular release instead of all releases.
-	Version *string `json:"version,omitempty"`
 	// Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
 	ProjectName string `json:"project_name"`
-	sourceType  Pypi   `const:"pypi" json:"sourceType"`
+	// Version of the project/package.  Use it to find a particular release instead of all releases.
+	Version    *string `json:"version,omitempty"`
+	sourceType Pypi    `const:"pypi" json:"sourceType"`
 }
 
 func (s SourcePypi) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (s *SourcePypi) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePypi) GetVersion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Version
-}
-
 func (o *SourcePypi) GetProjectName() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectName
+}
+
+func (o *SourcePypi) GetVersion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Version
 }
 
 func (o *SourcePypi) GetSourceType() Pypi {

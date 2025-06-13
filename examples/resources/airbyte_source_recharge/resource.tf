@@ -1,6 +1,7 @@
 resource "airbyte_source_recharge" "my_source_recharge" {
   configuration = {
     access_token              = "...my_access_token..."
+    lookback_window_days      = 3
     start_date                = "2021-05-14T00:00:00Z"
     use_orders_deprecated_api = false
   }

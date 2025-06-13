@@ -32,10 +32,10 @@ func (e *Workramp) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWorkramp struct {
-	// The API Token for Workramp
-	APIKey string `json:"api_key"`
 	// The id of the Academy
-	AcademyID  string   `json:"academy_id"`
+	AcademyID string `json:"academy_id"`
+	// The API Token for Workramp
+	APIKey     string   `json:"api_key"`
 	sourceType Workramp `const:"workramp" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceWorkramp) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceWorkramp) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceWorkramp) GetAcademyID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AcademyID
+}
+
+func (o *SourceWorkramp) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceWorkramp) GetSourceType() Workramp {

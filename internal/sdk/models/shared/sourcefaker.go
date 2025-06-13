@@ -32,17 +32,17 @@ func (e *Faker) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFaker struct {
-	// How many users should be generated in total. The purchases table will be scaled to match, with 10 purchases created per 10 users. This setting does not apply to the products stream.
-	Count *int64 `default:"1000" json:"count"`
-	// Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
-	Seed *int64 `default:"-1" json:"seed"`
-	// How many fake records will be in each page (stream slice), before a state message is emitted?
-	RecordsPerSlice *int64 `default:"1000" json:"records_per_slice"`
 	// Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.
 	AlwaysUpdated *bool `default:"true" json:"always_updated"`
+	// How many users should be generated in total. The purchases table will be scaled to match, with 10 purchases created per 10 users. This setting does not apply to the products stream.
+	Count *int64 `default:"1000" json:"count"`
 	// How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.
 	Parallelism *int64 `default:"4" json:"parallelism"`
-	sourceType  Faker  `const:"faker" json:"sourceType"`
+	// How many fake records will be in each page (stream slice), before a state message is emitted?
+	RecordsPerSlice *int64 `default:"1000" json:"records_per_slice"`
+	// Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
+	Seed       *int64 `default:"-1" json:"seed"`
+	sourceType Faker  `const:"faker" json:"sourceType"`
 }
 
 func (s SourceFaker) MarshalJSON() ([]byte, error) {
@@ -56,6 +56,13 @@ func (s *SourceFaker) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceFaker) GetAlwaysUpdated() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AlwaysUpdated
+}
+
 func (o *SourceFaker) GetCount() *int64 {
 	if o == nil {
 		return nil
@@ -63,11 +70,11 @@ func (o *SourceFaker) GetCount() *int64 {
 	return o.Count
 }
 
-func (o *SourceFaker) GetSeed() *int64 {
+func (o *SourceFaker) GetParallelism() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.Seed
+	return o.Parallelism
 }
 
 func (o *SourceFaker) GetRecordsPerSlice() *int64 {
@@ -77,18 +84,11 @@ func (o *SourceFaker) GetRecordsPerSlice() *int64 {
 	return o.RecordsPerSlice
 }
 
-func (o *SourceFaker) GetAlwaysUpdated() *bool {
+func (o *SourceFaker) GetSeed() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.AlwaysUpdated
-}
-
-func (o *SourceFaker) GetParallelism() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Parallelism
+	return o.Seed
 }
 
 func (o *SourceFaker) GetSourceType() Faker {

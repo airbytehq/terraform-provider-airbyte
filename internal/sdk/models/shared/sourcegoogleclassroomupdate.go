@@ -4,8 +4,8 @@ package shared
 
 type SourceGoogleClassroomUpdate struct {
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 }
 
 func (o *SourceGoogleClassroomUpdate) GetClientID() string {
@@ -15,16 +15,16 @@ func (o *SourceGoogleClassroomUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceGoogleClassroomUpdate) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceGoogleClassroomUpdate) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceGoogleClassroomUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }

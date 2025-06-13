@@ -9,6 +9,330 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType string
+
+const (
+	DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeRest DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType = "REST"
+)
+
+func (e DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType) ToPointer() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType {
+	return &e
+}
+func (e *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "REST":
+		*e = DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType: %v", v)
+	}
+}
+
+// DestinationS3DataLakeUpdateRestCatalog - Configuration details for connecting to a REST catalog.
+type DestinationS3DataLakeUpdateRestCatalog struct {
+	CatalogType *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType `default:"REST" json:"catalog_type"`
+	// The namespace to be used in the Table identifier.
+	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
+	//            `Destination-defined` or `Source-defined`
+	Namespace string `json:"namespace"`
+	// The base URL of the Rest server used to connect to the Rest catalog.
+	ServerURI            string `json:"server_uri"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+}
+
+func (d DestinationS3DataLakeUpdateRestCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3DataLakeUpdateRestCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3DataLakeUpdateRestCatalog) GetCatalogType() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType {
+	if o == nil {
+		return nil
+	}
+	return o.CatalogType
+}
+
+func (o *DestinationS3DataLakeUpdateRestCatalog) GetNamespace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Namespace
+}
+
+func (o *DestinationS3DataLakeUpdateRestCatalog) GetServerURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerURI
+}
+
+func (o *DestinationS3DataLakeUpdateRestCatalog) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type DestinationS3DataLakeUpdateSchemasCatalogType string
+
+const (
+	DestinationS3DataLakeUpdateSchemasCatalogTypeGlue DestinationS3DataLakeUpdateSchemasCatalogType = "GLUE"
+)
+
+func (e DestinationS3DataLakeUpdateSchemasCatalogType) ToPointer() *DestinationS3DataLakeUpdateSchemasCatalogType {
+	return &e
+}
+func (e *DestinationS3DataLakeUpdateSchemasCatalogType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "GLUE":
+		*e = DestinationS3DataLakeUpdateSchemasCatalogType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3DataLakeUpdateSchemasCatalogType: %v", v)
+	}
+}
+
+// DestinationS3DataLakeUpdateGlueCatalog - Configuration details for connecting to an AWS Glue-based Iceberg catalog.
+type DestinationS3DataLakeUpdateGlueCatalog struct {
+	CatalogType *DestinationS3DataLakeUpdateSchemasCatalogType `default:"GLUE" json:"catalog_type"`
+	// The Glue database name. This will ONLY be used if the `Destination Namespace` setting for the connection is set to `Destination-defined` or `Source-defined`
+	DatabaseName string `json:"database_name"`
+	// The AWS Account ID associated with the Glue service used by the Iceberg catalog.
+	GlueID string `json:"glue_id"`
+	// The ARN of the AWS role to assume. Only usable in Airbyte Cloud.
+	RoleArn              *string `json:"role_arn,omitempty"`
+	AdditionalProperties any     `additionalProperties:"true" json:"-"`
+}
+
+func (d DestinationS3DataLakeUpdateGlueCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3DataLakeUpdateGlueCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3DataLakeUpdateGlueCatalog) GetCatalogType() *DestinationS3DataLakeUpdateSchemasCatalogType {
+	if o == nil {
+		return nil
+	}
+	return o.CatalogType
+}
+
+func (o *DestinationS3DataLakeUpdateGlueCatalog) GetDatabaseName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatabaseName
+}
+
+func (o *DestinationS3DataLakeUpdateGlueCatalog) GetGlueID() string {
+	if o == nil {
+		return ""
+	}
+	return o.GlueID
+}
+
+func (o *DestinationS3DataLakeUpdateGlueCatalog) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
+}
+
+func (o *DestinationS3DataLakeUpdateGlueCatalog) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType string
+
+const (
+	DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogTypeNessie DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType = "NESSIE"
+)
+
+func (e DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType) ToPointer() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType {
+	return &e
+}
+func (e *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "NESSIE":
+		*e = DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType: %v", v)
+	}
+}
+
+// DestinationS3DataLakeUpdateNessieCatalog - Configuration details for connecting to a Nessie-based Iceberg catalog.
+type DestinationS3DataLakeUpdateNessieCatalog struct {
+	// Optional token for authentication with the Nessie server.
+	AccessToken *string                                                              `json:"access_token,omitempty"`
+	CatalogType *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType `default:"NESSIE" json:"catalog_type"`
+	// The Nessie namespace to be used in the Table identifier.
+	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
+	//            `Destination-defined` or `Source-defined`
+	Namespace string `json:"namespace"`
+	// The base URL of the Nessie server used to connect to the Nessie catalog.
+	ServerURI            string `json:"server_uri"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+}
+
+func (d DestinationS3DataLakeUpdateNessieCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3DataLakeUpdateNessieCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3DataLakeUpdateNessieCatalog) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *DestinationS3DataLakeUpdateNessieCatalog) GetCatalogType() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType {
+	if o == nil {
+		return nil
+	}
+	return o.CatalogType
+}
+
+func (o *DestinationS3DataLakeUpdateNessieCatalog) GetNamespace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Namespace
+}
+
+func (o *DestinationS3DataLakeUpdateNessieCatalog) GetServerURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerURI
+}
+
+func (o *DestinationS3DataLakeUpdateNessieCatalog) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type DestinationS3DataLakeUpdateCatalogTypeType string
+
+const (
+	DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateNessieCatalog DestinationS3DataLakeUpdateCatalogTypeType = "destination-s3-data-lake-update_Nessie Catalog"
+	DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateGlueCatalog   DestinationS3DataLakeUpdateCatalogTypeType = "destination-s3-data-lake-update_Glue Catalog"
+	DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateRestCatalog   DestinationS3DataLakeUpdateCatalogTypeType = "destination-s3-data-lake-update_Rest Catalog"
+)
+
+// DestinationS3DataLakeUpdateCatalogType - Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
+type DestinationS3DataLakeUpdateCatalogType struct {
+	DestinationS3DataLakeUpdateNessieCatalog *DestinationS3DataLakeUpdateNessieCatalog `queryParam:"inline"`
+	DestinationS3DataLakeUpdateGlueCatalog   *DestinationS3DataLakeUpdateGlueCatalog   `queryParam:"inline"`
+	DestinationS3DataLakeUpdateRestCatalog   *DestinationS3DataLakeUpdateRestCatalog   `queryParam:"inline"`
+
+	Type DestinationS3DataLakeUpdateCatalogTypeType
+}
+
+func CreateDestinationS3DataLakeUpdateCatalogTypeDestinationS3DataLakeUpdateNessieCatalog(destinationS3DataLakeUpdateNessieCatalog DestinationS3DataLakeUpdateNessieCatalog) DestinationS3DataLakeUpdateCatalogType {
+	typ := DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateNessieCatalog
+
+	return DestinationS3DataLakeUpdateCatalogType{
+		DestinationS3DataLakeUpdateNessieCatalog: &destinationS3DataLakeUpdateNessieCatalog,
+		Type:                                     typ,
+	}
+}
+
+func CreateDestinationS3DataLakeUpdateCatalogTypeDestinationS3DataLakeUpdateGlueCatalog(destinationS3DataLakeUpdateGlueCatalog DestinationS3DataLakeUpdateGlueCatalog) DestinationS3DataLakeUpdateCatalogType {
+	typ := DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateGlueCatalog
+
+	return DestinationS3DataLakeUpdateCatalogType{
+		DestinationS3DataLakeUpdateGlueCatalog: &destinationS3DataLakeUpdateGlueCatalog,
+		Type:                                   typ,
+	}
+}
+
+func CreateDestinationS3DataLakeUpdateCatalogTypeDestinationS3DataLakeUpdateRestCatalog(destinationS3DataLakeUpdateRestCatalog DestinationS3DataLakeUpdateRestCatalog) DestinationS3DataLakeUpdateCatalogType {
+	typ := DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateRestCatalog
+
+	return DestinationS3DataLakeUpdateCatalogType{
+		DestinationS3DataLakeUpdateRestCatalog: &destinationS3DataLakeUpdateRestCatalog,
+		Type:                                   typ,
+	}
+}
+
+func (u *DestinationS3DataLakeUpdateCatalogType) UnmarshalJSON(data []byte) error {
+
+	var destinationS3DataLakeUpdateRestCatalog DestinationS3DataLakeUpdateRestCatalog = DestinationS3DataLakeUpdateRestCatalog{}
+	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeUpdateRestCatalog, "", true, true); err == nil {
+		u.DestinationS3DataLakeUpdateRestCatalog = &destinationS3DataLakeUpdateRestCatalog
+		u.Type = DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateRestCatalog
+		return nil
+	}
+
+	var destinationS3DataLakeUpdateNessieCatalog DestinationS3DataLakeUpdateNessieCatalog = DestinationS3DataLakeUpdateNessieCatalog{}
+	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeUpdateNessieCatalog, "", true, true); err == nil {
+		u.DestinationS3DataLakeUpdateNessieCatalog = &destinationS3DataLakeUpdateNessieCatalog
+		u.Type = DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateNessieCatalog
+		return nil
+	}
+
+	var destinationS3DataLakeUpdateGlueCatalog DestinationS3DataLakeUpdateGlueCatalog = DestinationS3DataLakeUpdateGlueCatalog{}
+	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeUpdateGlueCatalog, "", true, true); err == nil {
+		u.DestinationS3DataLakeUpdateGlueCatalog = &destinationS3DataLakeUpdateGlueCatalog
+		u.Type = DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateGlueCatalog
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3DataLakeUpdateCatalogType", string(data))
+}
+
+func (u DestinationS3DataLakeUpdateCatalogType) MarshalJSON() ([]byte, error) {
+	if u.DestinationS3DataLakeUpdateNessieCatalog != nil {
+		return utils.MarshalJSON(u.DestinationS3DataLakeUpdateNessieCatalog, "", true)
+	}
+
+	if u.DestinationS3DataLakeUpdateGlueCatalog != nil {
+		return utils.MarshalJSON(u.DestinationS3DataLakeUpdateGlueCatalog, "", true)
+	}
+
+	if u.DestinationS3DataLakeUpdateRestCatalog != nil {
+		return utils.MarshalJSON(u.DestinationS3DataLakeUpdateRestCatalog, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationS3DataLakeUpdateCatalogType: all fields are null")
+}
+
 // DestinationS3DataLakeUpdateS3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 type DestinationS3DataLakeUpdateS3BucketRegion string
 
@@ -132,348 +456,24 @@ func (e *DestinationS3DataLakeUpdateS3BucketRegion) UnmarshalJSON(data []byte) e
 	}
 }
 
-type DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType string
-
-const (
-	DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeRest DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType = "REST"
-)
-
-func (e DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType) ToPointer() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType {
-	return &e
-}
-func (e *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "REST":
-		*e = DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType: %v", v)
-	}
-}
-
-// DestinationS3DataLakeUpdateRestCatalog - Configuration details for connecting to a REST catalog.
-type DestinationS3DataLakeUpdateRestCatalog struct {
-	CatalogType *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType `default:"REST" json:"catalog_type"`
-	// The base URL of the Rest server used to connect to the Rest catalog.
-	ServerURI string `json:"server_uri"`
-	// The namespace to be used in the Table identifier.
-	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
-	//            `Destination-defined` or `Source-defined`
-	Namespace            string `json:"namespace"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationS3DataLakeUpdateRestCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationS3DataLakeUpdateRestCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationS3DataLakeUpdateRestCatalog) GetCatalogType() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogType {
-	if o == nil {
-		return nil
-	}
-	return o.CatalogType
-}
-
-func (o *DestinationS3DataLakeUpdateRestCatalog) GetServerURI() string {
-	if o == nil {
-		return ""
-	}
-	return o.ServerURI
-}
-
-func (o *DestinationS3DataLakeUpdateRestCatalog) GetNamespace() string {
-	if o == nil {
-		return ""
-	}
-	return o.Namespace
-}
-
-func (o *DestinationS3DataLakeUpdateRestCatalog) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type DestinationS3DataLakeUpdateSchemasCatalogType string
-
-const (
-	DestinationS3DataLakeUpdateSchemasCatalogTypeGlue DestinationS3DataLakeUpdateSchemasCatalogType = "GLUE"
-)
-
-func (e DestinationS3DataLakeUpdateSchemasCatalogType) ToPointer() *DestinationS3DataLakeUpdateSchemasCatalogType {
-	return &e
-}
-func (e *DestinationS3DataLakeUpdateSchemasCatalogType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GLUE":
-		*e = DestinationS3DataLakeUpdateSchemasCatalogType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3DataLakeUpdateSchemasCatalogType: %v", v)
-	}
-}
-
-// DestinationS3DataLakeUpdateGlueCatalog - Configuration details for connecting to an AWS Glue-based Iceberg catalog.
-type DestinationS3DataLakeUpdateGlueCatalog struct {
-	CatalogType *DestinationS3DataLakeUpdateSchemasCatalogType `default:"GLUE" json:"catalog_type"`
-	// The AWS Account ID associated with the Glue service used by the Iceberg catalog.
-	GlueID string `json:"glue_id"`
-	// The ARN of the AWS role to assume. Only usable in Airbyte Cloud.
-	RoleArn *string `json:"role_arn,omitempty"`
-	// The Glue database name. This will ONLY be used if the `Destination Namespace` setting for the connection is set to `Destination-defined` or `Source-defined`
-	DatabaseName         string `json:"database_name"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationS3DataLakeUpdateGlueCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationS3DataLakeUpdateGlueCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationS3DataLakeUpdateGlueCatalog) GetCatalogType() *DestinationS3DataLakeUpdateSchemasCatalogType {
-	if o == nil {
-		return nil
-	}
-	return o.CatalogType
-}
-
-func (o *DestinationS3DataLakeUpdateGlueCatalog) GetGlueID() string {
-	if o == nil {
-		return ""
-	}
-	return o.GlueID
-}
-
-func (o *DestinationS3DataLakeUpdateGlueCatalog) GetRoleArn() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RoleArn
-}
-
-func (o *DestinationS3DataLakeUpdateGlueCatalog) GetDatabaseName() string {
-	if o == nil {
-		return ""
-	}
-	return o.DatabaseName
-}
-
-func (o *DestinationS3DataLakeUpdateGlueCatalog) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType string
-
-const (
-	DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogTypeNessie DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType = "NESSIE"
-)
-
-func (e DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType) ToPointer() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType {
-	return &e
-}
-func (e *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "NESSIE":
-		*e = DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType: %v", v)
-	}
-}
-
-// DestinationS3DataLakeUpdateNessieCatalog - Configuration details for connecting to a Nessie-based Iceberg catalog.
-type DestinationS3DataLakeUpdateNessieCatalog struct {
-	CatalogType *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType `default:"NESSIE" json:"catalog_type"`
-	// The base URL of the Nessie server used to connect to the Nessie catalog.
-	ServerURI string `json:"server_uri"`
-	// Optional token for authentication with the Nessie server.
-	AccessToken *string `json:"access_token,omitempty"`
-	// The Nessie namespace to be used in the Table identifier.
-	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
-	//            `Destination-defined` or `Source-defined`
-	Namespace            string `json:"namespace"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationS3DataLakeUpdateNessieCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationS3DataLakeUpdateNessieCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationS3DataLakeUpdateNessieCatalog) GetCatalogType() *DestinationS3DataLakeUpdateSchemasCatalogTypeCatalogTypeCatalogType {
-	if o == nil {
-		return nil
-	}
-	return o.CatalogType
-}
-
-func (o *DestinationS3DataLakeUpdateNessieCatalog) GetServerURI() string {
-	if o == nil {
-		return ""
-	}
-	return o.ServerURI
-}
-
-func (o *DestinationS3DataLakeUpdateNessieCatalog) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
-}
-
-func (o *DestinationS3DataLakeUpdateNessieCatalog) GetNamespace() string {
-	if o == nil {
-		return ""
-	}
-	return o.Namespace
-}
-
-func (o *DestinationS3DataLakeUpdateNessieCatalog) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type DestinationS3DataLakeUpdateCatalogTypeType string
-
-const (
-	DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateNessieCatalog DestinationS3DataLakeUpdateCatalogTypeType = "destination-s3-data-lake-update_Nessie Catalog"
-	DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateGlueCatalog   DestinationS3DataLakeUpdateCatalogTypeType = "destination-s3-data-lake-update_Glue Catalog"
-	DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateRestCatalog   DestinationS3DataLakeUpdateCatalogTypeType = "destination-s3-data-lake-update_Rest Catalog"
-)
-
-// DestinationS3DataLakeUpdateCatalogType - Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
-type DestinationS3DataLakeUpdateCatalogType struct {
-	DestinationS3DataLakeUpdateNessieCatalog *DestinationS3DataLakeUpdateNessieCatalog `queryParam:"inline"`
-	DestinationS3DataLakeUpdateGlueCatalog   *DestinationS3DataLakeUpdateGlueCatalog   `queryParam:"inline"`
-	DestinationS3DataLakeUpdateRestCatalog   *DestinationS3DataLakeUpdateRestCatalog   `queryParam:"inline"`
-
-	Type DestinationS3DataLakeUpdateCatalogTypeType
-}
-
-func CreateDestinationS3DataLakeUpdateCatalogTypeDestinationS3DataLakeUpdateNessieCatalog(destinationS3DataLakeUpdateNessieCatalog DestinationS3DataLakeUpdateNessieCatalog) DestinationS3DataLakeUpdateCatalogType {
-	typ := DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateNessieCatalog
-
-	return DestinationS3DataLakeUpdateCatalogType{
-		DestinationS3DataLakeUpdateNessieCatalog: &destinationS3DataLakeUpdateNessieCatalog,
-		Type:                                     typ,
-	}
-}
-
-func CreateDestinationS3DataLakeUpdateCatalogTypeDestinationS3DataLakeUpdateGlueCatalog(destinationS3DataLakeUpdateGlueCatalog DestinationS3DataLakeUpdateGlueCatalog) DestinationS3DataLakeUpdateCatalogType {
-	typ := DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateGlueCatalog
-
-	return DestinationS3DataLakeUpdateCatalogType{
-		DestinationS3DataLakeUpdateGlueCatalog: &destinationS3DataLakeUpdateGlueCatalog,
-		Type:                                   typ,
-	}
-}
-
-func CreateDestinationS3DataLakeUpdateCatalogTypeDestinationS3DataLakeUpdateRestCatalog(destinationS3DataLakeUpdateRestCatalog DestinationS3DataLakeUpdateRestCatalog) DestinationS3DataLakeUpdateCatalogType {
-	typ := DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateRestCatalog
-
-	return DestinationS3DataLakeUpdateCatalogType{
-		DestinationS3DataLakeUpdateRestCatalog: &destinationS3DataLakeUpdateRestCatalog,
-		Type:                                   typ,
-	}
-}
-
-func (u *DestinationS3DataLakeUpdateCatalogType) UnmarshalJSON(data []byte) error {
-
-	var destinationS3DataLakeUpdateRestCatalog DestinationS3DataLakeUpdateRestCatalog = DestinationS3DataLakeUpdateRestCatalog{}
-	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeUpdateRestCatalog, "", true, true); err == nil {
-		u.DestinationS3DataLakeUpdateRestCatalog = &destinationS3DataLakeUpdateRestCatalog
-		u.Type = DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateRestCatalog
-		return nil
-	}
-
-	var destinationS3DataLakeUpdateNessieCatalog DestinationS3DataLakeUpdateNessieCatalog = DestinationS3DataLakeUpdateNessieCatalog{}
-	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeUpdateNessieCatalog, "", true, true); err == nil {
-		u.DestinationS3DataLakeUpdateNessieCatalog = &destinationS3DataLakeUpdateNessieCatalog
-		u.Type = DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateNessieCatalog
-		return nil
-	}
-
-	var destinationS3DataLakeUpdateGlueCatalog DestinationS3DataLakeUpdateGlueCatalog = DestinationS3DataLakeUpdateGlueCatalog{}
-	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeUpdateGlueCatalog, "", true, true); err == nil {
-		u.DestinationS3DataLakeUpdateGlueCatalog = &destinationS3DataLakeUpdateGlueCatalog
-		u.Type = DestinationS3DataLakeUpdateCatalogTypeTypeDestinationS3DataLakeUpdateGlueCatalog
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3DataLakeUpdateCatalogType", string(data))
-}
-
-func (u DestinationS3DataLakeUpdateCatalogType) MarshalJSON() ([]byte, error) {
-	if u.DestinationS3DataLakeUpdateNessieCatalog != nil {
-		return utils.MarshalJSON(u.DestinationS3DataLakeUpdateNessieCatalog, "", true)
-	}
-
-	if u.DestinationS3DataLakeUpdateGlueCatalog != nil {
-		return utils.MarshalJSON(u.DestinationS3DataLakeUpdateGlueCatalog, "", true)
-	}
-
-	if u.DestinationS3DataLakeUpdateRestCatalog != nil {
-		return utils.MarshalJSON(u.DestinationS3DataLakeUpdateRestCatalog, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationS3DataLakeUpdateCatalogType: all fields are null")
-}
-
 // DestinationS3DataLakeUpdate - Defines the configurations required to connect to an Iceberg catalog, including warehouse location, main branch name, and catalog type specifics.
 type DestinationS3DataLakeUpdate struct {
 	// The AWS Access Key ID with permissions for S3 and Glue operations.
 	AccessKeyID *string `json:"access_key_id,omitempty"`
-	// The AWS Secret Access Key paired with the Access Key ID for AWS authentication.
-	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+	// Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
+	CatalogType DestinationS3DataLakeUpdateCatalogType `json:"catalog_type"`
+	// The primary or default branch name in the catalog. Most query engines will use "main" by default. See <a href="https://iceberg.apache.org/docs/latest/branching/">Iceberg documentation</a> for more information.
+	MainBranchName *string `default:"main" json:"main_branch_name"`
 	// The name of the S3 bucket that will host the Iceberg data.
 	S3BucketName string `json:"s3_bucket_name"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 	S3BucketRegion DestinationS3DataLakeUpdateS3BucketRegion `json:"s3_bucket_region"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
 	S3Endpoint *string `json:"s3_endpoint,omitempty"`
+	// The AWS Secret Access Key paired with the Access Key ID for AWS authentication.
+	SecretAccessKey *string `json:"secret_access_key,omitempty"`
 	// The root location of the data warehouse used by the Iceberg catalog. Typically includes a bucket name and path within that bucket. For AWS Glue and Nessie, must include the storage protocol (such as "s3://" for Amazon S3).
 	WarehouseLocation string `json:"warehouse_location"`
-	// The primary or default branch name in the catalog. Most query engines will use "main" by default. See <a href="https://iceberg.apache.org/docs/latest/branching/">Iceberg documentation</a> for more information.
-	MainBranchName *string `default:"main" json:"main_branch_name"`
-	// Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
-	CatalogType DestinationS3DataLakeUpdateCatalogType `json:"catalog_type"`
 }
 
 func (d DestinationS3DataLakeUpdate) MarshalJSON() ([]byte, error) {
@@ -494,11 +494,18 @@ func (o *DestinationS3DataLakeUpdate) GetAccessKeyID() *string {
 	return o.AccessKeyID
 }
 
-func (o *DestinationS3DataLakeUpdate) GetSecretAccessKey() *string {
+func (o *DestinationS3DataLakeUpdate) GetCatalogType() DestinationS3DataLakeUpdateCatalogType {
+	if o == nil {
+		return DestinationS3DataLakeUpdateCatalogType{}
+	}
+	return o.CatalogType
+}
+
+func (o *DestinationS3DataLakeUpdate) GetMainBranchName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SecretAccessKey
+	return o.MainBranchName
 }
 
 func (o *DestinationS3DataLakeUpdate) GetS3BucketName() string {
@@ -522,23 +529,16 @@ func (o *DestinationS3DataLakeUpdate) GetS3Endpoint() *string {
 	return o.S3Endpoint
 }
 
+func (o *DestinationS3DataLakeUpdate) GetSecretAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretAccessKey
+}
+
 func (o *DestinationS3DataLakeUpdate) GetWarehouseLocation() string {
 	if o == nil {
 		return ""
 	}
 	return o.WarehouseLocation
-}
-
-func (o *DestinationS3DataLakeUpdate) GetMainBranchName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.MainBranchName
-}
-
-func (o *DestinationS3DataLakeUpdate) GetCatalogType() DestinationS3DataLakeUpdateCatalogType {
-	if o == nil {
-		return DestinationS3DataLakeUpdateCatalogType{}
-	}
-	return o.CatalogType
 }

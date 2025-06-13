@@ -8,6 +8,7 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     }
     ca_certificate = "...my_ca_certificate..."
     endpoint       = "...my_endpoint..."
+    path_prefix    = "...my_path_prefix..."
     tunnel_method = {
       no_tunnel = {
         # ...

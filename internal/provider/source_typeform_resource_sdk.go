@@ -25,25 +25,25 @@ func (r *SourceTypeformResourceModel) ToSharedSourceTypeformCreateRequest() *sha
 	var credentials shared.SourceTypeformAuthorizationMethod
 	var sourceTypeformOAuth20 *shared.SourceTypeformOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-		var accessToken string
-		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceTypeformOAuth20 = &shared.SourceTypeformOAuth20{
+			AccessToken:     accessToken,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
-			AccessToken:     accessToken,
-			TokenExpiryDate: tokenExpiryDate,
 			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
 	if sourceTypeformOAuth20 != nil {
@@ -65,20 +65,20 @@ func (r *SourceTypeformResourceModel) ToSharedSourceTypeformCreateRequest() *sha
 			SourceTypeformPrivateToken: sourceTypeformPrivateToken,
 		}
 	}
+	var formIds []string = []string{}
+	for _, formIdsItem := range r.Configuration.FormIds {
+		formIds = append(formIds, formIdsItem.ValueString())
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
-	var formIds []string = []string{}
-	for _, formIdsItem := range r.Configuration.FormIds {
-		formIds = append(formIds, formIdsItem.ValueString())
-	}
 	configuration := shared.SourceTypeform{
 		Credentials: credentials,
-		StartDate:   startDate,
 		FormIds:     formIds,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -153,25 +153,25 @@ func (r *SourceTypeformResourceModel) ToSharedSourceTypeformPutRequest() *shared
 	var credentials shared.SourceTypeformUpdateAuthorizationMethod
 	var sourceTypeformUpdateOAuth20 *shared.SourceTypeformUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		var accessToken string
+		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-		var accessToken string
-		accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 		sourceTypeformUpdateOAuth20 = &shared.SourceTypeformUpdateOAuth20{
+			AccessToken:     accessToken,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
-			AccessToken:     accessToken,
-			TokenExpiryDate: tokenExpiryDate,
 			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
 	if sourceTypeformUpdateOAuth20 != nil {
@@ -193,20 +193,20 @@ func (r *SourceTypeformResourceModel) ToSharedSourceTypeformPutRequest() *shared
 			SourceTypeformUpdatePrivateToken: sourceTypeformUpdatePrivateToken,
 		}
 	}
+	var formIds []string = []string{}
+	for _, formIdsItem := range r.Configuration.FormIds {
+		formIds = append(formIds, formIdsItem.ValueString())
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
-	var formIds []string = []string{}
-	for _, formIdsItem := range r.Configuration.FormIds {
-		formIds = append(formIds, formIdsItem.ValueString())
-	}
 	configuration := shared.SourceTypeformUpdate{
 		Credentials: credentials,
-		StartDate:   startDate,
 		FormIds:     formIds,
+		StartDate:   startDate,
 	}
 	out := shared.SourceTypeformPutRequest{
 		Name:          name,

@@ -22,19 +22,19 @@ func (r *SourceDingConnectResourceModel) ToSharedSourceDingConnectCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	xCorrelationID := new(string)
 	if !r.Configuration.XCorrelationID.IsUnknown() && !r.Configuration.XCorrelationID.IsNull() {
 		*xCorrelationID = r.Configuration.XCorrelationID.ValueString()
 	} else {
 		xCorrelationID = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceDingConnect{
-		APIKey:         apiKey,
 		XCorrelationID: xCorrelationID,
+		APIKey:         apiKey,
 		StartDate:      startDate,
 	}
 	secretID := new(string)
@@ -107,19 +107,19 @@ func (r *SourceDingConnectResourceModel) ToSharedSourceDingConnectPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	xCorrelationID := new(string)
 	if !r.Configuration.XCorrelationID.IsUnknown() && !r.Configuration.XCorrelationID.IsNull() {
 		*xCorrelationID = r.Configuration.XCorrelationID.ValueString()
 	} else {
 		xCorrelationID = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceDingConnectUpdate{
-		APIKey:         apiKey,
 		XCorrelationID: xCorrelationID,
+		APIKey:         apiKey,
 		StartDate:      startDate,
 	}
 	out := shared.SourceDingConnectPutRequest{

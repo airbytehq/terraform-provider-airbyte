@@ -33,8 +33,8 @@ func (e *Pennylane) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePennylane struct {
-	StartTime  time.Time `json:"start_time"`
 	APIKey     string    `json:"api_key"`
+	StartTime  time.Time `json:"start_time"`
 	sourceType Pennylane `const:"pennylane" json:"sourceType"`
 }
 
@@ -49,18 +49,18 @@ func (s *SourcePennylane) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePennylane) GetStartTime() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartTime
-}
-
 func (o *SourcePennylane) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourcePennylane) GetStartTime() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartTime
 }
 
 func (o *SourcePennylane) GetSourceType() Pennylane {

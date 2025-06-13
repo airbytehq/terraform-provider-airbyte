@@ -22,17 +22,20 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var credentials shared.AuthenticationType
 	var sourceConvertkitOAuth20 *shared.SourceConvertkitOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := new(string)
+		if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+			*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		} else {
+			accessToken = nil
+		}
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
 		expiresAt := new(time.Time)
 		if !r.Configuration.Credentials.OAuth20.ExpiresAt.IsUnknown() && !r.Configuration.Credentials.OAuth20.ExpiresAt.IsNull() {
@@ -40,23 +43,14 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitCreateRequest() 
 		} else {
 			expiresAt = nil
 		}
-		accessToken := new(string)
-		if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
-			*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-		} else {
-			accessToken = nil
-		}
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
 		sourceConvertkitOAuth20 = &shared.SourceConvertkitOAuth20{
-			ClientID:     clientID,
-			ExpiresAt:    expiresAt,
 			AccessToken:  accessToken,
+			ClientID:     clientID,
 			ClientSecret: clientSecret,
+			ExpiresAt:    expiresAt,
 			RefreshToken: refreshToken,
 		}
 	}
@@ -82,9 +76,15 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitCreateRequest() 
 			APIKey: apiKey,
 		}
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceConvertkit{
-		StartDate:   startDate,
 		Credentials: credentials,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -156,17 +156,20 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var credentials shared.SourceConvertkitUpdateAuthenticationType
 	var sourceConvertkitUpdateOAuth20 *shared.SourceConvertkitUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := new(string)
+		if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+			*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		} else {
+			accessToken = nil
+		}
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
 		expiresAt := new(time.Time)
 		if !r.Configuration.Credentials.OAuth20.ExpiresAt.IsUnknown() && !r.Configuration.Credentials.OAuth20.ExpiresAt.IsNull() {
@@ -174,23 +177,14 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitPutRequest() *sh
 		} else {
 			expiresAt = nil
 		}
-		accessToken := new(string)
-		if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
-			*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-		} else {
-			accessToken = nil
-		}
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-
 		var refreshToken string
 		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
 		sourceConvertkitUpdateOAuth20 = &shared.SourceConvertkitUpdateOAuth20{
-			ClientID:     clientID,
-			ExpiresAt:    expiresAt,
 			AccessToken:  accessToken,
+			ClientID:     clientID,
 			ClientSecret: clientSecret,
+			ExpiresAt:    expiresAt,
 			RefreshToken: refreshToken,
 		}
 	}
@@ -216,9 +210,15 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitPutRequest() *sh
 			SourceConvertkitUpdateAPIKey: sourceConvertkitUpdateAPIKey,
 		}
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceConvertkitUpdate{
-		StartDate:   startDate,
 		Credentials: credentials,
+		StartDate:   startDate,
 	}
 	out := shared.SourceConvertkitPutRequest{
 		Name:          name,

@@ -21,27 +21,11 @@ func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Password.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -49,14 +33,30 @@ func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftCreateRequest() *sha
 	} else {
 		jdbcURLParams = nil
 	}
+	var password string
+	password = r.Configuration.Password.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceRedshift{
-		Host:          host,
-		Port:          port,
 		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
 		Schemas:       schemas,
 		Username:      username,
-		Password:      password,
-		JdbcURLParams: jdbcURLParams,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -128,27 +128,11 @@ func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Password.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -156,14 +140,30 @@ func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftPutRequest() *shared
 	} else {
 		jdbcURLParams = nil
 	}
+	var password string
+	password = r.Configuration.Password.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceRedshiftUpdate{
-		Host:          host,
-		Port:          port,
 		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
 		Schemas:       schemas,
 		Username:      username,
-		Password:      password,
-		JdbcURLParams: jdbcURLParams,
 	}
 	out := shared.SourceRedshiftPutRequest{
 		Name:          name,

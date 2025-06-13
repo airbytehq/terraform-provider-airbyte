@@ -25,22 +25,22 @@ func (r *SourceSimplesatResourceModel) ToSharedSourceSimplesatCreateRequest() *s
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	endDate := new(time.Time)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceSimplesat{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,22 +115,22 @@ func (r *SourceSimplesatResourceModel) ToSharedSourceSimplesatPutRequest() *shar
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	endDate := new(time.Time)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceSimplesatUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	out := shared.SourceSimplesatPutRequest{
 		Name:          name,

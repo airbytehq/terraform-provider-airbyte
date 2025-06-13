@@ -116,19 +116,12 @@ func (e *SourceYahooFinancePriceUpdateRange) UnmarshalJSON(data []byte) error {
 }
 
 type SourceYahooFinancePriceUpdate struct {
-	// Comma-separated identifiers for the stocks to be queried. Whitespaces are allowed.
-	Tickers string `json:"tickers"`
 	// The interval of between prices queried.
 	Interval *SourceYahooFinancePriceUpdateInterval `json:"interval,omitempty"`
 	// The range of prices to be queried.
 	Range *SourceYahooFinancePriceUpdateRange `json:"range,omitempty"`
-}
-
-func (o *SourceYahooFinancePriceUpdate) GetTickers() string {
-	if o == nil {
-		return ""
-	}
-	return o.Tickers
+	// Comma-separated identifiers for the stocks to be queried. Whitespaces are allowed.
+	Tickers string `json:"tickers"`
 }
 
 func (o *SourceYahooFinancePriceUpdate) GetInterval() *SourceYahooFinancePriceUpdateInterval {
@@ -143,4 +136,11 @@ func (o *SourceYahooFinancePriceUpdate) GetRange() *SourceYahooFinancePriceUpdat
 		return nil
 	}
 	return o.Range
+}
+
+func (o *SourceYahooFinancePriceUpdate) GetTickers() string {
+	if o == nil {
+		return ""
+	}
+	return o.Tickers
 }

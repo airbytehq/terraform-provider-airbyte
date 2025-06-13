@@ -32,14 +32,14 @@ func (e *Younium) UnmarshalJSON(data []byte) error {
 }
 
 type SourceYounium struct {
-	// Username for Younium account
-	Username string `json:"username"`
-	// Account password for younium account API key
-	Password string `json:"password"`
 	// Legal Entity that data should be pulled from
 	LegalEntity string `json:"legal_entity"`
+	// Account password for younium account API key
+	Password string `json:"password"`
 	// Property defining if connector is used against playground or production environment
-	Playground *bool   `default:"false" json:"playground"`
+	Playground *bool `default:"false" json:"playground"`
+	// Username for Younium account
+	Username   string  `json:"username"`
 	sourceType Younium `const:"younium" json:"sourceType"`
 }
 
@@ -54,11 +54,11 @@ func (s *SourceYounium) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceYounium) GetUsername() string {
+func (o *SourceYounium) GetLegalEntity() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.LegalEntity
 }
 
 func (o *SourceYounium) GetPassword() string {
@@ -68,18 +68,18 @@ func (o *SourceYounium) GetPassword() string {
 	return o.Password
 }
 
-func (o *SourceYounium) GetLegalEntity() string {
-	if o == nil {
-		return ""
-	}
-	return o.LegalEntity
-}
-
 func (o *SourceYounium) GetPlayground() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Playground
+}
+
+func (o *SourceYounium) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceYounium) GetSourceType() Younium {

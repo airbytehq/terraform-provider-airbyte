@@ -22,8 +22,8 @@ func (r *SourceAppcuesResourceModel) ToSharedSourceAppcuesCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var accountID string
+	accountID = r.Configuration.AccountID.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -31,15 +31,15 @@ func (r *SourceAppcuesResourceModel) ToSharedSourceAppcuesCreateRequest() *share
 	} else {
 		password = nil
 	}
-	var accountID string
-	accountID = r.Configuration.AccountID.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceAppcues{
-		Username:  username,
-		Password:  password,
 		AccountID: accountID,
+		Password:  password,
 		StartDate: startDate,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,8 +111,8 @@ func (r *SourceAppcuesResourceModel) ToSharedSourceAppcuesPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var accountID string
+	accountID = r.Configuration.AccountID.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -120,15 +120,15 @@ func (r *SourceAppcuesResourceModel) ToSharedSourceAppcuesPutRequest() *shared.S
 	} else {
 		password = nil
 	}
-	var accountID string
-	accountID = r.Configuration.AccountID.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceAppcuesUpdate{
-		Username:  username,
-		Password:  password,
 		AccountID: accountID,
+		Password:  password,
 		StartDate: startDate,
+		Username:  username,
 	}
 	out := shared.SourceAppcuesPutRequest{
 		Name:          name,

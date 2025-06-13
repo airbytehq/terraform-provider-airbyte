@@ -68,18 +68,18 @@ type SourceAmazonAdsUpdate struct {
 	ClientID string `json:"client_id"`
 	// The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 	ClientSecret string `json:"client_secret"`
+	// The amount of days to go back in time to get the updated data from Amazon Ads
+	LookBackWindow *int64 `default:"3" json:"look_back_window"`
+	// Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
+	MarketplaceIds []string `json:"marketplace_ids,omitempty"`
+	// Profile IDs you want to fetch data for. The Amazon Ads source connector supports only profiles with seller and vendor type, profiles with agency type will be ignored. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
+	Profiles []int64 `json:"profiles,omitempty"`
 	// Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
 	RefreshToken string `json:"refresh_token"`
 	// Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
 	Region *SourceAmazonAdsUpdateRegion `default:"NA" json:"region"`
 	// The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format
 	StartDate *types.Date `json:"start_date,omitempty"`
-	// Profile IDs you want to fetch data for. The Amazon Ads source connector supports only profiles with seller and vendor type, profiles with agency type will be ignored. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
-	Profiles []int64 `json:"profiles,omitempty"`
-	// Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
-	MarketplaceIds []string `json:"marketplace_ids,omitempty"`
-	// The amount of days to go back in time to get the updated data from Amazon Ads
-	LookBackWindow *int64 `default:"3" json:"look_back_window"`
 }
 
 func (s SourceAmazonAdsUpdate) MarshalJSON() ([]byte, error) {
@@ -111,6 +111,27 @@ func (o *SourceAmazonAdsUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
+func (o *SourceAmazonAdsUpdate) GetLookBackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookBackWindow
+}
+
+func (o *SourceAmazonAdsUpdate) GetMarketplaceIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MarketplaceIds
+}
+
+func (o *SourceAmazonAdsUpdate) GetProfiles() []int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Profiles
+}
+
 func (o *SourceAmazonAdsUpdate) GetRefreshToken() string {
 	if o == nil {
 		return ""
@@ -130,25 +151,4 @@ func (o *SourceAmazonAdsUpdate) GetStartDate() *types.Date {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceAmazonAdsUpdate) GetProfiles() []int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Profiles
-}
-
-func (o *SourceAmazonAdsUpdate) GetMarketplaceIds() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MarketplaceIds
-}
-
-func (o *SourceAmazonAdsUpdate) GetLookBackWindow() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.LookBackWindow
 }

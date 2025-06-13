@@ -22,29 +22,23 @@ func (r *SourceNotionResourceModel) ToSharedSourceNotionCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var credentials *shared.SourceNotionAuthenticationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceNotionOAuth20 *shared.SourceNotionOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			sourceNotionOAuth20 = &shared.SourceNotionOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceNotionOAuth20 != nil {
@@ -67,9 +61,15 @@ func (r *SourceNotionResourceModel) ToSharedSourceNotionCreateRequest() *shared.
 			}
 		}
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceNotion{
-		StartDate:   startDate,
 		Credentials: credentials,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -141,29 +141,23 @@ func (r *SourceNotionResourceModel) ToSharedSourceNotionPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	var credentials *shared.SourceNotionUpdateAuthenticationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceNotionUpdateOAuth20 *shared.SourceNotionUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			sourceNotionUpdateOAuth20 = &shared.SourceNotionUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceNotionUpdateOAuth20 != nil {
@@ -186,9 +180,15 @@ func (r *SourceNotionResourceModel) ToSharedSourceNotionPutRequest() *shared.Sou
 			}
 		}
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceNotionUpdate{
-		StartDate:   startDate,
 		Credentials: credentials,
+		StartDate:   startDate,
 	}
 	out := shared.SourceNotionPutRequest{
 		Name:          name,

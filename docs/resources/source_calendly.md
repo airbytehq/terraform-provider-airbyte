@@ -15,8 +15,9 @@ SourceCalendly Resource
 ```terraform
 resource "airbyte_source_calendly" "my_source_calendly" {
   configuration = {
-    api_key    = "...my_api_key..."
-    start_date = "2021-01-29T13:25:58.736Z"
+    api_key       = "...my_api_key..."
+    lookback_days = 2.91
+    start_date    = "2021-01-29T13:25:58.736Z"
   }
   definition_id = "8be0c388-cbc0-4fe1-b922-5904f219f8ad"
   name          = "...my_name..."
@@ -53,6 +54,10 @@ Required:
 
 - `api_key` (String, Sensitive) Go to Integrations → API & Webhooks to obtain your bearer token. https://calendly.com/integrations/api_webhooks
 - `start_date` (String)
+
+Optional:
+
+- `lookback_days` (Number) Number of days to be subtracted from the last cutoff date before starting to sync the `scheduled_events` stream. Default: 0
 
 
 <a id="nestedatt--resource_allocation"></a>

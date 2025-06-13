@@ -22,7 +22,6 @@ func (r *SourceExchangeRatesResourceModel) ToSharedSourceExchangeRatesCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
@@ -38,11 +37,12 @@ func (r *SourceExchangeRatesResourceModel) ToSharedSourceExchangeRatesCreateRequ
 	} else {
 		ignoreWeekends = nil
 	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceExchangeRates{
-		StartDate:      startDate,
 		AccessKey:      accessKey,
 		Base:           base,
 		IgnoreWeekends: ignoreWeekends,
+		StartDate:      startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -114,7 +114,6 @@ func (r *SourceExchangeRatesResourceModel) ToSharedSourceExchangeRatesPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
@@ -130,11 +129,12 @@ func (r *SourceExchangeRatesResourceModel) ToSharedSourceExchangeRatesPutRequest
 	} else {
 		ignoreWeekends = nil
 	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceExchangeRatesUpdate{
-		StartDate:      startDate,
 		AccessKey:      accessKey,
 		Base:           base,
 		IgnoreWeekends: ignoreWeekends,
+		StartDate:      startDate,
 	}
 	out := shared.SourceExchangeRatesPutRequest{
 		Name:          name,

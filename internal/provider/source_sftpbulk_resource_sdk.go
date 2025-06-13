@@ -22,6 +22,79 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var credentials shared.SourceSftpBulkAuthentication
+	var authenticateViaPassword *shared.AuthenticateViaPassword
+	if r.Configuration.Credentials.AuthenticateViaPassword != nil {
+		var password string
+		password = r.Configuration.Credentials.AuthenticateViaPassword.Password.ValueString()
+
+		authenticateViaPassword = &shared.AuthenticateViaPassword{
+			Password: password,
+		}
+	}
+	if authenticateViaPassword != nil {
+		credentials = shared.SourceSftpBulkAuthentication{
+			AuthenticateViaPassword: authenticateViaPassword,
+		}
+	}
+	var authenticateViaPrivateKey *shared.AuthenticateViaPrivateKey
+	if r.Configuration.Credentials.AuthenticateViaPrivateKey != nil {
+		var privateKey string
+		privateKey = r.Configuration.Credentials.AuthenticateViaPrivateKey.PrivateKey.ValueString()
+
+		authenticateViaPrivateKey = &shared.AuthenticateViaPrivateKey{
+			PrivateKey: privateKey,
+		}
+	}
+	if authenticateViaPrivateKey != nil {
+		credentials = shared.SourceSftpBulkAuthentication{
+			AuthenticateViaPrivateKey: authenticateViaPrivateKey,
+		}
+	}
+	var deliveryMethod *shared.SourceSftpBulkDeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var sourceSftpBulkReplicateRecords *shared.SourceSftpBulkReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			sourceSftpBulkReplicateRecords = &shared.SourceSftpBulkReplicateRecords{}
+		}
+		if sourceSftpBulkReplicateRecords != nil {
+			deliveryMethod = &shared.SourceSftpBulkDeliveryMethod{
+				SourceSftpBulkReplicateRecords: sourceSftpBulkReplicateRecords,
+			}
+		}
+		var sourceSftpBulkCopyRawFiles *shared.SourceSftpBulkCopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			sourceSftpBulkCopyRawFiles = &shared.SourceSftpBulkCopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if sourceSftpBulkCopyRawFiles != nil {
+			deliveryMethod = &shared.SourceSftpBulkDeliveryMethod{
+				SourceSftpBulkCopyRawFiles: sourceSftpBulkCopyRawFiles,
+			}
+		}
+	}
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -30,25 +103,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 	}
 	var streams []shared.SourceSftpBulkFileBasedStreamConfig = []shared.SourceSftpBulkFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceSftpBulkValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceSftpBulkValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -81,17 +135,11 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -99,33 +147,15 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceSftpBulkCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -163,34 +193,58 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceSftpBulkCSVFormat = &shared.SourceSftpBulkCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceSftpBulkCSVFormat != nil {
@@ -226,18 +280,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 		}
 		var sourceSftpBulkUnstructuredDocumentFormat *shared.SourceSftpBulkUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceSftpBulkParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceSftpBulkParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceSftpBulkProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceSftpBulkLocal *shared.SourceSftpBulkLocal
@@ -265,14 +307,14 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 					}
 					var parameters []shared.SourceSftpBulkAPIParameterConfigModel = []shared.SourceSftpBulkAPIParameterConfigModel{}
 					for _, parametersItem := range streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.Parameters {
-						var name2 string
-						name2 = parametersItem.Name.ValueString()
+						var name1 string
+						name1 = parametersItem.Name.ValueString()
 
 						var value string
 						value = parametersItem.Value.ValueString()
 
 						parameters = append(parameters, shared.SourceSftpBulkAPIParameterConfigModel{
-							Name:  name2,
+							Name:  name1,
 							Value: value,
 						})
 					}
@@ -288,10 +330,22 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceSftpBulkParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceSftpBulkParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceSftpBulkUnstructuredDocumentFormat = &shared.SourceSftpBulkUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceSftpBulkUnstructuredDocumentFormat != nil {
@@ -308,114 +362,60 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 				SourceSftpBulkExcelFormat: sourceSftpBulkExcelFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name2 string
+		name2 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceSftpBulkValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceSftpBulkValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceSftpBulkFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name2,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var deliveryMethod *shared.SourceSftpBulkDeliveryMethod
-	if r.Configuration.DeliveryMethod != nil {
-		var sourceSftpBulkReplicateRecords *shared.SourceSftpBulkReplicateRecords
-		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
-			sourceSftpBulkReplicateRecords = &shared.SourceSftpBulkReplicateRecords{}
-		}
-		if sourceSftpBulkReplicateRecords != nil {
-			deliveryMethod = &shared.SourceSftpBulkDeliveryMethod{
-				SourceSftpBulkReplicateRecords: sourceSftpBulkReplicateRecords,
-			}
-		}
-		var sourceSftpBulkCopyRawFiles *shared.SourceSftpBulkCopyRawFiles
-		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
-			preserveDirectoryStructure := new(bool)
-			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
-				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
-			} else {
-				preserveDirectoryStructure = nil
-			}
-			sourceSftpBulkCopyRawFiles = &shared.SourceSftpBulkCopyRawFiles{
-				PreserveDirectoryStructure: preserveDirectoryStructure,
-			}
-		}
-		if sourceSftpBulkCopyRawFiles != nil {
-			deliveryMethod = &shared.SourceSftpBulkDeliveryMethod{
-				SourceSftpBulkCopyRawFiles: sourceSftpBulkCopyRawFiles,
-			}
-		}
-	}
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	var credentials shared.SourceSftpBulkAuthentication
-	var authenticateViaPassword *shared.AuthenticateViaPassword
-	if r.Configuration.Credentials.AuthenticateViaPassword != nil {
-		var password string
-		password = r.Configuration.Credentials.AuthenticateViaPassword.Password.ValueString()
-
-		authenticateViaPassword = &shared.AuthenticateViaPassword{
-			Password: password,
-		}
-	}
-	if authenticateViaPassword != nil {
-		credentials = shared.SourceSftpBulkAuthentication{
-			AuthenticateViaPassword: authenticateViaPassword,
-		}
-	}
-	var authenticateViaPrivateKey *shared.AuthenticateViaPrivateKey
-	if r.Configuration.Credentials.AuthenticateViaPrivateKey != nil {
-		var privateKey string
-		privateKey = r.Configuration.Credentials.AuthenticateViaPrivateKey.PrivateKey.ValueString()
-
-		authenticateViaPrivateKey = &shared.AuthenticateViaPrivateKey{
-			PrivateKey: privateKey,
-		}
-	}
-	if authenticateViaPrivateKey != nil {
-		credentials = shared.SourceSftpBulkAuthentication{
-			AuthenticateViaPrivateKey: authenticateViaPrivateKey,
-		}
-	}
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	folderPath := new(string)
-	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
-		*folderPath = r.Configuration.FolderPath.ValueString()
-	} else {
-		folderPath = nil
-	}
 	configuration := shared.SourceSftpBulk{
+		Credentials:    credentials,
+		DeliveryMethod: deliveryMethod,
+		FolderPath:     folderPath,
+		Host:           host,
+		Port:           port,
 		StartDate:      startDate,
 		Streams:        streams,
-		DeliveryMethod: deliveryMethod,
-		Host:           host,
 		Username:       username,
-		Credentials:    credentials,
-		Port:           port,
-		FolderPath:     folderPath,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -487,6 +487,79 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var credentials shared.SourceSftpBulkUpdateAuthentication
+	var sourceSftpBulkUpdateAuthenticateViaPassword *shared.SourceSftpBulkUpdateAuthenticateViaPassword
+	if r.Configuration.Credentials.AuthenticateViaPassword != nil {
+		var password string
+		password = r.Configuration.Credentials.AuthenticateViaPassword.Password.ValueString()
+
+		sourceSftpBulkUpdateAuthenticateViaPassword = &shared.SourceSftpBulkUpdateAuthenticateViaPassword{
+			Password: password,
+		}
+	}
+	if sourceSftpBulkUpdateAuthenticateViaPassword != nil {
+		credentials = shared.SourceSftpBulkUpdateAuthentication{
+			SourceSftpBulkUpdateAuthenticateViaPassword: sourceSftpBulkUpdateAuthenticateViaPassword,
+		}
+	}
+	var sourceSftpBulkUpdateAuthenticateViaPrivateKey *shared.SourceSftpBulkUpdateAuthenticateViaPrivateKey
+	if r.Configuration.Credentials.AuthenticateViaPrivateKey != nil {
+		var privateKey string
+		privateKey = r.Configuration.Credentials.AuthenticateViaPrivateKey.PrivateKey.ValueString()
+
+		sourceSftpBulkUpdateAuthenticateViaPrivateKey = &shared.SourceSftpBulkUpdateAuthenticateViaPrivateKey{
+			PrivateKey: privateKey,
+		}
+	}
+	if sourceSftpBulkUpdateAuthenticateViaPrivateKey != nil {
+		credentials = shared.SourceSftpBulkUpdateAuthentication{
+			SourceSftpBulkUpdateAuthenticateViaPrivateKey: sourceSftpBulkUpdateAuthenticateViaPrivateKey,
+		}
+	}
+	var deliveryMethod *shared.SourceSftpBulkUpdateDeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var sourceSftpBulkUpdateReplicateRecords *shared.SourceSftpBulkUpdateReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			sourceSftpBulkUpdateReplicateRecords = &shared.SourceSftpBulkUpdateReplicateRecords{}
+		}
+		if sourceSftpBulkUpdateReplicateRecords != nil {
+			deliveryMethod = &shared.SourceSftpBulkUpdateDeliveryMethod{
+				SourceSftpBulkUpdateReplicateRecords: sourceSftpBulkUpdateReplicateRecords,
+			}
+		}
+		var sourceSftpBulkUpdateCopyRawFiles *shared.SourceSftpBulkUpdateCopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			sourceSftpBulkUpdateCopyRawFiles = &shared.SourceSftpBulkUpdateCopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if sourceSftpBulkUpdateCopyRawFiles != nil {
+			deliveryMethod = &shared.SourceSftpBulkUpdateDeliveryMethod{
+				SourceSftpBulkUpdateCopyRawFiles: sourceSftpBulkUpdateCopyRawFiles,
+			}
+		}
+	}
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -495,25 +568,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 	}
 	var streams []shared.SourceSftpBulkUpdateFileBasedStreamConfig = []shared.SourceSftpBulkUpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceSftpBulkUpdateValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceSftpBulkUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -546,17 +600,11 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -564,33 +612,15 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceSftpBulkUpdateCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -628,34 +658,58 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceSftpBulkUpdateCSVFormat = &shared.SourceSftpBulkUpdateCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceSftpBulkUpdateCSVFormat != nil {
@@ -691,18 +745,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 		}
 		var sourceSftpBulkUpdateUnstructuredDocumentFormat *shared.SourceSftpBulkUpdateUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceSftpBulkUpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceSftpBulkUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceSftpBulkUpdateProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceSftpBulkUpdateLocal *shared.SourceSftpBulkUpdateLocal
@@ -730,14 +772,14 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 					}
 					var parameters []shared.SourceSftpBulkUpdateAPIParameterConfigModel = []shared.SourceSftpBulkUpdateAPIParameterConfigModel{}
 					for _, parametersItem := range streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.Parameters {
-						var name2 string
-						name2 = parametersItem.Name.ValueString()
+						var name1 string
+						name1 = parametersItem.Name.ValueString()
 
 						var value string
 						value = parametersItem.Value.ValueString()
 
 						parameters = append(parameters, shared.SourceSftpBulkUpdateAPIParameterConfigModel{
-							Name:  name2,
+							Name:  name1,
 							Value: value,
 						})
 					}
@@ -753,10 +795,22 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceSftpBulkUpdateParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceSftpBulkUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceSftpBulkUpdateUnstructuredDocumentFormat = &shared.SourceSftpBulkUpdateUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceSftpBulkUpdateUnstructuredDocumentFormat != nil {
@@ -773,114 +827,60 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 				SourceSftpBulkUpdateExcelFormat: sourceSftpBulkUpdateExcelFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name2 string
+		name2 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceSftpBulkUpdateValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceSftpBulkUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceSftpBulkUpdateFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name2,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var deliveryMethod *shared.SourceSftpBulkUpdateDeliveryMethod
-	if r.Configuration.DeliveryMethod != nil {
-		var sourceSftpBulkUpdateReplicateRecords *shared.SourceSftpBulkUpdateReplicateRecords
-		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
-			sourceSftpBulkUpdateReplicateRecords = &shared.SourceSftpBulkUpdateReplicateRecords{}
-		}
-		if sourceSftpBulkUpdateReplicateRecords != nil {
-			deliveryMethod = &shared.SourceSftpBulkUpdateDeliveryMethod{
-				SourceSftpBulkUpdateReplicateRecords: sourceSftpBulkUpdateReplicateRecords,
-			}
-		}
-		var sourceSftpBulkUpdateCopyRawFiles *shared.SourceSftpBulkUpdateCopyRawFiles
-		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
-			preserveDirectoryStructure := new(bool)
-			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
-				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
-			} else {
-				preserveDirectoryStructure = nil
-			}
-			sourceSftpBulkUpdateCopyRawFiles = &shared.SourceSftpBulkUpdateCopyRawFiles{
-				PreserveDirectoryStructure: preserveDirectoryStructure,
-			}
-		}
-		if sourceSftpBulkUpdateCopyRawFiles != nil {
-			deliveryMethod = &shared.SourceSftpBulkUpdateDeliveryMethod{
-				SourceSftpBulkUpdateCopyRawFiles: sourceSftpBulkUpdateCopyRawFiles,
-			}
-		}
-	}
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	var credentials shared.SourceSftpBulkUpdateAuthentication
-	var sourceSftpBulkUpdateAuthenticateViaPassword *shared.SourceSftpBulkUpdateAuthenticateViaPassword
-	if r.Configuration.Credentials.AuthenticateViaPassword != nil {
-		var password string
-		password = r.Configuration.Credentials.AuthenticateViaPassword.Password.ValueString()
-
-		sourceSftpBulkUpdateAuthenticateViaPassword = &shared.SourceSftpBulkUpdateAuthenticateViaPassword{
-			Password: password,
-		}
-	}
-	if sourceSftpBulkUpdateAuthenticateViaPassword != nil {
-		credentials = shared.SourceSftpBulkUpdateAuthentication{
-			SourceSftpBulkUpdateAuthenticateViaPassword: sourceSftpBulkUpdateAuthenticateViaPassword,
-		}
-	}
-	var sourceSftpBulkUpdateAuthenticateViaPrivateKey *shared.SourceSftpBulkUpdateAuthenticateViaPrivateKey
-	if r.Configuration.Credentials.AuthenticateViaPrivateKey != nil {
-		var privateKey string
-		privateKey = r.Configuration.Credentials.AuthenticateViaPrivateKey.PrivateKey.ValueString()
-
-		sourceSftpBulkUpdateAuthenticateViaPrivateKey = &shared.SourceSftpBulkUpdateAuthenticateViaPrivateKey{
-			PrivateKey: privateKey,
-		}
-	}
-	if sourceSftpBulkUpdateAuthenticateViaPrivateKey != nil {
-		credentials = shared.SourceSftpBulkUpdateAuthentication{
-			SourceSftpBulkUpdateAuthenticateViaPrivateKey: sourceSftpBulkUpdateAuthenticateViaPrivateKey,
-		}
-	}
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	folderPath := new(string)
-	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
-		*folderPath = r.Configuration.FolderPath.ValueString()
-	} else {
-		folderPath = nil
-	}
 	configuration := shared.SourceSftpBulkUpdate{
+		Credentials:    credentials,
+		DeliveryMethod: deliveryMethod,
+		FolderPath:     folderPath,
+		Host:           host,
+		Port:           port,
 		StartDate:      startDate,
 		Streams:        streams,
-		DeliveryMethod: deliveryMethod,
-		Host:           host,
 		Username:       username,
-		Credentials:    credentials,
-		Port:           port,
-		FolderPath:     folderPath,
 	}
 	out := shared.SourceSftpBulkPutRequest{
 		Name:          name,

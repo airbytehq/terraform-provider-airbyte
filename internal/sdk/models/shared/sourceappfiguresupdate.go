@@ -44,11 +44,11 @@ func (e *SourceAppfiguresUpdateGroupBy) UnmarshalJSON(data []byte) error {
 
 type SourceAppfiguresUpdate struct {
 	APIKey string `json:"api_key"`
+	// Category term for grouping the search results
+	GroupBy *SourceAppfiguresUpdateGroupBy `default:"product" json:"group_by"`
 	// The store which needs to be searched in streams
 	SearchStore *string   `default:"apple" json:"search_store"`
 	StartDate   time.Time `json:"start_date"`
-	// Category term for grouping the search results
-	GroupBy *SourceAppfiguresUpdateGroupBy `default:"product" json:"group_by"`
 }
 
 func (s SourceAppfiguresUpdate) MarshalJSON() ([]byte, error) {
@@ -69,6 +69,13 @@ func (o *SourceAppfiguresUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceAppfiguresUpdate) GetGroupBy() *SourceAppfiguresUpdateGroupBy {
+	if o == nil {
+		return nil
+	}
+	return o.GroupBy
+}
+
 func (o *SourceAppfiguresUpdate) GetSearchStore() *string {
 	if o == nil {
 		return nil
@@ -81,11 +88,4 @@ func (o *SourceAppfiguresUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceAppfiguresUpdate) GetGroupBy() *SourceAppfiguresUpdateGroupBy {
-	if o == nil {
-		return nil
-	}
-	return o.GroupBy
 }

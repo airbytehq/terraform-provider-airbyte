@@ -32,10 +32,10 @@ func (e *JamfPro) UnmarshalJSON(data []byte) error {
 }
 
 type SourceJamfPro struct {
+	Password *string `json:"password,omitempty"`
 	// The unique subdomain for your Jamf Pro instance.
 	Subdomain  string  `json:"subdomain"`
 	Username   string  `json:"username"`
-	Password   *string `json:"password,omitempty"`
 	sourceType JamfPro `const:"jamf-pro" json:"sourceType"`
 }
 
@@ -50,6 +50,13 @@ func (s *SourceJamfPro) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceJamfPro) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
 func (o *SourceJamfPro) GetSubdomain() string {
 	if o == nil {
 		return ""
@@ -62,13 +69,6 @@ func (o *SourceJamfPro) GetUsername() string {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *SourceJamfPro) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
 }
 
 func (o *SourceJamfPro) GetSourceType() JamfPro {

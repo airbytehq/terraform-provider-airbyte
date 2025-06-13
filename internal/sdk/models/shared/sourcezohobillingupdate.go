@@ -52,17 +52,10 @@ func (e *SourceZohoBillingUpdateRegion) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZohoBillingUpdate struct {
-	Region       SourceZohoBillingUpdateRegion `json:"region"`
 	ClientID     string                        `json:"client_id"`
 	ClientSecret string                        `json:"client_secret"`
 	RefreshToken string                        `json:"refresh_token"`
-}
-
-func (o *SourceZohoBillingUpdate) GetRegion() SourceZohoBillingUpdateRegion {
-	if o == nil {
-		return SourceZohoBillingUpdateRegion("")
-	}
-	return o.Region
+	Region       SourceZohoBillingUpdateRegion `json:"region"`
 }
 
 func (o *SourceZohoBillingUpdate) GetClientID() string {
@@ -84,4 +77,11 @@ func (o *SourceZohoBillingUpdate) GetRefreshToken() string {
 		return ""
 	}
 	return o.RefreshToken
+}
+
+func (o *SourceZohoBillingUpdate) GetRegion() SourceZohoBillingUpdateRegion {
+	if o == nil {
+		return SourceZohoBillingUpdateRegion("")
+	}
+	return o.Region
 }

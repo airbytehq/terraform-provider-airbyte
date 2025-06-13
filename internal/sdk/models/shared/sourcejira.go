@@ -39,17 +39,15 @@ type SourceJira struct {
 	Domain string `json:"domain"`
 	// The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.
 	Email string `json:"email"`
+	// When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced.
+	LookbackWindowMinutes *int64 `default:"0" json:"lookback_window_minutes"`
+	// The number of worker threads to use for the sync.
+	NumWorkers *int64 `default:"3" json:"num_workers"`
 	// List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
 	Projects []string `json:"projects,omitempty"`
 	// The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
-	StartDate *time.Time `json:"start_date,omitempty"`
-	// When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced.
-	LookbackWindowMinutes *int64 `default:"0" json:"lookback_window_minutes"`
-	// Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.
-	EnableExperimentalStreams *bool `default:"false" json:"enable_experimental_streams"`
-	// The number of worker threads to use for the sync.
-	NumWorkers *int64 `default:"3" json:"num_workers"`
-	sourceType Jira   `const:"jira" json:"sourceType"`
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	sourceType Jira       `const:"jira" json:"sourceType"`
 }
 
 func (s SourceJira) MarshalJSON() ([]byte, error) {
@@ -84,6 +82,20 @@ func (o *SourceJira) GetEmail() string {
 	return o.Email
 }
 
+func (o *SourceJira) GetLookbackWindowMinutes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindowMinutes
+}
+
+func (o *SourceJira) GetNumWorkers() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.NumWorkers
+}
+
 func (o *SourceJira) GetProjects() []string {
 	if o == nil {
 		return nil
@@ -96,27 +108,6 @@ func (o *SourceJira) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceJira) GetLookbackWindowMinutes() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.LookbackWindowMinutes
-}
-
-func (o *SourceJira) GetEnableExperimentalStreams() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.EnableExperimentalStreams
-}
-
-func (o *SourceJira) GetNumWorkers() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.NumWorkers
 }
 
 func (o *SourceJira) GetSourceType() Jira {

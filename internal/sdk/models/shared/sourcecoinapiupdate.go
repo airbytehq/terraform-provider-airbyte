@@ -38,27 +38,27 @@ func (e *SourceCoinAPIUpdateEnvironment) UnmarshalJSON(data []byte) error {
 type SourceCoinAPIUpdate struct {
 	// API Key
 	APIKey string `json:"api_key"`
-	// The environment to use. Either sandbox or production.
-	//
-	Environment *SourceCoinAPIUpdateEnvironment `default:"sandbox" json:"environment"`
-	// The symbol ID to use. See the documentation for a list.
-	// https://docs.coinapi.io/#list-all-symbols-get
-	//
-	SymbolID string `json:"symbol_id"`
-	// The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
-	Period string `json:"period"`
-	// The start date in ISO 8601 format.
-	StartDate string `json:"start_date"`
 	// The end date in ISO 8601 format. If not supplied, data will be returned
 	// from the start date to the current time, or when the count of result
 	// elements reaches its limit.
 	//
 	EndDate *string `json:"end_date,omitempty"`
+	// The environment to use. Either sandbox or production.
+	//
+	Environment *SourceCoinAPIUpdateEnvironment `default:"sandbox" json:"environment"`
 	// The maximum number of elements to return. If not supplied, the default
 	// is 100. For numbers larger than 100, each 100 items is counted as one
 	// request for pricing purposes. Maximum value is 100000.
 	//
 	Limit *int64 `default:"100" json:"limit"`
+	// The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
+	Period string `json:"period"`
+	// The start date in ISO 8601 format.
+	StartDate string `json:"start_date"`
+	// The symbol ID to use. See the documentation for a list.
+	// https://docs.coinapi.io/#list-all-symbols-get
+	//
+	SymbolID string `json:"symbol_id"`
 }
 
 func (s SourceCoinAPIUpdate) MarshalJSON() ([]byte, error) {
@@ -79,6 +79,13 @@ func (o *SourceCoinAPIUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceCoinAPIUpdate) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
 func (o *SourceCoinAPIUpdate) GetEnvironment() *SourceCoinAPIUpdateEnvironment {
 	if o == nil {
 		return nil
@@ -86,11 +93,11 @@ func (o *SourceCoinAPIUpdate) GetEnvironment() *SourceCoinAPIUpdateEnvironment {
 	return o.Environment
 }
 
-func (o *SourceCoinAPIUpdate) GetSymbolID() string {
+func (o *SourceCoinAPIUpdate) GetLimit() *int64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.SymbolID
+	return o.Limit
 }
 
 func (o *SourceCoinAPIUpdate) GetPeriod() string {
@@ -107,16 +114,9 @@ func (o *SourceCoinAPIUpdate) GetStartDate() string {
 	return o.StartDate
 }
 
-func (o *SourceCoinAPIUpdate) GetEndDate() *string {
+func (o *SourceCoinAPIUpdate) GetSymbolID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.EndDate
-}
-
-func (o *SourceCoinAPIUpdate) GetLimit() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Limit
+	return o.SymbolID
 }

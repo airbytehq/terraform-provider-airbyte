@@ -21,30 +21,77 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.So
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	var port int64
-	port = r.Configuration.Port.ValueInt64()
-
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Password.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
 	} else {
 		jdbcURLParams = nil
+	}
+	var password string
+	password = r.Configuration.Password.ValueString()
+
+	var port int64
+	port = r.Configuration.Port.ValueInt64()
+
+	var replicationMethod *shared.UpdateMethod
+	if r.Configuration.ReplicationMethod != nil {
+		var readChangesUsingChangeDataCaptureCDC *shared.ReadChangesUsingChangeDataCaptureCDC
+		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
+			initialWaitingSeconds := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
+			} else {
+				initialWaitingSeconds = nil
+			}
+			invalidCdcCursorPositionBehavior := new(shared.SourceMssqlInvalidCDCPositionBehaviorAdvanced)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+				*invalidCdcCursorPositionBehavior = shared.SourceMssqlInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
+			} else {
+				invalidCdcCursorPositionBehavior = nil
+			}
+			queueSize := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.ValueInt64()
+			} else {
+				queueSize = nil
+			}
+			readChangesUsingChangeDataCaptureCDC = &shared.ReadChangesUsingChangeDataCaptureCDC{
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+				InitialWaitingSeconds:            initialWaitingSeconds,
+				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+				QueueSize:                        queueSize,
+			}
+		}
+		if readChangesUsingChangeDataCaptureCDC != nil {
+			replicationMethod = &shared.UpdateMethod{
+				ReadChangesUsingChangeDataCaptureCDC: readChangesUsingChangeDataCaptureCDC,
+			}
+		}
+		var scanChangesWithUserDefinedCursor *shared.ScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
+			scanChangesWithUserDefinedCursor = &shared.ScanChangesWithUserDefinedCursor{}
+		}
+		if scanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.UpdateMethod{
+				ScanChangesWithUserDefinedCursor: scanChangesWithUserDefinedCursor,
+			}
+		}
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
 	}
 	var sslMethod *shared.SSLMethod
 	if r.Configuration.SslMethod != nil {
@@ -68,76 +115,26 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.So
 		}
 		var encryptedVerifyCertificate *shared.EncryptedVerifyCertificate
 		if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
-			hostNameInCertificate := new(string)
-			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-			} else {
-				hostNameInCertificate = nil
-			}
 			certificate := new(string)
 			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsNull() {
 				*certificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.ValueString()
 			} else {
 				certificate = nil
 			}
+			hostNameInCertificate := new(string)
+			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+			} else {
+				hostNameInCertificate = nil
+			}
 			encryptedVerifyCertificate = &shared.EncryptedVerifyCertificate{
-				HostNameInCertificate: hostNameInCertificate,
 				Certificate:           certificate,
+				HostNameInCertificate: hostNameInCertificate,
 			}
 		}
 		if encryptedVerifyCertificate != nil {
 			sslMethod = &shared.SSLMethod{
 				EncryptedVerifyCertificate: encryptedVerifyCertificate,
-			}
-		}
-	}
-	var replicationMethod *shared.UpdateMethod
-	if r.Configuration.ReplicationMethod != nil {
-		var readChangesUsingChangeDataCaptureCDC *shared.ReadChangesUsingChangeDataCaptureCDC
-		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
-			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
-			} else {
-				initialWaitingSeconds = nil
-			}
-			invalidCdcCursorPositionBehavior := new(shared.SourceMssqlInvalidCDCPositionBehaviorAdvanced)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-				*invalidCdcCursorPositionBehavior = shared.SourceMssqlInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
-			} else {
-				invalidCdcCursorPositionBehavior = nil
-			}
-			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.ValueInt64()
-			} else {
-				queueSize = nil
-			}
-			initialLoadTimeoutHours := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
-				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
-			} else {
-				initialLoadTimeoutHours = nil
-			}
-			readChangesUsingChangeDataCaptureCDC = &shared.ReadChangesUsingChangeDataCaptureCDC{
-				InitialWaitingSeconds:            initialWaitingSeconds,
-				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-				QueueSize:                        queueSize,
-				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
-			}
-		}
-		if readChangesUsingChangeDataCaptureCDC != nil {
-			replicationMethod = &shared.UpdateMethod{
-				ReadChangesUsingChangeDataCaptureCDC: readChangesUsingChangeDataCaptureCDC,
-			}
-		}
-		var scanChangesWithUserDefinedCursor *shared.ScanChangesWithUserDefinedCursor
-		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
-			scanChangesWithUserDefinedCursor = &shared.ScanChangesWithUserDefinedCursor{}
-		}
-		if scanChangesWithUserDefinedCursor != nil {
-			replicationMethod = &shared.UpdateMethod{
-				ScanChangesWithUserDefinedCursor: scanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -154,6 +151,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.So
 		}
 		var sourceMssqlSSHKeyAuthentication *shared.SourceMssqlSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -166,14 +166,11 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.So
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sourceMssqlSSHKeyAuthentication = &shared.SourceMssqlSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sourceMssqlSSHKeyAuthentication != nil {
@@ -211,17 +208,20 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.So
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMssql{
-		Host:              host,
-		Port:              port,
 		Database:          database,
-		Schemas:           schemas,
-		Username:          username,
-		Password:          password,
+		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
-		SslMethod:         sslMethod,
+		Password:          password,
+		Port:              port,
 		ReplicationMethod: replicationMethod,
+		Schemas:           schemas,
+		SslMethod:         sslMethod,
 		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -293,30 +293,77 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	var port int64
-	port = r.Configuration.Port.ValueInt64()
-
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	var password string
-	password = r.Configuration.Password.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
 	} else {
 		jdbcURLParams = nil
+	}
+	var password string
+	password = r.Configuration.Password.ValueString()
+
+	var port int64
+	port = r.Configuration.Port.ValueInt64()
+
+	var replicationMethod *shared.SourceMssqlUpdateUpdateMethod
+	if r.Configuration.ReplicationMethod != nil {
+		var sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC *shared.SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC
+		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
+			initialWaitingSeconds := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
+			} else {
+				initialWaitingSeconds = nil
+			}
+			invalidCdcCursorPositionBehavior := new(shared.SourceMssqlUpdateInvalidCDCPositionBehaviorAdvanced)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+				*invalidCdcCursorPositionBehavior = shared.SourceMssqlUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
+			} else {
+				invalidCdcCursorPositionBehavior = nil
+			}
+			queueSize := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.ValueInt64()
+			} else {
+				queueSize = nil
+			}
+			sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC = &shared.SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC{
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+				InitialWaitingSeconds:            initialWaitingSeconds,
+				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+				QueueSize:                        queueSize,
+			}
+		}
+		if sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC != nil {
+			replicationMethod = &shared.SourceMssqlUpdateUpdateMethod{
+				SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC: sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC,
+			}
+		}
+		var sourceMssqlUpdateScanChangesWithUserDefinedCursor *shared.SourceMssqlUpdateScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
+			sourceMssqlUpdateScanChangesWithUserDefinedCursor = &shared.SourceMssqlUpdateScanChangesWithUserDefinedCursor{}
+		}
+		if sourceMssqlUpdateScanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.SourceMssqlUpdateUpdateMethod{
+				SourceMssqlUpdateScanChangesWithUserDefinedCursor: sourceMssqlUpdateScanChangesWithUserDefinedCursor,
+			}
+		}
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
 	}
 	var sslMethod *shared.SourceMssqlUpdateSSLMethod
 	if r.Configuration.SslMethod != nil {
@@ -340,76 +387,26 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 		}
 		var sourceMssqlUpdateEncryptedVerifyCertificate *shared.SourceMssqlUpdateEncryptedVerifyCertificate
 		if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
-			hostNameInCertificate := new(string)
-			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-			} else {
-				hostNameInCertificate = nil
-			}
 			certificate := new(string)
 			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsNull() {
 				*certificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.ValueString()
 			} else {
 				certificate = nil
 			}
+			hostNameInCertificate := new(string)
+			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+			} else {
+				hostNameInCertificate = nil
+			}
 			sourceMssqlUpdateEncryptedVerifyCertificate = &shared.SourceMssqlUpdateEncryptedVerifyCertificate{
-				HostNameInCertificate: hostNameInCertificate,
 				Certificate:           certificate,
+				HostNameInCertificate: hostNameInCertificate,
 			}
 		}
 		if sourceMssqlUpdateEncryptedVerifyCertificate != nil {
 			sslMethod = &shared.SourceMssqlUpdateSSLMethod{
 				SourceMssqlUpdateEncryptedVerifyCertificate: sourceMssqlUpdateEncryptedVerifyCertificate,
-			}
-		}
-	}
-	var replicationMethod *shared.SourceMssqlUpdateUpdateMethod
-	if r.Configuration.ReplicationMethod != nil {
-		var sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC *shared.SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC
-		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
-			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
-			} else {
-				initialWaitingSeconds = nil
-			}
-			invalidCdcCursorPositionBehavior := new(shared.SourceMssqlUpdateInvalidCDCPositionBehaviorAdvanced)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-				*invalidCdcCursorPositionBehavior = shared.SourceMssqlUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
-			} else {
-				invalidCdcCursorPositionBehavior = nil
-			}
-			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.QueueSize.ValueInt64()
-			} else {
-				queueSize = nil
-			}
-			initialLoadTimeoutHours := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
-				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
-			} else {
-				initialLoadTimeoutHours = nil
-			}
-			sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC = &shared.SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC{
-				InitialWaitingSeconds:            initialWaitingSeconds,
-				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-				QueueSize:                        queueSize,
-				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
-			}
-		}
-		if sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC != nil {
-			replicationMethod = &shared.SourceMssqlUpdateUpdateMethod{
-				SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC: sourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC,
-			}
-		}
-		var sourceMssqlUpdateScanChangesWithUserDefinedCursor *shared.SourceMssqlUpdateScanChangesWithUserDefinedCursor
-		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
-			sourceMssqlUpdateScanChangesWithUserDefinedCursor = &shared.SourceMssqlUpdateScanChangesWithUserDefinedCursor{}
-		}
-		if sourceMssqlUpdateScanChangesWithUserDefinedCursor != nil {
-			replicationMethod = &shared.SourceMssqlUpdateUpdateMethod{
-				SourceMssqlUpdateScanChangesWithUserDefinedCursor: sourceMssqlUpdateScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -426,6 +423,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 		}
 		var sourceMssqlUpdateSSHKeyAuthentication *shared.SourceMssqlUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -438,14 +438,11 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sourceMssqlUpdateSSHKeyAuthentication = &shared.SourceMssqlUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sourceMssqlUpdateSSHKeyAuthentication != nil {
@@ -483,17 +480,20 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMssqlUpdate{
-		Host:              host,
-		Port:              port,
 		Database:          database,
-		Schemas:           schemas,
-		Username:          username,
-		Password:          password,
+		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
-		SslMethod:         sslMethod,
+		Password:          password,
+		Port:              port,
 		ReplicationMethod: replicationMethod,
+		Schemas:           schemas,
+		SslMethod:         sslMethod,
 		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	out := shared.SourceMssqlPutRequest{
 		Name:          name,

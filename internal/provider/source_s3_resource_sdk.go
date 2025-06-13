@@ -22,6 +22,68 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	awsAccessKeyID := new(string)
+	if !r.Configuration.AwsAccessKeyID.IsUnknown() && !r.Configuration.AwsAccessKeyID.IsNull() {
+		*awsAccessKeyID = r.Configuration.AwsAccessKeyID.ValueString()
+	} else {
+		awsAccessKeyID = nil
+	}
+	awsSecretAccessKey := new(string)
+	if !r.Configuration.AwsSecretAccessKey.IsUnknown() && !r.Configuration.AwsSecretAccessKey.IsNull() {
+		*awsSecretAccessKey = r.Configuration.AwsSecretAccessKey.ValueString()
+	} else {
+		awsSecretAccessKey = nil
+	}
+	var bucket string
+	bucket = r.Configuration.Bucket.ValueString()
+
+	var deliveryMethod *shared.SourceS3DeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var sourceS3ReplicateRecords *shared.SourceS3ReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			sourceS3ReplicateRecords = &shared.SourceS3ReplicateRecords{}
+		}
+		if sourceS3ReplicateRecords != nil {
+			deliveryMethod = &shared.SourceS3DeliveryMethod{
+				SourceS3ReplicateRecords: sourceS3ReplicateRecords,
+			}
+		}
+		var sourceS3CopyRawFiles *shared.SourceS3CopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			sourceS3CopyRawFiles = &shared.SourceS3CopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if sourceS3CopyRawFiles != nil {
+			deliveryMethod = &shared.SourceS3DeliveryMethod{
+				SourceS3CopyRawFiles: sourceS3CopyRawFiles,
+			}
+		}
+	}
+	endpoint := new(string)
+	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
+		*endpoint = r.Configuration.Endpoint.ValueString()
+	} else {
+		endpoint = nil
+	}
+	regionName := new(string)
+	if !r.Configuration.RegionName.IsUnknown() && !r.Configuration.RegionName.IsNull() {
+		*regionName = r.Configuration.RegionName.ValueString()
+	} else {
+		regionName = nil
+	}
+	roleArn := new(string)
+	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
+		*roleArn = r.Configuration.RoleArn.ValueString()
+	} else {
+		roleArn = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -30,25 +92,6 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 	}
 	var streams []shared.SourceS3FileBasedStreamConfig = []shared.SourceS3FileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceS3ValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceS3ValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -81,17 +124,11 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -99,33 +136,15 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceS3CSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -163,34 +182,58 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceS3CSVFormat = &shared.SourceS3CSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceS3CSVFormat != nil {
@@ -226,18 +269,6 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 		}
 		var sourceS3UnstructuredDocumentFormat *shared.SourceS3UnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceS3ParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceS3ParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceS3Processing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceS3Local *shared.SourceS3Local
@@ -250,10 +281,22 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceS3ParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceS3ParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceS3UnstructuredDocumentFormat = &shared.SourceS3UnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceS3UnstructuredDocumentFormat != nil {
@@ -270,101 +313,58 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 				SourceS3ExcelFormat: sourceS3ExcelFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceS3ValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceS3ValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceS3FileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name1,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var deliveryMethod *shared.SourceS3DeliveryMethod
-	if r.Configuration.DeliveryMethod != nil {
-		var sourceS3ReplicateRecords *shared.SourceS3ReplicateRecords
-		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
-			sourceS3ReplicateRecords = &shared.SourceS3ReplicateRecords{}
-		}
-		if sourceS3ReplicateRecords != nil {
-			deliveryMethod = &shared.SourceS3DeliveryMethod{
-				SourceS3ReplicateRecords: sourceS3ReplicateRecords,
-			}
-		}
-		var sourceS3CopyRawFiles *shared.SourceS3CopyRawFiles
-		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
-			preserveDirectoryStructure := new(bool)
-			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
-				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
-			} else {
-				preserveDirectoryStructure = nil
-			}
-			sourceS3CopyRawFiles = &shared.SourceS3CopyRawFiles{
-				PreserveDirectoryStructure: preserveDirectoryStructure,
-			}
-		}
-		if sourceS3CopyRawFiles != nil {
-			deliveryMethod = &shared.SourceS3DeliveryMethod{
-				SourceS3CopyRawFiles: sourceS3CopyRawFiles,
-			}
-		}
-	}
-	var bucket string
-	bucket = r.Configuration.Bucket.ValueString()
-
-	awsAccessKeyID := new(string)
-	if !r.Configuration.AwsAccessKeyID.IsUnknown() && !r.Configuration.AwsAccessKeyID.IsNull() {
-		*awsAccessKeyID = r.Configuration.AwsAccessKeyID.ValueString()
-	} else {
-		awsAccessKeyID = nil
-	}
-	roleArn := new(string)
-	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
-		*roleArn = r.Configuration.RoleArn.ValueString()
-	} else {
-		roleArn = nil
-	}
-	awsSecretAccessKey := new(string)
-	if !r.Configuration.AwsSecretAccessKey.IsUnknown() && !r.Configuration.AwsSecretAccessKey.IsNull() {
-		*awsSecretAccessKey = r.Configuration.AwsSecretAccessKey.ValueString()
-	} else {
-		awsSecretAccessKey = nil
-	}
-	endpoint := new(string)
-	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
-		*endpoint = r.Configuration.Endpoint.ValueString()
-	} else {
-		endpoint = nil
-	}
-	regionName := new(string)
-	if !r.Configuration.RegionName.IsUnknown() && !r.Configuration.RegionName.IsNull() {
-		*regionName = r.Configuration.RegionName.ValueString()
-	} else {
-		regionName = nil
-	}
 	configuration := shared.SourceS3{
-		StartDate:          startDate,
-		Streams:            streams,
-		DeliveryMethod:     deliveryMethod,
-		Bucket:             bucket,
 		AwsAccessKeyID:     awsAccessKeyID,
-		RoleArn:            roleArn,
 		AwsSecretAccessKey: awsSecretAccessKey,
+		Bucket:             bucket,
+		DeliveryMethod:     deliveryMethod,
 		Endpoint:           endpoint,
 		RegionName:         regionName,
+		RoleArn:            roleArn,
+		StartDate:          startDate,
+		Streams:            streams,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -436,6 +436,68 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	awsAccessKeyID := new(string)
+	if !r.Configuration.AwsAccessKeyID.IsUnknown() && !r.Configuration.AwsAccessKeyID.IsNull() {
+		*awsAccessKeyID = r.Configuration.AwsAccessKeyID.ValueString()
+	} else {
+		awsAccessKeyID = nil
+	}
+	awsSecretAccessKey := new(string)
+	if !r.Configuration.AwsSecretAccessKey.IsUnknown() && !r.Configuration.AwsSecretAccessKey.IsNull() {
+		*awsSecretAccessKey = r.Configuration.AwsSecretAccessKey.ValueString()
+	} else {
+		awsSecretAccessKey = nil
+	}
+	var bucket string
+	bucket = r.Configuration.Bucket.ValueString()
+
+	var deliveryMethod *shared.SourceS3UpdateDeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var sourceS3UpdateReplicateRecords *shared.SourceS3UpdateReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			sourceS3UpdateReplicateRecords = &shared.SourceS3UpdateReplicateRecords{}
+		}
+		if sourceS3UpdateReplicateRecords != nil {
+			deliveryMethod = &shared.SourceS3UpdateDeliveryMethod{
+				SourceS3UpdateReplicateRecords: sourceS3UpdateReplicateRecords,
+			}
+		}
+		var sourceS3UpdateCopyRawFiles *shared.SourceS3UpdateCopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			sourceS3UpdateCopyRawFiles = &shared.SourceS3UpdateCopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if sourceS3UpdateCopyRawFiles != nil {
+			deliveryMethod = &shared.SourceS3UpdateDeliveryMethod{
+				SourceS3UpdateCopyRawFiles: sourceS3UpdateCopyRawFiles,
+			}
+		}
+	}
+	endpoint := new(string)
+	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
+		*endpoint = r.Configuration.Endpoint.ValueString()
+	} else {
+		endpoint = nil
+	}
+	regionName := new(string)
+	if !r.Configuration.RegionName.IsUnknown() && !r.Configuration.RegionName.IsNull() {
+		*regionName = r.Configuration.RegionName.ValueString()
+	} else {
+		regionName = nil
+	}
+	roleArn := new(string)
+	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
+		*roleArn = r.Configuration.RoleArn.ValueString()
+	} else {
+		roleArn = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -444,25 +506,6 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 	}
 	var streams []shared.SourceS3UpdateFileBasedStreamConfig = []shared.SourceS3UpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceS3UpdateValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceS3UpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -495,17 +538,11 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -513,33 +550,15 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceS3UpdateCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -577,34 +596,58 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceS3UpdateCSVFormat = &shared.SourceS3UpdateCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceS3UpdateCSVFormat != nil {
@@ -640,18 +683,6 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 		}
 		var sourceS3UpdateUnstructuredDocumentFormat *shared.SourceS3UpdateUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceS3UpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceS3UpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceS3UpdateProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceS3UpdateLocal *shared.SourceS3UpdateLocal
@@ -664,10 +695,22 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceS3UpdateParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceS3UpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceS3UpdateUnstructuredDocumentFormat = &shared.SourceS3UpdateUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceS3UpdateUnstructuredDocumentFormat != nil {
@@ -684,101 +727,58 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 				SourceS3UpdateExcelFormat: sourceS3UpdateExcelFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceS3UpdateValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceS3UpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceS3UpdateFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name1,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var deliveryMethod *shared.SourceS3UpdateDeliveryMethod
-	if r.Configuration.DeliveryMethod != nil {
-		var sourceS3UpdateReplicateRecords *shared.SourceS3UpdateReplicateRecords
-		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
-			sourceS3UpdateReplicateRecords = &shared.SourceS3UpdateReplicateRecords{}
-		}
-		if sourceS3UpdateReplicateRecords != nil {
-			deliveryMethod = &shared.SourceS3UpdateDeliveryMethod{
-				SourceS3UpdateReplicateRecords: sourceS3UpdateReplicateRecords,
-			}
-		}
-		var sourceS3UpdateCopyRawFiles *shared.SourceS3UpdateCopyRawFiles
-		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
-			preserveDirectoryStructure := new(bool)
-			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
-				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
-			} else {
-				preserveDirectoryStructure = nil
-			}
-			sourceS3UpdateCopyRawFiles = &shared.SourceS3UpdateCopyRawFiles{
-				PreserveDirectoryStructure: preserveDirectoryStructure,
-			}
-		}
-		if sourceS3UpdateCopyRawFiles != nil {
-			deliveryMethod = &shared.SourceS3UpdateDeliveryMethod{
-				SourceS3UpdateCopyRawFiles: sourceS3UpdateCopyRawFiles,
-			}
-		}
-	}
-	var bucket string
-	bucket = r.Configuration.Bucket.ValueString()
-
-	awsAccessKeyID := new(string)
-	if !r.Configuration.AwsAccessKeyID.IsUnknown() && !r.Configuration.AwsAccessKeyID.IsNull() {
-		*awsAccessKeyID = r.Configuration.AwsAccessKeyID.ValueString()
-	} else {
-		awsAccessKeyID = nil
-	}
-	roleArn := new(string)
-	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
-		*roleArn = r.Configuration.RoleArn.ValueString()
-	} else {
-		roleArn = nil
-	}
-	awsSecretAccessKey := new(string)
-	if !r.Configuration.AwsSecretAccessKey.IsUnknown() && !r.Configuration.AwsSecretAccessKey.IsNull() {
-		*awsSecretAccessKey = r.Configuration.AwsSecretAccessKey.ValueString()
-	} else {
-		awsSecretAccessKey = nil
-	}
-	endpoint := new(string)
-	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
-		*endpoint = r.Configuration.Endpoint.ValueString()
-	} else {
-		endpoint = nil
-	}
-	regionName := new(string)
-	if !r.Configuration.RegionName.IsUnknown() && !r.Configuration.RegionName.IsNull() {
-		*regionName = r.Configuration.RegionName.ValueString()
-	} else {
-		regionName = nil
-	}
 	configuration := shared.SourceS3Update{
-		StartDate:          startDate,
-		Streams:            streams,
-		DeliveryMethod:     deliveryMethod,
-		Bucket:             bucket,
 		AwsAccessKeyID:     awsAccessKeyID,
-		RoleArn:            roleArn,
 		AwsSecretAccessKey: awsSecretAccessKey,
+		Bucket:             bucket,
+		DeliveryMethod:     deliveryMethod,
 		Endpoint:           endpoint,
 		RegionName:         regionName,
+		RoleArn:            roleArn,
+		StartDate:          startDate,
+		Streams:            streams,
 	}
 	out := shared.SourceS3PutRequest{
 		Name:          name,
