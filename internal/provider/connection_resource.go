@@ -504,6 +504,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									Computed: true,
 									Optional: true,
 									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.EnsureSelectedFieldsDiff(),
 										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 									},
 									NestedObject: schema.NestedAttributeObject{
