@@ -29,7 +29,6 @@ data "airbyte_connection" "my_connection" {
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
 - `created_at` (Number)
-- `data_residency` (String)
 - `destination_id` (String)
 - `name` (String)
 - `namespace_definition` (String) Define the location where the data will be stored in the destination
@@ -55,6 +54,7 @@ Read-Only:
 Read-Only:
 
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
+- `destination_object_name` (String) The name of the destination object that this stream will be written to, used for data activation destinations.
 - `include_files` (Boolean) Whether to move raw files from the source to the destination during the sync.
 - `mappers` (Attributes List) Mappers that should be applied to the stream before writing to the destination. (see [below for nested schema](#nestedatt--configurations--streams--mappers))
 - `name` (String)

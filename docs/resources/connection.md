@@ -20,7 +20,8 @@ resource "airbyte_connection" "my_connection" {
         cursor_field = [
           "..."
         ]
-        include_files = false
+        destination_object_name = "...my_destination_object_name..."
+        include_files           = false
         mappers = [
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
@@ -115,6 +116,7 @@ Optional:
 Optional:
 
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
+- `destination_object_name` (String) The name of the destination object that this stream will be written to, used for data activation destinations.
 - `include_files` (Boolean) Whether to move raw files from the source to the destination during the sync.
 - `mappers` (Attributes List) Mappers that should be applied to the stream before writing to the destination. (see [below for nested schema](#nestedatt--configurations--streams--mappers))
 - `name` (String) Not Null

@@ -15,6 +15,7 @@ SourceGoogleSearchConsole Resource
 ```terraform
 resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
   configuration = {
+    always_use_aggregation_type_auto = false
     authorization = {
       service_account_key_authentication = {
         email                = "...my_email..."
@@ -28,8 +29,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
         name = "...my_name..."
       }
     ]
-    data_state = "final"
-    end_date   = "2021-12-12"
+    data_state  = "final"
+    end_date    = "2021-12-12"
+    num_workers = 30
     site_urls = [
       "..."
     ]
@@ -73,9 +75,11 @@ Required:
 
 Optional:
 
+- `always_use_aggregation_type_auto` (Boolean) Some search analytics streams fail with a 400 error if the specified `aggregationType` is not supported. This is customer implementation dependent and if this error is encountered, enable this setting which will override the existing `aggregationType` to use `auto` which should resolve the stream errors. Default: false
 - `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
 - `data_state` (String) If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>. Default: "final"; must be one of ["final", "all"]
 - `end_date` (String) UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
+- `num_workers` (Number) The number of worker threads to use for the sync. For more details on Google Search Console rate limits, refer to the <a href="https://developers.google.com/webmaster-tools/limits">docs</a>. Default: 40
 - `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. Default: "2021-01-01"
 
 <a id="nestedatt--configuration--authorization"></a>

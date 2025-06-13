@@ -15,8 +15,10 @@ DestinationTeradata Resource
 ```terraform
 resource "airbyte_destination_teradata" "my_destination_teradata" {
   configuration = {
-    host            = "...my_host..."
-    jdbc_url_params = "...my_jdbc_url_params..."
+    disable_type_dedupe = true
+    drop_cascade        = false
+    host                = "...my_host..."
+    jdbc_url_params     = "...my_jdbc_url_params..."
     logmech = {
       ldap = {
         password = "...my_password..."
@@ -27,9 +29,10 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
         username = "...my_username..."
       }
     }
-    query_band = "...my_query_band..."
-    schema     = "airbyte_td"
-    ssl        = false
+    query_band      = "...my_query_band..."
+    raw_data_schema = "...my_raw_data_schema..."
+    schema          = "airbyte_td"
+    ssl             = false
     ssl_mode = {
       # ...
     }
@@ -69,9 +72,12 @@ Required:
 
 Optional:
 
+- `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
+- `drop_cascade` (Boolean) Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects. Default: false
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `logmech` (Attributes) (see [below for nested schema](#nestedatt--configuration--logmech))
 - `query_band` (String) Defines the custom session query band using name-value pairs. For example, 'org=Finance;report=Fin123;'
+- `raw_data_schema` (String) The database to write raw tables into
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "airbyte_td"
 - `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the SSL modes. Default: false
 - `ssl_mode` (Attributes) SSL connection modes. 
