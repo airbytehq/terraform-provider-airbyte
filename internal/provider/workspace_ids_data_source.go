@@ -92,7 +92,7 @@ func (d *WorkspaceIdsDataSource) Read(ctx context.Context, req datasource.ReadRe
 
 	// Call the new ListWorkspaces API endpoint
 	request := operations.ListWorkspacesRequest{}
-	
+
 	response, err := d.client.Workspaces.ListWorkspaces(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to read workspaces, got error: %s", err))
@@ -121,4 +121,3 @@ func (d *WorkspaceIdsDataSource) Read(ctx context.Context, req datasource.ReadRe
 	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 }
-

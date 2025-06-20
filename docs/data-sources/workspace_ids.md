@@ -29,4 +29,3 @@ resource "airbyte_source_faker" "test" {
 
 - `id` (String) The ID of this resource.
 - `ids` (List of String) Workspace ID List
-
