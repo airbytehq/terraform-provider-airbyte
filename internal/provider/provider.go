@@ -1339,6 +1339,7 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceZoomDataSource,
 		NewSourceDefinitionDataSource,
 		NewWorkspaceDataSource,
+		NewWorkspaceIdsDataSource,
 	}
 }
 
