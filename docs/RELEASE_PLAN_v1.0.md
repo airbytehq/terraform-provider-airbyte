@@ -2,7 +2,7 @@
 
 This document outlines the plan for releasing the next major version of the Airbyte Terraform Provider, addressing the breaking changes and migration requirements identified in [airbytehq/airbyte-internal-issues#15064](https://github.com/airbytehq/airbyte-internal-issues/issues/15064).
 
-**Owners**: @aaronsteers, @clnoll
+**Owners**: @aaronsteers, @Conall-at-Airbyte (Conall)
 
 ## Executive Summary
 
