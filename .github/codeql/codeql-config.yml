@@ -1,0 +1,10 @@
+name: "CodeQL config"
+
+# Exclude generated code from analysis to reduce disk usage and analysis time.
+# The Speakeasy-generated SDK and per-connector provider files are large and
+# not hand-written, so excluding them focuses CodeQL on meaningful code.
+paths-ignore:
+  - internal/sdk/**
+  - internal/provider/destination_*.go
+  - internal/provider/source_*.go
+  - internal/provider/types/**
