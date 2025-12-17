@@ -27,10 +27,10 @@ jobs:
           echo "=== Disk space before cleanup ==="
           df -h
           echo "=== Removing large preinstalled components ==="
+          # Note: Do NOT delete /opt/hostedtoolcache/CodeQL - that's the CodeQL toolchain
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /opt/ghc
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
           echo "=== Disk space after cleanup ==="
           df -h
 
@@ -41,20 +41,22 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: "go.mod"
-          cache: true
+          # Disable Go cache for CodeQL to avoid cache conflicts with tracing
+          cache: false
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: go
+          build-mode: manual
           config-file: ./.github/codeql/codeql-config.yml
 
       - name: Go mod download
         run: go mod download
 
-      # Manual build instead of CodeQL autobuild to avoid disk space issues
+      # Manual build - removed -v flag to reduce log I/O overhead
       - name: Build
-        run: go build -v .
+        run: go build .
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
