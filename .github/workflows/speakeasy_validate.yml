@@ -33,18 +33,30 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
           echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
-      - name: Clean regeneration experiment
+      - name: Clean regeneration - delete ALL generated code
         run: |
           # Delete ALL generated code to force fully clean regeneration
-          # This tests if the mismatch is caused by preserved/stale files
-          echo "Removing internal/sdk for clean regeneration..."
+          # The upstream API spec has changed from per-connector types to generic types
+          # We need to remove all stale generated files so Speakeasy can regenerate fresh
+          
+          echo "=== Removing internal/sdk (SDK models and utils) ==="
           rm -rf internal/sdk
-          echo "Removing generated provider glue files..."
-          rm -rf internal/provider/*_sdk.go
+          
+          echo "=== Removing generated provider destination resources ==="
+          rm -f internal/provider/destination_*.go
+          echo "Removed $(ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo 0) destination files"
+          
+          echo "=== Removing generated provider source resources ==="
+          rm -f internal/provider/source_*.go
+          echo "Removed $(ls internal/provider/source_*.go 2>/dev/null | wc -l || echo 0) source files"
+          
+          echo "=== Removing generated provider types ==="
           rm -rf internal/provider/types/
-          echo "Listing remaining provider files..."
-          ls internal/provider/ | head -20
-          echo "Done. Generated code removed."
+          
+          echo "=== Listing remaining provider files ==="
+          ls internal/provider/ || echo "No files remaining"
+          
+          echo "=== Done. All generated code removed. ==="
 
       - name: Run Speakeasy Generation (dry-run)
         id: generate
@@ -65,30 +77,23 @@ jobs:
       - name: Debug - Inspect generated files
         if: always()
         run: |
-          echo "=== Check if destinationastra.go has generated code banner ==="
-          head -20 internal/sdk/models/shared/destinationastra.go || echo "File not found"
+          echo "=== List generated SDK models ==="
+          ls internal/sdk/models/shared/ 2>/dev/null | head -20 || echo "No SDK models found"
+          echo ""
+          echo "=== List generated provider files ==="
+          ls internal/provider/ 2>/dev/null | head -30 || echo "No provider files found"
+          echo ""
+          echo "=== Check for generic DestinationCreateRequest type ==="
+          grep -rn "DestinationCreateRequest" internal/sdk/models/ 2>/dev/null | head -5 || echo "Not found"
+          echo ""
+          echo "=== Check for generic SourceCreateRequest type ==="
+          grep -rn "SourceCreateRequest" internal/sdk/models/ 2>/dev/null | head -5 || echo "Not found"
           echo ""
           echo "=== UnmarshalJSON signature in utils/json.go ==="
-          grep -n "func UnmarshalJSON" internal/sdk/internal/utils/json.go || echo "Not found"
+          grep -n "func UnmarshalJSON" internal/sdk/internal/utils/json.go 2>/dev/null || echo "Not found"
           echo ""
-          echo "=== First UnmarshalJSON call in destinationastra.go ==="
-          grep -n "UnmarshalJSON" internal/sdk/models/shared/destinationastra.go | head -5 || echo "Not found"
-          echo ""
-          echo "=== Count of old call pattern (passing bool as 5th arg) ==="
-          grep -rn "UnmarshalJSON(data, &.*false, true)" internal/sdk/models/ | wc -l || echo "0"
-          grep -rn "UnmarshalJSON(data, &.*false, false)" internal/sdk/models/ | wc -l || echo "0"
-          echo ""
-          echo "=== Sample of old call patterns (first 10) ==="
-          grep -rn "UnmarshalJSON(data, &.*false, true)" internal/sdk/models/ | head -10 || echo "None found"
-          echo ""
-          echo "=== Count of new call pattern (passing []string as 5th arg) ==="
-          grep -rn 'UnmarshalJSON(data, &.*\[\]string' internal/sdk/models/ | wc -l || echo "0"
-          echo ""
-          echo "=== Git diff summary ==="
-          git diff --stat || true
-          echo ""
-          echo "=== Changed files in internal/sdk/models/shared (full list) ==="
-          git diff --name-only -- internal/sdk/models/shared/ || true
+          echo "=== Git status summary ==="
+          git status --short | head -50 || true
 
       - name: Upload debug artifacts
         if: always()
@@ -97,7 +102,8 @@ jobs:
           name: speakeasy-debug
           path: |
             internal/sdk/internal/utils/json.go
-            internal/sdk/models/shared/destinationastra.go
+            internal/sdk/models/shared/
+            internal/provider/
             speakeasy_output.txt
             .speakeasy/gen.lock
           retention-days: 5
