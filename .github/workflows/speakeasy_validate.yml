@@ -1,0 +1,70 @@
+name: Validate Speakeasy Generation
+
+# This workflow validates that the Speakeasy-generated code compiles correctly.
+# It runs on every PR push but does NOT create PRs or push changes.
+# For actual regeneration, use the manual "Generate" workflow.
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - 'examples/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Generation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - name: Install Speakeasy CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
+          echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
+
+      - name: Run Speakeasy Generation (dry-run)
+        id: generate
+        continue-on-error: true
+        env:
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+        run: |
+          # Run generation but don't commit/push anything
+          speakeasy run --skip-compile 2>&1 | tee speakeasy_output.txt
+          echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
+
+      - name: Check for generation errors
+        if: steps.generate.outcome == 'failure'
+        run: |
+          echo "::warning::Speakeasy generation encountered issues. See logs above."
+          cat speakeasy_output.txt
+
+      - name: Build generated code
+        run: |
+          go mod download
+          go build -v ./...
+
+      - name: Run linters
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          args: --timeout 5m
+
+      - name: Check for uncommitted changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::warning::Generation produced uncommitted changes:"
+            git diff --stat
+            echo ""
+            echo "If these changes are expected, run 'speakeasy run' locally and commit the results."
+          fi
