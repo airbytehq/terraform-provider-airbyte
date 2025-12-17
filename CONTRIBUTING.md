@@ -26,14 +26,44 @@ We will review and triage issues as quickly as possible. Our goal is to address 
 
 This section is for Airbyte maintainers who need to build, test, and publish updates to the provider.
 
-### Prerequisites
+### CI-First Workflow (Recommended)
+
+**All build, test, and regeneration tasks should be done via CI workflows.** This ensures consistent environments and avoids local toolchain issues.
+
+#### Regenerating the Provider
+
+The provider is regenerated from Airbyte's OpenAPI specification using Speakeasy. Use the GitHub Actions workflow:
+
+1. Go to [Actions > Generate](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/speakeasy_sdk_generation.yml) > Run workflow
+2. Select the target branch
+3. Optionally check "Force generation of SDKs"
+4. This creates a PR with the regenerated code for review
+
+The `speakeasy_validate.yml` workflow runs automatically on every PR push to validate that:
+- Speakeasy generation completes successfully
+- Generated code compiles
+- Linting passes
+
+#### Building and Testing
+
+CI workflows automatically run on every PR:
+- **Build**: Compiles the provider binary
+- **Terraform Provider Acceptance Tests**: Runs against multiple Terraform versions (1.0.x - 1.4.x)
+- **Validate Generation**: Ensures Speakeasy regeneration produces valid code
+
+To trigger a full regeneration test, push changes to a PR branch and monitor the workflow results.
+
+### Local Development (Fallback/Debug)
+
+Use local development only when debugging CI failures or when CI is unavailable.
+
+#### Prerequisites
 
 - Go 1.21+ (check `go.mod` for exact version)
 - Terraform 1.0+
-- [Speakeasy CLI](https://www.speakeasy.com/docs/speakeasy-cli/getting-started) (for regeneration)
-- GPG key (for releases)
+- [Speakeasy CLI](https://www.speakeasy.com/docs/speakeasy-cli/getting-started) (for local regeneration)
 
-### Building the Provider
+#### Local Build Commands
 
 ```bash
 # Build the provider binary
@@ -44,13 +74,17 @@ golangci-lint run --timeout 5m
 
 # Generate documentation
 go generate ./...
+
+# Run acceptance tests (requires Airbyte instance)
+TF_ACC=1 go test -v -cover ./internal/provider/
+
+# Local regeneration (prefer CI workflow instead)
+speakeasy run
 ```
 
-### Testing the Provider Locally
+#### Debug Mode
 
-#### Option 1: Debug Mode (recommended for development)
-
-This allows you to attach debuggers (e.g., delve) to the provider:
+For debugging provider behavior locally:
 
 ```bash
 go run main.go --debug
@@ -63,7 +97,7 @@ terraform init
 terraform apply
 ```
 
-#### Option 2: Local Binary with dev_overrides
+#### Local Binary with dev_overrides
 
 1. Build the provider: `go build -o terraform-provider-airbyte`
 2. Add to your `~/.terraformrc`:
@@ -78,37 +112,6 @@ provider_installation {
 ```
 
 3. Run Terraform commands (skip `terraform init` when using dev_overrides)
-
-#### Running Acceptance Tests
-
-```bash
-# Run all acceptance tests (requires Airbyte instance)
-TF_ACC=1 go test -v -cover ./internal/provider/
-```
-
-### Regenerating the Provider
-
-The provider is regenerated from Airbyte's OpenAPI specification using Speakeasy.
-
-#### Manual Regeneration
-
-```bash
-# Install Speakeasy CLI if not already installed
-# See: https://www.speakeasy.com/docs/speakeasy-cli/getting-started
-
-# Run regeneration
-make all
-# Or directly:
-speakeasy run
-```
-
-#### Automated Regeneration via GitHub Actions
-
-The `speakeasy_sdk_generation.yml` workflow can be triggered manually:
-
-1. Go to Actions > Generate > Run workflow
-2. Optionally check "Force generation of SDKs"
-3. This creates a PR with the regenerated code for review
 
 ### Publishing a New Release
 
