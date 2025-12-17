@@ -33,6 +33,14 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
           echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
+      - name: Clean regeneration experiment
+        run: |
+          # Delete internal/sdk to force clean regeneration
+          # This tests if the mismatch is caused by preserved/stale files
+          echo "Removing internal/sdk for clean regeneration..."
+          rm -rf internal/sdk
+          echo "Done. internal/sdk removed."
+
       - name: Run Speakeasy Generation (dry-run)
         id: generate
         continue-on-error: true
@@ -52,17 +60,30 @@ jobs:
       - name: Debug - Inspect generated files
         if: always()
         run: |
+          echo "=== Check if destinationastra.go has generated code banner ==="
+          head -20 internal/sdk/models/shared/destinationastra.go || echo "File not found"
+          echo ""
           echo "=== UnmarshalJSON signature in utils/json.go ==="
           grep -n "func UnmarshalJSON" internal/sdk/internal/utils/json.go || echo "Not found"
           echo ""
           echo "=== First UnmarshalJSON call in destinationastra.go ==="
           grep -n "UnmarshalJSON" internal/sdk/models/shared/destinationastra.go | head -5 || echo "Not found"
           echo ""
+          echo "=== Count of old call pattern (passing bool as 5th arg) ==="
+          grep -rn "UnmarshalJSON(data, &.*false, true)" internal/sdk/models/ | wc -l || echo "0"
+          grep -rn "UnmarshalJSON(data, &.*false, false)" internal/sdk/models/ | wc -l || echo "0"
+          echo ""
+          echo "=== Sample of old call patterns (first 10) ==="
+          grep -rn "UnmarshalJSON(data, &.*false, true)" internal/sdk/models/ | head -10 || echo "None found"
+          echo ""
+          echo "=== Count of new call pattern (passing []string as 5th arg) ==="
+          grep -rn 'UnmarshalJSON(data, &.*\[\]string' internal/sdk/models/ | wc -l || echo "0"
+          echo ""
           echo "=== Git diff summary ==="
           git diff --stat || true
           echo ""
-          echo "=== Changed files in internal/sdk ==="
-          git diff --name-only -- internal/sdk/ | head -20 || true
+          echo "=== Changed files in internal/sdk/models/shared (full list) ==="
+          git diff --name-only -- internal/sdk/models/shared/ || true
 
       - name: Upload debug artifacts
         if: always()
