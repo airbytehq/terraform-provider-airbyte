@@ -35,11 +35,16 @@ jobs:
 
       - name: Clean regeneration experiment
         run: |
-          # Delete internal/sdk to force clean regeneration
+          # Delete ALL generated code to force fully clean regeneration
           # This tests if the mismatch is caused by preserved/stale files
           echo "Removing internal/sdk for clean regeneration..."
           rm -rf internal/sdk
-          echo "Done. internal/sdk removed."
+          echo "Removing generated provider glue files..."
+          rm -rf internal/provider/*_sdk.go
+          rm -rf internal/provider/types/
+          echo "Listing remaining provider files..."
+          ls internal/provider/ | head -20
+          echo "Done. Generated code removed."
 
       - name: Run Speakeasy Generation (dry-run)
         id: generate
