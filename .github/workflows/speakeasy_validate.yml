@@ -49,9 +49,12 @@ jobs:
           echo "::warning::Speakeasy generation encountered issues. See logs above."
           cat speakeasy_output.txt
 
+      - name: Update dependencies
+        run: |
+          go mod tidy
+
       - name: Build generated code
         run: |
-          go mod download
           go build -v ./...
 
       - name: Run linters
