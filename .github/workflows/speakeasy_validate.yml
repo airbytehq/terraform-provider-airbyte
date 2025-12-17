@@ -49,6 +49,33 @@ jobs:
           echo "::warning::Speakeasy generation encountered issues. See logs above."
           cat speakeasy_output.txt
 
+      - name: Debug - Inspect generated files
+        if: always()
+        run: |
+          echo "=== UnmarshalJSON signature in utils/json.go ==="
+          grep -n "func UnmarshalJSON" internal/sdk/internal/utils/json.go || echo "Not found"
+          echo ""
+          echo "=== First UnmarshalJSON call in destinationastra.go ==="
+          grep -n "UnmarshalJSON" internal/sdk/models/shared/destinationastra.go | head -5 || echo "Not found"
+          echo ""
+          echo "=== Git diff summary ==="
+          git diff --stat || true
+          echo ""
+          echo "=== Changed files in internal/sdk ==="
+          git diff --name-only -- internal/sdk/ | head -20 || true
+
+      - name: Upload debug artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: speakeasy-debug
+          path: |
+            internal/sdk/internal/utils/json.go
+            internal/sdk/models/shared/destinationastra.go
+            speakeasy_output.txt
+            .speakeasy/gen.lock
+          retention-days: 5
+
       - name: Update dependencies
         run: |
           go mod tidy
