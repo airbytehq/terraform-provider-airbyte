@@ -53,10 +53,29 @@ jobs:
 
       - name: Go mod download
         run: go mod download
+        env:
+          # Isolate Go caches to avoid contention with CodeQL tracing
+          GOMODCACHE: ${{ runner.temp }}/go-mod-cache
+          GOCACHE: ${{ runner.temp }}/go-build-cache
 
-      # Manual build - removed -v flag to reduce log I/O overhead
+      # Manual build with heartbeat to monitor progress
       - name: Build
-        run: go build .
+        run: |
+          echo "Starting build at $(date)"
+          # Start heartbeat in background
+          (while true; do echo "Build heartbeat: $(date)"; sleep 30; done) &
+          HEARTBEAT_PID=$!
+          # Run build
+          go build .
+          BUILD_EXIT=$?
+          # Stop heartbeat
+          kill $HEARTBEAT_PID 2>/dev/null || true
+          echo "Build completed at $(date) with exit code $BUILD_EXIT"
+          exit $BUILD_EXIT
+        env:
+          # Isolate Go caches to avoid contention with CodeQL tracing
+          GOMODCACHE: ${{ runner.temp }}/go-mod-cache
+          GOCACHE: ${{ runner.temp }}/go-build-cache
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
