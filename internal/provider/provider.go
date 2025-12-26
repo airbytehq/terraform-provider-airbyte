@@ -25,13 +25,15 @@ type AirbyteProvider struct {
 
 // AirbyteProviderModel describes the provider data model.
 type AirbyteProviderModel struct {
-	BearerAuth   types.String `tfsdk:"bearer_auth"`
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	Password     types.String `tfsdk:"password"`
-	ServerURL    types.String `tfsdk:"server_url"`
-	TokenURL     types.String `tfsdk:"token_url"`
-	Username     types.String `tfsdk:"username"`
+	BearerAuth                 types.String `tfsdk:"bearer_auth"`
+	ClientID                   types.String `tfsdk:"client_id"`
+	ClientSecret               types.String `tfsdk:"client_secret"`
+	Password                   types.String `tfsdk:"password"`
+	ServerURL                  types.String `tfsdk:"server_url"`
+	TokenURL                   types.String `tfsdk:"token_url"`
+	Username                   types.String `tfsdk:"username"`
+	GoogleIAPServiceAccountKey types.String `tfsdk:"google_iap_service_account_key"`
+	GoogleIAPClientID          types.String `tfsdk:"google_iap_client_id"`
 }
 
 func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -69,6 +71,15 @@ func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest
 			"username": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
+			},
+			"google_iap_service_account_key": schema.StringAttribute{
+				Optional:    true,
+				Sensitive:   true,
+				Description: `Google Service Account JSON key for IAP authentication (content or file path)`,
+			},
+			"google_iap_client_id": schema.StringAttribute{
+				Optional:    true,
+				Description: `OAuth2 Client ID configured for Google IAP`,
 			},
 		},
 		MarkdownDescription: `airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.`,
@@ -131,8 +142,10 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	}
 
 	providerHTTPTransportOpts := ProviderHTTPTransportOpts{
-		SetHeaders: make(map[string]string),
-		Transport:  http.DefaultTransport,
+		SetHeaders:                 make(map[string]string),
+		Transport:                  http.DefaultTransport,
+		GoogleIAPServiceAccountKey: data.GoogleIAPServiceAccountKey.ValueString(),
+		GoogleIAPClientID:          data.GoogleIAPClientID.ValueString(),
 	}
 
 	httpClient := http.DefaultClient

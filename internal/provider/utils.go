@@ -107,13 +107,33 @@ type ProviderHTTPTransportOpts struct {
 
 	// Underlying HTTP transport.
 	Transport http.RoundTripper
+
+	// Google IAP Service Account Key (JSON content or file path)
+	GoogleIAPServiceAccountKey string
+
+	// Google IAP Client ID (OAuth2 Client ID configured for IAP)
+	GoogleIAPClientID string
 }
 
 // Note: this is taken as a more minimal/specific version of https://github.com/hashicorp/terraform-plugin-sdk/blob/main/helper/logging/logging_http_transport.go
 func NewProviderHTTPTransport(opts ProviderHTTPTransportOpts) *providerHttpTransport {
+	var iapManager *IAPTokenManager
+	if opts.GoogleIAPServiceAccountKey != "" && opts.GoogleIAPClientID != "" {
+		var err error
+		iapManager, err = NewIAPTokenManager(opts.GoogleIAPServiceAccountKey, opts.GoogleIAPClientID)
+		if err != nil {
+			// Log the error but continue - IAP will not work but provider can still function
+			// for non-IAP endpoints
+			tflog.Error(context.Background(), "Failed to initialize IAP token manager", map[string]interface{}{
+				"error": err.Error(),
+			})
+		}
+	}
+
 	return &providerHttpTransport{
 		setHeaders: opts.SetHeaders,
 		transport:  opts.Transport,
+		iapManager: iapManager,
 	}
 }
 
@@ -135,6 +155,7 @@ const (
 type providerHttpTransport struct {
 	setHeaders map[string]string
 	transport  http.RoundTripper
+	iapManager *IAPTokenManager
 }
 
 func (t *providerHttpTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -143,6 +164,18 @@ func (t *providerHttpTransport) RoundTrip(req *http.Request) (*http.Response, er
 
 	// Set globally defined HTTP headers in the request
 	t.setRequestHeaders(req)
+
+	// Set IAP token if configured
+	if t.iapManager != nil {
+		token, err := t.iapManager.GetToken()
+		if err != nil {
+			tflog.Error(ctx, "Failed to get IAP token", map[string]interface{}{
+				"error": err.Error(),
+			})
+		} else if token != "" {
+			req.Header.Set("Authorization", "Bearer "+token)
+		}
+	}
 
 	// Decompose the request bytes in a message (HTTP body) and fields (HTTP headers), then log it
 	fields, err := decomposeRequestForLogging(req)
