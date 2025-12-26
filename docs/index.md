@@ -35,6 +35,8 @@ provider "airbyte" {
 - `bearer_auth` (String, Sensitive)
 - `client_id` (String, Sensitive)
 - `client_secret` (String, Sensitive)
+- `google_iap_client_id` (String) OAuth2 Client ID configured for Google IAP
+- `google_iap_service_account_key` (String, Sensitive) Google Service Account JSON key for IAP authentication (content or file path)
 - `password` (String, Sensitive)
 - `server_url` (String) Server URL (defaults to https://api.airbyte.com/v1)
 - `token_url` (String, Sensitive)
