@@ -107,6 +107,9 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	} else {
 		bearerAuth = nil
 	}
+	// Only use BasicAuth if bearerAuth is not set and username/password are provided
+	// This fixes the issue where BasicAuth with empty credentials overwrites BearerAuth
+	// See: https://github.com/airbytehq/terraform-provider-airbyte/issues/198
 	var basicAuth *shared.SchemeBasicAuth
 	var username string
 	username = data.Username.ValueString()
@@ -114,9 +117,11 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	var password string
 	password = data.Password.ValueString()
 
-	basicAuth = &shared.SchemeBasicAuth{
-		Username: username,
-		Password: password,
+	if bearerAuth == nil && (username != "" || password != "") {
+		basicAuth = &shared.SchemeBasicAuth{
+			Username: username,
+			Password: password,
+		}
 	}
 	var clientCredentials *shared.SchemeClientCredentials
 	var clientID string
