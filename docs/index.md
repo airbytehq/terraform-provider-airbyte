@@ -10,6 +10,30 @@ description: |-
 
 airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 
+## Connector Modules (v1.0+)
+
+Starting with v1.0, connector-specific resources have moved to external modules. See the [Connector Modules Guide](guides/connector-modules.md) for details.
+
+**Quick example:**
+
+```terraform
+module "destination_postgres" {
+  source = "github.com/airbytehq/airbyte-terraform-modules//destinations/destination-postgres/3.0.0"
+
+  workspace_id = var.workspace_id
+  name         = "my-postgres"
+  # ... connector-specific variables
+}
+
+resource "airbyte_connection" "example" {
+  destination_id = module.destination_postgres.destination_id
+  source_id      = airbyte_source_custom.my_source.source_id
+  # ...
+}
+```
+
+Browse modules: https://airbytehq.github.io/airbyte-terraform-modules/
+
 ## Example Usage
 
 ```terraform

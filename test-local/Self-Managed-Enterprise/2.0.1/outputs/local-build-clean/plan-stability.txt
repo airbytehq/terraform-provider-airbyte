@@ -1,0 +1,39 @@
+
+Warning: Provider development overrides are in effect
+
+The following provider development overrides are set in the CLI
+configuration:
+ - airbytehq/airbyte in /Users/c.ogribin/tf-providers/airbyte-local
+
+The behavior may therefore not match any released version of the provider and
+applying changes may cause the state to become incompatible with published
+releases.
+airbyte_declarative_source_definition.exchange_rates: Refreshing state... [id=f8473b16-44bd-415e-b63a-37a730e617de]
+airbyte_destination_dev_null.my_destination_devnull: Refreshing state... [name=dev-null-terraform]
+airbyte_source_custom.my_exchange_rates: Refreshing state... [name=exchange rates]
+airbyte_connection.tf_custom_declarative_definition_example: Refreshing state... [name=tf_custom_declarative_definition_example]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # airbyte_source_custom.my_exchange_rates will be updated in-place
+  ~ resource "airbyte_source_custom" "my_exchange_rates" {
+      ~ configuration = jsonencode(
+          ~ {
+              ~ api_key    = "**********" -> "Bli8LtpYKu07NVlB9QQavwSLbCbLLLhn"
+                # (2 unchanged attributes hidden)
+            }
+        )
+        name          = "exchange rates"
+        # (4 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

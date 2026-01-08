@@ -1,0 +1,31 @@
+data.airbyte_workspace.default: Reading...
+data.airbyte_workspace.default: Read complete after 0s [name=Terraform-test]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.destination_dev_null.airbyte_destination_custom.destination-dev-null will be created
+  + resource "airbyte_destination_custom" "destination-dev-null" {
+      + configuration       = jsonencode({})
+      + created_at          = (known after apply)
+      + definition_id       = "a7bcc9d8-13b3-4e49-b80d-d020b90045e3"
+      + destination_id      = (known after apply)
+      + destination_type    = (known after apply)
+      + name                = "dev-null-terraform-module"
+      + resource_allocation = (known after apply)
+      + workspace_id        = "2e09f34d-a47c-44ff-84c3-ba67e3b3b13c"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + destination_id = (known after apply)
+  + workspace_name = "Terraform-test"
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

@@ -1,0 +1,1293 @@
+
+Warning: Provider development overrides are in effect
+
+The following provider development overrides are set in the CLI
+configuration:
+ - airbytehq/airbyte in /Users/c.ogribin/tf-providers/airbyte-local
+
+The behavior may therefore not match any released version of the provider and
+applying changes may cause the state to become incompatible with published
+releases.
+data.airbyte_workspace.default: Reading...
+data.airbyte_workspace.default: Read complete after 1s [name=Terraform-test]
+module.destination_dev_null.airbyte_destination_custom.destination-dev-null: Refreshing state... [name=dev-null-terraform-module]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # airbyte_connection.module_example will be created
+  + resource "airbyte_connection" "module_example" {
+      + configurations                       = {
+          + streams = [
+              + {
+                  + cursor_field            = (known after apply)
+                  + destination_object_name = (known after apply)
+                  + include_files           = (known after apply)
+                  + mappers                 = (known after apply)
+                  + name                    = "Rates"
+                  + namespace               = (known after apply)
+                  + primary_key             = (known after apply)
+                  + selected_fields         = (known after apply)
+                  + sync_mode               = "full_refresh_overwrite"
+                },
+            ]
+        }
+      + connection_id                        = (known after apply)
+      + created_at                           = (known after apply)
+      + destination_id                       = "8c912e26-9654-48f9-907d-ace415c09720"
+      + name                                 = "tf_module_connection_example"
+      + namespace_definition                 = "custom_format"
+      + namespace_format                     = "MODULE_TEST"
+      + non_breaking_schema_updates_behavior = "propagate_fully"
+      + schedule                             = {
+          + basic_timing    = (known after apply)
+          + cron_expression = "0 0 8 * * ? UTC"
+          + schedule_type   = "cron"
+        }
+      + source_id                            = (known after apply)
+      + status                               = "active"
+      + tags                                 = (known after apply)
+      + workspace_id                         = (known after apply)
+    }
+
+  # airbyte_declarative_source_definition.exchange_rates will be created
+  + resource "airbyte_declarative_source_definition" "exchange_rates" {
+      + id           = (known after apply)
+      + manifest     = jsonencode(
+            {
+              + check       = {
+                  + stream_names = [
+                      + "Rates",
+                    ]
+                  + type         = "CheckStream"
+                }
+              + definitions = {
+                  + base_requester = {
+                      + authenticator = {
+                          + api_token   = "{{ config[\"api_key\"] }}"
+                          + inject_into = {
+                              + field_name  = "apikey"
+                              + inject_into = "header"
+                              + type        = "RequestOption"
+                            }
+                          + type        = "ApiKeyAuthenticator"
+                        }
+                      + type          = "HttpRequester"
+                      + url_base      = "https://api.apilayer.com"
+                    }
+                  + streams        = {
+                      + Rates = {
+                          + incremental_sync = {
+                              + cursor_datetime_formats = [
+                                  + "%Y-%m-%d",
+                                ]
+                              + cursor_field            = "date"
+                              + cursor_granularity      = "P1D"
+                              + datetime_format         = "%Y-%m-%d"
+                              + end_datetime            = {
+                                  + datetime        = "{{ now_utc().strftime('%Y-%m-%dT%H:%M:%SZ') }}"
+                                  + datetime_format = "%Y-%m-%dT%H:%M:%SZ"
+                                  + type            = "MinMaxDatetime"
+                                }
+                              + start_datetime          = {
+                                  + datetime        = "{{ config[\"start_date\"] }}"
+                                  + datetime_format = "%Y-%m-%dT%H:%M:%SZ"
+                                  + type            = "MinMaxDatetime"
+                                }
+                              + step                    = "P1D"
+                              + type                    = "DatetimeBasedCursor"
+                            }
+                          + name             = "Rates"
+                          + retriever        = {
+                              + decoder         = {
+                                  + type = "JsonDecoder"
+                                }
+                              + record_selector = {
+                                  + extractor = {
+                                      + field_path = []
+                                      + type       = "DpathExtractor"
+                                    }
+                                  + type      = "RecordSelector"
+                                }
+                              + requester       = {
+                                  + "$ref"             = "#/definitions/base_requester"
+                                  + http_method        = "GET"
+                                  + path               = "/exchangerates_data/{{ stream_interval.start_time }}"
+                                  + request_parameters = {
+                                      + base = "{{ config['base'] }}"
+                                    }
+                                }
+                              + type            = "SimpleRetriever"
+                            }
+                          + schema_loader    = {
+                              + schema = {
+                                  + "$ref" = "#/schemas/Rates"
+                                }
+                              + type   = "InlineSchemaLoader"
+                            }
+                          + type             = "DeclarativeStream"
+                        }
+                    }
+                }
+              + metadata    = {
+                  + assist           = {}
+                  + autoImportSchema = {
+                      + Rates = true
+                    }
+                  + testedStreams    = {
+                      + Rates = {
+                          + hasRecords             = true
+                          + hasResponse            = true
+                          + primaryKeysArePresent  = true
+                          + primaryKeysAreUnique   = true
+                          + responsesAreSuccessful = true
+                          + streamHash             = "07361af2711839e5f74bcc073aa00689e2ef9498"
+                        }
+                    }
+                }
+              + schemas     = {
+                  + Rates = {
+                      + "$schema"            = "http://json-schema.org/schema#"
+                      + additionalProperties = true
+                      + properties           = {
+                          + base       = {
+                              + type = [
+                                  + "string",
+                                  + "null",
+                                ]
+                            }
+                          + date       = {
+                              + type = "string"
+                            }
+                          + historical = {
+                              + type = [
+                                  + "boolean",
+                                  + "null",
+                                ]
+                            }
+                          + rates      = {
+                              + properties = {
+                                  + AED = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + AFN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ALL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + AMD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ANG = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + AOA = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ARS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + AUD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + AWG = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + AZN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BAM = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BBD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BDT = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BGN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BHD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BIF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BMD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BND = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BOB = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BRL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BSD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BTC = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BTN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BWP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BYN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BYR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + BZD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CAD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CDF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CHF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CLF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CLP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CNY = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + COP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CRC = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CUC = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CUP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CVE = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + CZK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + DJF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + DKK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + DOP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + DZD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + EGP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ERN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ETB = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + EUR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + FJD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + FKP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GBP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GEL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GGP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GHS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GIP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GMD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GNF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GTQ = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + GYD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + HKD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + HNL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + HRK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + HTG = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + HUF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + IDR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ILS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + IMP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + INR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + IQD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + IRR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ISK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + JEP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + JMD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + JOD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + JPY = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KES = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KGS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KHR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KMF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KPW = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KRW = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KWD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KYD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + KZT = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LAK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LBP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LKR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LRD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LSL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LTL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LVL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + LYD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MAD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MDL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MGA = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MKD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MMK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MNT = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MOP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MRU = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MUR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MVR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MWK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MXN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MYR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + MZN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + NAD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + NGN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + NIO = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + NOK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + NPR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + NZD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + OMR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + PAB = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + PEN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + PGK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + PHP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + PKR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + PLN = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + PYG = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + QAR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + RON = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + RSD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + RUB = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + RWF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SAR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SBD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SCR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SDG = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SEK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SGD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SHP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SLE = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SLL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SOS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SRD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + STD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SVC = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SYP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + SZL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + THB = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TJS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TMT = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TND = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TOP = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TRY = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TTD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TWD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + TZS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + UAH = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + UGX = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + USD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + UYU = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + UZS = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + VEF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + VES = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + VND = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + VUV = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + WST = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + XAF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + XAG = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + XAU = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + XCD = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + XDR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + XOF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + XPF = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + YER = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ZAR = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ZMK = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ZMW = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                  + ZWL = {
+                                      + type = [
+                                          + "number",
+                                          + "null",
+                                        ]
+                                    }
+                                }
+                              + type       = [
+                                  + "object",
+                                  + "null",
+                                ]
+                            }
+                          + success    = {
+                              + type = [
+                                  + "boolean",
+                                  + "null",
+                                ]
+                            }
+                          + timestamp  = {
+                              + type = [
+                                  + "number",
+                                  + "null",
+                                ]
+                            }
+                        }
+                      + required             = [
+                          + "date",
+                        ]
+                      + type                 = "object"
+                    }
+                }
+              + spec        = {
+                  + connection_specification = {
+                      + "$schema"            = "http://json-schema.org/draft-07/schema#"
+                      + additionalProperties = true
+                      + properties           = {
+                          + api_key    = {
+                              + airbyte_secret = true
+                              + order          = 1
+                              + title          = "API Key"
+                              + type           = "string"
+                            }
+                          + base       = {
+                              + description = "What base currency are you looking for? (e.g GBP,USD)"
+                              + order       = 2
+                              + title       = "Base"
+                              + type        = "string"
+                            }
+                          + start_date = {
+                              + format  = "date-time"
+                              + order   = 0
+                              + pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+                              + title   = "Start date"
+                              + type    = "string"
+                            }
+                        }
+                      + required             = [
+                          + "start_date",
+                          + "api_key",
+                          + "base",
+                        ]
+                      + type                 = "object"
+                    }
+                  + type                     = "Spec"
+                }
+              + streams     = [
+                  + {
+                      + "$ref" = "#/definitions/streams/Rates"
+                    },
+                ]
+              + type        = "DeclarativeSource"
+              + version     = "6.48.15"
+            }
+        )
+      + name         = "exchange_rates_module_test"
+      + version      = (known after apply)
+      + workspace_id = "2e09f34d-a47c-44ff-84c3-ba67e3b3b13c"
+    }
+
+  # airbyte_source_custom.exchange_rates will be created
+  + resource "airbyte_source_custom" "exchange_rates" {
+      + configuration       = jsonencode(
+            {
+              + api_key    = "Bli8LtpYKu07NVlB9QQavwSLbCbLLLhn"
+              + base       = "USD"
+              + start_date = "2025-07-01T00:00:00Z"
+            }
+        )
+      + created_at          = (known after apply)
+      + definition_id       = (known after apply)
+      + name                = "exchange-rates-module-test"
+      + resource_allocation = (known after apply)
+      + source_id           = (known after apply)
+      + source_type         = (known after apply)
+      + workspace_id        = "2e09f34d-a47c-44ff-84c3-ba67e3b3b13c"
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + connection_id  = (known after apply)
+  + source_id      = (known after apply)
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
