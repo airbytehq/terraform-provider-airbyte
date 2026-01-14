@@ -1,4 +1,16 @@
-# Terraform Provider testing workflow.
+# Terraform Provider Testing Workflow
+#
+# This workflow runs build, lint, and acceptance tests for the Terraform provider.
+# It runs automatically on every pull request and push.
+#
+# Jobs:
+# - build: Compiles the provider and runs golangci-lint
+# - generate: Verifies that generated code is up to date
+# - test: Runs Terraform acceptance tests against multiple Terraform versions
+#
+# Note: Acceptance tests require TF_ACC=1 and may need additional credentials
+# for testing against a real Airbyte instance.
+
 name: Tests
 
 # This GitHub action runs your tests for each pull request and push.

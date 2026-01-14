@@ -1,3 +1,16 @@
+# Speakeasy SDK Generation Workflow
+#
+# This workflow regenerates the Terraform provider code from the upstream OpenAPI spec using Speakeasy.
+# It creates a PR with the regenerated code for review.
+#
+# How to use:
+# - Go to Actions > Generate > Run workflow
+# - For normal regeneration: just click "Run workflow"
+# - For clean regeneration (when API spec has breaking changes): check "clean_before_generate"
+#
+# The clean_before_generate option deletes all generated files first, which is needed when the
+# upstream API spec changes significantly (e.g., type renames that cause AST parsing errors).
+
 name: Generate
 permissions:
     checks: write
