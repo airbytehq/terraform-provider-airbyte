@@ -30,17 +30,32 @@ permissions:
   contents: read
 
 jobs:
+  # Updates the draft release when PRs are merged to main
   update_release_draft:
+    if: github.event_name == 'push'
     permissions:
       contents: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      # Drafts the next Release notes as Pull Requests are merged into "main"
-      # Also auto-labels PRs based on conventional commit title patterns
       - uses: release-drafter/release-drafter@v6
         with:
           config-name: release-drafter.yml
-          disable-autolabeler: false
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Auto-labels PRs based on conventional commit title patterns
+  autolabel_pr:
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6
+        with:
+          config-name: release-drafter.yml
+          disable-releaser: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
