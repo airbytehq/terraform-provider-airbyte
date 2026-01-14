@@ -11,8 +11,52 @@ permissions:
                 description: Force generation of SDKs
                 type: boolean
                 default: false
+            clean_before_generate:
+                description: Delete all generated files before regeneration (use for major API spec changes)
+                type: boolean
+                default: false
 jobs:
+    # Optional cleanup job - only runs if clean_before_generate is true
+    # This commits the deletion so the Speakeasy reusable workflow sees the cleaned state
+    clean-generated-files:
+        runs-on: ubuntu-latest
+        if: ${{ inputs.clean_before_generate == true }}
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Delete all generated code
+              run: |
+                # Delete ALL generated code to force fully clean regeneration
+                # The upstream API spec changed from per-connector types to generic types
+                # We need to remove all stale generated files so Speakeasy can regenerate fresh
+                
+                echo "=== Removing internal/sdk (SDK models and utils) ==="
+                rm -rf internal/sdk
+                
+                echo "=== Removing generated provider destination resources ==="
+                rm -f internal/provider/destination_*.go
+                
+                echo "=== Removing generated provider source resources ==="
+                rm -f internal/provider/source_*.go
+                
+                echo "=== Removing generated provider types ==="
+                rm -rf internal/provider/types/
+                
+                echo "=== Done. All generated code removed. ==="
+
+            - name: Commit and push cleaned state
+              run: |
+                git config user.name "github-actions[bot]"
+                git config user.email "github-actions[bot]@users.noreply.github.com"
+                git add -A
+                git commit -m "chore: Clean generated files before regeneration" || echo "No changes to commit"
+                git push
+
+    # Main generation job using Speakeasy's reusable workflow
     generate:
+        needs: [clean-generated-files]
+        # Run if cleanup succeeded OR was skipped (when clean_before_generate is false)
+        if: ${{ always() && (needs.clean-generated-files.result == 'success' || needs.clean-generated-files.result == 'skipped') }}
         uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
         with:
             force: ${{ github.event.inputs.force }}
