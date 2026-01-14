@@ -1,0 +1,61 @@
+# Release Drafter Workflow
+#
+# This workflow automatically creates and updates draft releases based on merged PRs.
+# It also auto-labels PRs based on conventional commit title patterns (e.g., "feat:", "fix:", "chore:").
+#
+# How it works:
+# - On push to main: Updates the draft release with the merged PR
+# - On PR open/update: Auto-labels the PR based on its title
+#
+# To publish a release:
+# 1. Go to the Releases page
+# 2. Find the draft release
+# 3. Edit the version number if needed
+# 4. Click "Publish release" - this creates the git tag and triggers the Release workflow
+
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+concurrency:
+  group: release-drafter
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  # Updates the draft release when PRs are merged to main
+  update_release_draft:
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6
+        with:
+          config-name: release-drafter.yml
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Auto-labels PRs based on conventional commit title patterns
+  autolabel_pr:
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6
+        with:
+          config-name: release-drafter.yml
+          disable-releaser: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

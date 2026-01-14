@@ -1,4 +1,19 @@
-# Terraform Provider release workflow.
+# Terraform Provider Release Workflow
+#
+# This workflow builds and publishes the Terraform provider to the Terraform Registry.
+# It uses GoReleaser to build binaries for all platforms and sign them with GPG.
+#
+# How to trigger:
+# 1. Go to Releases page and find the draft release created by release-drafter
+# 2. Edit the version number if needed and click "Publish release"
+# 3. This creates a git tag (e.g., v0.14.0) which triggers this workflow
+#
+# Alternatively, push a tag manually: git tag v0.14.0 && git push origin v0.14.0
+#
+# Required secrets:
+# - TERRAFORM_GPG_PRIVATE_KEY: GPG private key for signing
+# - TERRAFORM_GPG_PASSPHRASE: Passphrase for the GPG key
+
 name: Release
 
 # This GitHub action creates a release when a tag that matches the pattern
