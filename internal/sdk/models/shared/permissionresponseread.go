@@ -14,37 +14,37 @@ type PermissionResponseRead struct {
 	Scope PermissionScope `json:"scope"`
 }
 
-func (o *PermissionResponseRead) GetPermissionID() string {
-	if o == nil {
+func (p *PermissionResponseRead) GetPermissionID() string {
+	if p == nil {
 		return ""
 	}
-	return o.PermissionID
+	return p.PermissionID
 }
 
-func (o *PermissionResponseRead) GetPermissionType() PermissionType {
-	if o == nil {
+func (p *PermissionResponseRead) GetPermissionType() PermissionType {
+	if p == nil {
 		return PermissionType("")
 	}
-	return o.PermissionType
+	return p.PermissionType
 }
 
-func (o *PermissionResponseRead) GetUserID() string {
-	if o == nil {
+func (p *PermissionResponseRead) GetUserID() string {
+	if p == nil {
 		return ""
 	}
-	return o.UserID
+	return p.UserID
 }
 
-func (o *PermissionResponseRead) GetScopeID() string {
-	if o == nil {
+func (p *PermissionResponseRead) GetScopeID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ScopeID
+	return p.ScopeID
 }
 
-func (o *PermissionResponseRead) GetScope() PermissionScope {
-	if o == nil {
+func (p *PermissionResponseRead) GetScope() PermissionScope {
+	if p == nil {
 		return PermissionScope("")
 	}
-	return o.Scope
+	return p.Scope
 }

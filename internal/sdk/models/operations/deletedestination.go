@@ -10,11 +10,11 @@ type DeleteDestinationRequest struct {
 	DestinationID string `pathParam:"style=simple,explode=false,name=destinationId"`
 }
 
-func (o *DeleteDestinationRequest) GetDestinationID() string {
-	if o == nil {
+func (d *DeleteDestinationRequest) GetDestinationID() string {
+	if d == nil {
 		return ""
 	}
-	return o.DestinationID
+	return d.DestinationID
 }
 
 type DeleteDestinationResponse struct {
@@ -26,23 +26,23 @@ type DeleteDestinationResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *DeleteDestinationResponse) GetContentType() string {
-	if o == nil {
+func (d *DeleteDestinationResponse) GetContentType() string {
+	if d == nil {
 		return ""
 	}
-	return o.ContentType
+	return d.ContentType
 }
 
-func (o *DeleteDestinationResponse) GetStatusCode() int {
-	if o == nil {
+func (d *DeleteDestinationResponse) GetStatusCode() int {
+	if d == nil {
 		return 0
 	}
-	return o.StatusCode
+	return d.StatusCode
 }
 
-func (o *DeleteDestinationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (d *DeleteDestinationResponse) GetRawResponse() *http.Response {
+	if d == nil {
 		return nil
 	}
-	return o.RawResponse
+	return d.RawResponse
 }

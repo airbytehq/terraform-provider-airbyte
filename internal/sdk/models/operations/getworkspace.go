@@ -11,11 +11,11 @@ type GetWorkspaceRequest struct {
 	WorkspaceID string `pathParam:"style=simple,explode=false,name=workspaceId"`
 }
 
-func (o *GetWorkspaceRequest) GetWorkspaceID() string {
-	if o == nil {
+func (g *GetWorkspaceRequest) GetWorkspaceID() string {
+	if g == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return g.WorkspaceID
 }
 
 type GetWorkspaceResponse struct {
@@ -29,30 +29,30 @@ type GetWorkspaceResponse struct {
 	WorkspaceResponse *shared.WorkspaceResponse
 }
 
-func (o *GetWorkspaceResponse) GetContentType() string {
-	if o == nil {
+func (g *GetWorkspaceResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetWorkspaceResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetWorkspaceResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetWorkspaceResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetWorkspaceResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetWorkspaceResponse) GetWorkspaceResponse() *shared.WorkspaceResponse {
-	if o == nil {
+func (g *GetWorkspaceResponse) GetWorkspaceResponse() *shared.WorkspaceResponse {
+	if g == nil {
 		return nil
 	}
-	return o.WorkspaceResponse
+	return g.WorkspaceResponse
 }

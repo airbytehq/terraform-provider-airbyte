@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -23,6 +22,7 @@ func NewDestinationDefinitionDataSource() datasource.DataSource {
 
 // DestinationDefinitionDataSource is the data source implementation.
 type DestinationDefinitionDataSource struct {
+	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
@@ -107,17 +107,13 @@ func (r *DestinationDefinitionDataSource) Read(ctx context.Context, req datasour
 		return
 	}
 
-	var workspaceID string
-	workspaceID = data.WorkspaceID.ValueString()
+	request, requestDiags := data.ToOperationsGetDestinationDefinitionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	var definitionID string
-	definitionID = data.ID.ValueString()
-
-	request := operations.GetDestinationDefinitionRequest{
-		WorkspaceID:  workspaceID,
-		DefinitionID: definitionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.DestinationDefinitions.GetDestinationDefinition(ctx, request)
+	res, err := r.client.DestinationDefinitions.GetDestinationDefinition(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -129,10 +125,6 @@ func (r *DestinationDefinitionDataSource) Read(ctx context.Context, req datasour
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode == 404 {
-		resp.State.RemoveResource(ctx)
-		return
-	}
 	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
@@ -141,7 +133,11 @@ func (r *DestinationDefinitionDataSource) Read(ctx context.Context, req datasour
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDefinitionResponse(res.DefinitionResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedDefinitionResponse(ctx, res.DefinitionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

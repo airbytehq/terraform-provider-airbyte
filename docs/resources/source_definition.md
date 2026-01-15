@@ -44,6 +44,20 @@ resource "airbyte_source_definition" "my_sourcedefinition" {
 
 Import is supported using the following syntax:
 
+In Terraform v1.5.0 and later, the [`import` block](https://developer.hashicorp.com/terraform/language/import) can be used with the `id` attribute, for example:
+
+```terraform
+import {
+  to = airbyte_source_definition.my_airbyte_source_definition
+  id = jsonencode({
+    id = "..."
+    workspace_id = "..."
+  })
+}
+```
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
+
 ```shell
-terraform import airbyte_source_definition.my_airbyte_source_definition "{ \"definition_id\": \"\",  \"workspace_id\": \"\"}"
+terraform import airbyte_source_definition.my_airbyte_source_definition '{"id": "...", "workspace_id": "..."}'
 ```

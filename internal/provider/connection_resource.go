@@ -13,10 +13,9 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	speakeasy_objectvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/objectvalidators"
 	speakeasy_stringvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/stringvalidators"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -40,6 +39,7 @@ func NewConnectionResource() resource.Resource {
 
 // ConnectionResource defines the resource implementation.
 type ConnectionResource struct {
+	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
@@ -58,6 +58,7 @@ type ConnectionResourceModel struct {
 	Schedule                         *tfTypes.AirbyteAPIConnectionSchedule `tfsdk:"schedule"`
 	SourceID                         types.String                          `tfsdk:"source_id"`
 	Status                           types.String                          `tfsdk:"status"`
+	StatusReason                     types.String                          `tfsdk:"status_reason"`
 	Tags                             []tfTypes.Tag                         `tfsdk:"tags"`
 	WorkspaceID                      types.String                          `tfsdk:"workspace_id"`
 }
@@ -145,25 +146,20 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 												},
 												Attributes: map[string]schema.Attribute{
 													"encryption": schema.SingleNestedAttribute{
-														Computed: true,
 														Optional: true,
 														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															speakeasy_objectplanmodifier.UseConfigValue(),
 														},
 														Attributes: map[string]schema.Attribute{
 															"aes": schema.SingleNestedAttribute{
-																Computed: true,
 																Optional: true,
 																PlanModifiers: []planmodifier.Object{
-																	speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+																	speakeasy_objectplanmodifier.UseConfigValue(),
 																},
 																Attributes: map[string]schema.Attribute{
 																	"algorithm": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null; must be one of ["RSA", "AES"]`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
@@ -174,34 +170,25 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 																		},
 																	},
 																	"field_name_suffix": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
 																		},
 																	},
 																	"key": schema.StringAttribute{
-																		Computed:  true,
-																		Optional:  true,
-																		Sensitive: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
+																		Sensitive:   true,
 																		Description: `Not Null`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
 																		},
 																	},
 																	"mode": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null; must be one of ["CBC", "CFB", "OFB", "CTR", "GCM", "ECB"]`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
@@ -216,11 +203,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 																		},
 																	},
 																	"padding": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null; must be one of ["NoPadding", "PKCS5Padding"]`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
@@ -231,11 +215,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 																		},
 																	},
 																	"target_field": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
@@ -249,18 +230,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 																},
 															},
 															"rsa": schema.SingleNestedAttribute{
-																Computed: true,
 																Optional: true,
 																PlanModifiers: []planmodifier.Object{
-																	speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+																	speakeasy_objectplanmodifier.UseConfigValue(),
 																},
 																Attributes: map[string]schema.Attribute{
 																	"algorithm": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null; must be one of ["RSA", "AES"]`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
@@ -271,33 +248,24 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 																		},
 																	},
 																	"field_name_suffix": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
 																		},
 																	},
 																	"public_key": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
 																		},
 																	},
 																	"target_field": schema.StringAttribute{
-																		Computed: true,
-																		Optional: true,
-																		PlanModifiers: []planmodifier.String{
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
+																		Computed:    true,
+																		Optional:    true,
 																		Description: `Not Null`,
 																		Validators: []validator.String{
 																			speakeasy_stringvalidators.NotNull(),
@@ -313,6 +281,31 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														},
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
+																path.MatchRelative().AtParent().AtName("field_filtering"),
+																path.MatchRelative().AtParent().AtName("field_renaming"),
+																path.MatchRelative().AtParent().AtName("hashing"),
+																path.MatchRelative().AtParent().AtName("row_filtering"),
+															}...),
+														},
+													},
+													"field_filtering": schema.SingleNestedAttribute{
+														Optional: true,
+														PlanModifiers: []planmodifier.Object{
+															speakeasy_objectplanmodifier.UseConfigValue(),
+														},
+														Attributes: map[string]schema.Attribute{
+															"target_field": schema.StringAttribute{
+																Computed:    true,
+																Optional:    true,
+																Description: `The name of the field to filter. Not Null`,
+																Validators: []validator.String{
+																	speakeasy_stringvalidators.NotNull(),
+																},
+															},
+														},
+														Validators: []validator.Object{
+															objectvalidator.ConflictsWith(path.Expressions{
+																path.MatchRelative().AtParent().AtName("encryption"),
 																path.MatchRelative().AtParent().AtName("field_renaming"),
 																path.MatchRelative().AtParent().AtName("hashing"),
 																path.MatchRelative().AtParent().AtName("row_filtering"),
@@ -320,29 +313,22 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														},
 													},
 													"field_renaming": schema.SingleNestedAttribute{
-														Computed: true,
 														Optional: true,
 														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															speakeasy_objectplanmodifier.UseConfigValue(),
 														},
 														Attributes: map[string]schema.Attribute{
 															"new_field_name": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-																PlanModifiers: []planmodifier.String{
-																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																},
+																Computed:    true,
+																Optional:    true,
 																Description: `The new name for the field after renaming. Not Null`,
 																Validators: []validator.String{
 																	speakeasy_stringvalidators.NotNull(),
 																},
 															},
 															"original_field_name": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-																PlanModifiers: []planmodifier.String{
-																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																},
+																Computed:    true,
+																Optional:    true,
 																Description: `The current name of the field to rename. Not Null`,
 																Validators: []validator.String{
 																	speakeasy_stringvalidators.NotNull(),
@@ -352,35 +338,29 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
 																path.MatchRelative().AtParent().AtName("encryption"),
+																path.MatchRelative().AtParent().AtName("field_filtering"),
 																path.MatchRelative().AtParent().AtName("hashing"),
 																path.MatchRelative().AtParent().AtName("row_filtering"),
 															}...),
 														},
 													},
 													"hashing": schema.SingleNestedAttribute{
-														Computed: true,
 														Optional: true,
 														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															speakeasy_objectplanmodifier.UseConfigValue(),
 														},
 														Attributes: map[string]schema.Attribute{
 															"field_name_suffix": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-																PlanModifiers: []planmodifier.String{
-																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																},
+																Computed:    true,
+																Optional:    true,
 																Description: `The suffix to append to the field name after hashing. Not Null`,
 																Validators: []validator.String{
 																	speakeasy_stringvalidators.NotNull(),
 																},
 															},
 															"method": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-																PlanModifiers: []planmodifier.String{
-																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																},
+																Computed:    true,
+																Optional:    true,
 																Description: `The hashing algorithm to use. Not Null; must be one of ["MD2", "MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512"]`,
 																Validators: []validator.String{
 																	speakeasy_stringvalidators.NotNull(),
@@ -396,11 +376,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 																},
 															},
 															"target_field": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-																PlanModifiers: []planmodifier.String{
-																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																},
+																Computed:    true,
+																Optional:    true,
 																Description: `The name of the field to be hashed. Not Null`,
 																Validators: []validator.String{
 																	speakeasy_stringvalidators.NotNull(),
@@ -410,34 +387,32 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
 																path.MatchRelative().AtParent().AtName("encryption"),
+																path.MatchRelative().AtParent().AtName("field_filtering"),
 																path.MatchRelative().AtParent().AtName("field_renaming"),
 																path.MatchRelative().AtParent().AtName("row_filtering"),
 															}...),
 														},
 													},
 													"row_filtering": schema.SingleNestedAttribute{
-														Computed: true,
 														Optional: true,
 														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															speakeasy_objectplanmodifier.UseConfigValue(),
 														},
 														Attributes: map[string]schema.Attribute{
 															"conditions": schema.StringAttribute{
-																Computed: true,
-																Optional: true,
-																PlanModifiers: []planmodifier.String{
-																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																},
+																CustomType:  jsontypes.NormalizedType{},
+																Computed:    true,
+																Optional:    true,
 																Description: `Not Null; Parsed as JSON.`,
 																Validators: []validator.String{
 																	speakeasy_stringvalidators.NotNull(),
-																	validators.IsValidJSON(),
 																},
 															},
 														},
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
 																path.MatchRelative().AtParent().AtName("encryption"),
+																path.MatchRelative().AtParent().AtName("field_filtering"),
 																path.MatchRelative().AtParent().AtName("field_renaming"),
 																path.MatchRelative().AtParent().AtName("hashing"),
 															}...),
@@ -455,7 +430,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 												PlanModifiers: []planmodifier.String{
 													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 												},
-												Description: `Not Null; must be one of ["hashing", "field-renaming", "row-filtering", "encryption"]`,
+												Description: `Not Null; must be one of ["hashing", "field-renaming", "row-filtering", "encryption", "field-filtering"]`,
 												Validators: []validator.String{
 													speakeasy_stringvalidators.NotNull(),
 													stringvalidator.OneOf(
@@ -463,6 +438,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														"field-renaming",
 														"row-filtering",
 														"encryption",
+														"field-filtering",
 													),
 												},
 											},
@@ -500,11 +476,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									},
 									Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,
 								},
-								"selected_fields": schema.ListNestedAttribute{
+								"selected_fields": schema.SetNestedAttribute{
 									Computed: true,
 									Optional: true,
-									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+									PlanModifiers: []planmodifier.Set{
+										speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
 									},
 									NestedObject: schema.NestedAttributeObject{
 										Validators: []validator.Object{
@@ -532,14 +508,18 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									PlanModifiers: []planmodifier.String{
 										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 									},
-									Description: `must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "incremental_append", "incremental_deduped_history"]`,
+									Description: `must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "full_refresh_update", "full_refresh_soft_delete", "incremental_append", "incremental_deduped_history", "incremental_update", "incremental_soft_delete"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"full_refresh_overwrite",
 											"full_refresh_overwrite_deduped",
 											"full_refresh_append",
+											"full_refresh_update",
+											"full_refresh_soft_delete",
 											"incremental_append",
 											"incremental_deduped_history",
+											"incremental_update",
+											"incremental_soft_delete",
 										),
 									},
 								},
@@ -683,13 +663,20 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `must be one of ["active", "inactive", "deprecated"]`,
+				Description: `must be one of ["active", "inactive", "deprecated", "locked"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"active",
 						"inactive",
 						"deprecated",
+						"locked",
 					),
+				},
+			},
+			"status_reason": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"tags": schema.ListNestedAttribute{
@@ -801,8 +788,13 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToSharedConnectionCreateRequest()
-	res, err := r.client.Connections.CreateConnection(ctx, request)
+	request, requestDiags := data.ToSharedConnectionCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res, err := r.client.Connections.CreateConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -822,15 +814,24 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
 
-	request1 := operations.GetConnectionRequest{
-		ConnectionID: connectionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Connections.GetConnection(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetConnectionRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Connections.GetConnection(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -850,8 +851,17 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res1.ConnectionResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res1.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -875,13 +885,13 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	request, requestDiags := data.ToOperationsGetConnectionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetConnectionRequest{
-		ConnectionID: connectionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Connections.GetConnection(ctx, request)
+	res, err := r.client.Connections.GetConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -905,7 +915,11 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -925,15 +939,13 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	request, requestDiags := data.ToOperationsPatchConnectionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	connectionPatchRequest := *data.ToSharedConnectionPatchRequest()
-	request := operations.PatchConnectionRequest{
-		ConnectionID:           connectionID,
-		ConnectionPatchRequest: connectionPatchRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Connections.PatchConnection(ctx, request)
+	res, err := r.client.Connections.PatchConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -953,15 +965,24 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var connectionId1 string
-	connectionId1 = data.ConnectionID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
 
-	request1 := operations.GetConnectionRequest{
-		ConnectionID: connectionId1,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Connections.GetConnection(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetConnectionRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Connections.GetConnection(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -981,8 +1002,17 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res1.ConnectionResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res1.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -1006,13 +1036,13 @@ func (r *ConnectionResource) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteConnectionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteConnectionRequest{
-		ConnectionID: connectionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Connections.DeleteConnection(ctx, request)
+	res, err := r.client.Connections.DeleteConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

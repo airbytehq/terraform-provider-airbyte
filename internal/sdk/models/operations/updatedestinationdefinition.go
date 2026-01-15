@@ -13,25 +13,25 @@ type UpdateDestinationDefinitionRequest struct {
 	UpdateDefinitionRequest shared.UpdateDefinitionRequest `request:"mediaType=application/json"`
 }
 
-func (o *UpdateDestinationDefinitionRequest) GetWorkspaceID() string {
-	if o == nil {
+func (u *UpdateDestinationDefinitionRequest) GetWorkspaceID() string {
+	if u == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return u.WorkspaceID
 }
 
-func (o *UpdateDestinationDefinitionRequest) GetDefinitionID() string {
-	if o == nil {
+func (u *UpdateDestinationDefinitionRequest) GetDefinitionID() string {
+	if u == nil {
 		return ""
 	}
-	return o.DefinitionID
+	return u.DefinitionID
 }
 
-func (o *UpdateDestinationDefinitionRequest) GetUpdateDefinitionRequest() shared.UpdateDefinitionRequest {
-	if o == nil {
+func (u *UpdateDestinationDefinitionRequest) GetUpdateDefinitionRequest() shared.UpdateDefinitionRequest {
+	if u == nil {
 		return shared.UpdateDefinitionRequest{}
 	}
-	return o.UpdateDefinitionRequest
+	return u.UpdateDefinitionRequest
 }
 
 type UpdateDestinationDefinitionResponse struct {
@@ -45,30 +45,30 @@ type UpdateDestinationDefinitionResponse struct {
 	DefinitionResponse *shared.DefinitionResponse
 }
 
-func (o *UpdateDestinationDefinitionResponse) GetContentType() string {
-	if o == nil {
+func (u *UpdateDestinationDefinitionResponse) GetContentType() string {
+	if u == nil {
 		return ""
 	}
-	return o.ContentType
+	return u.ContentType
 }
 
-func (o *UpdateDestinationDefinitionResponse) GetStatusCode() int {
-	if o == nil {
+func (u *UpdateDestinationDefinitionResponse) GetStatusCode() int {
+	if u == nil {
 		return 0
 	}
-	return o.StatusCode
+	return u.StatusCode
 }
 
-func (o *UpdateDestinationDefinitionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (u *UpdateDestinationDefinitionResponse) GetRawResponse() *http.Response {
+	if u == nil {
 		return nil
 	}
-	return o.RawResponse
+	return u.RawResponse
 }
 
-func (o *UpdateDestinationDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
-	if o == nil {
+func (u *UpdateDestinationDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
+	if u == nil {
 		return nil
 	}
-	return o.DefinitionResponse
+	return u.DefinitionResponse
 }

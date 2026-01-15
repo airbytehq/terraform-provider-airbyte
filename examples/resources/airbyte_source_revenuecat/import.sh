@@ -1,1 +1,0 @@
-terraform import airbyte_source_revenuecat.my_airbyte_source_revenuecat ""

@@ -3,17 +3,42 @@
 package provider
 
 import (
+	"context"
 	"encoding/json"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DeclarativeSourceDefinitionDataSourceModel) RefreshFromSharedDeclarativeSourceDefinitionResponse(resp *shared.DeclarativeSourceDefinitionResponse) {
+func (r *DeclarativeSourceDefinitionDataSourceModel) RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx context.Context, resp *shared.DeclarativeSourceDefinitionResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.ID = types.StringValue(resp.ID)
 		manifestResult, _ := json.Marshal(resp.Manifest)
-		r.Manifest = types.StringValue(string(manifestResult))
+		r.Manifest = jsontypes.NewNormalizedValue(string(manifestResult))
 		r.Name = types.StringValue(resp.Name)
 		r.Version = types.Int64Value(resp.Version)
 	}
+
+	return diags
+}
+
+func (r *DeclarativeSourceDefinitionDataSourceModel) ToOperationsGetDeclarativeSourceDefinitionRequest(ctx context.Context) (*operations.GetDeclarativeSourceDefinitionRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var definitionID string
+	definitionID = r.ID.ValueString()
+
+	out := operations.GetDeclarativeSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
+	}
+
+	return &out, diags
 }

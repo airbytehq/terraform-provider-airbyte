@@ -3,11 +3,16 @@
 package provider
 
 import (
+	"context"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceDefinitionDataSourceModel) RefreshFromSharedDefinitionResponse(resp *shared.DefinitionResponse) {
+func (r *SourceDefinitionDataSourceModel) RefreshFromSharedDefinitionResponse(ctx context.Context, resp *shared.DefinitionResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.DockerImageTag = types.StringValue(resp.DockerImageTag)
 		r.DockerRepository = types.StringValue(resp.DockerRepository)
@@ -15,4 +20,23 @@ func (r *SourceDefinitionDataSourceModel) RefreshFromSharedDefinitionResponse(re
 		r.ID = types.StringValue(resp.ID)
 		r.Name = types.StringValue(resp.Name)
 	}
+
+	return diags
+}
+
+func (r *SourceDefinitionDataSourceModel) ToOperationsGetSourceDefinitionRequest(ctx context.Context) (*operations.GetSourceDefinitionRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var definitionID string
+	definitionID = r.ID.ValueString()
+
+	out := operations.GetSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
+	}
+
+	return &out, diags
 }

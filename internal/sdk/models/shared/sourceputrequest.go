@@ -10,23 +10,23 @@ type SourcePutRequest struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (o *SourcePutRequest) GetName() string {
-	if o == nil {
+func (s *SourcePutRequest) GetName() string {
+	if s == nil {
 		return ""
 	}
-	return o.Name
+	return s.Name
 }
 
-func (o *SourcePutRequest) GetConfiguration() any {
-	if o == nil {
+func (s *SourcePutRequest) GetConfiguration() any {
+	if s == nil {
 		return nil
 	}
-	return o.Configuration
+	return s.Configuration
 }
 
-func (o *SourcePutRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if o == nil {
+func (s *SourcePutRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if s == nil {
 		return nil
 	}
-	return o.ResourceAllocation
+	return s.ResourceAllocation
 }

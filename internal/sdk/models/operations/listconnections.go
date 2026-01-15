@@ -26,45 +26,45 @@ func (l ListConnectionsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListConnectionsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ListConnectionsRequest) GetWorkspaceIds() []string {
-	if o == nil {
+func (l *ListConnectionsRequest) GetWorkspaceIds() []string {
+	if l == nil {
 		return nil
 	}
-	return o.WorkspaceIds
+	return l.WorkspaceIds
 }
 
-func (o *ListConnectionsRequest) GetTagIds() []string {
-	if o == nil {
+func (l *ListConnectionsRequest) GetTagIds() []string {
+	if l == nil {
 		return nil
 	}
-	return o.TagIds
+	return l.TagIds
 }
 
-func (o *ListConnectionsRequest) GetIncludeDeleted() *bool {
-	if o == nil {
+func (l *ListConnectionsRequest) GetIncludeDeleted() *bool {
+	if l == nil {
 		return nil
 	}
-	return o.IncludeDeleted
+	return l.IncludeDeleted
 }
 
-func (o *ListConnectionsRequest) GetLimit() *int {
-	if o == nil {
+func (l *ListConnectionsRequest) GetLimit() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Limit
+	return l.Limit
 }
 
-func (o *ListConnectionsRequest) GetOffset() *int {
-	if o == nil {
+func (l *ListConnectionsRequest) GetOffset() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Offset
+	return l.Offset
 }
 
 type ListConnectionsResponse struct {
@@ -78,30 +78,30 @@ type ListConnectionsResponse struct {
 	ConnectionsResponse *shared.ConnectionsResponse
 }
 
-func (o *ListConnectionsResponse) GetContentType() string {
-	if o == nil {
+func (l *ListConnectionsResponse) GetContentType() string {
+	if l == nil {
 		return ""
 	}
-	return o.ContentType
+	return l.ContentType
 }
 
-func (o *ListConnectionsResponse) GetStatusCode() int {
-	if o == nil {
+func (l *ListConnectionsResponse) GetStatusCode() int {
+	if l == nil {
 		return 0
 	}
-	return o.StatusCode
+	return l.StatusCode
 }
 
-func (o *ListConnectionsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (l *ListConnectionsResponse) GetRawResponse() *http.Response {
+	if l == nil {
 		return nil
 	}
-	return o.RawResponse
+	return l.RawResponse
 }
 
-func (o *ListConnectionsResponse) GetConnectionsResponse() *shared.ConnectionsResponse {
-	if o == nil {
+func (l *ListConnectionsResponse) GetConnectionsResponse() *shared.ConnectionsResponse {
+	if l == nil {
 		return nil
 	}
-	return o.ConnectionsResponse
+	return l.ConnectionsResponse
 }

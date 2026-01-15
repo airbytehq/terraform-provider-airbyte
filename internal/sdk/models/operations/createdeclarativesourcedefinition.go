@@ -12,18 +12,18 @@ type CreateDeclarativeSourceDefinitionRequest struct {
 	CreateDeclarativeSourceDefinitionRequest shared.CreateDeclarativeSourceDefinitionRequest `request:"mediaType=application/json"`
 }
 
-func (o *CreateDeclarativeSourceDefinitionRequest) GetWorkspaceID() string {
-	if o == nil {
+func (c *CreateDeclarativeSourceDefinitionRequest) GetWorkspaceID() string {
+	if c == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return c.WorkspaceID
 }
 
-func (o *CreateDeclarativeSourceDefinitionRequest) GetCreateDeclarativeSourceDefinitionRequest() shared.CreateDeclarativeSourceDefinitionRequest {
-	if o == nil {
+func (c *CreateDeclarativeSourceDefinitionRequest) GetCreateDeclarativeSourceDefinitionRequest() shared.CreateDeclarativeSourceDefinitionRequest {
+	if c == nil {
 		return shared.CreateDeclarativeSourceDefinitionRequest{}
 	}
-	return o.CreateDeclarativeSourceDefinitionRequest
+	return c.CreateDeclarativeSourceDefinitionRequest
 }
 
 type CreateDeclarativeSourceDefinitionResponse struct {
@@ -37,30 +37,30 @@ type CreateDeclarativeSourceDefinitionResponse struct {
 	DeclarativeSourceDefinitionResponse *shared.DeclarativeSourceDefinitionResponse
 }
 
-func (o *CreateDeclarativeSourceDefinitionResponse) GetContentType() string {
-	if o == nil {
+func (c *CreateDeclarativeSourceDefinitionResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *CreateDeclarativeSourceDefinitionResponse) GetStatusCode() int {
-	if o == nil {
+func (c *CreateDeclarativeSourceDefinitionResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *CreateDeclarativeSourceDefinitionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *CreateDeclarativeSourceDefinitionResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *CreateDeclarativeSourceDefinitionResponse) GetDeclarativeSourceDefinitionResponse() *shared.DeclarativeSourceDefinitionResponse {
-	if o == nil {
+func (c *CreateDeclarativeSourceDefinitionResponse) GetDeclarativeSourceDefinitionResponse() *shared.DeclarativeSourceDefinitionResponse {
+	if c == nil {
 		return nil
 	}
-	return o.DeclarativeSourceDefinitionResponse
+	return c.DeclarativeSourceDefinitionResponse
 }

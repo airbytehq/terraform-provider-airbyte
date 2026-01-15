@@ -7,9 +7,9 @@ type PermissionUpdateRequest struct {
 	PermissionType PermissionType `json:"permissionType"`
 }
 
-func (o *PermissionUpdateRequest) GetPermissionType() PermissionType {
-	if o == nil {
+func (p *PermissionUpdateRequest) GetPermissionType() PermissionType {
+	if p == nil {
 		return PermissionType("")
 	}
-	return o.PermissionType
+	return p.PermissionType
 }

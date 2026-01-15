@@ -14,18 +14,18 @@ type ListPermissionsRequest struct {
 	OrganizationID *string `queryParam:"style=form,explode=true,name=organizationId"`
 }
 
-func (o *ListPermissionsRequest) GetUserID() *string {
-	if o == nil {
+func (l *ListPermissionsRequest) GetUserID() *string {
+	if l == nil {
 		return nil
 	}
-	return o.UserID
+	return l.UserID
 }
 
-func (o *ListPermissionsRequest) GetOrganizationID() *string {
-	if o == nil {
+func (l *ListPermissionsRequest) GetOrganizationID() *string {
+	if l == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return l.OrganizationID
 }
 
 type ListPermissionsResponse struct {
@@ -39,30 +39,30 @@ type ListPermissionsResponse struct {
 	PermissionsResponse *shared.PermissionsResponse
 }
 
-func (o *ListPermissionsResponse) GetContentType() string {
-	if o == nil {
+func (l *ListPermissionsResponse) GetContentType() string {
+	if l == nil {
 		return ""
 	}
-	return o.ContentType
+	return l.ContentType
 }
 
-func (o *ListPermissionsResponse) GetStatusCode() int {
-	if o == nil {
+func (l *ListPermissionsResponse) GetStatusCode() int {
+	if l == nil {
 		return 0
 	}
-	return o.StatusCode
+	return l.StatusCode
 }
 
-func (o *ListPermissionsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (l *ListPermissionsResponse) GetRawResponse() *http.Response {
+	if l == nil {
 		return nil
 	}
-	return o.RawResponse
+	return l.RawResponse
 }
 
-func (o *ListPermissionsResponse) GetPermissionsResponse() *shared.PermissionsResponse {
-	if o == nil {
+func (l *ListPermissionsResponse) GetPermissionsResponse() *shared.PermissionsResponse {
+	if l == nil {
 		return nil
 	}
-	return o.PermissionsResponse
+	return l.PermissionsResponse
 }

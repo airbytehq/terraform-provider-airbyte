@@ -26,9 +26,15 @@ resource "airbyte_connection" "my_connection" {
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
             mapper_configuration = {
-              field_renaming = {
-                new_field_name      = "...my_new_field_name..."
-                original_field_name = "...my_original_field_name..."
+              encryption = {
+                aes = {
+                  algorithm         = "AES"
+                  field_name_suffix = "...my_field_name_suffix..."
+                  key               = "...my_key..."
+                  mode              = "CBC"
+                  padding           = "PKCS5Padding"
+                  target_field      = "...my_target_field..."
+                }
               }
             }
             type = "field-renaming"
@@ -94,13 +100,14 @@ resource "airbyte_connection" "my_connection" {
 - `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. Default: "ignore"; must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
 - `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”). Default: ""
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
-- `status` (String) must be one of ["active", "inactive", "deprecated"]
+- `status` (String) must be one of ["active", "inactive", "deprecated", "locked"]
 - `tags` (Attributes List) (see [below for nested schema](#nestedatt--tags))
 
 ### Read-Only
 
 - `connection_id` (String)
 - `created_at` (Number)
+- `status_reason` (String)
 - `workspace_id` (String)
 
 <a id="nestedatt--configurations"></a>
@@ -122,8 +129,8 @@ Optional:
 - `name` (String) Not Null
 - `namespace` (String) Namespace of the stream.
 - `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
-- `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
-- `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
+- `selected_fields` (Attributes Set) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
+- `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "full_refresh_update", "full_refresh_soft_delete", "incremental_append", "incremental_deduped_history", "incremental_update", "incremental_soft_delete"]
 
 <a id="nestedatt--configurations--streams--mappers"></a>
 ### Nested Schema for `configurations.streams.mappers`
@@ -132,7 +139,7 @@ Optional:
 
 - `id` (String)
 - `mapper_configuration` (Attributes) The values required to configure the mapper. Not Null (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration))
-- `type` (String) Not Null; must be one of ["hashing", "field-renaming", "row-filtering", "encryption"]
+- `type` (String) Not Null; must be one of ["hashing", "field-renaming", "row-filtering", "encryption", "field-filtering"]
 
 <a id="nestedatt--configurations--streams--mappers--mapper_configuration"></a>
 ### Nested Schema for `configurations.streams.mappers.mapper_configuration`
@@ -140,6 +147,7 @@ Optional:
 Optional:
 
 - `encryption` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption))
+- `field_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering))
 - `field_renaming` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming))
 - `hashing` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--hashing))
 - `row_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering))
@@ -175,6 +183,14 @@ Optional:
 - `public_key` (String) Not Null
 - `target_field` (String) Not Null
 
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_filtering`
+
+Optional:
+
+- `target_field` (String) The name of the field to filter. Not Null
 
 
 <a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming"></a>
@@ -243,6 +259,17 @@ Optional:
 
 Import is supported using the following syntax:
 
+In Terraform v1.5.0 and later, the [`import` block](https://developer.hashicorp.com/terraform/language/import) can be used with the `id` attribute, for example:
+
+```terraform
+import {
+  to = airbyte_connection.my_airbyte_connection
+  id = "..."
+}
+```
+
+The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/commands/import) can be used, for example:
+
 ```shell
-terraform import airbyte_connection.my_airbyte_connection ""
+terraform import airbyte_connection.my_airbyte_connection "..."
 ```

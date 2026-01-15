@@ -12,18 +12,18 @@ type GetSourceDefinitionRequest struct {
 	DefinitionID string `pathParam:"style=simple,explode=false,name=definitionId"`
 }
 
-func (o *GetSourceDefinitionRequest) GetWorkspaceID() string {
-	if o == nil {
+func (g *GetSourceDefinitionRequest) GetWorkspaceID() string {
+	if g == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return g.WorkspaceID
 }
 
-func (o *GetSourceDefinitionRequest) GetDefinitionID() string {
-	if o == nil {
+func (g *GetSourceDefinitionRequest) GetDefinitionID() string {
+	if g == nil {
 		return ""
 	}
-	return o.DefinitionID
+	return g.DefinitionID
 }
 
 type GetSourceDefinitionResponse struct {
@@ -37,30 +37,30 @@ type GetSourceDefinitionResponse struct {
 	DefinitionResponse *shared.DefinitionResponse
 }
 
-func (o *GetSourceDefinitionResponse) GetContentType() string {
-	if o == nil {
+func (g *GetSourceDefinitionResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetSourceDefinitionResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetSourceDefinitionResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetSourceDefinitionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetSourceDefinitionResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetSourceDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
-	if o == nil {
+func (g *GetSourceDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
+	if g == nil {
 		return nil
 	}
-	return o.DefinitionResponse
+	return g.DefinitionResponse
 }

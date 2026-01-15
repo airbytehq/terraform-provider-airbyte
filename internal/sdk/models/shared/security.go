@@ -8,23 +8,23 @@ type Security struct {
 	ClientCredentials *SchemeClientCredentials `security:"scheme,type=oauth2,subtype=client_credentials"`
 }
 
-func (o *Security) GetBearerAuth() *string {
-	if o == nil {
+func (s *Security) GetBearerAuth() *string {
+	if s == nil {
 		return nil
 	}
-	return o.BearerAuth
+	return s.BearerAuth
 }
 
-func (o *Security) GetBasicAuth() *SchemeBasicAuth {
-	if o == nil {
+func (s *Security) GetBasicAuth() *SchemeBasicAuth {
+	if s == nil {
 		return nil
 	}
-	return o.BasicAuth
+	return s.BasicAuth
 }
 
-func (o *Security) GetClientCredentials() *SchemeClientCredentials {
-	if o == nil {
+func (s *Security) GetClientCredentials() *SchemeClientCredentials {
+	if s == nil {
 		return nil
 	}
-	return o.ClientCredentials
+	return s.ClientCredentials
 }
