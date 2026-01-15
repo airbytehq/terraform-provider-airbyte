@@ -101,7 +101,7 @@ jobs:
             force: ${{ github.event.inputs.force }}
             mode: pr
             speakeasy_version: latest
-            skip_compile: false
+            enable_sdk_changelog: false
         secrets:
             github_access_token: ${{ secrets.GITHUB_TOKEN }}
             speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
