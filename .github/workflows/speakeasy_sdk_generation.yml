@@ -5,18 +5,12 @@
 #
 # How to use:
 # - Go to Actions > Generate > Run workflow
-# - For normal regeneration: just click "Run workflow"
-# - For clean regeneration (when API spec has breaking changes): check "clean_before_generate"
+# - Select the branch to run on (usually main)
+# - Optionally check "Force generation" to regenerate even if no changes detected
 #
-# The clean_before_generate option:
-# 1. Creates a new branch from main
-# 2. Deletes all generated files and commits to that branch
-# 3. Re-dispatches this workflow on the new branch (with clean_before_generate=false)
-# 4. The Speakeasy action then runs on the cleaned branch and creates a PR
-#
-# This two-stage approach is needed because:
-# - Branch protection prevents pushing directly to main
-# - The Speakeasy reusable workflow doesn't support specifying a custom ref
+# For clean regeneration (when API spec has breaking changes):
+# 1. First run the "Clean PR Branch" workflow on an existing Speakeasy PR branch
+# 2. Then re-run this Generate workflow on main with force=true
 
 name: Generate
 permissions:
@@ -24,7 +18,6 @@ permissions:
     contents: write
     pull-requests: write
     statuses: write
-    actions: write  # Needed to dispatch workflows
 "on":
     workflow_dispatch:
         inputs:
@@ -32,70 +25,8 @@ permissions:
                 description: Force generation of SDKs
                 type: boolean
                 default: false
-            clean_before_generate:
-                description: Delete all generated files before regeneration (use for major API spec changes)
-                type: boolean
-                default: false
 jobs:
-    # Stage 1: Create a clean branch and re-dispatch the workflow on it
-    # Only runs if clean_before_generate is true AND we're on main/master
-    clean-and-redispatch:
-        runs-on: ubuntu-latest
-        if: ${{ inputs.clean_before_generate == true && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') }}
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Create clean branch and delete generated code
-              run: |
-                # Create a new branch for the clean regeneration
-                CLEAN_BRANCH="speakeasy/clean-regen-$(date +%s)"
-                echo "CLEAN_BRANCH=$CLEAN_BRANCH" >> $GITHUB_ENV
-                
-                git checkout -b "$CLEAN_BRANCH"
-                
-                # Delete ALL generated code to force fully clean regeneration
-                echo "=== Removing internal/sdk (SDK models and utils) ==="
-                rm -rf internal/sdk
-                
-                echo "=== Removing generated provider destination resources ==="
-                rm -f internal/provider/destination_*.go
-                
-                echo "=== Removing generated provider source resources ==="
-                rm -f internal/provider/source_*.go
-                
-                echo "=== Removing generated provider types ==="
-                rm -rf internal/provider/types/
-                
-                echo "=== Done. All generated code removed. ==="
-
-            - name: Commit and push clean branch
-              run: |
-                git config user.name "github-actions[bot]"
-                git config user.email "github-actions[bot]@users.noreply.github.com"
-                git add -A
-                git commit -m "chore: Clean generated files before regeneration" || echo "No changes to commit"
-                git push --set-upstream origin "$CLEAN_BRANCH"
-
-            - name: Dispatch workflow on clean branch
-              env:
-                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                echo "Dispatching Generate workflow on branch: $CLEAN_BRANCH"
-                gh workflow run "Generate" --ref "$CLEAN_BRANCH" -f force=${{ inputs.force }} -f clean_before_generate=false
-
-    # Stage 2: Run Speakeasy generation
-    # Runs when:
-    # - clean_before_generate is false (normal run or re-dispatched from Stage 1)
-    # - OR we're already on a non-main branch (re-dispatched from Stage 1)
     generate:
-        runs-on: ubuntu-latest
-        if: ${{ inputs.clean_before_generate == false || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master') }}
-        steps:
-            - run: echo "Starting Speakeasy generation on branch ${{ github.ref }}"
-    
-    generate-sdk:
-        needs: [generate]
-        if: ${{ inputs.clean_before_generate == false || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master') }}
         uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
         with:
             force: ${{ github.event.inputs.force }}
