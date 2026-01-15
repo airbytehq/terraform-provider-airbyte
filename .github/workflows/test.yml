@@ -1,4 +1,16 @@
-# Terraform Provider testing workflow.
+# Terraform Provider Testing Workflow
+#
+# This workflow runs build, lint, and acceptance tests for the Terraform provider.
+# It runs automatically on every pull request and push.
+#
+# Jobs:
+# - build: Compiles the provider and runs golangci-lint
+# - generate: Verifies that generated code is up to date
+# - test: Runs Terraform acceptance tests against multiple Terraform versions
+#
+# Note: Acceptance tests require TF_ACC=1 and may need additional credentials
+# for testing against a real Airbyte instance.
+
 name: Tests
 
 # This GitHub action runs your tests for each pull request and push.
@@ -45,9 +57,22 @@ jobs:
           cache: true
       - run: go generate ./...
       - name: git diff
+        id: git_diff
         run: |
           git diff --compact-summary --exit-code || \
             (echo; echo "Unexpected difference in directories after code generation. Run 'go generate ./...' command and commit."; exit 1)
+      - name: Create diff artifact
+        if: failure() && steps.git_diff.outcome == 'failure'
+        run: |
+          git diff > generated-code-diff.patch
+          echo "Generated code diff saved to generated-code-diff.patch"
+      - name: Upload diff artifact
+        if: failure() && steps.git_diff.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-code-diff
+          path: generated-code-diff.patch
+          retention-days: 7
 
   # Run acceptance tests in a matrix with Terraform CLI versions
   test:
