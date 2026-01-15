@@ -33,6 +33,10 @@ jobs:
             mode: pr
             speakeasy_version: latest
             enable_sdk_changelog: false
+            # Allow Go to auto-download newer toolchain versions if needed
+            # The Speakeasy action uses Go 1.23, but generated code may require newer versions
+            environment: |
+                GOTOOLCHAIN=auto
         secrets:
             github_access_token: ${{ secrets.GITHUB_TOKEN }}
             speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
