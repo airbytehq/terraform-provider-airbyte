@@ -13,18 +13,18 @@ type GetSourceRequest struct {
 	IncludeSecretCoordinates *bool `queryParam:"style=form,explode=true,name=includeSecretCoordinates"`
 }
 
-func (o *GetSourceRequest) GetSourceID() string {
-	if o == nil {
+func (g *GetSourceRequest) GetSourceID() string {
+	if g == nil {
 		return ""
 	}
-	return o.SourceID
+	return g.SourceID
 }
 
-func (o *GetSourceRequest) GetIncludeSecretCoordinates() *bool {
-	if o == nil {
+func (g *GetSourceRequest) GetIncludeSecretCoordinates() *bool {
+	if g == nil {
 		return nil
 	}
-	return o.IncludeSecretCoordinates
+	return g.IncludeSecretCoordinates
 }
 
 type GetSourceResponse struct {
@@ -38,30 +38,30 @@ type GetSourceResponse struct {
 	SourceResponse *shared.SourceResponse
 }
 
-func (o *GetSourceResponse) GetContentType() string {
-	if o == nil {
+func (g *GetSourceResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetSourceResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetSourceResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetSourceResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetSourceResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetSourceResponse) GetSourceResponse() *shared.SourceResponse {
-	if o == nil {
+func (g *GetSourceResponse) GetSourceResponse() *shared.SourceResponse {
+	if g == nil {
 		return nil
 	}
-	return o.SourceResponse
+	return g.SourceResponse
 }

@@ -22,65 +22,65 @@ type StreamConfiguration struct {
 	Mappers []ConfiguredStreamMapper `json:"mappers,omitempty"`
 }
 
-func (o *StreamConfiguration) GetName() string {
-	if o == nil {
+func (s *StreamConfiguration) GetName() string {
+	if s == nil {
 		return ""
 	}
-	return o.Name
+	return s.Name
 }
 
-func (o *StreamConfiguration) GetNamespace() *string {
-	if o == nil {
+func (s *StreamConfiguration) GetNamespace() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Namespace
+	return s.Namespace
 }
 
-func (o *StreamConfiguration) GetSyncMode() *ConnectionSyncModeEnum {
-	if o == nil {
+func (s *StreamConfiguration) GetSyncMode() *ConnectionSyncModeEnum {
+	if s == nil {
 		return nil
 	}
-	return o.SyncMode
+	return s.SyncMode
 }
 
-func (o *StreamConfiguration) GetCursorField() []string {
-	if o == nil {
+func (s *StreamConfiguration) GetCursorField() []string {
+	if s == nil {
 		return nil
 	}
-	return o.CursorField
+	return s.CursorField
 }
 
-func (o *StreamConfiguration) GetPrimaryKey() [][]string {
-	if o == nil {
+func (s *StreamConfiguration) GetPrimaryKey() [][]string {
+	if s == nil {
 		return nil
 	}
-	return o.PrimaryKey
+	return s.PrimaryKey
 }
 
-func (o *StreamConfiguration) GetIncludeFiles() *bool {
-	if o == nil {
+func (s *StreamConfiguration) GetIncludeFiles() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.IncludeFiles
+	return s.IncludeFiles
 }
 
-func (o *StreamConfiguration) GetDestinationObjectName() *string {
-	if o == nil {
+func (s *StreamConfiguration) GetDestinationObjectName() *string {
+	if s == nil {
 		return nil
 	}
-	return o.DestinationObjectName
+	return s.DestinationObjectName
 }
 
-func (o *StreamConfiguration) GetSelectedFields() []SelectedFieldInfo {
-	if o == nil {
+func (s *StreamConfiguration) GetSelectedFields() []SelectedFieldInfo {
+	if s == nil {
 		return nil
 	}
-	return o.SelectedFields
+	return s.SelectedFields
 }
 
-func (o *StreamConfiguration) GetMappers() []ConfiguredStreamMapper {
-	if o == nil {
+func (s *StreamConfiguration) GetMappers() []ConfiguredStreamMapper {
+	if s == nil {
 		return nil
 	}
-	return o.Mappers
+	return s.Mappers
 }

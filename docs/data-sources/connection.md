@@ -38,6 +38,7 @@ data "airbyte_connection" "my_connection" {
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `source_id` (String)
 - `status` (String)
+- `status_reason` (String)
 - `tags` (Attributes List) (see [below for nested schema](#nestedatt--tags))
 - `workspace_id` (String)
 
@@ -60,7 +61,7 @@ Read-Only:
 - `name` (String)
 - `namespace` (String) Namespace of the stream.
 - `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
-- `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
+- `selected_fields` (Attributes Set) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
 - `sync_mode` (String)
 
 <a id="nestedatt--configurations--streams--mappers"></a>
@@ -78,6 +79,7 @@ Read-Only:
 Read-Only:
 
 - `encryption` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption))
+- `field_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering))
 - `field_renaming` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming))
 - `hashing` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--hashing))
 - `row_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering))
@@ -113,6 +115,14 @@ Read-Only:
 - `public_key` (String)
 - `target_field` (String)
 
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_filtering`
+
+Read-Only:
+
+- `target_field` (String) The name of the field to filter.
 
 
 <a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming"></a>

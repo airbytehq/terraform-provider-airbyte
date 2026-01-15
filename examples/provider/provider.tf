@@ -2,11 +2,11 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.18.3"
+      version = "0.19.0"
     }
   }
 }
 
 provider "airbyte" {
-  # Configuration options
+  server_url = "..." # Optional
 }

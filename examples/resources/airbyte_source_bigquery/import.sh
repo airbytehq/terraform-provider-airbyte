@@ -1,1 +1,0 @@
-terraform import airbyte_source_bigquery.my_airbyte_source_bigquery ""

@@ -7,9 +7,11 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -24,6 +26,7 @@ func NewConnectionsDataSource() datasource.DataSource {
 
 // ConnectionsDataSource is the data source implementation.
 type ConnectionsDataSource struct {
+	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
@@ -130,6 +133,15 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 																		},
 																	},
 																},
+																"field_filtering": schema.SingleNestedAttribute{
+																	Computed: true,
+																	Attributes: map[string]schema.Attribute{
+																		"target_field": schema.StringAttribute{
+																			Computed:    true,
+																			Description: `The name of the field to filter.`,
+																		},
+																	},
+																},
 																"field_renaming": schema.SingleNestedAttribute{
 																	Computed: true,
 																	Attributes: map[string]schema.Attribute{
@@ -164,6 +176,7 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 																	Computed: true,
 																	Attributes: map[string]schema.Attribute{
 																		"conditions": schema.StringAttribute{
+																			CustomType:  jsontypes.NormalizedType{},
 																			Computed:    true,
 																			Description: `Parsed as JSON.`,
 																		},
@@ -193,7 +206,7 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 												},
 												Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,
 											},
-											"selected_fields": schema.ListNestedAttribute{
+											"selected_fields": schema.SetNestedAttribute{
 												Computed: true,
 												NestedObject: schema.NestedAttributeObject{
 													Attributes: map[string]schema.Attribute{
@@ -261,6 +274,9 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 						"status": schema.StringAttribute{
 							Computed: true,
 						},
+						"status_reason": schema.StringAttribute{
+							Computed: true,
+						},
 						"tags": schema.ListNestedAttribute{
 							Computed: true,
 							NestedObject: schema.NestedAttributeObject{
@@ -293,6 +309,9 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 			"limit": schema.Int32Attribute{
 				Optional:    true,
 				Description: `Set the limit on the number of Connections returned. The default is 20.`,
+				Validators: []validator.Int32{
+					int32validator.Between(1, 100),
+				},
 			},
 			"next": schema.StringAttribute{
 				Computed: true,
@@ -356,40 +375,13 @@ func (r *ConnectionsDataSource) Read(ctx context.Context, req datasource.ReadReq
 		return
 	}
 
-	var workspaceIds []string = []string{}
-	for _, workspaceIdsItem := range data.WorkspaceIds {
-		workspaceIds = append(workspaceIds, workspaceIdsItem.ValueString())
+	request, requestDiags := data.ToOperationsListConnectionsRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	var tagIds []string = []string{}
-	for _, tagIdsItem := range data.TagIds {
-		tagIds = append(tagIds, tagIdsItem.ValueString())
-	}
-	includeDeleted := new(bool)
-	if !data.IncludeDeleted.IsUnknown() && !data.IncludeDeleted.IsNull() {
-		*includeDeleted = data.IncludeDeleted.ValueBool()
-	} else {
-		includeDeleted = nil
-	}
-	limit := new(int)
-	if !data.Limit.IsUnknown() && !data.Limit.IsNull() {
-		*limit = int(data.Limit.ValueInt32())
-	} else {
-		limit = nil
-	}
-	offset := new(int)
-	if !data.Offset.IsUnknown() && !data.Offset.IsNull() {
-		*offset = int(data.Offset.ValueInt32())
-	} else {
-		offset = nil
-	}
-	request := operations.ListConnectionsRequest{
-		WorkspaceIds:   workspaceIds,
-		TagIds:         tagIds,
-		IncludeDeleted: includeDeleted,
-		Limit:          limit,
-		Offset:         offset,
-	}
-	res, err := r.client.Connections.ListConnections(ctx, request)
+	res, err := r.client.Connections.ListConnections(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -401,10 +393,6 @@ func (r *ConnectionsDataSource) Read(ctx context.Context, req datasource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode == 404 {
-		resp.State.RemoveResource(ctx)
-		return
-	}
 	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
@@ -413,7 +401,11 @@ func (r *ConnectionsDataSource) Read(ctx context.Context, req datasource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionsResponse(res.ConnectionsResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionsResponse(ctx, res.ConnectionsResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

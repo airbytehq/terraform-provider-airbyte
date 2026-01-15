@@ -9,23 +9,23 @@ type ConnectionScheduleResponse struct {
 	BasicTiming    *string                   `json:"basicTiming,omitempty"`
 }
 
-func (o *ConnectionScheduleResponse) GetScheduleType() ScheduleTypeWithBasicEnum {
-	if o == nil {
+func (c *ConnectionScheduleResponse) GetScheduleType() ScheduleTypeWithBasicEnum {
+	if c == nil {
 		return ScheduleTypeWithBasicEnum("")
 	}
-	return o.ScheduleType
+	return c.ScheduleType
 }
 
-func (o *ConnectionScheduleResponse) GetCronExpression() *string {
-	if o == nil {
+func (c *ConnectionScheduleResponse) GetCronExpression() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CronExpression
+	return c.CronExpression
 }
 
-func (o *ConnectionScheduleResponse) GetBasicTiming() *string {
-	if o == nil {
+func (c *ConnectionScheduleResponse) GetBasicTiming() *string {
+	if c == nil {
 		return nil
 	}
-	return o.BasicTiming
+	return c.BasicTiming
 }

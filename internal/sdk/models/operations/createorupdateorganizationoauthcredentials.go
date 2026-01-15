@@ -12,18 +12,18 @@ type CreateOrUpdateOrganizationOAuthCredentialsRequest struct {
 	OrganizationOAuthCredentialsRequest shared.OrganizationOAuthCredentialsRequest `request:"mediaType=application/json"`
 }
 
-func (o *CreateOrUpdateOrganizationOAuthCredentialsRequest) GetOrganizationID() string {
-	if o == nil {
+func (c *CreateOrUpdateOrganizationOAuthCredentialsRequest) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CreateOrUpdateOrganizationOAuthCredentialsRequest) GetOrganizationOAuthCredentialsRequest() shared.OrganizationOAuthCredentialsRequest {
-	if o == nil {
+func (c *CreateOrUpdateOrganizationOAuthCredentialsRequest) GetOrganizationOAuthCredentialsRequest() shared.OrganizationOAuthCredentialsRequest {
+	if c == nil {
 		return shared.OrganizationOAuthCredentialsRequest{}
 	}
-	return o.OrganizationOAuthCredentialsRequest
+	return c.OrganizationOAuthCredentialsRequest
 }
 
 type CreateOrUpdateOrganizationOAuthCredentialsResponse struct {
@@ -35,23 +35,23 @@ type CreateOrUpdateOrganizationOAuthCredentialsResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *CreateOrUpdateOrganizationOAuthCredentialsResponse) GetContentType() string {
-	if o == nil {
+func (c *CreateOrUpdateOrganizationOAuthCredentialsResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *CreateOrUpdateOrganizationOAuthCredentialsResponse) GetStatusCode() int {
-	if o == nil {
+func (c *CreateOrUpdateOrganizationOAuthCredentialsResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *CreateOrUpdateOrganizationOAuthCredentialsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *CreateOrUpdateOrganizationOAuthCredentialsResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

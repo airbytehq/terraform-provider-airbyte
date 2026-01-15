@@ -2,7 +2,9 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type ConnectionResponse struct {
 	Configurations                   StreamConfigurations       `tfsdk:"configurations"`
@@ -17,6 +19,7 @@ type ConnectionResponse struct {
 	Schedule                         ConnectionScheduleResponse `tfsdk:"schedule"`
 	SourceID                         types.String               `tfsdk:"source_id"`
 	Status                           types.String               `tfsdk:"status"`
+	StatusReason                     types.String               `tfsdk:"status_reason"`
 	Tags                             []Tag                      `tfsdk:"tags"`
 	WorkspaceID                      types.String               `tfsdk:"workspace_id"`
 }

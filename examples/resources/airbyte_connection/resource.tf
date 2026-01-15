@@ -11,9 +11,15 @@ resource "airbyte_connection" "my_connection" {
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
             mapper_configuration = {
-              field_renaming = {
-                new_field_name      = "...my_new_field_name..."
-                original_field_name = "...my_original_field_name..."
+              encryption = {
+                aes = {
+                  algorithm         = "AES"
+                  field_name_suffix = "...my_field_name_suffix..."
+                  key               = "...my_key..."
+                  mode              = "CBC"
+                  padding           = "PKCS5Padding"
+                  target_field      = "...my_target_field..."
+                }
               }
             }
             type = "field-renaming"

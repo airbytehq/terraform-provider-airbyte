@@ -12,18 +12,18 @@ type UpdatePermissionRequest struct {
 	PermissionUpdateRequest shared.PermissionUpdateRequest `request:"mediaType=application/json"`
 }
 
-func (o *UpdatePermissionRequest) GetPermissionID() string {
-	if o == nil {
+func (u *UpdatePermissionRequest) GetPermissionID() string {
+	if u == nil {
 		return ""
 	}
-	return o.PermissionID
+	return u.PermissionID
 }
 
-func (o *UpdatePermissionRequest) GetPermissionUpdateRequest() shared.PermissionUpdateRequest {
-	if o == nil {
+func (u *UpdatePermissionRequest) GetPermissionUpdateRequest() shared.PermissionUpdateRequest {
+	if u == nil {
 		return shared.PermissionUpdateRequest{}
 	}
-	return o.PermissionUpdateRequest
+	return u.PermissionUpdateRequest
 }
 
 type UpdatePermissionResponse struct {
@@ -37,30 +37,30 @@ type UpdatePermissionResponse struct {
 	PermissionResponse *shared.PermissionResponse
 }
 
-func (o *UpdatePermissionResponse) GetContentType() string {
-	if o == nil {
+func (u *UpdatePermissionResponse) GetContentType() string {
+	if u == nil {
 		return ""
 	}
-	return o.ContentType
+	return u.ContentType
 }
 
-func (o *UpdatePermissionResponse) GetStatusCode() int {
-	if o == nil {
+func (u *UpdatePermissionResponse) GetStatusCode() int {
+	if u == nil {
 		return 0
 	}
-	return o.StatusCode
+	return u.StatusCode
 }
 
-func (o *UpdatePermissionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (u *UpdatePermissionResponse) GetRawResponse() *http.Response {
+	if u == nil {
 		return nil
 	}
-	return o.RawResponse
+	return u.RawResponse
 }
 
-func (o *UpdatePermissionResponse) GetPermissionResponse() *shared.PermissionResponse {
-	if o == nil {
+func (u *UpdatePermissionResponse) GetPermissionResponse() *shared.PermissionResponse {
+	if u == nil {
 		return nil
 	}
-	return o.PermissionResponse
+	return u.PermissionResponse
 }

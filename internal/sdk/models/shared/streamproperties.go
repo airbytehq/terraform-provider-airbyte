@@ -13,51 +13,51 @@ type StreamProperties struct {
 	PropertyFields           [][]string               `json:"propertyFields,omitempty"`
 }
 
-func (o *StreamProperties) GetStreamName() *string {
-	if o == nil {
+func (s *StreamProperties) GetStreamName() *string {
+	if s == nil {
 		return nil
 	}
-	return o.StreamName
+	return s.StreamName
 }
 
-func (o *StreamProperties) GetSyncModes() []ConnectionSyncModeEnum {
-	if o == nil {
+func (s *StreamProperties) GetSyncModes() []ConnectionSyncModeEnum {
+	if s == nil {
 		return nil
 	}
-	return o.SyncModes
+	return s.SyncModes
 }
 
-func (o *StreamProperties) GetStreamnamespace() *string {
-	if o == nil {
+func (s *StreamProperties) GetStreamnamespace() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Streamnamespace
+	return s.Streamnamespace
 }
 
-func (o *StreamProperties) GetDefaultCursorField() []string {
-	if o == nil {
+func (s *StreamProperties) GetDefaultCursorField() []string {
+	if s == nil {
 		return nil
 	}
-	return o.DefaultCursorField
+	return s.DefaultCursorField
 }
 
-func (o *StreamProperties) GetSourceDefinedCursorField() *bool {
-	if o == nil {
+func (s *StreamProperties) GetSourceDefinedCursorField() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.SourceDefinedCursorField
+	return s.SourceDefinedCursorField
 }
 
-func (o *StreamProperties) GetSourceDefinedPrimaryKey() [][]string {
-	if o == nil {
+func (s *StreamProperties) GetSourceDefinedPrimaryKey() [][]string {
+	if s == nil {
 		return nil
 	}
-	return o.SourceDefinedPrimaryKey
+	return s.SourceDefinedPrimaryKey
 }
 
-func (o *StreamProperties) GetPropertyFields() [][]string {
-	if o == nil {
+func (s *StreamProperties) GetPropertyFields() [][]string {
+	if s == nil {
 		return nil
 	}
-	return o.PropertyFields
+	return s.PropertyFields
 }

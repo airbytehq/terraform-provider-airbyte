@@ -12,18 +12,18 @@ type PutDestinationRequest struct {
 	DestinationPutRequest *shared.DestinationPutRequest `request:"mediaType=application/json"`
 }
 
-func (o *PutDestinationRequest) GetDestinationID() string {
-	if o == nil {
+func (p *PutDestinationRequest) GetDestinationID() string {
+	if p == nil {
 		return ""
 	}
-	return o.DestinationID
+	return p.DestinationID
 }
 
-func (o *PutDestinationRequest) GetDestinationPutRequest() *shared.DestinationPutRequest {
-	if o == nil {
+func (p *PutDestinationRequest) GetDestinationPutRequest() *shared.DestinationPutRequest {
+	if p == nil {
 		return nil
 	}
-	return o.DestinationPutRequest
+	return p.DestinationPutRequest
 }
 
 type PutDestinationResponse struct {
@@ -37,30 +37,30 @@ type PutDestinationResponse struct {
 	DestinationResponse *shared.DestinationResponse
 }
 
-func (o *PutDestinationResponse) GetContentType() string {
-	if o == nil {
+func (p *PutDestinationResponse) GetContentType() string {
+	if p == nil {
 		return ""
 	}
-	return o.ContentType
+	return p.ContentType
 }
 
-func (o *PutDestinationResponse) GetStatusCode() int {
-	if o == nil {
+func (p *PutDestinationResponse) GetStatusCode() int {
+	if p == nil {
 		return 0
 	}
-	return o.StatusCode
+	return p.StatusCode
 }
 
-func (o *PutDestinationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (p *PutDestinationResponse) GetRawResponse() *http.Response {
+	if p == nil {
 		return nil
 	}
-	return o.RawResponse
+	return p.RawResponse
 }
 
-func (o *PutDestinationResponse) GetDestinationResponse() *shared.DestinationResponse {
-	if o == nil {
+func (p *PutDestinationResponse) GetDestinationResponse() *shared.DestinationResponse {
+	if p == nil {
 		return nil
 	}
-	return o.DestinationResponse
+	return p.DestinationResponse
 }

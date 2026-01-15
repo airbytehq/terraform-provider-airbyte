@@ -8,23 +8,23 @@ type WorkspacesResponse struct {
 	Data     []WorkspaceResponse `json:"data"`
 }
 
-func (o *WorkspacesResponse) GetPrevious() *string {
-	if o == nil {
+func (w *WorkspacesResponse) GetPrevious() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Previous
+	return w.Previous
 }
 
-func (o *WorkspacesResponse) GetNext() *string {
-	if o == nil {
+func (w *WorkspacesResponse) GetNext() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Next
+	return w.Next
 }
 
-func (o *WorkspacesResponse) GetData() []WorkspaceResponse {
-	if o == nil {
+func (w *WorkspacesResponse) GetData() []WorkspaceResponse {
+	if w == nil {
 		return []WorkspaceResponse{}
 	}
-	return o.Data
+	return w.Data
 }

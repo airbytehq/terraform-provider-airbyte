@@ -39,87 +39,87 @@ func (l ListJobsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListJobsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ListJobsRequest) GetConnectionID() *string {
-	if o == nil {
+func (l *ListJobsRequest) GetConnectionID() *string {
+	if l == nil {
 		return nil
 	}
-	return o.ConnectionID
+	return l.ConnectionID
 }
 
-func (o *ListJobsRequest) GetLimit() *int {
-	if o == nil {
+func (l *ListJobsRequest) GetLimit() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Limit
+	return l.Limit
 }
 
-func (o *ListJobsRequest) GetOffset() *int {
-	if o == nil {
+func (l *ListJobsRequest) GetOffset() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Offset
+	return l.Offset
 }
 
-func (o *ListJobsRequest) GetJobType() *shared.JobTypeEnum {
-	if o == nil {
+func (l *ListJobsRequest) GetJobType() *shared.JobTypeEnum {
+	if l == nil {
 		return nil
 	}
-	return o.JobType
+	return l.JobType
 }
 
-func (o *ListJobsRequest) GetWorkspaceIds() []string {
-	if o == nil {
+func (l *ListJobsRequest) GetWorkspaceIds() []string {
+	if l == nil {
 		return nil
 	}
-	return o.WorkspaceIds
+	return l.WorkspaceIds
 }
 
-func (o *ListJobsRequest) GetStatus() *shared.JobStatusEnum {
-	if o == nil {
+func (l *ListJobsRequest) GetStatus() *shared.JobStatusEnum {
+	if l == nil {
 		return nil
 	}
-	return o.Status
+	return l.Status
 }
 
-func (o *ListJobsRequest) GetCreatedAtStart() *time.Time {
-	if o == nil {
+func (l *ListJobsRequest) GetCreatedAtStart() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.CreatedAtStart
+	return l.CreatedAtStart
 }
 
-func (o *ListJobsRequest) GetCreatedAtEnd() *time.Time {
-	if o == nil {
+func (l *ListJobsRequest) GetCreatedAtEnd() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.CreatedAtEnd
+	return l.CreatedAtEnd
 }
 
-func (o *ListJobsRequest) GetUpdatedAtStart() *time.Time {
-	if o == nil {
+func (l *ListJobsRequest) GetUpdatedAtStart() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.UpdatedAtStart
+	return l.UpdatedAtStart
 }
 
-func (o *ListJobsRequest) GetUpdatedAtEnd() *time.Time {
-	if o == nil {
+func (l *ListJobsRequest) GetUpdatedAtEnd() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.UpdatedAtEnd
+	return l.UpdatedAtEnd
 }
 
-func (o *ListJobsRequest) GetOrderBy() *string {
-	if o == nil {
+func (l *ListJobsRequest) GetOrderBy() *string {
+	if l == nil {
 		return nil
 	}
-	return o.OrderBy
+	return l.OrderBy
 }
 
 type ListJobsResponse struct {
@@ -133,30 +133,30 @@ type ListJobsResponse struct {
 	JobsResponse *shared.JobsResponse
 }
 
-func (o *ListJobsResponse) GetContentType() string {
-	if o == nil {
+func (l *ListJobsResponse) GetContentType() string {
+	if l == nil {
 		return ""
 	}
-	return o.ContentType
+	return l.ContentType
 }
 
-func (o *ListJobsResponse) GetStatusCode() int {
-	if o == nil {
+func (l *ListJobsResponse) GetStatusCode() int {
+	if l == nil {
 		return 0
 	}
-	return o.StatusCode
+	return l.StatusCode
 }
 
-func (o *ListJobsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (l *ListJobsResponse) GetRawResponse() *http.Response {
+	if l == nil {
 		return nil
 	}
-	return o.RawResponse
+	return l.RawResponse
 }
 
-func (o *ListJobsResponse) GetJobsResponse() *shared.JobsResponse {
-	if o == nil {
+func (l *ListJobsResponse) GetJobsResponse() *shared.JobsResponse {
+	if l == nil {
 		return nil
 	}
-	return o.JobsResponse
+	return l.JobsResponse
 }
