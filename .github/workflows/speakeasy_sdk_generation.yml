@@ -5,11 +5,12 @@
 #
 # How to use:
 # - Go to Actions > Generate > Run workflow
-# - For normal regeneration: just click "Run workflow"
-# - For clean regeneration (when API spec has breaking changes): check "clean_before_generate"
+# - Select the branch to run on (usually main)
+# - Optionally check "Force generation" to regenerate even if no changes detected
 #
-# The clean_before_generate option deletes all generated files first, which is needed when the
-# upstream API spec changes significantly (e.g., type renames that cause AST parsing errors).
+# For clean regeneration (when API spec has breaking changes):
+# 1. First run the "Clean PR Branch" workflow on an existing Speakeasy PR branch
+# 2. Then re-run this Generate workflow on main with force=true
 
 name: Generate
 permissions:
@@ -24,58 +25,18 @@ permissions:
                 description: Force generation of SDKs
                 type: boolean
                 default: false
-            clean_before_generate:
-                description: Delete all generated files before regeneration (use for major API spec changes)
-                type: boolean
-                default: false
 jobs:
-    # Optional cleanup job - only runs if clean_before_generate is true
-    # This commits the deletion so the Speakeasy reusable workflow sees the cleaned state
-    clean-generated-files:
-        runs-on: ubuntu-latest
-        if: ${{ inputs.clean_before_generate == true }}
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Delete all generated code
-              run: |
-                # Delete ALL generated code to force fully clean regeneration
-                # The upstream API spec changed from per-connector types to generic types
-                # We need to remove all stale generated files so Speakeasy can regenerate fresh
-                
-                echo "=== Removing internal/sdk (SDK models and utils) ==="
-                rm -rf internal/sdk
-                
-                echo "=== Removing generated provider destination resources ==="
-                rm -f internal/provider/destination_*.go
-                
-                echo "=== Removing generated provider source resources ==="
-                rm -f internal/provider/source_*.go
-                
-                echo "=== Removing generated provider types ==="
-                rm -rf internal/provider/types/
-                
-                echo "=== Done. All generated code removed. ==="
-
-            - name: Commit and push cleaned state
-              run: |
-                git config user.name "github-actions[bot]"
-                git config user.email "github-actions[bot]@users.noreply.github.com"
-                git add -A
-                git commit -m "chore: Clean generated files before regeneration" || echo "No changes to commit"
-                git push
-
-    # Main generation job using Speakeasy's reusable workflow
     generate:
-        needs: [clean-generated-files]
-        # Run if cleanup succeeded OR was skipped (when clean_before_generate is false)
-        if: ${{ always() && (needs.clean-generated-files.result == 'success' || needs.clean-generated-files.result == 'skipped') }}
         uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
         with:
             force: ${{ github.event.inputs.force }}
             mode: pr
             speakeasy_version: latest
             enable_sdk_changelog: false
+            # Allow Go to auto-download newer toolchain versions if needed
+            # The Speakeasy action uses Go 1.23, but generated code may require newer versions
+            environment: |
+                GOTOOLCHAIN=auto
         secrets:
             github_access_token: ${{ secrets.GITHUB_TOKEN }}
             speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
