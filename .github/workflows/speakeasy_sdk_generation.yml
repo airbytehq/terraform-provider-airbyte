@@ -33,6 +33,12 @@ jobs:
             mode: pr
             speakeasy_version: latest
             enable_sdk_changelog: false
+            # Skip compile step to work around Go version mismatch in Speakeasy action.
+            # The Speakeasy action's staticcheck is built with Go 1.23.12, but the generated
+            # code requires Go 1.24. This causes the "Lint SDK" step to fail with:
+            # "module requires at least go1.24, but Staticcheck was built with go1.23.12"
+            # The repo's own CI (test.yml) runs golangci-lint which will catch any actual lint issues.
+            skip_compile: true
             # Allow Go to auto-download newer toolchain versions if needed
             # The Speakeasy action uses Go 1.23, but generated code may require newer versions
             environment: |
