@@ -813,7 +813,7 @@ paths:
       x-speakeasy-alias: "listConnections"
       x-speakeasy-group: "Connections"
       summary: "List connections"
-      x-speakeasy-entity-operation: Connection#list
+      x-speakeasy-entity-operation: Connection#read
       parameters:
       - name: "workspaceIds"
         description: "The UUIDs of the workspaces you wish to list connections for.\
@@ -1012,7 +1012,7 @@ paths:
       x-speakeasy-alias: "listWorkspaces"
       x-speakeasy-group: "Workspaces"
       summary: "List workspaces"
-      x-speakeasy-entity-operation: Workspace#list
+      x-speakeasy-entity-operation: Workspace#read
       parameters:
       - name: "workspaceIds"
         description: "The UUIDs of the workspaces you wish to fetch. Empty list will\
