@@ -33,8 +33,7 @@ terraform:
   additionalListResources: []
   additionalProviderAttributes:
     httpHeaders: ""
-  additionalResources:
-    - NewConnectorConfigResource
+  additionalResources: []
   allowUnknownFieldsInWeakUnions: false
   author: airbytehq
   baseErrorName: SDKError
