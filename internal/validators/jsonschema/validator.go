@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -480,9 +479,4 @@ func (v *Validator) GetPropertySchema(name string) *JSONSchema {
 // FormatPath formats a path for error messages
 func FormatPath(p path.Path) string {
 	return p.String()
-}
-
-// intToString converts an int to string for path formatting
-func intToString(i int) string {
-	return strconv.Itoa(i)
 }

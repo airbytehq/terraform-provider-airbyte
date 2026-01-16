@@ -101,10 +101,7 @@ func matchesConnectorName(conn ConnectorDefinition, name string) bool {
 		return true
 	}
 	expectedRepo = fmt.Sprintf("airbyte/destination-%s", name)
-	if equalFold(conn.DockerRepository, expectedRepo) {
-		return true
-	}
-	return false
+	return equalFold(conn.DockerRepository, expectedRepo)
 }
 
 // equalFold is a simple case-insensitive string comparison
