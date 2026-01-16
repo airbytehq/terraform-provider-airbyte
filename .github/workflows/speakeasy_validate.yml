@@ -108,6 +108,17 @@ jobs:
             .speakeasy/gen.lock
           retention-days: 5
 
+      - name: Inject custom resources
+        run: |
+          # Inject hand-written custom resources into the generated provider.go
+          # This is needed because custom resources cannot use gen.yaml additionalResources
+          # (Speakeasy expects the function to exist during generation)
+          if [ -f "./scripts/inject_custom_resources.sh" ]; then
+            ./scripts/inject_custom_resources.sh
+          else
+            echo "No custom resource injection script found, skipping"
+          fi
+
       - name: Update dependencies
         run: |
           go mod tidy
