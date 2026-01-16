@@ -1,0 +1,523 @@
+// Connector Config Resource with schema-driven plan-time validation.
+// This resource provides a generic way to configure Airbyte connectors
+// with native HCL syntax and plan-time validation against JSON Schema.
+
+package provider
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators/jsonschema"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
+
+// Ensure provider defined types fully satisfy framework interfaces.
+var _ resource.Resource = &ConnectorConfigResource{}
+var _ resource.ResourceWithImportState = &ConnectorConfigResource{}
+var _ resource.ResourceWithValidateConfig = &ConnectorConfigResource{}
+
+func NewConnectorConfigResource() resource.Resource {
+	return &ConnectorConfigResource{}
+}
+
+// ConnectorConfigResource defines the resource implementation.
+type ConnectorConfigResource struct {
+	client        *sdk.SDK
+	schemaFetcher *SchemaFetcher
+}
+
+// ConnectorConfigResourceModel describes the resource data model.
+type ConnectorConfigResourceModel struct {
+	ID               types.String  `tfsdk:"id"`
+	ConnectorType    types.String  `tfsdk:"connector_type"`
+	ConnectorName    types.String  `tfsdk:"connector_name"`
+	ConnectorVersion types.String  `tfsdk:"connector_version"`
+	Config           types.Dynamic `tfsdk:"config"`
+	WorkspaceID      types.String  `tfsdk:"workspace_id"`
+	Name             types.String  `tfsdk:"name"`
+}
+
+func (r *ConnectorConfigResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_connector_config"
+}
+
+func (r *ConnectorConfigResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		MarkdownDescription: `Connector Config Resource with schema-driven plan-time validation.
+
+This resource provides a generic way to configure Airbyte connectors using native HCL syntax.
+The configuration is validated against the connector's JSON Schema at plan time, providing
+early feedback for invalid configurations.
+
+## Example Usage
+
+` + "```hcl" + `
+resource "airbyte_connector_config" "postgres_source" {
+  connector_type    = "source"
+  connector_name    = "postgres"
+  connector_version = "3.7.0"
+  workspace_id      = "your-workspace-id"
+  name              = "My Postgres Source"
+
+  config = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "user"
+    password = "secret"
+    ssl_mode = {
+      mode = "require"
+    }
+  }
+}
+` + "```" + `
+`,
+		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				Computed:            true,
+				MarkdownDescription: "The unique identifier of the created source or destination.",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"connector_type": schema.StringAttribute{
+				Required:            true,
+				MarkdownDescription: "The type of connector: 'source' or 'destination'.",
+				Validators: []validator.String{
+					stringvalidator.OneOf("source", "destination"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"connector_name": schema.StringAttribute{
+				Required:            true,
+				MarkdownDescription: "The canonical name of the connector (e.g., 'postgres', 'bigquery').",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"connector_version": schema.StringAttribute{
+				Required:            true,
+				MarkdownDescription: "The version of the connector (docker image tag, e.g., '3.7.0'). Use 'latest' for the most recent version.",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"workspace_id": schema.StringAttribute{
+				Required:            true,
+				MarkdownDescription: "The ID of the workspace where the connector will be created.",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"name": schema.StringAttribute{
+				Required:            true,
+				MarkdownDescription: "A human-readable name for the connector instance.",
+			},
+			"config": schema.DynamicAttribute{
+				Required:            true,
+				MarkdownDescription: "The connector configuration as a native HCL object. This will be validated against the connector's JSON Schema at plan time.",
+			},
+		},
+	}
+}
+
+func (r *ConnectorConfigResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+	if req.ProviderData == nil {
+		return
+	}
+
+	client, ok := req.ProviderData.(*sdk.SDK)
+	if !ok {
+		resp.Diagnostics.AddError(
+			"Unexpected Resource Configure Type",
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+		)
+		return
+	}
+
+	r.client = client
+	r.schemaFetcher = NewSchemaFetcher()
+}
+
+// ValidateConfig performs plan-time validation of the connector configuration
+func (r *ConnectorConfigResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data ConnectorConfigResourceModel
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if data.ConnectorType.IsUnknown() || data.ConnectorName.IsUnknown() || data.ConnectorVersion.IsUnknown() {
+		return
+	}
+
+	if data.Config.IsUnknown() || data.Config.IsNull() {
+		return
+	}
+
+	connectorType := data.ConnectorType.ValueString()
+	connectorName := data.ConnectorName.ValueString()
+	connectorVersion := data.ConnectorVersion.ValueString()
+
+	if r.schemaFetcher == nil {
+		r.schemaFetcher = NewSchemaFetcher()
+	}
+
+	schemaJSON, err := r.schemaFetcher.GetSchema(ctx, connectorType, connectorName, connectorVersion)
+	if err != nil {
+		resp.Diagnostics.AddWarning(
+			"Schema Fetch Warning",
+			fmt.Sprintf("Could not fetch schema for %s/%s:%s: %s. Validation will be skipped.", connectorType, connectorName, connectorVersion, err),
+		)
+		return
+	}
+
+	validator, err := jsonschema.NewValidator(schemaJSON)
+	if err != nil {
+		resp.Diagnostics.AddWarning(
+			"Schema Parse Warning",
+			fmt.Sprintf("Could not parse schema for %s/%s:%s: %s. Validation will be skipped.", connectorType, connectorName, connectorVersion, err),
+		)
+		return
+	}
+
+	configPath := path.Root("config")
+	validationDiags := validator.ValidateDynamic(ctx, data.Config, configPath)
+	resp.Diagnostics.Append(validationDiags...)
+}
+
+func (r *ConnectorConfigResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data ConnectorConfigResourceModel
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	configJSON, diags := r.dynamicToJSON(ctx, data.Config)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	connectorType := data.ConnectorType.ValueString()
+
+	switch connectorType {
+	case "source":
+		resp.Diagnostics.Append(r.createSource(ctx, &data, configJSON)...)
+	case "destination":
+		resp.Diagnostics.Append(r.createDestination(ctx, &data, configJSON)...)
+	default:
+		resp.Diagnostics.AddError(
+			"Invalid Connector Type",
+			fmt.Sprintf("Connector type must be 'source' or 'destination', got: %s", connectorType),
+		)
+		return
+	}
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectorConfigResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data ConnectorConfigResourceModel
+
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	connectorType := data.ConnectorType.ValueString()
+
+	switch connectorType {
+	case "source":
+		resp.Diagnostics.Append(r.readSource(ctx, &data)...)
+	case "destination":
+		resp.Diagnostics.Append(r.readDestination(ctx, &data)...)
+	}
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectorConfigResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var data ConnectorConfigResourceModel
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	configJSON, diags := r.dynamicToJSON(ctx, data.Config)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	connectorType := data.ConnectorType.ValueString()
+
+	switch connectorType {
+	case "source":
+		resp.Diagnostics.Append(r.updateSource(ctx, &data, configJSON)...)
+	case "destination":
+		resp.Diagnostics.Append(r.updateDestination(ctx, &data, configJSON)...)
+	}
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectorConfigResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data ConnectorConfigResourceModel
+
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	connectorType := data.ConnectorType.ValueString()
+
+	switch connectorType {
+	case "source":
+		resp.Diagnostics.Append(r.deleteSource(ctx, &data)...)
+	case "destination":
+		resp.Diagnostics.Append(r.deleteDestination(ctx, &data)...)
+	}
+}
+
+func (r *ConnectorConfigResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+}
+
+// dynamicToJSON converts a Terraform Dynamic value to JSON
+func (r *ConnectorConfigResource) dynamicToJSON(ctx context.Context, dynamic types.Dynamic) (json.RawMessage, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	if dynamic.IsNull() || dynamic.IsUnknown() {
+		return nil, diags
+	}
+
+	underlyingValue := dynamic.UnderlyingValue()
+	goValue, err := attrValueToGo(ctx, underlyingValue)
+	if err != nil {
+		diags.AddError("Conversion Error", fmt.Sprintf("Failed to convert config to JSON: %s", err))
+		return nil, diags
+	}
+
+	jsonBytes, err := json.Marshal(goValue)
+	if err != nil {
+		diags.AddError("JSON Marshal Error", fmt.Sprintf("Failed to marshal config to JSON: %s", err))
+		return nil, diags
+	}
+
+	return jsonBytes, diags
+}
+
+// attrValueToGo converts a Terraform attribute value to a Go value
+func attrValueToGo(ctx context.Context, value interface{}) (interface{}, error) {
+	switch v := value.(type) {
+	case types.String:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		return v.ValueString(), nil
+	case types.Int64:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		return v.ValueInt64(), nil
+	case types.Float64:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		return v.ValueFloat64(), nil
+	case types.Number:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		f, _ := v.ValueBigFloat().Float64()
+		return f, nil
+	case types.Bool:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		return v.ValueBool(), nil
+	case types.Object:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		result := make(map[string]interface{})
+		for name, attr := range v.Attributes() {
+			goVal, err := attrValueToGo(ctx, attr)
+			if err != nil {
+				return nil, err
+			}
+			result[name] = goVal
+		}
+		return result, nil
+	case types.Map:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		result := make(map[string]interface{})
+		for key, elem := range v.Elements() {
+			goVal, err := attrValueToGo(ctx, elem)
+			if err != nil {
+				return nil, err
+			}
+			result[key] = goVal
+		}
+		return result, nil
+	case types.List:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		var result []interface{}
+		for _, elem := range v.Elements() {
+			goVal, err := attrValueToGo(ctx, elem)
+			if err != nil {
+				return nil, err
+			}
+			result = append(result, goVal)
+		}
+		return result, nil
+	case types.Tuple:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		var result []interface{}
+		for _, elem := range v.Elements() {
+			goVal, err := attrValueToGo(ctx, elem)
+			if err != nil {
+				return nil, err
+			}
+			result = append(result, goVal)
+		}
+		return result, nil
+	case types.Set:
+		if v.IsNull() || v.IsUnknown() {
+			return nil, nil
+		}
+		var result []interface{}
+		for _, elem := range v.Elements() {
+			goVal, err := attrValueToGo(ctx, elem)
+			if err != nil {
+				return nil, err
+			}
+			result = append(result, goVal)
+		}
+		return result, nil
+	default:
+		return nil, fmt.Errorf("unsupported type: %T", value)
+	}
+}
+
+// createSource creates a new source using the SDK
+func (r *ConnectorConfigResource) createSource(ctx context.Context, data *ConnectorConfigResourceModel, configJSON json.RawMessage) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Sources.CreateSource
+	// This is a placeholder that demonstrates the structure
+	// The actual implementation would need to:
+	// 1. Look up the definition_id from connector_name
+	// 2. Call the Sources API with the configuration
+	// 3. Set the ID from the response
+
+	diags.AddWarning(
+		"Not Yet Implemented",
+		"Source creation via connector_config is not yet fully implemented. Please use airbyte_source resource for now.",
+	)
+
+	return diags
+}
+
+// readSource reads a source using the SDK
+func (r *ConnectorConfigResource) readSource(ctx context.Context, data *ConnectorConfigResourceModel) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Sources.GetSource
+
+	return diags
+}
+
+// updateSource updates a source using the SDK
+func (r *ConnectorConfigResource) updateSource(ctx context.Context, data *ConnectorConfigResourceModel, configJSON json.RawMessage) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Sources.PutSource
+
+	return diags
+}
+
+// deleteSource deletes a source using the SDK
+func (r *ConnectorConfigResource) deleteSource(ctx context.Context, data *ConnectorConfigResourceModel) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Sources.DeleteSource
+
+	return diags
+}
+
+// createDestination creates a new destination using the SDK
+func (r *ConnectorConfigResource) createDestination(ctx context.Context, data *ConnectorConfigResourceModel, configJSON json.RawMessage) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Destinations.CreateDestination
+
+	diags.AddWarning(
+		"Not Yet Implemented",
+		"Destination creation via connector_config is not yet fully implemented. Please use airbyte_destination resource for now.",
+	)
+
+	return diags
+}
+
+// readDestination reads a destination using the SDK
+func (r *ConnectorConfigResource) readDestination(ctx context.Context, data *ConnectorConfigResourceModel) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Destinations.GetDestination
+
+	return diags
+}
+
+// updateDestination updates a destination using the SDK
+func (r *ConnectorConfigResource) updateDestination(ctx context.Context, data *ConnectorConfigResourceModel, configJSON json.RawMessage) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Destinations.PutDestination
+
+	return diags
+}
+
+// deleteDestination deletes a destination using the SDK
+func (r *ConnectorConfigResource) deleteDestination(ctx context.Context, data *ConnectorConfigResourceModel) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	// TODO: Implement actual API call using r.client.Destinations.DeleteDestination
+
+	return diags
+}
