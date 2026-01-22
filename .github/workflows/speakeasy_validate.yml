@@ -3,6 +3,10 @@ name: Validate Speakeasy Generation
 # This workflow validates that the Speakeasy-generated code compiles correctly.
 # It runs on every PR push but does NOT create PRs or push changes.
 # For actual regeneration, use the manual "Generate" workflow.
+#
+# The spec generation logic is ported from:
+# - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/ApiDocumentationGenerator.kt
+# - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
 
 on:
   pull_request:
@@ -15,6 +19,9 @@ on:
 permissions:
   contents: read
 
+env:
+  PYTHON_VERSION: "3.11"
+
 jobs:
   validate:
     name: Validate Generation
@@ -22,6 +29,24 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Python dependencies
+        run: pip install pyyaml
+
+      - name: Generate Terraform OpenAPI spec
+        run: python scripts/generate_terraform_spec.py --output api_terraform.yaml --cloud-only
+
+      - name: Upload generated spec as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api_terraform_spec
+          path: api_terraform.yaml
+          retention-days: 5
 
       - uses: actions/setup-go@v5
         with:
