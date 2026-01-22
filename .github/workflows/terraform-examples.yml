@@ -1,14 +1,23 @@
-name: Terraform Example (1.0)
+name: Terraform Examples
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'examples/projects/1.0/**'
-      - '.github/workflows/terraform-example-1.0.yml'
+      - 'examples/projects/**'
+      - '.github/workflows/terraform-examples.yml'
   workflow_dispatch:
     inputs:
+      project:
+        description: 'Project to run'
+        type: choice
+        options:
+          - all
+          - pre-1.0
+          - "1.0"
+        default: all
+        required: true
       action:
         description: 'Terraform action to perform'
         type: choice
@@ -23,22 +32,32 @@ permissions:
   contents: read
   actions: read
 
-env:
-  STATE_ARTIFACT_NAME: terraform-state-1.0
-  WORKING_DIRECTORY: examples/projects/1.0
-  TF_STATE_DIR: ${{ github.workspace }}/examples/projects/1.0/.terraform-state
-
-concurrency:
-  group: terraform-1.0-deploy
-  cancel-in-progress: false
-
 jobs:
   terraform:
-    name: Terraform (1.0)
+    name: Terraform (${{ matrix.project }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: pre-1.0
+            path: examples/projects/pre-1.0
+            artifact: terraform-state-pre-1.0
+          - project: "1.0"
+            path: examples/projects/1.0
+            artifact: terraform-state-1.0
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && 
+       (github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project))
+    concurrency:
+      group: terraform-${{ matrix.project }}-deploy
+      cancel-in-progress: false
     defaults:
       run:
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ matrix.path }}
+    env:
+      TF_STATE_DIR: ${{ github.workspace }}/${{ matrix.path }}/.terraform-state
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -53,9 +72,9 @@ jobs:
         continue-on-error: true
         uses: dawidd6/action-download-artifact@v6
         with:
-          name: ${{ env.STATE_ARTIFACT_NAME }}
+          name: ${{ matrix.artifact }}
           path: ${{ env.TF_STATE_DIR }}
-          workflow: terraform-example-1.0.yml
+          workflow: terraform-examples.yml
           branch: main
           workflow_conclusion: success
           search_artifacts: true
@@ -105,7 +124,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.STATE_ARTIFACT_NAME }}
+          name: ${{ matrix.artifact }}
           path: ${{ env.TF_STATE_DIR }}
           retention-days: 90
           overwrite: true
