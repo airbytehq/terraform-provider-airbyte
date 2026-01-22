@@ -560,32 +560,32 @@ def main() -> None:
 
     # Split the base spec to insert:
     # 1. Connector-specific paths before "components:"
-    # 2. Connector-specific schemas before "security:" (which comes after components/schemas)
+    # 2. Connector-specific schemas before "securitySchemes:" (inside components/schemas)
     base_lines = base_spec.split("\n")
     components_line_idx = None
-    security_line_idx = None
+    security_schemes_line_idx = None
 
     for i, line in enumerate(base_lines):
         if line.startswith("components:"):
             components_line_idx = i
-        # Find the top-level security section (not indented)
-        if line.startswith("security:"):
-            security_line_idx = i
+        # Find the securitySchemes section (indented with 2 spaces, inside components)
+        if line == "  securitySchemes:":
+            security_schemes_line_idx = i
             break
 
     if components_line_idx is None:
         msg = "Could not find 'components:' section in base spec"
         raise ValueError(msg)
-    if security_line_idx is None:
-        msg = "Could not find 'security:' section in base spec"
+    if security_schemes_line_idx is None:
+        msg = "Could not find 'securitySchemes:' section in base spec"
         raise ValueError(msg)
 
     # Build the output:
     # 1. Everything before "components:" (includes paths section)
     # 2. Connector-specific paths (still under paths section)
-    # 3. "components:" up to "security:" (includes base schemas)
-    # 4. Connector-specific schemas (still under components/schemas)
-    # 5. "security:" and rest of the spec
+    # 3. "components:" up to "securitySchemes:" (includes base schemas)
+    # 4. Connector-specific schemas (inside components/schemas, before securitySchemes)
+    # 5. "securitySchemes:" and rest of the spec
 
     output_parts = []
 
@@ -602,10 +602,10 @@ def main() -> None:
         upper_camel = lower_hyphen_to_upper_camel(name)
         output_parts.append(generate_destination_template(upper_camel))
 
-    # Part 3: Add components section and base schemas (up to security)
-    output_parts.append("\n".join(base_lines[components_line_idx:security_line_idx]))
+    # Part 3: Add components section and base schemas (up to securitySchemes)
+    output_parts.append("\n".join(base_lines[components_line_idx:security_schemes_line_idx]))
 
-    # Part 4: Add connector-specific schemas (under components/schemas, before security)
+    # Part 4: Add connector-specific schemas (inside components/schemas, before securitySchemes)
     output_parts.append("# Connector-specific schemas")
 
     # Add source create/update request schemas
@@ -638,8 +638,8 @@ def main() -> None:
     # Add custom connector stubs
     output_parts.append(generate_custom_connector_stubs())
 
-    # Part 5: Add security section and rest of the spec
-    output_parts.append("\n".join(base_lines[security_line_idx:]))
+    # Part 5: Add securitySchemes section and rest of the spec
+    output_parts.append("\n".join(base_lines[security_schemes_line_idx:]))
 
     # Write output
     output_content = "\n".join(output_parts)
