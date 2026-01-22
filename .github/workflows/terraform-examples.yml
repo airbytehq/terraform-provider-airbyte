@@ -27,6 +27,15 @@ on:
           - destroy
         default: plan
         required: true
+      state_mode:
+        description: 'State management mode'
+        type: choice
+        options:
+          - auto
+          - read-only
+          - read-write
+        default: auto
+        required: true
 
 permissions:
   contents: read
@@ -121,7 +130,15 @@ jobs:
         run: terraform destroy -auto-approve
 
       - name: Upload state artifact
-        if: always()
+        if: |
+          always() && (
+            github.event.inputs.state_mode == 'read-write' ||
+            (github.event.inputs.state_mode != 'read-only' && (
+              github.event_name == 'push' ||
+              github.event.inputs.action == 'apply' ||
+              github.event.inputs.action == 'destroy'
+            ))
+          )
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
