@@ -556,57 +556,87 @@ def main() -> None:
 
     print("Generating OpenAPI spec...")
 
-    # Start with the base spec
-    output_lines = [base_spec]
+    # Split the base spec at the "components:" line to insert paths before it
+    # and schemas into the components/schemas section
+    base_lines = base_spec.split("\n")
+    components_line_idx = None
+    schemas_line_idx = None
 
-    # Add connector-specific paths
-    output_lines.append("\n# Connector-specific paths\n")
+    for i, line in enumerate(base_lines):
+        if line.startswith("components:"):
+            components_line_idx = i
+        # Find the schemas section within components (indented with 2 spaces)
+        if components_line_idx is not None and line.strip() == "schemas:":
+            schemas_line_idx = i
+            break
+
+    if components_line_idx is None:
+        msg = "Could not find 'components:' section in base spec"
+        raise ValueError(msg)
+
+    # Build the output:
+    # 1. Everything before "components:" (includes paths section)
+    # 2. Connector-specific paths (still under paths section)
+    # 3. "components:" and everything up to end of schemas section
+    # 4. Connector-specific schemas
+    # 5. Rest of the spec
+
+    output_parts = []
+
+    # Part 1: Everything before components (includes all base paths)
+    output_parts.append("\n".join(base_lines[:components_line_idx]))
+
+    # Part 2: Add connector-specific paths (these go under the paths section)
+    output_parts.append("\n# Connector-specific paths")
     for name in source_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_lines.append(generate_source_template(upper_camel))
+        output_parts.append(generate_source_template(upper_camel))
 
     for name in destination_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_lines.append(generate_destination_template(upper_camel))
+        output_parts.append(generate_destination_template(upper_camel))
 
-    # Add connector-specific schemas
-    output_lines.append("\n# Connector-specific schemas\n")
+    # Part 3: Add components section and base schemas
+    output_parts.append("\n".join(base_lines[components_line_idx:]))
+
+    # Part 4: Add connector-specific schemas at the end (under components/schemas)
+    output_parts.append("\n# Connector-specific schemas")
 
     # Add source create/update request schemas
     for name in source_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_lines.append(generate_source_create_request_template(upper_camel, name))
-        output_lines.append(generate_source_update_request_template(upper_camel, name))
+        output_parts.append(generate_source_create_request_template(upper_camel, name))
+        output_parts.append(generate_source_update_request_template(upper_camel, name))
 
     # Add destination create/update request schemas
     for name in destination_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_lines.append(generate_destination_create_request_template(upper_camel, name))
-        output_lines.append(generate_destination_update_request_template(upper_camel, name))
+        output_parts.append(generate_destination_create_request_template(upper_camel, name))
+        output_parts.append(generate_destination_update_request_template(upper_camel, name))
 
     # Add connector configuration schemas
     for schema_name, spec in source_specs:
-        output_lines.append(f"\n    {schema_name}:\n")
+        output_parts.append(f"\n    {schema_name}:")
         yaml_content = yaml.dump(spec, default_flow_style=False, allow_unicode=True, sort_keys=False)
         for line in yaml_content.split("\n"):
             if line.strip():
-                output_lines.append(f"      {line}\n")
+                output_parts.append(f"      {line}")
 
     for schema_name, spec in destination_specs:
-        output_lines.append(f"\n    {schema_name}:\n")
+        output_parts.append(f"\n    {schema_name}:")
         yaml_content = yaml.dump(spec, default_flow_style=False, allow_unicode=True, sort_keys=False)
         for line in yaml_content.split("\n"):
             if line.strip():
-                output_lines.append(f"      {line}\n")
+                output_parts.append(f"      {line}")
 
     # Add custom connector stubs
-    output_lines.append(generate_custom_connector_stubs())
+    output_parts.append(generate_custom_connector_stubs())
 
     # Add security schemes
-    output_lines.append(generate_security_schemes())
+    output_parts.append(generate_security_schemes())
 
     # Write output
-    output_content = "".join(output_lines)
+    output_content = "\n".join(output_parts)
     args.output.write_text(output_content)
     print(f"Generated spec written to {args.output}")
     print(f"Total lines: {len(output_content.splitlines())}")
