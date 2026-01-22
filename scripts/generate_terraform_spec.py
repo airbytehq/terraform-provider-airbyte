@@ -29,8 +29,10 @@ import yaml
 OSS_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
 CLOUD_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
 
-# Base API spec URL (the generic spec without connector-specific schemas)
-BASE_API_SPEC_URL = "https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api.yaml"
+# Base API spec URL (the terraform-specific spec that Speakeasy already works with)
+# Using api_terraform.yaml instead of api.yaml because api.yaml has newer endpoints
+# with broken schema references that haven't been fixed upstream yet.
+BASE_API_SPEC_URL = "https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api_terraform.yaml"
 
 
 def lower_hyphen_to_upper_camel(name: str) -> str:
@@ -556,30 +558,34 @@ def main() -> None:
 
     print("Generating OpenAPI spec...")
 
-    # Split the base spec at the "components:" line to insert paths before it
-    # and schemas into the components/schemas section
+    # Split the base spec to insert:
+    # 1. Connector-specific paths before "components:"
+    # 2. Connector-specific schemas before "security:" (which comes after components/schemas)
     base_lines = base_spec.split("\n")
     components_line_idx = None
-    schemas_line_idx = None
+    security_line_idx = None
 
     for i, line in enumerate(base_lines):
         if line.startswith("components:"):
             components_line_idx = i
-        # Find the schemas section within components (indented with 2 spaces)
-        if components_line_idx is not None and line.strip() == "schemas:":
-            schemas_line_idx = i
+        # Find the top-level security section (not indented)
+        if line.startswith("security:"):
+            security_line_idx = i
             break
 
     if components_line_idx is None:
         msg = "Could not find 'components:' section in base spec"
         raise ValueError(msg)
+    if security_line_idx is None:
+        msg = "Could not find 'security:' section in base spec"
+        raise ValueError(msg)
 
     # Build the output:
     # 1. Everything before "components:" (includes paths section)
     # 2. Connector-specific paths (still under paths section)
-    # 3. "components:" and everything up to end of schemas section
-    # 4. Connector-specific schemas
-    # 5. Rest of the spec
+    # 3. "components:" up to "security:" (includes base schemas)
+    # 4. Connector-specific schemas (still under components/schemas)
+    # 5. "security:" and rest of the spec
 
     output_parts = []
 
@@ -596,11 +602,11 @@ def main() -> None:
         upper_camel = lower_hyphen_to_upper_camel(name)
         output_parts.append(generate_destination_template(upper_camel))
 
-    # Part 3: Add components section and base schemas
-    output_parts.append("\n".join(base_lines[components_line_idx:]))
+    # Part 3: Add components section and base schemas (up to security)
+    output_parts.append("\n".join(base_lines[components_line_idx:security_line_idx]))
 
-    # Part 4: Add connector-specific schemas at the end (under components/schemas)
-    output_parts.append("\n# Connector-specific schemas")
+    # Part 4: Add connector-specific schemas (under components/schemas, before security)
+    output_parts.append("# Connector-specific schemas")
 
     # Add source create/update request schemas
     for name in source_names_for_terraform:
@@ -632,8 +638,8 @@ def main() -> None:
     # Add custom connector stubs
     output_parts.append(generate_custom_connector_stubs())
 
-    # Add security schemes
-    output_parts.append(generate_security_schemes())
+    # Part 5: Add security section and rest of the spec
+    output_parts.append("\n".join(base_lines[security_line_idx:]))
 
     # Write output
     output_content = "\n".join(output_parts)
