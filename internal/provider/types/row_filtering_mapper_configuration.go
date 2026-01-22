@@ -6,6 +6,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 )
 
-type RowFiltering struct {
+type RowFilteringMapperConfiguration struct {
 	Conditions jsontypes.Normalized `tfsdk:"conditions"`
 }

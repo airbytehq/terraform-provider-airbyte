@@ -37,44 +37,44 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(ctx contex
 					var mappers tfTypes.ConfiguredStreamMapper
 
 					mappers.ID = types.StringPointerValue(mappersItem.ID)
-					if mappersItem.MapperConfiguration.Encryption != nil {
-						mappers.MapperConfiguration.Encryption = &tfTypes.Encryption{}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionAES != nil {
-							mappers.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionAES{}
-							mappers.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Algorithm))
-							mappers.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Key)
-							mappers.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Mode))
-							mappers.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Padding))
-							mappers.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.TargetField)
+					if mappersItem.MapperConfiguration.EncryptionMapperConfiguration != nil {
+						mappers.MapperConfiguration.EncryptionMapperConfiguration = &tfTypes.EncryptionMapperConfiguration{}
+						if mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration != nil {
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes = &tfTypes.EncryptionMapperAESConfiguration{}
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Algorithm))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.FieldNameSuffix)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Key)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Mode))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Padding))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.TargetField)
 						}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionRSA != nil {
-							mappers.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionRSA{}
-							mappers.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.Algorithm))
-							mappers.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.PublicKey)
-							mappers.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.TargetField)
+						if mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration != nil {
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa = &tfTypes.EncryptionMapperRSAConfiguration{}
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.Algorithm))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.FieldNameSuffix)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.PublicKey)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.TargetField)
 						}
 					}
-					if mappersItem.MapperConfiguration.FieldFiltering != nil {
-						mappers.MapperConfiguration.FieldFiltering = &tfTypes.FieldFiltering{}
-						mappers.MapperConfiguration.FieldFiltering.TargetField = types.StringValue(mappersItem.MapperConfiguration.FieldFiltering.TargetField)
+					if mappersItem.MapperConfiguration.FieldFilteringMapperConfiguration != nil {
+						mappers.MapperConfiguration.FieldFilteringMapperConfiguration = &tfTypes.FieldFilteringMapperConfiguration{}
+						mappers.MapperConfiguration.FieldFilteringMapperConfiguration.TargetField = types.StringValue(mappersItem.MapperConfiguration.FieldFilteringMapperConfiguration.TargetField)
 					}
-					if mappersItem.MapperConfiguration.FieldRenaming != nil {
-						mappers.MapperConfiguration.FieldRenaming = &tfTypes.FieldRenaming{}
-						mappers.MapperConfiguration.FieldRenaming.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.NewFieldName)
-						mappers.MapperConfiguration.FieldRenaming.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName)
+					if mappersItem.MapperConfiguration.FieldRenamingMapperConfiguration != nil {
+						mappers.MapperConfiguration.FieldRenamingMapperConfiguration = &tfTypes.FieldRenamingMapperConfiguration{}
+						mappers.MapperConfiguration.FieldRenamingMapperConfiguration.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenamingMapperConfiguration.NewFieldName)
+						mappers.MapperConfiguration.FieldRenamingMapperConfiguration.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenamingMapperConfiguration.OriginalFieldName)
 					}
-					if mappersItem.MapperConfiguration.Hashing != nil {
-						mappers.MapperConfiguration.Hashing = &tfTypes.Hashing{}
-						mappers.MapperConfiguration.Hashing.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Hashing.FieldNameSuffix)
-						mappers.MapperConfiguration.Hashing.Method = types.StringValue(string(mappersItem.MapperConfiguration.Hashing.Method))
-						mappers.MapperConfiguration.Hashing.TargetField = types.StringValue(mappersItem.MapperConfiguration.Hashing.TargetField)
+					if mappersItem.MapperConfiguration.HashingMapperConfiguration != nil {
+						mappers.MapperConfiguration.HashingMapperConfiguration = &tfTypes.HashingMapperConfiguration{}
+						mappers.MapperConfiguration.HashingMapperConfiguration.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.HashingMapperConfiguration.FieldNameSuffix)
+						mappers.MapperConfiguration.HashingMapperConfiguration.Method = types.StringValue(string(mappersItem.MapperConfiguration.HashingMapperConfiguration.Method))
+						mappers.MapperConfiguration.HashingMapperConfiguration.TargetField = types.StringValue(mappersItem.MapperConfiguration.HashingMapperConfiguration.TargetField)
 					}
-					if mappersItem.MapperConfiguration.RowFiltering != nil {
-						mappers.MapperConfiguration.RowFiltering = &tfTypes.RowFiltering{}
-						conditionsResult, _ := json.Marshal(mappersItem.MapperConfiguration.RowFiltering.Conditions)
-						mappers.MapperConfiguration.RowFiltering.Conditions = jsontypes.NewNormalizedValue(string(conditionsResult))
+					if mappersItem.MapperConfiguration.RowFilteringMapperConfiguration != nil {
+						mappers.MapperConfiguration.RowFilteringMapperConfiguration = &tfTypes.RowFilteringMapperConfiguration{}
+						conditionsResult, _ := json.Marshal(mappersItem.MapperConfiguration.RowFilteringMapperConfiguration.Conditions)
+						mappers.MapperConfiguration.RowFilteringMapperConfiguration.Conditions = jsontypes.NewNormalizedValue(string(conditionsResult))
 					}
 					mappers.Type = types.StringValue(string(mappersItem.Type))
 
@@ -281,112 +281,112 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 				}
 				typeVar := shared.StreamMapperType(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].Type.ValueString())
 				var mapperConfiguration shared.MapperConfiguration
-				var hashing *shared.Hashing
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing != nil {
+				var hashingMapperConfiguration *shared.HashingMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration != nil {
 					var fieldNameSuffix string
-					fieldNameSuffix = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.FieldNameSuffix.ValueString()
+					fieldNameSuffix = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration.FieldNameSuffix.ValueString()
 
-					method := shared.HashingMethod(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.Method.ValueString())
+					method := shared.HashingMethod(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration.Method.ValueString())
 					var targetField string
-					targetField = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.TargetField.ValueString()
+					targetField = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration.TargetField.ValueString()
 
-					hashing = &shared.Hashing{
+					hashingMapperConfiguration = &shared.HashingMapperConfiguration{
 						FieldNameSuffix: fieldNameSuffix,
 						Method:          method,
 						TargetField:     targetField,
 					}
 				}
-				if hashing != nil {
+				if hashingMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						Hashing: hashing,
+						HashingMapperConfiguration: hashingMapperConfiguration,
 					}
 				}
-				var fieldFiltering *shared.FieldFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering != nil {
+				var fieldFilteringMapperConfiguration *shared.FieldFilteringMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFilteringMapperConfiguration != nil {
 					var targetField1 string
-					targetField1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering.TargetField.ValueString()
+					targetField1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFilteringMapperConfiguration.TargetField.ValueString()
 
-					fieldFiltering = &shared.FieldFiltering{
+					fieldFilteringMapperConfiguration = &shared.FieldFilteringMapperConfiguration{
 						TargetField: targetField1,
 					}
 				}
-				if fieldFiltering != nil {
+				if fieldFilteringMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						FieldFiltering: fieldFiltering,
+						FieldFilteringMapperConfiguration: fieldFilteringMapperConfiguration,
 					}
 				}
-				var fieldRenaming *shared.FieldRenaming
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming != nil {
+				var fieldRenamingMapperConfiguration *shared.FieldRenamingMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenamingMapperConfiguration != nil {
 					var newFieldName string
-					newFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.NewFieldName.ValueString()
+					newFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenamingMapperConfiguration.NewFieldName.ValueString()
 
 					var originalFieldName string
-					originalFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.OriginalFieldName.ValueString()
+					originalFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenamingMapperConfiguration.OriginalFieldName.ValueString()
 
-					fieldRenaming = &shared.FieldRenaming{
+					fieldRenamingMapperConfiguration = &shared.FieldRenamingMapperConfiguration{
 						NewFieldName:      newFieldName,
 						OriginalFieldName: originalFieldName,
 					}
 				}
-				if fieldRenaming != nil {
+				if fieldRenamingMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						FieldRenaming: fieldRenaming,
+						FieldRenamingMapperConfiguration: fieldRenamingMapperConfiguration,
 					}
 				}
-				var rowFiltering *shared.RowFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering != nil {
+				var rowFilteringMapperConfiguration *shared.RowFilteringMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFilteringMapperConfiguration != nil {
 					var conditions interface{}
-					_ = json.Unmarshal([]byte(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering.Conditions.ValueString()), &conditions)
-					rowFiltering = &shared.RowFiltering{
+					_ = json.Unmarshal([]byte(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFilteringMapperConfiguration.Conditions.ValueString()), &conditions)
+					rowFilteringMapperConfiguration = &shared.RowFilteringMapperConfiguration{
 						Conditions: conditions,
 					}
 				}
-				if rowFiltering != nil {
+				if rowFilteringMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						RowFiltering: rowFiltering,
+						RowFilteringMapperConfiguration: rowFilteringMapperConfiguration,
 					}
 				}
-				var encryption *shared.Encryption
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption != nil {
-					var encryptionRSA *shared.EncryptionRSA
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa != nil {
-						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
+				var encryptionMapperConfiguration *shared.EncryptionMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration != nil {
+					var encryptionMapperRSAConfiguration *shared.EncryptionMapperRSAConfiguration
+					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa != nil {
+						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.Algorithm.ValueString())
 						var fieldNameSuffix1 string
-						fieldNameSuffix1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.FieldNameSuffix.ValueString()
+						fieldNameSuffix1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.FieldNameSuffix.ValueString()
 
 						var publicKey string
-						publicKey = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.PublicKey.ValueString()
+						publicKey = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.PublicKey.ValueString()
 
 						var targetField2 string
-						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
+						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.TargetField.ValueString()
 
-						encryptionRSA = &shared.EncryptionRSA{
+						encryptionMapperRSAConfiguration = &shared.EncryptionMapperRSAConfiguration{
 							Algorithm:       algorithm,
 							FieldNameSuffix: fieldNameSuffix1,
 							PublicKey:       publicKey,
 							TargetField:     targetField2,
 						}
 					}
-					if encryptionRSA != nil {
-						encryption = &shared.Encryption{
-							EncryptionRSA: encryptionRSA,
+					if encryptionMapperRSAConfiguration != nil {
+						encryptionMapperConfiguration = &shared.EncryptionMapperConfiguration{
+							EncryptionMapperRSAConfiguration: encryptionMapperRSAConfiguration,
 						}
 					}
-					var encryptionAES *shared.EncryptionAES
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes != nil {
-						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
+					var encryptionMapperAESConfiguration *shared.EncryptionMapperAESConfiguration
+					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes != nil {
+						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Algorithm.ValueString())
 						var fieldNameSuffix2 string
-						fieldNameSuffix2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.FieldNameSuffix.ValueString()
+						fieldNameSuffix2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.FieldNameSuffix.ValueString()
 
 						var key string
-						key = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Key.ValueString()
+						key = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Key.ValueString()
 
-						mode := shared.Mode(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Mode.ValueString())
-						padding := shared.Padding(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Padding.ValueString())
+						mode := shared.Mode(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Mode.ValueString())
+						padding := shared.Padding(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Padding.ValueString())
 						var targetField3 string
-						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.TargetField.ValueString()
+						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.TargetField.ValueString()
 
-						encryptionAES = &shared.EncryptionAES{
+						encryptionMapperAESConfiguration = &shared.EncryptionMapperAESConfiguration{
 							Algorithm:       algorithm1,
 							FieldNameSuffix: fieldNameSuffix2,
 							Key:             key,
@@ -395,15 +395,15 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 							TargetField:     targetField3,
 						}
 					}
-					if encryptionAES != nil {
-						encryption = &shared.Encryption{
-							EncryptionAES: encryptionAES,
+					if encryptionMapperAESConfiguration != nil {
+						encryptionMapperConfiguration = &shared.EncryptionMapperConfiguration{
+							EncryptionMapperAESConfiguration: encryptionMapperAESConfiguration,
 						}
 					}
 				}
-				if encryption != nil {
+				if encryptionMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						Encryption: encryption,
+						EncryptionMapperConfiguration: encryptionMapperConfiguration,
 					}
 				}
 				mappers = append(mappers, shared.ConfiguredStreamMapper{
@@ -589,112 +589,112 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 				}
 				typeVar := shared.StreamMapperType(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].Type.ValueString())
 				var mapperConfiguration shared.MapperConfiguration
-				var hashing *shared.Hashing
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing != nil {
+				var hashingMapperConfiguration *shared.HashingMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration != nil {
 					var fieldNameSuffix string
-					fieldNameSuffix = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.FieldNameSuffix.ValueString()
+					fieldNameSuffix = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration.FieldNameSuffix.ValueString()
 
-					method := shared.HashingMethod(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.Method.ValueString())
+					method := shared.HashingMethod(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration.Method.ValueString())
 					var targetField string
-					targetField = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.TargetField.ValueString()
+					targetField = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.HashingMapperConfiguration.TargetField.ValueString()
 
-					hashing = &shared.Hashing{
+					hashingMapperConfiguration = &shared.HashingMapperConfiguration{
 						FieldNameSuffix: fieldNameSuffix,
 						Method:          method,
 						TargetField:     targetField,
 					}
 				}
-				if hashing != nil {
+				if hashingMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						Hashing: hashing,
+						HashingMapperConfiguration: hashingMapperConfiguration,
 					}
 				}
-				var fieldFiltering *shared.FieldFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering != nil {
+				var fieldFilteringMapperConfiguration *shared.FieldFilteringMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFilteringMapperConfiguration != nil {
 					var targetField1 string
-					targetField1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering.TargetField.ValueString()
+					targetField1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFilteringMapperConfiguration.TargetField.ValueString()
 
-					fieldFiltering = &shared.FieldFiltering{
+					fieldFilteringMapperConfiguration = &shared.FieldFilteringMapperConfiguration{
 						TargetField: targetField1,
 					}
 				}
-				if fieldFiltering != nil {
+				if fieldFilteringMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						FieldFiltering: fieldFiltering,
+						FieldFilteringMapperConfiguration: fieldFilteringMapperConfiguration,
 					}
 				}
-				var fieldRenaming *shared.FieldRenaming
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming != nil {
+				var fieldRenamingMapperConfiguration *shared.FieldRenamingMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenamingMapperConfiguration != nil {
 					var newFieldName string
-					newFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.NewFieldName.ValueString()
+					newFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenamingMapperConfiguration.NewFieldName.ValueString()
 
 					var originalFieldName string
-					originalFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.OriginalFieldName.ValueString()
+					originalFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenamingMapperConfiguration.OriginalFieldName.ValueString()
 
-					fieldRenaming = &shared.FieldRenaming{
+					fieldRenamingMapperConfiguration = &shared.FieldRenamingMapperConfiguration{
 						NewFieldName:      newFieldName,
 						OriginalFieldName: originalFieldName,
 					}
 				}
-				if fieldRenaming != nil {
+				if fieldRenamingMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						FieldRenaming: fieldRenaming,
+						FieldRenamingMapperConfiguration: fieldRenamingMapperConfiguration,
 					}
 				}
-				var rowFiltering *shared.RowFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering != nil {
+				var rowFilteringMapperConfiguration *shared.RowFilteringMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFilteringMapperConfiguration != nil {
 					var conditions interface{}
-					_ = json.Unmarshal([]byte(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering.Conditions.ValueString()), &conditions)
-					rowFiltering = &shared.RowFiltering{
+					_ = json.Unmarshal([]byte(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFilteringMapperConfiguration.Conditions.ValueString()), &conditions)
+					rowFilteringMapperConfiguration = &shared.RowFilteringMapperConfiguration{
 						Conditions: conditions,
 					}
 				}
-				if rowFiltering != nil {
+				if rowFilteringMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						RowFiltering: rowFiltering,
+						RowFilteringMapperConfiguration: rowFilteringMapperConfiguration,
 					}
 				}
-				var encryption *shared.Encryption
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption != nil {
-					var encryptionRSA *shared.EncryptionRSA
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa != nil {
-						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
+				var encryptionMapperConfiguration *shared.EncryptionMapperConfiguration
+				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration != nil {
+					var encryptionMapperRSAConfiguration *shared.EncryptionMapperRSAConfiguration
+					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa != nil {
+						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.Algorithm.ValueString())
 						var fieldNameSuffix1 string
-						fieldNameSuffix1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.FieldNameSuffix.ValueString()
+						fieldNameSuffix1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.FieldNameSuffix.ValueString()
 
 						var publicKey string
-						publicKey = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.PublicKey.ValueString()
+						publicKey = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.PublicKey.ValueString()
 
 						var targetField2 string
-						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
+						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Rsa.TargetField.ValueString()
 
-						encryptionRSA = &shared.EncryptionRSA{
+						encryptionMapperRSAConfiguration = &shared.EncryptionMapperRSAConfiguration{
 							Algorithm:       algorithm,
 							FieldNameSuffix: fieldNameSuffix1,
 							PublicKey:       publicKey,
 							TargetField:     targetField2,
 						}
 					}
-					if encryptionRSA != nil {
-						encryption = &shared.Encryption{
-							EncryptionRSA: encryptionRSA,
+					if encryptionMapperRSAConfiguration != nil {
+						encryptionMapperConfiguration = &shared.EncryptionMapperConfiguration{
+							EncryptionMapperRSAConfiguration: encryptionMapperRSAConfiguration,
 						}
 					}
-					var encryptionAES *shared.EncryptionAES
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes != nil {
-						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
+					var encryptionMapperAESConfiguration *shared.EncryptionMapperAESConfiguration
+					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes != nil {
+						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Algorithm.ValueString())
 						var fieldNameSuffix2 string
-						fieldNameSuffix2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.FieldNameSuffix.ValueString()
+						fieldNameSuffix2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.FieldNameSuffix.ValueString()
 
 						var key string
-						key = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Key.ValueString()
+						key = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Key.ValueString()
 
-						mode := shared.Mode(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Mode.ValueString())
-						padding := shared.Padding(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Padding.ValueString())
+						mode := shared.Mode(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Mode.ValueString())
+						padding := shared.Padding(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.Padding.ValueString())
 						var targetField3 string
-						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.TargetField.ValueString()
+						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.EncryptionMapperConfiguration.Aes.TargetField.ValueString()
 
-						encryptionAES = &shared.EncryptionAES{
+						encryptionMapperAESConfiguration = &shared.EncryptionMapperAESConfiguration{
 							Algorithm:       algorithm1,
 							FieldNameSuffix: fieldNameSuffix2,
 							Key:             key,
@@ -703,15 +703,15 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 							TargetField:     targetField3,
 						}
 					}
-					if encryptionAES != nil {
-						encryption = &shared.Encryption{
-							EncryptionAES: encryptionAES,
+					if encryptionMapperAESConfiguration != nil {
+						encryptionMapperConfiguration = &shared.EncryptionMapperConfiguration{
+							EncryptionMapperAESConfiguration: encryptionMapperAESConfiguration,
 						}
 					}
 				}
-				if encryption != nil {
+				if encryptionMapperConfiguration != nil {
 					mapperConfiguration = shared.MapperConfiguration{
-						Encryption: encryption,
+						EncryptionMapperConfiguration: encryptionMapperConfiguration,
 					}
 				}
 				mappers = append(mappers, shared.ConfiguredStreamMapper{

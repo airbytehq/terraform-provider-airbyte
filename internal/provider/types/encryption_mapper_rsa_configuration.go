@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-type EncryptionRSA struct {
+type EncryptionMapperRSAConfiguration struct {
 	Algorithm       types.String `tfsdk:"algorithm"`
 	FieldNameSuffix types.String `tfsdk:"field_name_suffix"`
 	PublicKey       types.String `tfsdk:"public_key"`

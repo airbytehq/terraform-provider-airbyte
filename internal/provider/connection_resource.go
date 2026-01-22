@@ -145,17 +145,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 													speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 												},
 												Attributes: map[string]schema.Attribute{
-													"encryption": schema.SingleNestedAttribute{
+													"encryption_mapper_configuration": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"aes": schema.SingleNestedAttribute{
 																Optional: true,
-																PlanModifiers: []planmodifier.Object{
-																	speakeasy_objectplanmodifier.UseConfigValue(),
-																},
 																Attributes: map[string]schema.Attribute{
 																	"algorithm": schema.StringAttribute{
 																		Computed:    true,
@@ -231,9 +225,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 															},
 															"rsa": schema.SingleNestedAttribute{
 																Optional: true,
-																PlanModifiers: []planmodifier.Object{
-																	speakeasy_objectplanmodifier.UseConfigValue(),
-																},
 																Attributes: map[string]schema.Attribute{
 																	"algorithm": schema.StringAttribute{
 																		Computed:    true,
@@ -281,18 +272,15 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														},
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("field_filtering"),
-																path.MatchRelative().AtParent().AtName("field_renaming"),
-																path.MatchRelative().AtParent().AtName("hashing"),
-																path.MatchRelative().AtParent().AtName("row_filtering"),
+																path.MatchRelative().AtParent().AtName("field_filtering_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("field_renaming_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("hashing_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("row_filtering_mapper_configuration"),
 															}...),
 														},
 													},
-													"field_filtering": schema.SingleNestedAttribute{
+													"field_filtering_mapper_configuration": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"target_field": schema.StringAttribute{
 																Computed:    true,
@@ -305,18 +293,15 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														},
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("encryption"),
-																path.MatchRelative().AtParent().AtName("field_renaming"),
-																path.MatchRelative().AtParent().AtName("hashing"),
-																path.MatchRelative().AtParent().AtName("row_filtering"),
+																path.MatchRelative().AtParent().AtName("encryption_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("field_renaming_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("hashing_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("row_filtering_mapper_configuration"),
 															}...),
 														},
 													},
-													"field_renaming": schema.SingleNestedAttribute{
+													"field_renaming_mapper_configuration": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"new_field_name": schema.StringAttribute{
 																Computed:    true,
@@ -337,18 +322,15 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														},
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("encryption"),
-																path.MatchRelative().AtParent().AtName("field_filtering"),
-																path.MatchRelative().AtParent().AtName("hashing"),
-																path.MatchRelative().AtParent().AtName("row_filtering"),
+																path.MatchRelative().AtParent().AtName("encryption_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("field_filtering_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("hashing_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("row_filtering_mapper_configuration"),
 															}...),
 														},
 													},
-													"hashing": schema.SingleNestedAttribute{
+													"hashing_mapper_configuration": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"field_name_suffix": schema.StringAttribute{
 																Computed:    true,
@@ -386,18 +368,15 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														},
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("encryption"),
-																path.MatchRelative().AtParent().AtName("field_filtering"),
-																path.MatchRelative().AtParent().AtName("field_renaming"),
-																path.MatchRelative().AtParent().AtName("row_filtering"),
+																path.MatchRelative().AtParent().AtName("encryption_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("field_filtering_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("field_renaming_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("row_filtering_mapper_configuration"),
 															}...),
 														},
 													},
-													"row_filtering": schema.SingleNestedAttribute{
+													"row_filtering_mapper_configuration": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"conditions": schema.StringAttribute{
 																CustomType:  jsontypes.NormalizedType{},
@@ -411,10 +390,10 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 														},
 														Validators: []validator.Object{
 															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("encryption"),
-																path.MatchRelative().AtParent().AtName("field_filtering"),
-																path.MatchRelative().AtParent().AtName("field_renaming"),
-																path.MatchRelative().AtParent().AtName("hashing"),
+																path.MatchRelative().AtParent().AtName("encryption_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("field_filtering_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("field_renaming_mapper_configuration"),
+																path.MatchRelative().AtParent().AtName("hashing_mapper_configuration"),
 															}...),
 														},
 													},

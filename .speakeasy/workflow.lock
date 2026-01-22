@@ -1,4 +1,4 @@
-speakeasyVersion: 1.685.2
+speakeasyVersion: 1.695.0
 sources:
     my-source:
         sourceNamespace: my-source
@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:da85281bdcf07427081ebf5b68da88cd51810688875e4bbec72b3741c63e9cdf
         tags:
             - latest
-            - devin-1768441459-fix-speakeasy-go-version
+            - main
             - 1.0.0
 targets:
     terraform-provider-airbyte:

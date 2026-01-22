@@ -3,492 +3,74 @@
 package shared
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type Mode string
-
-const (
-	ModeCbc Mode = "CBC"
-	ModeCfb Mode = "CFB"
-	ModeOfb Mode = "OFB"
-	ModeCtr Mode = "CTR"
-	ModeGcm Mode = "GCM"
-	ModeEcb Mode = "ECB"
-)
-
-func (e Mode) ToPointer() *Mode {
-	return &e
-}
-func (e *Mode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CBC":
-		fallthrough
-	case "CFB":
-		fallthrough
-	case "OFB":
-		fallthrough
-	case "CTR":
-		fallthrough
-	case "GCM":
-		fallthrough
-	case "ECB":
-		*e = Mode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Mode: %v", v)
-	}
-}
-
-type Padding string
-
-const (
-	PaddingNoPadding    Padding = "NoPadding"
-	PaddingPkcs5Padding Padding = "PKCS5Padding"
-)
-
-func (e Padding) ToPointer() *Padding {
-	return &e
-}
-func (e *Padding) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "NoPadding":
-		fallthrough
-	case "PKCS5Padding":
-		*e = Padding(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Padding: %v", v)
-	}
-}
-
-type EncryptionAES struct {
-	Algorithm       EncryptionMapperAlgorithm `json:"algorithm"`
-	FieldNameSuffix string                    `json:"fieldNameSuffix"`
-	Key             string                    `json:"key"`
-	Mode            Mode                      `json:"mode"`
-	Padding         Padding                   `json:"padding"`
-	TargetField     string                    `json:"targetField"`
-}
-
-func (e EncryptionAES) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(e, "", false)
-}
-
-func (e *EncryptionAES) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (e *EncryptionAES) GetAlgorithm() EncryptionMapperAlgorithm {
-	if e == nil {
-		return EncryptionMapperAlgorithm("")
-	}
-	return e.Algorithm
-}
-
-func (e *EncryptionAES) GetFieldNameSuffix() string {
-	if e == nil {
-		return ""
-	}
-	return e.FieldNameSuffix
-}
-
-func (e *EncryptionAES) GetKey() string {
-	if e == nil {
-		return ""
-	}
-	return e.Key
-}
-
-func (e *EncryptionAES) GetMode() Mode {
-	if e == nil {
-		return Mode("")
-	}
-	return e.Mode
-}
-
-func (e *EncryptionAES) GetPadding() Padding {
-	if e == nil {
-		return Padding("")
-	}
-	return e.Padding
-}
-
-func (e *EncryptionAES) GetTargetField() string {
-	if e == nil {
-		return ""
-	}
-	return e.TargetField
-}
-
-type EncryptionRSA struct {
-	Algorithm       EncryptionMapperAlgorithm `json:"algorithm"`
-	FieldNameSuffix string                    `json:"fieldNameSuffix"`
-	PublicKey       string                    `json:"publicKey"`
-	TargetField     string                    `json:"targetField"`
-}
-
-func (e EncryptionRSA) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(e, "", false)
-}
-
-func (e *EncryptionRSA) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (e *EncryptionRSA) GetAlgorithm() EncryptionMapperAlgorithm {
-	if e == nil {
-		return EncryptionMapperAlgorithm("")
-	}
-	return e.Algorithm
-}
-
-func (e *EncryptionRSA) GetFieldNameSuffix() string {
-	if e == nil {
-		return ""
-	}
-	return e.FieldNameSuffix
-}
-
-func (e *EncryptionRSA) GetPublicKey() string {
-	if e == nil {
-		return ""
-	}
-	return e.PublicKey
-}
-
-func (e *EncryptionRSA) GetTargetField() string {
-	if e == nil {
-		return ""
-	}
-	return e.TargetField
-}
-
-type EncryptionType string
-
-const (
-	EncryptionTypeRsa EncryptionType = "RSA"
-	EncryptionTypeAes EncryptionType = "AES"
-)
-
-type Encryption struct {
-	EncryptionRSA *EncryptionRSA `queryParam:"inline" union:"member"`
-	EncryptionAES *EncryptionAES `queryParam:"inline" union:"member"`
-
-	Type EncryptionType
-}
-
-func CreateEncryptionRsa(rsa EncryptionRSA) Encryption {
-	typ := EncryptionTypeRsa
-
-	typStr := EncryptionMapperAlgorithm(typ)
-	rsa.Algorithm = typStr
-
-	return Encryption{
-		EncryptionRSA: &rsa,
-		Type:          typ,
-	}
-}
-
-func CreateEncryptionAes(aes EncryptionAES) Encryption {
-	typ := EncryptionTypeAes
-
-	typStr := EncryptionMapperAlgorithm(typ)
-	aes.Algorithm = typStr
-
-	return Encryption{
-		EncryptionAES: &aes,
-		Type:          typ,
-	}
-}
-
-func (u *Encryption) UnmarshalJSON(data []byte) error {
-
-	type discriminator struct {
-		Algorithm string `json:"algorithm"`
-	}
-
-	dis := new(discriminator)
-	if err := json.Unmarshal(data, &dis); err != nil {
-		return fmt.Errorf("could not unmarshal discriminator: %w", err)
-	}
-
-	switch dis.Algorithm {
-	case "RSA":
-		encryptionRSA := new(EncryptionRSA)
-		if err := utils.UnmarshalJSON(data, &encryptionRSA, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (Algorithm == RSA) type EncryptionRSA within Encryption: %w", string(data), err)
-		}
-
-		u.EncryptionRSA = encryptionRSA
-		u.Type = EncryptionTypeRsa
-		return nil
-	case "AES":
-		encryptionAES := new(EncryptionAES)
-		if err := utils.UnmarshalJSON(data, &encryptionAES, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (Algorithm == AES) type EncryptionAES within Encryption: %w", string(data), err)
-		}
-
-		u.EncryptionAES = encryptionAES
-		u.Type = EncryptionTypeAes
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Encryption", string(data))
-}
-
-func (u Encryption) MarshalJSON() ([]byte, error) {
-	if u.EncryptionRSA != nil {
-		return utils.MarshalJSON(u.EncryptionRSA, "", true)
-	}
-
-	if u.EncryptionAES != nil {
-		return utils.MarshalJSON(u.EncryptionAES, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type Encryption: all fields are null")
-}
-
-type RowFiltering struct {
-	Conditions any `json:"conditions"`
-}
-
-func (r RowFiltering) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(r, "", false)
-}
-
-func (r *RowFiltering) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (r *RowFiltering) GetConditions() any {
-	if r == nil {
-		return nil
-	}
-	return r.Conditions
-}
-
-type FieldRenaming struct {
-	// The new name for the field after renaming.
-	NewFieldName string `json:"newFieldName"`
-	// The current name of the field to rename.
-	OriginalFieldName string `json:"originalFieldName"`
-}
-
-func (f FieldRenaming) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(f, "", false)
-}
-
-func (f *FieldRenaming) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (f *FieldRenaming) GetNewFieldName() string {
-	if f == nil {
-		return ""
-	}
-	return f.NewFieldName
-}
-
-func (f *FieldRenaming) GetOriginalFieldName() string {
-	if f == nil {
-		return ""
-	}
-	return f.OriginalFieldName
-}
-
-type FieldFiltering struct {
-	// The name of the field to filter.
-	TargetField string `json:"targetField"`
-}
-
-func (f FieldFiltering) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(f, "", false)
-}
-
-func (f *FieldFiltering) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (f *FieldFiltering) GetTargetField() string {
-	if f == nil {
-		return ""
-	}
-	return f.TargetField
-}
-
-// HashingMethod - The hashing algorithm to use.
-type HashingMethod string
-
-const (
-	HashingMethodMd2    HashingMethod = "MD2"
-	HashingMethodMd5    HashingMethod = "MD5"
-	HashingMethodSha1   HashingMethod = "SHA-1"
-	HashingMethodSha224 HashingMethod = "SHA-224"
-	HashingMethodSha256 HashingMethod = "SHA-256"
-	HashingMethodSha384 HashingMethod = "SHA-384"
-	HashingMethodSha512 HashingMethod = "SHA-512"
-)
-
-func (e HashingMethod) ToPointer() *HashingMethod {
-	return &e
-}
-func (e *HashingMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "MD2":
-		fallthrough
-	case "MD5":
-		fallthrough
-	case "SHA-1":
-		fallthrough
-	case "SHA-224":
-		fallthrough
-	case "SHA-256":
-		fallthrough
-	case "SHA-384":
-		fallthrough
-	case "SHA-512":
-		*e = HashingMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for HashingMethod: %v", v)
-	}
-}
-
-type Hashing struct {
-	// The suffix to append to the field name after hashing.
-	FieldNameSuffix string `json:"fieldNameSuffix"`
-	// The hashing algorithm to use.
-	Method HashingMethod `json:"method"`
-	// The name of the field to be hashed.
-	TargetField string `json:"targetField"`
-}
-
-func (h Hashing) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(h, "", false)
-}
-
-func (h *Hashing) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &h, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (h *Hashing) GetFieldNameSuffix() string {
-	if h == nil {
-		return ""
-	}
-	return h.FieldNameSuffix
-}
-
-func (h *Hashing) GetMethod() HashingMethod {
-	if h == nil {
-		return HashingMethod("")
-	}
-	return h.Method
-}
-
-func (h *Hashing) GetTargetField() string {
-	if h == nil {
-		return ""
-	}
-	return h.TargetField
-}
-
 type MapperConfigurationType string
 
 const (
-	MapperConfigurationTypeHashing        MapperConfigurationType = "Hashing"
-	MapperConfigurationTypeFieldFiltering MapperConfigurationType = "Field Filtering"
-	MapperConfigurationTypeFieldRenaming  MapperConfigurationType = "Field Renaming"
-	MapperConfigurationTypeRowFiltering   MapperConfigurationType = "Row Filtering"
-	MapperConfigurationTypeEncryption     MapperConfigurationType = "Encryption"
+	MapperConfigurationTypeHashingMapperConfiguration        MapperConfigurationType = "HashingMapperConfiguration"
+	MapperConfigurationTypeFieldFilteringMapperConfiguration MapperConfigurationType = "FieldFilteringMapperConfiguration"
+	MapperConfigurationTypeFieldRenamingMapperConfiguration  MapperConfigurationType = "FieldRenamingMapperConfiguration"
+	MapperConfigurationTypeRowFilteringMapperConfiguration   MapperConfigurationType = "RowFilteringMapperConfiguration"
+	MapperConfigurationTypeEncryptionMapperConfiguration     MapperConfigurationType = "EncryptionMapperConfiguration"
 )
 
 // MapperConfiguration - The values required to configure the mapper.
 type MapperConfiguration struct {
-	Hashing        *Hashing        `queryParam:"inline" union:"member"`
-	FieldFiltering *FieldFiltering `queryParam:"inline" union:"member"`
-	FieldRenaming  *FieldRenaming  `queryParam:"inline" union:"member"`
-	RowFiltering   *RowFiltering   `queryParam:"inline" union:"member"`
-	Encryption     *Encryption     `queryParam:"inline" union:"member"`
+	HashingMapperConfiguration        *HashingMapperConfiguration        `queryParam:"inline" union:"member"`
+	FieldFilteringMapperConfiguration *FieldFilteringMapperConfiguration `queryParam:"inline" union:"member"`
+	FieldRenamingMapperConfiguration  *FieldRenamingMapperConfiguration  `queryParam:"inline" union:"member"`
+	RowFilteringMapperConfiguration   *RowFilteringMapperConfiguration   `queryParam:"inline" union:"member"`
+	EncryptionMapperConfiguration     *EncryptionMapperConfiguration     `queryParam:"inline" union:"member"`
 
 	Type MapperConfigurationType
 }
 
-func CreateMapperConfigurationHashing(hashing Hashing) MapperConfiguration {
-	typ := MapperConfigurationTypeHashing
+func CreateMapperConfigurationHashingMapperConfiguration(hashingMapperConfiguration HashingMapperConfiguration) MapperConfiguration {
+	typ := MapperConfigurationTypeHashingMapperConfiguration
 
 	return MapperConfiguration{
-		Hashing: &hashing,
-		Type:    typ,
+		HashingMapperConfiguration: &hashingMapperConfiguration,
+		Type:                       typ,
 	}
 }
 
-func CreateMapperConfigurationFieldFiltering(fieldFiltering FieldFiltering) MapperConfiguration {
-	typ := MapperConfigurationTypeFieldFiltering
+func CreateMapperConfigurationFieldFilteringMapperConfiguration(fieldFilteringMapperConfiguration FieldFilteringMapperConfiguration) MapperConfiguration {
+	typ := MapperConfigurationTypeFieldFilteringMapperConfiguration
 
 	return MapperConfiguration{
-		FieldFiltering: &fieldFiltering,
-		Type:           typ,
+		FieldFilteringMapperConfiguration: &fieldFilteringMapperConfiguration,
+		Type:                              typ,
 	}
 }
 
-func CreateMapperConfigurationFieldRenaming(fieldRenaming FieldRenaming) MapperConfiguration {
-	typ := MapperConfigurationTypeFieldRenaming
+func CreateMapperConfigurationFieldRenamingMapperConfiguration(fieldRenamingMapperConfiguration FieldRenamingMapperConfiguration) MapperConfiguration {
+	typ := MapperConfigurationTypeFieldRenamingMapperConfiguration
 
 	return MapperConfiguration{
-		FieldRenaming: &fieldRenaming,
-		Type:          typ,
+		FieldRenamingMapperConfiguration: &fieldRenamingMapperConfiguration,
+		Type:                             typ,
 	}
 }
 
-func CreateMapperConfigurationRowFiltering(rowFiltering RowFiltering) MapperConfiguration {
-	typ := MapperConfigurationTypeRowFiltering
+func CreateMapperConfigurationRowFilteringMapperConfiguration(rowFilteringMapperConfiguration RowFilteringMapperConfiguration) MapperConfiguration {
+	typ := MapperConfigurationTypeRowFilteringMapperConfiguration
 
 	return MapperConfiguration{
-		RowFiltering: &rowFiltering,
-		Type:         typ,
+		RowFilteringMapperConfiguration: &rowFilteringMapperConfiguration,
+		Type:                            typ,
 	}
 }
 
-func CreateMapperConfigurationEncryption(encryption Encryption) MapperConfiguration {
-	typ := MapperConfigurationTypeEncryption
+func CreateMapperConfigurationEncryptionMapperConfiguration(encryptionMapperConfiguration EncryptionMapperConfiguration) MapperConfiguration {
+	typ := MapperConfigurationTypeEncryptionMapperConfiguration
 
 	return MapperConfiguration{
-		Encryption: &encryption,
-		Type:       typ,
+		EncryptionMapperConfiguration: &encryptionMapperConfiguration,
+		Type:                          typ,
 	}
 }
 
@@ -497,43 +79,43 @@ func (u *MapperConfiguration) UnmarshalJSON(data []byte) error {
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var hashing Hashing = Hashing{}
-	if err := utils.UnmarshalJSON(data, &hashing, "", true, nil); err == nil {
+	var hashingMapperConfiguration HashingMapperConfiguration = HashingMapperConfiguration{}
+	if err := utils.UnmarshalJSON(data, &hashingMapperConfiguration, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  MapperConfigurationTypeHashing,
-			Value: &hashing,
+			Type:  MapperConfigurationTypeHashingMapperConfiguration,
+			Value: &hashingMapperConfiguration,
 		})
 	}
 
-	var fieldFiltering FieldFiltering = FieldFiltering{}
-	if err := utils.UnmarshalJSON(data, &fieldFiltering, "", true, nil); err == nil {
+	var fieldFilteringMapperConfiguration FieldFilteringMapperConfiguration = FieldFilteringMapperConfiguration{}
+	if err := utils.UnmarshalJSON(data, &fieldFilteringMapperConfiguration, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  MapperConfigurationTypeFieldFiltering,
-			Value: &fieldFiltering,
+			Type:  MapperConfigurationTypeFieldFilteringMapperConfiguration,
+			Value: &fieldFilteringMapperConfiguration,
 		})
 	}
 
-	var fieldRenaming FieldRenaming = FieldRenaming{}
-	if err := utils.UnmarshalJSON(data, &fieldRenaming, "", true, nil); err == nil {
+	var fieldRenamingMapperConfiguration FieldRenamingMapperConfiguration = FieldRenamingMapperConfiguration{}
+	if err := utils.UnmarshalJSON(data, &fieldRenamingMapperConfiguration, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  MapperConfigurationTypeFieldRenaming,
-			Value: &fieldRenaming,
+			Type:  MapperConfigurationTypeFieldRenamingMapperConfiguration,
+			Value: &fieldRenamingMapperConfiguration,
 		})
 	}
 
-	var rowFiltering RowFiltering = RowFiltering{}
-	if err := utils.UnmarshalJSON(data, &rowFiltering, "", true, nil); err == nil {
+	var rowFilteringMapperConfiguration RowFilteringMapperConfiguration = RowFilteringMapperConfiguration{}
+	if err := utils.UnmarshalJSON(data, &rowFilteringMapperConfiguration, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  MapperConfigurationTypeRowFiltering,
-			Value: &rowFiltering,
+			Type:  MapperConfigurationTypeRowFilteringMapperConfiguration,
+			Value: &rowFilteringMapperConfiguration,
 		})
 	}
 
-	var encryption Encryption = Encryption{}
-	if err := utils.UnmarshalJSON(data, &encryption, "", true, nil); err == nil {
+	var encryptionMapperConfiguration EncryptionMapperConfiguration = EncryptionMapperConfiguration{}
+	if err := utils.UnmarshalJSON(data, &encryptionMapperConfiguration, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  MapperConfigurationTypeEncryption,
-			Value: &encryption,
+			Type:  MapperConfigurationTypeEncryptionMapperConfiguration,
+			Value: &encryptionMapperConfiguration,
 		})
 	}
 
@@ -550,20 +132,20 @@ func (u *MapperConfiguration) UnmarshalJSON(data []byte) error {
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(MapperConfigurationType)
 	switch best.Type {
-	case MapperConfigurationTypeHashing:
-		u.Hashing = best.Value.(*Hashing)
+	case MapperConfigurationTypeHashingMapperConfiguration:
+		u.HashingMapperConfiguration = best.Value.(*HashingMapperConfiguration)
 		return nil
-	case MapperConfigurationTypeFieldFiltering:
-		u.FieldFiltering = best.Value.(*FieldFiltering)
+	case MapperConfigurationTypeFieldFilteringMapperConfiguration:
+		u.FieldFilteringMapperConfiguration = best.Value.(*FieldFilteringMapperConfiguration)
 		return nil
-	case MapperConfigurationTypeFieldRenaming:
-		u.FieldRenaming = best.Value.(*FieldRenaming)
+	case MapperConfigurationTypeFieldRenamingMapperConfiguration:
+		u.FieldRenamingMapperConfiguration = best.Value.(*FieldRenamingMapperConfiguration)
 		return nil
-	case MapperConfigurationTypeRowFiltering:
-		u.RowFiltering = best.Value.(*RowFiltering)
+	case MapperConfigurationTypeRowFilteringMapperConfiguration:
+		u.RowFilteringMapperConfiguration = best.Value.(*RowFilteringMapperConfiguration)
 		return nil
-	case MapperConfigurationTypeEncryption:
-		u.Encryption = best.Value.(*Encryption)
+	case MapperConfigurationTypeEncryptionMapperConfiguration:
+		u.EncryptionMapperConfiguration = best.Value.(*EncryptionMapperConfiguration)
 		return nil
 	}
 
@@ -571,24 +153,24 @@ func (u *MapperConfiguration) UnmarshalJSON(data []byte) error {
 }
 
 func (u MapperConfiguration) MarshalJSON() ([]byte, error) {
-	if u.Hashing != nil {
-		return utils.MarshalJSON(u.Hashing, "", true)
+	if u.HashingMapperConfiguration != nil {
+		return utils.MarshalJSON(u.HashingMapperConfiguration, "", true)
 	}
 
-	if u.FieldFiltering != nil {
-		return utils.MarshalJSON(u.FieldFiltering, "", true)
+	if u.FieldFilteringMapperConfiguration != nil {
+		return utils.MarshalJSON(u.FieldFilteringMapperConfiguration, "", true)
 	}
 
-	if u.FieldRenaming != nil {
-		return utils.MarshalJSON(u.FieldRenaming, "", true)
+	if u.FieldRenamingMapperConfiguration != nil {
+		return utils.MarshalJSON(u.FieldRenamingMapperConfiguration, "", true)
 	}
 
-	if u.RowFiltering != nil {
-		return utils.MarshalJSON(u.RowFiltering, "", true)
+	if u.RowFilteringMapperConfiguration != nil {
+		return utils.MarshalJSON(u.RowFilteringMapperConfiguration, "", true)
 	}
 
-	if u.Encryption != nil {
-		return utils.MarshalJSON(u.Encryption, "", true)
+	if u.EncryptionMapperConfiguration != nil {
+		return utils.MarshalJSON(u.EncryptionMapperConfiguration, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type MapperConfiguration: all fields are null")
