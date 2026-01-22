@@ -2,9 +2,7 @@
 
 package types
 
-import (
-	"github.com/hashicorp/terraform-plugin-framework/types"
-)
+import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type StreamConfiguration struct {
 	CursorField           []types.String           `tfsdk:"cursor_field"`

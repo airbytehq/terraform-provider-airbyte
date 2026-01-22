@@ -9,30 +9,30 @@ type CreateDefinitionRequest struct {
 	DocumentationURL *string `json:"documentationUrl,omitempty"`
 }
 
-func (c *CreateDefinitionRequest) GetName() string {
-	if c == nil {
+func (o *CreateDefinitionRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return c.Name
+	return o.Name
 }
 
-func (c *CreateDefinitionRequest) GetDockerRepository() string {
-	if c == nil {
+func (o *CreateDefinitionRequest) GetDockerRepository() string {
+	if o == nil {
 		return ""
 	}
-	return c.DockerRepository
+	return o.DockerRepository
 }
 
-func (c *CreateDefinitionRequest) GetDockerImageTag() string {
-	if c == nil {
+func (o *CreateDefinitionRequest) GetDockerImageTag() string {
+	if o == nil {
 		return ""
 	}
-	return c.DockerImageTag
+	return o.DockerImageTag
 }
 
-func (c *CreateDefinitionRequest) GetDocumentationURL() *string {
-	if c == nil {
+func (o *CreateDefinitionRequest) GetDocumentationURL() *string {
+	if o == nil {
 		return nil
 	}
-	return c.DocumentationURL
+	return o.DocumentationURL
 }

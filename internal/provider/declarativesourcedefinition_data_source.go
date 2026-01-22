@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -23,17 +23,16 @@ func NewDeclarativeSourceDefinitionDataSource() datasource.DataSource {
 
 // DeclarativeSourceDefinitionDataSource is the data source implementation.
 type DeclarativeSourceDefinitionDataSource struct {
-	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
 // DeclarativeSourceDefinitionDataSourceModel describes the data model.
 type DeclarativeSourceDefinitionDataSourceModel struct {
-	ID          types.String         `tfsdk:"id"`
-	Manifest    jsontypes.Normalized `tfsdk:"manifest"`
-	Name        types.String         `tfsdk:"name"`
-	Version     types.Int64          `tfsdk:"version"`
-	WorkspaceID types.String         `tfsdk:"workspace_id"`
+	ID          types.String `tfsdk:"id"`
+	Manifest    types.String `tfsdk:"manifest"`
+	Name        types.String `tfsdk:"name"`
+	Version     types.Int64  `tfsdk:"version"`
+	WorkspaceID types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -51,7 +50,6 @@ func (r *DeclarativeSourceDefinitionDataSource) Schema(ctx context.Context, req 
 				Computed: true,
 			},
 			"manifest": schema.StringAttribute{
-				CustomType:  jsontypes.NormalizedType{},
 				Computed:    true,
 				Description: `Low code CDK manifest JSON object. Parsed as JSON.`,
 			},
@@ -106,13 +104,17 @@ func (r *DeclarativeSourceDefinitionDataSource) Read(ctx context.Context, req da
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.GetDeclarativeSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -124,6 +126,10 @@ func (r *DeclarativeSourceDefinitionDataSource) Read(ctx context.Context, req da
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	}
 	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
@@ -132,11 +138,7 @@ func (r *DeclarativeSourceDefinitionDataSource) Read(ctx context.Context, req da
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

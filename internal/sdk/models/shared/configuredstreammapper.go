@@ -9,23 +9,23 @@ type ConfiguredStreamMapper struct {
 	MapperConfiguration MapperConfiguration `json:"mapperConfiguration"`
 }
 
-func (c *ConfiguredStreamMapper) GetID() *string {
-	if c == nil {
+func (o *ConfiguredStreamMapper) GetID() *string {
+	if o == nil {
 		return nil
 	}
-	return c.ID
+	return o.ID
 }
 
-func (c *ConfiguredStreamMapper) GetType() StreamMapperType {
-	if c == nil {
+func (o *ConfiguredStreamMapper) GetType() StreamMapperType {
+	if o == nil {
 		return StreamMapperType("")
 	}
-	return c.Type
+	return o.Type
 }
 
-func (c *ConfiguredStreamMapper) GetMapperConfiguration() MapperConfiguration {
-	if c == nil {
+func (o *ConfiguredStreamMapper) GetMapperConfiguration() MapperConfiguration {
+	if o == nil {
 		return MapperConfiguration{}
 	}
-	return c.MapperConfiguration
+	return o.MapperConfiguration
 }

@@ -12,18 +12,18 @@ type UpdateWorkspaceRequest struct {
 	WorkspaceUpdateRequest shared.WorkspaceUpdateRequest `request:"mediaType=application/json"`
 }
 
-func (u *UpdateWorkspaceRequest) GetWorkspaceID() string {
-	if u == nil {
+func (o *UpdateWorkspaceRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return u.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (u *UpdateWorkspaceRequest) GetWorkspaceUpdateRequest() shared.WorkspaceUpdateRequest {
-	if u == nil {
+func (o *UpdateWorkspaceRequest) GetWorkspaceUpdateRequest() shared.WorkspaceUpdateRequest {
+	if o == nil {
 		return shared.WorkspaceUpdateRequest{}
 	}
-	return u.WorkspaceUpdateRequest
+	return o.WorkspaceUpdateRequest
 }
 
 type UpdateWorkspaceResponse struct {
@@ -37,30 +37,30 @@ type UpdateWorkspaceResponse struct {
 	WorkspaceResponse *shared.WorkspaceResponse
 }
 
-func (u *UpdateWorkspaceResponse) GetContentType() string {
-	if u == nil {
+func (o *UpdateWorkspaceResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return u.ContentType
+	return o.ContentType
 }
 
-func (u *UpdateWorkspaceResponse) GetStatusCode() int {
-	if u == nil {
+func (o *UpdateWorkspaceResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return u.StatusCode
+	return o.StatusCode
 }
 
-func (u *UpdateWorkspaceResponse) GetRawResponse() *http.Response {
-	if u == nil {
+func (o *UpdateWorkspaceResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return u.RawResponse
+	return o.RawResponse
 }
 
-func (u *UpdateWorkspaceResponse) GetWorkspaceResponse() *shared.WorkspaceResponse {
-	if u == nil {
+func (o *UpdateWorkspaceResponse) GetWorkspaceResponse() *shared.WorkspaceResponse {
+	if o == nil {
 		return nil
 	}
-	return u.WorkspaceResponse
+	return o.WorkspaceResponse
 }

@@ -8,16 +8,16 @@ type AirbyteAPIConnectionSchedule struct {
 	CronExpression *string          `json:"cronExpression,omitempty"`
 }
 
-func (a *AirbyteAPIConnectionSchedule) GetScheduleType() ScheduleTypeEnum {
-	if a == nil {
+func (o *AirbyteAPIConnectionSchedule) GetScheduleType() ScheduleTypeEnum {
+	if o == nil {
 		return ScheduleTypeEnum("")
 	}
-	return a.ScheduleType
+	return o.ScheduleType
 }
 
-func (a *AirbyteAPIConnectionSchedule) GetCronExpression() *string {
-	if a == nil {
+func (o *AirbyteAPIConnectionSchedule) GetCronExpression() *string {
+	if o == nil {
 		return nil
 	}
-	return a.CronExpression
+	return o.CronExpression
 }

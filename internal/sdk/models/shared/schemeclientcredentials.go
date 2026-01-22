@@ -17,29 +17,29 @@ func (s SchemeClientCredentials) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SchemeClientCredentials) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *SchemeClientCredentials) GetClientID() string {
-	if s == nil {
+func (o *SchemeClientCredentials) GetClientID() string {
+	if o == nil {
 		return ""
 	}
-	return s.ClientID
+	return o.ClientID
 }
 
-func (s *SchemeClientCredentials) GetClientSecret() string {
-	if s == nil {
+func (o *SchemeClientCredentials) GetClientSecret() string {
+	if o == nil {
 		return ""
 	}
-	return s.ClientSecret
+	return o.ClientSecret
 }
 
-func (s *SchemeClientCredentials) GetTokenURL() string {
-	if s == nil {
+func (o *SchemeClientCredentials) GetTokenURL() string {
+	if o == nil {
 		return ""
 	}
-	return s.TokenURL
+	return o.TokenURL
 }

@@ -13,7 +13,6 @@ const (
 	ConnectionStatusEnumActive     ConnectionStatusEnum = "active"
 	ConnectionStatusEnumInactive   ConnectionStatusEnum = "inactive"
 	ConnectionStatusEnumDeprecated ConnectionStatusEnum = "deprecated"
-	ConnectionStatusEnumLocked     ConnectionStatusEnum = "locked"
 )
 
 func (e ConnectionStatusEnum) ToPointer() *ConnectionStatusEnum {
@@ -30,8 +29,6 @@ func (e *ConnectionStatusEnum) UnmarshalJSON(data []byte) error {
 	case "inactive":
 		fallthrough
 	case "deprecated":
-		fallthrough
-	case "locked":
 		*e = ConnectionStatusEnum(v)
 		return nil
 	default:

@@ -12,18 +12,18 @@ type GetDeclarativeSourceDefinitionRequest struct {
 	DefinitionID string `pathParam:"style=simple,explode=false,name=definitionId"`
 }
 
-func (g *GetDeclarativeSourceDefinitionRequest) GetWorkspaceID() string {
-	if g == nil {
+func (o *GetDeclarativeSourceDefinitionRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return g.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (g *GetDeclarativeSourceDefinitionRequest) GetDefinitionID() string {
-	if g == nil {
+func (o *GetDeclarativeSourceDefinitionRequest) GetDefinitionID() string {
+	if o == nil {
 		return ""
 	}
-	return g.DefinitionID
+	return o.DefinitionID
 }
 
 type GetDeclarativeSourceDefinitionResponse struct {
@@ -37,30 +37,30 @@ type GetDeclarativeSourceDefinitionResponse struct {
 	DeclarativeSourceDefinitionResponse *shared.DeclarativeSourceDefinitionResponse
 }
 
-func (g *GetDeclarativeSourceDefinitionResponse) GetContentType() string {
-	if g == nil {
+func (o *GetDeclarativeSourceDefinitionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return g.ContentType
+	return o.ContentType
 }
 
-func (g *GetDeclarativeSourceDefinitionResponse) GetStatusCode() int {
-	if g == nil {
+func (o *GetDeclarativeSourceDefinitionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return g.StatusCode
+	return o.StatusCode
 }
 
-func (g *GetDeclarativeSourceDefinitionResponse) GetRawResponse() *http.Response {
-	if g == nil {
+func (o *GetDeclarativeSourceDefinitionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return g.RawResponse
+	return o.RawResponse
 }
 
-func (g *GetDeclarativeSourceDefinitionResponse) GetDeclarativeSourceDefinitionResponse() *shared.DeclarativeSourceDefinitionResponse {
-	if g == nil {
+func (o *GetDeclarativeSourceDefinitionResponse) GetDeclarativeSourceDefinitionResponse() *shared.DeclarativeSourceDefinitionResponse {
+	if o == nil {
 		return nil
 	}
-	return g.DeclarativeSourceDefinitionResponse
+	return o.DeclarativeSourceDefinitionResponse
 }

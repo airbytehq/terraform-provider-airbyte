@@ -13,37 +13,37 @@ type PermissionResponse struct {
 	OrganizationID *string `json:"organizationId,omitempty"`
 }
 
-func (p *PermissionResponse) GetPermissionID() string {
-	if p == nil {
+func (o *PermissionResponse) GetPermissionID() string {
+	if o == nil {
 		return ""
 	}
-	return p.PermissionID
+	return o.PermissionID
 }
 
-func (p *PermissionResponse) GetPermissionType() PermissionType {
-	if p == nil {
+func (o *PermissionResponse) GetPermissionType() PermissionType {
+	if o == nil {
 		return PermissionType("")
 	}
-	return p.PermissionType
+	return o.PermissionType
 }
 
-func (p *PermissionResponse) GetUserID() string {
-	if p == nil {
+func (o *PermissionResponse) GetUserID() string {
+	if o == nil {
 		return ""
 	}
-	return p.UserID
+	return o.UserID
 }
 
-func (p *PermissionResponse) GetWorkspaceID() *string {
-	if p == nil {
+func (o *PermissionResponse) GetWorkspaceID() *string {
+	if o == nil {
 		return nil
 	}
-	return p.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (p *PermissionResponse) GetOrganizationID() *string {
-	if p == nil {
+func (o *PermissionResponse) GetOrganizationID() *string {
+	if o == nil {
 		return nil
 	}
-	return p.OrganizationID
+	return o.OrganizationID
 }

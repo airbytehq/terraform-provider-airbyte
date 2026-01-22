@@ -8,16 +8,16 @@ type WebhookNotificationConfig struct {
 	URL     *string `json:"url,omitempty"`
 }
 
-func (w *WebhookNotificationConfig) GetEnabled() *bool {
-	if w == nil {
+func (o *WebhookNotificationConfig) GetEnabled() *bool {
+	if o == nil {
 		return nil
 	}
-	return w.Enabled
+	return o.Enabled
 }
 
-func (w *WebhookNotificationConfig) GetURL() *string {
-	if w == nil {
+func (o *WebhookNotificationConfig) GetURL() *string {
+	if o == nil {
 		return nil
 	}
-	return w.URL
+	return o.URL
 }

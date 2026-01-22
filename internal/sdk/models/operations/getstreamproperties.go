@@ -22,31 +22,31 @@ func (g GetStreamPropertiesRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetStreamPropertiesRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, nil); err != nil {
+	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (g *GetStreamPropertiesRequest) GetSourceID() string {
-	if g == nil {
+func (o *GetStreamPropertiesRequest) GetSourceID() string {
+	if o == nil {
 		return ""
 	}
-	return g.SourceID
+	return o.SourceID
 }
 
-func (g *GetStreamPropertiesRequest) GetDestinationID() *string {
-	if g == nil {
+func (o *GetStreamPropertiesRequest) GetDestinationID() *string {
+	if o == nil {
 		return nil
 	}
-	return g.DestinationID
+	return o.DestinationID
 }
 
-func (g *GetStreamPropertiesRequest) GetIgnoreCache() *bool {
-	if g == nil {
+func (o *GetStreamPropertiesRequest) GetIgnoreCache() *bool {
+	if o == nil {
 		return nil
 	}
-	return g.IgnoreCache
+	return o.IgnoreCache
 }
 
 type GetStreamPropertiesResponse struct {
@@ -60,30 +60,30 @@ type GetStreamPropertiesResponse struct {
 	StreamPropertiesResponse []shared.StreamProperties
 }
 
-func (g *GetStreamPropertiesResponse) GetContentType() string {
-	if g == nil {
+func (o *GetStreamPropertiesResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return g.ContentType
+	return o.ContentType
 }
 
-func (g *GetStreamPropertiesResponse) GetStatusCode() int {
-	if g == nil {
+func (o *GetStreamPropertiesResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return g.StatusCode
+	return o.StatusCode
 }
 
-func (g *GetStreamPropertiesResponse) GetRawResponse() *http.Response {
-	if g == nil {
+func (o *GetStreamPropertiesResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return g.RawResponse
+	return o.RawResponse
 }
 
-func (g *GetStreamPropertiesResponse) GetStreamPropertiesResponse() []shared.StreamProperties {
-	if g == nil {
+func (o *GetStreamPropertiesResponse) GetStreamPropertiesResponse() []shared.StreamProperties {
+	if o == nil {
 		return nil
 	}
-	return g.StreamPropertiesResponse
+	return o.StreamPropertiesResponse
 }

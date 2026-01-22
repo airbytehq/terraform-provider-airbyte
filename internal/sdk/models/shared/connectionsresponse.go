@@ -8,23 +8,23 @@ type ConnectionsResponse struct {
 	Data     []ConnectionResponse `json:"data,omitempty"`
 }
 
-func (c *ConnectionsResponse) GetPrevious() *string {
-	if c == nil {
+func (o *ConnectionsResponse) GetPrevious() *string {
+	if o == nil {
 		return nil
 	}
-	return c.Previous
+	return o.Previous
 }
 
-func (c *ConnectionsResponse) GetNext() *string {
-	if c == nil {
+func (o *ConnectionsResponse) GetNext() *string {
+	if o == nil {
 		return nil
 	}
-	return c.Next
+	return o.Next
 }
 
-func (c *ConnectionsResponse) GetData() []ConnectionResponse {
-	if c == nil {
+func (o *ConnectionsResponse) GetData() []ConnectionResponse {
+	if o == nil {
 		return nil
 	}
-	return c.Data
+	return o.Data
 }

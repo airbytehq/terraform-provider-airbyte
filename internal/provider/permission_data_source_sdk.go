@@ -3,16 +3,11 @@
 package provider
 
 import (
-	"context"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *PermissionDataSourceModel) RefreshFromSharedPermissionResponse(ctx context.Context, resp *shared.PermissionResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *PermissionDataSourceModel) RefreshFromSharedPermissionResponse(resp *shared.PermissionResponse) {
 	if resp != nil {
 		r.OrganizationID = types.StringPointerValue(resp.OrganizationID)
 		r.PermissionID = types.StringValue(resp.PermissionID)
@@ -20,19 +15,4 @@ func (r *PermissionDataSourceModel) RefreshFromSharedPermissionResponse(ctx cont
 		r.UserID = types.StringValue(resp.UserID)
 		r.WorkspaceID = types.StringPointerValue(resp.WorkspaceID)
 	}
-
-	return diags
-}
-
-func (r *PermissionDataSourceModel) ToOperationsGetPermissionRequest(ctx context.Context) (*operations.GetPermissionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var permissionID string
-	permissionID = r.PermissionID.ValueString()
-
-	out := operations.GetPermissionRequest{
-		PermissionID: permissionID,
-	}
-
-	return &out, diags
 }

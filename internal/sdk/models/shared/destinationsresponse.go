@@ -8,23 +8,23 @@ type DestinationsResponse struct {
 	Data     []DestinationResponse `json:"data"`
 }
 
-func (d *DestinationsResponse) GetPrevious() *string {
-	if d == nil {
+func (o *DestinationsResponse) GetPrevious() *string {
+	if o == nil {
 		return nil
 	}
-	return d.Previous
+	return o.Previous
 }
 
-func (d *DestinationsResponse) GetNext() *string {
-	if d == nil {
+func (o *DestinationsResponse) GetNext() *string {
+	if o == nil {
 		return nil
 	}
-	return d.Next
+	return o.Next
 }
 
-func (d *DestinationsResponse) GetData() []DestinationResponse {
-	if d == nil {
+func (o *DestinationsResponse) GetData() []DestinationResponse {
+	if o == nil {
 		return []DestinationResponse{}
 	}
-	return d.Data
+	return o.Data
 }

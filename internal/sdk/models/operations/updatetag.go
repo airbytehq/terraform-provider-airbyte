@@ -12,18 +12,18 @@ type UpdateTagRequest struct {
 	TagPatchRequest shared.TagPatchRequest `request:"mediaType=application/json"`
 }
 
-func (u *UpdateTagRequest) GetTagID() string {
-	if u == nil {
+func (o *UpdateTagRequest) GetTagID() string {
+	if o == nil {
 		return ""
 	}
-	return u.TagID
+	return o.TagID
 }
 
-func (u *UpdateTagRequest) GetTagPatchRequest() shared.TagPatchRequest {
-	if u == nil {
+func (o *UpdateTagRequest) GetTagPatchRequest() shared.TagPatchRequest {
+	if o == nil {
 		return shared.TagPatchRequest{}
 	}
-	return u.TagPatchRequest
+	return o.TagPatchRequest
 }
 
 type UpdateTagResponse struct {
@@ -37,30 +37,30 @@ type UpdateTagResponse struct {
 	TagResponse *shared.TagResponse
 }
 
-func (u *UpdateTagResponse) GetContentType() string {
-	if u == nil {
+func (o *UpdateTagResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return u.ContentType
+	return o.ContentType
 }
 
-func (u *UpdateTagResponse) GetStatusCode() int {
-	if u == nil {
+func (o *UpdateTagResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return u.StatusCode
+	return o.StatusCode
 }
 
-func (u *UpdateTagResponse) GetRawResponse() *http.Response {
-	if u == nil {
+func (o *UpdateTagResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return u.RawResponse
+	return o.RawResponse
 }
 
-func (u *UpdateTagResponse) GetTagResponse() *shared.TagResponse {
-	if u == nil {
+func (o *UpdateTagResponse) GetTagResponse() *shared.TagResponse {
+	if o == nil {
 		return nil
 	}
-	return u.TagResponse
+	return o.TagResponse
 }

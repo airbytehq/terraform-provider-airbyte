@@ -7,7 +7,7 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -24,7 +24,6 @@ func NewConnectionDataSource() datasource.DataSource {
 
 // ConnectionDataSource is the data source implementation.
 type ConnectionDataSource struct {
-	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
@@ -42,7 +41,6 @@ type ConnectionDataSourceModel struct {
 	Schedule                         tfTypes.ConnectionScheduleResponse `tfsdk:"schedule"`
 	SourceID                         types.String                       `tfsdk:"source_id"`
 	Status                           types.String                       `tfsdk:"status"`
-	StatusReason                     types.String                       `tfsdk:"status_reason"`
 	Tags                             []tfTypes.Tag                      `tfsdk:"tags"`
 	WorkspaceID                      types.String                       `tfsdk:"workspace_id"`
 }
@@ -134,15 +132,6 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 															},
 														},
 													},
-													"field_filtering": schema.SingleNestedAttribute{
-														Computed: true,
-														Attributes: map[string]schema.Attribute{
-															"target_field": schema.StringAttribute{
-																Computed:    true,
-																Description: `The name of the field to filter.`,
-															},
-														},
-													},
 													"field_renaming": schema.SingleNestedAttribute{
 														Computed: true,
 														Attributes: map[string]schema.Attribute{
@@ -177,7 +166,6 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 														Computed: true,
 														Attributes: map[string]schema.Attribute{
 															"conditions": schema.StringAttribute{
-																CustomType:  jsontypes.NormalizedType{},
 																Computed:    true,
 																Description: `Parsed as JSON.`,
 															},
@@ -207,7 +195,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 									},
 									Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,
 								},
-								"selected_fields": schema.SetNestedAttribute{
+								"selected_fields": schema.ListNestedAttribute{
 									Computed: true,
 									NestedObject: schema.NestedAttributeObject{
 										Attributes: map[string]schema.Attribute{
@@ -275,9 +263,6 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 			"status": schema.StringAttribute{
 				Computed: true,
 			},
-			"status_reason": schema.StringAttribute{
-				Computed: true,
-			},
 			"tags": schema.ListNestedAttribute{
 				Computed: true,
 				NestedObject: schema.NestedAttributeObject{
@@ -342,13 +327,13 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetConnectionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var connectionID string
+	connectionID = data.ConnectionID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetConnectionRequest{
+		ConnectionID: connectionID,
 	}
-	res, err := r.client.Connections.GetConnection(ctx, *request)
+	res, err := r.client.Connections.GetConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -360,6 +345,10 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	}
 	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
@@ -368,11 +357,7 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

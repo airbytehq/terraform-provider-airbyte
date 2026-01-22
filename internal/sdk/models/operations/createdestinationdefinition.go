@@ -12,18 +12,18 @@ type CreateDestinationDefinitionRequest struct {
 	CreateDefinitionRequest shared.CreateDefinitionRequest `request:"mediaType=application/json"`
 }
 
-func (c *CreateDestinationDefinitionRequest) GetWorkspaceID() string {
-	if c == nil {
+func (o *CreateDestinationDefinitionRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return c.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (c *CreateDestinationDefinitionRequest) GetCreateDefinitionRequest() shared.CreateDefinitionRequest {
-	if c == nil {
+func (o *CreateDestinationDefinitionRequest) GetCreateDefinitionRequest() shared.CreateDefinitionRequest {
+	if o == nil {
 		return shared.CreateDefinitionRequest{}
 	}
-	return c.CreateDefinitionRequest
+	return o.CreateDefinitionRequest
 }
 
 type CreateDestinationDefinitionResponse struct {
@@ -37,30 +37,30 @@ type CreateDestinationDefinitionResponse struct {
 	DefinitionResponse *shared.DefinitionResponse
 }
 
-func (c *CreateDestinationDefinitionResponse) GetContentType() string {
-	if c == nil {
+func (o *CreateDestinationDefinitionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return c.ContentType
+	return o.ContentType
 }
 
-func (c *CreateDestinationDefinitionResponse) GetStatusCode() int {
-	if c == nil {
+func (o *CreateDestinationDefinitionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return c.StatusCode
+	return o.StatusCode
 }
 
-func (c *CreateDestinationDefinitionResponse) GetRawResponse() *http.Response {
-	if c == nil {
+func (o *CreateDestinationDefinitionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return c.RawResponse
+	return o.RawResponse
 }
 
-func (c *CreateDestinationDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
-	if c == nil {
+func (o *CreateDestinationDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
+	if o == nil {
 		return nil
 	}
-	return c.DefinitionResponse
+	return o.DefinitionResponse
 }

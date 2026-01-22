@@ -12,18 +12,18 @@ type CreateOrUpdateWorkspaceOAuthCredentialsRequest struct {
 	WorkspaceOAuthCredentialsRequest shared.WorkspaceOAuthCredentialsRequest `request:"mediaType=application/json"`
 }
 
-func (c *CreateOrUpdateWorkspaceOAuthCredentialsRequest) GetWorkspaceID() string {
-	if c == nil {
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return c.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (c *CreateOrUpdateWorkspaceOAuthCredentialsRequest) GetWorkspaceOAuthCredentialsRequest() shared.WorkspaceOAuthCredentialsRequest {
-	if c == nil {
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsRequest) GetWorkspaceOAuthCredentialsRequest() shared.WorkspaceOAuthCredentialsRequest {
+	if o == nil {
 		return shared.WorkspaceOAuthCredentialsRequest{}
 	}
-	return c.WorkspaceOAuthCredentialsRequest
+	return o.WorkspaceOAuthCredentialsRequest
 }
 
 type CreateOrUpdateWorkspaceOAuthCredentialsResponse struct {
@@ -35,23 +35,23 @@ type CreateOrUpdateWorkspaceOAuthCredentialsResponse struct {
 	RawResponse *http.Response
 }
 
-func (c *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetContentType() string {
-	if c == nil {
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return c.ContentType
+	return o.ContentType
 }
 
-func (c *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetStatusCode() int {
-	if c == nil {
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return c.StatusCode
+	return o.StatusCode
 }
 
-func (c *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetRawResponse() *http.Response {
-	if c == nil {
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return c.RawResponse
+	return o.RawResponse
 }

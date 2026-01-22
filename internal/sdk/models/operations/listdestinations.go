@@ -24,38 +24,38 @@ func (l ListDestinationsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListDestinationsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (l *ListDestinationsRequest) GetWorkspaceIds() []string {
-	if l == nil {
+func (o *ListDestinationsRequest) GetWorkspaceIds() []string {
+	if o == nil {
 		return nil
 	}
-	return l.WorkspaceIds
+	return o.WorkspaceIds
 }
 
-func (l *ListDestinationsRequest) GetIncludeDeleted() *bool {
-	if l == nil {
+func (o *ListDestinationsRequest) GetIncludeDeleted() *bool {
+	if o == nil {
 		return nil
 	}
-	return l.IncludeDeleted
+	return o.IncludeDeleted
 }
 
-func (l *ListDestinationsRequest) GetLimit() *int {
-	if l == nil {
+func (o *ListDestinationsRequest) GetLimit() *int {
+	if o == nil {
 		return nil
 	}
-	return l.Limit
+	return o.Limit
 }
 
-func (l *ListDestinationsRequest) GetOffset() *int {
-	if l == nil {
+func (o *ListDestinationsRequest) GetOffset() *int {
+	if o == nil {
 		return nil
 	}
-	return l.Offset
+	return o.Offset
 }
 
 type ListDestinationsResponse struct {
@@ -69,30 +69,30 @@ type ListDestinationsResponse struct {
 	DestinationsResponse *shared.DestinationsResponse
 }
 
-func (l *ListDestinationsResponse) GetContentType() string {
-	if l == nil {
+func (o *ListDestinationsResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return l.ContentType
+	return o.ContentType
 }
 
-func (l *ListDestinationsResponse) GetStatusCode() int {
-	if l == nil {
+func (o *ListDestinationsResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return l.StatusCode
+	return o.StatusCode
 }
 
-func (l *ListDestinationsResponse) GetRawResponse() *http.Response {
-	if l == nil {
+func (o *ListDestinationsResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return l.RawResponse
+	return o.RawResponse
 }
 
-func (l *ListDestinationsResponse) GetDestinationsResponse() *shared.DestinationsResponse {
-	if l == nil {
+func (o *ListDestinationsResponse) GetDestinationsResponse() *shared.DestinationsResponse {
+	if o == nil {
 		return nil
 	}
-	return l.DestinationsResponse
+	return o.DestinationsResponse
 }

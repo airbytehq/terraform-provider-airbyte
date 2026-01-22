@@ -12,18 +12,18 @@ type PatchConnectionRequest struct {
 	ConnectionPatchRequest shared.ConnectionPatchRequest `request:"mediaType=application/json"`
 }
 
-func (p *PatchConnectionRequest) GetConnectionID() string {
-	if p == nil {
+func (o *PatchConnectionRequest) GetConnectionID() string {
+	if o == nil {
 		return ""
 	}
-	return p.ConnectionID
+	return o.ConnectionID
 }
 
-func (p *PatchConnectionRequest) GetConnectionPatchRequest() shared.ConnectionPatchRequest {
-	if p == nil {
+func (o *PatchConnectionRequest) GetConnectionPatchRequest() shared.ConnectionPatchRequest {
+	if o == nil {
 		return shared.ConnectionPatchRequest{}
 	}
-	return p.ConnectionPatchRequest
+	return o.ConnectionPatchRequest
 }
 
 type PatchConnectionResponse struct {
@@ -37,30 +37,30 @@ type PatchConnectionResponse struct {
 	ConnectionResponse *shared.ConnectionResponse
 }
 
-func (p *PatchConnectionResponse) GetContentType() string {
-	if p == nil {
+func (o *PatchConnectionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return p.ContentType
+	return o.ContentType
 }
 
-func (p *PatchConnectionResponse) GetStatusCode() int {
-	if p == nil {
+func (o *PatchConnectionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return p.StatusCode
+	return o.StatusCode
 }
 
-func (p *PatchConnectionResponse) GetRawResponse() *http.Response {
-	if p == nil {
+func (o *PatchConnectionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return p.RawResponse
+	return o.RawResponse
 }
 
-func (p *PatchConnectionResponse) GetConnectionResponse() *shared.ConnectionResponse {
-	if p == nil {
+func (o *PatchConnectionResponse) GetConnectionResponse() *shared.ConnectionResponse {
+	if o == nil {
 		return nil
 	}
-	return p.ConnectionResponse
+	return o.ConnectionResponse
 }

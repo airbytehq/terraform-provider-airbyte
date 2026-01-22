@@ -7,16 +7,16 @@ type TagPatchRequest struct {
 	Color string `json:"color"`
 }
 
-func (t *TagPatchRequest) GetName() string {
-	if t == nil {
+func (o *TagPatchRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return t.Name
+	return o.Name
 }
 
-func (t *TagPatchRequest) GetColor() string {
-	if t == nil {
+func (o *TagPatchRequest) GetColor() string {
+	if o == nil {
 		return ""
 	}
-	return t.Color
+	return o.Color
 }

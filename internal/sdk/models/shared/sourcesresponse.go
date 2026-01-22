@@ -8,23 +8,23 @@ type SourcesResponse struct {
 	Data     []SourceResponse `json:"data"`
 }
 
-func (s *SourcesResponse) GetPrevious() *string {
-	if s == nil {
+func (o *SourcesResponse) GetPrevious() *string {
+	if o == nil {
 		return nil
 	}
-	return s.Previous
+	return o.Previous
 }
 
-func (s *SourcesResponse) GetNext() *string {
-	if s == nil {
+func (o *SourcesResponse) GetNext() *string {
+	if o == nil {
 		return nil
 	}
-	return s.Next
+	return o.Next
 }
 
-func (s *SourcesResponse) GetData() []SourceResponse {
-	if s == nil {
+func (o *SourcesResponse) GetData() []SourceResponse {
+	if o == nil {
 		return []SourceResponse{}
 	}
-	return s.Data
+	return o.Data
 }

@@ -2,12 +2,9 @@
 
 package sdk
 
-// Generated from OpenAPI doc version 1.0.0 and generator version 2.795.6
-
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/config"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/hooks"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
@@ -22,7 +19,7 @@ var ServerList = []string{
 	"https://api.airbyte.com/v1",
 }
 
-// HTTPClient provides an interface for supplying the SDK with a custom HTTP client
+// HTTPClient provides an interface for suplying the SDK with a custom HTTP client
 type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
@@ -48,9 +45,31 @@ func Float64(f float64) *float64 { return &f }
 // Pointer provides a helper function to return a pointer to a type
 func Pointer[T any](v T) *T { return &v }
 
+type sdkConfiguration struct {
+	Client            HTTPClient
+	Security          func(context.Context) (interface{}, error)
+	ServerURL         string
+	ServerIndex       int
+	Language          string
+	OpenAPIDocVersion string
+	SDKVersion        string
+	GenVersion        string
+	UserAgent         string
+	RetryConfig       *retry.Config
+	Hooks             *hooks.Hooks
+	Timeout           *time.Duration
+}
+
+func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
+	if c.ServerURL != "" {
+		return c.ServerURL, nil
+	}
+
+	return ServerList[c.ServerIndex], nil
+}
+
 // SDK - airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
-	SDKVersion                   string
 	Health                       *Health
 	Jobs                         *Jobs
 	DeclarativeSourceDefinitions *DeclarativeSourceDefinitions
@@ -66,8 +85,7 @@ type SDK struct {
 	Users                        *Users
 	Tags                         *Tags
 
-	sdkConfiguration config.SDKConfiguration
-	hooks            *hooks.Hooks
+	sdkConfiguration sdkConfiguration
 }
 
 type SDKOption func(*SDK)
@@ -140,12 +158,14 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
-		SDKVersion: "0.19.0",
-		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/terraform 0.19.0 2.795.6 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
-			ServerList: ServerList,
+		sdkConfiguration: sdkConfiguration{
+			Language:          "go",
+			OpenAPIDocVersion: "1.0.0",
+			SDKVersion:        "0.18.3",
+			GenVersion:        "2.562.3",
+			UserAgent:         "speakeasy-sdk/terraform 0.18.3 2.562.3 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			Hooks:             hooks.New(),
 		},
-		hooks: hooks.New(),
 	}
 	for _, opt := range opts {
 		opt(sdk)
@@ -158,25 +178,38 @@ func New(opts ...SDKOption) *SDK {
 
 	currentServerURL, _ := sdk.sdkConfiguration.GetServerDetails()
 	serverURL := currentServerURL
-	serverURL, sdk.sdkConfiguration.Client = sdk.hooks.SDKInit(currentServerURL, sdk.sdkConfiguration.Client)
-	if currentServerURL != serverURL {
+	serverURL, sdk.sdkConfiguration.Client = sdk.sdkConfiguration.Hooks.SDKInit(currentServerURL, sdk.sdkConfiguration.Client)
+	if serverURL != currentServerURL {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 
-	sdk.Health = newHealth(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Jobs = newJobs(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.DeclarativeSourceDefinitions = newDeclarativeSourceDefinitions(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.SourceDefinitions = newSourceDefinitions(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.DestinationDefinitions = newDestinationDefinitions(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Sources = newSources(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Destinations = newDestinations(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Connections = newConnections(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Streams = newStreams(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Workspaces = newWorkspaces(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Permissions = newPermissions(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Organizations = newOrganizations(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Users = newUsers(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Tags = newTags(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Health = newHealth(sdk.sdkConfiguration)
+
+	sdk.Jobs = newJobs(sdk.sdkConfiguration)
+
+	sdk.DeclarativeSourceDefinitions = newDeclarativeSourceDefinitions(sdk.sdkConfiguration)
+
+	sdk.SourceDefinitions = newSourceDefinitions(sdk.sdkConfiguration)
+
+	sdk.DestinationDefinitions = newDestinationDefinitions(sdk.sdkConfiguration)
+
+	sdk.Sources = newSources(sdk.sdkConfiguration)
+
+	sdk.Destinations = newDestinations(sdk.sdkConfiguration)
+
+	sdk.Connections = newConnections(sdk.sdkConfiguration)
+
+	sdk.Streams = newStreams(sdk.sdkConfiguration)
+
+	sdk.Workspaces = newWorkspaces(sdk.sdkConfiguration)
+
+	sdk.Permissions = newPermissions(sdk.sdkConfiguration)
+
+	sdk.Organizations = newOrganizations(sdk.sdkConfiguration)
+
+	sdk.Users = newUsers(sdk.sdkConfiguration)
+
+	sdk.Tags = newTags(sdk.sdkConfiguration)
 
 	return sdk
 }

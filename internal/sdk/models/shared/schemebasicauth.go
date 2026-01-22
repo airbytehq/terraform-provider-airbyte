@@ -7,16 +7,16 @@ type SchemeBasicAuth struct {
 	Password string `security:"name=password"`
 }
 
-func (s *SchemeBasicAuth) GetUsername() string {
-	if s == nil {
+func (o *SchemeBasicAuth) GetUsername() string {
+	if o == nil {
 		return ""
 	}
-	return s.Username
+	return o.Username
 }
 
-func (s *SchemeBasicAuth) GetPassword() string {
-	if s == nil {
+func (o *SchemeBasicAuth) GetPassword() string {
+	if o == nil {
 		return ""
 	}
-	return s.Password
+	return o.Password
 }

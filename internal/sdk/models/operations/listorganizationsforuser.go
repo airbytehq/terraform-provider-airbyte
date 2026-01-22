@@ -18,30 +18,30 @@ type ListOrganizationsForUserResponse struct {
 	OrganizationsResponse *shared.OrganizationsResponse
 }
 
-func (l *ListOrganizationsForUserResponse) GetContentType() string {
-	if l == nil {
+func (o *ListOrganizationsForUserResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return l.ContentType
+	return o.ContentType
 }
 
-func (l *ListOrganizationsForUserResponse) GetStatusCode() int {
-	if l == nil {
+func (o *ListOrganizationsForUserResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return l.StatusCode
+	return o.StatusCode
 }
 
-func (l *ListOrganizationsForUserResponse) GetRawResponse() *http.Response {
-	if l == nil {
+func (o *ListOrganizationsForUserResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return l.RawResponse
+	return o.RawResponse
 }
 
-func (l *ListOrganizationsForUserResponse) GetOrganizationsResponse() *shared.OrganizationsResponse {
-	if l == nil {
+func (o *ListOrganizationsForUserResponse) GetOrganizationsResponse() *shared.OrganizationsResponse {
+	if o == nil {
 		return nil
 	}
-	return l.OrganizationsResponse
+	return o.OrganizationsResponse
 }

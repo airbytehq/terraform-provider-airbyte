@@ -16,58 +16,58 @@ type SourceResponse struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (s *SourceResponse) GetSourceID() string {
-	if s == nil {
+func (o *SourceResponse) GetSourceID() string {
+	if o == nil {
 		return ""
 	}
-	return s.SourceID
+	return o.SourceID
 }
 
-func (s *SourceResponse) GetName() string {
-	if s == nil {
+func (o *SourceResponse) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return s.Name
+	return o.Name
 }
 
-func (s *SourceResponse) GetSourceType() string {
-	if s == nil {
+func (o *SourceResponse) GetSourceType() string {
+	if o == nil {
 		return ""
 	}
-	return s.SourceType
+	return o.SourceType
 }
 
-func (s *SourceResponse) GetDefinitionID() string {
-	if s == nil {
+func (o *SourceResponse) GetDefinitionID() string {
+	if o == nil {
 		return ""
 	}
-	return s.DefinitionID
+	return o.DefinitionID
 }
 
-func (s *SourceResponse) GetWorkspaceID() string {
-	if s == nil {
+func (o *SourceResponse) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return s.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (s *SourceResponse) GetConfiguration() any {
-	if s == nil {
+func (o *SourceResponse) GetConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return s.Configuration
+	return o.Configuration
 }
 
-func (s *SourceResponse) GetCreatedAt() int64 {
-	if s == nil {
+func (o *SourceResponse) GetCreatedAt() int64 {
+	if o == nil {
 		return 0
 	}
-	return s.CreatedAt
+	return o.CreatedAt
 }
 
-func (s *SourceResponse) GetResourceAllocation() *ScopedResourceRequirements {
-	if s == nil {
+func (o *SourceResponse) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return s.ResourceAllocation
+	return o.ResourceAllocation
 }

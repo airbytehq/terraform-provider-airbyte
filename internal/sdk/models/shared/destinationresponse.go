@@ -16,58 +16,58 @@ type DestinationResponse struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (d *DestinationResponse) GetDestinationID() string {
-	if d == nil {
+func (o *DestinationResponse) GetDestinationID() string {
+	if o == nil {
 		return ""
 	}
-	return d.DestinationID
+	return o.DestinationID
 }
 
-func (d *DestinationResponse) GetName() string {
-	if d == nil {
+func (o *DestinationResponse) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return d.Name
+	return o.Name
 }
 
-func (d *DestinationResponse) GetDestinationType() string {
-	if d == nil {
+func (o *DestinationResponse) GetDestinationType() string {
+	if o == nil {
 		return ""
 	}
-	return d.DestinationType
+	return o.DestinationType
 }
 
-func (d *DestinationResponse) GetDefinitionID() string {
-	if d == nil {
+func (o *DestinationResponse) GetDefinitionID() string {
+	if o == nil {
 		return ""
 	}
-	return d.DefinitionID
+	return o.DefinitionID
 }
 
-func (d *DestinationResponse) GetWorkspaceID() string {
-	if d == nil {
+func (o *DestinationResponse) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return d.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (d *DestinationResponse) GetConfiguration() any {
-	if d == nil {
+func (o *DestinationResponse) GetConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return d.Configuration
+	return o.Configuration
 }
 
-func (d *DestinationResponse) GetCreatedAt() int64 {
-	if d == nil {
+func (o *DestinationResponse) GetCreatedAt() int64 {
+	if o == nil {
 		return 0
 	}
-	return d.CreatedAt
+	return o.CreatedAt
 }
 
-func (d *DestinationResponse) GetResourceAllocation() *ScopedResourceRequirements {
-	if d == nil {
+func (o *DestinationResponse) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return d.ResourceAllocation
+	return o.ResourceAllocation
 }

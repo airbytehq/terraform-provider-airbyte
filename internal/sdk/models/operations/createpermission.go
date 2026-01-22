@@ -18,30 +18,30 @@ type CreatePermissionResponse struct {
 	PermissionResponse *shared.PermissionResponse
 }
 
-func (c *CreatePermissionResponse) GetContentType() string {
-	if c == nil {
+func (o *CreatePermissionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return c.ContentType
+	return o.ContentType
 }
 
-func (c *CreatePermissionResponse) GetStatusCode() int {
-	if c == nil {
+func (o *CreatePermissionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return c.StatusCode
+	return o.StatusCode
 }
 
-func (c *CreatePermissionResponse) GetRawResponse() *http.Response {
-	if c == nil {
+func (o *CreatePermissionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return c.RawResponse
+	return o.RawResponse
 }
 
-func (c *CreatePermissionResponse) GetPermissionResponse() *shared.PermissionResponse {
-	if c == nil {
+func (o *CreatePermissionResponse) GetPermissionResponse() *shared.PermissionResponse {
+	if o == nil {
 		return nil
 	}
-	return c.PermissionResponse
+	return o.PermissionResponse
 }

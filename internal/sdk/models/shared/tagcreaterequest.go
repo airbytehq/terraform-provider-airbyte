@@ -8,23 +8,23 @@ type TagCreateRequest struct {
 	WorkspaceID string `json:"workspaceId"`
 }
 
-func (t *TagCreateRequest) GetName() string {
-	if t == nil {
+func (o *TagCreateRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return t.Name
+	return o.Name
 }
 
-func (t *TagCreateRequest) GetColor() string {
-	if t == nil {
+func (o *TagCreateRequest) GetColor() string {
+	if o == nil {
 		return ""
 	}
-	return t.Color
+	return o.Color
 }
 
-func (t *TagCreateRequest) GetWorkspaceID() string {
-	if t == nil {
+func (o *TagCreateRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return t.WorkspaceID
+	return o.WorkspaceID
 }

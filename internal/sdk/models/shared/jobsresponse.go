@@ -8,23 +8,23 @@ type JobsResponse struct {
 	Data     []JobResponse `json:"data"`
 }
 
-func (j *JobsResponse) GetPrevious() *string {
-	if j == nil {
+func (o *JobsResponse) GetPrevious() *string {
+	if o == nil {
 		return nil
 	}
-	return j.Previous
+	return o.Previous
 }
 
-func (j *JobsResponse) GetNext() *string {
-	if j == nil {
+func (o *JobsResponse) GetNext() *string {
+	if o == nil {
 		return nil
 	}
-	return j.Next
+	return o.Next
 }
 
-func (j *JobsResponse) GetData() []JobResponse {
-	if j == nil {
+func (o *JobsResponse) GetData() []JobResponse {
+	if o == nil {
 		return []JobResponse{}
 	}
-	return j.Data
+	return o.Data
 }

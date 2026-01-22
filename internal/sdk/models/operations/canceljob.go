@@ -11,11 +11,11 @@ type CancelJobRequest struct {
 	JobID int64 `pathParam:"style=simple,explode=false,name=jobId"`
 }
 
-func (c *CancelJobRequest) GetJobID() int64 {
-	if c == nil {
+func (o *CancelJobRequest) GetJobID() int64 {
+	if o == nil {
 		return 0
 	}
-	return c.JobID
+	return o.JobID
 }
 
 type CancelJobResponse struct {
@@ -29,30 +29,30 @@ type CancelJobResponse struct {
 	JobResponse *shared.JobResponse
 }
 
-func (c *CancelJobResponse) GetContentType() string {
-	if c == nil {
+func (o *CancelJobResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return c.ContentType
+	return o.ContentType
 }
 
-func (c *CancelJobResponse) GetStatusCode() int {
-	if c == nil {
+func (o *CancelJobResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return c.StatusCode
+	return o.StatusCode
 }
 
-func (c *CancelJobResponse) GetRawResponse() *http.Response {
-	if c == nil {
+func (o *CancelJobResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return c.RawResponse
+	return o.RawResponse
 }
 
-func (c *CancelJobResponse) GetJobResponse() *shared.JobResponse {
-	if c == nil {
+func (o *CancelJobResponse) GetJobResponse() *shared.JobResponse {
+	if o == nil {
 		return nil
 	}
-	return c.JobResponse
+	return o.JobResponse
 }

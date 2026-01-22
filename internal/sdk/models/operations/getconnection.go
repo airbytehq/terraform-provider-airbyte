@@ -11,11 +11,11 @@ type GetConnectionRequest struct {
 	ConnectionID string `pathParam:"style=simple,explode=false,name=connectionId"`
 }
 
-func (g *GetConnectionRequest) GetConnectionID() string {
-	if g == nil {
+func (o *GetConnectionRequest) GetConnectionID() string {
+	if o == nil {
 		return ""
 	}
-	return g.ConnectionID
+	return o.ConnectionID
 }
 
 type GetConnectionResponse struct {
@@ -29,30 +29,30 @@ type GetConnectionResponse struct {
 	ConnectionResponse *shared.ConnectionResponse
 }
 
-func (g *GetConnectionResponse) GetContentType() string {
-	if g == nil {
+func (o *GetConnectionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return g.ContentType
+	return o.ContentType
 }
 
-func (g *GetConnectionResponse) GetStatusCode() int {
-	if g == nil {
+func (o *GetConnectionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return g.StatusCode
+	return o.StatusCode
 }
 
-func (g *GetConnectionResponse) GetRawResponse() *http.Response {
-	if g == nil {
+func (o *GetConnectionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return g.RawResponse
+	return o.RawResponse
 }
 
-func (g *GetConnectionResponse) GetConnectionResponse() *shared.ConnectionResponse {
-	if g == nil {
+func (o *GetConnectionResponse) GetConnectionResponse() *shared.ConnectionResponse {
+	if o == nil {
 		return nil
 	}
-	return g.ConnectionResponse
+	return o.ConnectionResponse
 }

@@ -1,0 +1,1 @@
+terraform import airbyte_destination_cobra.my_airbyte_destination_cobra ""

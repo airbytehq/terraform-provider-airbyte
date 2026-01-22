@@ -15,23 +15,23 @@ type InitiateOAuthResponse struct {
 	RawResponse *http.Response
 }
 
-func (i *InitiateOAuthResponse) GetContentType() string {
-	if i == nil {
+func (o *InitiateOAuthResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return i.ContentType
+	return o.ContentType
 }
 
-func (i *InitiateOAuthResponse) GetStatusCode() int {
-	if i == nil {
+func (o *InitiateOAuthResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return i.StatusCode
+	return o.StatusCode
 }
 
-func (i *InitiateOAuthResponse) GetRawResponse() *http.Response {
-	if i == nil {
+func (o *InitiateOAuthResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return i.RawResponse
+	return o.RawResponse
 }

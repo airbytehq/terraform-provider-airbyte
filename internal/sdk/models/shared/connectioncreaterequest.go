@@ -34,92 +34,92 @@ func (c ConnectionCreateRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionCreateRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *ConnectionCreateRequest) GetName() *string {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetName() *string {
+	if o == nil {
 		return nil
 	}
-	return c.Name
+	return o.Name
 }
 
-func (c *ConnectionCreateRequest) GetSourceID() string {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetSourceID() string {
+	if o == nil {
 		return ""
 	}
-	return c.SourceID
+	return o.SourceID
 }
 
-func (c *ConnectionCreateRequest) GetDestinationID() string {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetDestinationID() string {
+	if o == nil {
 		return ""
 	}
-	return c.DestinationID
+	return o.DestinationID
 }
 
-func (c *ConnectionCreateRequest) GetConfigurations() *StreamConfigurations {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetConfigurations() *StreamConfigurations {
+	if o == nil {
 		return nil
 	}
-	return c.Configurations
+	return o.Configurations
 }
 
-func (c *ConnectionCreateRequest) GetSchedule() *AirbyteAPIConnectionSchedule {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetSchedule() *AirbyteAPIConnectionSchedule {
+	if o == nil {
 		return nil
 	}
-	return c.Schedule
+	return o.Schedule
 }
 
-func (c *ConnectionCreateRequest) GetDataResidency() *string {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetDataResidency() *string {
+	if o == nil {
 		return nil
 	}
-	return c.DataResidency
+	return o.DataResidency
 }
 
-func (c *ConnectionCreateRequest) GetNamespaceDefinition() *NamespaceDefinitionEnum {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetNamespaceDefinition() *NamespaceDefinitionEnum {
+	if o == nil {
 		return nil
 	}
-	return c.NamespaceDefinition
+	return o.NamespaceDefinition
 }
 
-func (c *ConnectionCreateRequest) GetNamespaceFormat() *string {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetNamespaceFormat() *string {
+	if o == nil {
 		return nil
 	}
-	return c.NamespaceFormat
+	return o.NamespaceFormat
 }
 
-func (c *ConnectionCreateRequest) GetPrefix() *string {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetPrefix() *string {
+	if o == nil {
 		return nil
 	}
-	return c.Prefix
+	return o.Prefix
 }
 
-func (c *ConnectionCreateRequest) GetNonBreakingSchemaUpdatesBehavior() *NonBreakingSchemaUpdatesBehaviorEnum {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetNonBreakingSchemaUpdatesBehavior() *NonBreakingSchemaUpdatesBehaviorEnum {
+	if o == nil {
 		return nil
 	}
-	return c.NonBreakingSchemaUpdatesBehavior
+	return o.NonBreakingSchemaUpdatesBehavior
 }
 
-func (c *ConnectionCreateRequest) GetStatus() *ConnectionStatusEnum {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetStatus() *ConnectionStatusEnum {
+	if o == nil {
 		return nil
 	}
-	return c.Status
+	return o.Status
 }
 
-func (c *ConnectionCreateRequest) GetTags() []Tag {
-	if c == nil {
+func (o *ConnectionCreateRequest) GetTags() []Tag {
+	if o == nil {
 		return nil
 	}
-	return c.Tags
+	return o.Tags
 }

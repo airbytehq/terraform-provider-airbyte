@@ -2,10 +2,8 @@
 
 package types
 
-import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
-)
+import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type RowFiltering struct {
-	Conditions jsontypes.Normalized `tfsdk:"conditions"`
+	Conditions types.String `tfsdk:"conditions"`
 }

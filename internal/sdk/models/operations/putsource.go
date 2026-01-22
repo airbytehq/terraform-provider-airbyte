@@ -12,18 +12,18 @@ type PutSourceRequest struct {
 	SourcePutRequest *shared.SourcePutRequest `request:"mediaType=application/json"`
 }
 
-func (p *PutSourceRequest) GetSourceID() string {
-	if p == nil {
+func (o *PutSourceRequest) GetSourceID() string {
+	if o == nil {
 		return ""
 	}
-	return p.SourceID
+	return o.SourceID
 }
 
-func (p *PutSourceRequest) GetSourcePutRequest() *shared.SourcePutRequest {
-	if p == nil {
+func (o *PutSourceRequest) GetSourcePutRequest() *shared.SourcePutRequest {
+	if o == nil {
 		return nil
 	}
-	return p.SourcePutRequest
+	return o.SourcePutRequest
 }
 
 type PutSourceResponse struct {
@@ -37,30 +37,30 @@ type PutSourceResponse struct {
 	SourceResponse *shared.SourceResponse
 }
 
-func (p *PutSourceResponse) GetContentType() string {
-	if p == nil {
+func (o *PutSourceResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return p.ContentType
+	return o.ContentType
 }
 
-func (p *PutSourceResponse) GetStatusCode() int {
-	if p == nil {
+func (o *PutSourceResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return p.StatusCode
+	return o.StatusCode
 }
 
-func (p *PutSourceResponse) GetRawResponse() *http.Response {
-	if p == nil {
+func (o *PutSourceResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return p.RawResponse
+	return o.RawResponse
 }
 
-func (p *PutSourceResponse) GetSourceResponse() *shared.SourceResponse {
-	if p == nil {
+func (o *PutSourceResponse) GetSourceResponse() *shared.SourceResponse {
+	if o == nil {
 		return nil
 	}
-	return p.SourceResponse
+	return o.SourceResponse
 }

@@ -7,9 +7,9 @@ type EmailNotificationConfig struct {
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
-func (e *EmailNotificationConfig) GetEnabled() *bool {
-	if e == nil {
+func (o *EmailNotificationConfig) GetEnabled() *bool {
+	if o == nil {
 		return nil
 	}
-	return e.Enabled
+	return o.Enabled
 }

@@ -10,11 +10,11 @@ type DeleteConnectionRequest struct {
 	ConnectionID string `pathParam:"style=simple,explode=false,name=connectionId"`
 }
 
-func (d *DeleteConnectionRequest) GetConnectionID() string {
-	if d == nil {
+func (o *DeleteConnectionRequest) GetConnectionID() string {
+	if o == nil {
 		return ""
 	}
-	return d.ConnectionID
+	return o.ConnectionID
 }
 
 type DeleteConnectionResponse struct {
@@ -26,23 +26,23 @@ type DeleteConnectionResponse struct {
 	RawResponse *http.Response
 }
 
-func (d *DeleteConnectionResponse) GetContentType() string {
-	if d == nil {
+func (o *DeleteConnectionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return d.ContentType
+	return o.ContentType
 }
 
-func (d *DeleteConnectionResponse) GetStatusCode() int {
-	if d == nil {
+func (o *DeleteConnectionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return d.StatusCode
+	return o.StatusCode
 }
 
-func (d *DeleteConnectionResponse) GetRawResponse() *http.Response {
-	if d == nil {
+func (o *DeleteConnectionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return d.RawResponse
+	return o.RawResponse
 }

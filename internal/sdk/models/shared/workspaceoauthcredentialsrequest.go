@@ -12,23 +12,23 @@ type WorkspaceOAuthCredentialsRequest struct {
 	Configuration OAuthCredentialsConfiguration `json:"configuration"`
 }
 
-func (w *WorkspaceOAuthCredentialsRequest) GetActorType() ActorTypeEnum {
-	if w == nil {
+func (o *WorkspaceOAuthCredentialsRequest) GetActorType() ActorTypeEnum {
+	if o == nil {
 		return ActorTypeEnum("")
 	}
-	return w.ActorType
+	return o.ActorType
 }
 
-func (w *WorkspaceOAuthCredentialsRequest) GetName() string {
-	if w == nil {
+func (o *WorkspaceOAuthCredentialsRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return w.Name
+	return o.Name
 }
 
-func (w *WorkspaceOAuthCredentialsRequest) GetConfiguration() OAuthCredentialsConfiguration {
-	if w == nil {
+func (o *WorkspaceOAuthCredentialsRequest) GetConfiguration() OAuthCredentialsConfiguration {
+	if o == nil {
 		return OAuthCredentialsConfiguration{}
 	}
-	return w.Configuration
+	return o.Configuration
 }

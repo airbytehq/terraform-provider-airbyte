@@ -11,11 +11,11 @@ type GetPermissionRequest struct {
 	PermissionID string `pathParam:"style=simple,explode=false,name=permissionId"`
 }
 
-func (g *GetPermissionRequest) GetPermissionID() string {
-	if g == nil {
+func (o *GetPermissionRequest) GetPermissionID() string {
+	if o == nil {
 		return ""
 	}
-	return g.PermissionID
+	return o.PermissionID
 }
 
 type GetPermissionResponse struct {
@@ -29,30 +29,30 @@ type GetPermissionResponse struct {
 	PermissionResponse *shared.PermissionResponse
 }
 
-func (g *GetPermissionResponse) GetContentType() string {
-	if g == nil {
+func (o *GetPermissionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return g.ContentType
+	return o.ContentType
 }
 
-func (g *GetPermissionResponse) GetStatusCode() int {
-	if g == nil {
+func (o *GetPermissionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return g.StatusCode
+	return o.StatusCode
 }
 
-func (g *GetPermissionResponse) GetRawResponse() *http.Response {
-	if g == nil {
+func (o *GetPermissionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return g.RawResponse
+	return o.RawResponse
 }
 
-func (g *GetPermissionResponse) GetPermissionResponse() *shared.PermissionResponse {
-	if g == nil {
+func (o *GetPermissionResponse) GetPermissionResponse() *shared.PermissionResponse {
+	if o == nil {
 		return nil
 	}
-	return g.PermissionResponse
+	return o.PermissionResponse
 }

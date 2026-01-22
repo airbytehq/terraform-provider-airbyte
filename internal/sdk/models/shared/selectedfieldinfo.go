@@ -7,9 +7,9 @@ type SelectedFieldInfo struct {
 	FieldPath []string `json:"fieldPath,omitempty"`
 }
 
-func (s *SelectedFieldInfo) GetFieldPath() []string {
-	if s == nil {
+func (o *SelectedFieldInfo) GetFieldPath() []string {
+	if o == nil {
 		return nil
 	}
-	return s.FieldPath
+	return o.FieldPath
 }

@@ -7,9 +7,9 @@ type StreamConfigurations struct {
 	Streams []StreamConfiguration `json:"streams,omitempty"`
 }
 
-func (s *StreamConfigurations) GetStreams() []StreamConfiguration {
-	if s == nil {
+func (o *StreamConfigurations) GetStreams() []StreamConfiguration {
+	if o == nil {
 		return nil
 	}
-	return s.Streams
+	return o.Streams
 }

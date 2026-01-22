@@ -11,11 +11,11 @@ type GetTagRequest struct {
 	TagID string `pathParam:"style=simple,explode=false,name=tagId"`
 }
 
-func (g *GetTagRequest) GetTagID() string {
-	if g == nil {
+func (o *GetTagRequest) GetTagID() string {
+	if o == nil {
 		return ""
 	}
-	return g.TagID
+	return o.TagID
 }
 
 type GetTagResponse struct {
@@ -29,30 +29,30 @@ type GetTagResponse struct {
 	TagResponse *shared.TagResponse
 }
 
-func (g *GetTagResponse) GetContentType() string {
-	if g == nil {
+func (o *GetTagResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return g.ContentType
+	return o.ContentType
 }
 
-func (g *GetTagResponse) GetStatusCode() int {
-	if g == nil {
+func (o *GetTagResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return g.StatusCode
+	return o.StatusCode
 }
 
-func (g *GetTagResponse) GetRawResponse() *http.Response {
-	if g == nil {
+func (o *GetTagResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return g.RawResponse
+	return o.RawResponse
 }
 
-func (g *GetTagResponse) GetTagResponse() *shared.TagResponse {
-	if g == nil {
+func (o *GetTagResponse) GetTagResponse() *shared.TagResponse {
+	if o == nil {
 		return nil
 	}
-	return g.TagResponse
+	return o.TagResponse
 }

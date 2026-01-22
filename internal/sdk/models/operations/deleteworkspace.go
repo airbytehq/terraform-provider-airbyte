@@ -10,11 +10,11 @@ type DeleteWorkspaceRequest struct {
 	WorkspaceID string `pathParam:"style=simple,explode=false,name=workspaceId"`
 }
 
-func (d *DeleteWorkspaceRequest) GetWorkspaceID() string {
-	if d == nil {
+func (o *DeleteWorkspaceRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return d.WorkspaceID
+	return o.WorkspaceID
 }
 
 type DeleteWorkspaceResponse struct {
@@ -26,23 +26,23 @@ type DeleteWorkspaceResponse struct {
 	RawResponse *http.Response
 }
 
-func (d *DeleteWorkspaceResponse) GetContentType() string {
-	if d == nil {
+func (o *DeleteWorkspaceResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return d.ContentType
+	return o.ContentType
 }
 
-func (d *DeleteWorkspaceResponse) GetStatusCode() int {
-	if d == nil {
+func (o *DeleteWorkspaceResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return d.StatusCode
+	return o.StatusCode
 }
 
-func (d *DeleteWorkspaceResponse) GetRawResponse() *http.Response {
-	if d == nil {
+func (o *DeleteWorkspaceResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return d.RawResponse
+	return o.RawResponse
 }

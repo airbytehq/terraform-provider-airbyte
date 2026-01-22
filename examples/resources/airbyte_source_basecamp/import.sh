@@ -1,0 +1,1 @@
+terraform import airbyte_source_basecamp.my_airbyte_source_basecamp ""

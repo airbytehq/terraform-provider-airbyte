@@ -10,11 +10,10 @@ import (
 type StreamMapperType string
 
 const (
-	StreamMapperTypeHashing        StreamMapperType = "hashing"
-	StreamMapperTypeFieldRenaming  StreamMapperType = "field-renaming"
-	StreamMapperTypeRowFiltering   StreamMapperType = "row-filtering"
-	StreamMapperTypeEncryption     StreamMapperType = "encryption"
-	StreamMapperTypeFieldFiltering StreamMapperType = "field-filtering"
+	StreamMapperTypeHashing       StreamMapperType = "hashing"
+	StreamMapperTypeFieldRenaming StreamMapperType = "field-renaming"
+	StreamMapperTypeRowFiltering  StreamMapperType = "row-filtering"
+	StreamMapperTypeEncryption    StreamMapperType = "encryption"
 )
 
 func (e StreamMapperType) ToPointer() *StreamMapperType {
@@ -33,8 +32,6 @@ func (e *StreamMapperType) UnmarshalJSON(data []byte) error {
 	case "row-filtering":
 		fallthrough
 	case "encryption":
-		fallthrough
-	case "field-filtering":
 		*e = StreamMapperType(v)
 		return nil
 	default:

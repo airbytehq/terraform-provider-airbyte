@@ -8,23 +8,23 @@ type DefinitionsResponse struct {
 	Data     []DefinitionResponse `json:"data"`
 }
 
-func (d *DefinitionsResponse) GetPrevious() *string {
-	if d == nil {
+func (o *DefinitionsResponse) GetPrevious() *string {
+	if o == nil {
 		return nil
 	}
-	return d.Previous
+	return o.Previous
 }
 
-func (d *DefinitionsResponse) GetNext() *string {
-	if d == nil {
+func (o *DefinitionsResponse) GetNext() *string {
+	if o == nil {
 		return nil
 	}
-	return d.Next
+	return o.Next
 }
 
-func (d *DefinitionsResponse) GetData() []DefinitionResponse {
-	if d == nil {
+func (o *DefinitionsResponse) GetData() []DefinitionResponse {
+	if o == nil {
 		return []DefinitionResponse{}
 	}
-	return d.Data
+	return o.Data
 }

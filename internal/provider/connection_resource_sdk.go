@@ -3,209 +3,13 @@
 package provider
 
 import (
-	"context"
 	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(ctx context.Context, resp *shared.ConnectionResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		if r.Configurations == nil {
-			r.Configurations = &tfTypes.StreamConfigurations{}
-
-			r.Configurations.Streams = []tfTypes.StreamConfiguration{}
-
-			for _, streamsItem := range resp.Configurations.Streams {
-				var streams tfTypes.StreamConfiguration
-
-				streams.CursorField = make([]types.String, 0, len(streamsItem.CursorField))
-				for _, v := range streamsItem.CursorField {
-					streams.CursorField = append(streams.CursorField, types.StringValue(v))
-				}
-				streams.DestinationObjectName = types.StringPointerValue(streamsItem.DestinationObjectName)
-				streams.IncludeFiles = types.BoolPointerValue(streamsItem.IncludeFiles)
-				streams.Mappers = []tfTypes.ConfiguredStreamMapper{}
-
-				for _, mappersItem := range streamsItem.Mappers {
-					var mappers tfTypes.ConfiguredStreamMapper
-
-					mappers.ID = types.StringPointerValue(mappersItem.ID)
-					if mappersItem.MapperConfiguration.Encryption != nil {
-						mappers.MapperConfiguration.Encryption = &tfTypes.Encryption{}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionAES != nil {
-							mappers.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionAES{}
-							mappers.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Algorithm))
-							mappers.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Key)
-							mappers.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Mode))
-							mappers.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Padding))
-							mappers.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.TargetField)
-						}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionRSA != nil {
-							mappers.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionRSA{}
-							mappers.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.Algorithm))
-							mappers.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.PublicKey)
-							mappers.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.TargetField)
-						}
-					}
-					if mappersItem.MapperConfiguration.FieldFiltering != nil {
-						mappers.MapperConfiguration.FieldFiltering = &tfTypes.FieldFiltering{}
-						mappers.MapperConfiguration.FieldFiltering.TargetField = types.StringValue(mappersItem.MapperConfiguration.FieldFiltering.TargetField)
-					}
-					if mappersItem.MapperConfiguration.FieldRenaming != nil {
-						mappers.MapperConfiguration.FieldRenaming = &tfTypes.FieldRenaming{}
-						mappers.MapperConfiguration.FieldRenaming.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.NewFieldName)
-						mappers.MapperConfiguration.FieldRenaming.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName)
-					}
-					if mappersItem.MapperConfiguration.Hashing != nil {
-						mappers.MapperConfiguration.Hashing = &tfTypes.Hashing{}
-						mappers.MapperConfiguration.Hashing.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Hashing.FieldNameSuffix)
-						mappers.MapperConfiguration.Hashing.Method = types.StringValue(string(mappersItem.MapperConfiguration.Hashing.Method))
-						mappers.MapperConfiguration.Hashing.TargetField = types.StringValue(mappersItem.MapperConfiguration.Hashing.TargetField)
-					}
-					if mappersItem.MapperConfiguration.RowFiltering != nil {
-						mappers.MapperConfiguration.RowFiltering = &tfTypes.RowFiltering{}
-						conditionsResult, _ := json.Marshal(mappersItem.MapperConfiguration.RowFiltering.Conditions)
-						mappers.MapperConfiguration.RowFiltering.Conditions = jsontypes.NewNormalizedValue(string(conditionsResult))
-					}
-					mappers.Type = types.StringValue(string(mappersItem.Type))
-
-					streams.Mappers = append(streams.Mappers, mappers)
-				}
-				streams.Name = types.StringValue(streamsItem.Name)
-				streams.Namespace = types.StringPointerValue(streamsItem.Namespace)
-				streams.PrimaryKey = nil
-				for _, primaryKeyItem := range streamsItem.PrimaryKey {
-					var primaryKey []types.String
-					primaryKey = make([]types.String, 0, len(primaryKeyItem))
-					for _, v := range primaryKeyItem {
-						primaryKey = append(primaryKey, types.StringValue(v))
-					}
-					streams.PrimaryKey = append(streams.PrimaryKey, primaryKey)
-				}
-				streams.SelectedFields = []tfTypes.SelectedFieldInfo{}
-
-				for _, selectedFieldsItem := range streamsItem.SelectedFields {
-					var selectedFields tfTypes.SelectedFieldInfo
-
-					selectedFields.FieldPath = make([]types.String, 0, len(selectedFieldsItem.FieldPath))
-					for _, v := range selectedFieldsItem.FieldPath {
-						selectedFields.FieldPath = append(selectedFields.FieldPath, types.StringValue(v))
-					}
-
-					streams.SelectedFields = append(streams.SelectedFields, selectedFields)
-				}
-				if streamsItem.SyncMode != nil {
-					streams.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
-				} else {
-					streams.SyncMode = types.StringNull()
-				}
-
-				r.Configurations.Streams = append(r.Configurations.Streams, streams)
-			}
-		}
-		r.ConnectionID = types.StringValue(resp.ConnectionID)
-		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DestinationID = types.StringValue(resp.DestinationID)
-		r.Name = types.StringValue(resp.Name)
-		if resp.NamespaceDefinition != nil {
-			r.NamespaceDefinition = types.StringValue(string(*resp.NamespaceDefinition))
-		} else {
-			r.NamespaceDefinition = types.StringNull()
-		}
-		r.NamespaceFormat = types.StringPointerValue(resp.NamespaceFormat)
-		if resp.NonBreakingSchemaUpdatesBehavior != nil {
-			r.NonBreakingSchemaUpdatesBehavior = types.StringValue(string(*resp.NonBreakingSchemaUpdatesBehavior))
-		} else {
-			r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
-		}
-		r.Prefix = types.StringPointerValue(resp.Prefix)
-		if r.Schedule == nil {
-			r.Schedule = &tfTypes.AirbyteAPIConnectionSchedule{}
-
-			r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
-			r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
-			r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
-		}
-		r.SourceID = types.StringValue(resp.SourceID)
-		r.Status = types.StringValue(string(resp.Status))
-		r.StatusReason = types.StringPointerValue(resp.StatusReason)
-		r.Tags = []tfTypes.Tag{}
-
-		for _, tagsItem := range resp.Tags {
-			var tags tfTypes.Tag
-
-			tags.Color = types.StringValue(tagsItem.Color)
-			tags.Name = types.StringValue(tagsItem.Name)
-			tags.TagID = types.StringValue(tagsItem.TagID)
-			tags.WorkspaceID = types.StringValue(tagsItem.WorkspaceID)
-
-			r.Tags = append(r.Tags, tags)
-		}
-		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-	}
-
-	return diags
-}
-
-func (r *ConnectionResourceModel) ToOperationsDeleteConnectionRequest(ctx context.Context) (*operations.DeleteConnectionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var connectionID string
-	connectionID = r.ConnectionID.ValueString()
-
-	out := operations.DeleteConnectionRequest{
-		ConnectionID: connectionID,
-	}
-
-	return &out, diags
-}
-
-func (r *ConnectionResourceModel) ToOperationsGetConnectionRequest(ctx context.Context) (*operations.GetConnectionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var connectionID string
-	connectionID = r.ConnectionID.ValueString()
-
-	out := operations.GetConnectionRequest{
-		ConnectionID: connectionID,
-	}
-
-	return &out, diags
-}
-
-func (r *ConnectionResourceModel) ToOperationsPatchConnectionRequest(ctx context.Context) (*operations.PatchConnectionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var connectionID string
-	connectionID = r.ConnectionID.ValueString()
-
-	connectionPatchRequest, connectionPatchRequestDiags := r.ToSharedConnectionPatchRequest(ctx)
-	diags.Append(connectionPatchRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PatchConnectionRequest{
-		ConnectionID:           connectionID,
-		ConnectionPatchRequest: *connectionPatchRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Context) (*shared.ConnectionCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.ConnectionCreateRequest {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
@@ -220,75 +24,75 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 
 	var configurations *shared.StreamConfigurations
 	if r.Configurations != nil {
-		streams := make([]shared.StreamConfiguration, 0, len(r.Configurations.Streams))
-		for streamsIndex := range r.Configurations.Streams {
+		var streams []shared.StreamConfiguration = []shared.StreamConfiguration{}
+		for _, streamsItem := range r.Configurations.Streams {
 			var name1 string
-			name1 = r.Configurations.Streams[streamsIndex].Name.ValueString()
+			name1 = streamsItem.Name.ValueString()
 
 			namespace := new(string)
-			if !r.Configurations.Streams[streamsIndex].Namespace.IsUnknown() && !r.Configurations.Streams[streamsIndex].Namespace.IsNull() {
-				*namespace = r.Configurations.Streams[streamsIndex].Namespace.ValueString()
+			if !streamsItem.Namespace.IsUnknown() && !streamsItem.Namespace.IsNull() {
+				*namespace = streamsItem.Namespace.ValueString()
 			} else {
 				namespace = nil
 			}
 			syncMode := new(shared.ConnectionSyncModeEnum)
-			if !r.Configurations.Streams[streamsIndex].SyncMode.IsUnknown() && !r.Configurations.Streams[streamsIndex].SyncMode.IsNull() {
-				*syncMode = shared.ConnectionSyncModeEnum(r.Configurations.Streams[streamsIndex].SyncMode.ValueString())
+			if !streamsItem.SyncMode.IsUnknown() && !streamsItem.SyncMode.IsNull() {
+				*syncMode = shared.ConnectionSyncModeEnum(streamsItem.SyncMode.ValueString())
 			} else {
 				syncMode = nil
 			}
-			cursorField := make([]string, 0, len(r.Configurations.Streams[streamsIndex].CursorField))
-			for cursorFieldIndex := range r.Configurations.Streams[streamsIndex].CursorField {
-				cursorField = append(cursorField, r.Configurations.Streams[streamsIndex].CursorField[cursorFieldIndex].ValueString())
+			var cursorField []string = []string{}
+			for _, cursorFieldItem := range streamsItem.CursorField {
+				cursorField = append(cursorField, cursorFieldItem.ValueString())
 			}
-			primaryKey := make([][]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey))
-			for primaryKeyIndex := range r.Configurations.Streams[streamsIndex].PrimaryKey {
-				primaryKeyTmp := make([]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex]))
-				for index := range r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex] {
-					primaryKeyTmp = append(primaryKeyTmp, r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex][index].ValueString())
+			var primaryKey [][]string = [][]string{}
+			for _, primaryKeyItem := range streamsItem.PrimaryKey {
+				var primaryKeyTmp []string = []string{}
+				for _, item := range primaryKeyItem {
+					primaryKeyTmp = append(primaryKeyTmp, item.ValueString())
 				}
 				primaryKey = append(primaryKey, primaryKeyTmp)
 			}
 			includeFiles := new(bool)
-			if !r.Configurations.Streams[streamsIndex].IncludeFiles.IsUnknown() && !r.Configurations.Streams[streamsIndex].IncludeFiles.IsNull() {
-				*includeFiles = r.Configurations.Streams[streamsIndex].IncludeFiles.ValueBool()
+			if !streamsItem.IncludeFiles.IsUnknown() && !streamsItem.IncludeFiles.IsNull() {
+				*includeFiles = streamsItem.IncludeFiles.ValueBool()
 			} else {
 				includeFiles = nil
 			}
 			destinationObjectName := new(string)
-			if !r.Configurations.Streams[streamsIndex].DestinationObjectName.IsUnknown() && !r.Configurations.Streams[streamsIndex].DestinationObjectName.IsNull() {
-				*destinationObjectName = r.Configurations.Streams[streamsIndex].DestinationObjectName.ValueString()
+			if !streamsItem.DestinationObjectName.IsUnknown() && !streamsItem.DestinationObjectName.IsNull() {
+				*destinationObjectName = streamsItem.DestinationObjectName.ValueString()
 			} else {
 				destinationObjectName = nil
 			}
-			selectedFields := make([]shared.SelectedFieldInfo, 0, len(r.Configurations.Streams[streamsIndex].SelectedFields))
-			for selectedFieldsIndex := range r.Configurations.Streams[streamsIndex].SelectedFields {
-				fieldPath := make([]string, 0, len(r.Configurations.Streams[streamsIndex].SelectedFields[selectedFieldsIndex].FieldPath))
-				for fieldPathIndex := range r.Configurations.Streams[streamsIndex].SelectedFields[selectedFieldsIndex].FieldPath {
-					fieldPath = append(fieldPath, r.Configurations.Streams[streamsIndex].SelectedFields[selectedFieldsIndex].FieldPath[fieldPathIndex].ValueString())
+			var selectedFields []shared.SelectedFieldInfo = []shared.SelectedFieldInfo{}
+			for _, selectedFieldsItem := range streamsItem.SelectedFields {
+				var fieldPath []string = []string{}
+				for _, fieldPathItem := range selectedFieldsItem.FieldPath {
+					fieldPath = append(fieldPath, fieldPathItem.ValueString())
 				}
 				selectedFields = append(selectedFields, shared.SelectedFieldInfo{
 					FieldPath: fieldPath,
 				})
 			}
-			mappers := make([]shared.ConfiguredStreamMapper, 0, len(r.Configurations.Streams[streamsIndex].Mappers))
-			for mappersIndex := range r.Configurations.Streams[streamsIndex].Mappers {
+			var mappers []shared.ConfiguredStreamMapper = []shared.ConfiguredStreamMapper{}
+			for _, mappersItem := range streamsItem.Mappers {
 				id := new(string)
-				if !r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].ID.IsUnknown() && !r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].ID.IsNull() {
-					*id = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].ID.ValueString()
+				if !mappersItem.ID.IsUnknown() && !mappersItem.ID.IsNull() {
+					*id = mappersItem.ID.ValueString()
 				} else {
 					id = nil
 				}
-				typeVar := shared.StreamMapperType(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].Type.ValueString())
+				typeVar := shared.StreamMapperType(mappersItem.Type.ValueString())
 				var mapperConfiguration shared.MapperConfiguration
 				var hashing *shared.Hashing
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing != nil {
+				if mappersItem.MapperConfiguration.Hashing != nil {
 					var fieldNameSuffix string
-					fieldNameSuffix = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.FieldNameSuffix.ValueString()
+					fieldNameSuffix = mappersItem.MapperConfiguration.Hashing.FieldNameSuffix.ValueString()
 
-					method := shared.HashingMethod(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.Method.ValueString())
+					method := shared.HashingMethod(mappersItem.MapperConfiguration.Hashing.Method.ValueString())
 					var targetField string
-					targetField = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.TargetField.ValueString()
+					targetField = mappersItem.MapperConfiguration.Hashing.TargetField.ValueString()
 
 					hashing = &shared.Hashing{
 						FieldNameSuffix: fieldNameSuffix,
@@ -301,27 +105,13 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 						Hashing: hashing,
 					}
 				}
-				var fieldFiltering *shared.FieldFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering != nil {
-					var targetField1 string
-					targetField1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering.TargetField.ValueString()
-
-					fieldFiltering = &shared.FieldFiltering{
-						TargetField: targetField1,
-					}
-				}
-				if fieldFiltering != nil {
-					mapperConfiguration = shared.MapperConfiguration{
-						FieldFiltering: fieldFiltering,
-					}
-				}
 				var fieldRenaming *shared.FieldRenaming
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming != nil {
+				if mappersItem.MapperConfiguration.FieldRenaming != nil {
 					var newFieldName string
-					newFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.NewFieldName.ValueString()
+					newFieldName = mappersItem.MapperConfiguration.FieldRenaming.NewFieldName.ValueString()
 
 					var originalFieldName string
-					originalFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.OriginalFieldName.ValueString()
+					originalFieldName = mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName.ValueString()
 
 					fieldRenaming = &shared.FieldRenaming{
 						NewFieldName:      newFieldName,
@@ -334,9 +124,9 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 					}
 				}
 				var rowFiltering *shared.RowFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering != nil {
+				if mappersItem.MapperConfiguration.RowFiltering != nil {
 					var conditions interface{}
-					_ = json.Unmarshal([]byte(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering.Conditions.ValueString()), &conditions)
+					_ = json.Unmarshal([]byte(mappersItem.MapperConfiguration.RowFiltering.Conditions.ValueString()), &conditions)
 					rowFiltering = &shared.RowFiltering{
 						Conditions: conditions,
 					}
@@ -347,24 +137,24 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 					}
 				}
 				var encryption *shared.Encryption
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption != nil {
+				if mappersItem.MapperConfiguration.Encryption != nil {
 					var encryptionRSA *shared.EncryptionRSA
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa != nil {
-						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
+					if mappersItem.MapperConfiguration.Encryption.Rsa != nil {
+						algorithm := shared.EncryptionMapperAlgorithm(mappersItem.MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
 						var fieldNameSuffix1 string
-						fieldNameSuffix1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.FieldNameSuffix.ValueString()
+						fieldNameSuffix1 = mappersItem.MapperConfiguration.Encryption.Rsa.FieldNameSuffix.ValueString()
 
 						var publicKey string
-						publicKey = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.PublicKey.ValueString()
+						publicKey = mappersItem.MapperConfiguration.Encryption.Rsa.PublicKey.ValueString()
 
-						var targetField2 string
-						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
+						var targetField1 string
+						targetField1 = mappersItem.MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
 
 						encryptionRSA = &shared.EncryptionRSA{
 							Algorithm:       algorithm,
 							FieldNameSuffix: fieldNameSuffix1,
 							PublicKey:       publicKey,
-							TargetField:     targetField2,
+							TargetField:     targetField1,
 						}
 					}
 					if encryptionRSA != nil {
@@ -373,18 +163,18 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 						}
 					}
 					var encryptionAES *shared.EncryptionAES
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes != nil {
-						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
+					if mappersItem.MapperConfiguration.Encryption.Aes != nil {
+						algorithm1 := shared.EncryptionMapperAlgorithm(mappersItem.MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
 						var fieldNameSuffix2 string
-						fieldNameSuffix2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.FieldNameSuffix.ValueString()
+						fieldNameSuffix2 = mappersItem.MapperConfiguration.Encryption.Aes.FieldNameSuffix.ValueString()
 
 						var key string
-						key = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Key.ValueString()
+						key = mappersItem.MapperConfiguration.Encryption.Aes.Key.ValueString()
 
-						mode := shared.Mode(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Mode.ValueString())
-						padding := shared.Padding(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Padding.ValueString())
-						var targetField3 string
-						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.TargetField.ValueString()
+						mode := shared.Mode(mappersItem.MapperConfiguration.Encryption.Aes.Mode.ValueString())
+						padding := shared.Padding(mappersItem.MapperConfiguration.Encryption.Aes.Padding.ValueString())
+						var targetField2 string
+						targetField2 = mappersItem.MapperConfiguration.Encryption.Aes.TargetField.ValueString()
 
 						encryptionAES = &shared.EncryptionAES{
 							Algorithm:       algorithm1,
@@ -392,7 +182,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 							Key:             key,
 							Mode:            mode,
 							Padding:         padding,
-							TargetField:     targetField3,
+							TargetField:     targetField2,
 						}
 					}
 					if encryptionAES != nil {
@@ -478,19 +268,19 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 	} else {
 		status = nil
 	}
-	tags := make([]shared.Tag, 0, len(r.Tags))
-	for tagsIndex := range r.Tags {
+	var tags []shared.Tag = []shared.Tag{}
+	for _, tagsItem := range r.Tags {
 		var tagID string
-		tagID = r.Tags[tagsIndex].TagID.ValueString()
+		tagID = tagsItem.TagID.ValueString()
 
 		var workspaceID string
-		workspaceID = r.Tags[tagsIndex].WorkspaceID.ValueString()
+		workspaceID = tagsItem.WorkspaceID.ValueString()
 
 		var name2 string
-		name2 = r.Tags[tagsIndex].Name.ValueString()
+		name2 = tagsItem.Name.ValueString()
 
 		var color string
-		color = r.Tags[tagsIndex].Color.ValueString()
+		color = tagsItem.Color.ValueString()
 
 		tags = append(tags, shared.Tag{
 			TagID:       tagID,
@@ -513,13 +303,165 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 		Status:                           status,
 		Tags:                             tags,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Context) (*shared.ConnectionPatchRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
+func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shared.ConnectionResponse) {
+	if resp != nil {
+		if r.Configurations == nil {
+			r.Configurations = &tfTypes.StreamConfigurations{}
+		}
+		r.Configurations.Streams = []tfTypes.StreamConfiguration{}
+		if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
+			r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
+		}
+		for streamsCount, streamsItem := range resp.Configurations.Streams {
+			var streams1 tfTypes.StreamConfiguration
+			streams1.CursorField = make([]types.String, 0, len(streamsItem.CursorField))
+			for _, v := range streamsItem.CursorField {
+				streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
+			}
+			streams1.DestinationObjectName = types.StringPointerValue(streamsItem.DestinationObjectName)
+			streams1.IncludeFiles = types.BoolPointerValue(streamsItem.IncludeFiles)
+			streams1.Mappers = []tfTypes.ConfiguredStreamMapper{}
+			for mappersCount, mappersItem := range streamsItem.Mappers {
+				var mappers1 tfTypes.ConfiguredStreamMapper
+				mappers1.ID = types.StringPointerValue(mappersItem.ID)
+				if mappersItem.MapperConfiguration.Encryption != nil {
+					mappers1.MapperConfiguration.Encryption = &tfTypes.Encryption{}
+					if mappersItem.MapperConfiguration.Encryption.EncryptionAES != nil {
+						mappers1.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionAES{}
+						mappers1.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Algorithm))
+						mappers1.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.FieldNameSuffix)
+						mappers1.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Key)
+						mappers1.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Mode))
+						mappers1.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Padding))
+						mappers1.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.TargetField)
+					}
+					if mappersItem.MapperConfiguration.Encryption.EncryptionRSA != nil {
+						mappers1.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionRSA{}
+						mappers1.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.Algorithm))
+						mappers1.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.FieldNameSuffix)
+						mappers1.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.PublicKey)
+						mappers1.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.TargetField)
+					}
+				}
+				if mappersItem.MapperConfiguration.FieldRenaming != nil {
+					mappers1.MapperConfiguration.FieldRenaming = &tfTypes.FieldRenaming{}
+					mappers1.MapperConfiguration.FieldRenaming.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.NewFieldName)
+					mappers1.MapperConfiguration.FieldRenaming.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName)
+				}
+				if mappersItem.MapperConfiguration.Hashing != nil {
+					mappers1.MapperConfiguration.Hashing = &tfTypes.Hashing{}
+					mappers1.MapperConfiguration.Hashing.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Hashing.FieldNameSuffix)
+					mappers1.MapperConfiguration.Hashing.Method = types.StringValue(string(mappersItem.MapperConfiguration.Hashing.Method))
+					mappers1.MapperConfiguration.Hashing.TargetField = types.StringValue(mappersItem.MapperConfiguration.Hashing.TargetField)
+				}
+				if mappersItem.MapperConfiguration.RowFiltering != nil {
+					mappers1.MapperConfiguration.RowFiltering = &tfTypes.RowFiltering{}
+					conditionsResult, _ := json.Marshal(mappersItem.MapperConfiguration.RowFiltering.Conditions)
+					mappers1.MapperConfiguration.RowFiltering.Conditions = types.StringValue(string(conditionsResult))
+				}
+				mappers1.Type = types.StringValue(string(mappersItem.Type))
+				if mappersCount+1 > len(streams1.Mappers) {
+					streams1.Mappers = append(streams1.Mappers, mappers1)
+				} else {
+					streams1.Mappers[mappersCount].ID = mappers1.ID
+					streams1.Mappers[mappersCount].MapperConfiguration = mappers1.MapperConfiguration
+					streams1.Mappers[mappersCount].Type = mappers1.Type
+				}
+			}
+			streams1.Name = types.StringValue(streamsItem.Name)
+			streams1.Namespace = types.StringPointerValue(streamsItem.Namespace)
+			streams1.PrimaryKey = nil
+			for _, primaryKeyItem := range streamsItem.PrimaryKey {
+				var primaryKey1 []types.String
+				primaryKey1 = make([]types.String, 0, len(primaryKeyItem))
+				for _, v := range primaryKeyItem {
+					primaryKey1 = append(primaryKey1, types.StringValue(v))
+				}
+				streams1.PrimaryKey = append(streams1.PrimaryKey, primaryKey1)
+			}
+			streams1.SelectedFields = []tfTypes.SelectedFieldInfo{}
+			for selectedFieldsCount, selectedFieldsItem := range streamsItem.SelectedFields {
+				var selectedFields1 tfTypes.SelectedFieldInfo
+				selectedFields1.FieldPath = make([]types.String, 0, len(selectedFieldsItem.FieldPath))
+				for _, v := range selectedFieldsItem.FieldPath {
+					selectedFields1.FieldPath = append(selectedFields1.FieldPath, types.StringValue(v))
+				}
+				if selectedFieldsCount+1 > len(streams1.SelectedFields) {
+					streams1.SelectedFields = append(streams1.SelectedFields, selectedFields1)
+				} else {
+					streams1.SelectedFields[selectedFieldsCount].FieldPath = selectedFields1.FieldPath
+				}
+			}
+			if streamsItem.SyncMode != nil {
+				streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
+			} else {
+				streams1.SyncMode = types.StringNull()
+			}
+			if streamsCount+1 > len(r.Configurations.Streams) {
+				r.Configurations.Streams = append(r.Configurations.Streams, streams1)
+			} else {
+				r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
+				r.Configurations.Streams[streamsCount].DestinationObjectName = streams1.DestinationObjectName
+				r.Configurations.Streams[streamsCount].IncludeFiles = streams1.IncludeFiles
+				r.Configurations.Streams[streamsCount].Mappers = streams1.Mappers
+				r.Configurations.Streams[streamsCount].Name = streams1.Name
+				r.Configurations.Streams[streamsCount].Namespace = streams1.Namespace
+				r.Configurations.Streams[streamsCount].PrimaryKey = streams1.PrimaryKey
+				r.Configurations.Streams[streamsCount].SelectedFields = streams1.SelectedFields
+				r.Configurations.Streams[streamsCount].SyncMode = streams1.SyncMode
+			}
+		}
+		r.ConnectionID = types.StringValue(resp.ConnectionID)
+		r.CreatedAt = types.Int64Value(resp.CreatedAt)
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.Name = types.StringValue(resp.Name)
+		if resp.NamespaceDefinition != nil {
+			r.NamespaceDefinition = types.StringValue(string(*resp.NamespaceDefinition))
+		} else {
+			r.NamespaceDefinition = types.StringNull()
+		}
+		r.NamespaceFormat = types.StringPointerValue(resp.NamespaceFormat)
+		if resp.NonBreakingSchemaUpdatesBehavior != nil {
+			r.NonBreakingSchemaUpdatesBehavior = types.StringValue(string(*resp.NonBreakingSchemaUpdatesBehavior))
+		} else {
+			r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
+		}
+		r.Prefix = types.StringPointerValue(resp.Prefix)
+		if r.Schedule == nil {
+			r.Schedule = &tfTypes.AirbyteAPIConnectionSchedule{}
+		}
+		r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
+		r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
+		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.Status = types.StringValue(string(resp.Status))
+		r.Tags = []tfTypes.Tag{}
+		if len(r.Tags) > len(resp.Tags) {
+			r.Tags = r.Tags[:len(resp.Tags)]
+		}
+		for tagsCount, tagsItem := range resp.Tags {
+			var tags1 tfTypes.Tag
+			tags1.Color = types.StringValue(tagsItem.Color)
+			tags1.Name = types.StringValue(tagsItem.Name)
+			tags1.TagID = types.StringValue(tagsItem.TagID)
+			tags1.WorkspaceID = types.StringValue(tagsItem.WorkspaceID)
+			if tagsCount+1 > len(r.Tags) {
+				r.Tags = append(r.Tags, tags1)
+			} else {
+				r.Tags[tagsCount].Color = tags1.Color
+				r.Tags[tagsCount].Name = tags1.Name
+				r.Tags[tagsCount].TagID = tags1.TagID
+				r.Tags[tagsCount].WorkspaceID = tags1.WorkspaceID
+			}
+		}
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
+}
 
+func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.ConnectionPatchRequest {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
@@ -528,75 +470,75 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 	}
 	var configurations *shared.StreamConfigurations
 	if r.Configurations != nil {
-		streams := make([]shared.StreamConfiguration, 0, len(r.Configurations.Streams))
-		for streamsIndex := range r.Configurations.Streams {
+		var streams []shared.StreamConfiguration = []shared.StreamConfiguration{}
+		for _, streamsItem := range r.Configurations.Streams {
 			var name1 string
-			name1 = r.Configurations.Streams[streamsIndex].Name.ValueString()
+			name1 = streamsItem.Name.ValueString()
 
 			namespace := new(string)
-			if !r.Configurations.Streams[streamsIndex].Namespace.IsUnknown() && !r.Configurations.Streams[streamsIndex].Namespace.IsNull() {
-				*namespace = r.Configurations.Streams[streamsIndex].Namespace.ValueString()
+			if !streamsItem.Namespace.IsUnknown() && !streamsItem.Namespace.IsNull() {
+				*namespace = streamsItem.Namespace.ValueString()
 			} else {
 				namespace = nil
 			}
 			syncMode := new(shared.ConnectionSyncModeEnum)
-			if !r.Configurations.Streams[streamsIndex].SyncMode.IsUnknown() && !r.Configurations.Streams[streamsIndex].SyncMode.IsNull() {
-				*syncMode = shared.ConnectionSyncModeEnum(r.Configurations.Streams[streamsIndex].SyncMode.ValueString())
+			if !streamsItem.SyncMode.IsUnknown() && !streamsItem.SyncMode.IsNull() {
+				*syncMode = shared.ConnectionSyncModeEnum(streamsItem.SyncMode.ValueString())
 			} else {
 				syncMode = nil
 			}
-			cursorField := make([]string, 0, len(r.Configurations.Streams[streamsIndex].CursorField))
-			for cursorFieldIndex := range r.Configurations.Streams[streamsIndex].CursorField {
-				cursorField = append(cursorField, r.Configurations.Streams[streamsIndex].CursorField[cursorFieldIndex].ValueString())
+			var cursorField []string = []string{}
+			for _, cursorFieldItem := range streamsItem.CursorField {
+				cursorField = append(cursorField, cursorFieldItem.ValueString())
 			}
-			primaryKey := make([][]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey))
-			for primaryKeyIndex := range r.Configurations.Streams[streamsIndex].PrimaryKey {
-				primaryKeyTmp := make([]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex]))
-				for index := range r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex] {
-					primaryKeyTmp = append(primaryKeyTmp, r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex][index].ValueString())
+			var primaryKey [][]string = [][]string{}
+			for _, primaryKeyItem := range streamsItem.PrimaryKey {
+				var primaryKeyTmp []string = []string{}
+				for _, item := range primaryKeyItem {
+					primaryKeyTmp = append(primaryKeyTmp, item.ValueString())
 				}
 				primaryKey = append(primaryKey, primaryKeyTmp)
 			}
 			includeFiles := new(bool)
-			if !r.Configurations.Streams[streamsIndex].IncludeFiles.IsUnknown() && !r.Configurations.Streams[streamsIndex].IncludeFiles.IsNull() {
-				*includeFiles = r.Configurations.Streams[streamsIndex].IncludeFiles.ValueBool()
+			if !streamsItem.IncludeFiles.IsUnknown() && !streamsItem.IncludeFiles.IsNull() {
+				*includeFiles = streamsItem.IncludeFiles.ValueBool()
 			} else {
 				includeFiles = nil
 			}
 			destinationObjectName := new(string)
-			if !r.Configurations.Streams[streamsIndex].DestinationObjectName.IsUnknown() && !r.Configurations.Streams[streamsIndex].DestinationObjectName.IsNull() {
-				*destinationObjectName = r.Configurations.Streams[streamsIndex].DestinationObjectName.ValueString()
+			if !streamsItem.DestinationObjectName.IsUnknown() && !streamsItem.DestinationObjectName.IsNull() {
+				*destinationObjectName = streamsItem.DestinationObjectName.ValueString()
 			} else {
 				destinationObjectName = nil
 			}
-			selectedFields := make([]shared.SelectedFieldInfo, 0, len(r.Configurations.Streams[streamsIndex].SelectedFields))
-			for selectedFieldsIndex := range r.Configurations.Streams[streamsIndex].SelectedFields {
-				fieldPath := make([]string, 0, len(r.Configurations.Streams[streamsIndex].SelectedFields[selectedFieldsIndex].FieldPath))
-				for fieldPathIndex := range r.Configurations.Streams[streamsIndex].SelectedFields[selectedFieldsIndex].FieldPath {
-					fieldPath = append(fieldPath, r.Configurations.Streams[streamsIndex].SelectedFields[selectedFieldsIndex].FieldPath[fieldPathIndex].ValueString())
+			var selectedFields []shared.SelectedFieldInfo = []shared.SelectedFieldInfo{}
+			for _, selectedFieldsItem := range streamsItem.SelectedFields {
+				var fieldPath []string = []string{}
+				for _, fieldPathItem := range selectedFieldsItem.FieldPath {
+					fieldPath = append(fieldPath, fieldPathItem.ValueString())
 				}
 				selectedFields = append(selectedFields, shared.SelectedFieldInfo{
 					FieldPath: fieldPath,
 				})
 			}
-			mappers := make([]shared.ConfiguredStreamMapper, 0, len(r.Configurations.Streams[streamsIndex].Mappers))
-			for mappersIndex := range r.Configurations.Streams[streamsIndex].Mappers {
+			var mappers []shared.ConfiguredStreamMapper = []shared.ConfiguredStreamMapper{}
+			for _, mappersItem := range streamsItem.Mappers {
 				id := new(string)
-				if !r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].ID.IsUnknown() && !r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].ID.IsNull() {
-					*id = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].ID.ValueString()
+				if !mappersItem.ID.IsUnknown() && !mappersItem.ID.IsNull() {
+					*id = mappersItem.ID.ValueString()
 				} else {
 					id = nil
 				}
-				typeVar := shared.StreamMapperType(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].Type.ValueString())
+				typeVar := shared.StreamMapperType(mappersItem.Type.ValueString())
 				var mapperConfiguration shared.MapperConfiguration
 				var hashing *shared.Hashing
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing != nil {
+				if mappersItem.MapperConfiguration.Hashing != nil {
 					var fieldNameSuffix string
-					fieldNameSuffix = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.FieldNameSuffix.ValueString()
+					fieldNameSuffix = mappersItem.MapperConfiguration.Hashing.FieldNameSuffix.ValueString()
 
-					method := shared.HashingMethod(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.Method.ValueString())
+					method := shared.HashingMethod(mappersItem.MapperConfiguration.Hashing.Method.ValueString())
 					var targetField string
-					targetField = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Hashing.TargetField.ValueString()
+					targetField = mappersItem.MapperConfiguration.Hashing.TargetField.ValueString()
 
 					hashing = &shared.Hashing{
 						FieldNameSuffix: fieldNameSuffix,
@@ -609,27 +551,13 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 						Hashing: hashing,
 					}
 				}
-				var fieldFiltering *shared.FieldFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering != nil {
-					var targetField1 string
-					targetField1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldFiltering.TargetField.ValueString()
-
-					fieldFiltering = &shared.FieldFiltering{
-						TargetField: targetField1,
-					}
-				}
-				if fieldFiltering != nil {
-					mapperConfiguration = shared.MapperConfiguration{
-						FieldFiltering: fieldFiltering,
-					}
-				}
 				var fieldRenaming *shared.FieldRenaming
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming != nil {
+				if mappersItem.MapperConfiguration.FieldRenaming != nil {
 					var newFieldName string
-					newFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.NewFieldName.ValueString()
+					newFieldName = mappersItem.MapperConfiguration.FieldRenaming.NewFieldName.ValueString()
 
 					var originalFieldName string
-					originalFieldName = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.FieldRenaming.OriginalFieldName.ValueString()
+					originalFieldName = mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName.ValueString()
 
 					fieldRenaming = &shared.FieldRenaming{
 						NewFieldName:      newFieldName,
@@ -642,9 +570,9 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 					}
 				}
 				var rowFiltering *shared.RowFiltering
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering != nil {
+				if mappersItem.MapperConfiguration.RowFiltering != nil {
 					var conditions interface{}
-					_ = json.Unmarshal([]byte(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.RowFiltering.Conditions.ValueString()), &conditions)
+					_ = json.Unmarshal([]byte(mappersItem.MapperConfiguration.RowFiltering.Conditions.ValueString()), &conditions)
 					rowFiltering = &shared.RowFiltering{
 						Conditions: conditions,
 					}
@@ -655,24 +583,24 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 					}
 				}
 				var encryption *shared.Encryption
-				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption != nil {
+				if mappersItem.MapperConfiguration.Encryption != nil {
 					var encryptionRSA *shared.EncryptionRSA
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa != nil {
-						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
+					if mappersItem.MapperConfiguration.Encryption.Rsa != nil {
+						algorithm := shared.EncryptionMapperAlgorithm(mappersItem.MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
 						var fieldNameSuffix1 string
-						fieldNameSuffix1 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.FieldNameSuffix.ValueString()
+						fieldNameSuffix1 = mappersItem.MapperConfiguration.Encryption.Rsa.FieldNameSuffix.ValueString()
 
 						var publicKey string
-						publicKey = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.PublicKey.ValueString()
+						publicKey = mappersItem.MapperConfiguration.Encryption.Rsa.PublicKey.ValueString()
 
-						var targetField2 string
-						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
+						var targetField1 string
+						targetField1 = mappersItem.MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
 
 						encryptionRSA = &shared.EncryptionRSA{
 							Algorithm:       algorithm,
 							FieldNameSuffix: fieldNameSuffix1,
 							PublicKey:       publicKey,
-							TargetField:     targetField2,
+							TargetField:     targetField1,
 						}
 					}
 					if encryptionRSA != nil {
@@ -681,18 +609,18 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 						}
 					}
 					var encryptionAES *shared.EncryptionAES
-					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes != nil {
-						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
+					if mappersItem.MapperConfiguration.Encryption.Aes != nil {
+						algorithm1 := shared.EncryptionMapperAlgorithm(mappersItem.MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
 						var fieldNameSuffix2 string
-						fieldNameSuffix2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.FieldNameSuffix.ValueString()
+						fieldNameSuffix2 = mappersItem.MapperConfiguration.Encryption.Aes.FieldNameSuffix.ValueString()
 
 						var key string
-						key = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Key.ValueString()
+						key = mappersItem.MapperConfiguration.Encryption.Aes.Key.ValueString()
 
-						mode := shared.Mode(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Mode.ValueString())
-						padding := shared.Padding(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Padding.ValueString())
-						var targetField3 string
-						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.TargetField.ValueString()
+						mode := shared.Mode(mappersItem.MapperConfiguration.Encryption.Aes.Mode.ValueString())
+						padding := shared.Padding(mappersItem.MapperConfiguration.Encryption.Aes.Padding.ValueString())
+						var targetField2 string
+						targetField2 = mappersItem.MapperConfiguration.Encryption.Aes.TargetField.ValueString()
 
 						encryptionAES = &shared.EncryptionAES{
 							Algorithm:       algorithm1,
@@ -700,7 +628,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 							Key:             key,
 							Mode:            mode,
 							Padding:         padding,
-							TargetField:     targetField3,
+							TargetField:     targetField2,
 						}
 					}
 					if encryptionAES != nil {
@@ -786,19 +714,19 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 	} else {
 		status = nil
 	}
-	tags := make([]shared.Tag, 0, len(r.Tags))
-	for tagsIndex := range r.Tags {
+	var tags []shared.Tag = []shared.Tag{}
+	for _, tagsItem := range r.Tags {
 		var tagID string
-		tagID = r.Tags[tagsIndex].TagID.ValueString()
+		tagID = tagsItem.TagID.ValueString()
 
 		var workspaceID string
-		workspaceID = r.Tags[tagsIndex].WorkspaceID.ValueString()
+		workspaceID = tagsItem.WorkspaceID.ValueString()
 
 		var name2 string
-		name2 = r.Tags[tagsIndex].Name.ValueString()
+		name2 = tagsItem.Name.ValueString()
 
 		var color string
-		color = r.Tags[tagsIndex].Color.ValueString()
+		color = tagsItem.Color.ValueString()
 
 		tags = append(tags, shared.Tag{
 			TagID:       tagID,
@@ -819,6 +747,5 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 		Status:                           status,
 		Tags:                             tags,
 	}
-
-	return &out, diags
+	return &out
 }

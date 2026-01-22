@@ -2,9 +2,7 @@
 
 package types
 
-import (
-	"github.com/hashicorp/terraform-plugin-framework/types"
-)
+import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SelectedFieldInfo struct {
 	FieldPath []types.String `tfsdk:"field_path"`

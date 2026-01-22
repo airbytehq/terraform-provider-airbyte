@@ -8,23 +8,23 @@ type DeclarativeSourceDefinitionsResponse struct {
 	Data     []DeclarativeSourceDefinitionResponse `json:"data"`
 }
 
-func (d *DeclarativeSourceDefinitionsResponse) GetPrevious() *string {
-	if d == nil {
+func (o *DeclarativeSourceDefinitionsResponse) GetPrevious() *string {
+	if o == nil {
 		return nil
 	}
-	return d.Previous
+	return o.Previous
 }
 
-func (d *DeclarativeSourceDefinitionsResponse) GetNext() *string {
-	if d == nil {
+func (o *DeclarativeSourceDefinitionsResponse) GetNext() *string {
+	if o == nil {
 		return nil
 	}
-	return d.Next
+	return o.Next
 }
 
-func (d *DeclarativeSourceDefinitionsResponse) GetData() []DeclarativeSourceDefinitionResponse {
-	if d == nil {
+func (o *DeclarativeSourceDefinitionsResponse) GetData() []DeclarativeSourceDefinitionResponse {
+	if o == nil {
 		return []DeclarativeSourceDefinitionResponse{}
 	}
-	return d.Data
+	return o.Data
 }

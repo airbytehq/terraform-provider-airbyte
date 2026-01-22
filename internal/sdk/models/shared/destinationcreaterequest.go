@@ -14,37 +14,37 @@ type DestinationCreateRequest struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (d *DestinationCreateRequest) GetName() string {
-	if d == nil {
+func (o *DestinationCreateRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return d.Name
+	return o.Name
 }
 
-func (d *DestinationCreateRequest) GetDefinitionID() *string {
-	if d == nil {
+func (o *DestinationCreateRequest) GetDefinitionID() *string {
+	if o == nil {
 		return nil
 	}
-	return d.DefinitionID
+	return o.DefinitionID
 }
 
-func (d *DestinationCreateRequest) GetWorkspaceID() string {
-	if d == nil {
+func (o *DestinationCreateRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return d.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (d *DestinationCreateRequest) GetConfiguration() any {
-	if d == nil {
+func (o *DestinationCreateRequest) GetConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return d.Configuration
+	return o.Configuration
 }
 
-func (d *DestinationCreateRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if d == nil {
+func (o *DestinationCreateRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return d.ResourceAllocation
+	return o.ResourceAllocation
 }

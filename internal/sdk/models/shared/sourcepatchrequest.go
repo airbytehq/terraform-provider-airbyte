@@ -13,37 +13,37 @@ type SourcePatchRequest struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (s *SourcePatchRequest) GetName() *string {
-	if s == nil {
+func (o *SourcePatchRequest) GetName() *string {
+	if o == nil {
 		return nil
 	}
-	return s.Name
+	return o.Name
 }
 
-func (s *SourcePatchRequest) GetWorkspaceID() *string {
-	if s == nil {
+func (o *SourcePatchRequest) GetWorkspaceID() *string {
+	if o == nil {
 		return nil
 	}
-	return s.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (s *SourcePatchRequest) GetConfiguration() any {
-	if s == nil {
+func (o *SourcePatchRequest) GetConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return s.Configuration
+	return o.Configuration
 }
 
-func (s *SourcePatchRequest) GetSecretID() *string {
-	if s == nil {
+func (o *SourcePatchRequest) GetSecretID() *string {
+	if o == nil {
 		return nil
 	}
-	return s.SecretID
+	return o.SecretID
 }
 
-func (s *SourcePatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if s == nil {
+func (o *SourcePatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return s.ResourceAllocation
+	return o.ResourceAllocation
 }

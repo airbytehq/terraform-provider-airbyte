@@ -7,15 +7,10 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"mime"
 	"mime/multipart"
-	"net/textproto"
 	"net/url"
-	"path/filepath"
 	"reflect"
 	"regexp"
-
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/optionalnullable"
 )
 
 const (
@@ -25,9 +20,9 @@ const (
 )
 
 var (
-	jsonEncodingRegex       = regexp.MustCompile(`^(application|text)\/([^+]+\+)*json.*`)
-	multipartEncodingRegex  = regexp.MustCompile(`^multipart\/.*`)
-	urlEncodedEncodingRegex = regexp.MustCompile(`^application\/x-www-form-urlencoded.*`)
+	jsonEncodingRegex       = regexp.MustCompile(`(application|text)\/.*?\+*json.*`)
+	multipartEncodingRegex  = regexp.MustCompile(`multipart\/.*`)
+	urlEncodedEncodingRegex = regexp.MustCompile(`application\/x-www-form-urlencoded.*`)
 )
 
 func SerializeRequestBody(_ context.Context, request interface{}, nullable, optional bool, requestFieldName, serializationMethod, tag string) (io.Reader, string, error) {
@@ -171,21 +166,9 @@ func encodeMultipartFormData(w io.Writer, data interface{}) (string, error) {
 
 		tag := parseMultipartFormTag(field)
 		if tag.File {
-			switch fieldType.Kind() {
-			case reflect.Slice, reflect.Array:
-				for i := 0; i < valType.Len(); i++ {
-					arrayVal := valType.Index(i)
-
-					if err := encodeMultipartFormDataFile(writer, tag.Name, arrayVal.Type(), arrayVal); err != nil {
-						writer.Close()
-						return "", err
-					}
-				}
-			default:
-				if err := encodeMultipartFormDataFile(writer, tag.Name, fieldType, valType); err != nil {
-					writer.Close()
-					return "", err
-				}
+			if err := encodeMultipartFormDataFile(writer, tag.Name, fieldType, valType); err != nil {
+				writer.Close()
+				return "", err
 			}
 		} else if tag.JSON {
 			jw, err := writer.CreateFormField(tag.Name)
@@ -207,7 +190,7 @@ func encodeMultipartFormData(w io.Writer, data interface{}) (string, error) {
 			case reflect.Slice, reflect.Array:
 				values := parseDelimitedArray(true, valType, ",")
 				for _, v := range values {
-					if err := writer.WriteField(tag.Name, v); err != nil {
+					if err := writer.WriteField(tag.Name+"[]", v); err != nil {
 						writer.Close()
 						return "", err
 					}
@@ -260,28 +243,12 @@ func encodeMultipartFormDataFile(w *multipart.Writer, fieldName string, fieldTyp
 		return fmt.Errorf("invalid multipart/form-data file")
 	}
 
-	// Detect content type based on file extension
-	contentType := mime.TypeByExtension(filepath.Ext(fileName))
-	if contentType == "" {
-		contentType = "application/octet-stream"
-	}
-
-	// Create multipart header with proper content type
-	h := make(textproto.MIMEHeader)
-	h.Set("Content-Disposition", fmt.Sprintf(`form-data; name="%s"; filename="%s"`, fieldName, fileName))
-	h.Set("Content-Type", contentType)
-
-	fw, err := w.CreatePart(h)
+	fw, err := w.CreateFormFile(fieldName, fileName)
 	if err != nil {
 		return err
 	}
 	if _, err := io.Copy(fw, reader); err != nil {
 		return err
-	}
-
-	// Reset seek position to 0 if the reader supports seeking
-	if seeker, ok := reader.(io.Seeker); ok {
-		_, _ = seeker.Seek(0, io.SeekStart)
 	}
 
 	return nil
@@ -325,7 +292,7 @@ func encodeFormData(fieldName string, w io.Writer, data interface{}) error {
 				switch tag.Style {
 				// TODO: support other styles
 				case "form":
-					values := populateForm(tag.Name, tag.Explode, fieldType, valType, ",", nil, nil, func(sf reflect.StructField) string {
+					values := populateForm(tag.Name, tag.Explode, fieldType, valType, ",", nil, func(sf reflect.StructField) string {
 						tag := parseFormTag(field)
 						if tag == nil {
 							return ""
@@ -342,17 +309,6 @@ func encodeFormData(fieldName string, w io.Writer, data interface{}) error {
 			}
 		}
 	case reflect.Map:
-		// check if optionalnullable.OptionalNullable[T]
-		if nullableValue, ok := optionalnullable.AsOptionalNullable(requestValType); ok {
-			// Handle optionalnullable.OptionalNullable[T] using GetUntyped method
-			if value, isSet := nullableValue.GetUntyped(); isSet && value != nil {
-				dataValues.Set(fieldName, valToString(value))
-			}
-			// If not set or explicitly null, skip adding to form
-			break
-		}
-
-		// Handle regular map
 		for _, k := range requestValType.MapKeys() {
 			v := requestValType.MapIndex(k)
 			dataValues.Set(fmt.Sprintf("%v", k.Interface()), valToString(v.Interface()))

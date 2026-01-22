@@ -18,44 +18,44 @@ type NotificationsConfig struct {
 	SyncDisabledWarning *NotificationConfig `json:"syncDisabledWarning,omitempty"`
 }
 
-func (n *NotificationsConfig) GetFailure() *NotificationConfig {
-	if n == nil {
+func (o *NotificationsConfig) GetFailure() *NotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.Failure
+	return o.Failure
 }
 
-func (n *NotificationsConfig) GetSuccess() *NotificationConfig {
-	if n == nil {
+func (o *NotificationsConfig) GetSuccess() *NotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.Success
+	return o.Success
 }
 
-func (n *NotificationsConfig) GetConnectionUpdate() *NotificationConfig {
-	if n == nil {
+func (o *NotificationsConfig) GetConnectionUpdate() *NotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.ConnectionUpdate
+	return o.ConnectionUpdate
 }
 
-func (n *NotificationsConfig) GetConnectionUpdateActionRequired() *NotificationConfig {
-	if n == nil {
+func (o *NotificationsConfig) GetConnectionUpdateActionRequired() *NotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.ConnectionUpdateActionRequired
+	return o.ConnectionUpdateActionRequired
 }
 
-func (n *NotificationsConfig) GetSyncDisabled() *NotificationConfig {
-	if n == nil {
+func (o *NotificationsConfig) GetSyncDisabled() *NotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.SyncDisabled
+	return o.SyncDisabled
 }
 
-func (n *NotificationsConfig) GetSyncDisabledWarning() *NotificationConfig {
-	if n == nil {
+func (o *NotificationsConfig) GetSyncDisabledWarning() *NotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.SyncDisabledWarning
+	return o.SyncDisabledWarning
 }

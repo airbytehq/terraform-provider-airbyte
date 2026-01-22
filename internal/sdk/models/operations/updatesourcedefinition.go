@@ -13,25 +13,25 @@ type UpdateSourceDefinitionRequest struct {
 	UpdateDefinitionRequest shared.UpdateDefinitionRequest `request:"mediaType=application/json"`
 }
 
-func (u *UpdateSourceDefinitionRequest) GetWorkspaceID() string {
-	if u == nil {
+func (o *UpdateSourceDefinitionRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return u.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (u *UpdateSourceDefinitionRequest) GetDefinitionID() string {
-	if u == nil {
+func (o *UpdateSourceDefinitionRequest) GetDefinitionID() string {
+	if o == nil {
 		return ""
 	}
-	return u.DefinitionID
+	return o.DefinitionID
 }
 
-func (u *UpdateSourceDefinitionRequest) GetUpdateDefinitionRequest() shared.UpdateDefinitionRequest {
-	if u == nil {
+func (o *UpdateSourceDefinitionRequest) GetUpdateDefinitionRequest() shared.UpdateDefinitionRequest {
+	if o == nil {
 		return shared.UpdateDefinitionRequest{}
 	}
-	return u.UpdateDefinitionRequest
+	return o.UpdateDefinitionRequest
 }
 
 type UpdateSourceDefinitionResponse struct {
@@ -45,30 +45,30 @@ type UpdateSourceDefinitionResponse struct {
 	DefinitionResponse *shared.DefinitionResponse
 }
 
-func (u *UpdateSourceDefinitionResponse) GetContentType() string {
-	if u == nil {
+func (o *UpdateSourceDefinitionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return u.ContentType
+	return o.ContentType
 }
 
-func (u *UpdateSourceDefinitionResponse) GetStatusCode() int {
-	if u == nil {
+func (o *UpdateSourceDefinitionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return u.StatusCode
+	return o.StatusCode
 }
 
-func (u *UpdateSourceDefinitionResponse) GetRawResponse() *http.Response {
-	if u == nil {
+func (o *UpdateSourceDefinitionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return u.RawResponse
+	return o.RawResponse
 }
 
-func (u *UpdateSourceDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
-	if u == nil {
+func (o *UpdateSourceDefinitionResponse) GetDefinitionResponse() *shared.DefinitionResponse {
+	if o == nil {
 		return nil
 	}
-	return u.DefinitionResponse
+	return o.DefinitionResponse
 }

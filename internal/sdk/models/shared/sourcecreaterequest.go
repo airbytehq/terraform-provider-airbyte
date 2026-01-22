@@ -16,44 +16,44 @@ type SourceCreateRequest struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (s *SourceCreateRequest) GetName() string {
-	if s == nil {
+func (o *SourceCreateRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return s.Name
+	return o.Name
 }
 
-func (s *SourceCreateRequest) GetDefinitionID() *string {
-	if s == nil {
+func (o *SourceCreateRequest) GetDefinitionID() *string {
+	if o == nil {
 		return nil
 	}
-	return s.DefinitionID
+	return o.DefinitionID
 }
 
-func (s *SourceCreateRequest) GetWorkspaceID() string {
-	if s == nil {
+func (o *SourceCreateRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return s.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (s *SourceCreateRequest) GetConfiguration() any {
-	if s == nil {
+func (o *SourceCreateRequest) GetConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return s.Configuration
+	return o.Configuration
 }
 
-func (s *SourceCreateRequest) GetSecretID() *string {
-	if s == nil {
+func (o *SourceCreateRequest) GetSecretID() *string {
+	if o == nil {
 		return nil
 	}
-	return s.SecretID
+	return o.SecretID
 }
 
-func (s *SourceCreateRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if s == nil {
+func (o *SourceCreateRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return s.ResourceAllocation
+	return o.ResourceAllocation
 }

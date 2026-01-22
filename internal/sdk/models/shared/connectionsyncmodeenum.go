@@ -13,12 +13,8 @@ const (
 	ConnectionSyncModeEnumFullRefreshOverwrite        ConnectionSyncModeEnum = "full_refresh_overwrite"
 	ConnectionSyncModeEnumFullRefreshOverwriteDeduped ConnectionSyncModeEnum = "full_refresh_overwrite_deduped"
 	ConnectionSyncModeEnumFullRefreshAppend           ConnectionSyncModeEnum = "full_refresh_append"
-	ConnectionSyncModeEnumFullRefreshUpdate           ConnectionSyncModeEnum = "full_refresh_update"
-	ConnectionSyncModeEnumFullRefreshSoftDelete       ConnectionSyncModeEnum = "full_refresh_soft_delete"
 	ConnectionSyncModeEnumIncrementalAppend           ConnectionSyncModeEnum = "incremental_append"
 	ConnectionSyncModeEnumIncrementalDedupedHistory   ConnectionSyncModeEnum = "incremental_deduped_history"
-	ConnectionSyncModeEnumIncrementalUpdate           ConnectionSyncModeEnum = "incremental_update"
-	ConnectionSyncModeEnumIncrementalSoftDelete       ConnectionSyncModeEnum = "incremental_soft_delete"
 )
 
 func (e ConnectionSyncModeEnum) ToPointer() *ConnectionSyncModeEnum {
@@ -36,17 +32,9 @@ func (e *ConnectionSyncModeEnum) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "full_refresh_append":
 		fallthrough
-	case "full_refresh_update":
-		fallthrough
-	case "full_refresh_soft_delete":
-		fallthrough
 	case "incremental_append":
 		fallthrough
 	case "incremental_deduped_history":
-		fallthrough
-	case "incremental_update":
-		fallthrough
-	case "incremental_soft_delete":
 		*e = ConnectionSyncModeEnum(v)
 		return nil
 	default:

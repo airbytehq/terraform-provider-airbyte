@@ -32,78 +32,78 @@ func (c ConnectionPatchRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPatchRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *ConnectionPatchRequest) GetName() *string {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetName() *string {
+	if o == nil {
 		return nil
 	}
-	return c.Name
+	return o.Name
 }
 
-func (c *ConnectionPatchRequest) GetConfigurations() *StreamConfigurations {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetConfigurations() *StreamConfigurations {
+	if o == nil {
 		return nil
 	}
-	return c.Configurations
+	return o.Configurations
 }
 
-func (c *ConnectionPatchRequest) GetSchedule() *AirbyteAPIConnectionSchedule {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetSchedule() *AirbyteAPIConnectionSchedule {
+	if o == nil {
 		return nil
 	}
-	return c.Schedule
+	return o.Schedule
 }
 
-func (c *ConnectionPatchRequest) GetDataResidency() *string {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetDataResidency() *string {
+	if o == nil {
 		return nil
 	}
-	return c.DataResidency
+	return o.DataResidency
 }
 
-func (c *ConnectionPatchRequest) GetNamespaceDefinition() *NamespaceDefinitionEnumNoDefault {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetNamespaceDefinition() *NamespaceDefinitionEnumNoDefault {
+	if o == nil {
 		return nil
 	}
-	return c.NamespaceDefinition
+	return o.NamespaceDefinition
 }
 
-func (c *ConnectionPatchRequest) GetNamespaceFormat() *string {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetNamespaceFormat() *string {
+	if o == nil {
 		return nil
 	}
-	return c.NamespaceFormat
+	return o.NamespaceFormat
 }
 
-func (c *ConnectionPatchRequest) GetPrefix() *string {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetPrefix() *string {
+	if o == nil {
 		return nil
 	}
-	return c.Prefix
+	return o.Prefix
 }
 
-func (c *ConnectionPatchRequest) GetNonBreakingSchemaUpdatesBehavior() *NonBreakingSchemaUpdatesBehaviorEnumNoDefault {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetNonBreakingSchemaUpdatesBehavior() *NonBreakingSchemaUpdatesBehaviorEnumNoDefault {
+	if o == nil {
 		return nil
 	}
-	return c.NonBreakingSchemaUpdatesBehavior
+	return o.NonBreakingSchemaUpdatesBehavior
 }
 
-func (c *ConnectionPatchRequest) GetStatus() *ConnectionStatusEnum {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetStatus() *ConnectionStatusEnum {
+	if o == nil {
 		return nil
 	}
-	return c.Status
+	return o.Status
 }
 
-func (c *ConnectionPatchRequest) GetTags() []Tag {
-	if c == nil {
+func (o *ConnectionPatchRequest) GetTags() []Tag {
+	if o == nil {
 		return nil
 	}
-	return c.Tags
+	return o.Tags
 }

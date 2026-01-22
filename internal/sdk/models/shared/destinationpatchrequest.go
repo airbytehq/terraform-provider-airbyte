@@ -10,23 +10,23 @@ type DestinationPatchRequest struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (d *DestinationPatchRequest) GetName() *string {
-	if d == nil {
+func (o *DestinationPatchRequest) GetName() *string {
+	if o == nil {
 		return nil
 	}
-	return d.Name
+	return o.Name
 }
 
-func (d *DestinationPatchRequest) GetConfiguration() any {
-	if d == nil {
+func (o *DestinationPatchRequest) GetConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return d.Configuration
+	return o.Configuration
 }
 
-func (d *DestinationPatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if d == nil {
+func (o *DestinationPatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return d.ResourceAllocation
+	return o.ResourceAllocation
 }

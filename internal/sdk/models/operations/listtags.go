@@ -11,11 +11,11 @@ type ListTagsRequest struct {
 	WorkspaceIds []string `queryParam:"style=form,explode=true,name=workspaceIds"`
 }
 
-func (l *ListTagsRequest) GetWorkspaceIds() []string {
-	if l == nil {
+func (o *ListTagsRequest) GetWorkspaceIds() []string {
+	if o == nil {
 		return nil
 	}
-	return l.WorkspaceIds
+	return o.WorkspaceIds
 }
 
 type ListTagsResponse struct {
@@ -29,30 +29,30 @@ type ListTagsResponse struct {
 	TagsResponse *shared.TagsResponse
 }
 
-func (l *ListTagsResponse) GetContentType() string {
-	if l == nil {
+func (o *ListTagsResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return l.ContentType
+	return o.ContentType
 }
 
-func (l *ListTagsResponse) GetStatusCode() int {
-	if l == nil {
+func (o *ListTagsResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return l.StatusCode
+	return o.StatusCode
 }
 
-func (l *ListTagsResponse) GetRawResponse() *http.Response {
-	if l == nil {
+func (o *ListTagsResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return l.RawResponse
+	return o.RawResponse
 }
 
-func (l *ListTagsResponse) GetTagsResponse() *shared.TagsResponse {
-	if l == nil {
+func (o *ListTagsResponse) GetTagsResponse() *shared.TagsResponse {
+	if o == nil {
 		return nil
 	}
-	return l.TagsResponse
+	return o.TagsResponse
 }

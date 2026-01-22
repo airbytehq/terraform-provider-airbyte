@@ -15,37 +15,37 @@ type InitiateOauthRequest struct {
 	OAuthInputConfiguration any `json:"oAuthInputConfiguration,omitempty"`
 }
 
-func (i *InitiateOauthRequest) GetName() *string {
-	if i == nil {
+func (o *InitiateOauthRequest) GetName() *string {
+	if o == nil {
 		return nil
 	}
-	return i.Name
+	return o.Name
 }
 
-func (i *InitiateOauthRequest) GetSourceType() *string {
-	if i == nil {
+func (o *InitiateOauthRequest) GetSourceType() *string {
+	if o == nil {
 		return nil
 	}
-	return i.SourceType
+	return o.SourceType
 }
 
-func (i *InitiateOauthRequest) GetRedirectURL() string {
-	if i == nil {
+func (o *InitiateOauthRequest) GetRedirectURL() string {
+	if o == nil {
 		return ""
 	}
-	return i.RedirectURL
+	return o.RedirectURL
 }
 
-func (i *InitiateOauthRequest) GetWorkspaceID() string {
-	if i == nil {
+func (o *InitiateOauthRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return i.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (i *InitiateOauthRequest) GetOAuthInputConfiguration() any {
-	if i == nil {
+func (o *InitiateOauthRequest) GetOAuthInputConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return i.OAuthInputConfiguration
+	return o.OAuthInputConfiguration
 }

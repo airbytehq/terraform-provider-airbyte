@@ -6,9 +6,9 @@ type TagsResponse struct {
 	Data []TagResponse `json:"data"`
 }
 
-func (t *TagsResponse) GetData() []TagResponse {
-	if t == nil {
+func (o *TagsResponse) GetData() []TagResponse {
+	if o == nil {
 		return []TagResponse{}
 	}
-	return t.Data
+	return o.Data
 }

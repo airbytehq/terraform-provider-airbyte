@@ -7,16 +7,16 @@ type UpdateDefinitionRequest struct {
 	DockerImageTag string `json:"dockerImageTag"`
 }
 
-func (u *UpdateDefinitionRequest) GetName() string {
-	if u == nil {
+func (o *UpdateDefinitionRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return u.Name
+	return o.Name
 }
 
-func (u *UpdateDefinitionRequest) GetDockerImageTag() string {
-	if u == nil {
+func (o *UpdateDefinitionRequest) GetDockerImageTag() string {
+	if o == nil {
 		return ""
 	}
-	return u.DockerImageTag
+	return o.DockerImageTag
 }

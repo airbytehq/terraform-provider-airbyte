@@ -17,65 +17,65 @@ type JobResponse struct {
 	RowsSynced  *int64  `json:"rowsSynced,omitempty"`
 }
 
-func (j *JobResponse) GetJobID() int64 {
-	if j == nil {
+func (o *JobResponse) GetJobID() int64 {
+	if o == nil {
 		return 0
 	}
-	return j.JobID
+	return o.JobID
 }
 
-func (j *JobResponse) GetStatus() JobStatusEnum {
-	if j == nil {
+func (o *JobResponse) GetStatus() JobStatusEnum {
+	if o == nil {
 		return JobStatusEnum("")
 	}
-	return j.Status
+	return o.Status
 }
 
-func (j *JobResponse) GetJobType() JobTypeEnum {
-	if j == nil {
+func (o *JobResponse) GetJobType() JobTypeEnum {
+	if o == nil {
 		return JobTypeEnum("")
 	}
-	return j.JobType
+	return o.JobType
 }
 
-func (j *JobResponse) GetStartTime() string {
-	if j == nil {
+func (o *JobResponse) GetStartTime() string {
+	if o == nil {
 		return ""
 	}
-	return j.StartTime
+	return o.StartTime
 }
 
-func (j *JobResponse) GetConnectionID() string {
-	if j == nil {
+func (o *JobResponse) GetConnectionID() string {
+	if o == nil {
 		return ""
 	}
-	return j.ConnectionID
+	return o.ConnectionID
 }
 
-func (j *JobResponse) GetLastUpdatedAt() *string {
-	if j == nil {
+func (o *JobResponse) GetLastUpdatedAt() *string {
+	if o == nil {
 		return nil
 	}
-	return j.LastUpdatedAt
+	return o.LastUpdatedAt
 }
 
-func (j *JobResponse) GetDuration() *string {
-	if j == nil {
+func (o *JobResponse) GetDuration() *string {
+	if o == nil {
 		return nil
 	}
-	return j.Duration
+	return o.Duration
 }
 
-func (j *JobResponse) GetBytesSynced() *int64 {
-	if j == nil {
+func (o *JobResponse) GetBytesSynced() *int64 {
+	if o == nil {
 		return nil
 	}
-	return j.BytesSynced
+	return o.BytesSynced
 }
 
-func (j *JobResponse) GetRowsSynced() *int64 {
-	if j == nil {
+func (o *JobResponse) GetRowsSynced() *int64 {
+	if o == nil {
 		return nil
 	}
-	return j.RowsSynced
+	return o.RowsSynced
 }

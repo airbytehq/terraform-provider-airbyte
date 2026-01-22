@@ -10,23 +10,23 @@ type DestinationPutRequest struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (d *DestinationPutRequest) GetName() string {
-	if d == nil {
+func (o *DestinationPutRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return d.Name
+	return o.Name
 }
 
-func (d *DestinationPutRequest) GetConfiguration() any {
-	if d == nil {
+func (o *DestinationPutRequest) GetConfiguration() any {
+	if o == nil {
 		return nil
 	}
-	return d.Configuration
+	return o.Configuration
 }
 
-func (d *DestinationPutRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if d == nil {
+func (o *DestinationPutRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return d.ResourceAllocation
+	return o.ResourceAllocation
 }

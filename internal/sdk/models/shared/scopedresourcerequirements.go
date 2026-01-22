@@ -9,16 +9,16 @@ type ScopedResourceRequirements struct {
 	JobSpecific []JobTypeResourceLimit `json:"jobSpecific,omitempty"`
 }
 
-func (s *ScopedResourceRequirements) GetDefault() *ResourceRequirements {
-	if s == nil {
+func (o *ScopedResourceRequirements) GetDefault() *ResourceRequirements {
+	if o == nil {
 		return nil
 	}
-	return s.Default
+	return o.Default
 }
 
-func (s *ScopedResourceRequirements) GetJobSpecific() []JobTypeResourceLimit {
-	if s == nil {
+func (o *ScopedResourceRequirements) GetJobSpecific() []JobTypeResourceLimit {
+	if o == nil {
 		return nil
 	}
-	return s.JobSpecific
+	return o.JobSpecific
 }

@@ -12,18 +12,18 @@ type DeleteDeclarativeSourceDefinitionRequest struct {
 	DefinitionID string `pathParam:"style=simple,explode=false,name=definitionId"`
 }
 
-func (d *DeleteDeclarativeSourceDefinitionRequest) GetWorkspaceID() string {
-	if d == nil {
+func (o *DeleteDeclarativeSourceDefinitionRequest) GetWorkspaceID() string {
+	if o == nil {
 		return ""
 	}
-	return d.WorkspaceID
+	return o.WorkspaceID
 }
 
-func (d *DeleteDeclarativeSourceDefinitionRequest) GetDefinitionID() string {
-	if d == nil {
+func (o *DeleteDeclarativeSourceDefinitionRequest) GetDefinitionID() string {
+	if o == nil {
 		return ""
 	}
-	return d.DefinitionID
+	return o.DefinitionID
 }
 
 type DeleteDeclarativeSourceDefinitionResponse struct {
@@ -37,30 +37,30 @@ type DeleteDeclarativeSourceDefinitionResponse struct {
 	DeclarativeSourceDefinitionResponse *shared.DeclarativeSourceDefinitionResponse
 }
 
-func (d *DeleteDeclarativeSourceDefinitionResponse) GetContentType() string {
-	if d == nil {
+func (o *DeleteDeclarativeSourceDefinitionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return d.ContentType
+	return o.ContentType
 }
 
-func (d *DeleteDeclarativeSourceDefinitionResponse) GetStatusCode() int {
-	if d == nil {
+func (o *DeleteDeclarativeSourceDefinitionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return d.StatusCode
+	return o.StatusCode
 }
 
-func (d *DeleteDeclarativeSourceDefinitionResponse) GetRawResponse() *http.Response {
-	if d == nil {
+func (o *DeleteDeclarativeSourceDefinitionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return d.RawResponse
+	return o.RawResponse
 }
 
-func (d *DeleteDeclarativeSourceDefinitionResponse) GetDeclarativeSourceDefinitionResponse() *shared.DeclarativeSourceDefinitionResponse {
-	if d == nil {
+func (o *DeleteDeclarativeSourceDefinitionResponse) GetDeclarativeSourceDefinitionResponse() *shared.DeclarativeSourceDefinitionResponse {
+	if o == nil {
 		return nil
 	}
-	return d.DeclarativeSourceDefinitionResponse
+	return o.DeclarativeSourceDefinitionResponse
 }

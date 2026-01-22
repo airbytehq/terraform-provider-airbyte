@@ -9,16 +9,16 @@ type JobCreateRequest struct {
 	JobType JobTypeEnum `json:"jobType"`
 }
 
-func (j *JobCreateRequest) GetConnectionID() string {
-	if j == nil {
+func (o *JobCreateRequest) GetConnectionID() string {
+	if o == nil {
 		return ""
 	}
-	return j.ConnectionID
+	return o.ConnectionID
 }
 
-func (j *JobCreateRequest) GetJobType() JobTypeEnum {
-	if j == nil {
+func (o *JobCreateRequest) GetJobType() JobTypeEnum {
+	if o == nil {
 		return JobTypeEnum("")
 	}
-	return j.JobType
+	return o.JobType
 }

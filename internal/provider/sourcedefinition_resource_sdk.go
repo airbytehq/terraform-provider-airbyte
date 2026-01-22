@@ -3,110 +3,11 @@
 package provider
 
 import (
-	"context"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceDefinitionResourceModel) RefreshFromSharedDefinitionResponse(ctx context.Context, resp *shared.DefinitionResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		r.DockerImageTag = types.StringValue(resp.DockerImageTag)
-		r.DockerRepository = types.StringValue(resp.DockerRepository)
-		r.DocumentationURL = types.StringPointerValue(resp.DocumentationURL)
-		r.ID = types.StringValue(resp.ID)
-		r.Name = types.StringValue(resp.Name)
-	}
-
-	return diags
-}
-
-func (r *SourceDefinitionResourceModel) ToOperationsCreateSourceDefinitionRequest(ctx context.Context) (*operations.CreateSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	createDefinitionRequest, createDefinitionRequestDiags := r.ToSharedCreateDefinitionRequest(ctx)
-	diags.Append(createDefinitionRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.CreateSourceDefinitionRequest{
-		WorkspaceID:             workspaceID,
-		CreateDefinitionRequest: *createDefinitionRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceDefinitionResourceModel) ToOperationsDeleteSourceDefinitionRequest(ctx context.Context) (*operations.DeleteSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	out := operations.DeleteSourceDefinitionRequest{
-		WorkspaceID:  workspaceID,
-		DefinitionID: definitionID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceDefinitionResourceModel) ToOperationsGetSourceDefinitionRequest(ctx context.Context) (*operations.GetSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	out := operations.GetSourceDefinitionRequest{
-		WorkspaceID:  workspaceID,
-		DefinitionID: definitionID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceDefinitionResourceModel) ToOperationsUpdateSourceDefinitionRequest(ctx context.Context) (*operations.UpdateSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	updateDefinitionRequest, updateDefinitionRequestDiags := r.ToSharedUpdateDefinitionRequest(ctx)
-	diags.Append(updateDefinitionRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.UpdateSourceDefinitionRequest{
-		WorkspaceID:             workspaceID,
-		DefinitionID:            definitionID,
-		UpdateDefinitionRequest: *updateDefinitionRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceDefinitionResourceModel) ToSharedCreateDefinitionRequest(ctx context.Context) (*shared.CreateDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *SourceDefinitionResourceModel) ToSharedCreateDefinitionRequest() *shared.CreateDefinitionRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -128,13 +29,20 @@ func (r *SourceDefinitionResourceModel) ToSharedCreateDefinitionRequest(ctx cont
 		DockerImageTag:   dockerImageTag,
 		DocumentationURL: documentationURL,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *SourceDefinitionResourceModel) ToSharedUpdateDefinitionRequest(ctx context.Context) (*shared.UpdateDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
+func (r *SourceDefinitionResourceModel) RefreshFromSharedDefinitionResponse(resp *shared.DefinitionResponse) {
+	if resp != nil {
+		r.DockerImageTag = types.StringValue(resp.DockerImageTag)
+		r.DockerRepository = types.StringValue(resp.DockerRepository)
+		r.DocumentationURL = types.StringPointerValue(resp.DocumentationURL)
+		r.ID = types.StringValue(resp.ID)
+		r.Name = types.StringValue(resp.Name)
+	}
+}
 
+func (r *SourceDefinitionResourceModel) ToSharedUpdateDefinitionRequest() *shared.UpdateDefinitionRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -145,6 +53,5 @@ func (r *SourceDefinitionResourceModel) ToSharedUpdateDefinitionRequest(ctx cont
 		Name:           name,
 		DockerImageTag: dockerImageTag,
 	}
-
-	return &out, diags
+	return &out
 }

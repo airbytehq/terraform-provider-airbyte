@@ -10,16 +10,16 @@ type NotificationConfig struct {
 	Webhook *WebhookNotificationConfig `json:"webhook,omitempty"`
 }
 
-func (n *NotificationConfig) GetEmail() *EmailNotificationConfig {
-	if n == nil {
+func (o *NotificationConfig) GetEmail() *EmailNotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.Email
+	return o.Email
 }
 
-func (n *NotificationConfig) GetWebhook() *WebhookNotificationConfig {
-	if n == nil {
+func (o *NotificationConfig) GetWebhook() *WebhookNotificationConfig {
+	if o == nil {
 		return nil
 	}
-	return n.Webhook
+	return o.Webhook
 }

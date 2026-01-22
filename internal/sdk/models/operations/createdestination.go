@@ -18,30 +18,30 @@ type CreateDestinationResponse struct {
 	DestinationResponse *shared.DestinationResponse
 }
 
-func (c *CreateDestinationResponse) GetContentType() string {
-	if c == nil {
+func (o *CreateDestinationResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return c.ContentType
+	return o.ContentType
 }
 
-func (c *CreateDestinationResponse) GetStatusCode() int {
-	if c == nil {
+func (o *CreateDestinationResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return c.StatusCode
+	return o.StatusCode
 }
 
-func (c *CreateDestinationResponse) GetRawResponse() *http.Response {
-	if c == nil {
+func (o *CreateDestinationResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return c.RawResponse
+	return o.RawResponse
 }
 
-func (c *CreateDestinationResponse) GetDestinationResponse() *shared.DestinationResponse {
-	if c == nil {
+func (o *CreateDestinationResponse) GetDestinationResponse() *shared.DestinationResponse {
+	if o == nil {
 		return nil
 	}
-	return c.DestinationResponse
+	return o.DestinationResponse
 }

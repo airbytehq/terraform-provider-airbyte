@@ -18,30 +18,30 @@ type CreateConnectionResponse struct {
 	ConnectionResponse *shared.ConnectionResponse
 }
 
-func (c *CreateConnectionResponse) GetContentType() string {
-	if c == nil {
+func (o *CreateConnectionResponse) GetContentType() string {
+	if o == nil {
 		return ""
 	}
-	return c.ContentType
+	return o.ContentType
 }
 
-func (c *CreateConnectionResponse) GetStatusCode() int {
-	if c == nil {
+func (o *CreateConnectionResponse) GetStatusCode() int {
+	if o == nil {
 		return 0
 	}
-	return c.StatusCode
+	return o.StatusCode
 }
 
-func (c *CreateConnectionResponse) GetRawResponse() *http.Response {
-	if c == nil {
+func (o *CreateConnectionResponse) GetRawResponse() *http.Response {
+	if o == nil {
 		return nil
 	}
-	return c.RawResponse
+	return o.RawResponse
 }
 
-func (c *CreateConnectionResponse) GetConnectionResponse() *shared.ConnectionResponse {
-	if c == nil {
+func (o *CreateConnectionResponse) GetConnectionResponse() *shared.ConnectionResponse {
+	if o == nil {
 		return nil
 	}
-	return c.ConnectionResponse
+	return o.ConnectionResponse
 }

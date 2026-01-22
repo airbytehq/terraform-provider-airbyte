@@ -8,16 +8,16 @@ type CreateDeclarativeSourceDefinitionRequest struct {
 	Manifest any `json:"manifest"`
 }
 
-func (c *CreateDeclarativeSourceDefinitionRequest) GetName() string {
-	if c == nil {
+func (o *CreateDeclarativeSourceDefinitionRequest) GetName() string {
+	if o == nil {
 		return ""
 	}
-	return c.Name
+	return o.Name
 }
 
-func (c *CreateDeclarativeSourceDefinitionRequest) GetManifest() any {
-	if c == nil {
+func (o *CreateDeclarativeSourceDefinitionRequest) GetManifest() any {
+	if o == nil {
 		return nil
 	}
-	return c.Manifest
+	return o.Manifest
 }

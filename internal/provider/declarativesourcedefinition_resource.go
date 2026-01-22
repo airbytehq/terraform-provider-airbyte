@@ -9,12 +9,14 @@ import (
 	"fmt"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -29,17 +31,16 @@ func NewDeclarativeSourceDefinitionResource() resource.Resource {
 
 // DeclarativeSourceDefinitionResource defines the resource implementation.
 type DeclarativeSourceDefinitionResource struct {
-	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
 // DeclarativeSourceDefinitionResourceModel describes the resource data model.
 type DeclarativeSourceDefinitionResourceModel struct {
-	ID          types.String         `tfsdk:"id"`
-	Manifest    jsontypes.Normalized `tfsdk:"manifest"`
-	Name        types.String         `tfsdk:"name"`
-	Version     types.Int64          `tfsdk:"version"`
-	WorkspaceID types.String         `tfsdk:"workspace_id"`
+	ID          types.String `tfsdk:"id"`
+	Manifest    types.String `tfsdk:"manifest"`
+	Name        types.String `tfsdk:"name"`
+	Version     types.Int64  `tfsdk:"version"`
+	WorkspaceID types.String `tfsdk:"workspace_id"`
 }
 
 func (r *DeclarativeSourceDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,9 +55,11 @@ func (r *DeclarativeSourceDefinitionResource) Schema(ctx context.Context, req re
 				Computed: true,
 			},
 			"manifest": schema.StringAttribute{
-				CustomType:  jsontypes.NormalizedType{},
 				Required:    true,
 				Description: `Low code CDK manifest JSON object. Parsed as JSON.`,
+				Validators: []validator.String{
+					validators.IsValidJSON(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,
@@ -114,13 +117,15 @@ func (r *DeclarativeSourceDefinitionResource) Create(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsCreateDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	createDeclarativeSourceDefinitionRequest := *data.ToSharedCreateDeclarativeSourceDefinitionRequest()
+	request := operations.CreateDeclarativeSourceDefinitionRequest{
+		WorkspaceID:                              workspaceID,
+		CreateDeclarativeSourceDefinitionRequest: createDeclarativeSourceDefinitionRequest,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.CreateDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.CreateDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -140,17 +145,8 @@ func (r *DeclarativeSourceDefinitionResource) Create(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -174,13 +170,17 @@ func (r *DeclarativeSourceDefinitionResource) Read(ctx context.Context, req reso
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.GetDeclarativeSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -204,11 +204,7 @@ func (r *DeclarativeSourceDefinitionResource) Read(ctx context.Context, req reso
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -228,13 +224,19 @@ func (r *DeclarativeSourceDefinitionResource) Update(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsUpdateDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	updateDeclarativeSourceDefinitionRequest := *data.ToSharedUpdateDeclarativeSourceDefinitionRequest()
+	request := operations.UpdateDeclarativeSourceDefinitionRequest{
+		WorkspaceID:                              workspaceID,
+		DefinitionID:                             definitionID,
+		UpdateDeclarativeSourceDefinitionRequest: updateDeclarativeSourceDefinitionRequest,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.UpdateDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.UpdateDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -254,17 +256,8 @@ func (r *DeclarativeSourceDefinitionResource) Update(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -288,13 +281,17 @@ func (r *DeclarativeSourceDefinitionResource) Delete(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.DeleteDeclarativeSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.DeleteDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.DeleteDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -306,10 +303,7 @@ func (r *DeclarativeSourceDefinitionResource) Delete(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	switch res.StatusCode {
-	case 200, 404:
-		break
-	default:
+	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
@@ -325,18 +319,19 @@ func (r *DeclarativeSourceDefinitionResource) ImportState(ctx context.Context, r
 	}
 
 	if err := dec.Decode(&data); err != nil {
-		resp.Diagnostics.AddError("Invalid ID", `The import ID is not valid. It is expected to be a JSON object string with the format: '{"id": "...", "workspace_id": "..."}': `+err.Error())
+		resp.Diagnostics.AddError("Invalid ID", `The ID is not valid. It's expected to be a JSON object alike '{ "definition_id": "",  "workspace_id": ""}': `+err.Error())
 		return
 	}
 
 	if len(data.ID) == 0 {
-		resp.Diagnostics.AddError("Missing required field", `The field id is required but was not found in the json encoded ID.`)
+		resp.Diagnostics.AddError("Missing required field", `The field id is required but was not found in the json encoded ID. It's expected to be a value alike '""`)
 		return
 	}
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), data.ID)...)
 	if len(data.WorkspaceID) == 0 {
-		resp.Diagnostics.AddError("Missing required field", `The field workspace_id is required but was not found in the json encoded ID.`)
+		resp.Diagnostics.AddError("Missing required field", `The field workspace_id is required but was not found in the json encoded ID. It's expected to be a value alike '""`)
 		return
 	}
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("workspace_id"), data.WorkspaceID)...)
+
 }
