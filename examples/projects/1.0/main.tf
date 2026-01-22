@@ -1,8 +1,10 @@
+# Note: This example requires provider version 1.0.0 or later.
+# Update the version constraint once 1.0.0 is released to the Terraform Registry.
 terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "~> 1.0.0"
+      version = ">= 1.0.0"
     }
   }
 }

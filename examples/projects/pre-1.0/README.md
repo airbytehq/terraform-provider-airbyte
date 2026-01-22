@@ -1,6 +1,6 @@
 # Pre-1.0 Example Project
 
-This example project demonstrates how to use the Airbyte Terraform Provider (version 0.19.x) to create sources, destinations, and connections.
+This example project demonstrates how to use the Airbyte Terraform Provider (version 0.13.x) with connector-specific resources like `airbyte_source_faker` and `airbyte_destination_dev_null`.
 
 ## Resources Created
 
@@ -8,13 +8,13 @@ This project creates the following Airbyte resources:
 
 - **Workspace**: A dedicated workspace for the example
 - **Sources**:
-  - `source-faker`: Generates fake e-commerce data (users, products, purchases)
-  - `source-datagen`: Generates incremental test data
+  - `source-faker-1`: Generates fake e-commerce data (users, products, purchases) with seed 42
+  - `source-faker-2`: Generates fake e-commerce data with seed 123
 - **Destination**:
   - `destination-dev-null`: A silent destination for testing (discards all data)
 - **Connections**:
-  - `faker-to-dev-null`: Syncs faker data to dev-null
-  - `datagen-to-dev-null`: Syncs datagen data to dev-null
+  - `faker-1-to-dev-null`: Syncs faker-1 data to dev-null
+  - `faker-2-to-dev-null`: Syncs faker-2 data to dev-null
 
 ## Prerequisites
 
@@ -74,10 +74,10 @@ This approach provides:
 - Easy to inspect and debug
 - Suitable for example/demo projects
 
-## Connector Definition IDs
+## Key Differences from 1.0
 
-| Connector | Definition ID |
-|-----------|---------------|
-| source-faker | `dfd88b22-b603-4c3d-aad7-3701784586b1` |
-| source-datagen | `f14d5125-dc0d-4f6c-abe5-acde821a2203` |
-| destination-dev-null | `a7bcc9d8-13b3-4e49-b80d-d020b90045e3` |
+In pre-1.0 versions of the provider, you use connector-specific resources:
+- `airbyte_source_faker` instead of generic `airbyte_source`
+- `airbyte_destination_dev_null` instead of generic `airbyte_destination`
+
+These connector-specific resources have typed configuration blocks rather than JSON-encoded configuration strings.
