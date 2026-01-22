@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pyyaml"]
+# ///
 """
 Generate the Terraform-specific OpenAPI spec (api_terraform.yaml) with connector-specific schemas.
 

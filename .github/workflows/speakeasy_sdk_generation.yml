@@ -47,7 +47,6 @@ permissions:
                 default: true
 env:
     GO_VERSION: "1.24"
-    PYTHON_VERSION: "3.11"
 jobs:
     generate:
         name: Generate SDK
@@ -58,20 +57,15 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Set up Python
-              uses: actions/setup-python@v5
-              with:
-                  python-version: ${{ env.PYTHON_VERSION }}
-
-            - name: Install Python dependencies
-              run: pip install pyyaml
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
 
             - name: Generate Terraform OpenAPI spec
               run: |
                   if [ "${{ github.event.inputs.cloud_only }}" = "true" ]; then
-                      python scripts/generate_terraform_spec.py --output api_terraform.yaml --cloud-only
+                      uv run scripts/generate_terraform_spec.py --output api_terraform.yaml --cloud-only
                   else
-                      python scripts/generate_terraform_spec.py --output api_terraform.yaml
+                      uv run scripts/generate_terraform_spec.py --output api_terraform.yaml
                   fi
 
             - name: Upload generated spec as artifact

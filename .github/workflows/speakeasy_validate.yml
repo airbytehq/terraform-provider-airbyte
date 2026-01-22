@@ -19,9 +19,6 @@ on:
 permissions:
   contents: read
 
-env:
-  PYTHON_VERSION: "3.11"
-
 jobs:
   validate:
     name: Validate Generation
@@ -30,16 +27,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install Python dependencies
-        run: pip install pyyaml
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Generate Terraform OpenAPI spec
-        run: python scripts/generate_terraform_spec.py --output api_terraform.yaml --cloud-only
+        run: uv run scripts/generate_terraform_spec.py --output api_terraform.yaml --cloud-only
 
       - name: Upload generated spec as artifact
         uses: actions/upload-artifact@v4
