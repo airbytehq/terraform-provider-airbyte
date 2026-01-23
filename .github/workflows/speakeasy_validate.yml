@@ -102,10 +102,19 @@ jobs:
         env:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
+          # Redirect step summary to /dev/null to prevent Speakeasy from exceeding GitHub's 1024k limit
+          # Save original path for restoration
+          ORIGINAL_SUMMARY="$GITHUB_STEP_SUMMARY"
+          export GITHUB_STEP_SUMMARY=/dev/null
+          
           # Run generation but don't commit/push anything
           # Use --output console to minimize step summary output
           speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_output.txt
-          echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
+          EXIT_CODE=$?
+          
+          # Restore original step summary path
+          export GITHUB_STEP_SUMMARY="$ORIGINAL_SUMMARY"
+          echo "speakeasy_exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
 
       # Clear step summary after Speakeasy to stay under 1024k limit
       - name: Clear step summary after generation
