@@ -48,11 +48,43 @@ on:
 permissions:
   contents: read
   actions: read
+  pull-requests: write
 
 jobs:
+  pre-run-comment:
+    name: Pre-run Comment
+    runs-on: ubuntu-latest
+    if: github.event.inputs.comment-id
+    steps:
+      - name: Authenticate as GitHub App
+        uses: actions/create-github-app-token@v2
+        id: get-app-token
+        with:
+          app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
+          private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
+
+      - name: Append comment with job run link
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ steps.get-app-token.outputs.token }}
+          comment-id: ${{ github.event.inputs.comment-id }}
+          body: |
+            > **Terraform Examples Job Info**
+            >
+            > Running `terraform ${{ github.event.inputs.action }}` on project `${{ github.event.inputs.project }}`.
+
+            > Job started... [Check job output.](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
   terraform:
     name: Terraform (${{ matrix.project }})
     runs-on: ubuntu-latest
+    needs: [pre-run-comment]
+    if: |
+      always() && (
+        github.event_name == 'push' ||
+        (github.event_name == 'workflow_dispatch' && 
+         (github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project))
+      )
     strategy:
       fail-fast: false
       matrix:
@@ -63,10 +95,6 @@ jobs:
           - project: "1.0"
             path: examples/projects/1.0
             artifact: terraform-state-1.0
-    if: >-
-      github.event_name == 'push' ||
-      (github.event_name == 'workflow_dispatch' && 
-       (github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project))
     concurrency:
       group: terraform-${{ matrix.project }}-deploy
       cancel-in-progress: false
@@ -153,3 +181,36 @@ jobs:
           path: ${{ env.TF_STATE_DIR }}
           retention-days: 90
           overwrite: true
+
+  post-run-comment:
+    name: Post-run Comment
+    runs-on: ubuntu-latest
+    needs: [terraform]
+    if: always() && github.event.inputs.comment-id
+    steps:
+      - name: Authenticate as GitHub App
+        uses: actions/create-github-app-token@v2
+        id: get-app-token
+        with:
+          app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
+          private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
+
+      - name: Append success comment
+        if: needs.terraform.result == 'success'
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ steps.get-app-token.outputs.token }}
+          comment-id: ${{ github.event.inputs.comment-id }}
+          reactions: hooray
+          body: |
+            > Terraform ${{ github.event.inputs.action }} completed successfully.
+
+      - name: Append failure comment
+        if: needs.terraform.result == 'failure'
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ steps.get-app-token.outputs.token }}
+          comment-id: ${{ github.event.inputs.comment-id }}
+          reactions: confused
+          body: |
+            > Terraform ${{ github.event.inputs.action }} failed. Check the [job output](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.

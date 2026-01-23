@@ -3,7 +3,7 @@
 Your contribution is appreciated. Here are some helpful tips and resources.
 
 <details>
-<summary><b>Show Tips and Tricks</b></summary>
+<summary><b>💡 Show Tips and Tricks</b></summary>
 
 ### Terraform Example Commands
 
@@ -16,7 +16,7 @@ Your contribution is appreciated. Here are some helpful tips and resources.
 </details>
 
 <details>
-<summary><b>Show Repo Guidance</b></summary>
+<summary><b>📚 Show Repo Guidance</b></summary>
 
 ### About This Repository
 
