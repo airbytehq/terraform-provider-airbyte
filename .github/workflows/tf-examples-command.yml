@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'examples/projects/**'
-      - '.github/workflows/terraform-examples.yml'
+      - '.github/workflows/tf-examples-command.yml'
   workflow_dispatch:
     inputs:
       project:
@@ -91,7 +91,7 @@ jobs:
         with:
           name: ${{ matrix.artifact }}
           path: ${{ env.TF_STATE_DIR }}
-          workflow: terraform-examples.yml
+          workflow: tf-examples-command.yml
           branch: main
           workflow_conclusion: success
           search_artifacts: true

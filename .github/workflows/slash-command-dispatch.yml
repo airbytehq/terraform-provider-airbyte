@@ -32,7 +32,7 @@ jobs:
           dispatch-type: workflow
           issue-type: pull-request
           commands: |
-            terraform-examples
+            tf-examples
           static-args: |
             pr=${{ github.event.issue.number }}
             comment-id=${{ github.event.comment.id }}
