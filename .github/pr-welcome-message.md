@@ -7,6 +7,8 @@ Your contribution is appreciated. Here are some helpful commands you can use:
 - `/tf-examples project=pre-1.0 action=plan` - Run terraform plan on the pre-1.0 example project
 - `/tf-examples project=1.0 action=plan` - Run terraform plan on the 1.0 example project
 - `/tf-examples project=all action=plan` - Run terraform plan on all example projects
+- `/tf-examples project=pre-1.0 action=apply` - Apply terraform changes to the pre-1.0 example project
+- `/tf-examples project=pre-1.0 action=destroy` - Destroy terraform resources in the pre-1.0 example project
 
 ## CI Information
 
