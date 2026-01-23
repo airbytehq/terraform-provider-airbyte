@@ -25,7 +25,10 @@ from urllib.request import urlopen
 
 import yaml
 
-# Registry URLs
+# =============================================================================
+# Configuration Constants
+# =============================================================================
+
 OSS_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
 CLOUD_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
 
@@ -33,6 +36,314 @@ CLOUD_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/cloud_r
 # Using api_terraform.yaml instead of api.yaml because api.yaml has newer endpoints
 # with broken schema references that haven't been fixed upstream yet.
 BASE_API_SPEC_URL = "https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api_terraform.yaml"
+
+# =============================================================================
+# OpenAPI Path Templates
+# =============================================================================
+
+# Template for source connector paths (POST create, GET read, PUT update, DELETE)
+# Placeholders: {upper_camel_name}
+SOURCE_PATH_TEMPLATE = """\
+  /sources#{upper_camel_name}:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Source{upper_camel_name}CreateRequest"
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createSource{upper_camel_name}"
+      summary: "Create a source"
+      description:
+        "Creates a source given a name, workspace id, and a json blob containing\\
+        \\ the configuration for the source."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_{upper_camel_name}#create
+  /sources/{{sourceId}}#{upper_camel_name}:
+    get:
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Get a Source by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getSource{upper_camel_name}"
+      summary: "Get Source details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_{upper_camel_name}#read
+    put:
+      tags:
+        - "Sources"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Source{upper_camel_name}PutRequest"
+      responses:
+        "204":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putSource{upper_camel_name}"
+      summary: "Update a Source fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_{upper_camel_name}#update
+    delete:
+      tags:
+        - "Sources"
+      responses:
+        "204":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteSource{upper_camel_name}"
+      summary: "Delete a Source"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_{upper_camel_name}#delete
+    parameters:
+      - name: "sourceId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
+"""
+
+# Template for destination connector paths (POST create, GET read, PUT update, DELETE)
+# Placeholders: {upper_camel_name}
+DESTINATION_PATH_TEMPLATE = """\
+  /destinations#{upper_camel_name}:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Destination{upper_camel_name}CreateRequest"
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createDestination{upper_camel_name}"
+      summary: "Create a destination"
+      description:
+        "Creates a destination given a name, workspace id, and a json blob containing\\
+        \\ the configuration for the destination."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_{upper_camel_name}#create
+  /destinations/{{destinationId}}#{upper_camel_name}:
+    get:
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Get a Destination by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getDestination{upper_camel_name}"
+      summary: "Get Destination details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_{upper_camel_name}#read
+    put:
+      tags:
+        - "Destinations"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Destination{upper_camel_name}PutRequest"
+      responses:
+        "204":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putDestination{upper_camel_name}"
+      summary: "Update a Destination fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_{upper_camel_name}#update
+    delete:
+      tags:
+        - "Destinations"
+      responses:
+        "204":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteDestination{upper_camel_name}"
+      summary: "Delete a Destination"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_{upper_camel_name}#delete
+    parameters:
+      - name: "destinationId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
+"""
+
+# =============================================================================
+# OpenAPI Schema Templates
+# =============================================================================
+
+# Template for source create request schema
+# Placeholders: {upper_camel_name}, {hyphen_name}
+SOURCE_CREATE_REQUEST_TEMPLATE = """
+    Source{upper_camel_name}CreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the source e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/source-{hyphen_name}"
+        secretId:
+          description:
+            "Optional secretID obtained through the public API OAuth redirect\\
+            \\ flow."
+          type: "string"
+      x-speakeasy-entity: Source_{upper_camel_name}
+      x-speakeasy-param-suppress-computed-diff: true
+"""
+
+# Template for destination create request schema
+# Placeholders: {upper_camel_name}, {hyphen_name}
+DESTINATION_CREATE_REQUEST_TEMPLATE = """
+    Destination{upper_camel_name}CreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the destination e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/destination-{hyphen_name}"
+      x-speakeasy-entity: Destination_{upper_camel_name}
+      x-speakeasy-param-suppress-computed-diff: true
+"""
+
+# Template for source update (PUT) request schema
+# Placeholders: {upper_camel_name}, {hyphen_name}
+SOURCE_UPDATE_REQUEST_TEMPLATE = """
+    Source{upper_camel_name}PutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/source-{hyphen_name}-update"
+      x-speakeasy-entity: Source_{upper_camel_name}
+      x-speakeasy-param-suppress-computed-diff: true
+"""
+
+# Template for destination update (PUT) request schema
+# Placeholders: {upper_camel_name}, {hyphen_name}
+DESTINATION_UPDATE_REQUEST_TEMPLATE = """
+    Destination{upper_camel_name}PutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/destination-{hyphen_name}-update"
+      x-speakeasy-entity: Destination_{upper_camel_name}
+      x-speakeasy-param-suppress-computed-diff: true
+"""
+
+# Stub schemas for custom connectors
+CUSTOM_CONNECTOR_STUBS = """
+    source-custom:
+      description: The values required to configure the source.
+      example: { user: "charles" }
+    destination-custom:
+      description: The values required to configure the destination.
+      example: { user: "charles" }
+    source-custom-update:
+      title: "Custom Spec"
+    destination-custom-update:
+      title: "Custom Spec"
+"""
+
+
+# =============================================================================
+# Helper Functions
+# =============================================================================
 
 
 def lower_hyphen_to_upper_camel(name: str) -> str:
@@ -125,340 +436,47 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
     return result
 
 
-def generate_source_template(upper_camel_name: str) -> str:
+def generate_source_path(upper_camel_name: str) -> str:
     """Generate the OpenAPI path template for a source connector."""
-    return f"""  /sources#{upper_camel_name}:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Source{upper_camel_name}CreateRequest"
-      tags:
-        - "Sources"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SourceResponse"
-          description: "Successful operation"
-        "400":
-          description: "Invalid data"
-        "403":
-          description: "Not allowed"
-      operationId: "createSource{upper_camel_name}"
-      summary: "Create a source"
-      description:
-        "Creates a source given a name, workspace id, and a json blob containing\\
-        \\ the configuration for the source."
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_{upper_camel_name}#create
-  /sources/{{sourceId}}#{upper_camel_name}:
-    get:
-      tags:
-        - "Sources"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SourceResponse"
-          description: "Get a Source by the id in the path."
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "getSource{upper_camel_name}"
-      summary: "Get Source details"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_{upper_camel_name}#read
-    put:
-      tags:
-        - "Sources"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Source{upper_camel_name}PutRequest"
-      responses:
-        "204":
-          description: "The resource was updated successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "putSource{upper_camel_name}"
-      summary: "Update a Source fully"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_{upper_camel_name}#update
-    delete:
-      tags:
-        - "Sources"
-      responses:
-        "204":
-          description: "The resource was deleted successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "deleteSource{upper_camel_name}"
-      summary: "Delete a Source"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_{upper_camel_name}#delete
-    parameters:
-      - name: "sourceId"
-        schema:
-          format: "UUID"
-          type: "string"
-        in: "path"
-        required: true
-"""
+    return SOURCE_PATH_TEMPLATE.format(upper_camel_name=upper_camel_name)
 
 
-def generate_destination_template(upper_camel_name: str) -> str:
+def generate_destination_path(upper_camel_name: str) -> str:
     """Generate the OpenAPI path template for a destination connector."""
-    return f"""  /destinations#{upper_camel_name}:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Destination{upper_camel_name}CreateRequest"
-      tags:
-        - "Destinations"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DestinationResponse"
-          description: "Successful operation"
-        "400":
-          description: "Invalid data"
-        "403":
-          description: "Not allowed"
-      operationId: "createDestination{upper_camel_name}"
-      summary: "Create a destination"
-      description:
-        "Creates a destination given a name, workspace id, and a json blob containing\\
-        \\ the configuration for the destination."
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_{upper_camel_name}#create
-  /destinations/{{destinationId}}#{upper_camel_name}:
-    get:
-      tags:
-        - "Destinations"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DestinationResponse"
-          description: "Get a Destination by the id in the path."
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "getDestination{upper_camel_name}"
-      summary: "Get Destination details"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_{upper_camel_name}#read
-    put:
-      tags:
-        - "Destinations"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Destination{upper_camel_name}PutRequest"
-      responses:
-        "204":
-          description: "The resource was updated successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "putDestination{upper_camel_name}"
-      summary: "Update a Destination fully"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_{upper_camel_name}#update
-    delete:
-      tags:
-        - "Destinations"
-      responses:
-        "204":
-          description: "The resource was deleted successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "deleteDestination{upper_camel_name}"
-      summary: "Delete a Destination"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_{upper_camel_name}#delete
-    parameters:
-      - name: "destinationId"
-        schema:
-          format: "UUID"
-          type: "string"
-        in: "path"
-        required: true
-"""
+    return DESTINATION_PATH_TEMPLATE.format(upper_camel_name=upper_camel_name)
 
 
-def generate_source_create_request_template(upper_camel_name: str, hyphen_name: str) -> str:
+def generate_source_create_request(upper_camel_name: str, hyphen_name: str) -> str:
     """Generate the OpenAPI schema for a source create request."""
-    return f"""
-    Source{upper_camel_name}CreateRequest:
-      required:
-        - name
-        - workspaceId
-        - configuration
-      type: object
-      properties:
-        name:
-          description: Name of the source e.g. dev-mysql-instance.
-          type: string
-        definitionId:
-          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-          format: uuid
-          type: string
-        workspaceId:
-          format: uuid
-          type: string
-        configuration:
-          $ref: "#/components/schemas/source-{hyphen_name}"
-        secretId:
-          description:
-            "Optional secretID obtained through the public API OAuth redirect\\
-            \\ flow."
-          type: "string"
-      x-speakeasy-entity: Source_{upper_camel_name}
-      x-speakeasy-param-suppress-computed-diff: true
-"""
+    return SOURCE_CREATE_REQUEST_TEMPLATE.format(
+        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+    )
 
 
-def generate_destination_create_request_template(upper_camel_name: str, hyphen_name: str) -> str:
+def generate_destination_create_request(upper_camel_name: str, hyphen_name: str) -> str:
     """Generate the OpenAPI schema for a destination create request."""
-    return f"""
-    Destination{upper_camel_name}CreateRequest:
-      required:
-        - name
-        - workspaceId
-        - configuration
-      type: object
-      properties:
-        name:
-          description: Name of the destination e.g. dev-mysql-instance.
-          type: string
-        definitionId:
-          description: The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-          format: uuid
-          type: string
-        workspaceId:
-          format: uuid
-          type: string
-        configuration:
-          $ref: "#/components/schemas/destination-{hyphen_name}"
-      x-speakeasy-entity: Destination_{upper_camel_name}
-      x-speakeasy-param-suppress-computed-diff: true
-"""
+    return DESTINATION_CREATE_REQUEST_TEMPLATE.format(
+        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+    )
 
 
-def generate_source_update_request_template(upper_camel_name: str, hyphen_name: str) -> str:
+def generate_source_update_request(upper_camel_name: str, hyphen_name: str) -> str:
     """Generate the OpenAPI schema for a source update request."""
-    return f"""
-    Source{upper_camel_name}PutRequest:
-      required:
-        - "name"
-        - "workspaceId"
-        - "configuration"
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        workspaceId:
-          format: "uuid"
-          type: "string"
-        configuration:
-          $ref: "#/components/schemas/source-{hyphen_name}-update"
-      x-speakeasy-entity: Source_{upper_camel_name}
-      x-speakeasy-param-suppress-computed-diff: true
-"""
+    return SOURCE_UPDATE_REQUEST_TEMPLATE.format(
+        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+    )
 
 
-def generate_destination_update_request_template(upper_camel_name: str, hyphen_name: str) -> str:
+def generate_destination_update_request(upper_camel_name: str, hyphen_name: str) -> str:
     """Generate the OpenAPI schema for a destination update request."""
-    return f"""
-    Destination{upper_camel_name}PutRequest:
-      required:
-        - "name"
-        - "workspaceId"
-        - "configuration"
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        workspaceId:
-          format: "uuid"
-          type: "string"
-        configuration:
-          $ref: "#/components/schemas/destination-{hyphen_name}-update"
-      x-speakeasy-entity: Destination_{upper_camel_name}
-      x-speakeasy-param-suppress-computed-diff: true
-"""
+    return DESTINATION_UPDATE_REQUEST_TEMPLATE.format(
+        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+    )
 
 
-def generate_custom_connector_stubs() -> str:
-    """Generate stubs for custom connectors."""
-    return """
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-    destination-custom-update:
-      title: "Custom Spec"
-"""
-
-
-def generate_security_schemes() -> str:
-    """Generate security schemes for the API."""
-    return """  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-    basicAuth:
-      type: http
-      scheme: basic
-    clientCredentials:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: /applications/token
-          scopes: {}
-security:
-  - bearerAuth: []
-  - basicAuth: []
-  - clientCredentials: []
-"""
-
-
-def spec_to_yaml(spec: dict[str, Any], indent: int = 0) -> str:
-    """Convert a spec dict to YAML string with proper indentation."""
-    # Use PyYAML for proper YAML formatting
-    yaml_str = yaml.dump(spec, default_flow_style=False, allow_unicode=True, sort_keys=False)
-    # Add indentation
-    if indent > 0:
-        lines = yaml_str.split("\n")
-        indented_lines = [" " * indent + line if line.strip() else line for line in lines]
-        yaml_str = "\n".join(indented_lines)
-    return yaml_str
+# =============================================================================
+# Main Entry Point
+# =============================================================================
 
 
 def main() -> None:
@@ -596,11 +614,11 @@ def main() -> None:
     output_parts.append("\n# Connector-specific paths")
     for name in source_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_parts.append(generate_source_template(upper_camel))
+        output_parts.append(generate_source_path(upper_camel))
 
     for name in destination_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_parts.append(generate_destination_template(upper_camel))
+        output_parts.append(generate_destination_path(upper_camel))
 
     # Part 3: Add components section and base schemas (up to securitySchemes)
     output_parts.append("\n".join(base_lines[components_line_idx:security_schemes_line_idx]))
@@ -611,14 +629,14 @@ def main() -> None:
     # Add source create/update request schemas
     for name in source_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_parts.append(generate_source_create_request_template(upper_camel, name))
-        output_parts.append(generate_source_update_request_template(upper_camel, name))
+        output_parts.append(generate_source_create_request(upper_camel, name))
+        output_parts.append(generate_source_update_request(upper_camel, name))
 
     # Add destination create/update request schemas
     for name in destination_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_parts.append(generate_destination_create_request_template(upper_camel, name))
-        output_parts.append(generate_destination_update_request_template(upper_camel, name))
+        output_parts.append(generate_destination_create_request(upper_camel, name))
+        output_parts.append(generate_destination_update_request(upper_camel, name))
 
     # Add connector configuration schemas
     for schema_name, spec in source_specs:
@@ -636,7 +654,7 @@ def main() -> None:
                 output_parts.append(f"      {line}")
 
     # Add custom connector stubs
-    output_parts.append(generate_custom_connector_stubs())
+    output_parts.append(CUSTOM_CONNECTOR_STUBS)
 
     # Part 5: Add securitySchemes section and rest of the spec
     output_parts.append("\n".join(base_lines[security_schemes_line_idx:]))
