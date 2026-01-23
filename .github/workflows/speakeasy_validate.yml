@@ -141,6 +141,9 @@ jobs:
         with:
           version: latest
           args: --timeout 5m
+          # Disable problem matchers to avoid exceeding GitHub's step summary size limit (1024k)
+          # The generated code has many files which can produce a large summary
+          problem-matchers: false
 
       - name: Check for uncommitted changes
         run: |
