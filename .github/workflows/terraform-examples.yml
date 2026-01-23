@@ -36,6 +36,14 @@ on:
           - read-write
         default: auto
         required: true
+      pr:
+        description: 'PR number (for slash command triggers)'
+        type: string
+        required: false
+      comment-id:
+        description: 'Comment ID (for slash command triggers)'
+        type: string
+        required: false
 
 permissions:
   contents: read
