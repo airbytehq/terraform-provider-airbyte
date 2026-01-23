@@ -47,11 +47,11 @@ jobs:
           retention-days: 5
 
   # Job 2: Run Speakeasy to generate the Terraform provider code
-  # This job has its own step summary limit, separate from the other jobs
+  # Step summary is disabled via symlink to /dev/null to avoid GitHub's 1024k limit
   run-speakeasy:
     name: Run Speakeasy
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     needs: generate-spec
     steps:
       - uses: actions/checkout@v4
@@ -89,41 +89,23 @@ jobs:
           
           echo "=== Done. All generated code removed. ==="
 
-      # Clear step summary before Speakeasy to prevent accumulation
-      - name: Clear step summary
-        run: |
-          if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -f "$GITHUB_STEP_SUMMARY" ]; then
-            > "$GITHUB_STEP_SUMMARY"
-          fi
-
       - name: Run Speakeasy Generation (dry-run)
         id: generate
         continue-on-error: true
         env:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
-          # Replace step summary file with symlink to /dev/null to prevent Speakeasy from exceeding GitHub's 1024k limit
-          # The Speakeasy CLI writes directly to the file path, not through the env var
-          if [ -n "$GITHUB_STEP_SUMMARY" ]; then
+          # Disable step summary entirely by replacing the file with /dev/null symlink
+          # This prevents Speakeasy from exceeding GitHub's 1024k step summary limit
+          if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -f "$GITHUB_STEP_SUMMARY" ]; then
             rm -f "$GITHUB_STEP_SUMMARY"
-            ln -s /dev/null "$GITHUB_STEP_SUMMARY"
+            ln -sf /dev/null "$GITHUB_STEP_SUMMARY"
           fi
           
           # Run generation but don't commit/push anything
-          # Use --output console to minimize step summary output
+          # Use --output console to minimize output
           speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_output.txt
           echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
-
-      # Clear step summary after Speakeasy to stay under 1024k limit
-      - name: Clear step summary after generation
-        if: always()
-        run: |
-          if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -f "$GITHUB_STEP_SUMMARY" ]; then
-            # Keep only a small summary
-            echo "## Speakeasy Generation Complete" > "$GITHUB_STEP_SUMMARY"
-            echo "" >> "$GITHUB_STEP_SUMMARY"
-            echo "See job logs for details. Generated files uploaded as artifacts." >> "$GITHUB_STEP_SUMMARY"
-          fi
 
       - name: Check for generation errors
         if: steps.generate.outcome == 'failure'

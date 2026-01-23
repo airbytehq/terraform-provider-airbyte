@@ -499,6 +499,12 @@ def main() -> None:
         action="store_true",
         help="Only include connectors available in Airbyte Cloud",
     )
+    parser.add_argument(
+        "--type",
+        choices=["all", "sources", "destinations"],
+        default="all",
+        help="Type of connectors to include (default: all)",
+    )
     args = parser.parse_args()
 
     print("Fetching connector registries...")
@@ -512,24 +518,26 @@ def main() -> None:
     print("Fetching base API spec...")
     base_spec = fetch_text(args.base_spec)
 
-    # Filter sources and destinations
+    # Filter sources and destinations based on --type flag
     sources = []
-    for source in oss_registry.get("sources", []):
-        source_id = source.get("sourceDefinitionId")
-        if args.cloud_only and source_id not in cloud_source_ids:
-            continue
-        # Skip e2e-test-cloud connector
-        docker_repo = source.get("dockerRepository", "")
-        if "e2e-test-cloud" in docker_repo:
-            continue
-        sources.append(source)
+    if args.type in ("all", "sources"):
+        for source in oss_registry.get("sources", []):
+            source_id = source.get("sourceDefinitionId")
+            if args.cloud_only and source_id not in cloud_source_ids:
+                continue
+            # Skip e2e-test-cloud connector
+            docker_repo = source.get("dockerRepository", "")
+            if "e2e-test-cloud" in docker_repo:
+                continue
+            sources.append(source)
 
     destinations = []
-    for dest in oss_registry.get("destinations", []):
-        dest_id = dest.get("destinationDefinitionId")
-        if args.cloud_only and dest_id not in cloud_dest_ids:
-            continue
-        destinations.append(dest)
+    if args.type in ("all", "destinations"):
+        for dest in oss_registry.get("destinations", []):
+            dest_id = dest.get("destinationDefinitionId")
+            if args.cloud_only and dest_id not in cloud_dest_ids:
+                continue
+            destinations.append(dest)
 
     print(f"Processing {len(sources)} sources and {len(destinations)} destinations...")
 
@@ -570,9 +578,9 @@ def main() -> None:
     source_names.sort()
     destination_names.sort()
 
-    # Add "custom" connector
-    source_names_for_terraform = source_names + ["custom"]
-    destination_names_for_terraform = destination_names + ["custom"]
+    # Add "custom" connector (only when including that type)
+    source_names_for_terraform = source_names + (["custom"] if args.type in ("all", "sources") else [])
+    destination_names_for_terraform = destination_names + (["custom"] if args.type in ("all", "destinations") else [])
 
     print("Generating OpenAPI spec...")
 
@@ -653,8 +661,25 @@ def main() -> None:
             if line.strip():
                 output_parts.append(f"      {line}")
 
-    # Add custom connector stubs
-    output_parts.append(CUSTOM_CONNECTOR_STUBS)
+    # Add custom connector stubs (only for included types)
+    if args.type == "all":
+        output_parts.append(CUSTOM_CONNECTOR_STUBS)
+    elif args.type == "sources":
+        output_parts.append("""
+    source-custom:
+      description: The values required to configure the source.
+      example: { user: "charles" }
+    source-custom-update:
+      title: "Custom Spec"
+""")
+    elif args.type == "destinations":
+        output_parts.append("""
+    destination-custom:
+      description: The values required to configure the destination.
+      example: { user: "charles" }
+    destination-custom-update:
+      title: "Custom Spec"
+""")
 
     # Part 5: Add securitySchemes section and rest of the spec
     output_parts.append("\n".join(base_lines[security_schemes_line_idx:]))
