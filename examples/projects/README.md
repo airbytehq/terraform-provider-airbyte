@@ -45,7 +45,7 @@ Creates source-faker, source-datagen, and connections to a dev-null destination.
 
 ## CI/CD with GitHub Actions
 
-The `terraform-examples.yml` workflow manages state using GitHub Artifacts:
+The `tf-examples-command.yml` workflow manages state using GitHub Artifacts. You can trigger it via the `/tf-examples` slash command on PRs:
 
 1. Downloads previous state from artifacts (if available)
 2. Runs `terraform plan`
