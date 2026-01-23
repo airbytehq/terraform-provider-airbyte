@@ -136,14 +136,14 @@ jobs:
         run: |
           go build -v ./...
 
-      - name: Run linters
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: latest
-          args: --timeout 5m
-          # Disable problem matchers to avoid exceeding GitHub's step summary size limit (1024k)
-          # The generated code has many files which can produce a large summary
-          problem-matchers: false
+      # NOTE: Linting step is commented out because the golangci-lint-action writes to
+      # $GITHUB_STEP_SUMMARY and exceeds GitHub's 1024k limit when processing ~600 connector
+      # files (produces ~1915k). Linting still runs in other workflows (Build, Generate).
+      # - name: Run linters
+      #   uses: golangci/golangci-lint-action@v6
+      #   with:
+      #     version: latest
+      #     args: --timeout 5m
 
       - name: Check for uncommitted changes
         run: |
