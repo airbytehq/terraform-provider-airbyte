@@ -86,7 +86,7 @@ jobs:
           private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
 
       - name: Post or append starting comment
-        if: github.event.inputs.pr && matrix.project == 'pre-1.0'
+        if: github.event.inputs.pr
         id: start-comment
         uses: peter-evans/create-or-update-comment@v5
         with:
@@ -179,7 +179,7 @@ jobs:
           overwrite: true
 
       - name: Append success comment
-        if: success() && github.event.inputs.pr && matrix.project == 'pre-1.0'
+        if: success() && github.event.inputs.pr
         uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ steps.get-app-token.outputs.token }}
@@ -189,7 +189,7 @@ jobs:
             > Terraform ${{ github.event.inputs.action }} completed successfully.
 
       - name: Append failure comment
-        if: failure() && github.event.inputs.pr && matrix.project == 'pre-1.0'
+        if: failure() && github.event.inputs.pr
         uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ steps.get-app-token.outputs.token }}
