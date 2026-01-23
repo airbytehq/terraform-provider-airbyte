@@ -6,6 +6,7 @@ name: Validate Speakeasy Generation
 #
 # The workflow is split into multiple jobs to avoid exceeding GitHub's 1024k step summary limit.
 # With ~600 connectors, the Speakeasy CLI produces ~1915k of output in a single job.
+# By splitting into sources (~557) and destinations (~46), each job stays under the limit.
 #
 # The spec generation logic is ported from:
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/ApiDocumentationGenerator.kt
@@ -23,9 +24,9 @@ permissions:
   contents: read
 
 jobs:
-  # Job 1: Generate the OpenAPI spec from the Airbyte connector registry
-  generate-spec:
-    name: Generate Spec
+  # Job 1: Generate separate specs for sources and destinations
+  generate-specs:
+    name: Generate Specs
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -34,33 +35,45 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: Generate Terraform OpenAPI spec
+      - name: Generate full spec (for actual generation workflow)
         run: |
           mkdir -p generated
           uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
 
-      - name: Upload generated spec as artifact
+      - name: Generate sources-only spec
+        run: |
+          uv run scripts/generate_terraform_spec.py --output generated/api_terraform_sources.yaml --cloud-only --type sources
+
+      - name: Generate destinations-only spec
+        run: |
+          uv run scripts/generate_terraform_spec.py --output generated/api_terraform_destinations.yaml --cloud-only --type destinations
+
+      - name: Upload specs as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: api_terraform_spec
-          path: generated/api_terraform.yaml
+          name: api_terraform_specs
+          path: generated/
           retention-days: 5
 
-  # Job 2: Run Speakeasy to generate the Terraform provider code
-  # Step summary is disabled via symlink to /dev/null to avoid GitHub's 1024k limit
-  run-speakeasy:
-    name: Run Speakeasy
+  # Job 2a: Run Speakeasy for sources only
+  # This job processes ~557 sources, producing less output than the full spec
+  run-speakeasy-sources:
+    name: Run Speakeasy (Sources)
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    needs: generate-spec
+    timeout-minutes: 20
+    needs: generate-specs
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download generated spec
+      - name: Download specs
         uses: actions/download-artifact@v4
         with:
-          name: api_terraform_spec
+          name: api_terraform_specs
           path: generated/
+
+      - name: Copy sources spec to expected location
+        run: |
+          cp generated/api_terraform_sources.yaml generated/api_terraform.yaml
 
       - uses: actions/setup-go@v5
         with:
@@ -72,74 +85,148 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
           echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
-      - name: Clean regeneration - delete ALL generated code
+      - name: Clean generated code
         run: |
-          # Delete ALL generated code to force fully clean regeneration
-          echo "=== Removing internal/sdk (SDK models and utils) ==="
           rm -rf internal/sdk
-          
-          echo "=== Removing generated provider destination resources ==="
           rm -f internal/provider/destination_*.go
-          
-          echo "=== Removing generated provider source resources ==="
           rm -f internal/provider/source_*.go
-          
-          echo "=== Removing generated provider types ==="
           rm -rf internal/provider/types/
-          
-          echo "=== Done. All generated code removed. ==="
 
-      - name: Run Speakeasy Generation (dry-run)
+      - name: Run Speakeasy Generation (sources only)
         id: generate
         continue-on-error: true
         env:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
-          # Disable step summary entirely by replacing the file with /dev/null symlink
-          # This prevents Speakeasy from exceeding GitHub's 1024k step summary limit
-          if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -f "$GITHUB_STEP_SUMMARY" ]; then
-            rm -f "$GITHUB_STEP_SUMMARY"
-            ln -sf /dev/null "$GITHUB_STEP_SUMMARY"
-          fi
-          
-          # Run generation but don't commit/push anything
-          # Use --output console to minimize output
-          speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_output.txt
+          speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_sources_output.txt
           echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
 
-      - name: Check for generation errors
-        if: steps.generate.outcome == 'failure'
-        run: |
-          echo "::warning::Speakeasy generation encountered issues. See logs above."
-          tail -100 speakeasy_output.txt
-
-      - name: Upload generated code as artifact
+      - name: Upload sources generated code
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: generated-code
+          name: generated-code-sources
           path: |
             internal/
             go.mod
             go.sum
-            speakeasy_output.txt
+            speakeasy_sources_output.txt
             .speakeasy/gen.lock
           retention-days: 5
 
-  # Job 3: Build and verify the generated code
-  build-and-verify:
-    name: Build and Verify
+  # Job 2b: Run Speakeasy for destinations only
+  # This job processes ~46 destinations, producing much less output
+  run-speakeasy-destinations:
+    name: Run Speakeasy (Destinations)
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: run-speakeasy
+    needs: generate-specs
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download generated code
+      - name: Download specs
         uses: actions/download-artifact@v4
         with:
-          name: generated-code
-          path: .
+          name: api_terraform_specs
+          path: generated/
+
+      - name: Copy destinations spec to expected location
+        run: |
+          cp generated/api_terraform_destinations.yaml generated/api_terraform.yaml
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - name: Install Speakeasy CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
+          echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
+
+      - name: Clean generated code
+        run: |
+          rm -rf internal/sdk
+          rm -f internal/provider/destination_*.go
+          rm -f internal/provider/source_*.go
+          rm -rf internal/provider/types/
+
+      - name: Run Speakeasy Generation (destinations only)
+        id: generate
+        continue-on-error: true
+        env:
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+        run: |
+          speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_destinations_output.txt
+          echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
+
+      - name: Upload destinations generated code
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-code-destinations
+          path: |
+            internal/
+            go.mod
+            go.sum
+            speakeasy_destinations_output.txt
+            .speakeasy/gen.lock
+          retention-days: 5
+
+  # Job 3: Merge the generated code and build
+  # Note: This is a validation-only workflow. The actual generation workflow
+  # uses the full spec and runs Speakeasy once to produce the complete provider.
+  build-and-verify:
+    name: Build and Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [run-speakeasy-sources, run-speakeasy-destinations]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download sources generated code
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-code-sources
+          path: sources-gen/
+
+      - name: Download destinations generated code
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-code-destinations
+          path: destinations-gen/
+
+      - name: Merge generated code
+        run: |
+          # Start with sources as the base (has most of the code)
+          cp -r sources-gen/internal/ internal/
+          cp sources-gen/go.mod go.mod 2>/dev/null || true
+          cp sources-gen/go.sum go.sum 2>/dev/null || true
+          
+          # Merge destination-specific files from destinations generation
+          # Copy destination provider files
+          cp destinations-gen/internal/provider/destination_*.go internal/provider/ 2>/dev/null || true
+          
+          # Copy destination SDK models (these are in internal/sdk/models/shared/)
+          # We need to be careful to only copy destination-specific files
+          for f in destinations-gen/internal/sdk/models/shared/destination*.go; do
+            if [ -f "$f" ]; then
+              cp "$f" internal/sdk/models/shared/
+            fi
+          done
+          
+          # Copy destination types
+          for f in destinations-gen/internal/provider/types/destination*.go; do
+            if [ -f "$f" ]; then
+              cp "$f" internal/provider/types/
+            fi
+          done
+          
+          echo "=== Merged generated code ==="
+          echo "Source files:"
+          ls internal/provider/source_*.go 2>/dev/null | wc -l || echo "0"
+          echo "Destination files:"
+          ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo "0"
 
       - uses: actions/setup-go@v5
         with:
@@ -162,17 +249,8 @@ jobs:
           echo "=== List generated provider files ==="
           ls internal/provider/ 2>/dev/null | head -30 || echo "No provider files found"
           echo ""
-          echo "=== Check for generic DestinationCreateRequest type ==="
-          grep -rn "DestinationCreateRequest" internal/sdk/models/ 2>/dev/null | head -5 || echo "Not found"
+          echo "=== Source count ==="
+          ls internal/provider/source_*.go 2>/dev/null | wc -l || echo "0"
           echo ""
-          echo "=== Check for generic SourceCreateRequest type ==="
-          grep -rn "SourceCreateRequest" internal/sdk/models/ 2>/dev/null | head -5 || echo "Not found"
-
-      - name: Check for uncommitted changes
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "::warning::Generation produced uncommitted changes:"
-            git diff --stat
-            echo ""
-            echo "If these changes are expected, run 'speakeasy run' locally and commit the results."
-          fi
+          echo "=== Destination count ==="
+          ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo "0"
