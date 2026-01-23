@@ -24,9 +24,6 @@ jobs:
     name: Validate Generation
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    # Disable step summary to avoid exceeding GitHub's 1024k limit with ~600 connectors
-    env:
-      GITHUB_STEP_SUMMARY: /dev/null
     steps:
       - uses: actions/checkout@v4
 
@@ -155,4 +152,18 @@ jobs:
             git diff --stat
             echo ""
             echo "If these changes are expected, run 'speakeasy run' locally and commit the results."
+          fi
+
+      # Truncate step summary to avoid exceeding GitHub's 1024k limit
+      # With ~600 connectors, the Speakeasy CLI produces ~1915k of output
+      - name: Truncate step summary
+        if: always()
+        run: |
+          # Get the actual step summary file path from the runner
+          SUMMARY_FILE="${GITHUB_STEP_SUMMARY:-}"
+          if [ -n "$SUMMARY_FILE" ] && [ -f "$SUMMARY_FILE" ]; then
+            # Truncate to first 500k to stay well under 1024k limit
+            head -c 500000 "$SUMMARY_FILE" > "${SUMMARY_FILE}.tmp"
+            echo -e "\n\n... (truncated to avoid exceeding GitHub's 1024k step summary limit)" >> "${SUMMARY_FILE}.tmp"
+            mv "${SUMMARY_FILE}.tmp" "$SUMMARY_FILE"
           fi
