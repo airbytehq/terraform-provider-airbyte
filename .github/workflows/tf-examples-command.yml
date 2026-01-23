@@ -37,7 +37,7 @@ on:
         default: auto
         required: true
       pr:
-        description: 'PR number (for slash command triggers)'
+        description: 'PR number'
         type: string
         required: false
       comment-id:
