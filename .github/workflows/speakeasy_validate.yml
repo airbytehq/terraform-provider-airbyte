@@ -31,13 +31,15 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Generate Terraform OpenAPI spec
-        run: uv run scripts/generate_terraform_spec.py --output api_terraform.yaml --cloud-only
+        run: |
+          mkdir -p generated
+          uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
 
       - name: Upload generated spec as artifact
         uses: actions/upload-artifact@v4
         with:
           name: api_terraform_spec
-          path: api_terraform.yaml
+          path: generated/api_terraform.yaml
           retention-days: 5
 
       - uses: actions/setup-go@v5
@@ -82,7 +84,8 @@ jobs:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
           # Run generation but don't commit/push anything
-          speakeasy run --skip-compile 2>&1 | tee speakeasy_output.txt
+          # Use --output console to avoid exceeding GitHub's step summary size limit (1024k)
+          speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_output.txt
           echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
 
       - name: Check for generation errors

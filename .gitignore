@@ -10,6 +10,3 @@ terraform-provider-airbyte
 .DS_Store
 *.tfvars
 .idea
-
-# Generated spec file (created by scripts/generate_terraform_spec.py)
-api_terraform.yaml

@@ -3,7 +3,7 @@ speakeasyVersion: latest
 sources:
     my-source:
         inputs:
-            - location: ./api_terraform.yaml
+            - location: ./generated/api_terraform.yaml
         registry:
             location: registry.speakeasyapi.dev/airbyte/airbyte-prod/my-source
 targets:

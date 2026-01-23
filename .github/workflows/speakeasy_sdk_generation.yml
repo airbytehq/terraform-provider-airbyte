@@ -62,17 +62,18 @@ jobs:
 
             - name: Generate Terraform OpenAPI spec
               run: |
+                  mkdir -p generated
                   if [ "${{ github.event.inputs.cloud_only }}" = "true" ]; then
-                      uv run scripts/generate_terraform_spec.py --output api_terraform.yaml --cloud-only
+                      uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
                   else
-                      uv run scripts/generate_terraform_spec.py --output api_terraform.yaml
+                      uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
                   fi
 
             - name: Upload generated spec as artifact
               uses: actions/upload-artifact@v4
               with:
                   name: api_terraform_spec
-                  path: api_terraform.yaml
+                  path: generated/api_terraform.yaml
                   retention-days: 30
 
             - name: Set up Go
@@ -90,10 +91,11 @@ jobs:
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
+                  # Use --output console to avoid exceeding GitHub's step summary size limit (1024k)
                   if [ "${{ github.event.inputs.force }}" = "true" ]; then
-                      speakeasy run --force
+                      speakeasy run --force --output console
                   else
-                      speakeasy run
+                      speakeasy run --output console
                   fi
 
             - name: Check for changes
