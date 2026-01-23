@@ -187,23 +187,23 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: generated-code-destinations
-          path: destinations-gen/
-
-      - name: Copy generated code
-        run: |
-          # Use destinations generated code
-          cp -r destinations-gen/internal/ internal/
-          cp destinations-gen/go.mod go.mod 2>/dev/null || true
-          cp destinations-gen/go.sum go.sum 2>/dev/null || true
-          
-          echo "=== Generated code stats ==="
-          echo "Destination files:"
-          ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo "0"
+          path: .
 
       - uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
           cache: true
+
+      - name: Debug - Check directory structure
+        run: |
+          echo "=== Current directory structure ==="
+          ls -la
+          echo ""
+          echo "=== internal/ directory ==="
+          ls -la internal/ 2>/dev/null || echo "internal/ not found"
+          echo ""
+          echo "=== internal/provider/ directory ==="
+          ls internal/provider/ 2>/dev/null | head -20 || echo "internal/provider/ not found"
 
       - name: Update dependencies
         run: |
