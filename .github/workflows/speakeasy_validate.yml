@@ -83,8 +83,10 @@ jobs:
         env:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
+          # Unset GITHUB_STEP_SUMMARY to prevent Speakeasy from writing to it
+          # This avoids exceeding GitHub's 1024k step summary size limit with ~600 connectors
+          unset GITHUB_STEP_SUMMARY
           # Run generation but don't commit/push anything
-          # Use --output console to avoid exceeding GitHub's step summary size limit (1024k)
           speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_output.txt
           echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
 
