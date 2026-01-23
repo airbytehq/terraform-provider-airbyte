@@ -18,6 +18,7 @@ This is a Python port of the Kotlin logic originally in:
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 from pathlib import Path
 from typing import Any
@@ -47,6 +48,7 @@ SOURCE_PATH_TEMPLATE = """\
   /sources#{upper_camel_name}:
     post:
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -94,6 +96,7 @@ SOURCE_PATH_TEMPLATE = """\
       tags:
         - "Sources"
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -138,6 +141,7 @@ DESTINATION_PATH_TEMPLATE = """\
   /destinations#{upper_camel_name}:
     post:
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -185,6 +189,7 @@ DESTINATION_PATH_TEMPLATE = """\
       tags:
         - "Destinations"
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -383,8 +388,11 @@ def transform_connector_spec(
     if is_update:
         schema_name += "-update"
 
-    # Deep copy and transform the spec
-    transformed = transform_spec_properties(spec, is_update)
+    # Deep copy the spec to avoid mutating the original registry data
+    spec_copy = copy.deepcopy(spec)
+
+    # Transform the spec
+    transformed = transform_spec_properties(spec_copy, is_update)
 
     # Add the sourceType or destinationType property
     type_field = "sourceType" if actor_type == "source" else "destinationType"
