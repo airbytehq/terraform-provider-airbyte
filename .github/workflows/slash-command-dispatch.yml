@@ -33,6 +33,7 @@ jobs:
           issue-type: pull-request
           commands: |
             tf-examples
+            generate
           static-args: |
             pr=${{ github.event.issue.number }}
             comment-id=${{ github.event.comment.id }}

@@ -29,6 +29,14 @@ permissions:
                 description: Force generation of SDKs
                 type: boolean
                 default: false
+            pr:
+                description: 'PR number'
+                type: string
+                required: false
+            comment-id:
+                description: 'Comment ID (for slash command triggers)'
+                type: string
+                required: false
 env:
     GO_VERSION: "1.24"
 jobs:
@@ -36,6 +44,29 @@ jobs:
         name: Generate SDK
         runs-on: ubuntu-latest
         steps:
+            - name: Authenticate as GitHub App
+              if: github.event.inputs.pr
+              uses: actions/create-github-app-token@v2
+              id: get-app-token
+              with:
+                  app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
+                  private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
+
+            - name: Post or append starting comment
+              if: github.event.inputs.pr
+              id: start-comment
+              uses: peter-evans/create-or-update-comment@v5
+              with:
+                  token: ${{ steps.get-app-token.outputs.token }}
+                  issue-number: ${{ github.event.inputs.pr }}
+                  comment-id: ${{ github.event.inputs.comment-id || '' }}
+                  body: |
+                      > **Generate SDK Job Info**
+                      >
+                      > Running Speakeasy SDK generation (force=${{ github.event.inputs.force || 'false' }}).
+
+                      > Job started... [Check job output.](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
@@ -85,3 +116,23 @@ jobs:
                   branch: speakeasy-sdk-regen
                   base: main
                   delete-branch: true
+
+            - name: Append success comment
+              if: success() && github.event.inputs.pr
+              uses: peter-evans/create-or-update-comment@v5
+              with:
+                  token: ${{ steps.get-app-token.outputs.token }}
+                  comment-id: ${{ steps.start-comment.outputs.comment-id }}
+                  reactions: hooray
+                  body: |
+                      > SDK generation completed successfully.
+
+            - name: Append failure comment
+              if: failure() && github.event.inputs.pr
+              uses: peter-evans/create-or-update-comment@v5
+              with:
+                  token: ${{ steps.get-app-token.outputs.token }}
+                  comment-id: ${{ steps.start-comment.outputs.comment-id }}
+                  reactions: confused
+                  body: |
+                      > SDK generation failed. Check the [job output](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
