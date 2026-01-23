@@ -24,4 +24,6 @@ This repository uses Speakeasy to generate the Terraform provider from the Airby
 
 **Note:** This is a generated codebase. Direct modifications to generated files are not accepted - changes must be made to the upstream OpenAPI spec.
 
+[📝 _Edit this welcome message._](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/.github/pr-welcome-message.md)
+
 </details>
