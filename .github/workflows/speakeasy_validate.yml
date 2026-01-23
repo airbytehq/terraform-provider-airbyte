@@ -4,9 +4,6 @@ name: Validate Speakeasy Generation
 # It runs on every PR push but does NOT create PRs or push changes.
 # For actual regeneration, use the manual "Generate" workflow.
 #
-# The workflow runs Speakeasy twice (sources, then destinations) as separate steps,
-# clearing the step summary between runs to avoid GitHub's 1024k step summary limit.
-#
 # The spec generation logic is ported from:
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/ApiDocumentationGenerator.kt
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
@@ -43,120 +40,30 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
           echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
-      - name: Generate full spec
+      - name: Generate spec from Airbyte connector registry
         run: |
           mkdir -p generated
           uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
 
-      - name: Generate sources-only spec
-        run: |
-          uv run scripts/generate_terraform_spec.py --output generated/api_terraform_sources.yaml --cloud-only --type sources
-
-      - name: Generate destinations-only spec
-        run: |
-          uv run scripts/generate_terraform_spec.py --output generated/api_terraform_destinations.yaml --cloud-only --type destinations
-
-      - name: Upload specs as artifacts
+      - name: Upload spec as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: api_terraform_specs
-          path: generated/
+          name: api_terraform_spec
+          path: generated/api_terraform.yaml
           retention-days: 5
 
-      # Run Speakeasy for sources first
-      - name: Clean generated code (for sources)
+      - name: Clean generated code
         run: |
           rm -rf internal/sdk
           rm -f internal/provider/destination_*.go
           rm -f internal/provider/source_*.go
           rm -rf internal/provider/types/
 
-      - name: Copy sources spec
-        run: |
-          cp generated/api_terraform_sources.yaml generated/api_terraform.yaml
-
-      - name: Run Speakeasy Generation (sources)
-        id: generate_sources
-        continue-on-error: true
+      - name: Run Speakeasy Generation
         env:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
-          # Clear step summary before running to avoid size limit
-          echo "" > $GITHUB_STEP_SUMMARY
-          speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_sources_output.txt
-          echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
-
-      - name: Save sources generated code
-        run: |
-          mkdir -p sources-gen
-          cp -r internal/ sources-gen/
-          cp go.mod sources-gen/ 2>/dev/null || true
-          cp go.sum sources-gen/ 2>/dev/null || true
-
-      # Clear step summary before destinations to avoid cumulative size limit
-      - name: Clear step summary
-        run: |
-          echo "" > $GITHUB_STEP_SUMMARY
-
-      # Run Speakeasy for destinations
-      - name: Clean generated code (for destinations)
-        run: |
-          rm -rf internal/sdk
-          rm -f internal/provider/destination_*.go
-          rm -f internal/provider/source_*.go
-          rm -rf internal/provider/types/
-
-      - name: Copy destinations spec
-        run: |
-          cp generated/api_terraform_destinations.yaml generated/api_terraform.yaml
-
-      - name: Run Speakeasy Generation (destinations)
-        id: generate_destinations
-        continue-on-error: true
-        env:
-          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
-        run: |
-          # Clear step summary before running to avoid size limit
-          echo "" > $GITHUB_STEP_SUMMARY
-          speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_destinations_output.txt
-          echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
-
-      - name: Save destinations generated code
-        run: |
-          mkdir -p destinations-gen
-          cp -r internal/ destinations-gen/
-          cp go.mod destinations-gen/ 2>/dev/null || true
-          cp go.sum destinations-gen/ 2>/dev/null || true
-
-      # Merge and build
-      - name: Merge generated code
-        run: |
-          # Start with sources as the base (has most of the code)
-          rm -rf internal/
-          cp -r sources-gen/internal/ internal/
-          cp sources-gen/go.mod go.mod 2>/dev/null || true
-          cp sources-gen/go.sum go.sum 2>/dev/null || true
-          
-          # Merge destination-specific files from destinations generation
-          cp destinations-gen/internal/provider/destination_*.go internal/provider/ 2>/dev/null || true
-          
-          # Copy destination SDK models
-          for f in destinations-gen/internal/sdk/models/shared/destination*.go; do
-            if [ -f "$f" ]; then
-              cp "$f" internal/sdk/models/shared/
-            fi
-          done
-          
-          # Copy destination types
-          for f in destinations-gen/internal/provider/types/destination*.go; do
-            if [ -f "$f" ]; then
-              cp "$f" internal/provider/types/
-            fi
-          done
-          
-          echo "=== Merged generated code ==="
-          echo "Source files: $(ls internal/provider/source_*.go 2>/dev/null | wc -l || echo 0)"
-          echo "Destination files: $(ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo 0)"
+          speakeasy run --skip-compile
 
       - name: Update dependencies
         run: |
