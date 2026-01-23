@@ -24,6 +24,9 @@ jobs:
     name: Validate Generation
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Disable step summary to avoid exceeding GitHub's 1024k limit with ~600 connectors
+    env:
+      GITHUB_STEP_SUMMARY: /dev/null
     steps:
       - uses: actions/checkout@v4
 
@@ -83,9 +86,6 @@ jobs:
         env:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
-          # Unset GITHUB_STEP_SUMMARY to prevent Speakeasy from writing to it
-          # This avoids exceeding GitHub's 1024k step summary size limit with ~600 connectors
-          unset GITHUB_STEP_SUMMARY
           # Run generation but don't commit/push anything
           speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_output.txt
           echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
