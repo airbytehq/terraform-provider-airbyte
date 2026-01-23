@@ -4,6 +4,9 @@ name: Validate Speakeasy Generation
 # It runs on every PR push but does NOT create PRs or push changes.
 # For actual regeneration, use the manual "Generate" workflow.
 #
+# The workflow is split into multiple jobs to avoid exceeding GitHub's 1024k step summary limit.
+# With ~600 connectors, the Speakeasy CLI produces ~1915k of output in a single job.
+#
 # The spec generation logic is ported from:
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/ApiDocumentationGenerator.kt
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
@@ -20,10 +23,11 @@ permissions:
   contents: read
 
 jobs:
-  validate:
-    name: Validate Generation
+  # Job 1: Generate the OpenAPI spec from the Airbyte connector registry
+  generate-spec:
+    name: Generate Spec
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -42,6 +46,22 @@ jobs:
           path: generated/api_terraform.yaml
           retention-days: 5
 
+  # Job 2: Run Speakeasy to generate the Terraform provider code
+  # This job has its own step summary limit, separate from the other jobs
+  run-speakeasy:
+    name: Run Speakeasy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: generate-spec
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download generated spec
+        uses: actions/download-artifact@v4
+        with:
+          name: api_terraform_spec
+          path: generated/
+
       - uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
@@ -55,27 +75,26 @@ jobs:
       - name: Clean regeneration - delete ALL generated code
         run: |
           # Delete ALL generated code to force fully clean regeneration
-          # The upstream API spec has changed from per-connector types to generic types
-          # We need to remove all stale generated files so Speakeasy can regenerate fresh
-          
           echo "=== Removing internal/sdk (SDK models and utils) ==="
           rm -rf internal/sdk
           
           echo "=== Removing generated provider destination resources ==="
           rm -f internal/provider/destination_*.go
-          echo "Removed $(ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo 0) destination files"
           
           echo "=== Removing generated provider source resources ==="
           rm -f internal/provider/source_*.go
-          echo "Removed $(ls internal/provider/source_*.go 2>/dev/null | wc -l || echo 0) source files"
           
           echo "=== Removing generated provider types ==="
           rm -rf internal/provider/types/
           
-          echo "=== Listing remaining provider files ==="
-          ls internal/provider/ || echo "No files remaining"
-          
           echo "=== Done. All generated code removed. ==="
+
+      # Clear step summary before Speakeasy to prevent accumulation
+      - name: Clear step summary
+        run: |
+          if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -f "$GITHUB_STEP_SUMMARY" ]; then
+            > "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Run Speakeasy Generation (dry-run)
         id: generate
@@ -84,17 +103,69 @@ jobs:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
           # Run generation but don't commit/push anything
+          # Use --output console to minimize step summary output
           speakeasy run --skip-compile --output console 2>&1 | tee speakeasy_output.txt
           echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
+
+      # Clear step summary after Speakeasy to stay under 1024k limit
+      - name: Clear step summary after generation
+        if: always()
+        run: |
+          if [ -n "$GITHUB_STEP_SUMMARY" ] && [ -f "$GITHUB_STEP_SUMMARY" ]; then
+            # Keep only a small summary
+            echo "## Speakeasy Generation Complete" > "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "See job logs for details. Generated files uploaded as artifacts." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Check for generation errors
         if: steps.generate.outcome == 'failure'
         run: |
           echo "::warning::Speakeasy generation encountered issues. See logs above."
-          cat speakeasy_output.txt
+          tail -100 speakeasy_output.txt
+
+      - name: Upload generated code as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-code
+          path: |
+            internal/
+            go.mod
+            go.sum
+            speakeasy_output.txt
+            .speakeasy/gen.lock
+          retention-days: 5
+
+  # Job 3: Build and verify the generated code
+  build-and-verify:
+    name: Build and Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: run-speakeasy
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download generated code
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-code
+          path: .
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - name: Update dependencies
+        run: |
+          go mod tidy
+
+      - name: Build generated code
+        run: |
+          go build ./...
 
       - name: Debug - Inspect generated files
-        if: always()
         run: |
           echo "=== List generated SDK models ==="
           ls internal/sdk/models/shared/ 2>/dev/null | head -20 || echo "No SDK models found"
@@ -107,43 +178,6 @@ jobs:
           echo ""
           echo "=== Check for generic SourceCreateRequest type ==="
           grep -rn "SourceCreateRequest" internal/sdk/models/ 2>/dev/null | head -5 || echo "Not found"
-          echo ""
-          echo "=== UnmarshalJSON signature in utils/json.go ==="
-          grep -n "func UnmarshalJSON" internal/sdk/internal/utils/json.go 2>/dev/null || echo "Not found"
-          echo ""
-          echo "=== Git status summary ==="
-          git status --short | head -50 || true
-
-      - name: Upload debug artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: speakeasy-debug
-          path: |
-            internal/sdk/internal/utils/json.go
-            internal/sdk/models/shared/
-            internal/provider/
-            speakeasy_output.txt
-            .speakeasy/gen.lock
-          retention-days: 5
-
-      - name: Update dependencies
-        run: |
-          go mod tidy
-
-      - name: Build generated code
-        run: |
-          # Remove -v flag to avoid verbose output that exceeds GitHub's step summary size limit
-          go build ./...
-
-      # NOTE: Linting step is commented out because the golangci-lint-action writes to
-      # $GITHUB_STEP_SUMMARY and exceeds GitHub's 1024k limit when processing ~600 connector
-      # files (produces ~1915k). Linting still runs in other workflows (Build, Generate).
-      # - name: Run linters
-      #   uses: golangci/golangci-lint-action@v6
-      #   with:
-      #     version: latest
-      #     args: --timeout 5m
 
       - name: Check for uncommitted changes
         run: |
@@ -152,18 +186,4 @@ jobs:
             git diff --stat
             echo ""
             echo "If these changes are expected, run 'speakeasy run' locally and commit the results."
-          fi
-
-      # Truncate step summary to avoid exceeding GitHub's 1024k limit
-      # With ~600 connectors, the Speakeasy CLI produces ~1915k of output
-      - name: Truncate step summary
-        if: always()
-        run: |
-          # Get the actual step summary file path from the runner
-          SUMMARY_FILE="${GITHUB_STEP_SUMMARY:-}"
-          if [ -n "$SUMMARY_FILE" ] && [ -f "$SUMMARY_FILE" ]; then
-            # Truncate to first 500k to stay well under 1024k limit
-            head -c 500000 "$SUMMARY_FILE" > "${SUMMARY_FILE}.tmp"
-            echo -e "\n\n... (truncated to avoid exceeding GitHub's 1024k step summary limit)" >> "${SUMMARY_FILE}.tmp"
-            mv "${SUMMARY_FILE}.tmp" "$SUMMARY_FILE"
           fi
