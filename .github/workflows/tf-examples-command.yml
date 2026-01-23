@@ -78,19 +78,21 @@ jobs:
       TF_STATE_DIR: ${{ github.workspace }}/${{ matrix.path }}/.terraform-state
     steps:
       - name: Authenticate as GitHub App
-        if: github.event.inputs.comment-id
+        if: github.event.inputs.pr
         uses: actions/create-github-app-token@v2
         id: get-app-token
         with:
           app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
           private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
 
-      - name: Append comment with job run link
-        if: github.event.inputs.comment-id && matrix.project == 'pre-1.0'
+      - name: Post or append starting comment
+        if: github.event.inputs.pr && matrix.project == 'pre-1.0'
+        id: start-comment
         uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ steps.get-app-token.outputs.token }}
-          comment-id: ${{ github.event.inputs.comment-id }}
+          issue-number: ${{ github.event.inputs.pr }}
+          comment-id: ${{ github.event.inputs.comment-id || '' }}
           body: |
             > **Terraform Examples Job Info**
             >
@@ -177,21 +179,21 @@ jobs:
           overwrite: true
 
       - name: Append success comment
-        if: success() && github.event.inputs.comment-id && matrix.project == 'pre-1.0'
+        if: success() && github.event.inputs.pr && matrix.project == 'pre-1.0'
         uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ steps.get-app-token.outputs.token }}
-          comment-id: ${{ github.event.inputs.comment-id }}
+          comment-id: ${{ steps.start-comment.outputs.comment-id }}
           reactions: hooray
           body: |
             > Terraform ${{ github.event.inputs.action }} completed successfully.
 
       - name: Append failure comment
-        if: failure() && github.event.inputs.comment-id && matrix.project == 'pre-1.0'
+        if: failure() && github.event.inputs.pr && matrix.project == 'pre-1.0'
         uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ steps.get-app-token.outputs.token }}
-          comment-id: ${{ github.event.inputs.comment-id }}
+          comment-id: ${{ steps.start-comment.outputs.comment-id }}
           reactions: confused
           body: |
             > Terraform ${{ github.event.inputs.action }} failed. Check the [job output](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
