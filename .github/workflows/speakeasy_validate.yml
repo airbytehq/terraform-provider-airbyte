@@ -134,7 +134,8 @@ jobs:
 
       - name: Build generated code
         run: |
-          go build -v ./...
+          # Remove -v flag to avoid verbose output that exceeds GitHub's step summary size limit
+          go build ./...
 
       # NOTE: Linting step is commented out because the golangci-lint-action writes to
       # $GITHUB_STEP_SUMMARY and exceeds GitHub's 1024k limit when processing ~600 connector
