@@ -51,8 +51,6 @@ jobs:
           requireScope: false
           # Configure which scopes are allowed (empty = any scope allowed)
           scopes: ""
-          # Allow any subject (no case restriction)
-          # subjectPattern: ^(?![A-Z]).+$
           # Allow WIP PRs
           wip: true
           # Validate the PR title only (not the commits)
