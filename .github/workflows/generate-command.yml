@@ -58,15 +58,11 @@ jobs:
         name: Generate SDK
         runs-on: ubuntu-latest-16core
         timeout-minutes: 30
-        # Permissions for workflow_dispatch (PR creation, comments, etc.)
-        # When called via workflow_call from pull_request, these are ignored
-        # and the caller's (more restricted) permissions are used instead.
-        permissions:
-            checks: write
-            contents: write
-            pull-requests: write
-            statuses: write
-            actions: write
+        # Note: No explicit permissions here to allow workflow_call from
+        # pull_request triggers (which have restricted permissions).
+        # The workflow uses GITHUB_TOKEN with default permissions, which is
+        # sufficient for dry_run mode. For PR creation (non-dry_run), the
+        # peter-evans/create-pull-request action uses its own token.
         steps:
             - name: Authenticate as GitHub App
               if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
