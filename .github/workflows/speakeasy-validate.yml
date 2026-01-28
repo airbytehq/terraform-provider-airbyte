@@ -24,7 +24,6 @@ permissions:
 jobs:
   validate:
     name: Validate Generation (Dry Run)
-    runs-on: ubuntu-latest-16core
     uses: ./.github/workflows/generate-command.yml
     with:
       dry_run: true
