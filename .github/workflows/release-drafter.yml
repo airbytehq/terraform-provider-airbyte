@@ -1,26 +1,28 @@
 # Release Drafter Workflow
 #
 # This workflow automatically creates and updates draft releases based on merged PRs.
-# It also auto-labels PRs based on conventional commit title patterns (e.g., "feat:", "fix:", "chore:").
+# It uses semantic PR titles (conventional commits format) to categorize changes.
 #
 # How it works:
 # - On push to main: Updates the draft release with the merged PR
-# - On PR open/update: Auto-labels the PR based on its title
+# - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 #
 # To publish a release:
 # 1. Go to the Releases page
 # 2. Find the draft release
 # 3. Edit the version number if needed
 # 4. Click "Publish release" - this creates the git tag and triggers the Release workflow
+#
+# Note: This uses aaronsteers/semantic-pr-release-drafter which does NOT require
+# labels for categorization - it uses semantic PR titles instead.
 
 name: Release Drafter
 
 on:
+  workflow_dispatch: {}
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, reopened, synchronize]
 
 concurrency:
   group: release-drafter
@@ -30,32 +32,57 @@ permissions:
   contents: read
 
 jobs:
-  # Updates the draft release when PRs are merged to main
   update_release_draft:
+    name: Draft Release
     if: github.event_name == 'push'
     permissions:
       contents: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v6
+      - uses: aaronsteers/semantic-pr-release-drafter@v1
         with:
-          config-name: release-drafter.yml
-          disable-autolabeler: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name-template: 'v$RESOLVED_VERSION'
+          tag-template: 'v$RESOLVED_VERSION'
+          change-template: '- $TITLE (#$NUMBER)'
+          template: |
+            ## Changes
 
-  # Auto-labels PRs based on conventional commit title patterns
-  autolabel_pr:
-    if: github.event_name == 'pull_request'
-    permissions:
-      contents: write
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: release-drafter/release-drafter@v6
-        with:
-          config-name: release-drafter.yml
-          disable-releaser: true
+            $CHANGES
+
+            ## Installation
+
+            ```hcl
+            terraform {
+              required_providers {
+                airbyte = {
+                  source  = "airbytehq/airbyte"
+                  version = "$RESOLVED_VERSION"
+                }
+              }
+            }
+            ```
+          categories: |
+            - title: 'Breaking Changes'
+              commit-types:
+                - 'breaking'
+            - title: 'New Features'
+              commit-types:
+                - 'feat'
+            - title: 'Bug Fixes'
+              commit-types:
+                - 'fix'
+            - title: 'Under the Hood'
+              collapse-after: 5
+              commit-types:
+                - 'chore'
+                - 'ci'
+                - 'refactor'
+                - 'test'
+                - 'perf'
+            - title: 'Documentation'
+              collapse-after: 3
+              commit-types:
+                - 'docs'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
