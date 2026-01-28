@@ -7,7 +7,7 @@
 # 1. Fetch connector definitions from the Airbyte connector registry (all connectors, Cloud + OSS)
 # 2. Generate api_terraform.yaml with connector-specific schemas (using scripts/generate_terraform_spec.py)
 # 3. Upload the generated spec as a GitHub artifact for documentation/debugging
-# 4. Run Speakeasy to generate the Terraform provider code (always with --force)
+# 4. Run Speakeasy to generate the Terraform provider code
 # 5. (If not dry_run) Create a PR with the regenerated code
 # 6. (If dry_run) Build and verify the generated code compiles
 #
@@ -129,10 +129,10 @@ jobs:
               run: |
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
                       # Dry run: use --skip-compile, we'll build ourselves
-                      speakeasy run --force --skip-compile
+                      speakeasy run --skip-compile
                   else
-                      # Always force regeneration with console output
-                      speakeasy run --force --output console
+                      # Normal generation with console output
+                      speakeasy run --output console
                   fi
 
             - name: Update dependencies
