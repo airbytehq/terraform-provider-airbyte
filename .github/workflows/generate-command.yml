@@ -1,20 +1,22 @@
 # Speakeasy SDK Generation Workflow
 #
 # This workflow regenerates the Terraform provider code from the Airbyte connector registry using Speakeasy.
-# It creates a PR with the regenerated code for review.
+# It can either create a PR with the regenerated code (default) or run in dry-run mode for validation.
 #
 # Generation Process:
 # 1. Fetch connector definitions from the Airbyte connector registry
 # 2. Generate api_terraform.yaml with connector-specific schemas (using scripts/generate_terraform_spec.py)
 # 3. Upload the generated spec as a GitHub artifact for documentation/debugging
 # 4. Run Speakeasy to generate the Terraform provider code
-# 5. Create a PR with the regenerated code
+# 5. (If not dry_run) Create a PR with the regenerated code
+# 6. (If dry_run) Build and verify the generated code compiles
 #
 # How to use:
 # - Go to Actions > Generate > Run workflow
 # - Select the branch to run on (usually main)
 # - Optionally check "Force generation" to regenerate even if no changes detected
 # - Optionally check "Cloud only" to only include connectors available in Airbyte Cloud
+# - Optionally check "Dry run" to validate generation without creating a PR
 #
 # For clean regeneration (when API spec has breaking changes):
 # 1. First run the "Clean PR Branch" workflow on an existing Speakeasy PR branch
@@ -45,6 +47,10 @@ permissions:
                 description: Only include connectors available in Airbyte Cloud
                 type: boolean
                 default: true
+            dry_run:
+                description: Validate generation without creating a PR
+                type: boolean
+                default: false
             pr:
                 description: 'PR number'
                 type: string
@@ -53,15 +59,28 @@ permissions:
                 description: 'Comment ID (for slash command triggers)'
                 type: string
                 required: false
-env:
-    GO_VERSION: "1.24"
+    workflow_call:
+        inputs:
+            force:
+                description: Force generation of SDKs
+                type: boolean
+                default: false
+            cloud_only:
+                description: Only include connectors available in Airbyte Cloud
+                type: boolean
+                default: true
+            dry_run:
+                description: Validate generation without creating a PR
+                type: boolean
+                default: false
 jobs:
     generate:
         name: Generate SDK
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest-16core
+        timeout-minutes: 30
         steps:
             - name: Authenticate as GitHub App
-              if: github.event.inputs.pr
+              if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
               uses: actions/create-github-app-token@v2
               id: get-app-token
               with:
@@ -69,7 +88,7 @@ jobs:
                   private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
 
             - name: Post or append starting comment
-              if: github.event.inputs.pr
+              if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
               id: start-comment
               uses: peter-evans/create-or-update-comment@v5
               with:
@@ -79,7 +98,7 @@ jobs:
                   body: |
                       > **Generate SDK Job Info**
                       >
-                      > Running Speakeasy SDK generation (force=${{ github.event.inputs.force || 'false' }}).
+                      > Running Speakeasy SDK generation (force=${{ inputs.force }}).
 
                       > Job started... [Check job output.](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
@@ -94,7 +113,7 @@ jobs:
             - name: Generate Terraform OpenAPI spec
               run: |
                   mkdir -p generated
-                  if [ "${{ github.event.inputs.cloud_only }}" = "true" ]; then
+                  if [ "${{ inputs.cloud_only }}" = "true" ]; then
                       uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
                   else
                       uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
@@ -110,7 +129,7 @@ jobs:
             - name: Set up Go
               uses: actions/setup-go@v5
               with:
-                  go-version: ${{ env.GO_VERSION }}
+                  go-version-file: 'go.mod'
                   cache: true
 
             - name: Install Speakeasy CLI
@@ -118,18 +137,47 @@ jobs:
                   curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
                   echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
+            - name: Clean generated code
+              run: |
+                  rm -rf internal/sdk
+                  rm -f internal/provider/destination_*.go
+                  rm -f internal/provider/source_*.go
+                  rm -rf internal/provider/types/
+
             - name: Run Speakeasy
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
-                  # Use --output console to avoid exceeding GitHub's step summary size limit (1024k)
-                  if [ "${{ github.event.inputs.force }}" = "true" ]; then
+                  if [ "${{ inputs.dry_run }}" = "true" ]; then
+                      # Dry run: use --skip-compile, we'll build ourselves
+                      speakeasy run --skip-compile
+                  elif [ "${{ inputs.force }}" = "true" ]; then
+                      # Force generation with console output
                       speakeasy run --force --output console
                   else
+                      # Normal generation with console output
                       speakeasy run --output console
                   fi
 
+            - name: Update dependencies
+              if: ${{ inputs.dry_run }}
+              run: |
+                  go mod tidy
+
+            - name: Build generated code
+              if: ${{ inputs.dry_run }}
+              run: |
+                  go build ./...
+
+            - name: Generation Summary
+              run: |
+                  echo "=== Generation Summary ==="
+                  echo "Source files: $(ls internal/provider/source_*.go 2>/dev/null | wc -l || echo 0)"
+                  echo "Destination files: $(ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo 0)"
+                  echo "SDK models: $(ls internal/sdk/models/shared/ 2>/dev/null | wc -l || echo 0)"
+
             - name: Check for changes
+              if: ${{ !inputs.dry_run }}
               id: changes
               run: |
                   if [ -n "$(git status --porcelain)" ]; then
@@ -139,7 +187,7 @@ jobs:
                   fi
 
             - name: Create Pull Request
-              if: steps.changes.outputs.has_changes == 'true'
+              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' }}
               uses: peter-evans/create-pull-request@v6
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
@@ -156,7 +204,7 @@ jobs:
                   delete-branch: true
 
             - name: Append success comment
-              if: success() && github.event.inputs.pr
+              if: ${{ success() && !inputs.dry_run && github.event.inputs.pr != '' }}
               uses: peter-evans/create-or-update-comment@v5
               with:
                   token: ${{ steps.get-app-token.outputs.token }}
@@ -166,7 +214,7 @@ jobs:
                       > SDK generation completed successfully.
 
             - name: Append failure comment
-              if: failure() && github.event.inputs.pr
+              if: ${{ failure() && !inputs.dry_run && github.event.inputs.pr != '' }}
               uses: peter-evans/create-or-update-comment@v5
               with:
                   token: ${{ steps.get-app-token.outputs.token }}
