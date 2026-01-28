@@ -14,7 +14,7 @@
 # Note: Acceptance tests require TF_ACC=1 and may need additional credentials
 # for testing against a real Airbyte instance.
 
-name: Tests
+name: Build and Test
 
 # This GitHub action runs your tests for each pull request and push.
 # Optionally, you can turn it on using a schedule for regular testing.
