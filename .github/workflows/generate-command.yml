@@ -4,23 +4,21 @@
 # It can either create a PR with the regenerated code (default) or run in dry-run mode for validation.
 #
 # Generation Process:
-# 1. Fetch connector definitions from the Airbyte connector registry
+# 1. Fetch connector definitions from the Airbyte connector registry (all connectors, Cloud + OSS)
 # 2. Generate api_terraform.yaml with connector-specific schemas (using scripts/generate_terraform_spec.py)
 # 3. Upload the generated spec as a GitHub artifact for documentation/debugging
-# 4. Run Speakeasy to generate the Terraform provider code
+# 4. Run Speakeasy to generate the Terraform provider code (always with --force)
 # 5. (If not dry_run) Create a PR with the regenerated code
 # 6. (If dry_run) Build and verify the generated code compiles
 #
 # How to use:
 # - Go to Actions > Generate > Run workflow
 # - Select the branch to run on (usually main)
-# - Optionally check "Force generation" to regenerate even if no changes detected
-# - Optionally check "Cloud only" to only include connectors available in Airbyte Cloud
 # - Optionally check "Dry run" to validate generation without creating a PR
 #
 # For clean regeneration (when API spec has breaking changes):
 # 1. First run the "Clean PR Branch" workflow on an existing Speakeasy PR branch
-# 2. Then re-run this Generate workflow on main with force=true
+# 2. Then re-run this Generate workflow on main
 #
 # Note: This workflow calls the Speakeasy CLI directly (instead of using their Docker-based
 # reusable workflow) to allow us to control the Go version via setup-go. This is necessary
@@ -39,14 +37,6 @@ permissions:
 "on":
     workflow_dispatch:
         inputs:
-            force:
-                description: Force generation of SDKs
-                type: boolean
-                default: false
-            cloud_only:
-                description: Only include connectors available in Airbyte Cloud
-                type: boolean
-                default: true
             dry_run:
                 description: Validate generation without creating a PR
                 type: boolean
@@ -61,14 +51,6 @@ permissions:
                 required: false
     workflow_call:
         inputs:
-            force:
-                description: Force generation of SDKs
-                type: boolean
-                default: false
-            cloud_only:
-                description: Only include connectors available in Airbyte Cloud
-                type: boolean
-                default: true
             dry_run:
                 description: Validate generation without creating a PR
                 type: boolean
@@ -98,7 +80,7 @@ jobs:
                   body: |
                       > **Generate SDK Job Info**
                       >
-                      > Running Speakeasy SDK generation (force=${{ inputs.force }}).
+                      > Running Speakeasy SDK generation.
 
                       > Job started... [Check job output.](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
@@ -113,11 +95,8 @@ jobs:
             - name: Generate Terraform OpenAPI spec
               run: |
                   mkdir -p generated
-                  if [ "${{ inputs.cloud_only }}" = "true" ]; then
-                      uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
-                  else
-                      uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
-                  fi
+                  # Generate spec with all connectors (Cloud + OSS)
+                  uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
 
             - name: Upload generated spec as artifact
               uses: actions/upload-artifact@v4
@@ -150,13 +129,10 @@ jobs:
               run: |
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
                       # Dry run: use --skip-compile, we'll build ourselves
-                      speakeasy run --skip-compile
-                  elif [ "${{ inputs.force }}" = "true" ]; then
-                      # Force generation with console output
-                      speakeasy run --force --output console
+                      speakeasy run --force --skip-compile
                   else
-                      # Normal generation with console output
-                      speakeasy run --output console
+                      # Always force regeneration with console output
+                      speakeasy run --force --output console
                   fi
 
             - name: Update dependencies

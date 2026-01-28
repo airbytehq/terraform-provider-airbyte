@@ -26,6 +26,4 @@ jobs:
     uses: ./.github/workflows/generate-command.yml
     with:
       dry_run: true
-      cloud_only: true
-      force: false
     secrets: inherit
