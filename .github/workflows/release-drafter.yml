@@ -61,27 +61,5 @@ jobs:
               }
             }
             ```
-          categories: |
-            - title: 'Breaking Changes'
-              commit-types:
-                - 'breaking'
-            - title: 'New Features'
-              commit-types:
-                - 'feat'
-            - title: 'Bug Fixes'
-              commit-types:
-                - 'fix'
-            - title: 'Under the Hood'
-              collapse-after: 5
-              commit-types:
-                - 'chore'
-                - 'ci'
-                - 'refactor'
-                - 'test'
-                - 'perf'
-            - title: 'Documentation'
-              collapse-after: 3
-              commit-types:
-                - 'docs'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
