@@ -479,6 +479,12 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
         if key == "required" and is_update:
             # For update schemas, make all fields optional
             continue
+        elif key == "examples":
+            # OpenAPI requires 'examples' to be an array, not a single value
+            if isinstance(value, list):
+                result[key] = value
+            else:
+                result[key] = [value]
         elif key == "properties":
             result[key] = {}
             for prop_name, prop_value in value.items():
