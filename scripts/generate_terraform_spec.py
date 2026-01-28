@@ -33,10 +33,10 @@ import yaml
 OSS_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
 CLOUD_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
 
-# Base API spec URL (the terraform-specific spec that Speakeasy already works with)
-# Using api_terraform.yaml instead of api.yaml because api.yaml has newer endpoints
-# with broken schema references that haven't been fixed upstream yet.
-BASE_API_SPEC_URL = "https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api_terraform.yaml"
+# Base API spec URL - the actual OpenAPI spec maintained by the platform team.
+# This is the source of truth for the Airbyte API. The terraform provider adds
+# connector-specific paths and schemas on top of this base spec.
+BASE_API_SPEC_URL = "https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api.yaml"
 
 # =============================================================================
 # OpenAPI Path Templates
@@ -345,6 +345,39 @@ CUSTOM_CONNECTOR_STUBS = """
       title: "Custom Spec"
 """
 
+# Stub schemas for SourceConfiguration and DestinationConfiguration
+# These are placeholders that get replaced by oneOf references to all connector types
+CONFIGURATION_STUBS = """
+    SourceConfiguration:
+      description: The values required to configure the source.
+      example: { user: "charles" }
+
+    DestinationConfiguration:
+      description: The values required to configure the destination.
+      example: { user: "charles" }
+"""
+
+# Security schemes for the API
+SECURITY_SCHEMES = """  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic
+    clientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /applications/token
+          scopes: {}
+security:
+  - bearerAuth: []
+  - basicAuth: []
+  - clientCredentials: []
+"""
+
 
 # =============================================================================
 # Helper Functions
@@ -596,7 +629,8 @@ def main() -> None:
 
     # Split the base spec to insert:
     # 1. Connector-specific paths before "components:"
-    # 2. Connector-specific schemas before "securitySchemes:" (inside components/schemas)
+    # 2. Connector-specific schemas at the end of components/schemas
+    # 3. Security schemes (if not present in base spec)
     base_lines = base_spec.split("\n")
     components_line_idx = None
     security_schemes_line_idx = None
@@ -612,16 +646,16 @@ def main() -> None:
     if components_line_idx is None:
         msg = "Could not find 'components:' section in base spec"
         raise ValueError(msg)
-    if security_schemes_line_idx is None:
-        msg = "Could not find 'securitySchemes:' section in base spec"
-        raise ValueError(msg)
+
+    # If no securitySchemes section, we'll add it at the end
+    has_security_schemes = security_schemes_line_idx is not None
 
     # Build the output:
     # 1. Everything before "components:" (includes paths section)
     # 2. Connector-specific paths (still under paths section)
-    # 3. "components:" up to "securitySchemes:" (includes base schemas)
-    # 4. Connector-specific schemas (inside components/schemas, before securitySchemes)
-    # 5. "securitySchemes:" and rest of the spec
+    # 3. "components:" and base schemas
+    # 4. Connector-specific schemas (inside components/schemas)
+    # 5. Security schemes (added if not present, or kept if present)
 
     output_parts = []
 
@@ -638,8 +672,13 @@ def main() -> None:
         upper_camel = lower_hyphen_to_upper_camel(name)
         output_parts.append(generate_destination_path(upper_camel))
 
-    # Part 3: Add components section and base schemas (up to securitySchemes)
-    output_parts.append("\n".join(base_lines[components_line_idx:security_schemes_line_idx]))
+    # Part 3: Add components section and base schemas
+    if has_security_schemes:
+        # Include up to securitySchemes
+        output_parts.append("\n".join(base_lines[components_line_idx:security_schemes_line_idx]))
+    else:
+        # Include all of components (no securitySchemes in base spec)
+        output_parts.append("\n".join(base_lines[components_line_idx:]))
 
     # Part 4: Add connector-specific schemas (inside components/schemas, before securitySchemes)
     output_parts.append("# Connector-specific schemas")
@@ -691,8 +730,16 @@ def main() -> None:
       title: "Custom Spec"
 """)
 
-    # Part 5: Add securitySchemes section and rest of the spec
-    output_parts.append("\n".join(base_lines[security_schemes_line_idx:]))
+    # Note: SourceConfiguration and DestinationConfiguration stubs are already
+    # present in the base api.yaml, so we don't need to add them here.
+
+    # Part 5: Add securitySchemes section
+    if has_security_schemes:
+        # Use existing securitySchemes from base spec
+        output_parts.append("\n".join(base_lines[security_schemes_line_idx:]))
+    else:
+        # Add security schemes (not present in base api.yaml)
+        output_parts.append(SECURITY_SCHEMES)
 
     # Write output
     output_content = "\n".join(output_parts)
