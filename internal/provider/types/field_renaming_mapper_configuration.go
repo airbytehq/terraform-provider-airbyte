@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-type FieldRenaming struct {
+type FieldRenamingMapperConfiguration struct {
 	NewFieldName      types.String `tfsdk:"new_field_name"`
 	OriginalFieldName types.String `tfsdk:"original_field_name"`
 }

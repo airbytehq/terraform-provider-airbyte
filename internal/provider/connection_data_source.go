@@ -88,7 +88,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 											"mapper_configuration": schema.SingleNestedAttribute{
 												Computed: true,
 												Attributes: map[string]schema.Attribute{
-													"encryption": schema.SingleNestedAttribute{
+													"encryption_mapper_configuration": schema.SingleNestedAttribute{
 														Computed: true,
 														Attributes: map[string]schema.Attribute{
 															"aes": schema.SingleNestedAttribute{
@@ -134,7 +134,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 															},
 														},
 													},
-													"field_filtering": schema.SingleNestedAttribute{
+													"field_filtering_mapper_configuration": schema.SingleNestedAttribute{
 														Computed: true,
 														Attributes: map[string]schema.Attribute{
 															"target_field": schema.StringAttribute{
@@ -143,7 +143,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 															},
 														},
 													},
-													"field_renaming": schema.SingleNestedAttribute{
+													"field_renaming_mapper_configuration": schema.SingleNestedAttribute{
 														Computed: true,
 														Attributes: map[string]schema.Attribute{
 															"new_field_name": schema.StringAttribute{
@@ -156,7 +156,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 															},
 														},
 													},
-													"hashing": schema.SingleNestedAttribute{
+													"hashing_mapper_configuration": schema.SingleNestedAttribute{
 														Computed: true,
 														Attributes: map[string]schema.Attribute{
 															"field_name_suffix": schema.StringAttribute{
@@ -173,7 +173,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 															},
 														},
 													},
-													"row_filtering": schema.SingleNestedAttribute{
+													"row_filtering_mapper_configuration": schema.SingleNestedAttribute{
 														Computed: true,
 														Attributes: map[string]schema.Attribute{
 															"conditions": schema.StringAttribute{

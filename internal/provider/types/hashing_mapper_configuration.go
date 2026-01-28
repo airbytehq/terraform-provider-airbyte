@@ -6,11 +6,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-type EncryptionAES struct {
-	Algorithm       types.String `tfsdk:"algorithm"`
+type HashingMapperConfiguration struct {
 	FieldNameSuffix types.String `tfsdk:"field_name_suffix"`
-	Key             types.String `tfsdk:"key"`
-	Mode            types.String `tfsdk:"mode"`
-	Padding         types.String `tfsdk:"padding"`
+	Method          types.String `tfsdk:"method"`
 	TargetField     types.String `tfsdk:"target_field"`
 }

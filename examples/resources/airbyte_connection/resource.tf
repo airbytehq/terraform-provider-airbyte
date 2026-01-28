@@ -11,13 +11,13 @@ resource "airbyte_connection" "my_connection" {
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
             mapper_configuration = {
-              encryption = {
+              encryption_mapper_configuration = {
                 aes = {
-                  algorithm         = "AES"
+                  algorithm         = "RSA"
                   field_name_suffix = "...my_field_name_suffix..."
                   key               = "...my_key..."
-                  mode              = "CBC"
-                  padding           = "PKCS5Padding"
+                  mode              = "OFB"
+                  padding           = "NoPadding"
                   target_field      = "...my_target_field..."
                 }
               }

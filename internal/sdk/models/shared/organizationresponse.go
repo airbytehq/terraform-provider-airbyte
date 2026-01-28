@@ -2,7 +2,6 @@
 
 package shared
 
-// OrganizationResponse - Provides details of a single organization for a user.
 type OrganizationResponse struct {
 	OrganizationID   string `json:"organizationId"`
 	OrganizationName string `json:"organizationName"`

@@ -6,6 +6,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-type FieldFiltering struct {
+type FieldFilteringMapperConfiguration struct {
 	TargetField types.String `tfsdk:"target_field"`
 }
