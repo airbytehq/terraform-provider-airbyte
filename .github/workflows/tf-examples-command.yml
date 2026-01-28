@@ -51,23 +51,38 @@ permissions:
   pull-requests: write
 
 jobs:
+  # Determine which projects to run based on event type and input
+  setup:
+    name: Setup Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Set matrix
+        id: set-matrix
+        run: |
+          # Define all projects
+          ALL_PROJECTS='[{"project":"pre-1.0","path":"examples/projects/pre-1.0","artifact":"terraform-state-pre-1.0"},{"project":"1.0","path":"examples/projects/1.0","artifact":"terraform-state-1.0"}]'
+          
+          if [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event.inputs.project }}" = "all" ]; then
+            # Run all projects for push events or when 'all' is selected
+            echo "matrix={\"include\":$ALL_PROJECTS}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.inputs.project }}" = "pre-1.0" ]; then
+            echo 'matrix={"include":[{"project":"pre-1.0","path":"examples/projects/pre-1.0","artifact":"terraform-state-pre-1.0"}]}' >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.inputs.project }}" = "1.0" ]; then
+            echo 'matrix={"include":[{"project":"1.0","path":"examples/projects/1.0","artifact":"terraform-state-1.0"}]}' >> $GITHUB_OUTPUT
+          else
+            # Fallback to all projects
+            echo "matrix={\"include\":$ALL_PROJECTS}" >> $GITHUB_OUTPUT
+          fi
+
   terraform:
     name: Terraform (${{ matrix.project }})
+    needs: setup
     runs-on: ubuntu-latest
-    if: |
-      github.event_name == 'push' ||
-      (github.event_name == 'workflow_dispatch' && 
-       (github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project))
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - project: pre-1.0
-            path: examples/projects/pre-1.0
-            artifact: terraform-state-pre-1.0
-          - project: "1.0"
-            path: examples/projects/1.0
-            artifact: terraform-state-1.0
+      matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
     concurrency:
       group: terraform-${{ matrix.project }}-deploy
       cancel-in-progress: false

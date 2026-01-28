@@ -1,0 +1,29 @@
+# Validate Speakeasy Generation (Dry Run)
+#
+# This workflow validates that Speakeasy generation can complete successfully.
+# It does NOT validate that the generated code matches the committed code (zero-diff).
+# It runs on every PR push but does NOT create PRs or push changes.
+#
+# This workflow calls the main generation workflow with dry_run=true to ensure
+# both workflows use the same generation logic.
+
+name: Validate Speakeasy Generation (Dry Run)
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - 'examples/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Generation (Dry Run)
+    uses: ./.github/workflows/generate-command.yml
+    with:
+      dry_run: true
+    secrets: inherit

@@ -14,7 +14,7 @@
 # - TERRAFORM_GPG_PRIVATE_KEY: GPG private key for signing
 # - TERRAFORM_GPG_PASSPHRASE: Passphrase for the GPG key
 
-name: Release
+name: Publish to Terraform Public Registry
 
 # This GitHub action creates a release when a tag that matches the pattern
 # "v*" (e.g. v0.1.0) is created.
@@ -31,7 +31,11 @@ permissions:
 
 jobs:
   goreleaser:
+    name: Build and Publish Release
     runs-on: ubuntu-latest-16core
+    environment:
+      name: Terraform Registry
+      url: https://registry.terraform.io/providers/airbytehq/airbyte
     steps:
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
         with:
