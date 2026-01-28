@@ -592,25 +592,73 @@ def main() -> None:
     base_spec = fetch_text(args.base_spec)
 
     # Filter sources and destinations based on --type flag
+    # Logic:
+    # - With --cloud-only: Only include connectors available in Airbyte Cloud
+    # - Without --cloud-only: Include Cloud connectors + OSS connectors not in Cloud
+    #   (This ensures we don't miss Cloud-only connectors that aren't in OSS)
     sources = []
     if args.type in ("all", "sources"):
-        for source in oss_registry.get("sources", []):
-            source_id = source.get("sourceDefinitionId")
-            if args.cloud_only and source_id not in cloud_source_ids:
-                continue
-            # Skip e2e-test-cloud connector
-            docker_repo = source.get("dockerRepository", "")
-            if "e2e-test-cloud" in docker_repo:
-                continue
-            sources.append(source)
+        seen_source_ids = set()
+        if args.cloud_only:
+            # Cloud-only mode: iterate through OSS but filter to cloud IDs
+            for source in oss_registry.get("sources", []):
+                source_id = source.get("sourceDefinitionId")
+                if source_id not in cloud_source_ids:
+                    continue
+                # Skip e2e-test-cloud connector
+                docker_repo = source.get("dockerRepository", "")
+                if "e2e-test-cloud" in docker_repo:
+                    continue
+                sources.append(source)
+                seen_source_ids.add(source_id)
+        else:
+            # Cloud+OSS mode: Start with Cloud connectors, then add OSS-only connectors
+            # First, add all Cloud connectors
+            for source in cloud_registry.get("sources", []):
+                source_id = source.get("sourceDefinitionId")
+                # Skip e2e-test-cloud connector
+                docker_repo = source.get("dockerRepository", "")
+                if "e2e-test-cloud" in docker_repo:
+                    continue
+                sources.append(source)
+                seen_source_ids.add(source_id)
+            # Then add OSS connectors that are NOT in Cloud
+            for source in oss_registry.get("sources", []):
+                source_id = source.get("sourceDefinitionId")
+                if source_id in seen_source_ids:
+                    continue  # Already added from Cloud
+                # Skip e2e-test-cloud connector
+                docker_repo = source.get("dockerRepository", "")
+                if "e2e-test-cloud" in docker_repo:
+                    continue
+                sources.append(source)
+                seen_source_ids.add(source_id)
 
     destinations = []
     if args.type in ("all", "destinations"):
-        for dest in oss_registry.get("destinations", []):
-            dest_id = dest.get("destinationDefinitionId")
-            if args.cloud_only and dest_id not in cloud_dest_ids:
-                continue
-            destinations.append(dest)
+        seen_dest_ids = set()
+        if args.cloud_only:
+            # Cloud-only mode: iterate through OSS but filter to cloud IDs
+            for dest in oss_registry.get("destinations", []):
+                dest_id = dest.get("destinationDefinitionId")
+                if dest_id not in cloud_dest_ids:
+                    continue
+                destinations.append(dest)
+                seen_dest_ids.add(dest_id)
+        else:
+            # Cloud+OSS mode: Start with Cloud connectors, then add OSS-only connectors
+            # First, add all Cloud connectors
+            for dest in cloud_registry.get("destinations", []):
+                dest_id = dest.get("destinationDefinitionId")
+                destinations.append(dest)
+                seen_dest_ids.add(dest_id)
+            # Then add OSS connectors that are NOT in Cloud
+            for dest in oss_registry.get("destinations", []):
+                dest_id = dest.get("destinationDefinitionId")
+                if dest_id in seen_dest_ids:
+                    continue  # Already added from Cloud
+                destinations.append(dest)
+                seen_dest_ids.add(dest_id)
 
     print(f"Processing {len(sources)} sources and {len(destinations)} destinations...")
 
