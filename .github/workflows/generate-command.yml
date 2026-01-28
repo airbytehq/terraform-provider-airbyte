@@ -7,7 +7,7 @@
 # 1. Fetch connector definitions from the Airbyte connector registry (all connectors, Cloud + OSS)
 # 2. Generate api_terraform.yaml with connector-specific schemas (using scripts/generate_terraform_spec.py)
 # 3. Upload the generated spec as a GitHub artifact for documentation/debugging
-# 4. Run Speakeasy to generate the Terraform provider code (always with --force)
+# 4. Run Speakeasy to generate the Terraform provider code
 # 5. (If not dry_run) Create a PR with the regenerated code
 # 6. (If dry_run) Build and verify the generated code compiles
 #
@@ -29,11 +29,9 @@
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
 
 name: Generate TF Provider (New PR)
-permissions:
-    checks: write
-    contents: write
-    pull-requests: write
-    statuses: write
+# Note: Top-level permissions are intentionally omitted to allow workflow_call
+# from pull_request triggers (which have restricted permissions).
+# Job-level permissions are used instead.
 "on":
     workflow_dispatch:
         inputs:
@@ -60,6 +58,11 @@ jobs:
         name: Generate SDK
         runs-on: ubuntu-latest-16core
         timeout-minutes: 30
+        # Note: No explicit permissions here to allow workflow_call from
+        # pull_request triggers (which have restricted permissions).
+        # The workflow uses GITHUB_TOKEN with default permissions, which is
+        # sufficient for dry_run mode. For PR creation (non-dry_run), the
+        # peter-evans/create-pull-request action uses its own token.
         steps:
             - name: Authenticate as GitHub App
               if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
@@ -129,10 +132,10 @@ jobs:
               run: |
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
                       # Dry run: use --skip-compile, we'll build ourselves
-                      speakeasy run --force --skip-compile
+                      speakeasy run --skip-compile
                   else
-                      # Always force regeneration with console output
-                      speakeasy run --force --output console
+                      # Normal generation with console output
+                      speakeasy run --output console
                   fi
 
             - name: Update dependencies

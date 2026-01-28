@@ -479,6 +479,16 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
         if key == "required" and is_update:
             # For update schemas, make all fields optional
             continue
+        elif key == "examples":
+            # OpenAPI requires 'examples' to be an array, not a single value.
+            # This mitigates upstream connector-side spec issues (2026-01-28):
+            # https://github.com/airbytehq/oncall/issues/11076
+            if value is None:
+                continue  # Skip null examples
+            elif isinstance(value, list):
+                result[key] = value
+            else:
+                result[key] = [value]
         elif key == "properties":
             result[key] = {}
             for prop_name, prop_value in value.items():
