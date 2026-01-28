@@ -11,7 +11,11 @@ name: Validate Speakeasy Generation (Split Steps Experiment)
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
 
 on:
-  # Manual trigger only - not run automatically on PRs
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - 'examples/**'
   workflow_dispatch:
 
 permissions:
