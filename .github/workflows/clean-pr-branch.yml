@@ -5,9 +5,9 @@
 # a fully clean regeneration.
 #
 # How to use:
-# 1. Run the "Generate" workflow on main - this creates a Speakeasy PR
+# 1. Run the "Generate TF Provider (New PR)" workflow on main - this creates a Speakeasy PR
 # 2. If regeneration fails due to stale files, run this workflow on the PR's branch
-# 3. Re-run the "Generate" workflow on main with force=true
+# 3. Re-run the "Generate TF Provider (New PR)" workflow on main with force=true
 #
 # The workflow will:
 # - Delete all generated SDK code (internal/sdk)
@@ -27,6 +27,7 @@ permissions:
                 required: true
 jobs:
     clean:
+        name: Delete Generated Files
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4

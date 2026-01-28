@@ -11,7 +11,8 @@ permissions:
   actions: write
 
 jobs:
-  slashCommandDispatch:
+  slash-command-dispatch:
+    name: Slash Command Dispatch
     # Only allow slash commands on pull request (not on issues)
     if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest

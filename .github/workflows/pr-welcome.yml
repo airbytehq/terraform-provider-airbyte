@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   welcome:
+    name: Post Welcome Comment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
