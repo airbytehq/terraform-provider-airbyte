@@ -1,6 +1,7 @@
-name: Validate Speakeasy Generation
+name: Validate Speakeasy Generation (Dry Run)
 
-# This workflow validates that the Speakeasy-generated code compiles correctly.
+# This workflow validates that Speakeasy generation can complete successfully.
+# It does NOT validate that the generated code matches the committed code (zero-diff).
 # It runs on every PR push but does NOT create PRs or push changes.
 # For actual regeneration, use the manual "Generate" workflow.
 #
@@ -21,7 +22,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validate Generation
+    name: Validate Generation (Dry Run)
     runs-on: ubuntu-latest-16core
     timeout-minutes: 30
     steps:
