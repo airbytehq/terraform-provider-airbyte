@@ -98,8 +98,10 @@ jobs:
             - name: Generate Terraform OpenAPI spec
               run: |
                   mkdir -p generated
-                  # Generate spec with all connectors (Cloud + OSS)
-                  uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
+                  # Generate spec with Cloud connectors only (faster generation)
+                  # Using --cloud-only to reduce the number of connectors processed,
+                  # which significantly speeds up Speakeasy generation (~11 min vs 30+ min timeout)
+                  uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
 
             - name: Upload generated spec as artifact
               uses: actions/upload-artifact@v4
