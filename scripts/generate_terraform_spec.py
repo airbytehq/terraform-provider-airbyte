@@ -481,7 +481,9 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
             continue
         elif key == "examples":
             # OpenAPI requires 'examples' to be an array, not a single value
-            if isinstance(value, list):
+            if value is None:
+                continue  # Skip null examples
+            elif isinstance(value, list):
                 result[key] = value
             else:
                 result[key] = [value]
