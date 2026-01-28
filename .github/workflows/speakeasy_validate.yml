@@ -3,6 +3,10 @@ name: Validate Speakeasy Generation
 # This workflow validates that the Speakeasy-generated code compiles correctly.
 # It runs on every PR push but does NOT create PRs or push changes.
 # For actual regeneration, use the manual "Generate" workflow.
+#
+# The spec generation logic is ported from:
+# - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/ApiDocumentationGenerator.kt
+# - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
 
 on:
   pull_request:
@@ -18,10 +22,13 @@ permissions:
 jobs:
   validate:
     name: Validate Generation
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-latest-16core
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - uses: actions/setup-go@v5
         with:
@@ -33,80 +40,30 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
           echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
-      - name: Clean regeneration - delete ALL generated code
+      - name: Generate spec from Airbyte connector registry
         run: |
-          # Delete ALL generated code to force fully clean regeneration
-          # The upstream API spec has changed from per-connector types to generic types
-          # We need to remove all stale generated files so Speakeasy can regenerate fresh
-          
-          echo "=== Removing internal/sdk (SDK models and utils) ==="
-          rm -rf internal/sdk
-          
-          echo "=== Removing generated provider destination resources ==="
-          rm -f internal/provider/destination_*.go
-          echo "Removed $(ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo 0) destination files"
-          
-          echo "=== Removing generated provider source resources ==="
-          rm -f internal/provider/source_*.go
-          echo "Removed $(ls internal/provider/source_*.go 2>/dev/null | wc -l || echo 0) source files"
-          
-          echo "=== Removing generated provider types ==="
-          rm -rf internal/provider/types/
-          
-          echo "=== Listing remaining provider files ==="
-          ls internal/provider/ || echo "No files remaining"
-          
-          echo "=== Done. All generated code removed. ==="
+          mkdir -p generated
+          uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml --cloud-only
 
-      - name: Run Speakeasy Generation (dry-run)
-        id: generate
-        continue-on-error: true
+      - name: Upload spec as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api_terraform_spec
+          path: generated/api_terraform.yaml
+          retention-days: 5
+
+      - name: Clean generated code
+        run: |
+          rm -rf internal/sdk
+          rm -f internal/provider/destination_*.go
+          rm -f internal/provider/source_*.go
+          rm -rf internal/provider/types/
+
+      - name: Run Speakeasy Generation
         env:
           SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
         run: |
-          # Run generation but don't commit/push anything
-          speakeasy run --skip-compile 2>&1 | tee speakeasy_output.txt
-          echo "speakeasy_exit_code=$?" >> $GITHUB_OUTPUT
-
-      - name: Check for generation errors
-        if: steps.generate.outcome == 'failure'
-        run: |
-          echo "::warning::Speakeasy generation encountered issues. See logs above."
-          cat speakeasy_output.txt
-
-      - name: Debug - Inspect generated files
-        if: always()
-        run: |
-          echo "=== List generated SDK models ==="
-          ls internal/sdk/models/shared/ 2>/dev/null | head -20 || echo "No SDK models found"
-          echo ""
-          echo "=== List generated provider files ==="
-          ls internal/provider/ 2>/dev/null | head -30 || echo "No provider files found"
-          echo ""
-          echo "=== Check for generic DestinationCreateRequest type ==="
-          grep -rn "DestinationCreateRequest" internal/sdk/models/ 2>/dev/null | head -5 || echo "Not found"
-          echo ""
-          echo "=== Check for generic SourceCreateRequest type ==="
-          grep -rn "SourceCreateRequest" internal/sdk/models/ 2>/dev/null | head -5 || echo "Not found"
-          echo ""
-          echo "=== UnmarshalJSON signature in utils/json.go ==="
-          grep -n "func UnmarshalJSON" internal/sdk/internal/utils/json.go 2>/dev/null || echo "Not found"
-          echo ""
-          echo "=== Git status summary ==="
-          git status --short | head -50 || true
-
-      - name: Upload debug artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: speakeasy-debug
-          path: |
-            internal/sdk/internal/utils/json.go
-            internal/sdk/models/shared/
-            internal/provider/
-            speakeasy_output.txt
-            .speakeasy/gen.lock
-          retention-days: 5
+          speakeasy run --skip-compile
 
       - name: Update dependencies
         run: |
@@ -114,19 +71,11 @@ jobs:
 
       - name: Build generated code
         run: |
-          go build -v ./...
+          go build ./...
 
-      - name: Run linters
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: latest
-          args: --timeout 5m
-
-      - name: Check for uncommitted changes
+      - name: Summary
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "::warning::Generation produced uncommitted changes:"
-            git diff --stat
-            echo ""
-            echo "If these changes are expected, run 'speakeasy run' locally and commit the results."
-          fi
+          echo "=== Generation Summary ==="
+          echo "Source files: $(ls internal/provider/source_*.go 2>/dev/null | wc -l || echo 0)"
+          echo "Destination files: $(ls internal/provider/destination_*.go 2>/dev/null | wc -l || echo 0)"
+          echo "SDK models: $(ls internal/sdk/models/shared/ 2>/dev/null | wc -l || echo 0)"

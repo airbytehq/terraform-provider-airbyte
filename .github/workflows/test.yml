@@ -5,8 +5,11 @@
 #
 # Jobs:
 # - build: Compiles the provider and runs golangci-lint
-# - generate: Verifies that generated code is up to date
+# - verify-go-generate: Verifies that Go-generated code (docs templates) is up to date
 # - test: Runs Terraform acceptance tests against multiple Terraform versions
+#
+# Note: This workflow does NOT run Speakeasy generation. For Speakeasy regeneration
+# of the provider code, use the manual "Generate" workflow (generate-command.yml).
 #
 # Note: Acceptance tests require TF_ACC=1 and may need additional credentials
 # for testing against a real Airbyte instance.
@@ -47,7 +50,8 @@ jobs:
           version: latest
           args: --timeout 5m
 
-  generate:
+  verify-go-generate:
+    name: Verify Go Generate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
