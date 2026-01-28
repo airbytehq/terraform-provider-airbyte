@@ -29,11 +29,9 @@
 # - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
 
 name: Generate TF Provider (New PR)
-permissions:
-    checks: write
-    contents: write
-    pull-requests: write
-    statuses: write
+# Note: Top-level permissions are intentionally omitted to allow workflow_call
+# from pull_request triggers (which have restricted permissions).
+# Job-level permissions are used instead.
 "on":
     workflow_dispatch:
         inputs:
@@ -60,6 +58,15 @@ jobs:
         name: Generate SDK
         runs-on: ubuntu-latest-16core
         timeout-minutes: 30
+        # Permissions for workflow_dispatch (PR creation, comments, etc.)
+        # When called via workflow_call from pull_request, these are ignored
+        # and the caller's (more restricted) permissions are used instead.
+        permissions:
+            checks: write
+            contents: write
+            pull-requests: write
+            statuses: write
+            actions: write
         steps:
             - name: Authenticate as GitHub App
               if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
