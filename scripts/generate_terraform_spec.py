@@ -582,9 +582,11 @@ def main() -> None:
         schema_name_update, transformed_update = transform_connector_spec(name, spec, "destination", True)
         destination_specs.append((schema_name_update, transformed_update))
 
-    # Sort names for consistent output
+    # Sort names and specs for consistent output
     source_names.sort()
     destination_names.sort()
+    source_specs.sort(key=lambda x: x[0])  # Sort by schema name
+    destination_specs.sort(key=lambda x: x[0])  # Sort by schema name
 
     # Add "custom" connector (only when including that type)
     source_names_for_terraform = source_names + (["custom"] if args.type in ("all", "sources") else [])
