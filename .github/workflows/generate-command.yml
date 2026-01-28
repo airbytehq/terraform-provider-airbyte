@@ -98,7 +98,8 @@ jobs:
             - name: Generate Terraform OpenAPI spec
               run: |
                   mkdir -p generated
-                  # Generate spec with all connectors (Cloud + OSS)
+                  # Generate spec with all connectors (Cloud + OSS-only)
+                  # The script handles deduplication: Cloud connectors + OSS connectors not in Cloud
                   uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
 
             - name: Upload generated spec as artifact
