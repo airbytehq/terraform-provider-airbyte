@@ -57,7 +57,7 @@ jobs:
     generate:
         name: Generate SDK
         runs-on: ubuntu-latest-16core
-        timeout-minutes: 30
+        timeout-minutes: 90
         # Note: No explicit permissions here to allow workflow_call from
         # pull_request triggers (which have restricted permissions).
         # The workflow uses GITHUB_TOKEN with default permissions, which is

@@ -1,5 +1,7 @@
 # Validate Speakeasy Generation (Dry Run)
 #
+# Test PR: Verifying that workflow_call now pulls from main after PR #247 merge.
+#
 # This workflow validates that Speakeasy generation can complete successfully.
 # It does NOT validate that the generated code matches the committed code (zero-diff).
 # It runs on every PR push but does NOT create PRs or push changes.
