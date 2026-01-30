@@ -332,26 +332,31 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
 """
 
 # Stub schemas for custom connectors
-# These must have type: object and additionalProperties: true to be treated as
-# proper object schemas by Speakeasy, otherwise we get "impedance mismatch: any != class"
+# These must have type: object with properties defined to be treated as class schemas
+# by Speakeasy. Without properties, Speakeasy treats them as map types which causes
+# "impedance mismatch: map != class" errors.
 CUSTOM_CONNECTOR_STUBS = """
     source-custom:
       description: The values required to configure the source.
       type: object
+      properties: {}
       additionalProperties: true
       example: { user: "charles" }
     destination-custom:
       description: The values required to configure the destination.
       type: object
+      properties: {}
       additionalProperties: true
       example: { user: "charles" }
     source-custom-update:
       title: "Custom Spec"
       type: object
+      properties: {}
       additionalProperties: true
     destination-custom-update:
       title: "Custom Spec"
       type: object
+      properties: {}
       additionalProperties: true
 """
 
