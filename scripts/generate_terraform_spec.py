@@ -332,32 +332,25 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
 """
 
 # Stub schemas for custom connectors
-# These must have type: object with properties defined to be treated as class schemas
-# by Speakeasy. Without properties, Speakeasy treats them as map types which causes
-# "impedance mismatch: map != class" errors.
+# These need x-speakeasy-type-override: any to tell Speakeasy to treat them as
+# arbitrary JSON blobs, since custom connectors can have any configuration shape.
+# Using type: object with additionalProperties causes "impedance mismatch: map != class"
+# because Speakeasy expects a structured class but we can't define fixed properties.
 CUSTOM_CONNECTOR_STUBS = """
     source-custom:
       description: The values required to configure the source.
-      type: object
-      properties: {}
-      additionalProperties: true
+      x-speakeasy-type-override: any
       example: { user: "charles" }
     destination-custom:
       description: The values required to configure the destination.
-      type: object
-      properties: {}
-      additionalProperties: true
+      x-speakeasy-type-override: any
       example: { user: "charles" }
     source-custom-update:
       title: "Custom Spec"
-      type: object
-      properties: {}
-      additionalProperties: true
+      x-speakeasy-type-override: any
     destination-custom-update:
       title: "Custom Spec"
-      type: object
-      properties: {}
-      additionalProperties: true
+      x-speakeasy-type-override: any
 """
 
 # Stub schemas for missing references in api.yaml
