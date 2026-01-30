@@ -332,17 +332,27 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
 """
 
 # Stub schemas for custom connectors
+# These must have type: object and additionalProperties: true to be treated as
+# proper object schemas by Speakeasy, otherwise we get "impedance mismatch: any != class"
 CUSTOM_CONNECTOR_STUBS = """
     source-custom:
       description: The values required to configure the source.
+      type: object
+      additionalProperties: true
       example: { user: "charles" }
     destination-custom:
       description: The values required to configure the destination.
+      type: object
+      additionalProperties: true
       example: { user: "charles" }
     source-custom-update:
       title: "Custom Spec"
+      type: object
+      additionalProperties: true
     destination-custom-update:
       title: "Custom Spec"
+      type: object
+      additionalProperties: true
 """
 
 # Stub schemas for missing references in api.yaml
