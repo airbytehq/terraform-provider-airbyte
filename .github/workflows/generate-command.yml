@@ -120,6 +120,24 @@ jobs:
                   curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
                   echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
+            - name: Lint OpenAPI spec (fast-fail for circular references)
+              env:
+                  SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+              run: |
+                  echo "Running Speakeasy lint to detect circular references and other issues..."
+                  # Run lint and capture output - this is much faster than full generation
+                  # and will catch circular reference issues before they cause hangs
+                  speakeasy lint openapi -s generated/api_terraform.yaml 2>&1 | tee lint_output.txt
+                  
+                  # Check for circular reference warnings that don't have x-speakeasy-type-override
+                  if grep -i "circular" lint_output.txt | grep -v "x-speakeasy-type-override"; then
+                      echo "::error::Circular reference detected without x-speakeasy-type-override annotation!"
+                      echo "Add 'x-speakeasy-type-override: any' to schemas with circular references."
+                      exit 1
+                  fi
+                  
+                  echo "Lint passed - no unhandled circular references detected."
+
             - name: Clean generated code
               run: |
                   rm -rf internal/sdk
