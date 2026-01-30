@@ -50,7 +50,7 @@ resource "airbyte_source" "my_source" {
 
 ### Required
 
-- `configuration` (String) The values required to configure the source. Parsed as JSON. **Note:** For datetime fields like `start_date`, use ISO8601 format with fractional seconds (e.g., `2025-01-01T00:00:00.000000Z` for file-based sources). See the examples directory for more details.
+- `configuration` (String) The values required to configure the source. Parsed as JSON.
 - `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String) Requires replacement if changed.
 
