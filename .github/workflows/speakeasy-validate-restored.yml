@@ -37,8 +37,11 @@ jobs:
 
       - name: Install Speakeasy CLI
         run: |
-          curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
-          echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
+          # Pin to v1.700.1 which was used in the successful 11-minute run
+          curl -fsSL https://github.com/speakeasy-api/speakeasy/releases/download/v1.700.1/speakeasy_linux_amd64.zip -o speakeasy.zip
+          unzip speakeasy.zip -d /usr/local/bin
+          rm speakeasy.zip
+          echo "/usr/local/bin" >> $GITHUB_PATH
 
       - name: Generate spec from Airbyte connector registry
         run: |
