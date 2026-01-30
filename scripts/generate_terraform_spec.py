@@ -376,6 +376,16 @@ FORBIDDEN_RESPONSE_STUB = """    ForbiddenResponse:
           schema:
             $ref: '#/components/schemas/ForbiddenResponse'"""
 
+# Speakeasy circular reference handling
+# The upstream api.yaml uses `x-airbyte-circular-ref: true` to mark schemas with
+# circular references. Speakeasy doesn't understand this marker and will hang
+# trying to resolve the circular reference. We need to replace it with
+# `x-speakeasy-type-override: any` which tells Speakeasy to treat the schema
+# as an arbitrary JSON blob, avoiding the circular reference issue.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
+CIRCULAR_REF_MARKER = "x-airbyte-circular-ref: true"
+SPEAKEASY_TYPE_OVERRIDE = "x-speakeasy-type-override: any"
+
 # Security schemes for the API
 # NOTE: The two leading spaces before `securitySchemes:` are intentional.
 # This snippet is inserted into an existing YAML structure where this
@@ -590,6 +600,13 @@ def main() -> None:
 
     print("Fetching base API spec...")
     base_spec = fetch_text(args.base_spec)
+
+    # Transform Airbyte circular reference markers to Speakeasy type overrides
+    # This prevents Speakeasy from hanging when trying to resolve circular references
+    if CIRCULAR_REF_MARKER in base_spec:
+        circular_ref_count = base_spec.count(CIRCULAR_REF_MARKER)
+        print(f"  Transforming {circular_ref_count} circular reference marker(s) for Speakeasy compatibility")
+        base_spec = base_spec.replace(CIRCULAR_REF_MARKER, SPEAKEASY_TYPE_OVERRIDE)
 
     # Filter sources and destinations based on --type flag
     # Logic:
