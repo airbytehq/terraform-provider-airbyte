@@ -334,6 +334,7 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
 # Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
 # The constant below is commented out but kept for reference in case custom
 # connectors are re-added in the future.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
 # CUSTOM_CONNECTOR_STUBS = """
 #     source-custom:
 #       description: The values required to configure the source.
@@ -730,7 +731,8 @@ def main() -> None:
     destination_specs.sort(key=lambda x: x[0])  # Sort by schema name
 
     # Note: Custom connectors were removed in the 1.0 refactor (PR #232)
-    # so we no longer add them to the terraform spec
+    # so we no longer add them to the terraform spec.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
     source_names_for_terraform = source_names
     destination_names_for_terraform = destination_names
 
@@ -845,6 +847,7 @@ def main() -> None:
     # Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
     # The code below is commented out but kept for reference in case custom
     # connectors are re-added in the future.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
     # if args.type == "all":
     #     output_parts.append(CUSTOM_CONNECTOR_STUBS)
     # elif args.type == "sources":
