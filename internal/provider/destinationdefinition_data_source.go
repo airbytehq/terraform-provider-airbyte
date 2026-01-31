@@ -57,7 +57,7 @@ func (r *DestinationDefinitionDataSource) Schema(ctx context.Context, req dataso
 				Computed: true,
 			},
 			"id": schema.StringAttribute{
-				Computed: true,
+				Required: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

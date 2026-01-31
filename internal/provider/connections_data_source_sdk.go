@@ -39,44 +39,44 @@ func (r *ConnectionsDataSourceModel) RefreshFromSharedConnectionsResponse(ctx co
 					var mappers tfTypes.ConfiguredStreamMapper
 
 					mappers.ID = types.StringPointerValue(mappersItem.ID)
-					if mappersItem.MapperConfiguration.Encryption != nil {
-						mappers.MapperConfiguration.Encryption = &tfTypes.Encryption{}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionAES != nil {
-							mappers.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionAES{}
-							mappers.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Algorithm))
-							mappers.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Key)
-							mappers.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Mode))
-							mappers.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Padding))
-							mappers.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.TargetField)
+					if mappersItem.MapperConfiguration.EncryptionMapperConfiguration != nil {
+						mappers.MapperConfiguration.EncryptionMapperConfiguration = &tfTypes.EncryptionMapperConfiguration{}
+						if mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration != nil {
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes = &tfTypes.EncryptionMapperAESConfiguration{}
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Algorithm))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.FieldNameSuffix)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Key)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Mode))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.Padding))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperAESConfiguration.TargetField)
 						}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionRSA != nil {
-							mappers.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionRSA{}
-							mappers.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.Algorithm))
-							mappers.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.PublicKey)
-							mappers.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.TargetField)
+						if mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration != nil {
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa = &tfTypes.EncryptionMapperRSAConfiguration{}
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.Algorithm))
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.FieldNameSuffix)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.PublicKey)
+							mappers.MapperConfiguration.EncryptionMapperConfiguration.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.EncryptionMapperConfiguration.EncryptionMapperRSAConfiguration.TargetField)
 						}
 					}
-					if mappersItem.MapperConfiguration.FieldFiltering != nil {
-						mappers.MapperConfiguration.FieldFiltering = &tfTypes.FieldFiltering{}
-						mappers.MapperConfiguration.FieldFiltering.TargetField = types.StringValue(mappersItem.MapperConfiguration.FieldFiltering.TargetField)
+					if mappersItem.MapperConfiguration.FieldFilteringMapperConfiguration != nil {
+						mappers.MapperConfiguration.FieldFilteringMapperConfiguration = &tfTypes.FieldFilteringMapperConfiguration{}
+						mappers.MapperConfiguration.FieldFilteringMapperConfiguration.TargetField = types.StringValue(mappersItem.MapperConfiguration.FieldFilteringMapperConfiguration.TargetField)
 					}
-					if mappersItem.MapperConfiguration.FieldRenaming != nil {
-						mappers.MapperConfiguration.FieldRenaming = &tfTypes.FieldRenaming{}
-						mappers.MapperConfiguration.FieldRenaming.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.NewFieldName)
-						mappers.MapperConfiguration.FieldRenaming.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName)
+					if mappersItem.MapperConfiguration.FieldRenamingMapperConfiguration != nil {
+						mappers.MapperConfiguration.FieldRenamingMapperConfiguration = &tfTypes.FieldRenamingMapperConfiguration{}
+						mappers.MapperConfiguration.FieldRenamingMapperConfiguration.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenamingMapperConfiguration.NewFieldName)
+						mappers.MapperConfiguration.FieldRenamingMapperConfiguration.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenamingMapperConfiguration.OriginalFieldName)
 					}
-					if mappersItem.MapperConfiguration.Hashing != nil {
-						mappers.MapperConfiguration.Hashing = &tfTypes.Hashing{}
-						mappers.MapperConfiguration.Hashing.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Hashing.FieldNameSuffix)
-						mappers.MapperConfiguration.Hashing.Method = types.StringValue(string(mappersItem.MapperConfiguration.Hashing.Method))
-						mappers.MapperConfiguration.Hashing.TargetField = types.StringValue(mappersItem.MapperConfiguration.Hashing.TargetField)
+					if mappersItem.MapperConfiguration.HashingMapperConfiguration != nil {
+						mappers.MapperConfiguration.HashingMapperConfiguration = &tfTypes.HashingMapperConfiguration{}
+						mappers.MapperConfiguration.HashingMapperConfiguration.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.HashingMapperConfiguration.FieldNameSuffix)
+						mappers.MapperConfiguration.HashingMapperConfiguration.Method = types.StringValue(string(mappersItem.MapperConfiguration.HashingMapperConfiguration.Method))
+						mappers.MapperConfiguration.HashingMapperConfiguration.TargetField = types.StringValue(mappersItem.MapperConfiguration.HashingMapperConfiguration.TargetField)
 					}
-					if mappersItem.MapperConfiguration.RowFiltering != nil {
-						mappers.MapperConfiguration.RowFiltering = &tfTypes.RowFiltering{}
-						conditionsResult, _ := json.Marshal(mappersItem.MapperConfiguration.RowFiltering.Conditions)
-						mappers.MapperConfiguration.RowFiltering.Conditions = jsontypes.NewNormalizedValue(string(conditionsResult))
+					if mappersItem.MapperConfiguration.RowFilteringMapperConfiguration != nil {
+						mappers.MapperConfiguration.RowFilteringMapperConfiguration = &tfTypes.RowFilteringMapperConfiguration{}
+						conditionsResult, _ := json.Marshal(mappersItem.MapperConfiguration.RowFilteringMapperConfiguration.Conditions)
+						mappers.MapperConfiguration.RowFilteringMapperConfiguration.Conditions = jsontypes.NewNormalizedValue(string(conditionsResult))
 					}
 					mappers.Type = types.StringValue(string(mappersItem.Type))
 

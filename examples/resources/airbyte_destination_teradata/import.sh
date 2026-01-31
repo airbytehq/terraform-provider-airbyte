@@ -1,0 +1,1 @@
+terraform import airbyte_destination_teradata.my_airbyte_destination_teradata "..."

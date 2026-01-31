@@ -1,0 +1,4 @@
+import {
+  to = airbyte_source_sharepoint_lists_enterprise.my_airbyte_source_sharepoint_lists_enterprise
+  id = "..."
+}

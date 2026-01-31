@@ -14,7 +14,9 @@ Source Resource
 
 ```terraform
 resource "airbyte_source" "my_source" {
-  configuration = { "user" : "charles" }
+  configuration = {
+    # ...
+  }
   definition_id = "e735c764-352e-4392-b04a-4052108601be"
   name          = "...my_name..."
   resource_allocation = {
@@ -50,7 +52,7 @@ resource "airbyte_source" "my_source" {
 
 ### Required
 
-- `configuration` (String) The values required to configure the source. Parsed as JSON.
+- `configuration` (Attributes) The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source. (see [below for nested schema](#nestedatt--configuration))
 - `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String) Requires replacement if changed.
 
@@ -65,6 +67,10 @@ resource "airbyte_source" "my_source" {
 - `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
+
+<a id="nestedatt--configuration"></a>
+### Nested Schema for `configuration`
+
 
 <a id="nestedatt--resource_allocation"></a>
 ### Nested Schema for `resource_allocation`

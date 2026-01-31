@@ -57,7 +57,7 @@ func (r *SourceDefinitionDataSource) Schema(ctx context.Context, req datasource.
 				Computed: true,
 			},
 			"id": schema.StringAttribute{
-				Computed: true,
+				Required: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

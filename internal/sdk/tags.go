@@ -539,10 +539,10 @@ func (s *Tags) DeleteTag(ctx context.Context, request operations.DeleteTagReques
 	}
 
 	switch {
+	case httpRes.StatusCode == 204:
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
-	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
