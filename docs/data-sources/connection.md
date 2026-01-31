@@ -78,22 +78,22 @@ Read-Only:
 
 Read-Only:
 
-- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption))
-- `field_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering))
-- `field_renaming` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming))
-- `hashing` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--hashing))
-- `row_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering))
+- `encryption_mapper_configuration` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption_mapper_configuration))
+- `field_filtering_mapper_configuration` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering_mapper_configuration))
+- `field_renaming_mapper_configuration` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming_mapper_configuration))
+- `hashing_mapper_configuration` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--hashing_mapper_configuration))
+- `row_filtering_mapper_configuration` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering_mapper_configuration))
 
-<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption"></a>
-### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption`
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption_mapper_configuration"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption_mapper_configuration`
 
 Read-Only:
 
-- `aes` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption--aes))
-- `rsa` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption--rsa))
+- `aes` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption_mapper_configuration--aes))
+- `rsa` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption_mapper_configuration--rsa))
 
-<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption--aes"></a>
-### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption.aes`
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption_mapper_configuration--aes"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption_mapper_configuration.aes`
 
 Read-Only:
 
@@ -105,8 +105,8 @@ Read-Only:
 - `target_field` (String)
 
 
-<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption--rsa"></a>
-### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption.rsa`
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption_mapper_configuration--rsa"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption_mapper_configuration.rsa`
 
 Read-Only:
 
@@ -117,16 +117,16 @@ Read-Only:
 
 
 
-<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering"></a>
-### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_filtering`
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_filtering_mapper_configuration"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_filtering_mapper_configuration`
 
 Read-Only:
 
 - `target_field` (String) The name of the field to filter.
 
 
-<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming"></a>
-### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_renaming`
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming_mapper_configuration"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_renaming_mapper_configuration`
 
 Read-Only:
 
@@ -134,8 +134,8 @@ Read-Only:
 - `original_field_name` (String) The current name of the field to rename.
 
 
-<a id="nestedatt--configurations--streams--mappers--mapper_configuration--hashing"></a>
-### Nested Schema for `configurations.streams.mappers.mapper_configuration.hashing`
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--hashing_mapper_configuration"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.hashing_mapper_configuration`
 
 Read-Only:
 
@@ -144,8 +144,8 @@ Read-Only:
 - `target_field` (String) The name of the field to be hashed.
 
 
-<a id="nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering"></a>
-### Nested Schema for `configurations.streams.mappers.mapper_configuration.row_filtering`
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering_mapper_configuration"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.row_filtering_mapper_configuration`
 
 Read-Only:
 

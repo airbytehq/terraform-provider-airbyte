@@ -403,12 +403,12 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 	}
 
 	switch {
+	case httpRes.StatusCode == 204:
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
 		fallthrough
 	case httpRes.StatusCode == 422:
-	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

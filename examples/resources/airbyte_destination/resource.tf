@@ -1,5 +1,7 @@
 resource "airbyte_destination" "my_destination" {
-  configuration = { "user" : "charles" }
+  configuration = {
+    # ...
+  }
   definition_id = "13935752-81d7-4aef-8384-d1aae19059e7"
   name          = "...my_name..."
   resource_allocation = {

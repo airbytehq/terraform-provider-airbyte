@@ -1,0 +1,4 @@
+import {
+  to = airbyte_source_google_search_console.my_airbyte_source_google_search_console
+  id = "..."
+}

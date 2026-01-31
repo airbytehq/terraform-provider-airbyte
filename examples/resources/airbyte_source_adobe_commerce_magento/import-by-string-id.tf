@@ -1,0 +1,4 @@
+import {
+  to = airbyte_source_adobe_commerce_magento.my_airbyte_source_adobe_commerce_magento
+  id = "..."
+}

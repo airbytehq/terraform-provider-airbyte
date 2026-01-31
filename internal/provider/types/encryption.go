@@ -3,6 +3,6 @@
 package types
 
 type Encryption struct {
-	Aes *EncryptionAES `queryParam:"inline" tfsdk:"aes"`
-	Rsa *EncryptionRSA `queryParam:"inline" tfsdk:"rsa"`
+	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate `queryParam:"inline" tfsdk:"tls_encrypted_verify_certificate"`
+	Unencrypted                   *Unencrypted                   `queryParam:"inline" tfsdk:"unencrypted"`
 }

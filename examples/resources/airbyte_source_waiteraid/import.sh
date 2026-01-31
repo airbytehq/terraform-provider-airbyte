@@ -1,0 +1,1 @@
+terraform import airbyte_source_waiteraid.my_airbyte_source_waiteraid "..."

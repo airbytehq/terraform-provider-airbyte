@@ -2,7 +2,7 @@
 
 package sdk
 
-// Generated from OpenAPI doc version 1.0.0 and generator version 2.795.6
+// Generated from OpenAPI doc version 1.0.0 and generator version 2.801.2
 
 import (
 	"context"
@@ -51,20 +51,32 @@ func Pointer[T any](v T) *T { return &v }
 // SDK - airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
 	SDKVersion                   string
+	PublicRoot                   *PublicRoot
+	Public                       *Public
 	Health                       *Health
+	ConfigTemplates              *ConfigTemplates
+	ConnectionTemplates          *ConnectionTemplates
+	Applications                 *Applications
 	Jobs                         *Jobs
+	Regions                      *Regions
+	Dataplanes                   *Dataplanes
+	ConnectorDefinitions         *ConnectorDefinitions
 	DeclarativeSourceDefinitions *DeclarativeSourceDefinitions
 	SourceDefinitions            *SourceDefinitions
 	DestinationDefinitions       *DestinationDefinitions
 	Sources                      *Sources
 	Destinations                 *Destinations
+	OAuth                        *OAuth
 	Connections                  *Connections
 	Streams                      *Streams
 	Workspaces                   *Workspaces
 	Permissions                  *Permissions
 	Organizations                *Organizations
 	Users                        *Users
+	Groups                       *Groups
 	Tags                         *Tags
+	EmbeddedWidget               *EmbeddedWidget
+	EmbeddedScopedToken          *EmbeddedScopedToken
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -140,9 +152,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
-		SDKVersion: "0.19.0",
+		SDKVersion: "0.20.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/terraform 0.19.0 2.795.6 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			UserAgent:  "speakeasy-sdk/terraform 0.20.0 2.801.2 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -163,20 +175,32 @@ func New(opts ...SDKOption) *SDK {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 
+	sdk.PublicRoot = newPublicRoot(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Public = newPublic(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Health = newHealth(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.ConfigTemplates = newConfigTemplates(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.ConnectionTemplates = newConnectionTemplates(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Applications = newApplications(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Jobs = newJobs(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Regions = newRegions(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Dataplanes = newDataplanes(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.ConnectorDefinitions = newConnectorDefinitions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.DeclarativeSourceDefinitions = newDeclarativeSourceDefinitions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SourceDefinitions = newSourceDefinitions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.DestinationDefinitions = newDestinationDefinitions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Sources = newSources(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Destinations = newDestinations(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.OAuth = newOAuth(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Connections = newConnections(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Streams = newStreams(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Workspaces = newWorkspaces(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Permissions = newPermissions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Organizations = newOrganizations(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Users = newUsers(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Groups = newGroups(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Tags = newTags(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.EmbeddedWidget = newEmbeddedWidget(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.EmbeddedScopedToken = newEmbeddedScopedToken(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

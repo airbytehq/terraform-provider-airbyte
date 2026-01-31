@@ -48,7 +48,7 @@ func (r *DeclarativeSourceDefinitionDataSource) Schema(ctx context.Context, req 
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Required: true,
 			},
 			"manifest": schema.StringAttribute{
 				CustomType:  jsontypes.NormalizedType{},
