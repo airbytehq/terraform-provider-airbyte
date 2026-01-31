@@ -331,27 +331,25 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
       x-speakeasy-param-suppress-computed-diff: true
 """
 
-# Stub schemas for custom connectors
-# These need x-speakeasy-type-override: any to tell Speakeasy to treat them as
-# arbitrary JSON blobs, since custom connectors can have any configuration shape.
-# Using type: object with additionalProperties causes "impedance mismatch: map != class"
-# because Speakeasy expects a structured class but we can't define fixed properties.
-CUSTOM_CONNECTOR_STUBS = """
-    source-custom:
-      description: The values required to configure the source.
-      x-speakeasy-type-override: any
-      example: { user: "charles" }
-    destination-custom:
-      description: The values required to configure the destination.
-      x-speakeasy-type-override: any
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-      x-speakeasy-type-override: any
-    destination-custom-update:
-      title: "Custom Spec"
-      x-speakeasy-type-override: any
-"""
+# Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+# The constant below is commented out but kept for reference in case custom
+# connectors are re-added in the future.
+# CUSTOM_CONNECTOR_STUBS = """
+#     source-custom:
+#       description: The values required to configure the source.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     destination-custom:
+#       description: The values required to configure the destination.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     source-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+#     destination-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+# """
 
 # Stub schemas for missing references in api.yaml
 # These schemas are referenced in api.yaml but not defined there (upstream bug)
@@ -731,9 +729,10 @@ def main() -> None:
     source_specs.sort(key=lambda x: x[0])  # Sort by schema name
     destination_specs.sort(key=lambda x: x[0])  # Sort by schema name
 
-    # Add "custom" connector (only when including that type)
-    source_names_for_terraform = source_names + (["custom"] if args.type in ("all", "sources") else [])
-    destination_names_for_terraform = destination_names + (["custom"] if args.type in ("all", "destinations") else [])
+    # Note: Custom connectors were removed in the 1.0 refactor (PR #232)
+    # so we no longer add them to the terraform spec
+    source_names_for_terraform = source_names
+    destination_names_for_terraform = destination_names
 
     print("Generating OpenAPI spec...")
 
@@ -843,25 +842,27 @@ def main() -> None:
             if line.strip():
                 output_parts.append(f"      {line}")
 
-    # Add custom connector stubs (only for included types)
-    if args.type == "all":
-        output_parts.append(CUSTOM_CONNECTOR_STUBS)
-    elif args.type == "sources":
-        output_parts.append("""
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-""")
-    elif args.type == "destinations":
-        output_parts.append("""
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    destination-custom-update:
-      title: "Custom Spec"
-""")
+    # Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+    # The code below is commented out but kept for reference in case custom
+    # connectors are re-added in the future.
+    # if args.type == "all":
+    #     output_parts.append(CUSTOM_CONNECTOR_STUBS)
+    # elif args.type == "sources":
+    #     output_parts.append("""
+    #     source-custom:
+    #       description: The values required to configure the source.
+    #       example: { user: "charles" }
+    #     source-custom-update:
+    #       title: "Custom Spec"
+    # """)
+    # elif args.type == "destinations":
+    #     output_parts.append("""
+    #     destination-custom:
+    #       description: The values required to configure the destination.
+    #       example: { user: "charles" }
+    #     destination-custom-update:
+    #       title: "Custom Spec"
+    # """)
 
     # Note: SourceConfiguration and DestinationConfiguration stubs are already
     # present in the base api.yaml, so we don't need to add them here.
