@@ -331,19 +331,26 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
       x-speakeasy-param-suppress-computed-diff: true
 """
 
-# Stub schemas for custom connectors
-CUSTOM_CONNECTOR_STUBS = """
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-    destination-custom-update:
-      title: "Custom Spec"
-"""
+# Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+# The constant below is commented out but kept for reference in case custom
+# connectors are re-added in the future.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+# CUSTOM_CONNECTOR_STUBS = """
+#     source-custom:
+#       description: The values required to configure the source.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     destination-custom:
+#       description: The values required to configure the destination.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     source-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+#     destination-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+# """
 
 # Stub schemas for missing references in api.yaml
 # These schemas are referenced in api.yaml but not defined there (upstream bug)
@@ -375,6 +382,16 @@ FORBIDDEN_RESPONSE_STUB = """    ForbiddenResponse:
         application/json:
           schema:
             $ref: '#/components/schemas/ForbiddenResponse'"""
+
+# Speakeasy circular reference handling
+# The upstream api.yaml uses `x-airbyte-circular-ref: true` to mark schemas with
+# circular references. Speakeasy doesn't understand this marker and will hang
+# trying to resolve the circular reference. We ADD `x-speakeasy-type-override: any`
+# on the line after the Airbyte marker (keeping the original annotation intact).
+# This tells Speakeasy to treat the schema as an arbitrary JSON blob.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
+CIRCULAR_REF_MARKER = "x-airbyte-circular-ref: true"
+SPEAKEASY_TYPE_OVERRIDE = "x-speakeasy-type-override: any"
 
 # Security schemes for the API
 # NOTE: The two leading spaces before `securitySchemes:` are intentional.
@@ -591,6 +608,18 @@ def main() -> None:
     print("Fetching base API spec...")
     base_spec = fetch_text(args.base_spec)
 
+    # Add Speakeasy type override after Airbyte circular reference markers
+    # This prevents Speakeasy from hanging when trying to resolve circular references
+    # We keep the original x-airbyte-circular-ref annotation and add x-speakeasy-type-override after it
+    if CIRCULAR_REF_MARKER in base_spec:
+        circular_ref_count = base_spec.count(CIRCULAR_REF_MARKER)
+        print(f"  Adding Speakeasy type override for {circular_ref_count} circular reference marker(s)")
+        # Add the Speakeasy annotation on the line after the Airbyte marker
+        base_spec = base_spec.replace(
+            CIRCULAR_REF_MARKER,
+            f"{CIRCULAR_REF_MARKER}\n      {SPEAKEASY_TYPE_OVERRIDE}"
+        )
+
     # Filter sources and destinations based on --type flag
     # Logic:
     # - With --cloud-only: Only include connectors available in Airbyte Cloud
@@ -701,9 +730,11 @@ def main() -> None:
     source_specs.sort(key=lambda x: x[0])  # Sort by schema name
     destination_specs.sort(key=lambda x: x[0])  # Sort by schema name
 
-    # Add "custom" connector (only when including that type)
-    source_names_for_terraform = source_names + (["custom"] if args.type in ("all", "sources") else [])
-    destination_names_for_terraform = destination_names + (["custom"] if args.type in ("all", "destinations") else [])
+    # Note: Custom connectors were removed in the 1.0 refactor (PR #232)
+    # so we no longer add them to the terraform spec.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+    source_names_for_terraform = source_names
+    destination_names_for_terraform = destination_names
 
     print("Generating OpenAPI spec...")
 
@@ -813,25 +844,28 @@ def main() -> None:
             if line.strip():
                 output_parts.append(f"      {line}")
 
-    # Add custom connector stubs (only for included types)
-    if args.type == "all":
-        output_parts.append(CUSTOM_CONNECTOR_STUBS)
-    elif args.type == "sources":
-        output_parts.append("""
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-""")
-    elif args.type == "destinations":
-        output_parts.append("""
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    destination-custom-update:
-      title: "Custom Spec"
-""")
+    # Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+    # The code below is commented out but kept for reference in case custom
+    # connectors are re-added in the future.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+    # if args.type == "all":
+    #     output_parts.append(CUSTOM_CONNECTOR_STUBS)
+    # elif args.type == "sources":
+    #     output_parts.append("""
+    #     source-custom:
+    #       description: The values required to configure the source.
+    #       example: { user: "charles" }
+    #     source-custom-update:
+    #       title: "Custom Spec"
+    # """)
+    # elif args.type == "destinations":
+    #     output_parts.append("""
+    #     destination-custom:
+    #       description: The values required to configure the destination.
+    #       example: { user: "charles" }
+    #     destination-custom-update:
+    #       title: "Custom Spec"
+    # """)
 
     # Note: SourceConfiguration and DestinationConfiguration stubs are already
     # present in the base api.yaml, so we don't need to add them here.
