@@ -90,3 +90,32 @@ State is managed using GitHub Artifacts:
 | Resources | Connector-specific (`airbyte_source_faker`) | Generic (`airbyte_source`) |
 | Configuration | Typed blocks | JSON-encoded strings |
 | Connector ID | Implicit | Explicit `definition_id` |
+
+## Datetime Format Requirements
+
+Many connectors (especially file-based sources like SharePoint Enterprise, S3, Azure Blob Storage, and Notion) require specific datetime formats for fields like `start_date`.
+
+### Common Formats
+
+| Connector Type | Format | Example |
+|----------------|--------|---------|
+| File-based sources (S3, SharePoint, Azure Blob) | ISO8601 with 6 microsecond digits | `2025-01-01T00:00:00.000000Z` |
+| Notion | ISO8601 with 3 millisecond digits | `2025-01-01T00:00:00.000Z` |
+
+### Important Notes
+
+1. **Always include fractional seconds**: Many connectors will reject datetime strings without fractional seconds (e.g., `2025-01-01T00:00:00Z` will fail validation).
+
+2. **Use `jsonencode()` in v1.0+**: When using the generic `airbyte_source` resource, wrap your configuration in `jsonencode()` to ensure datetime strings are passed correctly:
+
+   ```hcl
+   configuration = jsonencode({
+     sourceType = "s3"
+     start_date = "2025-01-01T00:00:00.000000Z"
+     # ... other config
+   })
+   ```
+
+3. **Pre-1.0 provider issue**: In provider versions before 1.0, connector-specific resources (like `airbyte_source_notion`) had a bug where datetime strings with zero fractional seconds (e.g., `.000000`) would be truncated. This is fixed in v1.0+ with the generic resource model.
+
+See `1.0/file-based-source-example.tf` for complete examples with datetime configuration.
