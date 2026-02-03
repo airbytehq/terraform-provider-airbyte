@@ -39,21 +39,21 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(ctx contex
 					mappers.ID = types.StringPointerValue(mappersItem.ID)
 					if mappersItem.MapperConfiguration.Encryption != nil {
 						mappers.MapperConfiguration.Encryption = &tfTypes.Encryption{}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionAES != nil {
-							mappers.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionAES{}
-							mappers.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Algorithm))
-							mappers.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Key)
-							mappers.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Mode))
-							mappers.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Padding))
-							mappers.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.TargetField)
+						if mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration != nil {
+							mappers.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionMapperAESConfiguration{}
+							mappers.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration.Algorithm))
+							mappers.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration.FieldNameSuffix)
+							mappers.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration.Key)
+							mappers.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration.Mode))
+							mappers.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration.Padding))
+							mappers.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration.TargetField)
 						}
-						if mappersItem.MapperConfiguration.Encryption.EncryptionRSA != nil {
-							mappers.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionRSA{}
-							mappers.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.Algorithm))
-							mappers.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.FieldNameSuffix)
-							mappers.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.PublicKey)
-							mappers.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.TargetField)
+						if mappersItem.MapperConfiguration.Encryption.EncryptionMapperRSAConfiguration != nil {
+							mappers.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionMapperRSAConfiguration{}
+							mappers.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionMapperRSAConfiguration.Algorithm))
+							mappers.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionMapperRSAConfiguration.FieldNameSuffix)
+							mappers.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionMapperRSAConfiguration.PublicKey)
+							mappers.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionMapperRSAConfiguration.TargetField)
 						}
 					}
 					if mappersItem.MapperConfiguration.FieldFiltering != nil {
@@ -348,7 +348,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 				}
 				var encryption *shared.Encryption
 				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption != nil {
-					var encryptionRSA *shared.EncryptionRSA
+					var encryptionMapperRSAConfiguration *shared.EncryptionMapperRSAConfiguration
 					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa != nil {
 						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
 						var fieldNameSuffix1 string
@@ -360,19 +360,19 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 						var targetField2 string
 						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
 
-						encryptionRSA = &shared.EncryptionRSA{
+						encryptionMapperRSAConfiguration = &shared.EncryptionMapperRSAConfiguration{
 							Algorithm:       algorithm,
 							FieldNameSuffix: fieldNameSuffix1,
 							PublicKey:       publicKey,
 							TargetField:     targetField2,
 						}
 					}
-					if encryptionRSA != nil {
+					if encryptionMapperRSAConfiguration != nil {
 						encryption = &shared.Encryption{
-							EncryptionRSA: encryptionRSA,
+							EncryptionMapperRSAConfiguration: encryptionMapperRSAConfiguration,
 						}
 					}
-					var encryptionAES *shared.EncryptionAES
+					var encryptionMapperAESConfiguration *shared.EncryptionMapperAESConfiguration
 					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes != nil {
 						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
 						var fieldNameSuffix2 string
@@ -386,7 +386,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 						var targetField3 string
 						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.TargetField.ValueString()
 
-						encryptionAES = &shared.EncryptionAES{
+						encryptionMapperAESConfiguration = &shared.EncryptionMapperAESConfiguration{
 							Algorithm:       algorithm1,
 							FieldNameSuffix: fieldNameSuffix2,
 							Key:             key,
@@ -395,9 +395,9 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 							TargetField:     targetField3,
 						}
 					}
-					if encryptionAES != nil {
+					if encryptionMapperAESConfiguration != nil {
 						encryption = &shared.Encryption{
-							EncryptionAES: encryptionAES,
+							EncryptionMapperAESConfiguration: encryptionMapperAESConfiguration,
 						}
 					}
 				}
@@ -656,7 +656,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 				}
 				var encryption *shared.Encryption
 				if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption != nil {
-					var encryptionRSA *shared.EncryptionRSA
+					var encryptionMapperRSAConfiguration *shared.EncryptionMapperRSAConfiguration
 					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa != nil {
 						algorithm := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.Algorithm.ValueString())
 						var fieldNameSuffix1 string
@@ -668,19 +668,19 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 						var targetField2 string
 						targetField2 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Rsa.TargetField.ValueString()
 
-						encryptionRSA = &shared.EncryptionRSA{
+						encryptionMapperRSAConfiguration = &shared.EncryptionMapperRSAConfiguration{
 							Algorithm:       algorithm,
 							FieldNameSuffix: fieldNameSuffix1,
 							PublicKey:       publicKey,
 							TargetField:     targetField2,
 						}
 					}
-					if encryptionRSA != nil {
+					if encryptionMapperRSAConfiguration != nil {
 						encryption = &shared.Encryption{
-							EncryptionRSA: encryptionRSA,
+							EncryptionMapperRSAConfiguration: encryptionMapperRSAConfiguration,
 						}
 					}
-					var encryptionAES *shared.EncryptionAES
+					var encryptionMapperAESConfiguration *shared.EncryptionMapperAESConfiguration
 					if r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes != nil {
 						algorithm1 := shared.EncryptionMapperAlgorithm(r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.Algorithm.ValueString())
 						var fieldNameSuffix2 string
@@ -694,7 +694,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 						var targetField3 string
 						targetField3 = r.Configurations.Streams[streamsIndex].Mappers[mappersIndex].MapperConfiguration.Encryption.Aes.TargetField.ValueString()
 
-						encryptionAES = &shared.EncryptionAES{
+						encryptionMapperAESConfiguration = &shared.EncryptionMapperAESConfiguration{
 							Algorithm:       algorithm1,
 							FieldNameSuffix: fieldNameSuffix2,
 							Key:             key,
@@ -703,9 +703,9 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 							TargetField:     targetField3,
 						}
 					}
-					if encryptionAES != nil {
+					if encryptionMapperAESConfiguration != nil {
 						encryption = &shared.Encryption{
-							EncryptionAES: encryptionAES,
+							EncryptionMapperAESConfiguration: encryptionMapperAESConfiguration,
 						}
 					}
 				}

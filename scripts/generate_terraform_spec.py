@@ -331,19 +331,26 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
       x-speakeasy-param-suppress-computed-diff: true
 """
 
-# Stub schemas for custom connectors
-CUSTOM_CONNECTOR_STUBS = """
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-    destination-custom-update:
-      title: "Custom Spec"
-"""
+# Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+# The constant below is commented out but kept for reference in case custom
+# connectors are re-added in the future.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+# CUSTOM_CONNECTOR_STUBS = """
+#     source-custom:
+#       description: The values required to configure the source.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     destination-custom:
+#       description: The values required to configure the destination.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     source-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+#     destination-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+# """
 
 # Stub schemas for missing references in api.yaml
 # These schemas are referenced in api.yaml but not defined there (upstream bug)
@@ -375,6 +382,11 @@ FORBIDDEN_RESPONSE_STUB = """    ForbiddenResponse:
         application/json:
           schema:
             $ref: '#/components/schemas/ForbiddenResponse'"""
+
+# Note: Speakeasy circular reference handling has been moved to the overlay file
+# at overlays/terraform_speakeasy.yaml. The overlay adds x-speakeasy-type-override: any
+# to schemas marked with x-airbyte-circular-ref: true.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
 
 # Security schemes for the API
 # NOTE: The two leading spaces before `securitySchemes:` are intentional.
@@ -591,6 +603,10 @@ def main() -> None:
     print("Fetching base API spec...")
     base_spec = fetch_text(args.base_spec)
 
+    # Note: Speakeasy circular reference handling has been moved to the overlay file
+    # at overlays/terraform_speakeasy.yaml. The overlay adds x-speakeasy-type-override: any
+    # to schemas marked with x-airbyte-circular-ref: true.
+
     # Filter sources and destinations based on --type flag
     # Logic:
     # - With --cloud-only: Only include connectors available in Airbyte Cloud
@@ -701,9 +717,11 @@ def main() -> None:
     source_specs.sort(key=lambda x: x[0])  # Sort by schema name
     destination_specs.sort(key=lambda x: x[0])  # Sort by schema name
 
-    # Add "custom" connector (only when including that type)
-    source_names_for_terraform = source_names + (["custom"] if args.type in ("all", "sources") else [])
-    destination_names_for_terraform = destination_names + (["custom"] if args.type in ("all", "destinations") else [])
+    # Note: Custom connectors were removed in the 1.0 refactor (PR #232)
+    # so we no longer add them to the terraform spec.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+    source_names_for_terraform = source_names
+    destination_names_for_terraform = destination_names
 
     print("Generating OpenAPI spec...")
 
@@ -813,25 +831,28 @@ def main() -> None:
             if line.strip():
                 output_parts.append(f"      {line}")
 
-    # Add custom connector stubs (only for included types)
-    if args.type == "all":
-        output_parts.append(CUSTOM_CONNECTOR_STUBS)
-    elif args.type == "sources":
-        output_parts.append("""
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-""")
-    elif args.type == "destinations":
-        output_parts.append("""
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    destination-custom-update:
-      title: "Custom Spec"
-""")
+    # Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+    # The code below is commented out but kept for reference in case custom
+    # connectors are re-added in the future.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+    # if args.type == "all":
+    #     output_parts.append(CUSTOM_CONNECTOR_STUBS)
+    # elif args.type == "sources":
+    #     output_parts.append("""
+    #     source-custom:
+    #       description: The values required to configure the source.
+    #       example: { user: "charles" }
+    #     source-custom-update:
+    #       title: "Custom Spec"
+    # """)
+    # elif args.type == "destinations":
+    #     output_parts.append("""
+    #     destination-custom:
+    #       description: The values required to configure the destination.
+    #       example: { user: "charles" }
+    #     destination-custom-update:
+    #       title: "Custom Spec"
+    # """)
 
     # Note: SourceConfiguration and DestinationConfiguration stubs are already
     # present in the base api.yaml, so we don't need to add them here.
