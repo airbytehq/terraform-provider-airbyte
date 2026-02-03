@@ -1,5 +1,7 @@
 resource "airbyte_source" "my_source" {
-  configuration = { "user" : "charles" }
+  configuration = {
+    # ...
+  }
   definition_id = "e735c764-352e-4392-b04a-4052108601be"
   name          = "...my_name..."
   resource_allocation = {
