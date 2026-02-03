@@ -5,13 +5,13 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.700.2
   generationVersion: 2.801.2
-  releaseVersion: 0.20.0
-  configChecksum: a591ed1bc547fa8c86594584f4f6a25c
+  releaseVersion: 0.20.1
+  configChecksum: 1ceffe37f1fbac63e7995fcdc73ac0b3
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 37f24037-d800-417c-a50a-1746183d235e
-  pristine_commit_hash: 34a57e948d058ead2ed77c2fa238ef8097b414e3
-  pristine_tree_hash: 0069bc0e10ff3769db4ba2cdfa9e221f42b047d6
+  generation_id: 100281dd-2e76-4ea5-b868-68cefa2b1ddf
+  pristine_commit_hash: 5492ae8f57626c180dec37e70d8521237378e8ad
+  pristine_tree_hash: fa7b2ea1c03a2c2733075f55d957c26827b1f99d
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -2495,8 +2495,8 @@ trackedFiles:
     pristine_git_object: 8f46fa23e9ff318c727d03f0dcf5a8a677b6e617
   examples/provider/provider.tf:
     id: 954e955c0240
-    last_write_checksum: sha1:03a93399eec04c3dbf37a589296d3917eaf36958
-    pristine_git_object: b2b2732cd4d02db59f38fb8e8612eee4fc1a2233
+    last_write_checksum: sha1:3f89eb82e3ab318758fc387f63898ebf3fad37ed
+    pristine_git_object: f2175c91cf2fe59ed8bec5c151a93a8c34738734
   examples/resources/airbyte_connection/import-by-string-id.tf:
     id: 8c04ff01f5ae
     last_write_checksum: sha1:d0e6ff899bd5da0e7018c9420f4face02263ff4c
@@ -46487,8 +46487,8 @@ trackedFiles:
     pristine_git_object: aa809fccb3445b1e2530a979dad620512f50e70f
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:0eba15c4839f558a8eb04a7a7a4e637fde2250f0
-    pristine_git_object: e164e6db3c57127f04e7dcc516ad8290d590c016
+    last_write_checksum: sha1:f0bf0cb72872761b03bd8ce6c7776e19b84c91b2
+    pristine_git_object: ee06b90fb4bf1f1df1916c2dce3cf3f41dd6a853
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:66ab6b67568021818e816cc8282e29c6cbca673b
@@ -47617,7 +47617,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "4289e7fa-68cd-4faa-a9fa-6db5a598dae0", "configuration": {"add_base_id_to_stream_name": false, "credentials": {"auth_method": "oauth2.0"}, "num_workers": 5, "sourceType": "airtable"}}
+        application/json: {"name": "<value>", "workspaceId": "4289e7fa-68cd-4faa-a9fa-6db5a598dae0", "configuration": {"add_base_id_to_stream_name": false, "credentials": {"auth_method": "api_key"}, "num_workers": 5, "sourceType": "airtable"}}
   deleteSourceAirtable:
     speakeasy-default-delete-source-airtable:
       parameters:
@@ -49561,7 +49561,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "61b0870d-5dee-414c-894b-a30ff56bbb12", "configuration": {"database": "default", "port": 8123, "ssl": true, "tunnel_method": {"tunnel_method": "SSH_PASSWORD_AUTH", "tunnel_port": 22}, "sourceType": "clickhouse"}}
+        application/json: {"name": "<value>", "workspaceId": "61b0870d-5dee-414c-894b-a30ff56bbb12", "configuration": {"database": "default", "port": 8123, "ssl": true, "tunnel_method": {"tunnel_method": "SSH_KEY_AUTH", "tunnel_port": 22}, "sourceType": "clickhouse"}}
   deleteSourceClickhouse:
     speakeasy-default-delete-source-clickhouse:
       parameters:
@@ -51271,7 +51271,7 @@ examples:
   createSourceFile:
     speakeasy-default-create-source-file:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "a36810de-3a80-4de0-a9ab-6ee4be663741", "configuration": {"dataset_name": "<value>", "format": "csv", "provider": {"storage": "S3"}, "reader_options": "{}", "url": "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv", "sourceType": "file"}}
+        application/json: {"name": "<value>", "workspaceId": "a36810de-3a80-4de0-a9ab-6ee4be663741", "configuration": {"dataset_name": "<value>", "format": "csv", "provider": {"storage": "local"}, "reader_options": "{}", "url": "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv", "sourceType": "file"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 207223}
@@ -52396,7 +52396,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "d5cdfde5-551c-4cd8-b54d-f641452fe9ef", "configuration": {"convert_conversions_event": false, "credentials": {"auth_type": "Client"}, "custom_reports_array": [{"cohortSpec": {"cohorts": [{"dateRange": {"endDate": "2021-01-01", "startDate": "2021-01-01"}}], "enabled": "true"}}], "date_ranges_end_date": "2021-01-31", "date_ranges_start_date": "2021-01-01", "keep_empty_rows": false, "lookback_window": 2, "property_ids": ["1738294", "5729978930"], "window_in_days": 30, "sourceType": "google-analytics-data-api"}}
+        application/json: {"name": "<value>", "workspaceId": "d5cdfde5-551c-4cd8-b54d-f641452fe9ef", "configuration": {"convert_conversions_event": false, "credentials": {"auth_type": "Service"}, "custom_reports_array": [{"cohortSpec": {"cohorts": [{"dateRange": {"endDate": "2021-01-01", "startDate": "2021-01-01"}}], "enabled": "true"}}], "date_ranges_end_date": "2021-01-31", "date_ranges_start_date": "2021-01-01", "keep_empty_rows": false, "lookback_window": 2, "property_ids": ["1738294", "5729978930"], "window_in_days": 30, "sourceType": "google-analytics-data-api"}}
   deleteSourceGoogleAnalyticsDataApi:
     speakeasy-default-delete-source-google-analytics-data-api:
       parameters:
@@ -52486,7 +52486,7 @@ examples:
   createSourceGoogleDrive:
     speakeasy-default-create-source-google-drive:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "d76fd1bf-9162-4c62-984d-1613e16f8768", "configuration": {"credentials": {"auth_type": "Service", "service_account_info": "<value>"}, "folder_url": "https://drive.google.com/drive/folders/1Xaz0vXXXX2enKnNYU5qSt9NS70gvMyYn", "start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"days_to_sync_if_history_is_full": 3, "format": {"filetype": "excel"}, "globs": ["**"], "name": "<value>", "schemaless": false, "use_first_found_file_for_schema_discovery": false, "validation_policy": "Emit Record"}], "sourceType": "google-drive"}}
+        application/json: {"name": "<value>", "workspaceId": "d76fd1bf-9162-4c62-984d-1613e16f8768", "configuration": {"credentials": {"auth_type": "Service", "service_account_info": "<value>"}, "folder_url": "https://drive.google.com/drive/folders/1Xaz0vXXXX2enKnNYU5qSt9NS70gvMyYn", "start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"days_to_sync_if_history_is_full": 3, "format": {"filetype": "jsonl"}, "globs": ["**"], "name": "<value>", "schemaless": false, "use_first_found_file_for_schema_discovery": false, "validation_policy": "Emit Record"}], "sourceType": "google-drive"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 944085}
@@ -54997,7 +54997,7 @@ examples:
   createSourceMicrosoftSharepoint:
     speakeasy-default-create-source-microsoft-sharepoint:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "aa594dcd-025e-48e1-9b19-ff0512b4ba63", "configuration": {"credentials": {"auth_type": "Client", "client_id": "<id>", "client_secret": "<value>", "tenant_id": "<id>"}, "folder_path": ".", "search_scope": "ALL", "site_url": "", "start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"days_to_sync_if_history_is_full": 3, "format": {"filetype": "excel"}, "globs": ["**"], "name": "<value>", "schemaless": false, "validation_policy": "Emit Record"}], "sourceType": "microsoft-sharepoint"}}
+        application/json: {"name": "<value>", "workspaceId": "aa594dcd-025e-48e1-9b19-ff0512b4ba63", "configuration": {"credentials": {"auth_type": "Client", "client_id": "<id>", "client_secret": "<value>", "tenant_id": "<id>"}, "folder_path": ".", "search_scope": "ALL", "site_url": "", "start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"days_to_sync_if_history_is_full": 3, "format": {"filetype": "jsonl"}, "globs": ["**"], "name": "<value>", "schemaless": false, "validation_policy": "Emit Record"}], "sourceType": "microsoft-sharepoint"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 640501}
@@ -55231,7 +55231,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "1154f02c-9e64-4355-b26b-65006ebc8332", "configuration": {"database_config": {"auth_source": "admin", "cluster_type": "SELF_MANAGED_REPLICA_SET", "connection_string": "mongodb://example1.host.com:27017,example2.host.com:27017,example3.host.com:27017/", "schema_enforced": true}, "discover_sample_size": 10000, "discover_timeout_seconds": 600, "initial_load_timeout_hours": 8, "initial_waiting_seconds": 300, "invalid_cdc_cursor_position_behavior": "Fail sync", "queue_size": 10000, "update_capture_mode": "Lookup", "sourceType": "mongodb-v2"}}
+        application/json: {"name": "<value>", "workspaceId": "1154f02c-9e64-4355-b26b-65006ebc8332", "configuration": {"database_config": {"auth_source": "admin", "cluster_type": "ATLAS_REPLICA_SET", "connection_string": "mongodb://example1.host.com:27017,example2.host.com:27017,example3.host.com:27017/", "schema_enforced": true}, "discover_sample_size": 10000, "discover_timeout_seconds": 600, "initial_load_timeout_hours": 8, "initial_waiting_seconds": 300, "invalid_cdc_cursor_position_behavior": "Fail sync", "queue_size": 10000, "update_capture_mode": "Lookup", "sourceType": "mongodb-v2"}}
   deleteSourceMongodbV2:
     speakeasy-default-delete-source-mongodb-v2:
       parameters:
@@ -57310,7 +57310,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "ddd96d3f-1aaf-4a6f-8f07-8fbbf382e247", "configuration": {"entra_service_principal_auth": false, "port": 5432, "schemas": ["public"], "tunnel_method": {"tunnel_method": "SSH_PASSWORD_AUTH", "tunnel_port": 22}, "sourceType": "postgres"}}
+        application/json: {"name": "<value>", "workspaceId": "ddd96d3f-1aaf-4a6f-8f07-8fbbf382e247", "configuration": {"entra_service_principal_auth": false, "port": 5432, "schemas": ["public"], "tunnel_method": {"tunnel_method": "SSH_KEY_AUTH", "tunnel_port": 22}, "sourceType": "postgres"}}
   deleteSourcePostgres:
     speakeasy-default-delete-source-postgres:
       parameters:
@@ -58849,7 +58849,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "c94064ec-155a-4698-9994-9b7a4423e1d2", "configuration": {"folder_path": "/logs/2022", "host": "www.host.com", "port": 22, "start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"days_to_sync_if_history_is_full": 3, "format": {"filetype": "excel"}, "globs": ["**"], "schemaless": false, "use_first_found_file_for_schema_discovery": false, "validation_policy": "Emit Record"}], "sourceType": "sftp-bulk"}}
+        application/json: {"name": "<value>", "workspaceId": "c94064ec-155a-4698-9994-9b7a4423e1d2", "configuration": {"folder_path": "/logs/2022", "host": "www.host.com", "port": 22, "start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"days_to_sync_if_history_is_full": 3, "format": {"filetype": "jsonl"}, "globs": ["**"], "schemaless": false, "use_first_found_file_for_schema_discovery": false, "validation_policy": "Emit Record"}], "sourceType": "sftp-bulk"}}
   deleteSourceSftpBulk:
     speakeasy-default-delete-source-sftp-bulk:
       parameters:
@@ -63142,7 +63142,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "12b46e33-be39-49e2-aa81-14849351bf3d", "configuration": {"port": 1521, "schema": "airbyte", "tunnel_method": {"tunnel_method": "SSH_PASSWORD_AUTH", "tunnel_port": 22}, "destinationType": "oracle"}}
+        application/json: {"name": "<value>", "workspaceId": "12b46e33-be39-49e2-aa81-14849351bf3d", "configuration": {"port": 1521, "schema": "airbyte", "tunnel_method": {"tunnel_method": "SSH_KEY_AUTH", "tunnel_port": 22}, "destinationType": "oracle"}}
   deleteDestinationOracle:
     speakeasy-default-delete-destination-oracle:
       parameters:
@@ -63304,7 +63304,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "83e3a61d-b8cb-49ef-ba64-52c659d5b159", "configuration": {"cache_type": "hash", "host": "localhost,127.0.0.1", "port": 6379, "ssl": false, "tunnel_method": {"tunnel_method": "SSH_PASSWORD_AUTH", "tunnel_port": 22}, "destinationType": "redis"}}
+        application/json: {"name": "<value>", "workspaceId": "83e3a61d-b8cb-49ef-ba64-52c659d5b159", "configuration": {"cache_type": "hash", "host": "localhost,127.0.0.1", "port": 6379, "ssl": false, "tunnel_method": {"tunnel_method": "SSH_KEY_AUTH", "tunnel_port": 22}, "destinationType": "redis"}}
   deleteDestinationRedis:
     speakeasy-default-delete-destination-redis:
       parameters:
