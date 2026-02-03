@@ -14,7 +14,9 @@ Destination Resource
 
 ```terraform
 resource "airbyte_destination" "my_destination" {
-  configuration = { "user" : "charles" }
+  configuration = {
+    # ...
+  }
   definition_id = "13935752-81d7-4aef-8384-d1aae19059e7"
   name          = "...my_name..."
   resource_allocation = {
@@ -49,7 +51,7 @@ resource "airbyte_destination" "my_destination" {
 
 ### Required
 
-- `configuration` (String) The values required to configure the destination. Parsed as JSON.
+- `configuration` (Attributes) The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. (see [below for nested schema](#nestedatt--configuration))
 - `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String) Requires replacement if changed.
 
@@ -63,6 +65,10 @@ resource "airbyte_destination" "my_destination" {
 - `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
+
+<a id="nestedatt--configuration"></a>
+### Nested Schema for `configuration`
+
 
 <a id="nestedatt--resource_allocation"></a>
 ### Nested Schema for `resource_allocation`

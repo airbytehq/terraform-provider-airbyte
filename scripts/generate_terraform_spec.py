@@ -33,10 +33,10 @@ import yaml
 OSS_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
 CLOUD_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
 
-# Base API spec URL (the terraform-specific spec that Speakeasy already works with)
-# Using api_terraform.yaml instead of api.yaml because api.yaml has newer endpoints
-# with broken schema references that haven't been fixed upstream yet.
-BASE_API_SPEC_URL = "https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api_terraform.yaml"
+# Base API spec URL - the actual OpenAPI spec maintained by the platform team.
+# This is the source of truth for the Airbyte API. The terraform provider adds
+# connector-specific paths and schemas on top of this base spec.
+BASE_API_SPEC_URL = "https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api.yaml"
 
 # =============================================================================
 # OpenAPI Path Templates
@@ -331,18 +331,85 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
       x-speakeasy-param-suppress-computed-diff: true
 """
 
-# Stub schemas for custom connectors
-CUSTOM_CONNECTOR_STUBS = """
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-    destination-custom-update:
-      title: "Custom Spec"
+# Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+# The constant below is commented out but kept for reference in case custom
+# connectors are re-added in the future.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+# CUSTOM_CONNECTOR_STUBS = """
+#     source-custom:
+#       description: The values required to configure the source.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     destination-custom:
+#       description: The values required to configure the destination.
+#       x-speakeasy-type-override: any
+#       example: { user: "charles" }
+#     source-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+#     destination-custom-update:
+#       title: "Custom Spec"
+#       x-speakeasy-type-override: any
+# """
+
+# Stub schemas for missing references in api.yaml
+# These schemas are referenced in api.yaml but not defined there (upstream bug)
+# We add stubs to make the spec valid for Speakeasy processing
+MISSING_SCHEMA_STUBS = """
+    DataplaneCreateResponseBody:
+      description: Response body for dataplane creation
+      type: object
+      properties:
+        dataplaneId:
+          type: string
+          format: uuid
+          description: The ID of the created dataplane
+
+    ForbiddenResponse:
+      description: Forbidden response
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+"""
+
+# Stub response for ForbiddenResponse (referenced in api.yaml but not defined)
+# This gets injected into the components/responses section
+FORBIDDEN_RESPONSE_STUB = """    ForbiddenResponse:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ForbiddenResponse'"""
+
+# Note: Speakeasy circular reference handling has been moved to the overlay file
+# at overlays/terraform_speakeasy.yaml. The overlay adds x-speakeasy-type-override: any
+# to schemas marked with x-airbyte-circular-ref: true.
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
+
+# Security schemes for the API
+# NOTE: The two leading spaces before `securitySchemes:` are intentional.
+# This snippet is inserted into an existing YAML structure where this
+# indentation is required for correct formatting of the generated spec.
+SECURITY_SCHEMES = """  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic
+    clientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /applications/token
+          scopes: {}
+security:
+  - bearerAuth: []
+  - basicAuth: []
+  - clientCredentials: []
 """
 
 
@@ -424,6 +491,16 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
         if key == "required" and is_update:
             # For update schemas, make all fields optional
             continue
+        elif key == "examples":
+            # OpenAPI requires 'examples' to be an array, not a single value.
+            # This mitigates upstream connector-side spec issues (2026-01-28):
+            # https://github.com/airbytehq/oncall/issues/11076
+            if value is None:
+                continue  # Skip null examples
+            elif isinstance(value, list):
+                result[key] = value
+            else:
+                result[key] = [value]
         elif key == "properties":
             result[key] = {}
             for prop_name, prop_value in value.items():
@@ -526,26 +603,78 @@ def main() -> None:
     print("Fetching base API spec...")
     base_spec = fetch_text(args.base_spec)
 
+    # Note: Speakeasy circular reference handling has been moved to the overlay file
+    # at overlays/terraform_speakeasy.yaml. The overlay adds x-speakeasy-type-override: any
+    # to schemas marked with x-airbyte-circular-ref: true.
+
     # Filter sources and destinations based on --type flag
+    # Logic:
+    # - With --cloud-only: Only include connectors available in Airbyte Cloud
+    # - Without --cloud-only: Include Cloud connectors + OSS connectors not in Cloud
+    #   (This ensures we don't miss Cloud-only connectors that aren't in OSS)
     sources = []
     if args.type in ("all", "sources"):
-        for source in oss_registry.get("sources", []):
-            source_id = source.get("sourceDefinitionId")
-            if args.cloud_only and source_id not in cloud_source_ids:
-                continue
-            # Skip e2e-test-cloud connector
-            docker_repo = source.get("dockerRepository", "")
-            if "e2e-test-cloud" in docker_repo:
-                continue
-            sources.append(source)
+        seen_source_ids = set()
+        if args.cloud_only:
+            # Cloud-only mode: iterate through OSS but filter to cloud IDs
+            for source in oss_registry.get("sources", []):
+                source_id = source.get("sourceDefinitionId")
+                if source_id not in cloud_source_ids:
+                    continue
+                # Skip e2e-test-cloud connector
+                docker_repo = source.get("dockerRepository", "")
+                if "e2e-test-cloud" in docker_repo:
+                    continue
+                sources.append(source)
+                seen_source_ids.add(source_id)
+        else:
+            # Cloud+OSS mode: Start with Cloud connectors, then add OSS-only connectors
+            # First, add all Cloud connectors
+            for source in cloud_registry.get("sources", []):
+                source_id = source.get("sourceDefinitionId")
+                # Skip e2e-test-cloud connector
+                docker_repo = source.get("dockerRepository", "")
+                if "e2e-test-cloud" in docker_repo:
+                    continue
+                sources.append(source)
+                seen_source_ids.add(source_id)
+            # Then add OSS connectors that are NOT in Cloud
+            for source in oss_registry.get("sources", []):
+                source_id = source.get("sourceDefinitionId")
+                if source_id in seen_source_ids:
+                    continue  # Already added from Cloud
+                # Skip e2e-test-cloud connector
+                docker_repo = source.get("dockerRepository", "")
+                if "e2e-test-cloud" in docker_repo:
+                    continue
+                sources.append(source)
+                seen_source_ids.add(source_id)
 
     destinations = []
     if args.type in ("all", "destinations"):
-        for dest in oss_registry.get("destinations", []):
-            dest_id = dest.get("destinationDefinitionId")
-            if args.cloud_only and dest_id not in cloud_dest_ids:
-                continue
-            destinations.append(dest)
+        seen_dest_ids = set()
+        if args.cloud_only:
+            # Cloud-only mode: iterate through OSS but filter to cloud IDs
+            for dest in oss_registry.get("destinations", []):
+                dest_id = dest.get("destinationDefinitionId")
+                if dest_id not in cloud_dest_ids:
+                    continue
+                destinations.append(dest)
+                seen_dest_ids.add(dest_id)
+        else:
+            # Cloud+OSS mode: Start with Cloud connectors, then add OSS-only connectors
+            # First, add all Cloud connectors
+            for dest in cloud_registry.get("destinations", []):
+                dest_id = dest.get("destinationDefinitionId")
+                destinations.append(dest)
+                seen_dest_ids.add(dest_id)
+            # Then add OSS connectors that are NOT in Cloud
+            for dest in oss_registry.get("destinations", []):
+                dest_id = dest.get("destinationDefinitionId")
+                if dest_id in seen_dest_ids:
+                    continue  # Already added from Cloud
+                destinations.append(dest)
+                seen_dest_ids.add(dest_id)
 
     print(f"Processing {len(sources)} sources and {len(destinations)} destinations...")
 
@@ -588,22 +717,34 @@ def main() -> None:
     source_specs.sort(key=lambda x: x[0])  # Sort by schema name
     destination_specs.sort(key=lambda x: x[0])  # Sort by schema name
 
-    # Add "custom" connector (only when including that type)
-    source_names_for_terraform = source_names + (["custom"] if args.type in ("all", "sources") else [])
-    destination_names_for_terraform = destination_names + (["custom"] if args.type in ("all", "destinations") else [])
+    # Note: Custom connectors were removed in the 1.0 refactor (PR #232)
+    # so we no longer add them to the terraform spec.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+    source_names_for_terraform = source_names
+    destination_names_for_terraform = destination_names
 
     print("Generating OpenAPI spec...")
 
     # Split the base spec to insert:
     # 1. Connector-specific paths before "components:"
-    # 2. Connector-specific schemas before "securitySchemes:" (inside components/schemas)
+    # 2. Missing response stubs in components/responses
+    # 3. Connector-specific schemas at the end of components/schemas
+    # 4. Security schemes (if not present in base spec)
     base_lines = base_spec.split("\n")
     components_line_idx = None
+    responses_line_idx = None
+    schemas_line_idx = None
     security_schemes_line_idx = None
 
     for i, line in enumerate(base_lines):
         if line.startswith("components:"):
             components_line_idx = i
+        # Find the responses section (indented with 2 spaces, inside components)
+        if line == "  responses:":
+            responses_line_idx = i
+        # Find the schemas section (indented with 2 spaces, inside components)
+        if line == "  schemas:":
+            schemas_line_idx = i
         # Find the securitySchemes section (indented with 2 spaces, inside components)
         if line == "  securitySchemes:":
             security_schemes_line_idx = i
@@ -612,16 +753,16 @@ def main() -> None:
     if components_line_idx is None:
         msg = "Could not find 'components:' section in base spec"
         raise ValueError(msg)
-    if security_schemes_line_idx is None:
-        msg = "Could not find 'securitySchemes:' section in base spec"
-        raise ValueError(msg)
+
+    # If no securitySchemes section, we'll add it at the end
+    has_security_schemes = security_schemes_line_idx is not None
 
     # Build the output:
     # 1. Everything before "components:" (includes paths section)
     # 2. Connector-specific paths (still under paths section)
-    # 3. "components:" up to "securitySchemes:" (includes base schemas)
-    # 4. Connector-specific schemas (inside components/schemas, before securitySchemes)
-    # 5. "securitySchemes:" and rest of the spec
+    # 3. "components:" and base schemas
+    # 4. Connector-specific schemas (inside components/schemas)
+    # 5. Security schemes (added if not present, or kept if present)
 
     output_parts = []
 
@@ -638,8 +779,27 @@ def main() -> None:
         upper_camel = lower_hyphen_to_upper_camel(name)
         output_parts.append(generate_destination_path(upper_camel))
 
-    # Part 3: Add components section and base schemas (up to securitySchemes)
-    output_parts.append("\n".join(base_lines[components_line_idx:security_schemes_line_idx]))
+    # Part 3: Add components section with injected missing responses
+    # We need to inject the ForbiddenResponse stub into the responses section
+    if responses_line_idx and schemas_line_idx:
+        # Include components up to and including responses section header
+        output_parts.append("\n".join(base_lines[components_line_idx:responses_line_idx + 1]))
+        # Find the existing responses (between responses: and schemas:)
+        existing_responses = base_lines[responses_line_idx + 1:schemas_line_idx]
+        output_parts.append("\n".join(existing_responses))
+        # Add missing ForbiddenResponse stub
+        output_parts.append(FORBIDDEN_RESPONSE_STUB)
+        # Add schemas section and rest up to securitySchemes (or end)
+        if has_security_schemes:
+            output_parts.append("\n".join(base_lines[schemas_line_idx:security_schemes_line_idx]))
+        else:
+            output_parts.append("\n".join(base_lines[schemas_line_idx:]))
+    elif has_security_schemes:
+        # Include up to securitySchemes
+        output_parts.append("\n".join(base_lines[components_line_idx:security_schemes_line_idx]))
+    else:
+        # Include all of components (no securitySchemes in base spec)
+        output_parts.append("\n".join(base_lines[components_line_idx:]))
 
     # Part 4: Add connector-specific schemas (inside components/schemas, before securitySchemes)
     output_parts.append("# Connector-specific schemas")
@@ -671,28 +831,42 @@ def main() -> None:
             if line.strip():
                 output_parts.append(f"      {line}")
 
-    # Add custom connector stubs (only for included types)
-    if args.type == "all":
-        output_parts.append(CUSTOM_CONNECTOR_STUBS)
-    elif args.type == "sources":
-        output_parts.append("""
-    source-custom:
-      description: The values required to configure the source.
-      example: { user: "charles" }
-    source-custom-update:
-      title: "Custom Spec"
-""")
-    elif args.type == "destinations":
-        output_parts.append("""
-    destination-custom:
-      description: The values required to configure the destination.
-      example: { user: "charles" }
-    destination-custom-update:
-      title: "Custom Spec"
-""")
+    # Note: Custom connector stubs were removed in the 1.0 refactor (PR #232)
+    # The code below is commented out but kept for reference in case custom
+    # connectors are re-added in the future.
+    # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+    # if args.type == "all":
+    #     output_parts.append(CUSTOM_CONNECTOR_STUBS)
+    # elif args.type == "sources":
+    #     output_parts.append("""
+    #     source-custom:
+    #       description: The values required to configure the source.
+    #       example: { user: "charles" }
+    #     source-custom-update:
+    #       title: "Custom Spec"
+    # """)
+    # elif args.type == "destinations":
+    #     output_parts.append("""
+    #     destination-custom:
+    #       description: The values required to configure the destination.
+    #       example: { user: "charles" }
+    #     destination-custom-update:
+    #       title: "Custom Spec"
+    # """)
 
-    # Part 5: Add securitySchemes section and rest of the spec
-    output_parts.append("\n".join(base_lines[security_schemes_line_idx:]))
+    # Note: SourceConfiguration and DestinationConfiguration stubs are already
+    # present in the base api.yaml, so we don't need to add them here.
+
+    # Add missing schema stubs (referenced in api.yaml but not defined there)
+    output_parts.append(MISSING_SCHEMA_STUBS)
+
+    # Part 5: Add securitySchemes section
+    if has_security_schemes:
+        # Use existing securitySchemes from base spec
+        output_parts.append("\n".join(base_lines[security_schemes_line_idx:]))
+    else:
+        # Add security schemes (not present in base api.yaml)
+        output_parts.append(SECURITY_SCHEMES)
 
     # Write output
     output_content = "\n".join(output_parts)

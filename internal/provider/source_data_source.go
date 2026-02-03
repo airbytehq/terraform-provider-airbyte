@@ -7,7 +7,6 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -30,7 +29,7 @@ type SourceDataSource struct {
 
 // SourceDataSourceModel describes the data model.
 type SourceDataSourceModel struct {
-	Configuration            jsontypes.Normalized                `tfsdk:"configuration"`
+	Configuration            tfTypes.SourceConfiguration         `tfsdk:"configuration"`
 	CreatedAt                types.Int64                         `tfsdk:"created_at"`
 	DefinitionID             types.String                        `tfsdk:"definition_id"`
 	IncludeSecretCoordinates types.Bool                          `queryParam:"style=form,explode=true,name=includeSecretCoordinates" tfsdk:"include_secret_coordinates"`
@@ -52,10 +51,9 @@ func (r *SourceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 		MarkdownDescription: "Source DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.StringAttribute{
-				CustomType:  jsontypes.NormalizedType{},
+			"configuration": schema.SingleNestedAttribute{
 				Computed:    true,
-				Description: `The values required to configure the source. Parsed as JSON.`,
+				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,
 			},
 			"created_at": schema.Int64Attribute{
 				Computed: true,

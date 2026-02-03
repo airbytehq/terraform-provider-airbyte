@@ -1,12 +1,14 @@
 workflowVersion: 1.0.0
 speakeasyVersion: latest
 sources:
-    my-source:
+    airbyte-api:
         inputs:
             - location: ./generated/api_terraform.yaml
+        overlays:
+            - location: ./overlays/terraform_speakeasy.yaml
         registry:
             location: registry.speakeasyapi.dev/airbyte/airbyte-prod/my-source
 targets:
     terraform-provider-airbyte:
         target: terraform
-        source: my-source
+        source: airbyte-api

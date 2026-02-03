@@ -1,0 +1,4 @@
+import {
+  to = airbyte_source_dynamodb.my_airbyte_source_dynamodb
+  id = "..."
+}
