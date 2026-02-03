@@ -1,7 +1,7 @@
 INFO    Linting OpenAPI document...
 
 INFO    Using ruleset speakeasy-recommended
-INFO    Lint report available to view at: https://app.speakeasy.com/org/airbyte/airbyte-prod/linting-report/f6b818dfc584a1d8e311979de4710c4f
+INFO    Lint report available to view at: https://app.speakeasy.com/org/airbyte/airbyte-prod/linting-report/15987227f9767faff324684e9ee1df78
 INFO    validation hint: [line 16] missing-error-response - An error response should be defined for all operations
 INFO    validation hint: [line 30] missing-error-response - An error response should be defined for all operations
 INFO    validation hint: [line 50] missing-examples - Missing example for responses. Consider adding an example
