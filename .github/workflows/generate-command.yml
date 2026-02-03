@@ -151,10 +151,12 @@ jobs:
               run: |
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
                       # Dry run: use --skip-compile, we'll build ourselves
-                      speakeasy run --skip-compile
+                      # Use --skip-versioning to respect the version in gen.yaml
+                      speakeasy run --skip-compile --skip-versioning
                   else
                       # Normal generation with console output
-                      speakeasy run --output console
+                      # Use --skip-versioning to respect the version in gen.yaml
+                      speakeasy run --output console --skip-versioning
                   fi
 
             - name: Update dependencies
