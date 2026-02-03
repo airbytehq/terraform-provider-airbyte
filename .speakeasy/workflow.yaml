@@ -4,6 +4,8 @@ sources:
     my-source:
         inputs:
             - location: ./generated/api_terraform.yaml
+        overlays:
+            - location: ./overlays/terraform_speakeasy.yaml
         registry:
             location: registry.speakeasyapi.dev/airbyte/airbyte-prod/my-source
 targets:
