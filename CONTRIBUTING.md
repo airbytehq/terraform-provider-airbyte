@@ -152,6 +152,72 @@ Releases are automated via GitHub Actions when a new tag is pushed.
 | `.speakeasy/gen.lock` | Lock file tracking generation state |
 | `gen.yaml` | Provider-specific generation settings |
 | `.goreleaser.yml` | Multi-platform build and release configuration |
+| `overlays/terraform_speakeasy.yaml` | Speakeasy overlay for Terraform-specific customizations |
+
+### Maintaining the Speakeasy Overlay
+
+The overlay file (`overlays/terraform_speakeasy.yaml`) applies Speakeasy-specific extensions to the generated OpenAPI spec. This is a declarative way to customize how Speakeasy generates the Terraform provider without modifying the upstream API spec.
+
+#### When to Update the Overlay
+
+Update the overlay when you need to:
+- **Handle circular references**: Add `x-speakeasy-type-override: any` for schemas with circular references that cause Speakeasy to hang
+- **Control naming**: Add `x-speakeasy-name-override` to customize how schema names appear in Terraform attributes
+- **Add Speakeasy extensions**: Any static Speakeasy extension that should be applied to specific schemas
+
+#### Overlay Structure
+
+The overlay uses the [OpenAPI Overlay Specification 1.0.0](https://github.com/OAI/Overlay-Specification) format:
+
+```yaml
+overlay: 1.0.0
+info:
+  title: Terraform Speakeasy Extensions
+  version: 1.0.0
+actions:
+  - target: "$.components.schemas.SchemaName"
+    description: "Description of what this action does"
+    update:
+      x-speakeasy-extension: value
+```
+
+#### Testing Overlay Changes Locally
+
+Before committing overlay changes, test them locally:
+
+```bash
+# Generate the terraform spec
+python scripts/generate_terraform_spec.py --cloud-only --output generated/api_terraform.yaml
+
+# Apply the overlay and verify
+speakeasy overlay apply \
+  --schema generated/api_terraform.yaml \
+  --overlay overlays/terraform_speakeasy.yaml \
+  --out test_output.yaml
+
+# Check that extensions were applied
+grep "x-speakeasy-name-override\|x-speakeasy-type-override" test_output.yaml
+
+# Clean up
+rm test_output.yaml
+```
+
+#### Current Overlay Actions
+
+The overlay currently handles:
+
+1. **Circular Reference Fix** (`RowFilteringOperation`): Adds `x-speakeasy-type-override: any` to prevent Speakeasy from hanging on circular references. See [issue #250](https://github.com/airbytehq/terraform-provider-airbyte/issues/250).
+
+2. **Mapper Configuration Naming**: Adds `x-speakeasy-name-override` to MapperConfiguration schemas so Terraform attributes use short names (`encryption`, `field_filtering`) instead of redundant full names (`encryption_mapper_configuration`).
+
+#### Adding New Overlay Actions
+
+When adding new actions:
+
+1. Identify the JSONPath target for the schema (e.g., `$.components.schemas.MySchema`)
+2. Add a descriptive comment explaining why the action is needed
+3. Test locally with `speakeasy overlay apply`
+4. Verify the generated Terraform code has the expected changes
 
 ### Connector Modules
 
