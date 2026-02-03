@@ -1,5 +1,13 @@
-speakeasyVersion: 1.685.2
+speakeasyVersion: 1.700.2
 sources:
+    airbyte-api:
+        sourceNamespace: my-source
+        sourceRevisionDigest: sha256:ff513a92503b914cde7869456aa1a18ec0c2167f80d5775c2132f7f5a1ce2418
+        sourceBlobDigest: sha256:751f98cd3bad7db83eef2522382b8ca6787cb6af93c1a2a073fbcdd8301125d7
+        tags:
+            - latest
+            - devin-1770099207-overlay-mapper-naming
+            - 1.0.0
     my-source:
         sourceNamespace: my-source
         sourceRevisionDigest: sha256:72df57375105e5d22ca3f76bc67990777490bc2b03c4628b8645231ad1052811
@@ -10,20 +18,22 @@ sources:
             - 1.0.0
 targets:
     terraform-provider-airbyte:
-        source: my-source
+        source: airbyte-api
         sourceNamespace: my-source
-        sourceRevisionDigest: sha256:72df57375105e5d22ca3f76bc67990777490bc2b03c4628b8645231ad1052811
-        sourceBlobDigest: sha256:da85281bdcf07427081ebf5b68da88cd51810688875e4bbec72b3741c63e9cdf
+        sourceRevisionDigest: sha256:ff513a92503b914cde7869456aa1a18ec0c2167f80d5775c2132f7f5a1ce2418
+        sourceBlobDigest: sha256:751f98cd3bad7db83eef2522382b8ca6787cb6af93c1a2a073fbcdd8301125d7
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
-        my-source:
+        airbyte-api:
             inputs:
-                - location: https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api_terraform.yaml
+                - location: ./generated/api_terraform.yaml
+            overlays:
+                - location: ./overlays/terraform_speakeasy.yaml
             registry:
                 location: registry.speakeasyapi.dev/airbyte/airbyte-prod/my-source
     targets:
         terraform-provider-airbyte:
             target: terraform
-            source: my-source
+            source: airbyte-api
