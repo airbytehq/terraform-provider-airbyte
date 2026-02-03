@@ -383,15 +383,10 @@ FORBIDDEN_RESPONSE_STUB = """    ForbiddenResponse:
           schema:
             $ref: '#/components/schemas/ForbiddenResponse'"""
 
-# Speakeasy circular reference handling
-# The upstream api.yaml uses `x-airbyte-circular-ref: true` to mark schemas with
-# circular references. Speakeasy doesn't understand this marker and will hang
-# trying to resolve the circular reference. We ADD `x-speakeasy-type-override: any`
-# on the line after the Airbyte marker (keeping the original annotation intact).
-# This tells Speakeasy to treat the schema as an arbitrary JSON blob.
+# Note: Speakeasy circular reference handling has been moved to the overlay file
+# at overlays/terraform_speakeasy.yaml. The overlay adds x-speakeasy-type-override: any
+# to schemas marked with x-airbyte-circular-ref: true.
 # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
-CIRCULAR_REF_MARKER = "x-airbyte-circular-ref: true"
-SPEAKEASY_TYPE_OVERRIDE = "x-speakeasy-type-override: any"
 
 # Security schemes for the API
 # NOTE: The two leading spaces before `securitySchemes:` are intentional.
@@ -608,17 +603,9 @@ def main() -> None:
     print("Fetching base API spec...")
     base_spec = fetch_text(args.base_spec)
 
-    # Add Speakeasy type override after Airbyte circular reference markers
-    # This prevents Speakeasy from hanging when trying to resolve circular references
-    # We keep the original x-airbyte-circular-ref annotation and add x-speakeasy-type-override after it
-    if CIRCULAR_REF_MARKER in base_spec:
-        circular_ref_count = base_spec.count(CIRCULAR_REF_MARKER)
-        print(f"  Adding Speakeasy type override for {circular_ref_count} circular reference marker(s)")
-        # Add the Speakeasy annotation on the line after the Airbyte marker
-        base_spec = base_spec.replace(
-            CIRCULAR_REF_MARKER,
-            f"{CIRCULAR_REF_MARKER}\n      {SPEAKEASY_TYPE_OVERRIDE}"
-        )
+    # Note: Speakeasy circular reference handling has been moved to the overlay file
+    # at overlays/terraform_speakeasy.yaml. The overlay adds x-speakeasy-type-override: any
+    # to schemas marked with x-airbyte-circular-ref: true.
 
     # Filter sources and destinations based on --type flag
     # Logic:

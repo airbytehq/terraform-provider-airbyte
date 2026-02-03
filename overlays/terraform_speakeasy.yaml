@@ -1,0 +1,58 @@
+# Speakeasy Overlay for Terraform Provider
+# This overlay applies Speakeasy-specific extensions to the generated OpenAPI spec.
+# It is applied after the Python script generates the base terraform spec.
+#
+# Documentation: https://www.speakeasy.com/docs/openapi/overlays
+overlay: 1.0.0
+info:
+  title: Terraform Speakeasy Extensions
+  version: 1.0.0
+
+actions:
+  # =============================================================================
+  # Circular Reference Handling
+  # =============================================================================
+  # The upstream api.yaml uses `x-airbyte-circular-ref: true` to mark schemas with
+  # circular references. Speakeasy doesn't understand this marker and will hang
+  # trying to resolve the circular reference. We add `x-speakeasy-type-override: any`
+  # to tell Speakeasy to treat these schemas as arbitrary JSON blobs.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
+
+  - target: "$.components.schemas.RowFilteringOperation"
+    description: "Add Speakeasy type override for circular reference in RowFilteringOperation"
+    update:
+      x-speakeasy-type-override: any
+
+  # =============================================================================
+  # Mapper Configuration Naming
+  # =============================================================================
+  # The MapperConfiguration oneOf schemas have full names like "HashingMapperConfiguration"
+  # which Speakeasy converts to snake_case attributes like "hashing_mapper_configuration".
+  # Since the parent is already named "mapper_configuration", this is redundant.
+  # We use x-speakeasy-name-override to use shorter names matching the schema titles.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/pull/239
+
+  - target: "$.components.schemas.HashingMapperConfiguration"
+    description: "Use shorter name 'Hashing' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: Hashing
+
+  - target: "$.components.schemas.EncryptionMapperConfiguration"
+    description: "Use shorter name 'Encryption' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: Encryption
+
+  - target: "$.components.schemas.FieldFilteringMapperConfiguration"
+    description: "Use shorter name 'FieldFiltering' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: FieldFiltering
+
+  - target: "$.components.schemas.FieldRenamingMapperConfiguration"
+    description: "Use shorter name 'FieldRenaming' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: FieldRenaming
+
+  - target: "$.components.schemas.RowFilteringMapperConfiguration"
+    description: "Use shorter name 'RowFiltering' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: RowFiltering

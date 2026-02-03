@@ -147,15 +147,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 												Attributes: map[string]schema.Attribute{
 													"encryption": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"aes": schema.SingleNestedAttribute{
 																Optional: true,
-																PlanModifiers: []planmodifier.Object{
-																	speakeasy_objectplanmodifier.UseConfigValue(),
-																},
 																Attributes: map[string]schema.Attribute{
 																	"algorithm": schema.StringAttribute{
 																		Computed:    true,
@@ -231,9 +225,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 															},
 															"rsa": schema.SingleNestedAttribute{
 																Optional: true,
-																PlanModifiers: []planmodifier.Object{
-																	speakeasy_objectplanmodifier.UseConfigValue(),
-																},
 																Attributes: map[string]schema.Attribute{
 																	"algorithm": schema.StringAttribute{
 																		Computed:    true,
@@ -290,9 +281,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 													},
 													"field_filtering": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"target_field": schema.StringAttribute{
 																Computed:    true,
@@ -314,9 +302,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 													},
 													"field_renaming": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"new_field_name": schema.StringAttribute{
 																Computed:    true,
@@ -346,9 +331,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 													},
 													"hashing": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"field_name_suffix": schema.StringAttribute{
 																Computed:    true,
@@ -395,9 +377,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 													},
 													"row_filtering": schema.SingleNestedAttribute{
 														Optional: true,
-														PlanModifiers: []planmodifier.Object{
-															speakeasy_objectplanmodifier.UseConfigValue(),
-														},
 														Attributes: map[string]schema.Attribute{
 															"conditions": schema.StringAttribute{
 																CustomType:  jsontypes.NormalizedType{},
@@ -825,43 +804,6 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	request1, request1Diags := data.ToOperationsGetConnectionRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Connections.GetConnection(ctx, *request1)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res1 != nil && res1.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
-		}
-		return
-	}
-	if res1 == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
-		return
-	}
-	if res1.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
-		return
-	}
-	if !(res1.ConnectionResponse != nil) {
-		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
-		return
-	}
-	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res1.ConnectionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -976,43 +918,6 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	request1, request1Diags := data.ToOperationsGetConnectionRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Connections.GetConnection(ctx, *request1)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res1 != nil && res1.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
-		}
-		return
-	}
-	if res1 == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
-		return
-	}
-	if res1.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
-		return
-	}
-	if !(res1.ConnectionResponse != nil) {
-		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
-		return
-	}
-	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res1.ConnectionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -1054,7 +959,10 @@ func (r *ConnectionResource) Delete(ctx context.Context, req resource.DeleteRequ
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
+	switch res.StatusCode {
+	case 204, 404:
+		break
+	default:
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

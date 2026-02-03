@@ -1,0 +1,4 @@
+import {
+  to = airbyte_source_zoho_inventory.my_airbyte_source_zoho_inventory
+  id = "..."
+}
