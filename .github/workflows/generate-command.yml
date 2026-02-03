@@ -119,12 +119,8 @@ jobs:
                   echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
             - name: Get next version from release drafter
-              id: version
+              id: get-version
               uses: aaronsteers/semantic-pr-release-drafter@v0.7.0
-              with:
-                  # Use the same templates as the release-drafter workflow
-                  name-template: 'v$RESOLVED_VERSION'
-                  tag-template: 'v$RESOLVED_VERSION'
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -157,15 +153,15 @@ jobs:
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
-                  echo "Using version from release drafter: ${{ steps.version.outputs.resolved-version }}"
+                  echo "Using version from release drafter: ${{ steps.get-version.outputs.resolved-version }}"
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
                       # Dry run: use --skip-compile, we'll build ourselves
                       # Use --set-version to use the version from semantic-pr-release-drafter
-                      speakeasy run --skip-compile --set-version=${{ steps.version.outputs.resolved-version }}
+                      speakeasy run --skip-compile --set-version=${{ steps.get-version.outputs.resolved-version }}
                   else
                       # Normal generation with console output
                       # Use --set-version to use the version from semantic-pr-release-drafter
-                      speakeasy run --output console --set-version=${{ steps.version.outputs.resolved-version }}
+                      speakeasy run --output console --set-version=${{ steps.get-version.outputs.resolved-version }}
                   fi
 
             - name: Update dependencies
