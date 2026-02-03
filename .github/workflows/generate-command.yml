@@ -58,11 +58,9 @@ jobs:
         name: Generate SDK
         runs-on: ubuntu-latest-16core
         timeout-minutes: 30
-        # Note: No explicit permissions here to allow workflow_call from
-        # pull_request triggers (which have restricted permissions).
-        # The workflow uses GITHUB_TOKEN with default permissions, which is
-        # sufficient for dry_run mode. For PR creation (non-dry_run), the
-        # peter-evans/create-pull-request action uses its own token.
+        permissions:
+            contents: write
+            pull-requests: write
         steps:
             - name: Authenticate as GitHub App
               if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
@@ -120,6 +118,12 @@ jobs:
                   curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
                   echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
 
+            - name: Get next version from release drafter
+              id: get-version
+              uses: aaronsteers/semantic-pr-release-drafter@v0.7.0
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Lint OpenAPI spec (fast-fail for circular references)
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
@@ -149,12 +153,15 @@ jobs:
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
+                  echo "Using version from release drafter: ${{ steps.get-version.outputs.resolved-version }}"
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
                       # Dry run: use --skip-compile, we'll build ourselves
-                      speakeasy run --skip-compile
+                      # Use --set-version to use the version from semantic-pr-release-drafter
+                      speakeasy run --skip-compile --set-version=${{ steps.get-version.outputs.resolved-version }}
                   else
                       # Normal generation with console output
-                      speakeasy run --output console
+                      # Use --set-version to use the version from semantic-pr-release-drafter
+                      speakeasy run --output console --set-version=${{ steps.get-version.outputs.resolved-version }}
                   fi
 
             - name: Update dependencies
