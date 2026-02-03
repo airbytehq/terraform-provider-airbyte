@@ -156,7 +156,7 @@ Releases are automated via GitHub Actions when a new tag is pushed.
 
 ### Maintaining the Speakeasy Overlay
 
-The overlay file (`overlays/terraform_speakeasy.yaml`) applies Speakeasy-specific extensions to the generated OpenAPI spec. This is a declarative way to customize how Speakeasy generates the Terraform provider without modifying the upstream API spec.
+The overlay file (`overlays/terraform_speakeasy.yaml`) applies Speakeasy-specific extensions to the generated OpenAPI spec. This is a declarative way to customize how Speakeasy generates the Terraform provider without modifying the upstream API spec. For more details, see the [Speakeasy Overlays documentation](https://www.speakeasy.com/docs/openapi/overlays).
 
 #### When to Update the Overlay
 
