@@ -1,6 +1,10 @@
 version: 2
 # Visit https://goreleaser.com for documentation on how to customize this
 # behavior.
+snapshot:
+  # Use clean version for snapshot builds (no -SNAPSHOT suffix)
+  # This is needed for release-drafter workflow which builds assets before tagging
+  version_template: '{{ .Version }}'
 before:
   hooks:
     # this is just an example and not a requirement for provider building/publishing
