@@ -224,7 +224,10 @@ jobs:
                   delete-branch: true
 
             - name: Enable auto-merge for automated PRs
-              if: ${{ !inputs.dry_run && steps.create-pr.outputs.pull-request-number && (github.event_name == 'push' || github.event_name == 'schedule') }}
+              if: |
+                  !inputs.dry_run &&
+                  steps.create-pr.outputs.pull-request-number &&
+                  contains(fromJSON('["push", "schedule"]'), github.event_name)
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
