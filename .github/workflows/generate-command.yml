@@ -205,12 +205,20 @@ jobs:
                       echo "has_changes=false" >> $GITHUB_OUTPUT
                   fi
 
+            - name: Authenticate as GitHub App for PR creation
+              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' }}
+              uses: actions/create-github-app-token@v2
+              id: get-pr-token
+              with:
+                  app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
+                  private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
+
             - name: Create Pull Request
               if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' }}
               id: create-pr
               uses: peter-evans/create-pull-request@v6
               with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ steps.get-pr-token.outputs.token }}
                   commit-message: "chore: regenerate SDK with Speakeasy"
                   title: "chore: regenerate SDK with Speakeasy"
                   body: |
@@ -223,14 +231,15 @@ jobs:
                   base: main
                   delete-branch: true
 
-            - name: Enable auto-merge for automated PRs
-              if: |
-                  (github.event_name == 'push'
-                   || github.event_name == 'schedule'
-                  ) && steps.create-pr.outputs.pull-request-number
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
+            # Auto-merge is disabled until confidence in the process is higher
+            # - name: Enable auto-merge for automated PRs
+            #   if: |
+            #       (github.event_name == 'push'
+            #        || github.event_name == 'schedule'
+            #       ) && steps.create-pr.outputs.pull-request-number
+            #   env:
+            #       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #   run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
 
             - name: Append success comment
               if: ${{ success() && !inputs.dry_run && github.event.inputs.pr != '' }}
