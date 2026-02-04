@@ -225,9 +225,9 @@ jobs:
 
             - name: Enable auto-merge for automated PRs
               if: |
-                  !inputs.dry_run &&
-                  steps.create-pr.outputs.pull-request-number &&
-                  contains(fromJSON('["push", "schedule"]'), github.event_name)
+                  (github.event_name == 'push'
+                   || github.event_name == 'schedule'
+                  ) && steps.create-pr.outputs.pull-request-number
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
