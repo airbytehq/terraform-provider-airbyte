@@ -1,10 +1,6 @@
 version: 2
 # Visit https://goreleaser.com for documentation on how to customize this
 # behavior.
-snapshot:
-  # Use clean version for snapshot builds (no -SNAPSHOT suffix)
-  # This is needed for release-drafter workflow which builds assets before tagging
-  version_template: '{{ .Version }}'
 before:
   hooks:
     # this is just an example and not a requirement for provider building/publishing
@@ -56,10 +52,12 @@ signs:
       - "--detach-sign"
       - "${artifact}"
 release:
+  # Upload to existing draft release created by semantic-pr-release-drafter
+  draft: true
+  use_existing_draft: true
+  replace_existing_artifacts: true
   extra_files:
     - glob: 'terraform-registry-manifest.json'
       name_template: '{{ .ProjectName }}_{{ .Version }}_manifest.json'
-  # If you want to manually examine the release before its live, uncomment this line:
-  # draft: true
 changelog:
   disable: true
