@@ -4,8 +4,8 @@
 # It can either create a PR with the regenerated code (default) or run in dry-run mode for validation.
 #
 # Triggers:
-# - On push to main: Auto-generates after every merge to ensure provider stays up-to-date
-# - Daily schedule (6 AM UTC): Catches connector registry changes that happen outside of PRs
+# - On push to main: Auto-generates after every merge to ensure provider stays up-to-date (auto-merge enabled)
+# - Daily schedule (6 AM UTC): Catches connector registry changes that happen outside of PRs (auto-merge enabled)
 # - Manual workflow_dispatch: For on-demand generation
 # - workflow_call: For validation from other workflows (e.g., PR checks)
 #
@@ -207,6 +207,7 @@ jobs:
 
             - name: Create Pull Request
               if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' }}
+              id: create-pr
               uses: peter-evans/create-pull-request@v6
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
@@ -221,6 +222,14 @@ jobs:
                   branch: speakeasy-sdk-regen
                   base: main
                   delete-branch: true
+
+            - name: Enable auto-merge for automated PRs
+              if: ${{ !inputs.dry_run && steps.create-pr.outputs.pull-request-number && (github.event_name == 'push' || github.event_name == 'schedule') }}
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  echo "Enabling auto-merge for PR #${{ steps.create-pr.outputs.pull-request-number }}"
+                  gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
 
             - name: Append success comment
               if: ${{ success() && !inputs.dry_run && github.event.inputs.pr != '' }}
