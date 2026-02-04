@@ -53,7 +53,17 @@ TD-TODO: Devin, please list key code files here for maintainers - e.g. the pytho
 
 After each merge to main, a draft release is created/updated automatically. You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
 
-Terraform receives webhook notifications from GitHub based on the "Terraform Registry" GitHub App - not to be confused with "Terraform Cloud" which is user user-targeted app, not for publishing.
+Terraform receives webhook notifications from GitHub, see below.
+
+### Giving Terraform Registry Access to Webhook Notifications
+
+In order for Terraform Registry to receive webhook notifications, an admin user on GitHub must install the "Terraform Registry" GitHub App on behalf of the Airbyte organization. This app is associated with that admin user, specifically, and allows Terraform to receive webhook notifications when new releases are published.
+
+Note that the "Terraform Registry" GitHub App is not to be confused with "Terraform Cloud" which is their customer-targeted app, not for publishing.
+
+### Logging into the Terraform Registry
+
+You will log in to the Terraform Registry is performed with your GitHub account here: [Terraform Registry Login](https://registry.terraform.io/sign-in). When you sign in, you must select "legacy" login and then "GitHub" for login provider, since we do not have a registered (newer) Hashicorp login account.
 
 ## Important Note on Pre-releases
 
@@ -67,6 +77,8 @@ You may publish a prerelease by following the steps below:
 
 > [!Warning]
 > Do not check the box to "Set as a pre-release" even if you are publishing a prerelease. Doing so will prevent the Terraform Registry from syncing the release, which in turn prevents users from installing the new version of the provider.
+>
+> Terraform will still recognize the version as a prerelease based on the version string itself (e.g., `1.0.0-rc1`).
 
 ## Updating Upstream Dependencies
 
