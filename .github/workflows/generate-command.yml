@@ -231,7 +231,7 @@ jobs:
                   base: main
                   delete-branch: true
 
-            # Auto-merge is disabled until we can validate version bumps
+            # Auto-merge is disabled until confidence in the process is higher
             # - name: Enable auto-merge for automated PRs
             #   if: |
             #       (github.event_name == 'push'
