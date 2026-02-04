@@ -272,23 +272,23 @@ func (j *Jsonl) GetUnexpectedFieldBehavior() *UnexpectedFieldBehavior {
 	return j.UnexpectedFieldBehavior
 }
 
-// Avro - This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.
-type Avro struct {
+// SourceS3Avro - This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.
+type SourceS3Avro struct {
 	filetype *string `const:"avro" json:"filetype"`
 }
 
-func (a Avro) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
+func (s SourceS3Avro) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (a *Avro) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+func (s *SourceS3Avro) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (a *Avro) GetFiletype() *string {
+func (s *SourceS3Avro) GetFiletype() *string {
 	return types.Pointer("avro")
 }
 
@@ -452,18 +452,18 @@ func (c *Csv) GetQuoteChar() *string {
 type SourceS3FileFormatType string
 
 const (
-	SourceS3FileFormatTypeCsv     SourceS3FileFormatType = "CSV"
-	SourceS3FileFormatTypeParquet SourceS3FileFormatType = "Parquet"
-	SourceS3FileFormatTypeAvro    SourceS3FileFormatType = "Avro"
-	SourceS3FileFormatTypeJsonl   SourceS3FileFormatType = "Jsonl"
+	SourceS3FileFormatTypeCsv          SourceS3FileFormatType = "CSV"
+	SourceS3FileFormatTypeParquet      SourceS3FileFormatType = "Parquet"
+	SourceS3FileFormatTypeSourceS3Avro SourceS3FileFormatType = "source-s3_Avro"
+	SourceS3FileFormatTypeJsonl        SourceS3FileFormatType = "Jsonl"
 )
 
 // SourceS3FileFormat - Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate
 type SourceS3FileFormat struct {
-	Csv     *Csv     `queryParam:"inline" union:"member"`
-	Parquet *Parquet `queryParam:"inline" union:"member"`
-	Avro    *Avro    `queryParam:"inline" union:"member"`
-	Jsonl   *Jsonl   `queryParam:"inline" union:"member"`
+	Csv          *Csv          `queryParam:"inline" union:"member"`
+	Parquet      *Parquet      `queryParam:"inline" union:"member"`
+	SourceS3Avro *SourceS3Avro `queryParam:"inline" union:"member"`
+	Jsonl        *Jsonl        `queryParam:"inline" union:"member"`
 
 	Type SourceS3FileFormatType
 }
@@ -486,12 +486,12 @@ func CreateSourceS3FileFormatParquet(parquet Parquet) SourceS3FileFormat {
 	}
 }
 
-func CreateSourceS3FileFormatAvro(avro Avro) SourceS3FileFormat {
-	typ := SourceS3FileFormatTypeAvro
+func CreateSourceS3FileFormatSourceS3Avro(sourceS3Avro SourceS3Avro) SourceS3FileFormat {
+	typ := SourceS3FileFormatTypeSourceS3Avro
 
 	return SourceS3FileFormat{
-		Avro: &avro,
-		Type: typ,
+		SourceS3Avro: &sourceS3Avro,
+		Type:         typ,
 	}
 }
 
@@ -525,11 +525,11 @@ func (u *SourceS3FileFormat) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var avro Avro = Avro{}
-	if err := utils.UnmarshalJSON(data, &avro, "", true, nil); err == nil {
+	var sourceS3Avro SourceS3Avro = SourceS3Avro{}
+	if err := utils.UnmarshalJSON(data, &sourceS3Avro, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceS3FileFormatTypeAvro,
-			Value: &avro,
+			Type:  SourceS3FileFormatTypeSourceS3Avro,
+			Value: &sourceS3Avro,
 		})
 	}
 
@@ -560,8 +560,8 @@ func (u *SourceS3FileFormat) UnmarshalJSON(data []byte) error {
 	case SourceS3FileFormatTypeParquet:
 		u.Parquet = best.Value.(*Parquet)
 		return nil
-	case SourceS3FileFormatTypeAvro:
-		u.Avro = best.Value.(*Avro)
+	case SourceS3FileFormatTypeSourceS3Avro:
+		u.SourceS3Avro = best.Value.(*SourceS3Avro)
 		return nil
 	case SourceS3FileFormatTypeJsonl:
 		u.Jsonl = best.Value.(*Jsonl)
@@ -580,8 +580,8 @@ func (u SourceS3FileFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Parquet, "", true)
 	}
 
-	if u.Avro != nil {
-		return utils.MarshalJSON(u.Avro, "", true)
+	if u.SourceS3Avro != nil {
+		return utils.MarshalJSON(u.SourceS3Avro, "", true)
 	}
 
 	if u.Jsonl != nil {
@@ -1675,7 +1675,7 @@ type SourceS3 struct {
 	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
 	Dataset        *string                 `json:"dataset,omitempty"`
 	DeliveryMethod *SourceS3DeliveryMethod `json:"delivery_method,omitempty"`
-	// Endpoint to an S3 compatible service. Leave empty to use AWS.
+	// Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required.
 	Endpoint *string `default:"" json:"endpoint"`
 	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate
 	Format *SourceS3FileFormat `json:"format,omitempty"`

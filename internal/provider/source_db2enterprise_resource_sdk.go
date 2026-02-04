@@ -209,7 +209,7 @@ func (r *SourceDb2EnterpriseResourceModel) ToSharedSourceDb2EnterpriseCreateRequ
 	database = r.Configuration.Database.ValueString()
 
 	var encryption shared.SourceDb2EnterpriseEncryption
-	var unencrypted *shared.Unencrypted
+	var sourceDb2EnterpriseUnencrypted *shared.SourceDb2EnterpriseUnencrypted
 	if r.Configuration.Encryption.Unencrypted != nil {
 		encryptionMethod := new(shared.EncryptionMethod)
 		if !r.Configuration.Encryption.Unencrypted.EncryptionMethod.IsUnknown() && !r.Configuration.Encryption.Unencrypted.EncryptionMethod.IsNull() {
@@ -221,17 +221,17 @@ func (r *SourceDb2EnterpriseResourceModel) ToSharedSourceDb2EnterpriseCreateRequ
 		if !r.Configuration.Encryption.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.Unencrypted.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.Encryption.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties2)
 		}
-		unencrypted = &shared.Unencrypted{
+		sourceDb2EnterpriseUnencrypted = &shared.SourceDb2EnterpriseUnencrypted{
 			EncryptionMethod:     encryptionMethod,
 			AdditionalProperties: additionalProperties2,
 		}
 	}
-	if unencrypted != nil {
+	if sourceDb2EnterpriseUnencrypted != nil {
 		encryption = shared.SourceDb2EnterpriseEncryption{
-			Unencrypted: unencrypted,
+			SourceDb2EnterpriseUnencrypted: sourceDb2EnterpriseUnencrypted,
 		}
 	}
-	var tlsEncryptedVerifyCertificate *shared.TLSEncryptedVerifyCertificate
+	var sourceDb2EnterpriseTLSEncryptedVerifyCertificate *shared.SourceDb2EnterpriseTLSEncryptedVerifyCertificate
 	if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
 		encryptionMethod1 := new(shared.SourceDb2EnterpriseEncryptionMethod)
 		if !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.EncryptionMethod.IsUnknown() && !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.EncryptionMethod.IsNull() {
@@ -246,15 +246,15 @@ func (r *SourceDb2EnterpriseResourceModel) ToSharedSourceDb2EnterpriseCreateRequ
 		if !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.Encryption.TLSEncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties3)
 		}
-		tlsEncryptedVerifyCertificate = &shared.TLSEncryptedVerifyCertificate{
+		sourceDb2EnterpriseTLSEncryptedVerifyCertificate = &shared.SourceDb2EnterpriseTLSEncryptedVerifyCertificate{
 			EncryptionMethod:     encryptionMethod1,
 			SslCertificate:       sslCertificate,
 			AdditionalProperties: additionalProperties3,
 		}
 	}
-	if tlsEncryptedVerifyCertificate != nil {
+	if sourceDb2EnterpriseTLSEncryptedVerifyCertificate != nil {
 		encryption = shared.SourceDb2EnterpriseEncryption{
-			TLSEncryptedVerifyCertificate: tlsEncryptedVerifyCertificate,
+			SourceDb2EnterpriseTLSEncryptedVerifyCertificate: sourceDb2EnterpriseTLSEncryptedVerifyCertificate,
 		}
 	}
 	var host string

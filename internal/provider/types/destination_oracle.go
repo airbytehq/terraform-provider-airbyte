@@ -9,7 +9,6 @@ import (
 
 type DestinationOracle struct {
 	AdditionalProperties jsontypes.Normalized              `tfsdk:"additional_properties"`
-	Encryption           *DestinationOracleEncryption      `tfsdk:"encryption"`
 	Host                 types.String                      `tfsdk:"host"`
 	JdbcURLParams        types.String                      `tfsdk:"jdbc_url_params"`
 	Password             types.String                      `tfsdk:"password"`

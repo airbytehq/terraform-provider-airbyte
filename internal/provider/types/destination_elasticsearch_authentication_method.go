@@ -4,6 +4,5 @@ package types
 
 type DestinationElasticsearchAuthenticationMethod struct {
 	APIKeySecret     *DestinationElasticsearchAPIKeySecret     `queryParam:"inline" tfsdk:"api_key_secret"`
-	None             *DestinationElasticsearchNone             `queryParam:"inline" tfsdk:"none"`
 	UsernamePassword *DestinationElasticsearchUsernamePassword `queryParam:"inline" tfsdk:"username_password"`
 }

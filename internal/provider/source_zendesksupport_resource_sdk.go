@@ -195,7 +195,7 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRe
 				SourceZendeskSupportAPIToken: sourceZendeskSupportAPIToken,
 			}
 		}
-		var oAuth20Legacy *shared.OAuth20Legacy
+		var sourceZendeskSupportOAuth20Legacy *shared.SourceZendeskSupportOAuth20Legacy
 		if r.Configuration.Credentials.OAuth20Legacy != nil {
 			var accessToken1 string
 			accessToken1 = r.Configuration.Credentials.OAuth20Legacy.AccessToken.ValueString()
@@ -216,16 +216,16 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRe
 			if !r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.ValueString()), &additionalProperties2)
 			}
-			oAuth20Legacy = &shared.OAuth20Legacy{
+			sourceZendeskSupportOAuth20Legacy = &shared.SourceZendeskSupportOAuth20Legacy{
 				AccessToken:          accessToken1,
 				ClientID:             clientId1,
 				ClientSecret:         clientSecret1,
 				AdditionalProperties: additionalProperties2,
 			}
 		}
-		if oAuth20Legacy != nil {
+		if sourceZendeskSupportOAuth20Legacy != nil {
 			credentials = &shared.SourceZendeskSupportAuthentication{
-				OAuth20Legacy: oAuth20Legacy,
+				SourceZendeskSupportOAuth20Legacy: sourceZendeskSupportOAuth20Legacy,
 			}
 		}
 	}

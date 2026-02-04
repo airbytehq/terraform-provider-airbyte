@@ -11,13 +11,11 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -83,17 +81,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								Description: `Use a api key and secret combination to authenticate`,
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("none"),
-										path.MatchRelative().AtParent().AtName("username_password"),
-									}...),
-								},
-							},
-							"none": schema.SingleNestedAttribute{
-								Optional:    true,
-								Description: `No authentication will be used`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("api_key_secret"),
 										path.MatchRelative().AtParent().AtName("username_password"),
 									}...),
 								},
@@ -114,7 +101,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_key_secret"),
-										path.MatchRelative().AtParent().AtName("none"),
 									}...),
 								},
 							},
@@ -128,89 +114,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 					"endpoint": schema.StringAttribute{
 						Required:    true,
 						Description: `The full url of the Elasticsearch server`,
-					},
-					"path_prefix": schema.StringAttribute{
-						Optional:    true,
-						Description: `The Path Prefix of the Elasticsearch server`,
-					},
-					"tunnel_method": schema.SingleNestedAttribute{
-						Optional: true,
-						Attributes: map[string]schema.Attribute{
-							"no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("password_authentication"),
-										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
-									}...),
-								},
-							},
-							"password_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_host": schema.StringAttribute{
-										Required:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     int64default.StaticInt64(22),
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
-										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
-										},
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level username for logging into the jump server host`,
-									},
-									"tunnel_user_password": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level password for logging into the jump server host`,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("no_tunnel"),
-										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
-									}...),
-								},
-							},
-							"ssh_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Required:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     int64default.StaticInt64(22),
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
-										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
-										},
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level username for logging into the jump server host.`,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("no_tunnel"),
-										path.MatchRelative().AtParent().AtName("password_authentication"),
-									}...),
-								},
-							},
-						},
-						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"upsert": schema.BoolAttribute{
 						Computed:    true,

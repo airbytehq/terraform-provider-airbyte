@@ -23,13 +23,7 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     }
     ca_certificate = "...my_ca_certificate..."
     endpoint       = "...my_endpoint..."
-    path_prefix    = "...my_path_prefix..."
-    tunnel_method = {
-      no_tunnel = {
-        # ...
-      }
-    }
-    upsert = false
+    upsert         = false
   }
   definition_id = "fa3d17d3-6d2d-4bd3-a934-fcd7370e225f"
   name          = "...my_name..."
@@ -68,8 +62,6 @@ Optional:
 
 - `authentication_method` (Attributes) The type of authentication to be used (see [below for nested schema](#nestedatt--configuration--authentication_method))
 - `ca_certificate` (String) CA certificate
-- `path_prefix` (String) The Path Prefix of the Elasticsearch server
-- `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 - `upsert` (Boolean) If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys. Default: true
 
 <a id="nestedatt--configuration--authentication_method"></a>
@@ -78,7 +70,6 @@ Optional:
 Optional:
 
 - `api_key_secret` (Attributes) Use a api key and secret combination to authenticate (see [below for nested schema](#nestedatt--configuration--authentication_method--api_key_secret))
-- `none` (Attributes) No authentication will be used (see [below for nested schema](#nestedatt--configuration--authentication_method--none))
 - `username_password` (Attributes) Basic auth header with a username and password (see [below for nested schema](#nestedatt--configuration--authentication_method--username_password))
 
 <a id="nestedatt--configuration--authentication_method--api_key_secret"></a>
@@ -90,10 +81,6 @@ Required:
 - `api_key_secret` (String) The secret associated with the API Key ID.
 
 
-<a id="nestedatt--configuration--authentication_method--none"></a>
-### Nested Schema for `configuration.authentication_method.none`
-
-
 <a id="nestedatt--configuration--authentication_method--username_password"></a>
 ### Nested Schema for `configuration.authentication_method.username_password`
 
@@ -101,48 +88,6 @@ Required:
 
 - `password` (String) Basic auth password to access a secure Elasticsearch server
 - `username` (String) Basic auth username to access a secure Elasticsearch server
-
-
-
-<a id="nestedatt--configuration--tunnel_method"></a>
-### Nested Schema for `configuration.tunnel_method`
-
-Optional:
-
-- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
-
-<a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.no_tunnel`
-
-
-<a id="nestedatt--configuration--tunnel_method--password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.password_authentication`
-
-Required:
-
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
-
-Optional:
-
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
-
-
-<a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.ssh_key_authentication`
-
-Required:
-
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_user` (String) OS-level username for logging into the jump server host.
-
-Optional:
-
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 

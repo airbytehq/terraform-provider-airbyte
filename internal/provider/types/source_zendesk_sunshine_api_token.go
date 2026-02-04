@@ -3,10 +3,12 @@
 package types
 
 import (
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type SourceZendeskSunshineAPIToken struct {
-	APIToken types.String `tfsdk:"api_token"`
-	Email    types.String `tfsdk:"email"`
+	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	APIToken             types.String         `tfsdk:"api_token"`
+	Email                types.String         `tfsdk:"email"`
 }

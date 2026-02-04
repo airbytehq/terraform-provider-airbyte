@@ -103,32 +103,32 @@ func (g *Gzip) GetAdditionalProperties() any {
 	return g.AdditionalProperties
 }
 
-type CompressionType string
+type DestinationCustomerIoSchemasCompressionType string
 
 const (
-	CompressionTypeNoCompression CompressionType = "No Compression"
+	DestinationCustomerIoSchemasCompressionTypeNoCompression DestinationCustomerIoSchemasCompressionType = "No Compression"
 )
 
-func (e CompressionType) ToPointer() *CompressionType {
+func (e DestinationCustomerIoSchemasCompressionType) ToPointer() *DestinationCustomerIoSchemasCompressionType {
 	return &e
 }
-func (e *CompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationCustomerIoSchemasCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = CompressionType(v)
+		*e = DestinationCustomerIoSchemasCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationCustomerIoSchemasCompressionType: %v", v)
 	}
 }
 
 type NoCompression struct {
-	CompressionType      *CompressionType `default:"No Compression" json:"compression_type"`
-	AdditionalProperties any              `additionalProperties:"true" json:"-"`
+	CompressionType      *DestinationCustomerIoSchemasCompressionType `default:"No Compression" json:"compression_type"`
+	AdditionalProperties any                                          `additionalProperties:"true" json:"-"`
 }
 
 func (n NoCompression) MarshalJSON() ([]byte, error) {
@@ -142,7 +142,7 @@ func (n *NoCompression) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (n *NoCompression) GetCompressionType() *CompressionType {
+func (n *NoCompression) GetCompressionType() *DestinationCustomerIoSchemasCompressionType {
 	if n == nil {
 		return nil
 	}

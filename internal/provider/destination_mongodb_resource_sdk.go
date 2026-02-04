@@ -174,17 +174,10 @@ func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbCreateReques
 			} else {
 				port = nil
 			}
-			tls := new(bool)
-			if !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsUnknown() && !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsNull() {
-				*tls = r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.ValueBool()
-			} else {
-				tls = nil
-			}
 			standaloneMongoDbInstance = &shared.StandaloneMongoDbInstance{
 				Host:     host,
 				Instance: instance,
 				Port:     port,
-				TLS:      tls,
 			}
 		}
 		if standaloneMongoDbInstance != nil {
@@ -399,17 +392,10 @@ func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbPutRequest(c
 			} else {
 				port = nil
 			}
-			tls := new(bool)
-			if !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsUnknown() && !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsNull() {
-				*tls = r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.ValueBool()
-			} else {
-				tls = nil
-			}
 			destinationMongodbUpdateStandaloneMongoDbInstance = &shared.DestinationMongodbUpdateStandaloneMongoDbInstance{
 				Host:     host,
 				Instance: instance,
 				Port:     port,
-				TLS:      tls,
 			}
 		}
 		if destinationMongodbUpdateStandaloneMongoDbInstance != nil {

@@ -3,8 +3,8 @@
 package types
 
 type SourceS3FileFormat struct {
-	Avro    *Avro    `queryParam:"inline" tfsdk:"avro"`
-	Csv     *Csv     `queryParam:"inline" tfsdk:"csv"`
-	Jsonl   *Jsonl   `queryParam:"inline" tfsdk:"jsonl"`
-	Parquet *Parquet `queryParam:"inline" tfsdk:"parquet"`
+	Avro    *SourceS3Avro `queryParam:"inline" tfsdk:"avro"`
+	Csv     *Csv          `queryParam:"inline" tfsdk:"csv"`
+	Jsonl   *Jsonl        `queryParam:"inline" tfsdk:"jsonl"`
+	Parquet *Parquet      `queryParam:"inline" tfsdk:"parquet"`
 }

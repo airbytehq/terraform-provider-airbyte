@@ -58,26 +58,6 @@ func (e *SourceFileUpdateFileFormat) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceFileUpdateLocalFilesystemLimited struct {
-	// WARNING: Note that the local storage URL available for reading must start with the local mount "/local/" at the moment until we implement more advanced docker mounting options.
-	storage *string `const:"local" json:"storage,omitempty"`
-}
-
-func (s SourceFileUpdateLocalFilesystemLimited) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceFileUpdateLocalFilesystemLimited) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (s *SourceFileUpdateLocalFilesystemLimited) GetStorage() *string {
-	return types.Pointer("local")
-}
-
 type SourceFileUpdateSFTPSecureFileTransferProtocol struct {
 	Host     *string `json:"host,omitempty"`
 	Password *string `json:"password,omitempty"`
@@ -380,7 +360,6 @@ const (
 	SourceFileUpdateStorageProviderTypeSourceFileUpdateSSHSecureShell                 SourceFileUpdateStorageProviderType = "source-file-update_SSH: Secure Shell"
 	SourceFileUpdateStorageProviderTypeSourceFileUpdateSCPSecureCopyProtocol          SourceFileUpdateStorageProviderType = "source-file-update_SCP: Secure copy protocol"
 	SourceFileUpdateStorageProviderTypeSourceFileUpdateSFTPSecureFileTransferProtocol SourceFileUpdateStorageProviderType = "source-file-update_SFTP: Secure File Transfer Protocol"
-	SourceFileUpdateStorageProviderTypeSourceFileUpdateLocalFilesystemLimited         SourceFileUpdateStorageProviderType = "source-file-update_Local Filesystem (limited)"
 )
 
 // SourceFileUpdateStorageProvider - The storage Provider or Location of the file(s) which should be replicated.
@@ -392,7 +371,6 @@ type SourceFileUpdateStorageProvider struct {
 	SourceFileUpdateSSHSecureShell                 *SourceFileUpdateSSHSecureShell                 `queryParam:"inline" union:"member"`
 	SourceFileUpdateSCPSecureCopyProtocol          *SourceFileUpdateSCPSecureCopyProtocol          `queryParam:"inline" union:"member"`
 	SourceFileUpdateSFTPSecureFileTransferProtocol *SourceFileUpdateSFTPSecureFileTransferProtocol `queryParam:"inline" union:"member"`
-	SourceFileUpdateLocalFilesystemLimited         *SourceFileUpdateLocalFilesystemLimited         `queryParam:"inline" union:"member"`
 
 	Type SourceFileUpdateStorageProviderType
 }
@@ -460,15 +438,6 @@ func CreateSourceFileUpdateStorageProviderSourceFileUpdateSFTPSecureFileTransfer
 	}
 }
 
-func CreateSourceFileUpdateStorageProviderSourceFileUpdateLocalFilesystemLimited(sourceFileUpdateLocalFilesystemLimited SourceFileUpdateLocalFilesystemLimited) SourceFileUpdateStorageProvider {
-	typ := SourceFileUpdateStorageProviderTypeSourceFileUpdateLocalFilesystemLimited
-
-	return SourceFileUpdateStorageProvider{
-		SourceFileUpdateLocalFilesystemLimited: &sourceFileUpdateLocalFilesystemLimited,
-		Type:                                   typ,
-	}
-}
-
 func (u *SourceFileUpdateStorageProvider) UnmarshalJSON(data []byte) error {
 
 	var candidates []utils.UnionCandidate
@@ -530,14 +499,6 @@ func (u *SourceFileUpdateStorageProvider) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var sourceFileUpdateLocalFilesystemLimited SourceFileUpdateLocalFilesystemLimited = SourceFileUpdateLocalFilesystemLimited{}
-	if err := utils.UnmarshalJSON(data, &sourceFileUpdateLocalFilesystemLimited, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceFileUpdateStorageProviderTypeSourceFileUpdateLocalFilesystemLimited,
-			Value: &sourceFileUpdateLocalFilesystemLimited,
-		})
-	}
-
 	if len(candidates) == 0 {
 		return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceFileUpdateStorageProvider", string(data))
 	}
@@ -572,9 +533,6 @@ func (u *SourceFileUpdateStorageProvider) UnmarshalJSON(data []byte) error {
 	case SourceFileUpdateStorageProviderTypeSourceFileUpdateSFTPSecureFileTransferProtocol:
 		u.SourceFileUpdateSFTPSecureFileTransferProtocol = best.Value.(*SourceFileUpdateSFTPSecureFileTransferProtocol)
 		return nil
-	case SourceFileUpdateStorageProviderTypeSourceFileUpdateLocalFilesystemLimited:
-		u.SourceFileUpdateLocalFilesystemLimited = best.Value.(*SourceFileUpdateLocalFilesystemLimited)
-		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceFileUpdateStorageProvider", string(data))
@@ -607,10 +565,6 @@ func (u SourceFileUpdateStorageProvider) MarshalJSON() ([]byte, error) {
 
 	if u.SourceFileUpdateSFTPSecureFileTransferProtocol != nil {
 		return utils.MarshalJSON(u.SourceFileUpdateSFTPSecureFileTransferProtocol, "", true)
-	}
-
-	if u.SourceFileUpdateLocalFilesystemLimited != nil {
-		return utils.MarshalJSON(u.SourceFileUpdateLocalFilesystemLimited, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceFileUpdateStorageProvider: all fields are null")

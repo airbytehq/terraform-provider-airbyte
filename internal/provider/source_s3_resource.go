@@ -127,7 +127,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Computed:    true,
 						Optional:    true,
 						Default:     stringdefault.StaticString(``),
-						Description: `Endpoint to an S3 compatible service. Leave empty to use AWS. Default: ""`,
+						Description: `Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required. Default: ""`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Optional: true,

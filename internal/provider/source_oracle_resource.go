@@ -103,7 +103,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Connect data that will be used for DB connection`,
 					},
 					"encryption": schema.SingleNestedAttribute{
-						Optional: true,
+						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"native_network_encryption_nne": schema.SingleNestedAttribute{
 								Optional: true,
@@ -126,7 +126,6 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("tls_encrypted_verify_certificate"),
-										path.MatchRelative().AtParent().AtName("unencrypted"),
 									}...),
 								},
 							},
@@ -142,17 +141,6 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("native_network_encryption_nne"),
-										path.MatchRelative().AtParent().AtName("unencrypted"),
-									}...),
-								},
-							},
-							"unencrypted": schema.SingleNestedAttribute{
-								Optional:    true,
-								Description: `Data transfer will not be encrypted.`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("native_network_encryption_nne"),
-										path.MatchRelative().AtParent().AtName("tls_encrypted_verify_certificate"),
 									}...),
 								},
 							},

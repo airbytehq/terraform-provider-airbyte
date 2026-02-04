@@ -319,15 +319,6 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest(ctx context.Co
 			SFTPSecureFileTransferProtocol: sftpSecureFileTransferProtocol,
 		}
 	}
-	var localFilesystemLimited *shared.LocalFilesystemLimited
-	if r.Configuration.Provider.LocalFilesystemLimited != nil {
-		localFilesystemLimited = &shared.LocalFilesystemLimited{}
-	}
-	if localFilesystemLimited != nil {
-		provider = shared.StorageProvider{
-			LocalFilesystemLimited: localFilesystemLimited,
-		}
-	}
 	readerOptions := new(string)
 	if !r.Configuration.ReaderOptions.IsUnknown() && !r.Configuration.ReaderOptions.IsNull() {
 		*readerOptions = r.Configuration.ReaderOptions.ValueString()
@@ -589,15 +580,6 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest(ctx context.Conte
 	if sourceFileUpdateSFTPSecureFileTransferProtocol != nil {
 		provider = &shared.SourceFileUpdateStorageProvider{
 			SourceFileUpdateSFTPSecureFileTransferProtocol: sourceFileUpdateSFTPSecureFileTransferProtocol,
-		}
-	}
-	var sourceFileUpdateLocalFilesystemLimited *shared.SourceFileUpdateLocalFilesystemLimited
-	if r.Configuration.Provider.LocalFilesystemLimited != nil {
-		sourceFileUpdateLocalFilesystemLimited = &shared.SourceFileUpdateLocalFilesystemLimited{}
-	}
-	if sourceFileUpdateLocalFilesystemLimited != nil {
-		provider = &shared.SourceFileUpdateStorageProvider{
-			SourceFileUpdateLocalFilesystemLimited: sourceFileUpdateLocalFilesystemLimited,
 		}
 	}
 	readerOptions := new(string)

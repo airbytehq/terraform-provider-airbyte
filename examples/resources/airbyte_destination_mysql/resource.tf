@@ -8,7 +8,6 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
     password              = "...my_password..."
     port                  = 3306
     raw_data_schema       = "...my_raw_data_schema..."
-    ssl                   = true
     tunnel_method = {
       no_tunnel = {
         # ...

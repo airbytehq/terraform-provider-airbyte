@@ -10,7 +10,5 @@ type DestinationElasticsearch struct {
 	AuthenticationMethod *DestinationElasticsearchAuthenticationMethod `tfsdk:"authentication_method"`
 	CaCertificate        types.String                                  `tfsdk:"ca_certificate"`
 	Endpoint             types.String                                  `tfsdk:"endpoint"`
-	PathPrefix           types.String                                  `tfsdk:"path_prefix"`
-	TunnelMethod         *DestinationElasticsearchSSHTunnelMethod      `tfsdk:"tunnel_method"`
 	Upsert               types.Bool                                    `tfsdk:"upsert"`
 }

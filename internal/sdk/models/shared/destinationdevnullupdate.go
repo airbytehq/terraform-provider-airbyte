@@ -9,156 +9,32 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType string
+type DestinationDevNullUpdateTestDestinationType string
 
 const (
-	DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationTypeFailing DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType = "FAILING"
+	DestinationDevNullUpdateTestDestinationTypeSilent DestinationDevNullUpdateTestDestinationType = "SILENT"
 )
 
-func (e DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType) ToPointer() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType {
+func (e DestinationDevNullUpdateTestDestinationType) ToPointer() *DestinationDevNullUpdateTestDestinationType {
 	return &e
 }
-func (e *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "FAILING":
-		*e = DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType: %v", v)
-	}
-}
-
-type DestinationDevNullUpdateFailing struct {
-	// Number of messages after which to fail.
-	NumMessages          *int64                                                                            `json:"num_messages,omitempty"`
-	TestDestinationType  *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType `default:"FAILING" json:"test_destination_type"`
-	AdditionalProperties any                                                                               `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationDevNullUpdateFailing) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationDevNullUpdateFailing) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationDevNullUpdateFailing) GetNumMessages() *int64 {
-	if d == nil {
-		return nil
-	}
-	return d.NumMessages
-}
-
-func (d *DestinationDevNullUpdateFailing) GetTestDestinationType() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationTestDestinationType {
-	if d == nil {
-		return nil
-	}
-	return d.TestDestinationType
-}
-
-func (d *DestinationDevNullUpdateFailing) GetAdditionalProperties() any {
-	if d == nil {
-		return nil
-	}
-	return d.AdditionalProperties
-}
-
-type DestinationDevNullUpdateSchemasTestDestinationTestDestinationType string
-
-const (
-	DestinationDevNullUpdateSchemasTestDestinationTestDestinationTypeThrottled DestinationDevNullUpdateSchemasTestDestinationTestDestinationType = "THROTTLED"
-)
-
-func (e DestinationDevNullUpdateSchemasTestDestinationTestDestinationType) ToPointer() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType {
-	return &e
-}
-func (e *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "THROTTLED":
-		*e = DestinationDevNullUpdateSchemasTestDestinationTestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateSchemasTestDestinationTestDestinationType: %v", v)
-	}
-}
-
-type DestinationDevNullUpdateThrottled struct {
-	// The number of milliseconds to wait between each record.
-	MillisPerRecord      *int64                                                             `json:"millis_per_record,omitempty"`
-	TestDestinationType  *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType `default:"THROTTLED" json:"test_destination_type"`
-	AdditionalProperties any                                                                `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationDevNullUpdateThrottled) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationDevNullUpdateThrottled) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationDevNullUpdateThrottled) GetMillisPerRecord() *int64 {
-	if d == nil {
-		return nil
-	}
-	return d.MillisPerRecord
-}
-
-func (d *DestinationDevNullUpdateThrottled) GetTestDestinationType() *DestinationDevNullUpdateSchemasTestDestinationTestDestinationType {
-	if d == nil {
-		return nil
-	}
-	return d.TestDestinationType
-}
-
-func (d *DestinationDevNullUpdateThrottled) GetAdditionalProperties() any {
-	if d == nil {
-		return nil
-	}
-	return d.AdditionalProperties
-}
-
-type DestinationDevNullUpdateSchemasTestDestinationType string
-
-const (
-	DestinationDevNullUpdateSchemasTestDestinationTypeSilent DestinationDevNullUpdateSchemasTestDestinationType = "SILENT"
-)
-
-func (e DestinationDevNullUpdateSchemasTestDestinationType) ToPointer() *DestinationDevNullUpdateSchemasTestDestinationType {
-	return &e
-}
-func (e *DestinationDevNullUpdateSchemasTestDestinationType) UnmarshalJSON(data []byte) error {
+func (e *DestinationDevNullUpdateTestDestinationType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SILENT":
-		*e = DestinationDevNullUpdateSchemasTestDestinationType(v)
+		*e = DestinationDevNullUpdateTestDestinationType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateSchemasTestDestinationType: %v", v)
+		return fmt.Errorf("invalid value for DestinationDevNullUpdateTestDestinationType: %v", v)
 	}
 }
 
 type DestinationDevNullUpdateSilent struct {
-	TestDestinationType  *DestinationDevNullUpdateSchemasTestDestinationType `default:"SILENT" json:"test_destination_type"`
-	AdditionalProperties any                                                 `additionalProperties:"true" json:"-"`
+	TestDestinationType  *DestinationDevNullUpdateTestDestinationType `default:"SILENT" json:"test_destination_type"`
+	AdditionalProperties any                                          `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationDevNullUpdateSilent) MarshalJSON() ([]byte, error) {
@@ -172,7 +48,7 @@ func (d *DestinationDevNullUpdateSilent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (d *DestinationDevNullUpdateSilent) GetTestDestinationType() *DestinationDevNullUpdateSchemasTestDestinationType {
+func (d *DestinationDevNullUpdateSilent) GetTestDestinationType() *DestinationDevNullUpdateTestDestinationType {
 	if d == nil {
 		return nil
 	}
@@ -186,426 +62,17 @@ func (d *DestinationDevNullUpdateSilent) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
-type DestinationDevNullUpdateSchemasTestDestinationLoggingType string
-
-const (
-	DestinationDevNullUpdateSchemasTestDestinationLoggingTypeRandomSampling DestinationDevNullUpdateSchemasTestDestinationLoggingType = "RandomSampling"
-)
-
-func (e DestinationDevNullUpdateSchemasTestDestinationLoggingType) ToPointer() *DestinationDevNullUpdateSchemasTestDestinationLoggingType {
-	return &e
-}
-func (e *DestinationDevNullUpdateSchemasTestDestinationLoggingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "RandomSampling":
-		*e = DestinationDevNullUpdateSchemasTestDestinationLoggingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateSchemasTestDestinationLoggingType: %v", v)
-	}
-}
-
-// DestinationDevNullUpdateRandomSampling - For each stream, randomly log a percentage of the entries with a maximum cap.
-type DestinationDevNullUpdateRandomSampling struct {
-	LoggingType *DestinationDevNullUpdateSchemasTestDestinationLoggingType `default:"RandomSampling" json:"logging_type"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
-	// A positive floating number smaller than 1.
-	SamplingRatio *float64 `default:"0.001" json:"sampling_ratio"`
-	// When the seed is unspecified, the current time millis will be used as the seed.
-	Seed                 *float64 `json:"seed,omitempty"`
-	AdditionalProperties any      `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationDevNullUpdateRandomSampling) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationDevNullUpdateRandomSampling) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationDevNullUpdateRandomSampling) GetLoggingType() *DestinationDevNullUpdateSchemasTestDestinationLoggingType {
-	if d == nil {
-		return nil
-	}
-	return d.LoggingType
-}
-
-func (d *DestinationDevNullUpdateRandomSampling) GetMaxEntryCount() *float64 {
-	if d == nil {
-		return nil
-	}
-	return d.MaxEntryCount
-}
-
-func (d *DestinationDevNullUpdateRandomSampling) GetSamplingRatio() *float64 {
-	if d == nil {
-		return nil
-	}
-	return d.SamplingRatio
-}
-
-func (d *DestinationDevNullUpdateRandomSampling) GetSeed() *float64 {
-	if d == nil {
-		return nil
-	}
-	return d.Seed
-}
-
-func (d *DestinationDevNullUpdateRandomSampling) GetAdditionalProperties() any {
-	if d == nil {
-		return nil
-	}
-	return d.AdditionalProperties
-}
-
-type DestinationDevNullUpdateSchemasLoggingType string
-
-const (
-	DestinationDevNullUpdateSchemasLoggingTypeEveryNth DestinationDevNullUpdateSchemasLoggingType = "EveryNth"
-)
-
-func (e DestinationDevNullUpdateSchemasLoggingType) ToPointer() *DestinationDevNullUpdateSchemasLoggingType {
-	return &e
-}
-func (e *DestinationDevNullUpdateSchemasLoggingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "EveryNth":
-		*e = DestinationDevNullUpdateSchemasLoggingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateSchemasLoggingType: %v", v)
-	}
-}
-
-// DestinationDevNullUpdateEveryNThEntry - For each stream, log every N-th entry with a maximum cap.
-type DestinationDevNullUpdateEveryNThEntry struct {
-	LoggingType *DestinationDevNullUpdateSchemasLoggingType `default:"EveryNth" json:"logging_type"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
-	// The N-th entry to log for each stream. N starts from 1. For example, when N = 1, every entry is logged; when N = 2, every other entry is logged; when N = 3, one out of three entries is logged.
-	NthEntryToLog        *int64 `json:"nth_entry_to_log,omitempty"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationDevNullUpdateEveryNThEntry) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationDevNullUpdateEveryNThEntry) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationDevNullUpdateEveryNThEntry) GetLoggingType() *DestinationDevNullUpdateSchemasLoggingType {
-	if d == nil {
-		return nil
-	}
-	return d.LoggingType
-}
-
-func (d *DestinationDevNullUpdateEveryNThEntry) GetMaxEntryCount() *float64 {
-	if d == nil {
-		return nil
-	}
-	return d.MaxEntryCount
-}
-
-func (d *DestinationDevNullUpdateEveryNThEntry) GetNthEntryToLog() *int64 {
-	if d == nil {
-		return nil
-	}
-	return d.NthEntryToLog
-}
-
-func (d *DestinationDevNullUpdateEveryNThEntry) GetAdditionalProperties() any {
-	if d == nil {
-		return nil
-	}
-	return d.AdditionalProperties
-}
-
-type DestinationDevNullUpdateLoggingType string
-
-const (
-	DestinationDevNullUpdateLoggingTypeFirstN DestinationDevNullUpdateLoggingType = "FirstN"
-)
-
-func (e DestinationDevNullUpdateLoggingType) ToPointer() *DestinationDevNullUpdateLoggingType {
-	return &e
-}
-func (e *DestinationDevNullUpdateLoggingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "FirstN":
-		*e = DestinationDevNullUpdateLoggingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateLoggingType: %v", v)
-	}
-}
-
-// DestinationDevNullUpdateFirstNEntries - Log first N entries per stream.
-type DestinationDevNullUpdateFirstNEntries struct {
-	LoggingType *DestinationDevNullUpdateLoggingType `default:"FirstN" json:"logging_type"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount        *float64 `default:"100" json:"max_entry_count"`
-	AdditionalProperties any      `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationDevNullUpdateFirstNEntries) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationDevNullUpdateFirstNEntries) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationDevNullUpdateFirstNEntries) GetLoggingType() *DestinationDevNullUpdateLoggingType {
-	if d == nil {
-		return nil
-	}
-	return d.LoggingType
-}
-
-func (d *DestinationDevNullUpdateFirstNEntries) GetMaxEntryCount() *float64 {
-	if d == nil {
-		return nil
-	}
-	return d.MaxEntryCount
-}
-
-func (d *DestinationDevNullUpdateFirstNEntries) GetAdditionalProperties() any {
-	if d == nil {
-		return nil
-	}
-	return d.AdditionalProperties
-}
-
-type DestinationDevNullUpdateLoggingConfigurationType string
-
-const (
-	DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateFirstNEntries  DestinationDevNullUpdateLoggingConfigurationType = "destination-dev-null-update_First N Entries"
-	DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateEveryNThEntry  DestinationDevNullUpdateLoggingConfigurationType = "destination-dev-null-update_Every N-th Entry"
-	DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateRandomSampling DestinationDevNullUpdateLoggingConfigurationType = "destination-dev-null-update_Random Sampling"
-)
-
-// DestinationDevNullUpdateLoggingConfiguration - Configurate how the messages are logged.
-type DestinationDevNullUpdateLoggingConfiguration struct {
-	DestinationDevNullUpdateFirstNEntries  *DestinationDevNullUpdateFirstNEntries  `queryParam:"inline" union:"member"`
-	DestinationDevNullUpdateEveryNThEntry  *DestinationDevNullUpdateEveryNThEntry  `queryParam:"inline" union:"member"`
-	DestinationDevNullUpdateRandomSampling *DestinationDevNullUpdateRandomSampling `queryParam:"inline" union:"member"`
-
-	Type DestinationDevNullUpdateLoggingConfigurationType
-}
-
-func CreateDestinationDevNullUpdateLoggingConfigurationDestinationDevNullUpdateFirstNEntries(destinationDevNullUpdateFirstNEntries DestinationDevNullUpdateFirstNEntries) DestinationDevNullUpdateLoggingConfiguration {
-	typ := DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateFirstNEntries
-
-	return DestinationDevNullUpdateLoggingConfiguration{
-		DestinationDevNullUpdateFirstNEntries: &destinationDevNullUpdateFirstNEntries,
-		Type:                                  typ,
-	}
-}
-
-func CreateDestinationDevNullUpdateLoggingConfigurationDestinationDevNullUpdateEveryNThEntry(destinationDevNullUpdateEveryNThEntry DestinationDevNullUpdateEveryNThEntry) DestinationDevNullUpdateLoggingConfiguration {
-	typ := DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateEveryNThEntry
-
-	return DestinationDevNullUpdateLoggingConfiguration{
-		DestinationDevNullUpdateEveryNThEntry: &destinationDevNullUpdateEveryNThEntry,
-		Type:                                  typ,
-	}
-}
-
-func CreateDestinationDevNullUpdateLoggingConfigurationDestinationDevNullUpdateRandomSampling(destinationDevNullUpdateRandomSampling DestinationDevNullUpdateRandomSampling) DestinationDevNullUpdateLoggingConfiguration {
-	typ := DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateRandomSampling
-
-	return DestinationDevNullUpdateLoggingConfiguration{
-		DestinationDevNullUpdateRandomSampling: &destinationDevNullUpdateRandomSampling,
-		Type:                                   typ,
-	}
-}
-
-func (u *DestinationDevNullUpdateLoggingConfiguration) UnmarshalJSON(data []byte) error {
-
-	var candidates []utils.UnionCandidate
-
-	// Collect all valid candidates
-	var destinationDevNullUpdateFirstNEntries DestinationDevNullUpdateFirstNEntries = DestinationDevNullUpdateFirstNEntries{}
-	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateFirstNEntries, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateFirstNEntries,
-			Value: &destinationDevNullUpdateFirstNEntries,
-		})
-	}
-
-	var destinationDevNullUpdateEveryNThEntry DestinationDevNullUpdateEveryNThEntry = DestinationDevNullUpdateEveryNThEntry{}
-	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateEveryNThEntry, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateEveryNThEntry,
-			Value: &destinationDevNullUpdateEveryNThEntry,
-		})
-	}
-
-	var destinationDevNullUpdateRandomSampling DestinationDevNullUpdateRandomSampling = DestinationDevNullUpdateRandomSampling{}
-	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateRandomSampling, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateRandomSampling,
-			Value: &destinationDevNullUpdateRandomSampling,
-		})
-	}
-
-	if len(candidates) == 0 {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationDevNullUpdateLoggingConfiguration", string(data))
-	}
-
-	// Pick the best candidate using multi-stage filtering
-	best := utils.PickBestUnionCandidate(candidates, data)
-	if best == nil {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationDevNullUpdateLoggingConfiguration", string(data))
-	}
-
-	// Set the union type and value based on the best candidate
-	u.Type = best.Type.(DestinationDevNullUpdateLoggingConfigurationType)
-	switch best.Type {
-	case DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateFirstNEntries:
-		u.DestinationDevNullUpdateFirstNEntries = best.Value.(*DestinationDevNullUpdateFirstNEntries)
-		return nil
-	case DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateEveryNThEntry:
-		u.DestinationDevNullUpdateEveryNThEntry = best.Value.(*DestinationDevNullUpdateEveryNThEntry)
-		return nil
-	case DestinationDevNullUpdateLoggingConfigurationTypeDestinationDevNullUpdateRandomSampling:
-		u.DestinationDevNullUpdateRandomSampling = best.Value.(*DestinationDevNullUpdateRandomSampling)
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationDevNullUpdateLoggingConfiguration", string(data))
-}
-
-func (u DestinationDevNullUpdateLoggingConfiguration) MarshalJSON() ([]byte, error) {
-	if u.DestinationDevNullUpdateFirstNEntries != nil {
-		return utils.MarshalJSON(u.DestinationDevNullUpdateFirstNEntries, "", true)
-	}
-
-	if u.DestinationDevNullUpdateEveryNThEntry != nil {
-		return utils.MarshalJSON(u.DestinationDevNullUpdateEveryNThEntry, "", true)
-	}
-
-	if u.DestinationDevNullUpdateRandomSampling != nil {
-		return utils.MarshalJSON(u.DestinationDevNullUpdateRandomSampling, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationDevNullUpdateLoggingConfiguration: all fields are null")
-}
-
-type DestinationDevNullUpdateTestDestinationType string
-
-const (
-	DestinationDevNullUpdateTestDestinationTypeLogging DestinationDevNullUpdateTestDestinationType = "LOGGING"
-)
-
-func (e DestinationDevNullUpdateTestDestinationType) ToPointer() *DestinationDevNullUpdateTestDestinationType {
-	return &e
-}
-func (e *DestinationDevNullUpdateTestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "LOGGING":
-		*e = DestinationDevNullUpdateTestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateTestDestinationType: %v", v)
-	}
-}
-
-type DestinationDevNullUpdateLogging struct {
-	// Configurate how the messages are logged.
-	LoggingConfig        *DestinationDevNullUpdateLoggingConfiguration `json:"logging_config,omitempty"`
-	TestDestinationType  *DestinationDevNullUpdateTestDestinationType  `default:"LOGGING" json:"test_destination_type"`
-	AdditionalProperties any                                           `additionalProperties:"true" json:"-"`
-}
-
-func (d DestinationDevNullUpdateLogging) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationDevNullUpdateLogging) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationDevNullUpdateLogging) GetLoggingConfig() *DestinationDevNullUpdateLoggingConfiguration {
-	if d == nil {
-		return nil
-	}
-	return d.LoggingConfig
-}
-
-func (d *DestinationDevNullUpdateLogging) GetTestDestinationType() *DestinationDevNullUpdateTestDestinationType {
-	if d == nil {
-		return nil
-	}
-	return d.TestDestinationType
-}
-
-func (d *DestinationDevNullUpdateLogging) GetAdditionalProperties() any {
-	if d == nil {
-		return nil
-	}
-	return d.AdditionalProperties
-}
-
 type DestinationDevNullUpdateTestDestinationUnionType string
 
 const (
-	DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateLogging   DestinationDevNullUpdateTestDestinationUnionType = "destination-dev-null-update_Logging"
-	DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateSilent    DestinationDevNullUpdateTestDestinationUnionType = "destination-dev-null-update_Silent"
-	DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateThrottled DestinationDevNullUpdateTestDestinationUnionType = "destination-dev-null-update_Throttled"
-	DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateFailing   DestinationDevNullUpdateTestDestinationUnionType = "destination-dev-null-update_Failing"
+	DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateSilent DestinationDevNullUpdateTestDestinationUnionType = "destination-dev-null-update_Silent"
 )
 
 // DestinationDevNullUpdateTestDestination - The type of destination to be used
 type DestinationDevNullUpdateTestDestination struct {
-	DestinationDevNullUpdateLogging   *DestinationDevNullUpdateLogging   `queryParam:"inline" union:"member"`
-	DestinationDevNullUpdateSilent    *DestinationDevNullUpdateSilent    `queryParam:"inline" union:"member"`
-	DestinationDevNullUpdateThrottled *DestinationDevNullUpdateThrottled `queryParam:"inline" union:"member"`
-	DestinationDevNullUpdateFailing   *DestinationDevNullUpdateFailing   `queryParam:"inline" union:"member"`
+	DestinationDevNullUpdateSilent *DestinationDevNullUpdateSilent `queryParam:"inline" union:"member"`
 
 	Type DestinationDevNullUpdateTestDestinationUnionType
-}
-
-func CreateDestinationDevNullUpdateTestDestinationDestinationDevNullUpdateLogging(destinationDevNullUpdateLogging DestinationDevNullUpdateLogging) DestinationDevNullUpdateTestDestination {
-	typ := DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateLogging
-
-	return DestinationDevNullUpdateTestDestination{
-		DestinationDevNullUpdateLogging: &destinationDevNullUpdateLogging,
-		Type:                            typ,
-	}
 }
 
 func CreateDestinationDevNullUpdateTestDestinationDestinationDevNullUpdateSilent(destinationDevNullUpdateSilent DestinationDevNullUpdateSilent) DestinationDevNullUpdateTestDestination {
@@ -617,58 +84,16 @@ func CreateDestinationDevNullUpdateTestDestinationDestinationDevNullUpdateSilent
 	}
 }
 
-func CreateDestinationDevNullUpdateTestDestinationDestinationDevNullUpdateThrottled(destinationDevNullUpdateThrottled DestinationDevNullUpdateThrottled) DestinationDevNullUpdateTestDestination {
-	typ := DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateThrottled
-
-	return DestinationDevNullUpdateTestDestination{
-		DestinationDevNullUpdateThrottled: &destinationDevNullUpdateThrottled,
-		Type:                              typ,
-	}
-}
-
-func CreateDestinationDevNullUpdateTestDestinationDestinationDevNullUpdateFailing(destinationDevNullUpdateFailing DestinationDevNullUpdateFailing) DestinationDevNullUpdateTestDestination {
-	typ := DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateFailing
-
-	return DestinationDevNullUpdateTestDestination{
-		DestinationDevNullUpdateFailing: &destinationDevNullUpdateFailing,
-		Type:                            typ,
-	}
-}
-
 func (u *DestinationDevNullUpdateTestDestination) UnmarshalJSON(data []byte) error {
 
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var destinationDevNullUpdateLogging DestinationDevNullUpdateLogging = DestinationDevNullUpdateLogging{}
-	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateLogging, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateLogging,
-			Value: &destinationDevNullUpdateLogging,
-		})
-	}
-
 	var destinationDevNullUpdateSilent DestinationDevNullUpdateSilent = DestinationDevNullUpdateSilent{}
 	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateSilent, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
 			Type:  DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateSilent,
 			Value: &destinationDevNullUpdateSilent,
-		})
-	}
-
-	var destinationDevNullUpdateThrottled DestinationDevNullUpdateThrottled = DestinationDevNullUpdateThrottled{}
-	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateThrottled, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateThrottled,
-			Value: &destinationDevNullUpdateThrottled,
-		})
-	}
-
-	var destinationDevNullUpdateFailing DestinationDevNullUpdateFailing = DestinationDevNullUpdateFailing{}
-	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateFailing, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateFailing,
-			Value: &destinationDevNullUpdateFailing,
 		})
 	}
 
@@ -685,17 +110,8 @@ func (u *DestinationDevNullUpdateTestDestination) UnmarshalJSON(data []byte) err
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(DestinationDevNullUpdateTestDestinationUnionType)
 	switch best.Type {
-	case DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateLogging:
-		u.DestinationDevNullUpdateLogging = best.Value.(*DestinationDevNullUpdateLogging)
-		return nil
 	case DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateSilent:
 		u.DestinationDevNullUpdateSilent = best.Value.(*DestinationDevNullUpdateSilent)
-		return nil
-	case DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateThrottled:
-		u.DestinationDevNullUpdateThrottled = best.Value.(*DestinationDevNullUpdateThrottled)
-		return nil
-	case DestinationDevNullUpdateTestDestinationUnionTypeDestinationDevNullUpdateFailing:
-		u.DestinationDevNullUpdateFailing = best.Value.(*DestinationDevNullUpdateFailing)
 		return nil
 	}
 
@@ -703,20 +119,8 @@ func (u *DestinationDevNullUpdateTestDestination) UnmarshalJSON(data []byte) err
 }
 
 func (u DestinationDevNullUpdateTestDestination) MarshalJSON() ([]byte, error) {
-	if u.DestinationDevNullUpdateLogging != nil {
-		return utils.MarshalJSON(u.DestinationDevNullUpdateLogging, "", true)
-	}
-
 	if u.DestinationDevNullUpdateSilent != nil {
 		return utils.MarshalJSON(u.DestinationDevNullUpdateSilent, "", true)
-	}
-
-	if u.DestinationDevNullUpdateThrottled != nil {
-		return utils.MarshalJSON(u.DestinationDevNullUpdateThrottled, "", true)
-	}
-
-	if u.DestinationDevNullUpdateFailing != nil {
-		return utils.MarshalJSON(u.DestinationDevNullUpdateFailing, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type DestinationDevNullUpdateTestDestination: all fields are null")

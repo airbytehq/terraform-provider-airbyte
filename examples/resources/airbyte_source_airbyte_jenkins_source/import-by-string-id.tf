@@ -1,0 +1,4 @@
+import {
+  to = airbyte_source_airbyte_jenkins_source.my_airbyte_source_airbyte_jenkins_source
+  id = "..."
+}

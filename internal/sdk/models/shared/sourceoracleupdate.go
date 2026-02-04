@@ -244,50 +244,19 @@ func (s *SourceOracleUpdateNativeNetworkEncryptionNNE) GetEncryptionMethod() *st
 	return types.Pointer("client_nne")
 }
 
-// SourceOracleUpdateUnencrypted - Data transfer will not be encrypted.
-type SourceOracleUpdateUnencrypted struct {
-	encryptionMethod *string `const:"unencrypted" json:"encryption_method,omitempty"`
-}
-
-func (s SourceOracleUpdateUnencrypted) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceOracleUpdateUnencrypted) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (s *SourceOracleUpdateUnencrypted) GetEncryptionMethod() *string {
-	return types.Pointer("unencrypted")
-}
-
 type SourceOracleUpdateEncryptionType string
 
 const (
-	SourceOracleUpdateEncryptionTypeSourceOracleUpdateUnencrypted                   SourceOracleUpdateEncryptionType = "source-oracle-update_Unencrypted"
 	SourceOracleUpdateEncryptionTypeSourceOracleUpdateNativeNetworkEncryptionNNE    SourceOracleUpdateEncryptionType = "source-oracle-update_Native Network Encryption (NNE)"
 	SourceOracleUpdateEncryptionTypeSourceOracleUpdateTLSEncryptedVerifyCertificate SourceOracleUpdateEncryptionType = "source-oracle-update_TLS Encrypted (verify certificate)"
 )
 
 // SourceOracleUpdateEncryption - The encryption method with is used when communicating with the database.
 type SourceOracleUpdateEncryption struct {
-	SourceOracleUpdateUnencrypted                   *SourceOracleUpdateUnencrypted                   `queryParam:"inline" union:"member"`
 	SourceOracleUpdateNativeNetworkEncryptionNNE    *SourceOracleUpdateNativeNetworkEncryptionNNE    `queryParam:"inline" union:"member"`
 	SourceOracleUpdateTLSEncryptedVerifyCertificate *SourceOracleUpdateTLSEncryptedVerifyCertificate `queryParam:"inline" union:"member"`
 
 	Type SourceOracleUpdateEncryptionType
-}
-
-func CreateSourceOracleUpdateEncryptionSourceOracleUpdateUnencrypted(sourceOracleUpdateUnencrypted SourceOracleUpdateUnencrypted) SourceOracleUpdateEncryption {
-	typ := SourceOracleUpdateEncryptionTypeSourceOracleUpdateUnencrypted
-
-	return SourceOracleUpdateEncryption{
-		SourceOracleUpdateUnencrypted: &sourceOracleUpdateUnencrypted,
-		Type:                          typ,
-	}
 }
 
 func CreateSourceOracleUpdateEncryptionSourceOracleUpdateNativeNetworkEncryptionNNE(sourceOracleUpdateNativeNetworkEncryptionNNE SourceOracleUpdateNativeNetworkEncryptionNNE) SourceOracleUpdateEncryption {
@@ -313,14 +282,6 @@ func (u *SourceOracleUpdateEncryption) UnmarshalJSON(data []byte) error {
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var sourceOracleUpdateUnencrypted SourceOracleUpdateUnencrypted = SourceOracleUpdateUnencrypted{}
-	if err := utils.UnmarshalJSON(data, &sourceOracleUpdateUnencrypted, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceOracleUpdateEncryptionTypeSourceOracleUpdateUnencrypted,
-			Value: &sourceOracleUpdateUnencrypted,
-		})
-	}
-
 	var sourceOracleUpdateNativeNetworkEncryptionNNE SourceOracleUpdateNativeNetworkEncryptionNNE = SourceOracleUpdateNativeNetworkEncryptionNNE{}
 	if err := utils.UnmarshalJSON(data, &sourceOracleUpdateNativeNetworkEncryptionNNE, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
@@ -350,9 +311,6 @@ func (u *SourceOracleUpdateEncryption) UnmarshalJSON(data []byte) error {
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(SourceOracleUpdateEncryptionType)
 	switch best.Type {
-	case SourceOracleUpdateEncryptionTypeSourceOracleUpdateUnencrypted:
-		u.SourceOracleUpdateUnencrypted = best.Value.(*SourceOracleUpdateUnencrypted)
-		return nil
 	case SourceOracleUpdateEncryptionTypeSourceOracleUpdateNativeNetworkEncryptionNNE:
 		u.SourceOracleUpdateNativeNetworkEncryptionNNE = best.Value.(*SourceOracleUpdateNativeNetworkEncryptionNNE)
 		return nil
@@ -365,10 +323,6 @@ func (u *SourceOracleUpdateEncryption) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleUpdateEncryption) MarshalJSON() ([]byte, error) {
-	if u.SourceOracleUpdateUnencrypted != nil {
-		return utils.MarshalJSON(u.SourceOracleUpdateUnencrypted, "", true)
-	}
-
 	if u.SourceOracleUpdateNativeNetworkEncryptionNNE != nil {
 		return utils.MarshalJSON(u.SourceOracleUpdateNativeNetworkEncryptionNNE, "", true)
 	}

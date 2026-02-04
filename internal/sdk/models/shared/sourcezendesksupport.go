@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-type OAuth20Legacy struct {
+type SourceZendeskSupportOAuth20Legacy struct {
 	// The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
 	AccessToken string `json:"access_token"`
 	// The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
@@ -22,47 +22,47 @@ type OAuth20Legacy struct {
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
 
-func (o OAuth20Legacy) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(o, "", false)
+func (s SourceZendeskSupportOAuth20Legacy) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (o *OAuth20Legacy) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, nil); err != nil {
+func (s *SourceZendeskSupportOAuth20Legacy) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *OAuth20Legacy) GetAccessToken() string {
-	if o == nil {
+func (s *SourceZendeskSupportOAuth20Legacy) GetAccessToken() string {
+	if s == nil {
 		return ""
 	}
-	return o.AccessToken
+	return s.AccessToken
 }
 
-func (o *OAuth20Legacy) GetClientID() *string {
-	if o == nil {
+func (s *SourceZendeskSupportOAuth20Legacy) GetClientID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ClientID
+	return s.ClientID
 }
 
-func (o *OAuth20Legacy) GetClientSecret() *string {
-	if o == nil {
+func (s *SourceZendeskSupportOAuth20Legacy) GetClientSecret() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ClientSecret
+	return s.ClientSecret
 }
 
-func (o *OAuth20Legacy) GetCredentials() *string {
+func (s *SourceZendeskSupportOAuth20Legacy) GetCredentials() *string {
 	return types.Pointer("oauth2.0")
 }
 
-func (o *OAuth20Legacy) GetAdditionalProperties() any {
-	if o == nil {
+func (s *SourceZendeskSupportOAuth20Legacy) GetAdditionalProperties() any {
+	if s == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return s.AdditionalProperties
 }
 
 type SourceZendeskSupportAPIToken struct {
@@ -185,16 +185,16 @@ func (o *OAuth20WithRefreshToken) GetAdditionalProperties() any {
 type SourceZendeskSupportAuthenticationType string
 
 const (
-	SourceZendeskSupportAuthenticationTypeOAuth20WithRefreshToken      SourceZendeskSupportAuthenticationType = "OAuth2.0 with Refresh Token"
-	SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAPIToken SourceZendeskSupportAuthenticationType = "source-zendesk-support_API Token"
-	SourceZendeskSupportAuthenticationTypeOAuth20Legacy                SourceZendeskSupportAuthenticationType = "OAuth2.0 (Legacy)"
+	SourceZendeskSupportAuthenticationTypeOAuth20WithRefreshToken           SourceZendeskSupportAuthenticationType = "OAuth2.0 with Refresh Token"
+	SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAPIToken      SourceZendeskSupportAuthenticationType = "source-zendesk-support_API Token"
+	SourceZendeskSupportAuthenticationTypeSourceZendeskSupportOAuth20Legacy SourceZendeskSupportAuthenticationType = "source-zendesk-support_OAuth2.0 (Legacy)"
 )
 
 // SourceZendeskSupportAuthentication - Zendesk allows three authentication methods. We recommend using `OAuth2.0 with Refresh Token` for Airbyte Cloud users (recommended), `OAuth2.0 (Legacy)` for existing OAuth connections, and `API token` for Airbyte Open Source users.
 type SourceZendeskSupportAuthentication struct {
-	OAuth20WithRefreshToken      *OAuth20WithRefreshToken      `queryParam:"inline" union:"member"`
-	SourceZendeskSupportAPIToken *SourceZendeskSupportAPIToken `queryParam:"inline" union:"member"`
-	OAuth20Legacy                *OAuth20Legacy                `queryParam:"inline" union:"member"`
+	OAuth20WithRefreshToken           *OAuth20WithRefreshToken           `queryParam:"inline" union:"member"`
+	SourceZendeskSupportAPIToken      *SourceZendeskSupportAPIToken      `queryParam:"inline" union:"member"`
+	SourceZendeskSupportOAuth20Legacy *SourceZendeskSupportOAuth20Legacy `queryParam:"inline" union:"member"`
 
 	Type SourceZendeskSupportAuthenticationType
 }
@@ -217,12 +217,12 @@ func CreateSourceZendeskSupportAuthenticationSourceZendeskSupportAPIToken(source
 	}
 }
 
-func CreateSourceZendeskSupportAuthenticationOAuth20Legacy(oAuth20Legacy OAuth20Legacy) SourceZendeskSupportAuthentication {
-	typ := SourceZendeskSupportAuthenticationTypeOAuth20Legacy
+func CreateSourceZendeskSupportAuthenticationSourceZendeskSupportOAuth20Legacy(sourceZendeskSupportOAuth20Legacy SourceZendeskSupportOAuth20Legacy) SourceZendeskSupportAuthentication {
+	typ := SourceZendeskSupportAuthenticationTypeSourceZendeskSupportOAuth20Legacy
 
 	return SourceZendeskSupportAuthentication{
-		OAuth20Legacy: &oAuth20Legacy,
-		Type:          typ,
+		SourceZendeskSupportOAuth20Legacy: &sourceZendeskSupportOAuth20Legacy,
+		Type:                              typ,
 	}
 }
 
@@ -247,11 +247,11 @@ func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var oAuth20Legacy OAuth20Legacy = OAuth20Legacy{}
-	if err := utils.UnmarshalJSON(data, &oAuth20Legacy, "", true, nil); err == nil {
+	var sourceZendeskSupportOAuth20Legacy SourceZendeskSupportOAuth20Legacy = SourceZendeskSupportOAuth20Legacy{}
+	if err := utils.UnmarshalJSON(data, &sourceZendeskSupportOAuth20Legacy, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceZendeskSupportAuthenticationTypeOAuth20Legacy,
-			Value: &oAuth20Legacy,
+			Type:  SourceZendeskSupportAuthenticationTypeSourceZendeskSupportOAuth20Legacy,
+			Value: &sourceZendeskSupportOAuth20Legacy,
 		})
 	}
 
@@ -274,8 +274,8 @@ func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
 	case SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAPIToken:
 		u.SourceZendeskSupportAPIToken = best.Value.(*SourceZendeskSupportAPIToken)
 		return nil
-	case SourceZendeskSupportAuthenticationTypeOAuth20Legacy:
-		u.OAuth20Legacy = best.Value.(*OAuth20Legacy)
+	case SourceZendeskSupportAuthenticationTypeSourceZendeskSupportOAuth20Legacy:
+		u.SourceZendeskSupportOAuth20Legacy = best.Value.(*SourceZendeskSupportOAuth20Legacy)
 		return nil
 	}
 
@@ -291,8 +291,8 @@ func (u SourceZendeskSupportAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceZendeskSupportAPIToken, "", true)
 	}
 
-	if u.OAuth20Legacy != nil {
-		return utils.MarshalJSON(u.OAuth20Legacy, "", true)
+	if u.SourceZendeskSupportOAuth20Legacy != nil {
+		return utils.MarshalJSON(u.SourceZendeskSupportOAuth20Legacy, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceZendeskSupportAuthentication: all fields are null")

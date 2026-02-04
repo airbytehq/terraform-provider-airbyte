@@ -412,7 +412,7 @@ func (e *DestinationClickhouseUpdateDestinationType) UnmarshalJSON(data []byte) 
 type DestinationClickhouseUpdate struct {
 	// Name of the database.
 	Database *string `default:"default" json:"database"`
-	// Use the JSON type for Object fields. If disabled, the JSON will be converted to a string.
+	// Use the JSON type when possible. If disabled, the JSON will be converted to a string.
 	EnableJSON *bool `default:"false" json:"enable_json"`
 	// Hostname of the database.
 	Host *string `json:"host,omitempty"`
