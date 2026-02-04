@@ -70,7 +70,7 @@ func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest
 				Optional:    true,
 			},
 			"token_url": schema.StringAttribute{
-				MarkdownDescription: `OAuth2 Client Credentials Flow token URL. Defaults to https://api.airbyte.com/v1/applications/token`,
+				MarkdownDescription: `OAuth2 Client Credentials Flow token URL. Defaults to https://api.airbyte.com/v1/applications/token for Airbyte Cloud. Required for self-hosted instances.`,
 				Optional:            true,
 				Sensitive:           true,
 			},
@@ -131,8 +131,9 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 
 	if !data.TokenURL.IsUnknown() && !data.TokenURL.IsNull() && data.TokenURL.ValueString() != "" {
 		clientCredentials.TokenURL = data.TokenURL.ValueString()
-	} else {
+	} else if serverUrl == "https://api.airbyte.com/v1" {
 		// Default token URL for Airbyte Cloud OAuth2 authentication
+		// Only set when using Airbyte Cloud to avoid breaking self-hosted instances
 		clientCredentials.TokenURL = "https://api.airbyte.com/v1/applications/token"
 	}
 
