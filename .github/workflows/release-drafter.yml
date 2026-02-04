@@ -4,17 +4,18 @@
 # It uses semantic PR titles (conventional commits format) to categorize changes.
 #
 # How it works:
-# - On push to main: Updates the draft release with the merged PR
+# - On push to main: Updates the draft release with the merged PR and pre-built assets
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 #
 # To publish a release:
 # 1. Go to the Releases page
-# 2. Find the draft release
+# 2. Find the draft release (assets are already attached!)
 # 3. Edit the version number if needed
 # 4. Click "Publish release" - this creates the git tag and triggers the Release workflow
 #
-# Note: This uses aaronsteers/semantic-pr-release-drafter which does NOT require
-# labels for categorization - it uses semantic PR titles instead.
+# Note: This workflow builds and attaches assets to the draft release to prevent
+# checksum mismatches with the Terraform Registry. The Registry syncs checksums
+# when a release is published, so assets must be present at that time.
 
 name: Release Drafter
 
@@ -32,14 +33,53 @@ permissions:
   contents: read
 
 jobs:
-  update_release_draft:
-    name: Draft Release
+  draft_release:
+    name: Draft Release with Assets
     permissions:
       contents: write
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-16core
     steps:
-      - uses: aaronsteers/semantic-pr-release-drafter@v1.0.0
+      # Step 1: Calculate the next version using dry-run mode
+      - name: Calculate next version (dry-run)
+        uses: aaronsteers/semantic-pr-release-drafter@v1.0.0
+        id: version-calc
+        with:
+          dry-run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 2: Checkout code to build assets
+      - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      # Step 3: Import GPG key for signing
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5.2.0
+        id: import_gpg
+        with:
+          gpg_private_key: ${{ secrets.TERRAFORM_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.TERRAFORM_GPG_PASSPHRASE }}
+
+      # Step 4: Build assets using GoReleaser (snapshot mode, no publish)
+      - name: Build release assets
+        uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
+        with:
+          args: release --snapshot --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+          GORELEASER_CURRENT_TAG: v${{ steps.version-calc.outputs.resolved-version }}
+
+      # Step 5: Create/update draft release with assets attached
+      - name: Create draft release with assets
+        uses: aaronsteers/semantic-pr-release-drafter@v1.0.0
         with:
           name-template: 'v$RESOLVED_VERSION'
           tag-template: 'v$RESOLVED_VERSION'
@@ -61,5 +101,10 @@ jobs:
               }
             }
             ```
+          attach-files: |
+            dist/*.zip
+            dist/*_SHA256SUMS
+            dist/*_SHA256SUMS.sig
+            dist/*_manifest.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
