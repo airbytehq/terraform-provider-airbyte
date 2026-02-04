@@ -3,12 +3,18 @@
 # This workflow regenerates the Terraform provider code from the Airbyte connector registry using Speakeasy.
 # It can either create a PR with the regenerated code (default) or run in dry-run mode for validation.
 #
+# Triggers:
+# - On push to main: Auto-generates after every merge to ensure provider stays up-to-date (auto-merge enabled)
+# - Daily schedule (6 AM UTC): Catches connector registry changes that happen outside of PRs (auto-merge enabled)
+# - Manual workflow_dispatch: For on-demand generation
+# - workflow_call: For validation from other workflows (e.g., PR checks)
+#
 # Generation Process:
 # 1. Fetch connector definitions from the Airbyte connector registry (Cloud + OSS connectors)
 # 2. Generate api_terraform.yaml with connector-specific schemas (using scripts/generate_terraform_spec.py)
 # 3. Upload the generated spec as a GitHub artifact for documentation/debugging
 # 4. Run Speakeasy to generate the Terraform provider code
-# 5. (If not dry_run) Create a PR with the regenerated code
+# 5. (If not dry_run) Create a PR with the regenerated code (only if there are changes)
 # 6. (If dry_run) Build and verify the generated code compiles
 #
 # How to use:
@@ -33,6 +39,14 @@ name: Generate TF Provider (New PR)
 # from pull_request triggers (which have restricted permissions).
 # Job-level permissions are used instead.
 "on":
+    # Auto-generate on merge to main to ensure provider stays up-to-date
+    push:
+        branches:
+            - main
+    # Daily scheduled generation to catch registry changes
+    schedule:
+        # Run daily at 6 AM UTC (10 PM PT / 1 AM ET)
+        - cron: '0 6 * * *'
     workflow_dispatch:
         inputs:
             dry_run:
@@ -193,6 +207,7 @@ jobs:
 
             - name: Create Pull Request
               if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' }}
+              id: create-pr
               uses: peter-evans/create-pull-request@v6
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
@@ -207,6 +222,15 @@ jobs:
                   branch: speakeasy-sdk-regen
                   base: main
                   delete-branch: true
+
+            - name: Enable auto-merge for automated PRs
+              if: |
+                  (github.event_name == 'push'
+                   || github.event_name == 'schedule'
+                  ) && steps.create-pr.outputs.pull-request-number
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
 
             - name: Append success comment
               if: ${{ success() && !inputs.dry_run && github.event.inputs.pr != '' }}
