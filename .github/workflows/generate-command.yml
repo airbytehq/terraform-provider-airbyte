@@ -230,9 +230,7 @@ jobs:
                   ) && steps.create-pr.outputs.pull-request-number
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  echo "Enabling auto-merge for PR #${{ steps.create-pr.outputs.pull-request-number }}"
-                  gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
+              run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
 
             - name: Append success comment
               if: ${{ success() && !inputs.dry_run && github.event.inputs.pr != '' }}
