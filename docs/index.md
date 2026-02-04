@@ -36,5 +36,5 @@ provider "airbyte" {
 - `client_secret` (String, Sensitive) OAuth2 Client Credentials Flow client secret.
 - `password` (String, Sensitive) HTTP Basic password.
 - `server_url` (String) Server URL (defaults to https://api.airbyte.com/v1)
-- `token_url` (String, Sensitive) OAuth2 Client Credentials Flow token URL.
+- `token_url` (String, Sensitive) OAuth2 Client Credentials Flow token URL. Defaults to https://api.airbyte.com/v1/applications/token
 - `username` (String, Sensitive) HTTP Basic username.
