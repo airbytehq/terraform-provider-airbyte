@@ -178,9 +178,9 @@ func (r *DestinationCustomerIoResourceModel) ToSharedDestinationCustomerIoCreate
 			if r.Configuration.ObjectStorageConfig.S3.Compression != nil {
 				var noCompression *shared.NoCompression
 				if r.Configuration.ObjectStorageConfig.S3.Compression.NoCompression != nil {
-					compressionType := new(shared.CompressionType)
+					compressionType := new(shared.DestinationCustomerIoSchemasCompressionType)
 					if !r.Configuration.ObjectStorageConfig.S3.Compression.NoCompression.CompressionType.IsUnknown() && !r.Configuration.ObjectStorageConfig.S3.Compression.NoCompression.CompressionType.IsNull() {
-						*compressionType = shared.CompressionType(r.Configuration.ObjectStorageConfig.S3.Compression.NoCompression.CompressionType.ValueString())
+						*compressionType = shared.DestinationCustomerIoSchemasCompressionType(r.Configuration.ObjectStorageConfig.S3.Compression.NoCompression.CompressionType.ValueString())
 					} else {
 						compressionType = nil
 					}

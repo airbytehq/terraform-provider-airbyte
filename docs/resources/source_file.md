@@ -19,9 +19,10 @@ resource "airbyte_source_file" "my_source_file" {
     dataset_name          = "...my_dataset_name..."
     format                = "csv"
     provider = {
-      s3_amazon_web_services = {
-        aws_access_key_id     = "...my_aws_access_key_id..."
-        aws_secret_access_key = "...my_aws_secret_access_key..."
+      az_blob_azure_blob_storage = {
+        sas_token       = "...my_sas_token..."
+        shared_key      = "...my_shared_key..."
+        storage_account = "...my_storage_account..."
       }
     }
     reader_options = "{}"
@@ -78,7 +79,6 @@ Optional:
 - `az_blob_azure_blob_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--az_blob_azure_blob_storage))
 - `gcs_google_cloud_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--gcs_google_cloud_storage))
 - `https_public_web` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--https_public_web))
-- `local_filesystem_limited` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--local_filesystem_limited))
 - `s3_amazon_web_services` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--s3_amazon_web_services))
 - `scp_secure_copy_protocol` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--scp_secure_copy_protocol))
 - `sftp_secure_file_transfer_protocol` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--sftp_secure_file_transfer_protocol))
@@ -111,10 +111,6 @@ Optional:
 Optional:
 
 - `user_agent` (Boolean) Add User-Agent to request. Default: false
-
-
-<a id="nestedatt--configuration--provider--local_filesystem_limited"></a>
-### Nested Schema for `configuration.provider.local_filesystem_limited`
 
 
 <a id="nestedatt--configuration--provider--s3_amazon_web_services"></a>

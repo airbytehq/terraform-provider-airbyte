@@ -65,82 +65,7 @@ Optional:
 
 Optional:
 
-- `failing` (Attributes) (see [below for nested schema](#nestedatt--configuration--test_destination--failing))
-- `logging` (Attributes) (see [below for nested schema](#nestedatt--configuration--test_destination--logging))
 - `silent` (Attributes) (see [below for nested schema](#nestedatt--configuration--test_destination--silent))
-- `throttled` (Attributes) (see [below for nested schema](#nestedatt--configuration--test_destination--throttled))
-
-<a id="nestedatt--configuration--test_destination--failing"></a>
-### Nested Schema for `configuration.test_destination.failing`
-
-Required:
-
-- `num_messages` (Number) Number of messages after which to fail.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `test_destination_type` (String) Default: "FAILING"; must be "FAILING"
-
-
-<a id="nestedatt--configuration--test_destination--logging"></a>
-### Nested Schema for `configuration.test_destination.logging`
-
-Required:
-
-- `logging_config` (Attributes) Configurate how the messages are logged. (see [below for nested schema](#nestedatt--configuration--test_destination--logging--logging_config))
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `test_destination_type` (String) Default: "LOGGING"; must be "LOGGING"
-
-<a id="nestedatt--configuration--test_destination--logging--logging_config"></a>
-### Nested Schema for `configuration.test_destination.logging.logging_config`
-
-Optional:
-
-- `every_n_th_entry` (Attributes) For each stream, log every N-th entry with a maximum cap. (see [below for nested schema](#nestedatt--configuration--test_destination--logging--logging_config--every_n_th_entry))
-- `first_n_entries` (Attributes) Log first N entries per stream. (see [below for nested schema](#nestedatt--configuration--test_destination--logging--logging_config--first_n_entries))
-- `random_sampling` (Attributes) For each stream, randomly log a percentage of the entries with a maximum cap. (see [below for nested schema](#nestedatt--configuration--test_destination--logging--logging_config--random_sampling))
-
-<a id="nestedatt--configuration--test_destination--logging--logging_config--every_n_th_entry"></a>
-### Nested Schema for `configuration.test_destination.logging.logging_config.every_n_th_entry`
-
-Required:
-
-- `nth_entry_to_log` (Number) The N-th entry to log for each stream. N starts from 1. For example, when N = 1, every entry is logged; when N = 2, every other entry is logged; when N = 3, one out of three entries is logged.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `logging_type` (String) Default: "EveryNth"; must be "EveryNth"
-- `max_entry_count` (Number) Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries. Default: 100
-
-
-<a id="nestedatt--configuration--test_destination--logging--logging_config--first_n_entries"></a>
-### Nested Schema for `configuration.test_destination.logging.logging_config.first_n_entries`
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `logging_type` (String) Default: "FirstN"; must be "FirstN"
-- `max_entry_count` (Number) Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries. Default: 100
-
-
-<a id="nestedatt--configuration--test_destination--logging--logging_config--random_sampling"></a>
-### Nested Schema for `configuration.test_destination.logging.logging_config.random_sampling`
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `logging_type` (String) Default: "RandomSampling"; must be "RandomSampling"
-- `max_entry_count` (Number) Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries. Default: 100
-- `sampling_ratio` (Number) A positive floating number smaller than 1. Default: 0.001
-- `seed` (Number) When the seed is unspecified, the current time millis will be used as the seed.
-
-
-
 
 <a id="nestedatt--configuration--test_destination--silent"></a>
 ### Nested Schema for `configuration.test_destination.silent`
@@ -149,19 +74,6 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `test_destination_type` (String) Default: "SILENT"; must be "SILENT"
-
-
-<a id="nestedatt--configuration--test_destination--throttled"></a>
-### Nested Schema for `configuration.test_destination.throttled`
-
-Required:
-
-- `millis_per_record` (Number) The number of milliseconds to wait between each record.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `test_destination_type` (String) Default: "THROTTLED"; must be "THROTTLED"
 
 
 

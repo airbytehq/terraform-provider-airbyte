@@ -76,18 +76,24 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 							"api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										CustomType:  jsontypes.NormalizedType{},
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+									},
 									"api_token": schema.StringAttribute{
 										Required:    true,
-										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-sunshine">docs</a> for more information.`,
 									},
 									"email": schema.StringAttribute{
 										Required:    true,
-										Description: `The user email for your Zendesk account`,
+										Description: `The user email for your Zendesk account.`,
 									},
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth20_legacy"),
 									}...),
 								},
 							},
@@ -95,25 +101,71 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Long-term access Token for making authenticated requests.`,
+										Optional:    true,
+										Description: `Access Token for making authenticated requests.`,
+									},
+									"additional_properties": schema.StringAttribute{
+										CustomType:  jsontypes.NormalizedType{},
+										Optional:    true,
+										Description: `Parsed as JSON.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
-										Description: `The Client ID of your OAuth application.`,
+										Description: `The OAuth client's ID. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
-										Description: `The Client Secret of your OAuth application.`,
+										Description: `The OAuth client secret. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The refresh token used to obtain new access tokens. Note that Zendesk uses rotating refresh tokens - each refresh will return a new refresh token and invalidate the previous one.`,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Optional:    true,
+										Description: `The date-time when the access token should be refreshed.`,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
+										},
 									},
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
+										path.MatchRelative().AtParent().AtName("o_auth20_legacy"),
+									}...),
+								},
+							},
+							"o_auth20_legacy": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.`,
+									},
+									"additional_properties": schema.StringAttribute{
+										CustomType:  jsontypes.NormalizedType{},
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+									},
+									"client_id": schema.StringAttribute{
+										Optional:    true,
+										Description: `The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional:    true,
+										Description: `The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("api_token"),
+										path.MatchRelative().AtParent().AtName("o_auth20"),
 									}...),
 								},
 							},
 						},
+						Description: `Zendesk allows three authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

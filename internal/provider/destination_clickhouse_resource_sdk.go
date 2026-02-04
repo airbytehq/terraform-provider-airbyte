@@ -155,9 +155,9 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 	} else {
 		port = nil
 	}
-	protocol := new(shared.Protocol)
+	protocol := new(shared.DestinationClickhouseProtocol)
 	if !r.Configuration.Protocol.IsUnknown() && !r.Configuration.Protocol.IsNull() {
-		*protocol = shared.Protocol(r.Configuration.Protocol.ValueString())
+		*protocol = shared.DestinationClickhouseProtocol(r.Configuration.Protocol.ValueString())
 	} else {
 		protocol = nil
 	}

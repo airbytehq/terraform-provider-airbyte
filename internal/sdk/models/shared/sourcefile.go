@@ -57,26 +57,6 @@ func (e *FileFormat) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type LocalFilesystemLimited struct {
-	// WARNING: Note that the local storage URL available for reading must start with the local mount "/local/" at the moment until we implement more advanced docker mounting options.
-	storage string `const:"local" json:"storage"`
-}
-
-func (l LocalFilesystemLimited) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(l, "", false)
-}
-
-func (l *LocalFilesystemLimited) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (l *LocalFilesystemLimited) GetStorage() string {
-	return "local"
-}
-
 type SFTPSecureFileTransferProtocol struct {
 	Host     string  `json:"host"`
 	Password *string `json:"password,omitempty"`
@@ -379,7 +359,6 @@ const (
 	StorageProviderTypeSSHSecureShell                 StorageProviderType = "SSH: Secure Shell"
 	StorageProviderTypeSCPSecureCopyProtocol          StorageProviderType = "SCP: Secure copy protocol"
 	StorageProviderTypeSFTPSecureFileTransferProtocol StorageProviderType = "SFTP: Secure File Transfer Protocol"
-	StorageProviderTypeLocalFilesystemLimited         StorageProviderType = "Local Filesystem (limited)"
 )
 
 // StorageProvider - The storage Provider or Location of the file(s) which should be replicated.
@@ -391,7 +370,6 @@ type StorageProvider struct {
 	SSHSecureShell                 *SSHSecureShell                 `queryParam:"inline" union:"member"`
 	SCPSecureCopyProtocol          *SCPSecureCopyProtocol          `queryParam:"inline" union:"member"`
 	SFTPSecureFileTransferProtocol *SFTPSecureFileTransferProtocol `queryParam:"inline" union:"member"`
-	LocalFilesystemLimited         *LocalFilesystemLimited         `queryParam:"inline" union:"member"`
 
 	Type StorageProviderType
 }
@@ -459,15 +437,6 @@ func CreateStorageProviderSFTPSecureFileTransferProtocol(sftpSecureFileTransferP
 	}
 }
 
-func CreateStorageProviderLocalFilesystemLimited(localFilesystemLimited LocalFilesystemLimited) StorageProvider {
-	typ := StorageProviderTypeLocalFilesystemLimited
-
-	return StorageProvider{
-		LocalFilesystemLimited: &localFilesystemLimited,
-		Type:                   typ,
-	}
-}
-
 func (u *StorageProvider) UnmarshalJSON(data []byte) error {
 
 	var candidates []utils.UnionCandidate
@@ -529,14 +498,6 @@ func (u *StorageProvider) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var localFilesystemLimited LocalFilesystemLimited = LocalFilesystemLimited{}
-	if err := utils.UnmarshalJSON(data, &localFilesystemLimited, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  StorageProviderTypeLocalFilesystemLimited,
-			Value: &localFilesystemLimited,
-		})
-	}
-
 	if len(candidates) == 0 {
 		return fmt.Errorf("could not unmarshal `%s` into any supported union types for StorageProvider", string(data))
 	}
@@ -571,9 +532,6 @@ func (u *StorageProvider) UnmarshalJSON(data []byte) error {
 	case StorageProviderTypeSFTPSecureFileTransferProtocol:
 		u.SFTPSecureFileTransferProtocol = best.Value.(*SFTPSecureFileTransferProtocol)
 		return nil
-	case StorageProviderTypeLocalFilesystemLimited:
-		u.LocalFilesystemLimited = best.Value.(*LocalFilesystemLimited)
-		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for StorageProvider", string(data))
@@ -606,10 +564,6 @@ func (u StorageProvider) MarshalJSON() ([]byte, error) {
 
 	if u.SFTPSecureFileTransferProtocol != nil {
 		return utils.MarshalJSON(u.SFTPSecureFileTransferProtocol, "", true)
-	}
-
-	if u.LocalFilesystemLimited != nil {
-		return utils.MarshalJSON(u.LocalFilesystemLimited, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type StorageProvider: all fields are null")

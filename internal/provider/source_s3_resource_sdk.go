@@ -302,13 +302,13 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest(ctx context.Contex
 				Parquet: parquet,
 			}
 		}
-		var avro *shared.Avro
+		var sourceS3Avro *shared.SourceS3Avro
 		if r.Configuration.Format.Avro != nil {
-			avro = &shared.Avro{}
+			sourceS3Avro = &shared.SourceS3Avro{}
 		}
-		if avro != nil {
+		if sourceS3Avro != nil {
 			format = &shared.SourceS3FileFormat{
-				Avro: avro,
+				SourceS3Avro: sourceS3Avro,
 			}
 		}
 		var jsonl *shared.Jsonl

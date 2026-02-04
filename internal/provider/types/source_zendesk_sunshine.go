@@ -8,8 +8,8 @@ import (
 )
 
 type SourceZendeskSunshine struct {
-	AdditionalProperties jsontypes.Normalized                      `tfsdk:"additional_properties"`
-	Credentials          *SourceZendeskSunshineAuthorizationMethod `tfsdk:"credentials"`
-	StartDate            types.String                              `tfsdk:"start_date"`
-	Subdomain            types.String                              `tfsdk:"subdomain"`
+	AdditionalProperties jsontypes.Normalized                 `tfsdk:"additional_properties"`
+	Credentials          *SourceZendeskSunshineAuthentication `tfsdk:"credentials"`
+	StartDate            types.String                         `tfsdk:"start_date"`
+	Subdomain            types.String                         `tfsdk:"subdomain"`
 }

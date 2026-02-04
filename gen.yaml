@@ -20,6 +20,7 @@ generation:
   schemas:
     allOfMergeStrategy: shallowMerge
   requestBodyFieldName: ""
+  versioningStrategy: automatic
   persistentEdits: {}
   tests:
     generateTests: true
@@ -27,7 +28,7 @@ generation:
     skipResponseBodyAssertions: false
   telemetryEnabled: true
 terraform:
-  version: 1.0.0-rc2
+  version: 1.0.0
   additionalDataSources: []
   additionalDependencies: {}
   additionalEphemeralResources: []

@@ -83,7 +83,7 @@ func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource
 						Computed:    true,
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
-						Description: `Use the JSON type for Object fields. If disabled, the JSON will be converted to a string. Default: false`,
+						Description: `Use the JSON type when possible. If disabled, the JSON will be converted to a string. Default: false`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,

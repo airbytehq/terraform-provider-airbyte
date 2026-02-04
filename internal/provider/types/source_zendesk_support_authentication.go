@@ -3,7 +3,7 @@
 package types
 
 type SourceZendeskSupportAuthentication struct {
-	APIToken                *SourceZendeskSupportAPIToken `queryParam:"inline" tfsdk:"api_token"`
-	OAuth20Legacy           *OAuth20Legacy                `queryParam:"inline" tfsdk:"o_auth20_legacy"`
-	OAuth20WithRefreshToken *OAuth20WithRefreshToken      `queryParam:"inline" tfsdk:"o_auth20_with_refresh_token"`
+	APIToken                *SourceZendeskSupportAPIToken      `queryParam:"inline" tfsdk:"api_token"`
+	OAuth20Legacy           *SourceZendeskSupportOAuth20Legacy `queryParam:"inline" tfsdk:"o_auth20_legacy"`
+	OAuth20WithRefreshToken *OAuth20WithRefreshToken           `queryParam:"inline" tfsdk:"o_auth20_with_refresh_token"`
 }

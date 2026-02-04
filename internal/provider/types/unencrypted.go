@@ -2,12 +2,5 @@
 
 package types
 
-import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
-	"github.com/hashicorp/terraform-plugin-framework/types"
-)
-
 type Unencrypted struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	EncryptionMethod     types.String         `tfsdk:"encryption_method"`
 }

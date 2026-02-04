@@ -6,7 +6,6 @@ type StorageProvider struct {
 	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage         `queryParam:"inline" tfsdk:"az_blob_azure_blob_storage"`
 	GCSGoogleCloudStorage          *GCSGoogleCloudStorage          `queryParam:"inline" tfsdk:"gcs_google_cloud_storage"`
 	HTTPSPublicWeb                 *HTTPSPublicWeb                 `queryParam:"inline" tfsdk:"https_public_web"`
-	LocalFilesystemLimited         *LocalFilesystemLimited         `queryParam:"inline" tfsdk:"local_filesystem_limited"`
 	S3AmazonWebServices            *SourceFileS3AmazonWebServices  `queryParam:"inline" tfsdk:"s3_amazon_web_services"`
 	SCPSecureCopyProtocol          *SCPSecureCopyProtocol          `queryParam:"inline" tfsdk:"scp_secure_copy_protocol"`
 	SFTPSecureFileTransferProtocol *SFTPSecureFileTransferProtocol `queryParam:"inline" tfsdk:"sftp_secure_file_transfer_protocol"`

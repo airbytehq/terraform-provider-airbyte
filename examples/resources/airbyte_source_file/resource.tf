@@ -4,9 +4,10 @@ resource "airbyte_source_file" "my_source_file" {
     dataset_name          = "...my_dataset_name..."
     format                = "csv"
     provider = {
-      s3_amazon_web_services = {
-        aws_access_key_id     = "...my_aws_access_key_id..."
-        aws_secret_access_key = "...my_aws_secret_access_key..."
+      az_blob_azure_blob_storage = {
+        sas_token       = "...my_sas_token..."
+        shared_key      = "...my_shared_key..."
+        storage_account = "...my_storage_account..."
       }
     }
     reader_options = "{}"

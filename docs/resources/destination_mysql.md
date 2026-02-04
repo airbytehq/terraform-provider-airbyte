@@ -23,7 +23,6 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
     password              = "...my_password..."
     port                  = 3306
     raw_data_schema       = "...my_raw_data_schema..."
-    ssl                   = true
     tunnel_method = {
       no_tunnel = {
         # ...
@@ -74,7 +73,6 @@ Optional:
 - `password` (String) Password associated with the username.
 - `port` (Number) Port of the database. Default: 3306
 - `raw_data_schema` (String) The database to write raw tables into
-- `ssl` (Boolean) Encrypt data using SSL. Default: true
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>

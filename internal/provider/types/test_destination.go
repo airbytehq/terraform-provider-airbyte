@@ -3,8 +3,5 @@
 package types
 
 type TestDestination struct {
-	Failing   *Failing   `queryParam:"inline" tfsdk:"failing"`
-	Logging   *Logging   `queryParam:"inline" tfsdk:"logging"`
-	Silent    *Silent    `queryParam:"inline" tfsdk:"silent"`
-	Throttled *Throttled `queryParam:"inline" tfsdk:"throttled"`
+	Silent *Silent `queryParam:"inline" tfsdk:"silent"`
 }

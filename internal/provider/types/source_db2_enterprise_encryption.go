@@ -3,6 +3,6 @@
 package types
 
 type SourceDb2EnterpriseEncryption struct {
-	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate `queryParam:"inline" tfsdk:"tls_encrypted_verify_certificate"`
-	Unencrypted                   *Unencrypted                   `queryParam:"inline" tfsdk:"unencrypted"`
+	TLSEncryptedVerifyCertificate *SourceDb2EnterpriseTLSEncryptedVerifyCertificate `queryParam:"inline" tfsdk:"tls_encrypted_verify_certificate"`
+	Unencrypted                   *SourceDb2EnterpriseUnencrypted                   `queryParam:"inline" tfsdk:"unencrypted"`
 }

@@ -3,11 +3,15 @@
 package types
 
 import (
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type SourceZendeskSunshineOAuth20 struct {
-	AccessToken  types.String `tfsdk:"access_token"`
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
+	AccessToken          types.String         `tfsdk:"access_token"`
+	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	ClientID             types.String         `tfsdk:"client_id"`
+	ClientSecret         types.String         `tfsdk:"client_secret"`
+	RefreshToken         types.String         `tfsdk:"refresh_token"`
+	TokenExpiryDate      types.String         `tfsdk:"token_expiry_date"`
 }

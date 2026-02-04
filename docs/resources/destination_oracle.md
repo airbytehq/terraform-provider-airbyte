@@ -16,18 +16,13 @@ DestinationOracle Resource
 resource "airbyte_destination_oracle" "my_destination_oracle" {
   configuration = {
     additional_properties = "{ \"see\": \"documentation\" }"
-    encryption = {
-      tls_encrypted_verify_certificate = {
-        ssl_certificate = "...my_ssl_certificate..."
-      }
-    }
-    host            = "...my_host..."
-    jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 1521
-    raw_data_schema = "...my_raw_data_schema..."
-    schema          = "airbyte"
-    sid             = "...my_sid..."
+    host                  = "...my_host..."
+    jdbc_url_params       = "...my_jdbc_url_params..."
+    password              = "...my_password..."
+    port                  = 1521
+    raw_data_schema       = "...my_raw_data_schema..."
+    schema                = "airbyte"
+    sid                   = "...my_sid..."
     tunnel_method = {
       ssh_key_authentication = {
         ssh_key     = "...my_ssh_key..."
@@ -76,43 +71,12 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `encryption` (Attributes) The encryption method which is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--encryption))
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String) The password associated with the username.
 - `port` (Number) The port of the database. Default: 1521
 - `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 - `schema` (String) The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema. Default: "airbyte"
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
-
-<a id="nestedatt--configuration--encryption"></a>
-### Nested Schema for `configuration.encryption`
-
-Optional:
-
-- `native_network_encryption_nne` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--native_network_encryption_nne))
-- `tls_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--tls_encrypted_verify_certificate))
-- `unencrypted` (Attributes) Data transfer will not be encrypted. (see [below for nested schema](#nestedatt--configuration--encryption--unencrypted))
-
-<a id="nestedatt--configuration--encryption--native_network_encryption_nne"></a>
-### Nested Schema for `configuration.encryption.native_network_encryption_nne`
-
-Optional:
-
-- `encryption_algorithm` (String) This parameter defines the database encryption algorithm. Default: "AES256"; must be one of ["AES256", "RC4_56", "3DES168"]
-
-
-<a id="nestedatt--configuration--encryption--tls_encrypted_verify_certificate"></a>
-### Nested Schema for `configuration.encryption.tls_encrypted_verify_certificate`
-
-Required:
-
-- `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
-
-
-<a id="nestedatt--configuration--encryption--unencrypted"></a>
-### Nested Schema for `configuration.encryption.unencrypted`
-
-
 
 <a id="nestedatt--configuration--tunnel_method"></a>
 ### Nested Schema for `configuration.tunnel_method`

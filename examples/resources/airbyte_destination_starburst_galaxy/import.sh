@@ -1,0 +1,1 @@
+terraform import airbyte_destination_starburst_galaxy.my_airbyte_destination_starburst_galaxy "..."

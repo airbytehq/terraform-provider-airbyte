@@ -9,156 +9,32 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type DestinationDevNullSchemasTestDestinationTestDestinationType string
+type TestDestinationType string
 
 const (
-	DestinationDevNullSchemasTestDestinationTestDestinationTypeFailing DestinationDevNullSchemasTestDestinationTestDestinationType = "FAILING"
+	TestDestinationTypeSilent TestDestinationType = "SILENT"
 )
 
-func (e DestinationDevNullSchemasTestDestinationTestDestinationType) ToPointer() *DestinationDevNullSchemasTestDestinationTestDestinationType {
+func (e TestDestinationType) ToPointer() *TestDestinationType {
 	return &e
 }
-func (e *DestinationDevNullSchemasTestDestinationTestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "FAILING":
-		*e = DestinationDevNullSchemasTestDestinationTestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullSchemasTestDestinationTestDestinationType: %v", v)
-	}
-}
-
-type Failing struct {
-	// Number of messages after which to fail.
-	NumMessages          int64                                                        `json:"num_messages"`
-	TestDestinationType  *DestinationDevNullSchemasTestDestinationTestDestinationType `default:"FAILING" json:"test_destination_type"`
-	AdditionalProperties any                                                          `additionalProperties:"true" json:"-"`
-}
-
-func (f Failing) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(f, "", false)
-}
-
-func (f *Failing) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (f *Failing) GetNumMessages() int64 {
-	if f == nil {
-		return 0
-	}
-	return f.NumMessages
-}
-
-func (f *Failing) GetTestDestinationType() *DestinationDevNullSchemasTestDestinationTestDestinationType {
-	if f == nil {
-		return nil
-	}
-	return f.TestDestinationType
-}
-
-func (f *Failing) GetAdditionalProperties() any {
-	if f == nil {
-		return nil
-	}
-	return f.AdditionalProperties
-}
-
-type DestinationDevNullSchemasTestDestinationType string
-
-const (
-	DestinationDevNullSchemasTestDestinationTypeThrottled DestinationDevNullSchemasTestDestinationType = "THROTTLED"
-)
-
-func (e DestinationDevNullSchemasTestDestinationType) ToPointer() *DestinationDevNullSchemasTestDestinationType {
-	return &e
-}
-func (e *DestinationDevNullSchemasTestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "THROTTLED":
-		*e = DestinationDevNullSchemasTestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullSchemasTestDestinationType: %v", v)
-	}
-}
-
-type Throttled struct {
-	// The number of milliseconds to wait between each record.
-	MillisPerRecord      int64                                         `json:"millis_per_record"`
-	TestDestinationType  *DestinationDevNullSchemasTestDestinationType `default:"THROTTLED" json:"test_destination_type"`
-	AdditionalProperties any                                           `additionalProperties:"true" json:"-"`
-}
-
-func (t Throttled) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(t, "", false)
-}
-
-func (t *Throttled) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (t *Throttled) GetMillisPerRecord() int64 {
-	if t == nil {
-		return 0
-	}
-	return t.MillisPerRecord
-}
-
-func (t *Throttled) GetTestDestinationType() *DestinationDevNullSchemasTestDestinationType {
-	if t == nil {
-		return nil
-	}
-	return t.TestDestinationType
-}
-
-func (t *Throttled) GetAdditionalProperties() any {
-	if t == nil {
-		return nil
-	}
-	return t.AdditionalProperties
-}
-
-type DestinationDevNullTestDestinationType string
-
-const (
-	DestinationDevNullTestDestinationTypeSilent DestinationDevNullTestDestinationType = "SILENT"
-)
-
-func (e DestinationDevNullTestDestinationType) ToPointer() *DestinationDevNullTestDestinationType {
-	return &e
-}
-func (e *DestinationDevNullTestDestinationType) UnmarshalJSON(data []byte) error {
+func (e *TestDestinationType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SILENT":
-		*e = DestinationDevNullTestDestinationType(v)
+		*e = TestDestinationType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDevNullTestDestinationType: %v", v)
+		return fmt.Errorf("invalid value for TestDestinationType: %v", v)
 	}
 }
 
 type Silent struct {
-	TestDestinationType  *DestinationDevNullTestDestinationType `default:"SILENT" json:"test_destination_type"`
-	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
+	TestDestinationType  *TestDestinationType `default:"SILENT" json:"test_destination_type"`
+	AdditionalProperties any                  `additionalProperties:"true" json:"-"`
 }
 
 func (s Silent) MarshalJSON() ([]byte, error) {
@@ -172,7 +48,7 @@ func (s *Silent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *Silent) GetTestDestinationType() *DestinationDevNullTestDestinationType {
+func (s *Silent) GetTestDestinationType() *TestDestinationType {
 	if s == nil {
 		return nil
 	}
@@ -186,426 +62,17 @@ func (s *Silent) GetAdditionalProperties() any {
 	return s.AdditionalProperties
 }
 
-type DestinationDevNullSchemasLoggingType string
-
-const (
-	DestinationDevNullSchemasLoggingTypeRandomSampling DestinationDevNullSchemasLoggingType = "RandomSampling"
-)
-
-func (e DestinationDevNullSchemasLoggingType) ToPointer() *DestinationDevNullSchemasLoggingType {
-	return &e
-}
-func (e *DestinationDevNullSchemasLoggingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "RandomSampling":
-		*e = DestinationDevNullSchemasLoggingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullSchemasLoggingType: %v", v)
-	}
-}
-
-// RandomSampling - For each stream, randomly log a percentage of the entries with a maximum cap.
-type RandomSampling struct {
-	LoggingType *DestinationDevNullSchemasLoggingType `default:"RandomSampling" json:"logging_type"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
-	// A positive floating number smaller than 1.
-	SamplingRatio *float64 `default:"0.001" json:"sampling_ratio"`
-	// When the seed is unspecified, the current time millis will be used as the seed.
-	Seed                 *float64 `json:"seed,omitempty"`
-	AdditionalProperties any      `additionalProperties:"true" json:"-"`
-}
-
-func (r RandomSampling) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(r, "", false)
-}
-
-func (r *RandomSampling) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (r *RandomSampling) GetLoggingType() *DestinationDevNullSchemasLoggingType {
-	if r == nil {
-		return nil
-	}
-	return r.LoggingType
-}
-
-func (r *RandomSampling) GetMaxEntryCount() *float64 {
-	if r == nil {
-		return nil
-	}
-	return r.MaxEntryCount
-}
-
-func (r *RandomSampling) GetSamplingRatio() *float64 {
-	if r == nil {
-		return nil
-	}
-	return r.SamplingRatio
-}
-
-func (r *RandomSampling) GetSeed() *float64 {
-	if r == nil {
-		return nil
-	}
-	return r.Seed
-}
-
-func (r *RandomSampling) GetAdditionalProperties() any {
-	if r == nil {
-		return nil
-	}
-	return r.AdditionalProperties
-}
-
-type DestinationDevNullLoggingType string
-
-const (
-	DestinationDevNullLoggingTypeEveryNth DestinationDevNullLoggingType = "EveryNth"
-)
-
-func (e DestinationDevNullLoggingType) ToPointer() *DestinationDevNullLoggingType {
-	return &e
-}
-func (e *DestinationDevNullLoggingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "EveryNth":
-		*e = DestinationDevNullLoggingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationDevNullLoggingType: %v", v)
-	}
-}
-
-// EveryNThEntry - For each stream, log every N-th entry with a maximum cap.
-type EveryNThEntry struct {
-	LoggingType *DestinationDevNullLoggingType `default:"EveryNth" json:"logging_type"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
-	// The N-th entry to log for each stream. N starts from 1. For example, when N = 1, every entry is logged; when N = 2, every other entry is logged; when N = 3, one out of three entries is logged.
-	NthEntryToLog        int64 `json:"nth_entry_to_log"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
-}
-
-func (e EveryNThEntry) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(e, "", false)
-}
-
-func (e *EveryNThEntry) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (e *EveryNThEntry) GetLoggingType() *DestinationDevNullLoggingType {
-	if e == nil {
-		return nil
-	}
-	return e.LoggingType
-}
-
-func (e *EveryNThEntry) GetMaxEntryCount() *float64 {
-	if e == nil {
-		return nil
-	}
-	return e.MaxEntryCount
-}
-
-func (e *EveryNThEntry) GetNthEntryToLog() int64 {
-	if e == nil {
-		return 0
-	}
-	return e.NthEntryToLog
-}
-
-func (e *EveryNThEntry) GetAdditionalProperties() any {
-	if e == nil {
-		return nil
-	}
-	return e.AdditionalProperties
-}
-
-type LoggingType string
-
-const (
-	LoggingTypeFirstN LoggingType = "FirstN"
-)
-
-func (e LoggingType) ToPointer() *LoggingType {
-	return &e
-}
-func (e *LoggingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "FirstN":
-		*e = LoggingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for LoggingType: %v", v)
-	}
-}
-
-// FirstNEntries - Log first N entries per stream.
-type FirstNEntries struct {
-	LoggingType *LoggingType `default:"FirstN" json:"logging_type"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount        *float64 `default:"100" json:"max_entry_count"`
-	AdditionalProperties any      `additionalProperties:"true" json:"-"`
-}
-
-func (f FirstNEntries) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(f, "", false)
-}
-
-func (f *FirstNEntries) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (f *FirstNEntries) GetLoggingType() *LoggingType {
-	if f == nil {
-		return nil
-	}
-	return f.LoggingType
-}
-
-func (f *FirstNEntries) GetMaxEntryCount() *float64 {
-	if f == nil {
-		return nil
-	}
-	return f.MaxEntryCount
-}
-
-func (f *FirstNEntries) GetAdditionalProperties() any {
-	if f == nil {
-		return nil
-	}
-	return f.AdditionalProperties
-}
-
-type LoggingConfigurationType string
-
-const (
-	LoggingConfigurationTypeFirstNEntries  LoggingConfigurationType = "First N Entries"
-	LoggingConfigurationTypeEveryNThEntry  LoggingConfigurationType = "Every N-th Entry"
-	LoggingConfigurationTypeRandomSampling LoggingConfigurationType = "Random Sampling"
-)
-
-// LoggingConfiguration - Configurate how the messages are logged.
-type LoggingConfiguration struct {
-	FirstNEntries  *FirstNEntries  `queryParam:"inline" union:"member"`
-	EveryNThEntry  *EveryNThEntry  `queryParam:"inline" union:"member"`
-	RandomSampling *RandomSampling `queryParam:"inline" union:"member"`
-
-	Type LoggingConfigurationType
-}
-
-func CreateLoggingConfigurationFirstNEntries(firstNEntries FirstNEntries) LoggingConfiguration {
-	typ := LoggingConfigurationTypeFirstNEntries
-
-	return LoggingConfiguration{
-		FirstNEntries: &firstNEntries,
-		Type:          typ,
-	}
-}
-
-func CreateLoggingConfigurationEveryNThEntry(everyNThEntry EveryNThEntry) LoggingConfiguration {
-	typ := LoggingConfigurationTypeEveryNThEntry
-
-	return LoggingConfiguration{
-		EveryNThEntry: &everyNThEntry,
-		Type:          typ,
-	}
-}
-
-func CreateLoggingConfigurationRandomSampling(randomSampling RandomSampling) LoggingConfiguration {
-	typ := LoggingConfigurationTypeRandomSampling
-
-	return LoggingConfiguration{
-		RandomSampling: &randomSampling,
-		Type:           typ,
-	}
-}
-
-func (u *LoggingConfiguration) UnmarshalJSON(data []byte) error {
-
-	var candidates []utils.UnionCandidate
-
-	// Collect all valid candidates
-	var firstNEntries FirstNEntries = FirstNEntries{}
-	if err := utils.UnmarshalJSON(data, &firstNEntries, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  LoggingConfigurationTypeFirstNEntries,
-			Value: &firstNEntries,
-		})
-	}
-
-	var everyNThEntry EveryNThEntry = EveryNThEntry{}
-	if err := utils.UnmarshalJSON(data, &everyNThEntry, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  LoggingConfigurationTypeEveryNThEntry,
-			Value: &everyNThEntry,
-		})
-	}
-
-	var randomSampling RandomSampling = RandomSampling{}
-	if err := utils.UnmarshalJSON(data, &randomSampling, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  LoggingConfigurationTypeRandomSampling,
-			Value: &randomSampling,
-		})
-	}
-
-	if len(candidates) == 0 {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for LoggingConfiguration", string(data))
-	}
-
-	// Pick the best candidate using multi-stage filtering
-	best := utils.PickBestUnionCandidate(candidates, data)
-	if best == nil {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for LoggingConfiguration", string(data))
-	}
-
-	// Set the union type and value based on the best candidate
-	u.Type = best.Type.(LoggingConfigurationType)
-	switch best.Type {
-	case LoggingConfigurationTypeFirstNEntries:
-		u.FirstNEntries = best.Value.(*FirstNEntries)
-		return nil
-	case LoggingConfigurationTypeEveryNThEntry:
-		u.EveryNThEntry = best.Value.(*EveryNThEntry)
-		return nil
-	case LoggingConfigurationTypeRandomSampling:
-		u.RandomSampling = best.Value.(*RandomSampling)
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LoggingConfiguration", string(data))
-}
-
-func (u LoggingConfiguration) MarshalJSON() ([]byte, error) {
-	if u.FirstNEntries != nil {
-		return utils.MarshalJSON(u.FirstNEntries, "", true)
-	}
-
-	if u.EveryNThEntry != nil {
-		return utils.MarshalJSON(u.EveryNThEntry, "", true)
-	}
-
-	if u.RandomSampling != nil {
-		return utils.MarshalJSON(u.RandomSampling, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type LoggingConfiguration: all fields are null")
-}
-
-type TestDestinationType string
-
-const (
-	TestDestinationTypeLogging TestDestinationType = "LOGGING"
-)
-
-func (e TestDestinationType) ToPointer() *TestDestinationType {
-	return &e
-}
-func (e *TestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "LOGGING":
-		*e = TestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TestDestinationType: %v", v)
-	}
-}
-
-type Logging struct {
-	// Configurate how the messages are logged.
-	LoggingConfig        LoggingConfiguration `json:"logging_config"`
-	TestDestinationType  *TestDestinationType `default:"LOGGING" json:"test_destination_type"`
-	AdditionalProperties any                  `additionalProperties:"true" json:"-"`
-}
-
-func (l Logging) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(l, "", false)
-}
-
-func (l *Logging) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (l *Logging) GetLoggingConfig() LoggingConfiguration {
-	if l == nil {
-		return LoggingConfiguration{}
-	}
-	return l.LoggingConfig
-}
-
-func (l *Logging) GetTestDestinationType() *TestDestinationType {
-	if l == nil {
-		return nil
-	}
-	return l.TestDestinationType
-}
-
-func (l *Logging) GetAdditionalProperties() any {
-	if l == nil {
-		return nil
-	}
-	return l.AdditionalProperties
-}
-
 type TestDestinationUnionType string
 
 const (
-	TestDestinationUnionTypeLogging   TestDestinationUnionType = "Logging"
-	TestDestinationUnionTypeSilent    TestDestinationUnionType = "Silent"
-	TestDestinationUnionTypeThrottled TestDestinationUnionType = "Throttled"
-	TestDestinationUnionTypeFailing   TestDestinationUnionType = "Failing"
+	TestDestinationUnionTypeSilent TestDestinationUnionType = "Silent"
 )
 
 // TestDestination - The type of destination to be used
 type TestDestination struct {
-	Logging   *Logging   `queryParam:"inline" union:"member"`
-	Silent    *Silent    `queryParam:"inline" union:"member"`
-	Throttled *Throttled `queryParam:"inline" union:"member"`
-	Failing   *Failing   `queryParam:"inline" union:"member"`
+	Silent *Silent `queryParam:"inline" union:"member"`
 
 	Type TestDestinationUnionType
-}
-
-func CreateTestDestinationLogging(logging Logging) TestDestination {
-	typ := TestDestinationUnionTypeLogging
-
-	return TestDestination{
-		Logging: &logging,
-		Type:    typ,
-	}
 }
 
 func CreateTestDestinationSilent(silent Silent) TestDestination {
@@ -617,58 +84,16 @@ func CreateTestDestinationSilent(silent Silent) TestDestination {
 	}
 }
 
-func CreateTestDestinationThrottled(throttled Throttled) TestDestination {
-	typ := TestDestinationUnionTypeThrottled
-
-	return TestDestination{
-		Throttled: &throttled,
-		Type:      typ,
-	}
-}
-
-func CreateTestDestinationFailing(failing Failing) TestDestination {
-	typ := TestDestinationUnionTypeFailing
-
-	return TestDestination{
-		Failing: &failing,
-		Type:    typ,
-	}
-}
-
 func (u *TestDestination) UnmarshalJSON(data []byte) error {
 
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var logging Logging = Logging{}
-	if err := utils.UnmarshalJSON(data, &logging, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  TestDestinationUnionTypeLogging,
-			Value: &logging,
-		})
-	}
-
 	var silent Silent = Silent{}
 	if err := utils.UnmarshalJSON(data, &silent, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
 			Type:  TestDestinationUnionTypeSilent,
 			Value: &silent,
-		})
-	}
-
-	var throttled Throttled = Throttled{}
-	if err := utils.UnmarshalJSON(data, &throttled, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  TestDestinationUnionTypeThrottled,
-			Value: &throttled,
-		})
-	}
-
-	var failing Failing = Failing{}
-	if err := utils.UnmarshalJSON(data, &failing, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  TestDestinationUnionTypeFailing,
-			Value: &failing,
 		})
 	}
 
@@ -685,17 +110,8 @@ func (u *TestDestination) UnmarshalJSON(data []byte) error {
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(TestDestinationUnionType)
 	switch best.Type {
-	case TestDestinationUnionTypeLogging:
-		u.Logging = best.Value.(*Logging)
-		return nil
 	case TestDestinationUnionTypeSilent:
 		u.Silent = best.Value.(*Silent)
-		return nil
-	case TestDestinationUnionTypeThrottled:
-		u.Throttled = best.Value.(*Throttled)
-		return nil
-	case TestDestinationUnionTypeFailing:
-		u.Failing = best.Value.(*Failing)
 		return nil
 	}
 
@@ -703,20 +119,8 @@ func (u *TestDestination) UnmarshalJSON(data []byte) error {
 }
 
 func (u TestDestination) MarshalJSON() ([]byte, error) {
-	if u.Logging != nil {
-		return utils.MarshalJSON(u.Logging, "", true)
-	}
-
 	if u.Silent != nil {
 		return utils.MarshalJSON(u.Silent, "", true)
-	}
-
-	if u.Throttled != nil {
-		return utils.MarshalJSON(u.Throttled, "", true)
-	}
-
-	if u.Failing != nil {
-		return utils.MarshalJSON(u.Failing, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type TestDestination: all fields are null")

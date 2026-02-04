@@ -3,9 +3,12 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
     additional_properties = "{ \"see\": \"documentation\" }"
     credentials = {
       o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
+        access_token          = "...my_access_token..."
+        additional_properties = "{ \"see\": \"documentation\" }"
+        client_id             = "...my_client_id..."
+        client_secret         = "...my_client_secret..."
+        refresh_token         = "...my_refresh_token..."
+        token_expiry_date     = "2022-04-04T03:34:15.040Z"
       }
     }
     start_date = "2021-01-01T00:00:00Z"

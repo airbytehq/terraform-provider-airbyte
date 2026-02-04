@@ -3,12 +3,10 @@
 package types
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type TLSEncryptedVerifyCertificate struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	EncryptionMethod     types.String         `tfsdk:"encryption_method"`
-	SslCertificate       types.String         `tfsdk:"ssl_certificate"`
+	KeyStorePassword types.String `tfsdk:"key_store_password"`
+	SslCertificate   types.String `tfsdk:"ssl_certificate"`
 }

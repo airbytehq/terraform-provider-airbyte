@@ -69,7 +69,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `database` (String) Name of the database. Default: "default"
-- `enable_json` (Boolean) Use the JSON type for Object fields. If disabled, the JSON will be converted to a string. Default: false
+- `enable_json` (Boolean) Use the JSON type when possible. If disabled, the JSON will be converted to a string. Default: false
 - `port` (String) HTTP port of the database. Default(s) HTTP: 8123 — HTTPS: 8443. Default: "8443"
 - `protocol` (String) Protocol for the database connection string. Default: "https"; must be one of ["http", "https"]
 - `record_window_size` (Number) Warning: Tuning this parameter can impact the performances. The maximum number of records that should be written to a batch. The batch size limit is still limited to 70 Mb

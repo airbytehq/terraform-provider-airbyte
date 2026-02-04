@@ -9,18 +9,18 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// Protocol for the database connection string.
-type Protocol string
+// DestinationClickhouseProtocol - Protocol for the database connection string.
+type DestinationClickhouseProtocol string
 
 const (
-	ProtocolHTTP  Protocol = "http"
-	ProtocolHTTPS Protocol = "https"
+	DestinationClickhouseProtocolHTTP  DestinationClickhouseProtocol = "http"
+	DestinationClickhouseProtocolHTTPS DestinationClickhouseProtocol = "https"
 )
 
-func (e Protocol) ToPointer() *Protocol {
+func (e DestinationClickhouseProtocol) ToPointer() *DestinationClickhouseProtocol {
 	return &e
 }
-func (e *Protocol) UnmarshalJSON(data []byte) error {
+func (e *DestinationClickhouseProtocol) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,10 +29,10 @@ func (e *Protocol) UnmarshalJSON(data []byte) error {
 	case "http":
 		fallthrough
 	case "https":
-		*e = Protocol(v)
+		*e = DestinationClickhouseProtocol(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Protocol: %v", v)
+		return fmt.Errorf("invalid value for DestinationClickhouseProtocol: %v", v)
 	}
 }
 
@@ -412,7 +412,7 @@ func (e *DestinationClickhouseDestinationType) UnmarshalJSON(data []byte) error 
 type DestinationClickhouse struct {
 	// Name of the database.
 	Database *string `default:"default" json:"database"`
-	// Use the JSON type for Object fields. If disabled, the JSON will be converted to a string.
+	// Use the JSON type when possible. If disabled, the JSON will be converted to a string.
 	EnableJSON *bool `default:"false" json:"enable_json"`
 	// Hostname of the database.
 	Host string `json:"host"`
@@ -421,7 +421,7 @@ type DestinationClickhouse struct {
 	// HTTP port of the database. Default(s) HTTP: 8123 — HTTPS: 8443
 	Port *string `default:"8443" json:"port"`
 	// Protocol for the database connection string.
-	Protocol *Protocol `default:"https" json:"protocol"`
+	Protocol *DestinationClickhouseProtocol `default:"https" json:"protocol"`
 	// Warning: Tuning this parameter can impact the performances. The maximum number of records that should be written to a batch. The batch size limit is still limited to 70 Mb
 	RecordWindowSize *int64 `json:"record_window_size,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
@@ -478,7 +478,7 @@ func (d *DestinationClickhouse) GetPort() *string {
 	return d.Port
 }
 
-func (d *DestinationClickhouse) GetProtocol() *Protocol {
+func (d *DestinationClickhouse) GetProtocol() *DestinationClickhouseProtocol {
 	if d == nil {
 		return nil
 	}

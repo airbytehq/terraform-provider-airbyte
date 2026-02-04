@@ -126,27 +126,46 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshineCreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var credentials *shared.SourceZendeskSunshineAuthorizationMethod
+	var credentials *shared.SourceZendeskSunshineAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSunshineOAuth20 *shared.SourceZendeskSunshineOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
+			accessToken := new(string)
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
+			var refreshToken string
+			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+
+			tokenExpiryDate := new(time.Time)
+			if !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsNull() {
+				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+			} else {
+				tokenExpiryDate = nil
+			}
+			var additionalProperties map[string]any
+			if !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.OAuth20.AdditionalProperties.ValueString()), &additionalProperties)
+			}
 			sourceZendeskSunshineOAuth20 = &shared.SourceZendeskSunshineOAuth20{
-				AccessToken:  accessToken,
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
+				AccessToken:          accessToken,
+				ClientID:             clientID,
+				ClientSecret:         clientSecret,
+				RefreshToken:         refreshToken,
+				TokenExpiryDate:      tokenExpiryDate,
+				AdditionalProperties: additionalProperties,
 			}
 		}
 		if sourceZendeskSunshineOAuth20 != nil {
-			credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
+			credentials = &shared.SourceZendeskSunshineAuthentication{
 				SourceZendeskSunshineOAuth20: sourceZendeskSunshineOAuth20,
 			}
 		}
@@ -158,14 +177,52 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshineCreate
 			var email string
 			email = r.Configuration.Credentials.APIToken.Email.ValueString()
 
+			var additionalProperties1 map[string]any
+			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
+			}
 			sourceZendeskSunshineAPIToken = &shared.SourceZendeskSunshineAPIToken{
-				APIToken: apiToken,
-				Email:    email,
+				APIToken:             apiToken,
+				Email:                email,
+				AdditionalProperties: additionalProperties1,
 			}
 		}
 		if sourceZendeskSunshineAPIToken != nil {
-			credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
+			credentials = &shared.SourceZendeskSunshineAuthentication{
 				SourceZendeskSunshineAPIToken: sourceZendeskSunshineAPIToken,
+			}
+		}
+		var oAuth20Legacy *shared.OAuth20Legacy
+		if r.Configuration.Credentials.OAuth20Legacy != nil {
+			var accessToken1 string
+			accessToken1 = r.Configuration.Credentials.OAuth20Legacy.AccessToken.ValueString()
+
+			clientId1 := new(string)
+			if !r.Configuration.Credentials.OAuth20Legacy.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.ClientID.IsNull() {
+				*clientId1 = r.Configuration.Credentials.OAuth20Legacy.ClientID.ValueString()
+			} else {
+				clientId1 = nil
+			}
+			clientSecret1 := new(string)
+			if !r.Configuration.Credentials.OAuth20Legacy.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.ClientSecret.IsNull() {
+				*clientSecret1 = r.Configuration.Credentials.OAuth20Legacy.ClientSecret.ValueString()
+			} else {
+				clientSecret1 = nil
+			}
+			var additionalProperties2 map[string]any
+			if !r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.ValueString()), &additionalProperties2)
+			}
+			oAuth20Legacy = &shared.OAuth20Legacy{
+				AccessToken:          accessToken1,
+				ClientID:             clientId1,
+				ClientSecret:         clientSecret1,
+				AdditionalProperties: additionalProperties2,
+			}
+		}
+		if oAuth20Legacy != nil {
+			credentials = &shared.SourceZendeskSunshineAuthentication{
+				OAuth20Legacy: oAuth20Legacy,
 			}
 		}
 	}
@@ -173,15 +230,15 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshineCreate
 	var subdomain string
 	subdomain = r.Configuration.Subdomain.ValueString()
 
-	var additionalProperties map[string]any
+	var additionalProperties3 map[string]any
 	if !r.Configuration.AdditionalProperties.IsUnknown() && !r.Configuration.AdditionalProperties.IsNull() {
-		_ = json.Unmarshal([]byte(r.Configuration.AdditionalProperties.ValueString()), &additionalProperties)
+		_ = json.Unmarshal([]byte(r.Configuration.AdditionalProperties.ValueString()), &additionalProperties3)
 	}
 	configuration := shared.SourceZendeskSunshine{
 		Credentials:          credentials,
 		StartDate:            startDate,
 		Subdomain:            subdomain,
-		AdditionalProperties: additionalProperties,
+		AdditionalProperties: additionalProperties3,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -209,7 +266,7 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshinePutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var credentials *shared.SourceZendeskSunshineUpdateAuthorizationMethod
+	var credentials *shared.SourceZendeskSunshineUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSunshineUpdateOAuth20 *shared.SourceZendeskSunshineUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
@@ -231,14 +288,33 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshinePutReq
 			} else {
 				clientSecret = nil
 			}
+			refreshToken := new(string)
+			if !r.Configuration.Credentials.OAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.RefreshToken.IsNull() {
+				*refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+			} else {
+				refreshToken = nil
+			}
+			tokenExpiryDate := new(time.Time)
+			if !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsNull() {
+				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+			} else {
+				tokenExpiryDate = nil
+			}
+			var additionalProperties map[string]any
+			if !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.OAuth20.AdditionalProperties.ValueString()), &additionalProperties)
+			}
 			sourceZendeskSunshineUpdateOAuth20 = &shared.SourceZendeskSunshineUpdateOAuth20{
-				AccessToken:  accessToken,
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
+				AccessToken:          accessToken,
+				ClientID:             clientID,
+				ClientSecret:         clientSecret,
+				RefreshToken:         refreshToken,
+				TokenExpiryDate:      tokenExpiryDate,
+				AdditionalProperties: additionalProperties,
 			}
 		}
 		if sourceZendeskSunshineUpdateOAuth20 != nil {
-			credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
+			credentials = &shared.SourceZendeskSunshineUpdateAuthentication{
 				SourceZendeskSunshineUpdateOAuth20: sourceZendeskSunshineUpdateOAuth20,
 			}
 		}
@@ -256,14 +332,55 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshinePutReq
 			} else {
 				email = nil
 			}
+			var additionalProperties1 map[string]any
+			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
+			}
 			sourceZendeskSunshineUpdateAPIToken = &shared.SourceZendeskSunshineUpdateAPIToken{
-				APIToken: apiToken,
-				Email:    email,
+				APIToken:             apiToken,
+				Email:                email,
+				AdditionalProperties: additionalProperties1,
 			}
 		}
 		if sourceZendeskSunshineUpdateAPIToken != nil {
-			credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
+			credentials = &shared.SourceZendeskSunshineUpdateAuthentication{
 				SourceZendeskSunshineUpdateAPIToken: sourceZendeskSunshineUpdateAPIToken,
+			}
+		}
+		var sourceZendeskSunshineUpdateOAuth20Legacy *shared.SourceZendeskSunshineUpdateOAuth20Legacy
+		if r.Configuration.Credentials.OAuth20Legacy != nil {
+			accessToken1 := new(string)
+			if !r.Configuration.Credentials.OAuth20Legacy.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.AccessToken.IsNull() {
+				*accessToken1 = r.Configuration.Credentials.OAuth20Legacy.AccessToken.ValueString()
+			} else {
+				accessToken1 = nil
+			}
+			clientId1 := new(string)
+			if !r.Configuration.Credentials.OAuth20Legacy.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.ClientID.IsNull() {
+				*clientId1 = r.Configuration.Credentials.OAuth20Legacy.ClientID.ValueString()
+			} else {
+				clientId1 = nil
+			}
+			clientSecret1 := new(string)
+			if !r.Configuration.Credentials.OAuth20Legacy.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.ClientSecret.IsNull() {
+				*clientSecret1 = r.Configuration.Credentials.OAuth20Legacy.ClientSecret.ValueString()
+			} else {
+				clientSecret1 = nil
+			}
+			var additionalProperties2 map[string]any
+			if !r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.OAuth20Legacy.AdditionalProperties.ValueString()), &additionalProperties2)
+			}
+			sourceZendeskSunshineUpdateOAuth20Legacy = &shared.SourceZendeskSunshineUpdateOAuth20Legacy{
+				AccessToken:          accessToken1,
+				ClientID:             clientId1,
+				ClientSecret:         clientSecret1,
+				AdditionalProperties: additionalProperties2,
+			}
+		}
+		if sourceZendeskSunshineUpdateOAuth20Legacy != nil {
+			credentials = &shared.SourceZendeskSunshineUpdateAuthentication{
+				SourceZendeskSunshineUpdateOAuth20Legacy: sourceZendeskSunshineUpdateOAuth20Legacy,
 			}
 		}
 	}
@@ -279,15 +396,15 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshinePutReq
 	} else {
 		subdomain = nil
 	}
-	var additionalProperties map[string]any
+	var additionalProperties3 map[string]any
 	if !r.Configuration.AdditionalProperties.IsUnknown() && !r.Configuration.AdditionalProperties.IsNull() {
-		_ = json.Unmarshal([]byte(r.Configuration.AdditionalProperties.ValueString()), &additionalProperties)
+		_ = json.Unmarshal([]byte(r.Configuration.AdditionalProperties.ValueString()), &additionalProperties3)
 	}
 	configuration := shared.SourceZendeskSunshineUpdate{
 		Credentials:          credentials,
 		StartDate:            startDate,
 		Subdomain:            subdomain,
-		AdditionalProperties: additionalProperties,
+		AdditionalProperties: additionalProperties3,
 	}
 	out := shared.SourceZendeskSunshinePutRequest{
 		Name:          name,

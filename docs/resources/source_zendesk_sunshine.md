@@ -18,9 +18,12 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
     additional_properties = "{ \"see\": \"documentation\" }"
     credentials = {
       o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
+        access_token          = "...my_access_token..."
+        additional_properties = "{ \"see\": \"documentation\" }"
+        client_id             = "...my_client_id..."
+        client_secret         = "...my_client_secret..."
+        refresh_token         = "...my_refresh_token..."
+        token_expiry_date     = "2022-04-04T03:34:15.040Z"
       }
     }
     start_date = "2021-01-01T00:00:00Z"
@@ -65,7 +68,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `credentials` (Attributes) Zendesk allows three authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials))
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -74,14 +77,19 @@ Optional:
 
 - `api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
 - `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `o_auth20_legacy` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20_legacy))
 
 <a id="nestedatt--configuration--credentials--api_token"></a>
 ### Nested Schema for `configuration.credentials.api_token`
 
 Required:
 
-- `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-- `email` (String) The user email for your Zendesk account
+- `api_token` (String) The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-sunshine">docs</a> for more information.
+- `email` (String) The user email for your Zendesk account.
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -89,9 +97,29 @@ Required:
 
 Required:
 
-- `access_token` (String) Long-term access Token for making authenticated requests.
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
+- `client_id` (String) The OAuth client's ID. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
+- `client_secret` (String) The OAuth client secret. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
+- `refresh_token` (String) The refresh token used to obtain new access tokens. Note that Zendesk uses rotating refresh tokens - each refresh will return a new refresh token and invalidate the previous one.
+
+Optional:
+
+- `access_token` (String) Access Token for making authenticated requests.
+- `additional_properties` (String) Parsed as JSON.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
+
+
+<a id="nestedatt--configuration--credentials--o_auth20_legacy"></a>
+### Nested Schema for `configuration.credentials.o_auth20_legacy`
+
+Required:
+
+- `access_token` (String) The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `client_id` (String) The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
+- `client_secret` (String) The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 
 
 

@@ -1,18 +1,13 @@
 resource "airbyte_destination_oracle" "my_destination_oracle" {
   configuration = {
     additional_properties = "{ \"see\": \"documentation\" }"
-    encryption = {
-      tls_encrypted_verify_certificate = {
-        ssl_certificate = "...my_ssl_certificate..."
-      }
-    }
-    host            = "...my_host..."
-    jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 1521
-    raw_data_schema = "...my_raw_data_schema..."
-    schema          = "airbyte"
-    sid             = "...my_sid..."
+    host                  = "...my_host..."
+    jdbc_url_params       = "...my_jdbc_url_params..."
+    password              = "...my_password..."
+    port                  = 1521
+    raw_data_schema       = "...my_raw_data_schema..."
+    schema                = "airbyte"
+    sid                   = "...my_sid..."
     tunnel_method = {
       ssh_key_authentication = {
         ssh_key     = "...my_ssh_key..."

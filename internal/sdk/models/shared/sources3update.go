@@ -1675,7 +1675,7 @@ type SourceS3Update struct {
 	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
 	Dataset        *string                       `json:"dataset,omitempty"`
 	DeliveryMethod *SourceS3UpdateDeliveryMethod `json:"delivery_method,omitempty"`
-	// Endpoint to an S3 compatible service. Leave empty to use AWS.
+	// Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required.
 	Endpoint *string `default:"" json:"endpoint"`
 	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate
 	Format *SourceS3UpdateFileFormat `json:"format,omitempty"`

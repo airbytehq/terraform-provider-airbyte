@@ -94,7 +94,7 @@ Optional:
 - `password` (String) Password associated with the username.
 - `raw_data_schema` (String) Airbyte will use this schema for various internal tables. In legacy raw tables mode, the raw tables will be stored in this schema. Defaults to "airbyte_internal".
 - `schema` (String) The default schema tables are written. If not specified otherwise, the "public" schema will be used. Default: "public"
-- `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the connection modes.
+- `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the connection modes. Default: true
 - `ssl_mode` (Attributes) SSL connection modes.
   <b>disable</b> - Disables encryption of communication between Airbyte and destination database.
   <b>allow</b> - Enables encryption only when required by the destination database.

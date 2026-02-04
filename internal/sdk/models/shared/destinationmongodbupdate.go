@@ -304,8 +304,6 @@ type DestinationMongodbUpdateStandaloneMongoDbInstance struct {
 	Instance *DestinationMongodbUpdateInstance `default:"standalone" json:"instance"`
 	// The Port of a Mongo database to be replicated.
 	Port *int64 `default:"27017" json:"port"`
-	// Indicates whether TLS encryption protocol will be used to connect to MongoDB. It is recommended to use TLS connection if possible. For more information see <a href="https://docs.airbyte.com/integrations/sources/mongodb-v2">documentation</a>.
-	TLS *bool `default:"false" json:"tls"`
 }
 
 func (d DestinationMongodbUpdateStandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
@@ -338,13 +336,6 @@ func (d *DestinationMongodbUpdateStandaloneMongoDbInstance) GetPort() *int64 {
 		return nil
 	}
 	return d.Port
-}
-
-func (d *DestinationMongodbUpdateStandaloneMongoDbInstance) GetTLS() *bool {
-	if d == nil {
-		return nil
-	}
-	return d.TLS
 }
 
 type DestinationMongodbUpdateMongoDbInstanceTypeType string

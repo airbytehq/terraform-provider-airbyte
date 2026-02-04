@@ -239,44 +239,44 @@ func (e *SourceDb2EnterpriseEncryptionMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
-type TLSEncryptedVerifyCertificate struct {
+// SourceDb2EnterpriseTLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
+type SourceDb2EnterpriseTLSEncryptedVerifyCertificate struct {
 	EncryptionMethod *SourceDb2EnterpriseEncryptionMethod `default:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate       string `json:"ssl_certificate"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
-func (t TLSEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(t, "", false)
+func (s SourceDb2EnterpriseTLSEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (t *TLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+func (s *SourceDb2EnterpriseTLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (t *TLSEncryptedVerifyCertificate) GetEncryptionMethod() *SourceDb2EnterpriseEncryptionMethod {
-	if t == nil {
+func (s *SourceDb2EnterpriseTLSEncryptedVerifyCertificate) GetEncryptionMethod() *SourceDb2EnterpriseEncryptionMethod {
+	if s == nil {
 		return nil
 	}
-	return t.EncryptionMethod
+	return s.EncryptionMethod
 }
 
-func (t *TLSEncryptedVerifyCertificate) GetSslCertificate() string {
-	if t == nil {
+func (s *SourceDb2EnterpriseTLSEncryptedVerifyCertificate) GetSslCertificate() string {
+	if s == nil {
 		return ""
 	}
-	return t.SslCertificate
+	return s.SslCertificate
 }
 
-func (t *TLSEncryptedVerifyCertificate) GetAdditionalProperties() any {
-	if t == nil {
+func (s *SourceDb2EnterpriseTLSEncryptedVerifyCertificate) GetAdditionalProperties() any {
+	if s == nil {
 		return nil
 	}
-	return t.AdditionalProperties
+	return s.AdditionalProperties
 }
 
 type EncryptionMethod string
@@ -302,67 +302,67 @@ func (e *EncryptionMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Unencrypted - Data transfer will not be encrypted.
-type Unencrypted struct {
+// SourceDb2EnterpriseUnencrypted - Data transfer will not be encrypted.
+type SourceDb2EnterpriseUnencrypted struct {
 	EncryptionMethod     *EncryptionMethod `default:"unencrypted" json:"encryption_method"`
 	AdditionalProperties any               `additionalProperties:"true" json:"-"`
 }
 
-func (u Unencrypted) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(u, "", false)
+func (s SourceDb2EnterpriseUnencrypted) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (u *Unencrypted) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
+func (s *SourceDb2EnterpriseUnencrypted) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (u *Unencrypted) GetEncryptionMethod() *EncryptionMethod {
-	if u == nil {
+func (s *SourceDb2EnterpriseUnencrypted) GetEncryptionMethod() *EncryptionMethod {
+	if s == nil {
 		return nil
 	}
-	return u.EncryptionMethod
+	return s.EncryptionMethod
 }
 
-func (u *Unencrypted) GetAdditionalProperties() any {
-	if u == nil {
+func (s *SourceDb2EnterpriseUnencrypted) GetAdditionalProperties() any {
+	if s == nil {
 		return nil
 	}
-	return u.AdditionalProperties
+	return s.AdditionalProperties
 }
 
 type SourceDb2EnterpriseEncryptionType string
 
 const (
-	SourceDb2EnterpriseEncryptionTypeUnencrypted                   SourceDb2EnterpriseEncryptionType = "Unencrypted"
-	SourceDb2EnterpriseEncryptionTypeTLSEncryptedVerifyCertificate SourceDb2EnterpriseEncryptionType = "TLS Encrypted (verify certificate)"
+	SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseUnencrypted                   SourceDb2EnterpriseEncryptionType = "source-db2-enterprise_Unencrypted"
+	SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseTLSEncryptedVerifyCertificate SourceDb2EnterpriseEncryptionType = "source-db2-enterprise_TLS Encrypted (verify certificate)"
 )
 
 // SourceDb2EnterpriseEncryption - The encryption method with is used when communicating with the database.
 type SourceDb2EnterpriseEncryption struct {
-	Unencrypted                   *Unencrypted                   `queryParam:"inline" union:"member"`
-	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate `queryParam:"inline" union:"member"`
+	SourceDb2EnterpriseUnencrypted                   *SourceDb2EnterpriseUnencrypted                   `queryParam:"inline" union:"member"`
+	SourceDb2EnterpriseTLSEncryptedVerifyCertificate *SourceDb2EnterpriseTLSEncryptedVerifyCertificate `queryParam:"inline" union:"member"`
 
 	Type SourceDb2EnterpriseEncryptionType
 }
 
-func CreateSourceDb2EnterpriseEncryptionUnencrypted(unencrypted Unencrypted) SourceDb2EnterpriseEncryption {
-	typ := SourceDb2EnterpriseEncryptionTypeUnencrypted
+func CreateSourceDb2EnterpriseEncryptionSourceDb2EnterpriseUnencrypted(sourceDb2EnterpriseUnencrypted SourceDb2EnterpriseUnencrypted) SourceDb2EnterpriseEncryption {
+	typ := SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseUnencrypted
 
 	return SourceDb2EnterpriseEncryption{
-		Unencrypted: &unencrypted,
-		Type:        typ,
+		SourceDb2EnterpriseUnencrypted: &sourceDb2EnterpriseUnencrypted,
+		Type:                           typ,
 	}
 }
 
-func CreateSourceDb2EnterpriseEncryptionTLSEncryptedVerifyCertificate(tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate) SourceDb2EnterpriseEncryption {
-	typ := SourceDb2EnterpriseEncryptionTypeTLSEncryptedVerifyCertificate
+func CreateSourceDb2EnterpriseEncryptionSourceDb2EnterpriseTLSEncryptedVerifyCertificate(sourceDb2EnterpriseTLSEncryptedVerifyCertificate SourceDb2EnterpriseTLSEncryptedVerifyCertificate) SourceDb2EnterpriseEncryption {
+	typ := SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseTLSEncryptedVerifyCertificate
 
 	return SourceDb2EnterpriseEncryption{
-		TLSEncryptedVerifyCertificate: &tlsEncryptedVerifyCertificate,
-		Type:                          typ,
+		SourceDb2EnterpriseTLSEncryptedVerifyCertificate: &sourceDb2EnterpriseTLSEncryptedVerifyCertificate,
+		Type: typ,
 	}
 }
 
@@ -371,19 +371,19 @@ func (u *SourceDb2EnterpriseEncryption) UnmarshalJSON(data []byte) error {
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var unencrypted Unencrypted = Unencrypted{}
-	if err := utils.UnmarshalJSON(data, &unencrypted, "", true, nil); err == nil {
+	var sourceDb2EnterpriseUnencrypted SourceDb2EnterpriseUnencrypted = SourceDb2EnterpriseUnencrypted{}
+	if err := utils.UnmarshalJSON(data, &sourceDb2EnterpriseUnencrypted, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceDb2EnterpriseEncryptionTypeUnencrypted,
-			Value: &unencrypted,
+			Type:  SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseUnencrypted,
+			Value: &sourceDb2EnterpriseUnencrypted,
 		})
 	}
 
-	var tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate = TLSEncryptedVerifyCertificate{}
-	if err := utils.UnmarshalJSON(data, &tlsEncryptedVerifyCertificate, "", true, nil); err == nil {
+	var sourceDb2EnterpriseTLSEncryptedVerifyCertificate SourceDb2EnterpriseTLSEncryptedVerifyCertificate = SourceDb2EnterpriseTLSEncryptedVerifyCertificate{}
+	if err := utils.UnmarshalJSON(data, &sourceDb2EnterpriseTLSEncryptedVerifyCertificate, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceDb2EnterpriseEncryptionTypeTLSEncryptedVerifyCertificate,
-			Value: &tlsEncryptedVerifyCertificate,
+			Type:  SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseTLSEncryptedVerifyCertificate,
+			Value: &sourceDb2EnterpriseTLSEncryptedVerifyCertificate,
 		})
 	}
 
@@ -400,11 +400,11 @@ func (u *SourceDb2EnterpriseEncryption) UnmarshalJSON(data []byte) error {
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(SourceDb2EnterpriseEncryptionType)
 	switch best.Type {
-	case SourceDb2EnterpriseEncryptionTypeUnencrypted:
-		u.Unencrypted = best.Value.(*Unencrypted)
+	case SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseUnencrypted:
+		u.SourceDb2EnterpriseUnencrypted = best.Value.(*SourceDb2EnterpriseUnencrypted)
 		return nil
-	case SourceDb2EnterpriseEncryptionTypeTLSEncryptedVerifyCertificate:
-		u.TLSEncryptedVerifyCertificate = best.Value.(*TLSEncryptedVerifyCertificate)
+	case SourceDb2EnterpriseEncryptionTypeSourceDb2EnterpriseTLSEncryptedVerifyCertificate:
+		u.SourceDb2EnterpriseTLSEncryptedVerifyCertificate = best.Value.(*SourceDb2EnterpriseTLSEncryptedVerifyCertificate)
 		return nil
 	}
 
@@ -412,12 +412,12 @@ func (u *SourceDb2EnterpriseEncryption) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceDb2EnterpriseEncryption) MarshalJSON() ([]byte, error) {
-	if u.Unencrypted != nil {
-		return utils.MarshalJSON(u.Unencrypted, "", true)
+	if u.SourceDb2EnterpriseUnencrypted != nil {
+		return utils.MarshalJSON(u.SourceDb2EnterpriseUnencrypted, "", true)
 	}
 
-	if u.TLSEncryptedVerifyCertificate != nil {
-		return utils.MarshalJSON(u.TLSEncryptedVerifyCertificate, "", true)
+	if u.SourceDb2EnterpriseTLSEncryptedVerifyCertificate != nil {
+		return utils.MarshalJSON(u.SourceDb2EnterpriseTLSEncryptedVerifyCertificate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceDb2EnterpriseEncryption: all fields are null")

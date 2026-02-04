@@ -25,7 +25,6 @@ func (r *DestinationMysqlResourceModel) RefreshFromSharedDestinationResponse(ctx
 		r.Configuration.Password = configurationPriorData.Password
 		r.Configuration.Port = configurationPriorData.Port
 		r.Configuration.RawDataSchema = configurationPriorData.RawDataSchema
-		r.Configuration.Ssl = configurationPriorData.Ssl
 		r.Configuration.TunnelMethod = configurationPriorData.TunnelMethod
 		r.Configuration.Username = configurationPriorData.Username
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
@@ -168,12 +167,6 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest(ct
 	} else {
 		rawDataSchema = nil
 	}
-	ssl := new(bool)
-	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
-		*ssl = r.Configuration.Ssl.ValueBool()
-	} else {
-		ssl = nil
-	}
 	var tunnelMethod *shared.DestinationMysqlSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationMysqlNoTunnel *shared.DestinationMysqlNoTunnel
@@ -259,7 +252,6 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest(ct
 		Password:             password,
 		Port:                 port,
 		RawDataSchema:        rawDataSchema,
-		Ssl:                  ssl,
 		TunnelMethod:         tunnelMethod,
 		Username:             username,
 		AdditionalProperties: additionalProperties,
@@ -324,12 +316,6 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest(ctx c
 		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
 	} else {
 		rawDataSchema = nil
-	}
-	ssl := new(bool)
-	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
-		*ssl = r.Configuration.Ssl.ValueBool()
-	} else {
-		ssl = nil
 	}
 	var tunnelMethod *shared.DestinationMysqlUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -437,7 +423,6 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest(ctx c
 		Password:             password,
 		Port:                 port,
 		RawDataSchema:        rawDataSchema,
-		Ssl:                  ssl,
 		TunnelMethod:         tunnelMethod,
 		Username:             username,
 		AdditionalProperties: additionalProperties,
