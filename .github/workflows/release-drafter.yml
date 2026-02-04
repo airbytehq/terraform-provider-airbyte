@@ -77,6 +77,12 @@ jobs:
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
           GORELEASER_CURRENT_TAG: v${{ steps.version-calc.outputs.resolved-version }}
 
+      # Step 4b: Copy manifest file to dist/ (snapshot mode doesn't process release.extra_files)
+      - name: Copy manifest to dist
+        run: |
+          VERSION="${{ steps.version-calc.outputs.resolved-version }}"
+          cp terraform-registry-manifest.json "dist/terraform-provider-airbyte_${VERSION}_manifest.json"
+
       # Step 5: Create/update draft release with assets attached
       - name: Create draft release with assets
         uses: aaronsteers/semantic-pr-release-drafter@v1.0.0
