@@ -621,9 +621,9 @@ def main() -> None:
                 source_id = source.get("sourceDefinitionId")
                 if source_id not in cloud_source_ids:
                     continue
-                # Skip e2e-test-cloud connector
+                # Skip e2e-test connectors (internal testing only)
                 docker_repo = source.get("dockerRepository", "")
-                if "e2e-test-cloud" in docker_repo:
+                if "e2e-test" in docker_repo:
                     continue
                 sources.append(source)
                 seen_source_ids.add(source_id)
@@ -632,9 +632,9 @@ def main() -> None:
             # First, add all Cloud connectors
             for source in cloud_registry.get("sources", []):
                 source_id = source.get("sourceDefinitionId")
-                # Skip e2e-test-cloud connector
+                # Skip e2e-test connectors (internal testing only)
                 docker_repo = source.get("dockerRepository", "")
-                if "e2e-test-cloud" in docker_repo:
+                if "e2e-test" in docker_repo:
                     continue
                 sources.append(source)
                 seen_source_ids.add(source_id)
@@ -643,9 +643,9 @@ def main() -> None:
                 source_id = source.get("sourceDefinitionId")
                 if source_id in seen_source_ids:
                     continue  # Already added from Cloud
-                # Skip e2e-test-cloud connector
+                # Skip e2e-test connectors (both e2e-test and e2e-test-cloud)
                 docker_repo = source.get("dockerRepository", "")
-                if "e2e-test-cloud" in docker_repo:
+                if "e2e-test" in docker_repo:
                     continue
                 sources.append(source)
                 seen_source_ids.add(source_id)
