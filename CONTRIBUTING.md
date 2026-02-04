@@ -9,7 +9,7 @@
 
 ### Regenerating the Provider
 
-Use the GitHub Actions workflow: [Actions > Generate](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/speakeasy_sdk_generation.yml) > Run workflow
+Use the GitHub Actions workflow: [Actions > Generate](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/generate-command.yml) > Run workflow
 
 ### Release Process
 
@@ -47,7 +47,12 @@ terraform plan
 
 ### Code Files (Not Generated)
 
-TD-TODO: Devin, please list key code files here for maintainers - e.g. the python generation script.
+| File | Purpose |
+|------|---------|
+| `scripts/generate_terraform_spec.py` | Generates the Terraform-specific OpenAPI spec from upstream sources |
+| `overlays/terraform_speakeasy.yaml` | Speakeasy overlay for Terraform-specific customizations |
+| `.github/workflows/release-drafter.yml` | Creates draft releases with pre-built assets |
+| `.github/workflows/generate-command.yml` | Triggers provider regeneration via Speakeasy |
 
 ## Releasing
 
@@ -86,7 +91,7 @@ You may publish a prerelease by following the steps below:
 
 In general, no upstream action should be needed to capture updates to upstream OpenAPI spec changes. A legacy `api_terraform.yaml` file is no longer used, and instead this provider performs its own spec transformations (as needed) directly from the upstream OpenAPI spec document.
 
-The OpenAPI spec is maintained in the [airbyte-platform-internal](https://github.com/airbytehq/airbyte-platform-internal) repository. TK-TODO: Devin, please give a deep link here to the `api_spec.yaml` file on that repo's master branch.
+The OpenAPI spec is maintained in the [airbyte-platform-internal](https://github.com/airbytehq/airbyte-platform-internal) repository at [`oss/airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml).
 
 ### Updating the Connector Models
 
