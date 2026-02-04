@@ -27,34 +27,34 @@ resource "airbyte_source" "faker" {
   name          = "source-faker"
   workspace_id  = airbyte_workspace.example.workspace_id
   definition_id = "dfd88b22-b603-4c3d-aad7-3701784586b1"
-  configuration = jsonencode({
+  configuration = {
     sourceType = "faker"
     count      = 1000
     seed       = 42
-  })
+  }
 }
 
 resource "airbyte_source" "datagen" {
   name          = "source-datagen"
   workspace_id  = airbyte_workspace.example.workspace_id
   definition_id = "f14d5125-dc0d-4f6c-abe5-acde821a2203"
-  configuration = jsonencode({
+  configuration = {
     sourceType = "datagen"
     type       = "INCREMENTAL"
     max_record = 1000
-  })
+  }
 }
 
 resource "airbyte_destination" "dev_null" {
   name          = "destination-dev-null"
   workspace_id  = airbyte_workspace.example.workspace_id
   definition_id = "a7bcc9d8-13b3-4e49-b80d-d020b90045e3"
-  configuration = jsonencode({
+  configuration = {
     destinationType = "dev-null"
     test_destination = {
       test_destination_type = "SILENT"
     }
-  })
+  }
 }
 
 resource "airbyte_connection" "faker_to_dev_null" {
