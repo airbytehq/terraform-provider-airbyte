@@ -18,6 +18,7 @@ func (r *SourceYotpoResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceYotpo{}
 		r.Configuration.AccessToken = configurationPriorData.AccessToken
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.AppKey = configurationPriorData.AppKey
@@ -47,6 +48,7 @@ func (r *SourceYotpoResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

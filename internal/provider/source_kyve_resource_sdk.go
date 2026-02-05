@@ -16,6 +16,7 @@ func (r *SourceKyveResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceKyve{}
 		r.Configuration.MaxPages = configurationPriorData.MaxPages
 		r.Configuration.PageSize = configurationPriorData.PageSize
 		r.Configuration.PoolIds = configurationPriorData.PoolIds
@@ -45,6 +46,7 @@ func (r *SourceKyveResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

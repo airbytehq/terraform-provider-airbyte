@@ -33,6 +33,8 @@ type PutSourceDelightedResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	SourceResponse *shared.SourceResponse
 }
 
 func (p *PutSourceDelightedResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutSourceDelightedResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutSourceDelightedResponse) GetSourceResponse() *shared.SourceResponse {
+	if p == nil {
+		return nil
+	}
+	return p.SourceResponse
 }

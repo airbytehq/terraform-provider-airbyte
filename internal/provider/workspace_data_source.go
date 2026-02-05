@@ -29,10 +29,10 @@ type WorkspaceDataSource struct {
 
 // WorkspaceDataSourceModel describes the data model.
 type WorkspaceDataSourceModel struct {
-	DataResidency types.String                `tfsdk:"data_residency"`
-	Name          types.String                `tfsdk:"name"`
-	Notifications tfTypes.NotificationsConfig `tfsdk:"notifications"`
-	WorkspaceID   types.String                `tfsdk:"workspace_id"`
+	DataResidency types.String                 `tfsdk:"data_residency"`
+	Name          types.String                 `tfsdk:"name"`
+	Notifications *tfTypes.NotificationsConfig `tfsdk:"notifications"`
+	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.

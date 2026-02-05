@@ -33,6 +33,8 @@ type PutSourceLinkedinAdsResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	SourceResponse *shared.SourceResponse
 }
 
 func (p *PutSourceLinkedinAdsResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutSourceLinkedinAdsResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutSourceLinkedinAdsResponse) GetSourceResponse() *shared.SourceResponse {
+	if p == nil {
+		return nil
+	}
+	return p.SourceResponse
 }

@@ -52,7 +52,7 @@ resource "airbyte_destination_gcs_data_lake" "my_destination_gcsdatalake" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "8c8a2d3e-1b4f-4a9c-9e7d-6f5a4b3c2d1e"; Requires replacement if changed.
 
 ### Read-Only
 

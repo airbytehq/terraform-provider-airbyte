@@ -7,6 +7,6 @@ import (
 )
 
 type JobTypeResourceLimit struct {
-	JobType              types.String         `tfsdk:"job_type"`
-	ResourceRequirements ResourceRequirements `tfsdk:"resource_requirements"`
+	JobType              types.String          `tfsdk:"job_type"`
+	ResourceRequirements *ResourceRequirements `tfsdk:"resource_requirements"`
 }

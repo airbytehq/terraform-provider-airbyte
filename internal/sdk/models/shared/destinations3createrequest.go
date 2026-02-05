@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationS3CreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string       `json:"definitionId,omitempty"`
+	DefinitionID  *string       `default:"4816b78f-1489-44c1-9060-4b19d5fa9362" json:"definitionId"`
 	WorkspaceID   string        `json:"workspaceId"`
 	Configuration DestinationS3 `json:"configuration"`
+}
+
+func (d DestinationS3CreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3CreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationS3CreateRequest) GetName() string {

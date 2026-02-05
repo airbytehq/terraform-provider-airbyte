@@ -37,7 +37,7 @@ resource "airbyte_destination_motherduck" "my_destination_motherduck" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "042ee9b5-eb98-4e99-a4e5-3f0d573bee66"; Requires replacement if changed.
 
 ### Read-Only
 

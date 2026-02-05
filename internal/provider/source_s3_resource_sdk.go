@@ -17,6 +17,7 @@ func (r *SourceS3ResourceModel) RefreshFromSharedSourceResponse(ctx context.Cont
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceS3{}
 		r.Configuration.AwsAccessKeyID = configurationPriorData.AwsAccessKeyID
 		r.Configuration.AwsSecretAccessKey = configurationPriorData.AwsSecretAccessKey
 		r.Configuration.Bucket = configurationPriorData.Bucket
@@ -55,6 +56,7 @@ func (r *SourceS3ResourceModel) RefreshFromSharedSourceResponse(ctx context.Cont
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

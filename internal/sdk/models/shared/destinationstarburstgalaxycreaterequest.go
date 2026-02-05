@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationStarburstGalaxyCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string                    `json:"definitionId,omitempty"`
+	DefinitionID  *string                    `default:"4528e960-6f7b-4412-8555-7e0097e1da17" json:"definitionId"`
 	WorkspaceID   string                     `json:"workspaceId"`
 	Configuration DestinationStarburstGalaxy `json:"configuration"`
+}
+
+func (d DestinationStarburstGalaxyCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationStarburstGalaxyCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationStarburstGalaxyCreateRequest) GetName() string {

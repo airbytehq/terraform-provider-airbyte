@@ -33,6 +33,8 @@ type PutSourcePabblySubscriptionsBillingResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	SourceResponse *shared.SourceResponse
 }
 
 func (p *PutSourcePabblySubscriptionsBillingResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutSourcePabblySubscriptionsBillingResponse) GetRawResponse() *http.Res
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutSourcePabblySubscriptionsBillingResponse) GetSourceResponse() *shared.SourceResponse {
+	if p == nil {
+		return nil
+	}
+	return p.SourceResponse
 }

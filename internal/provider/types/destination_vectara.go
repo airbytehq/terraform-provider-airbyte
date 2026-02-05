@@ -7,11 +7,11 @@ import (
 )
 
 type DestinationVectara struct {
-	CorpusName     types.String       `tfsdk:"corpus_name"`
-	CustomerID     types.String       `tfsdk:"customer_id"`
-	MetadataFields []types.String     `tfsdk:"metadata_fields"`
-	Oauth2         OAuth20Credentials `tfsdk:"oauth2"`
-	Parallelize    types.Bool         `tfsdk:"parallelize"`
-	TextFields     []types.String     `tfsdk:"text_fields"`
-	TitleField     types.String       `tfsdk:"title_field"`
+	CorpusName     types.String        `tfsdk:"corpus_name"`
+	CustomerID     types.String        `tfsdk:"customer_id"`
+	MetadataFields []types.String      `tfsdk:"metadata_fields"`
+	Oauth2         *OAuth20Credentials `tfsdk:"oauth2"`
+	Parallelize    types.Bool          `tfsdk:"parallelize"`
+	TextFields     []types.String      `tfsdk:"text_fields"`
+	TitleField     types.String        `tfsdk:"title_field"`
 }

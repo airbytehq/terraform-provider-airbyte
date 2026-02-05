@@ -8,7 +8,7 @@ import (
 )
 
 type SourceSalesloft struct {
-	AdditionalProperties jsontypes.Normalized       `tfsdk:"additional_properties"`
-	Credentials          SourceSalesloftCredentials `tfsdk:"credentials"`
-	StartDate            types.String               `tfsdk:"start_date"`
+	AdditionalProperties jsontypes.Normalized        `tfsdk:"additional_properties"`
+	Credentials          *SourceSalesloftCredentials `tfsdk:"credentials"`
+	StartDate            types.String                `tfsdk:"start_date"`
 }

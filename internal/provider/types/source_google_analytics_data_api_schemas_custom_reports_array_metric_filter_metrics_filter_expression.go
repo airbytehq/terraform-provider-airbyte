@@ -7,6 +7,6 @@ import (
 )
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterExpression struct {
-	FieldName types.String                                                                          `tfsdk:"field_name"`
-	Filter    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter `tfsdk:"filter"`
+	FieldName types.String                                                                           `tfsdk:"field_name"`
+	Filter    *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter `tfsdk:"filter"`
 }

@@ -18,6 +18,7 @@ func (r *SourceTrustpilotResourceModel) RefreshFromSharedSourceResponse(ctx cont
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceTrustpilot{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.BusinessUnits = configurationPriorData.BusinessUnits
 		r.Configuration.Credentials = configurationPriorData.Credentials
@@ -46,6 +47,7 @@ func (r *SourceTrustpilotResourceModel) RefreshFromSharedSourceResponse(ctx cont
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

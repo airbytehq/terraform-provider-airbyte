@@ -8,13 +8,13 @@ import (
 )
 
 type DestinationS3DataLake struct {
-	AccessKeyID          types.String                     `tfsdk:"access_key_id"`
-	AdditionalProperties jsontypes.Normalized             `tfsdk:"additional_properties"`
-	CatalogType          DestinationS3DataLakeCatalogType `tfsdk:"catalog_type"`
-	MainBranchName       types.String                     `tfsdk:"main_branch_name"`
-	S3BucketName         types.String                     `tfsdk:"s3_bucket_name"`
-	S3BucketRegion       types.String                     `tfsdk:"s3_bucket_region"`
-	S3Endpoint           types.String                     `tfsdk:"s3_endpoint"`
-	SecretAccessKey      types.String                     `tfsdk:"secret_access_key"`
-	WarehouseLocation    types.String                     `tfsdk:"warehouse_location"`
+	AccessKeyID          types.String                      `tfsdk:"access_key_id"`
+	AdditionalProperties jsontypes.Normalized              `tfsdk:"additional_properties"`
+	CatalogType          *DestinationS3DataLakeCatalogType `tfsdk:"catalog_type"`
+	MainBranchName       types.String                      `tfsdk:"main_branch_name"`
+	S3BucketName         types.String                      `tfsdk:"s3_bucket_name"`
+	S3BucketRegion       types.String                      `tfsdk:"s3_bucket_region"`
+	S3Endpoint           types.String                      `tfsdk:"s3_endpoint"`
+	SecretAccessKey      types.String                      `tfsdk:"secret_access_key"`
+	WarehouseLocation    types.String                      `tfsdk:"warehouse_location"`
 }

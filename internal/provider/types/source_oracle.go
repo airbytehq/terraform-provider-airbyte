@@ -8,7 +8,7 @@ import (
 
 type SourceOracle struct {
 	ConnectionData *ConnectBy                   `tfsdk:"connection_data"`
-	Encryption     SourceOracleEncryption       `tfsdk:"encryption"`
+	Encryption     *SourceOracleEncryption      `tfsdk:"encryption"`
 	Host           types.String                 `tfsdk:"host"`
 	JdbcURLParams  types.String                 `tfsdk:"jdbc_url_params"`
 	Password       types.String                 `tfsdk:"password"`

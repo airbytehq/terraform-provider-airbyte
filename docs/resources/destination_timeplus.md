@@ -35,7 +35,7 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "f70a8ece-351e-4790-b37b-cb790bcd6d54"; Requires replacement if changed.
 
 ### Read-Only
 

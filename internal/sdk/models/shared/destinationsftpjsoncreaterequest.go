@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationSftpJSONCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string             `json:"definitionId,omitempty"`
+	DefinitionID  *string             `default:"e9810f61-4bab-46d2-bb22-edfc902e0644" json:"definitionId"`
 	WorkspaceID   string              `json:"workspaceId"`
 	Configuration DestinationSftpJSON `json:"configuration"`
+}
+
+func (d DestinationSftpJSONCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSftpJSONCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationSftpJSONCreateRequest) GetName() string {

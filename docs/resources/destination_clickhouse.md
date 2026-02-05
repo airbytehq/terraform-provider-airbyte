@@ -48,7 +48,7 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "ce0d828e-1dc4-496c-b122-2da42e637e48"; Requires replacement if changed.
 
 ### Read-Only
 

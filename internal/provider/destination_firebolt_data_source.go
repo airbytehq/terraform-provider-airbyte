@@ -29,7 +29,7 @@ type DestinationFireboltDataSource struct {
 
 // DestinationFireboltDataSourceModel describes the data model.
 type DestinationFireboltDataSourceModel struct {
-	Configuration      tfTypes.DestinationConfiguration    `tfsdk:"configuration"`
+	Configuration      *tfTypes.DestinationConfiguration   `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	DestinationID      types.String                        `tfsdk:"destination_id"`

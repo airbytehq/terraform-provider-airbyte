@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationOracleCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string           `json:"definitionId,omitempty"`
+	DefinitionID  *string           `default:"3986776d-2319-4de9-8af8-db14c0996e72" json:"definitionId"`
 	WorkspaceID   string            `json:"workspaceId"`
 	Configuration DestinationOracle `json:"configuration"`
+}
+
+func (d DestinationOracleCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationOracleCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationOracleCreateRequest) GetName() string {

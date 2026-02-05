@@ -17,6 +17,7 @@ func (r *SourceKlarnaResourceModel) RefreshFromSharedSourceResponse(ctx context.
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceKlarna{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.Password = configurationPriorData.Password
 		r.Configuration.Playground = configurationPriorData.Playground
@@ -46,6 +47,7 @@ func (r *SourceKlarnaResourceModel) RefreshFromSharedSourceResponse(ctx context.
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

@@ -38,7 +38,7 @@ resource "airbyte_destination_surrealdb" "my_destination_surrealdb" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "de8c3498-80d9-468b-88a1-d4ebb729c3f6"; Requires replacement if changed.
 
 ### Read-Only
 

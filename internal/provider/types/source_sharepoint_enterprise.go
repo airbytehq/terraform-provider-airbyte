@@ -7,7 +7,7 @@ import (
 )
 
 type SourceSharepointEnterprise struct {
-	Credentials       SourceSharepointEnterpriseAuthentication          `tfsdk:"credentials"`
+	Credentials       *SourceSharepointEnterpriseAuthentication         `tfsdk:"credentials"`
 	DeliveryMethod    *SourceSharepointEnterpriseDeliveryMethod         `tfsdk:"delivery_method"`
 	FileContainsQuery []types.String                                    `tfsdk:"file_contains_query"`
 	FolderPath        types.String                                      `tfsdk:"folder_path"`

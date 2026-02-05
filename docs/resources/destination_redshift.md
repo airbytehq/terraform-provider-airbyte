@@ -63,7 +63,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "f7a7d195-377f-cf5b-70a5-be6b819019dc"; Requires replacement if changed.
 
 ### Read-Only
 

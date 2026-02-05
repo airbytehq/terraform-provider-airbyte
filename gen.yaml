@@ -28,10 +28,12 @@ generation:
     skipResponseBodyAssertions: false
   telemetryEnabled: true
 terraform:
-  version: 1.0.0-rc4
+  version: 1.0.0
+  additionalActions: []
   additionalDataSources: []
   additionalDependencies: {}
   additionalEphemeralResources: []
+  additionalFunctions: []
   additionalListResources: []
   additionalProviderAttributes:
     httpHeaders: ""
@@ -61,4 +63,5 @@ terraform:
   outputModelSuffix: output
   packageName: airbyte
   respectRequiredFields: false
+  respectTitlesForPrimitiveUnionMembers: false
   unionStrategy: populated-fields

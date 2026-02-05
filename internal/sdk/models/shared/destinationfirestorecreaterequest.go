@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationFirestoreCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string              `json:"definitionId,omitempty"`
+	DefinitionID  *string              `default:"27dc7500-6d1b-40b1-8b07-e2f2aea3c9f4" json:"definitionId"`
 	WorkspaceID   string               `json:"workspaceId"`
 	Configuration DestinationFirestore `json:"configuration"`
+}
+
+func (d DestinationFirestoreCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationFirestoreCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationFirestoreCreateRequest) GetName() string {

@@ -49,7 +49,7 @@ resource "airbyte_destination_hubspot" "my_destination_hubspot" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "c8ccd253-8525-4bbd-801c-f0b84ac71f61"; Requires replacement if changed.
 
 ### Read-Only
 

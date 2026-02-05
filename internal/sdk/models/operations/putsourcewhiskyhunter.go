@@ -33,6 +33,8 @@ type PutSourceWhiskyHunterResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	SourceResponse *shared.SourceResponse
 }
 
 func (p *PutSourceWhiskyHunterResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutSourceWhiskyHunterResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutSourceWhiskyHunterResponse) GetSourceResponse() *shared.SourceResponse {
+	if p == nil {
+		return nil
+	}
+	return p.SourceResponse
 }

@@ -51,7 +51,7 @@ resource "airbyte_destination_starburst_galaxy" "my_destination_starburstgalaxy"
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "4528e960-6f7b-4412-8555-7e0097e1da17"; Requires replacement if changed.
 
 ### Read-Only
 

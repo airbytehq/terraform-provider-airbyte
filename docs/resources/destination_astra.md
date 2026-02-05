@@ -66,7 +66,7 @@ resource "airbyte_destination_astra" "my_destination_astra" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "042ce96f-1158-4662-9543-e2ff015be97a"; Requires replacement if changed.
 
 ### Read-Only
 

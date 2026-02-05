@@ -7,13 +7,13 @@ import (
 )
 
 type DestinationDatabricks struct {
-	AcceptTerms       types.Bool                          `tfsdk:"accept_terms"`
-	Authentication    DestinationDatabricksAuthentication `tfsdk:"authentication"`
-	Database          types.String                        `tfsdk:"database"`
-	Hostname          types.String                        `tfsdk:"hostname"`
-	HTTPPath          types.String                        `tfsdk:"http_path"`
-	Port              types.String                        `tfsdk:"port"`
-	PurgeStagingData  types.Bool                          `tfsdk:"purge_staging_data"`
-	RawSchemaOverride types.String                        `tfsdk:"raw_schema_override"`
-	Schema            types.String                        `tfsdk:"schema"`
+	AcceptTerms       types.Bool                           `tfsdk:"accept_terms"`
+	Authentication    *DestinationDatabricksAuthentication `tfsdk:"authentication"`
+	Database          types.String                         `tfsdk:"database"`
+	Hostname          types.String                         `tfsdk:"hostname"`
+	HTTPPath          types.String                         `tfsdk:"http_path"`
+	Port              types.String                         `tfsdk:"port"`
+	PurgeStagingData  types.Bool                           `tfsdk:"purge_staging_data"`
+	RawSchemaOverride types.String                         `tfsdk:"raw_schema_override"`
+	Schema            types.String                         `tfsdk:"schema"`
 }

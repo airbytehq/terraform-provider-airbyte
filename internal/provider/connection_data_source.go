@@ -30,21 +30,21 @@ type ConnectionDataSource struct {
 
 // ConnectionDataSourceModel describes the data model.
 type ConnectionDataSourceModel struct {
-	Configurations                   tfTypes.StreamConfigurations       `tfsdk:"configurations"`
-	ConnectionID                     types.String                       `tfsdk:"connection_id"`
-	CreatedAt                        types.Int64                        `tfsdk:"created_at"`
-	DestinationID                    types.String                       `tfsdk:"destination_id"`
-	Name                             types.String                       `tfsdk:"name"`
-	NamespaceDefinition              types.String                       `tfsdk:"namespace_definition"`
-	NamespaceFormat                  types.String                       `tfsdk:"namespace_format"`
-	NonBreakingSchemaUpdatesBehavior types.String                       `tfsdk:"non_breaking_schema_updates_behavior"`
-	Prefix                           types.String                       `tfsdk:"prefix"`
-	Schedule                         tfTypes.ConnectionScheduleResponse `tfsdk:"schedule"`
-	SourceID                         types.String                       `tfsdk:"source_id"`
-	Status                           types.String                       `tfsdk:"status"`
-	StatusReason                     types.String                       `tfsdk:"status_reason"`
-	Tags                             []tfTypes.Tag                      `tfsdk:"tags"`
-	WorkspaceID                      types.String                       `tfsdk:"workspace_id"`
+	Configurations                   *tfTypes.StreamConfigurations       `tfsdk:"configurations"`
+	ConnectionID                     types.String                        `tfsdk:"connection_id"`
+	CreatedAt                        types.Int64                         `tfsdk:"created_at"`
+	DestinationID                    types.String                        `tfsdk:"destination_id"`
+	Name                             types.String                        `tfsdk:"name"`
+	NamespaceDefinition              types.String                        `tfsdk:"namespace_definition"`
+	NamespaceFormat                  types.String                        `tfsdk:"namespace_format"`
+	NonBreakingSchemaUpdatesBehavior types.String                        `tfsdk:"non_breaking_schema_updates_behavior"`
+	Prefix                           types.String                        `tfsdk:"prefix"`
+	Schedule                         *tfTypes.ConnectionScheduleResponse `tfsdk:"schedule"`
+	SourceID                         types.String                        `tfsdk:"source_id"`
+	Status                           types.String                        `tfsdk:"status"`
+	StatusReason                     types.String                        `tfsdk:"status_reason"`
+	Tags                             []tfTypes.Tag                       `tfsdk:"tags"`
+	WorkspaceID                      types.String                        `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.

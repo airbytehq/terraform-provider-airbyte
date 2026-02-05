@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationWeaviate struct {
-	Embedding   DestinationWeaviateEmbedding             `tfsdk:"embedding"`
-	Indexing    DestinationWeaviateIndexing              `tfsdk:"indexing"`
-	OmitRawText types.Bool                               `tfsdk:"omit_raw_text"`
-	Processing  DestinationWeaviateProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *DestinationWeaviateEmbedding             `tfsdk:"embedding"`
+	Indexing    *DestinationWeaviateIndexing              `tfsdk:"indexing"`
+	OmitRawText types.Bool                                `tfsdk:"omit_raw_text"`
+	Processing  *DestinationWeaviateProcessingConfigModel `tfsdk:"processing"`
 }

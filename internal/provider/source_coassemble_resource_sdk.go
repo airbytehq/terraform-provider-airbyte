@@ -17,6 +17,7 @@ func (r *SourceCoassembleResourceModel) RefreshFromSharedSourceResponse(ctx cont
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceCoassemble{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.UserID = configurationPriorData.UserID
 		r.Configuration.UserToken = configurationPriorData.UserToken
@@ -44,6 +45,7 @@ func (r *SourceCoassembleResourceModel) RefreshFromSharedSourceResponse(ctx cont
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

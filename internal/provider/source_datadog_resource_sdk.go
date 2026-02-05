@@ -17,6 +17,7 @@ func (r *SourceDatadogResourceModel) RefreshFromSharedSourceResponse(ctx context
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceDatadog{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.APIKey = configurationPriorData.APIKey
 		r.Configuration.ApplicationKey = configurationPriorData.ApplicationKey
@@ -50,6 +51,7 @@ func (r *SourceDatadogResourceModel) RefreshFromSharedSourceResponse(ctx context
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

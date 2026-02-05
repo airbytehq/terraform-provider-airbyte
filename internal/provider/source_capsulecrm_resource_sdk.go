@@ -18,6 +18,7 @@ func (r *SourceCapsuleCrmResourceModel) RefreshFromSharedSourceResponse(ctx cont
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceCapsuleCrm{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.BearerToken = configurationPriorData.BearerToken
 		r.Configuration.Entity = configurationPriorData.Entity
@@ -46,6 +47,7 @@ func (r *SourceCapsuleCrmResourceModel) RefreshFromSharedSourceResponse(ctx cont
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

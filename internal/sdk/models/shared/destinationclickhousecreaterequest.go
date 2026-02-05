@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationClickhouseCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string               `json:"definitionId,omitempty"`
+	DefinitionID  *string               `default:"ce0d828e-1dc4-496c-b122-2da42e637e48" json:"definitionId"`
 	WorkspaceID   string                `json:"workspaceId"`
 	Configuration DestinationClickhouse `json:"configuration"`
+}
+
+func (d DestinationClickhouseCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationClickhouseCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationClickhouseCreateRequest) GetName() string {

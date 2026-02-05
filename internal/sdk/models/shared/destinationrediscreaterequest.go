@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationRedisCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string          `json:"definitionId,omitempty"`
+	DefinitionID  *string          `default:"d4d3fef9-e319-45c2-881a-bd02ce44cc9f" json:"definitionId"`
 	WorkspaceID   string           `json:"workspaceId"`
 	Configuration DestinationRedis `json:"configuration"`
+}
+
+func (d DestinationRedisCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedisCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationRedisCreateRequest) GetName() string {

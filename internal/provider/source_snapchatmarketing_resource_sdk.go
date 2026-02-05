@@ -18,6 +18,7 @@ func (r *SourceSnapchatMarketingResourceModel) RefreshFromSharedSourceResponse(c
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceSnapchatMarketing{}
 		r.Configuration.ActionReportTime = configurationPriorData.ActionReportTime
 		r.Configuration.AdAccountIds = configurationPriorData.AdAccountIds
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
@@ -53,6 +54,7 @@ func (r *SourceSnapchatMarketingResourceModel) RefreshFromSharedSourceResponse(c
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

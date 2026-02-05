@@ -70,7 +70,7 @@ resource "airbyte_destination_pgvector" "my_destination_pgvector" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "e0e06cd9-57a9-4d39-b032-bedd874ae875"; Requires replacement if changed.
 
 ### Read-Only
 

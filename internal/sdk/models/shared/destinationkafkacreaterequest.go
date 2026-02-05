@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationKafkaCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string          `json:"definitionId,omitempty"`
+	DefinitionID  *string          `default:"9f760101-60ae-462f-9ee6-b7a9dafd454d" json:"definitionId"`
 	WorkspaceID   string           `json:"workspaceId"`
 	Configuration DestinationKafka `json:"configuration"`
+}
+
+func (d DestinationKafkaCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationKafkaCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationKafkaCreateRequest) GetName() string {

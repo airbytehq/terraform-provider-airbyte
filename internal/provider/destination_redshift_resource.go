@@ -44,7 +44,7 @@ type DestinationRedshiftResource struct {
 
 // DestinationRedshiftResourceModel describes the resource data model.
 type DestinationRedshiftResourceModel struct {
-	Configuration      tfTypes.DestinationRedshift         `tfsdk:"configuration"`
+	Configuration      *tfTypes.DestinationRedshift        `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	DestinationID      types.String                        `tfsdk:"destination_id"`
@@ -297,11 +297,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`f7a7d195-377f-cf5b-70a5-be6b819019dc`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "f7a7d195-377f-cf5b-70a5-be6b819019dc"; Requires replacement if changed.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
@@ -621,43 +622,15 @@ func (r *DestinationRedshiftResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if res.StatusCode != 200 {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
+	if !(res.DestinationResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationRedshiftRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationRedshift(ctx, *request1)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res1 != nil && res1.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
-		}
-		return
-	}
-	if res1 == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
-		return
-	}
-	if res1.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
-		return
-	}
-	if !(res1.DestinationResponse != nil) {
-		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
-		return
-	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return

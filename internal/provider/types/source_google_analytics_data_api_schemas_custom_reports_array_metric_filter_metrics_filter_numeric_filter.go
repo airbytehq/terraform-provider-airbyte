@@ -7,6 +7,6 @@ import (
 )
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter struct {
-	Operation []types.String                                                                      `tfsdk:"operation"`
-	Value     SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue `tfsdk:"value"`
+	Operation []types.String                                                                       `tfsdk:"operation"`
+	Value     *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue `tfsdk:"value"`
 }

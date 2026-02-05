@@ -10,7 +10,7 @@ import (
 type SourceGoogleAds struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 	ConversionWindowDays types.Int64          `tfsdk:"conversion_window_days"`
-	Credentials          GoogleCredentials    `tfsdk:"credentials"`
+	Credentials          *GoogleCredentials   `tfsdk:"credentials"`
 	CustomQueriesArray   []CustomQueriesArray `tfsdk:"custom_queries_array"`
 	CustomerID           types.String         `tfsdk:"customer_id"`
 	CustomerStatusFilter []types.String       `tfsdk:"customer_status_filter"`

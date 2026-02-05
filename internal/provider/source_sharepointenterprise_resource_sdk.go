@@ -17,6 +17,7 @@ func (r *SourceSharepointEnterpriseResourceModel) RefreshFromSharedSourceRespons
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceSharepointEnterprise{}
 		r.Configuration.Credentials = configurationPriorData.Credentials
 		r.Configuration.DeliveryMethod = configurationPriorData.DeliveryMethod
 		r.Configuration.FileContainsQuery = configurationPriorData.FileContainsQuery
@@ -49,6 +50,7 @@ func (r *SourceSharepointEnterpriseResourceModel) RefreshFromSharedSourceRespons
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

@@ -7,6 +7,6 @@ import (
 )
 
 type DestinationChromaIndexing struct {
-	AuthMethod     ConnectionMode `tfsdk:"auth_method"`
-	CollectionName types.String   `tfsdk:"collection_name"`
+	AuthMethod     *ConnectionMode `tfsdk:"auth_method"`
+	CollectionName types.String    `tfsdk:"collection_name"`
 }

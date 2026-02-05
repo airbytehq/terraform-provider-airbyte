@@ -7,10 +7,10 @@ import (
 )
 
 type DestinationMilvusIndexing struct {
-	Auth        DestinationMilvusAuthentication `tfsdk:"auth"`
-	Collection  types.String                    `tfsdk:"collection"`
-	Db          types.String                    `tfsdk:"db"`
-	Host        types.String                    `tfsdk:"host"`
-	TextField   types.String                    `tfsdk:"text_field"`
-	VectorField types.String                    `tfsdk:"vector_field"`
+	Auth        *DestinationMilvusAuthentication `tfsdk:"auth"`
+	Collection  types.String                     `tfsdk:"collection"`
+	Db          types.String                     `tfsdk:"db"`
+	Host        types.String                     `tfsdk:"host"`
+	TextField   types.String                     `tfsdk:"text_field"`
+	VectorField types.String                     `tfsdk:"vector_field"`
 }

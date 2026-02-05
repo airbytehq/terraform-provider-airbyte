@@ -8,7 +8,7 @@ import (
 )
 
 type SourceYoutubeAnalytics struct {
-	AdditionalProperties jsontypes.Normalized   `tfsdk:"additional_properties"`
-	ContentOwnerID       types.String           `tfsdk:"content_owner_id"`
-	Credentials          AuthenticateViaOAuth20 `tfsdk:"credentials"`
+	AdditionalProperties jsontypes.Normalized    `tfsdk:"additional_properties"`
+	ContentOwnerID       types.String            `tfsdk:"content_owner_id"`
+	Credentials          *AuthenticateViaOAuth20 `tfsdk:"credentials"`
 }

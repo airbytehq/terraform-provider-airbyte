@@ -8,17 +8,17 @@ import (
 )
 
 type DestinationHubspotS3 struct {
-	AccessKeyID          types.String                   `tfsdk:"access_key_id"`
-	AdditionalProperties jsontypes.Normalized           `tfsdk:"additional_properties"`
-	BucketPath           types.String                   `tfsdk:"bucket_path"`
-	Compression          *DestinationHubspotCompression `tfsdk:"compression"`
-	FileNameFormat       types.String                   `tfsdk:"file_name_format"`
-	Format               DestinationHubspotOutputFormat `tfsdk:"format"`
-	PathFormat           types.String                   `tfsdk:"path_format"`
-	RoleArn              types.String                   `tfsdk:"role_arn"`
-	S3BucketName         types.String                   `tfsdk:"s3_bucket_name"`
-	S3BucketRegion       types.String                   `tfsdk:"s3_bucket_region"`
-	S3Endpoint           types.String                   `tfsdk:"s3_endpoint"`
-	SecretAccessKey      types.String                   `tfsdk:"secret_access_key"`
-	StorageType          types.String                   `tfsdk:"storage_type"`
+	AccessKeyID          types.String                    `tfsdk:"access_key_id"`
+	AdditionalProperties jsontypes.Normalized            `tfsdk:"additional_properties"`
+	BucketPath           types.String                    `tfsdk:"bucket_path"`
+	Compression          *DestinationHubspotCompression  `tfsdk:"compression"`
+	FileNameFormat       types.String                    `tfsdk:"file_name_format"`
+	Format               *DestinationHubspotOutputFormat `tfsdk:"format"`
+	PathFormat           types.String                    `tfsdk:"path_format"`
+	RoleArn              types.String                    `tfsdk:"role_arn"`
+	S3BucketName         types.String                    `tfsdk:"s3_bucket_name"`
+	S3BucketRegion       types.String                    `tfsdk:"s3_bucket_region"`
+	S3Endpoint           types.String                    `tfsdk:"s3_endpoint"`
+	SecretAccessKey      types.String                    `tfsdk:"secret_access_key"`
+	StorageType          types.String                    `tfsdk:"storage_type"`
 }

@@ -7,11 +7,11 @@ import (
 )
 
 type SnowflakeConnection struct {
-	Credentials   DestinationSnowflakeCortexCredentials `tfsdk:"credentials"`
-	Database      types.String                          `tfsdk:"database"`
-	DefaultSchema types.String                          `tfsdk:"default_schema"`
-	Host          types.String                          `tfsdk:"host"`
-	Role          types.String                          `tfsdk:"role"`
-	Username      types.String                          `tfsdk:"username"`
-	Warehouse     types.String                          `tfsdk:"warehouse"`
+	Credentials   *DestinationSnowflakeCortexCredentials `tfsdk:"credentials"`
+	Database      types.String                           `tfsdk:"database"`
+	DefaultSchema types.String                           `tfsdk:"default_schema"`
+	Host          types.String                           `tfsdk:"host"`
+	Role          types.String                           `tfsdk:"role"`
+	Username      types.String                           `tfsdk:"username"`
+	Warehouse     types.String                           `tfsdk:"warehouse"`
 }

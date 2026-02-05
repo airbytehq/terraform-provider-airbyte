@@ -8,5 +8,5 @@ import (
 
 type DestinationDevNull struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	TestDestination      TestDestination      `tfsdk:"test_destination"`
+	TestDestination      *TestDestination     `tfsdk:"test_destination"`
 }

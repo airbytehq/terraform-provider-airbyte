@@ -17,6 +17,7 @@ func (r *SourceHuggingFaceDatasetsResourceModel) RefreshFromSharedSourceResponse
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceHuggingFaceDatasets{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.DatasetName = configurationPriorData.DatasetName
 		r.Configuration.DatasetSplits = configurationPriorData.DatasetSplits
@@ -45,6 +46,7 @@ func (r *SourceHuggingFaceDatasetsResourceModel) RefreshFromSharedSourceResponse
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

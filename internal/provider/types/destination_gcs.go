@@ -7,9 +7,9 @@ import (
 )
 
 type DestinationGcs struct {
-	Credential      DestinationGcsAuthentication `tfsdk:"credential"`
-	Format          DestinationGcsOutputFormat   `tfsdk:"format"`
-	GcsBucketName   types.String                 `tfsdk:"gcs_bucket_name"`
-	GcsBucketPath   types.String                 `tfsdk:"gcs_bucket_path"`
-	GcsBucketRegion types.String                 `tfsdk:"gcs_bucket_region"`
+	Credential      *DestinationGcsAuthentication `tfsdk:"credential"`
+	Format          *DestinationGcsOutputFormat   `tfsdk:"format"`
+	GcsBucketName   types.String                  `tfsdk:"gcs_bucket_name"`
+	GcsBucketPath   types.String                  `tfsdk:"gcs_bucket_path"`
+	GcsBucketRegion types.String                  `tfsdk:"gcs_bucket_region"`
 }

@@ -8,17 +8,17 @@ import (
 )
 
 type SourceNetsuiteEnterprise struct {
-	AccountID                       types.String                                 `tfsdk:"account_id"`
-	AdditionalProperties            jsontypes.Normalized                         `tfsdk:"additional_properties"`
-	AuthenticationMethod            SourceNetsuiteEnterpriseAuthenticationMethod `tfsdk:"authentication_method"`
-	CheckPrivileges                 types.Bool                                   `tfsdk:"check_privileges"`
-	CheckpointTargetIntervalSeconds types.Int64                                  `tfsdk:"checkpoint_target_interval_seconds"`
-	Concurrency                     types.Int64                                  `tfsdk:"concurrency"`
-	Cursor                          SourceNetsuiteEnterpriseUpdateMethod         `tfsdk:"cursor"`
-	Host                            types.String                                 `tfsdk:"host"`
-	JdbcURLParams                   types.String                                 `tfsdk:"jdbc_url_params"`
-	Port                            types.Int64                                  `tfsdk:"port"`
-	RoleID                          types.String                                 `tfsdk:"role_id"`
-	TunnelMethod                    SourceNetsuiteEnterpriseSSHTunnelMethod      `tfsdk:"tunnel_method"`
-	Username                        types.String                                 `tfsdk:"username"`
+	AccountID                       types.String                                  `tfsdk:"account_id"`
+	AdditionalProperties            jsontypes.Normalized                          `tfsdk:"additional_properties"`
+	AuthenticationMethod            *SourceNetsuiteEnterpriseAuthenticationMethod `tfsdk:"authentication_method"`
+	CheckPrivileges                 types.Bool                                    `tfsdk:"check_privileges"`
+	CheckpointTargetIntervalSeconds types.Int64                                   `tfsdk:"checkpoint_target_interval_seconds"`
+	Concurrency                     types.Int64                                   `tfsdk:"concurrency"`
+	Cursor                          *SourceNetsuiteEnterpriseUpdateMethod         `tfsdk:"cursor"`
+	Host                            types.String                                  `tfsdk:"host"`
+	JdbcURLParams                   types.String                                  `tfsdk:"jdbc_url_params"`
+	Port                            types.Int64                                   `tfsdk:"port"`
+	RoleID                          types.String                                  `tfsdk:"role_id"`
+	TunnelMethod                    *SourceNetsuiteEnterpriseSSHTunnelMethod      `tfsdk:"tunnel_method"`
+	Username                        types.String                                  `tfsdk:"username"`
 }

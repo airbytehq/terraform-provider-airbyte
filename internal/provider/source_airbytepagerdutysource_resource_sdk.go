@@ -16,6 +16,7 @@ func (r *SourceAirbytePagerdutySourceResourceModel) RefreshFromSharedSourceRespo
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceAirbytePagerdutySource{}
 		r.Configuration.CutoffDays = configurationPriorData.CutoffDays
 		r.Configuration.DefaultSeverity = configurationPriorData.DefaultSeverity
 		r.Configuration.IncidentLogEntriesOverview = configurationPriorData.IncidentLogEntriesOverview
@@ -45,6 +46,7 @@ func (r *SourceAirbytePagerdutySourceResourceModel) RefreshFromSharedSourceRespo
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

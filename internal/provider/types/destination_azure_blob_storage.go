@@ -17,6 +17,6 @@ type DestinationAzureBlobStorage struct {
 	AzureClientID                      types.String         `tfsdk:"azure_client_id"`
 	AzureClientSecret                  types.String         `tfsdk:"azure_client_secret"`
 	AzureTenantID                      types.String         `tfsdk:"azure_tenant_id"`
-	Format                             OutputFormat         `tfsdk:"format"`
+	Format                             *OutputFormat        `tfsdk:"format"`
 	SharedAccessSignature              types.String         `tfsdk:"shared_access_signature"`
 }

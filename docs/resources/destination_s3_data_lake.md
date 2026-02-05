@@ -50,7 +50,7 @@ resource "airbyte_destination_s3_data_lake" "my_destination_s3datalake" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "716ca874-520b-4902-9f80-9fad66754b89"; Requires replacement if changed.
 
 ### Read-Only
 

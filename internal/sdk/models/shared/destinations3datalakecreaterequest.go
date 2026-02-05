@@ -2,14 +2,29 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationS3DataLakeCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID *string `json:"definitionId,omitempty"`
+	DefinitionID *string `default:"716ca874-520b-4902-9f80-9fad66754b89" json:"definitionId"`
 	WorkspaceID  string  `json:"workspaceId"`
 	// Defines the configurations required to connect to an Iceberg catalog, including warehouse location, main branch name, and catalog type specifics.
 	Configuration DestinationS3DataLake `json:"configuration"`
+}
+
+func (d DestinationS3DataLakeCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3DataLakeCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationS3DataLakeCreateRequest) GetName() string {

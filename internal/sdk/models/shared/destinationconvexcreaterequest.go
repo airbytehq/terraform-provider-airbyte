@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationConvexCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string           `json:"definitionId,omitempty"`
+	DefinitionID  *string           `default:"3eb4d99c-11fa-4561-a259-fc88e0c2f8f4" json:"definitionId"`
 	WorkspaceID   string            `json:"workspaceId"`
 	Configuration DestinationConvex `json:"configuration"`
+}
+
+func (d DestinationConvexCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationConvexCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationConvexCreateRequest) GetName() string {

@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationMssqlV2CreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string            `json:"definitionId,omitempty"`
+	DefinitionID  *string            `default:"37a928c1-2d5c-431a-a97d-ae236bd1ea0c" json:"definitionId"`
 	WorkspaceID   string             `json:"workspaceId"`
 	Configuration DestinationMssqlV2 `json:"configuration"`
+}
+
+func (d DestinationMssqlV2CreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlV2CreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationMssqlV2CreateRequest) GetName() string {

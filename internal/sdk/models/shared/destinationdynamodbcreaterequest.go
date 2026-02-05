@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationDynamodbCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string             `json:"definitionId,omitempty"`
+	DefinitionID  *string             `default:"8ccd8909-4e99-4141-b48d-4984b70b2d89" json:"definitionId"`
 	WorkspaceID   string              `json:"workspaceId"`
 	Configuration DestinationDynamodb `json:"configuration"`
+}
+
+func (d DestinationDynamodbCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDynamodbCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationDynamodbCreateRequest) GetName() string {

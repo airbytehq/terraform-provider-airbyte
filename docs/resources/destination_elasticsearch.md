@@ -42,7 +42,7 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "68f351a7-2745-4bef-ad7f-996b8e51bb8c"; Requires replacement if changed.
 
 ### Read-Only
 

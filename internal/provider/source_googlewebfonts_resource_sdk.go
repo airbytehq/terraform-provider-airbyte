@@ -17,6 +17,7 @@ func (r *SourceGoogleWebfontsResourceModel) RefreshFromSharedSourceResponse(ctx 
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceGoogleWebfonts{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.Alt = configurationPriorData.Alt
 		r.Configuration.APIKey = configurationPriorData.APIKey
@@ -46,6 +47,7 @@ func (r *SourceGoogleWebfontsResourceModel) RefreshFromSharedSourceResponse(ctx 
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

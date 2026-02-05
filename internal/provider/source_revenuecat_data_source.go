@@ -29,7 +29,7 @@ type SourceRevenuecatDataSource struct {
 
 // SourceRevenuecatDataSourceModel describes the data model.
 type SourceRevenuecatDataSourceModel struct {
-	Configuration      tfTypes.SourceConfiguration         `tfsdk:"configuration"`
+	Configuration      *tfTypes.SourceConfiguration        `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	Name               types.String                        `tfsdk:"name"`

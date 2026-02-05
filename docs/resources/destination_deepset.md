@@ -38,7 +38,7 @@ resource "airbyte_destination_deepset" "my_destination_deepset" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "a6fe9a28-7377-4d2d-aa39-15bcf9578e17"; Requires replacement if changed.
 
 ### Read-Only
 

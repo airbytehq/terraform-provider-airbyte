@@ -7,7 +7,7 @@ import (
 )
 
 type SourceGoogleDrive struct {
-	Credentials    SourceGoogleDriveAuthentication          `tfsdk:"credentials"`
+	Credentials    *SourceGoogleDriveAuthentication         `tfsdk:"credentials"`
 	DeliveryMethod *SourceGoogleDriveDeliveryMethod         `tfsdk:"delivery_method"`
 	FolderURL      types.String                             `tfsdk:"folder_url"`
 	StartDate      types.String                             `tfsdk:"start_date"`

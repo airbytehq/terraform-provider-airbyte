@@ -46,7 +46,7 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "072d5540-f236-4294-ba7c-ade8fd918496"; Requires replacement if changed.
 
 ### Read-Only
 

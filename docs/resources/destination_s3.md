@@ -63,7 +63,7 @@ resource "airbyte_destination_s3" "my_destination_s3" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "4816b78f-1489-44c1-9060-4b19d5fa9362"; Requires replacement if changed.
 
 ### Read-Only
 

@@ -9,7 +9,7 @@ import (
 
 type SourceJotform struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	APIEndpoint          APIEndpoint          `tfsdk:"api_endpoint"`
+	APIEndpoint          *APIEndpoint         `tfsdk:"api_endpoint"`
 	APIKey               types.String         `tfsdk:"api_key"`
 	EndDate              types.String         `tfsdk:"end_date"`
 	StartDate            types.String         `tfsdk:"start_date"`

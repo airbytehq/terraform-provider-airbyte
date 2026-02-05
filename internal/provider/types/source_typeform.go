@@ -8,8 +8,8 @@ import (
 )
 
 type SourceTypeform struct {
-	AdditionalProperties jsontypes.Normalized              `tfsdk:"additional_properties"`
-	Credentials          SourceTypeformAuthorizationMethod `tfsdk:"credentials"`
-	FormIds              []types.String                    `tfsdk:"form_ids"`
-	StartDate            types.String                      `tfsdk:"start_date"`
+	AdditionalProperties jsontypes.Normalized               `tfsdk:"additional_properties"`
+	Credentials          *SourceTypeformAuthorizationMethod `tfsdk:"credentials"`
+	FormIds              []types.String                     `tfsdk:"form_ids"`
+	StartDate            types.String                       `tfsdk:"start_date"`
 }
