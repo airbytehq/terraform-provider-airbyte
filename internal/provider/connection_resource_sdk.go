@@ -130,11 +130,10 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(ctx contex
 		r.Prefix = types.StringPointerValue(resp.Prefix)
 		if r.Schedule == nil {
 			r.Schedule = &tfTypes.AirbyteAPIConnectionSchedule{}
-
-			r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
-			r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
-			r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 		}
+		r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
+		r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
+		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 		r.SourceID = types.StringValue(resp.SourceID)
 		r.Status = types.StringValue(string(resp.Status))
 		r.StatusReason = types.StringPointerValue(resp.StatusReason)
