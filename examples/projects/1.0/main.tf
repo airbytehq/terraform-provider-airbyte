@@ -30,6 +30,8 @@ variable "airbyte_client_secret" {
 
 variable "workspace_id" {
   description = "The Airbyte workspace ID to use for testing."
+  # Default to the Devin Sandbox workspace for this example
+  default     = "266ebdfe-0d7b-4540-9817-de7e4505ba61"
   type        = string
 }
 
