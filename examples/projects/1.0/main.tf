@@ -12,11 +12,18 @@ terraform {
 }
 
 provider "airbyte" {
-  bearer_auth = var.airbyte_api_key
+  client_id     = var.airbyte_client_id
+  client_secret = var.airbyte_client_secret
 }
 
-variable "airbyte_api_key" {
-  description = "The Airbyte API Key to use when authenticating to the Airbyte service."
+variable "airbyte_client_id" {
+  description = "The Airbyte Client ID for OAuth authentication."
+  sensitive   = true
+  type        = string
+}
+
+variable "airbyte_client_secret" {
+  description = "The Airbyte Client Secret for OAuth authentication."
   sensitive   = true
   type        = string
 }
