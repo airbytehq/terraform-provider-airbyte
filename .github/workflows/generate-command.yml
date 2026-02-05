@@ -188,6 +188,33 @@ jobs:
               run: |
                   go build ./...
 
+            - name: Upload generated provider code as artifact
+              if: ${{ inputs.dry_run }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: generated_provider_code
+                  path: |
+                      internal/provider/
+                      internal/sdk/
+                  retention-days: 7
+
+            - name: Build provider binaries for testing
+              if: ${{ inputs.dry_run }}
+              run: |
+                  mkdir -p dist
+                  # Build for Linux amd64 (AI/CI environments)
+                  GOOS=linux GOARCH=amd64 go build -o dist/terraform-provider-airbyte_linux_amd64
+                  # Build for Mac M-series (Engineers)
+                  GOOS=darwin GOARCH=arm64 go build -o dist/terraform-provider-airbyte_darwin_arm64
+
+            - name: Upload provider binaries as artifact
+              if: ${{ inputs.dry_run }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: provider_binaries
+                  path: dist/
+                  retention-days: 7
+
             - name: Generation Summary
               run: |
                   echo "=== Generation Summary ==="
