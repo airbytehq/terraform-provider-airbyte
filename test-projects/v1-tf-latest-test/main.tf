@@ -14,6 +14,9 @@ terraform {
 provider "airbyte" {
   client_id     = var.airbyte_client_id
   client_secret = var.airbyte_client_secret
+  # Workaround for https://github.com/airbytehq/terraform-provider-airbyte/issues/280
+  # TK-TODO: Resolve before merging.
+  token_url     = "https://api.airbyte.com/v1/applications/token"
 }
 
 variable "airbyte_client_id" {
@@ -32,6 +35,13 @@ variable "workspace_id" {
   description = "The Airbyte workspace ID to use for testing."
   # Default to the Devin Sandbox workspace for this example
   default     = "266ebdfe-0d7b-4540-9817-de7e4505ba61"
+  type        = string
+  default     = "266ebdfe-0d7b-4540-9817-de7e4505ba61" # Default to Devin Sandbox
+}
+
+variable "motherduck_api_key" {
+  description = "MotherDuck API key for destination authentication."
+  sensitive   = true
   type        = string
 }
 
@@ -55,21 +65,24 @@ resource "airbyte_source_faker" "faker_2" {
   }
 }
 
-# Destination: Dev Null (silent mode)
-resource "airbyte_destination_dev_null" "dev_null" {
-  name         = "destination-dev-null"
+# Destination: MotherDuck
+# NOTE: Currently fails with "value-not-found" error in Airbyte Cloud
+# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/281
+# TK-TODO: Resolve before merging
+resource "airbyte_destination_motherduck" "motherduck" {
+  name         = "destination-motherduck"
   workspace_id = var.workspace_id
   configuration = {
-    test_destination = {
-      silent = {}
-    }
+    motherduck_api_key = var.motherduck_api_key
+    destination_path   = "md:airbyte_test"
+    schema             = "main"
   }
 }
 
-resource "airbyte_connection" "faker_1_to_dev_null" {
-  name           = "faker-1-to-dev-null"
+resource "airbyte_connection" "faker_1_to_motherduck" {
+  name           = "faker-1-to-motherduck"
   source_id      = airbyte_source_faker.faker_1.source_id
-  destination_id = airbyte_destination_dev_null.dev_null.destination_id
+  destination_id = airbyte_destination_motherduck.motherduck.destination_id
   schedule = {
     schedule_type = "manual"
   }
@@ -92,10 +105,10 @@ resource "airbyte_connection" "faker_1_to_dev_null" {
   status = "inactive"
 }
 
-resource "airbyte_connection" "faker_2_to_dev_null" {
-  name           = "faker-2-to-dev-null"
+resource "airbyte_connection" "faker_2_to_motherduck" {
+  name           = "faker-2-to-motherduck"
   source_id      = airbyte_source_faker.faker_2.source_id
-  destination_id = airbyte_destination_dev_null.dev_null.destination_id
+  destination_id = airbyte_destination_motherduck.motherduck.destination_id
   schedule = {
     schedule_type = "manual"
   }
@@ -133,17 +146,17 @@ output "faker_2_source_id" {
   description = "The ID of the second faker source"
 }
 
-output "dev_null_destination_id" {
-  value       = airbyte_destination_dev_null.dev_null.destination_id
-  description = "The ID of the dev-null destination"
+output "motherduck_destination_id" {
+  value       = airbyte_destination_motherduck.motherduck.destination_id
+  description = "The ID of the MotherDuck destination"
 }
 
 output "faker_1_connection_id" {
-  value       = airbyte_connection.faker_1_to_dev_null.connection_id
-  description = "The ID of the faker-1 to dev-null connection"
+  value       = airbyte_connection.faker_1_to_motherduck.connection_id
+  description = "The ID of the faker-1 to MotherDuck connection"
 }
 
 output "faker_2_connection_id" {
-  value       = airbyte_connection.faker_2_to_dev_null.connection_id
-  description = "The ID of the faker-2 to dev-null connection"
+  value       = airbyte_connection.faker_2_to_motherduck.connection_id
+  description = "The ID of the faker-2 to MotherDuck connection"
 }

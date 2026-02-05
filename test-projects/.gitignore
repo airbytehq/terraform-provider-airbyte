@@ -1,0 +1,16 @@
+# Credentials (sensitive)
+.env
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+*.tfvars
+
+# Downloaded provider binaries
+provider-bin/
+
+# Active provider binary (copied from provider-bin)
+provider-override/
