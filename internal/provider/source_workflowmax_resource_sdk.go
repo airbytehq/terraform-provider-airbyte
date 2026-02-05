@@ -18,6 +18,7 @@ func (r *SourceWorkflowmaxResourceModel) RefreshFromSharedSourceResponse(ctx con
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceWorkflowmax{}
 		r.Configuration.AccountID = configurationPriorData.AccountID
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.APIKey2 = configurationPriorData.APIKey2
@@ -46,6 +47,7 @@ func (r *SourceWorkflowmaxResourceModel) RefreshFromSharedSourceResponse(ctx con
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

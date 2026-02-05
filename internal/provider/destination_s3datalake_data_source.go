@@ -29,7 +29,7 @@ type DestinationS3DataLakeDataSource struct {
 
 // DestinationS3DataLakeDataSourceModel describes the data model.
 type DestinationS3DataLakeDataSourceModel struct {
-	Configuration      tfTypes.DestinationConfiguration    `tfsdk:"configuration"`
+	Configuration      *tfTypes.DestinationConfiguration   `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	DestinationID      types.String                        `tfsdk:"destination_id"`

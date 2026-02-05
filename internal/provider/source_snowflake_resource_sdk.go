@@ -17,6 +17,7 @@ func (r *SourceSnowflakeResourceModel) RefreshFromSharedSourceResponse(ctx conte
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceSnowflake{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.CheckPrivileges = configurationPriorData.CheckPrivileges
 		r.Configuration.CheckpointTargetIntervalSeconds = configurationPriorData.CheckpointTargetIntervalSeconds
@@ -53,6 +54,7 @@ func (r *SourceSnowflakeResourceModel) RefreshFromSharedSourceResponse(ctx conte
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

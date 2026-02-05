@@ -67,7 +67,7 @@ resource "airbyte_destination_customer_io" "my_destination_customerio" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "c101b15f-2de9-4616-b54f-0ec9d28ca64d"; Requires replacement if changed.
 
 ### Read-Only
 

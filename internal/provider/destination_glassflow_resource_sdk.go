@@ -16,6 +16,7 @@ func (r *DestinationGlassflowResourceModel) RefreshFromSharedDestinationResponse
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationGlassflow{}
 		r.Configuration.PipelineAccessToken = configurationPriorData.PipelineAccessToken
 		r.Configuration.PipelineID = configurationPriorData.PipelineID
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
@@ -44,6 +45,7 @@ func (r *DestinationGlassflowResourceModel) RefreshFromSharedDestinationResponse
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

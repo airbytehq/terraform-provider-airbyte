@@ -12,11 +12,11 @@ type DestinationMssql struct {
 	Database             types.String                     `tfsdk:"database"`
 	Host                 types.String                     `tfsdk:"host"`
 	JdbcURLParams        types.String                     `tfsdk:"jdbc_url_params"`
-	LoadType             LoadType                         `tfsdk:"load_type"`
+	LoadType             *LoadType                        `tfsdk:"load_type"`
 	Password             types.String                     `tfsdk:"password"`
 	Port                 types.Int64                      `tfsdk:"port"`
 	Schema               types.String                     `tfsdk:"schema"`
-	SslMethod            SSLMethod                        `tfsdk:"ssl_method"`
+	SslMethod            *SSLMethod                       `tfsdk:"ssl_method"`
 	TunnelMethod         *DestinationMssqlSSHTunnelMethod `tfsdk:"tunnel_method"`
 	User                 types.String                     `tfsdk:"user"`
 }

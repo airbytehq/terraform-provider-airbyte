@@ -68,7 +68,7 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "3d2b6f84-7f0d-4e3f-a5e5-7c7d4b50eabd"; Requires replacement if changed.
 
 ### Read-Only
 

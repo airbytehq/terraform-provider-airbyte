@@ -74,7 +74,7 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "6eb1198a-6d38-43e5-aaaa-dccd8f71db2b"; Requires replacement if changed.
 
 ### Read-Only
 

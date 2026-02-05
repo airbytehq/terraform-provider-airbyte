@@ -65,7 +65,7 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "25c5221d-dce2-4163-ade9-739ef790f503"; Requires replacement if changed.
 
 ### Read-Only
 

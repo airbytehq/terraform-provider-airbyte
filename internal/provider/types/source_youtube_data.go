@@ -7,7 +7,7 @@ import (
 )
 
 type SourceYoutubeData struct {
-	AdditionalProperties jsontypes.Normalized                  `tfsdk:"additional_properties"`
-	ChannelIds           []jsontypes.Normalized                `tfsdk:"channel_ids"`
-	Credentials          SourceYoutubeDataAuthenticationMethod `tfsdk:"credentials"`
+	AdditionalProperties jsontypes.Normalized                   `tfsdk:"additional_properties"`
+	ChannelIds           []jsontypes.Normalized                 `tfsdk:"channel_ids"`
+	Credentials          *SourceYoutubeDataAuthenticationMethod `tfsdk:"credentials"`
 }

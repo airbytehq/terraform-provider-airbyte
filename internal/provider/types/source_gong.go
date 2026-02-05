@@ -8,7 +8,7 @@ import (
 )
 
 type SourceGong struct {
-	AdditionalProperties jsontypes.Normalized     `tfsdk:"additional_properties"`
-	Credentials          SourceGongAuthentication `tfsdk:"credentials"`
-	StartDate            types.String             `tfsdk:"start_date"`
+	AdditionalProperties jsontypes.Normalized      `tfsdk:"additional_properties"`
+	Credentials          *SourceGongAuthentication `tfsdk:"credentials"`
+	StartDate            types.String              `tfsdk:"start_date"`
 }

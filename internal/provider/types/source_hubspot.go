@@ -8,10 +8,10 @@ import (
 )
 
 type SourceHubspot struct {
-	AdditionalProperties      jsontypes.Normalized        `tfsdk:"additional_properties"`
-	Credentials               SourceHubspotAuthentication `tfsdk:"credentials"`
-	EnableExperimentalStreams types.Bool                  `tfsdk:"enable_experimental_streams"`
-	LookbackWindow            types.Int64                 `tfsdk:"lookback_window"`
-	NumWorker                 types.Int64                 `tfsdk:"num_worker"`
-	StartDate                 types.String                `tfsdk:"start_date"`
+	AdditionalProperties      jsontypes.Normalized         `tfsdk:"additional_properties"`
+	Credentials               *SourceHubspotAuthentication `tfsdk:"credentials"`
+	EnableExperimentalStreams types.Bool                   `tfsdk:"enable_experimental_streams"`
+	LookbackWindow            types.Int64                  `tfsdk:"lookback_window"`
+	NumWorker                 types.Int64                  `tfsdk:"num_worker"`
+	StartDate                 types.String                 `tfsdk:"start_date"`
 }

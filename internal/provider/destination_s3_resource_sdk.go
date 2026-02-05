@@ -17,6 +17,7 @@ func (r *DestinationS3ResourceModel) RefreshFromSharedDestinationResponse(ctx co
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationS3{}
 		r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.FileNamePattern = configurationPriorData.FileNamePattern
@@ -54,6 +55,7 @@ func (r *DestinationS3ResourceModel) RefreshFromSharedDestinationResponse(ctx co
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

@@ -40,7 +40,7 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "a7bcc9d8-13b3-4e49-b80d-d020b90045e3"; Requires replacement if changed.
 
 ### Read-Only
 

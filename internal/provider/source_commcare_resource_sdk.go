@@ -16,6 +16,7 @@ func (r *SourceCommcareResourceModel) RefreshFromSharedSourceResponse(ctx contex
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceCommcare{}
 		r.Configuration.APIKey = configurationPriorData.APIKey
 		r.Configuration.AppID = configurationPriorData.AppID
 		r.Configuration.ProjectSpace = configurationPriorData.ProjectSpace
@@ -44,6 +45,7 @@ func (r *SourceCommcareResourceModel) RefreshFromSharedSourceResponse(ctx contex
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

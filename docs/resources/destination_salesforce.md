@@ -44,7 +44,7 @@ resource "airbyte_destination_salesforce" "my_destination_salesforce" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "c0b24000-d34d-b33f-fea7-6b96dc0e5f0d"; Requires replacement if changed.
 
 ### Read-Only
 

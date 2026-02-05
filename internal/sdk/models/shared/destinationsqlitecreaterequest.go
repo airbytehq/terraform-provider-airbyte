@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationSqliteCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string           `json:"definitionId,omitempty"`
+	DefinitionID  *string           `default:"b76be0a6-27dc-4560-95f6-2623da0bd7b6" json:"definitionId"`
 	WorkspaceID   string            `json:"workspaceId"`
 	Configuration DestinationSqlite `json:"configuration"`
+}
+
+func (d DestinationSqliteCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSqliteCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationSqliteCreateRequest) GetName() string {

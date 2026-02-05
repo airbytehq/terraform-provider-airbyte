@@ -17,6 +17,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromSharedSourceResponse
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceGoogleSearchConsole{}
 		r.Configuration.AlwaysUseAggregationTypeAuto = configurationPriorData.AlwaysUseAggregationTypeAuto
 		r.Configuration.Authorization = configurationPriorData.Authorization
 		r.Configuration.CustomReports = configurationPriorData.CustomReports
@@ -51,6 +52,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromSharedSourceResponse
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

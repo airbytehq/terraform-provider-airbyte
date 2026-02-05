@@ -35,7 +35,7 @@ resource "airbyte_destination_glassflow" "my_destination_glassflow" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "6af33483-3956-4fea-a38c-04d136e90fa8"; Requires replacement if changed.
 
 ### Read-Only
 

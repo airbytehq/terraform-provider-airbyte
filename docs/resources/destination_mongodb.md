@@ -53,7 +53,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "8b746512-8c2e-6ac1-4adc-b59faafd473c"; Requires replacement if changed.
 
 ### Read-Only
 

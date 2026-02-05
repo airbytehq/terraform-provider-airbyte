@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationHubspotCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string            `json:"definitionId,omitempty"`
+	DefinitionID  *string            `default:"c8ccd253-8525-4bbd-801c-f0b84ac71f61" json:"definitionId"`
 	WorkspaceID   string             `json:"workspaceId"`
 	Configuration DestinationHubspot `json:"configuration"`
+}
+
+func (d DestinationHubspotCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationHubspotCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationHubspotCreateRequest) GetName() string {

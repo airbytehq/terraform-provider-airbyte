@@ -33,6 +33,8 @@ type PutDestinationStreamrAirbyteConnectorsResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	DestinationResponse *shared.DestinationResponse
 }
 
 func (p *PutDestinationStreamrAirbyteConnectorsResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutDestinationStreamrAirbyteConnectorsResponse) GetRawResponse() *http.
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutDestinationStreamrAirbyteConnectorsResponse) GetDestinationResponse() *shared.DestinationResponse {
+	if p == nil {
+		return nil
+	}
+	return p.DestinationResponse
 }

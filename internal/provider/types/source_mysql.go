@@ -18,7 +18,7 @@ type SourceMysql struct {
 	MaxDbConnections                types.Int64                 `tfsdk:"max_db_connections"`
 	Password                        types.String                `tfsdk:"password"`
 	Port                            types.Int64                 `tfsdk:"port"`
-	ReplicationMethod               SourceMysqlUpdateMethod     `tfsdk:"replication_method"`
+	ReplicationMethod               *SourceMysqlUpdateMethod    `tfsdk:"replication_method"`
 	SslMode                         *SourceMysqlEncryption      `tfsdk:"ssl_mode"`
 	TableFilters                    []TableFilter               `tfsdk:"table_filters"`
 	TunnelMethod                    *SourceMysqlSSHTunnelMethod `tfsdk:"tunnel_method"`

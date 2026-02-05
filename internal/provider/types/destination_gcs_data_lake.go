@@ -9,7 +9,7 @@ import (
 
 type DestinationGcsDataLake struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	CatalogType          CatalogType          `tfsdk:"catalog_type"`
+	CatalogType          *CatalogType         `tfsdk:"catalog_type"`
 	GcpLocation          types.String         `tfsdk:"gcp_location"`
 	GcpProjectID         types.String         `tfsdk:"gcp_project_id"`
 	GcsBucketName        types.String         `tfsdk:"gcs_bucket_name"`

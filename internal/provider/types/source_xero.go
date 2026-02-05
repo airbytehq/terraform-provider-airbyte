@@ -8,8 +8,8 @@ import (
 )
 
 type SourceXero struct {
-	AdditionalProperties jsontypes.Normalized           `tfsdk:"additional_properties"`
-	Credentials          SourceXeroAuthenticationMethod `tfsdk:"credentials"`
-	StartDate            types.String                   `tfsdk:"start_date"`
-	TenantID             types.String                   `tfsdk:"tenant_id"`
+	AdditionalProperties jsontypes.Normalized            `tfsdk:"additional_properties"`
+	Credentials          *SourceXeroAuthenticationMethod `tfsdk:"credentials"`
+	StartDate            types.String                    `tfsdk:"start_date"`
+	TenantID             types.String                    `tfsdk:"tenant_id"`
 }

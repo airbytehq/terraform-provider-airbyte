@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationSnowflakeCortex struct {
-	Embedding   DestinationSnowflakeCortexEmbedding             `tfsdk:"embedding"`
-	Indexing    SnowflakeConnection                             `tfsdk:"indexing"`
-	OmitRawText types.Bool                                      `tfsdk:"omit_raw_text"`
-	Processing  DestinationSnowflakeCortexProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *DestinationSnowflakeCortexEmbedding             `tfsdk:"embedding"`
+	Indexing    *SnowflakeConnection                             `tfsdk:"indexing"`
+	OmitRawText types.Bool                                       `tfsdk:"omit_raw_text"`
+	Processing  *DestinationSnowflakeCortexProcessingConfigModel `tfsdk:"processing"`
 }

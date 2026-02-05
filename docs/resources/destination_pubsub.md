@@ -42,7 +42,7 @@ resource "airbyte_destination_pubsub" "my_destination_pubsub" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "356668e2-7e34-47f3-a3b0-67a8a481b692"; Requires replacement if changed.
 
 ### Read-Only
 

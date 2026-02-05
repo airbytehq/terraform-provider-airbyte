@@ -40,7 +40,7 @@ type SourceResource struct {
 
 // SourceResourceModel describes the resource data model.
 type SourceResourceModel struct {
-	Configuration      tfTypes.SourceConfiguration         `tfsdk:"configuration"`
+	Configuration      *tfTypes.SourceConfiguration        `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	Name               types.String                        `tfsdk:"name"`

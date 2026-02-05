@@ -7,10 +7,10 @@ import (
 )
 
 type PostgresConnection struct {
-	Credentials   DestinationPgvectorCredentials `tfsdk:"credentials"`
-	Database      types.String                   `tfsdk:"database"`
-	DefaultSchema types.String                   `tfsdk:"default_schema"`
-	Host          types.String                   `tfsdk:"host"`
-	Port          types.Int64                    `tfsdk:"port"`
-	Username      types.String                   `tfsdk:"username"`
+	Credentials   *DestinationPgvectorCredentials `tfsdk:"credentials"`
+	Database      types.String                    `tfsdk:"database"`
+	DefaultSchema types.String                    `tfsdk:"default_schema"`
+	Host          types.String                    `tfsdk:"host"`
+	Port          types.Int64                     `tfsdk:"port"`
+	Username      types.String                    `tfsdk:"username"`
 }

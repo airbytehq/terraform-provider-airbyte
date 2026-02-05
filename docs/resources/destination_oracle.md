@@ -50,7 +50,7 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "3986776d-2319-4de9-8af8-db14c0996e72"; Requires replacement if changed.
 
 ### Read-Only
 

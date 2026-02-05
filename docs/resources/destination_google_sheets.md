@@ -41,7 +41,7 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "a4cbd2d1-8dbe-4818-b8bc-b90ad782d12a"; Requires replacement if changed.
 
 ### Read-Only
 

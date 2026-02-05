@@ -17,6 +17,7 @@ func (r *SourceTeradataResourceModel) RefreshFromSharedSourceResponse(ctx contex
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceTeradata{}
 		r.Configuration.Database = configurationPriorData.Database
 		r.Configuration.Host = configurationPriorData.Host
 		r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
@@ -50,6 +51,7 @@ func (r *SourceTeradataResourceModel) RefreshFromSharedSourceResponse(ctx contex
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

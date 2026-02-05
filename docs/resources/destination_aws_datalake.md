@@ -58,7 +58,7 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "99878c90-0fbd-46d3-9d98-ffde879d17fc"; Requires replacement if changed.
 
 ### Read-Only
 

@@ -46,7 +46,7 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "b4c5d105-31fd-4817-96b6-cb923bfc04cb"; Requires replacement if changed.
 
 ### Read-Only
 

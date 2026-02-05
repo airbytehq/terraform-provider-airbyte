@@ -8,18 +8,18 @@ import (
 )
 
 type SourceDb2Enterprise struct {
-	AdditionalProperties            jsontypes.Normalized               `tfsdk:"additional_properties"`
-	CheckPrivileges                 types.Bool                         `tfsdk:"check_privileges"`
-	CheckpointTargetIntervalSeconds types.Int64                        `tfsdk:"checkpoint_target_interval_seconds"`
-	Concurrency                     types.Int64                        `tfsdk:"concurrency"`
-	Cursor                          UpdateMethod                       `tfsdk:"cursor"`
-	Database                        types.String                       `tfsdk:"database"`
-	Encryption                      SourceDb2EnterpriseEncryption      `tfsdk:"encryption"`
-	Host                            types.String                       `tfsdk:"host"`
-	JdbcURLParams                   types.String                       `tfsdk:"jdbc_url_params"`
-	Password                        types.String                       `tfsdk:"password"`
-	Port                            types.Int64                        `tfsdk:"port"`
-	Schemas                         []types.String                     `tfsdk:"schemas"`
-	TunnelMethod                    SourceDb2EnterpriseSSHTunnelMethod `tfsdk:"tunnel_method"`
-	Username                        types.String                       `tfsdk:"username"`
+	AdditionalProperties            jsontypes.Normalized                `tfsdk:"additional_properties"`
+	CheckPrivileges                 types.Bool                          `tfsdk:"check_privileges"`
+	CheckpointTargetIntervalSeconds types.Int64                         `tfsdk:"checkpoint_target_interval_seconds"`
+	Concurrency                     types.Int64                         `tfsdk:"concurrency"`
+	Cursor                          *UpdateMethod                       `tfsdk:"cursor"`
+	Database                        types.String                        `tfsdk:"database"`
+	Encryption                      *SourceDb2EnterpriseEncryption      `tfsdk:"encryption"`
+	Host                            types.String                        `tfsdk:"host"`
+	JdbcURLParams                   types.String                        `tfsdk:"jdbc_url_params"`
+	Password                        types.String                        `tfsdk:"password"`
+	Port                            types.Int64                         `tfsdk:"port"`
+	Schemas                         []types.String                      `tfsdk:"schemas"`
+	TunnelMethod                    *SourceDb2EnterpriseSSHTunnelMethod `tfsdk:"tunnel_method"`
+	Username                        types.String                        `tfsdk:"username"`
 }

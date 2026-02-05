@@ -47,7 +47,7 @@ resource "airbyte_destination_vectara" "my_destination_vectara" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "102900e7-a236-4c94-83e4-a4189b99adc2"; Requires replacement if changed.
 
 ### Read-Only
 

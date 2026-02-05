@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationQdrant struct {
-	Embedding   DestinationQdrantEmbedding             `tfsdk:"embedding"`
-	Indexing    DestinationQdrantIndexing              `tfsdk:"indexing"`
-	OmitRawText types.Bool                             `tfsdk:"omit_raw_text"`
-	Processing  DestinationQdrantProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *DestinationQdrantEmbedding             `tfsdk:"embedding"`
+	Indexing    *DestinationQdrantIndexing              `tfsdk:"indexing"`
+	OmitRawText types.Bool                              `tfsdk:"omit_raw_text"`
+	Processing  *DestinationQdrantProcessingConfigModel `tfsdk:"processing"`
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type DestinationMongodb struct {
-	AuthType     AuthorizationType                  `tfsdk:"auth_type"`
+	AuthType     *AuthorizationType                 `tfsdk:"auth_type"`
 	Database     types.String                       `tfsdk:"database"`
 	InstanceType *MongoDbInstanceType               `tfsdk:"instance_type"`
 	TunnelMethod *DestinationMongodbSSHTunnelMethod `tfsdk:"tunnel_method"`

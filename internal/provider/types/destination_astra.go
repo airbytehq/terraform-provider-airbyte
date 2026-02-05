@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationAstra struct {
-	Embedding   Embedding             `tfsdk:"embedding"`
-	Indexing    Indexing              `tfsdk:"indexing"`
-	OmitRawText types.Bool            `tfsdk:"omit_raw_text"`
-	Processing  ProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *Embedding             `tfsdk:"embedding"`
+	Indexing    *Indexing              `tfsdk:"indexing"`
+	OmitRawText types.Bool             `tfsdk:"omit_raw_text"`
+	Processing  *ProcessingConfigModel `tfsdk:"processing"`
 }

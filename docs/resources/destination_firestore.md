@@ -35,7 +35,7 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "27dc7500-6d1b-40b1-8b07-e2f2aea3c9f4"; Requires replacement if changed.
 
 ### Read-Only
 

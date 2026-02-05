@@ -8,10 +8,10 @@ import (
 )
 
 type SourceWorkday struct {
-	AdditionalProperties jsontypes.Normalized        `tfsdk:"additional_properties"`
-	Credentials          SourceWorkdayAuthentication `tfsdk:"credentials"`
-	Host                 types.String                `tfsdk:"host"`
-	NumWorkers           types.Int64                 `tfsdk:"num_workers"`
-	ReportIds            []ReportIds                 `tfsdk:"report_ids"`
-	TenantID             types.String                `tfsdk:"tenant_id"`
+	AdditionalProperties jsontypes.Normalized         `tfsdk:"additional_properties"`
+	Credentials          *SourceWorkdayAuthentication `tfsdk:"credentials"`
+	Host                 types.String                 `tfsdk:"host"`
+	NumWorkers           types.Int64                  `tfsdk:"num_workers"`
+	ReportIds            []ReportIds                  `tfsdk:"report_ids"`
+	TenantID             types.String                 `tfsdk:"tenant_id"`
 }

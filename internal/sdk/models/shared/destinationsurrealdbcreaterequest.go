@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationSurrealdbCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string              `json:"definitionId,omitempty"`
+	DefinitionID  *string              `default:"de8c3498-80d9-468b-88a1-d4ebb729c3f6" json:"definitionId"`
 	WorkspaceID   string               `json:"workspaceId"`
 	Configuration DestinationSurrealdb `json:"configuration"`
+}
+
+func (d DestinationSurrealdbCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSurrealdbCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationSurrealdbCreateRequest) GetName() string {

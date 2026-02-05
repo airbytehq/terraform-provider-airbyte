@@ -71,7 +71,7 @@ resource "airbyte_destination_chroma" "my_destination_chroma" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "0b75218b-f702-4a28-85ac-34d3d84c0fc2"; Requires replacement if changed.
 
 ### Read-Only
 

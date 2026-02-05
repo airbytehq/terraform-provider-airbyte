@@ -20,11 +20,11 @@ type SourceKafka struct {
 	MaxRecordsProcess    types.Int64          `tfsdk:"max_records_process"`
 	MessageFormat        *MessageFormat       `tfsdk:"message_format"`
 	PollingTime          types.Int64          `tfsdk:"polling_time"`
-	Protocol             Protocol             `tfsdk:"protocol"`
+	Protocol             *Protocol            `tfsdk:"protocol"`
 	ReceiveBufferBytes   types.Int64          `tfsdk:"receive_buffer_bytes"`
 	RepeatedCalls        types.Int64          `tfsdk:"repeated_calls"`
 	RequestTimeoutMs     types.Int64          `tfsdk:"request_timeout_ms"`
 	RetryBackoffMs       types.Int64          `tfsdk:"retry_backoff_ms"`
-	Subscription         SubscriptionMethod   `tfsdk:"subscription"`
+	Subscription         *SubscriptionMethod  `tfsdk:"subscription"`
 	TestTopic            types.String         `tfsdk:"test_topic"`
 }

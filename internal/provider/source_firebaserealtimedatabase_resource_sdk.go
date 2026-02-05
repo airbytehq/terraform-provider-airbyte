@@ -16,6 +16,7 @@ func (r *SourceFirebaseRealtimeDatabaseResourceModel) RefreshFromSharedSourceRes
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceFirebaseRealtimeDatabase{}
 		r.Configuration.BufferSize = configurationPriorData.BufferSize
 		r.Configuration.DatabaseName = configurationPriorData.DatabaseName
 		r.Configuration.GoogleApplicationCredentials = configurationPriorData.GoogleApplicationCredentials
@@ -44,6 +45,7 @@ func (r *SourceFirebaseRealtimeDatabaseResourceModel) RefreshFromSharedSourceRes
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

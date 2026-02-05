@@ -29,7 +29,7 @@ type SourcePapersignDataSource struct {
 
 // SourcePapersignDataSourceModel describes the data model.
 type SourcePapersignDataSourceModel struct {
-	Configuration      tfTypes.SourceConfiguration         `tfsdk:"configuration"`
+	Configuration      *tfTypes.SourceConfiguration        `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	Name               types.String                        `tfsdk:"name"`

@@ -7,7 +7,7 @@ import (
 )
 
 type Cohorts struct {
-	DateRange DateRange    `tfsdk:"date_range"`
+	DateRange *DateRange   `tfsdk:"date_range"`
 	Dimension types.String `tfsdk:"dimension"`
 	Name      types.String `tfsdk:"name"`
 }

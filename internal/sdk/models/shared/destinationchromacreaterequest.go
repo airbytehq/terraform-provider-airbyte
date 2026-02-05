@@ -2,14 +2,29 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationChromaCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID *string `json:"definitionId,omitempty"`
+	DefinitionID *string `default:"0b75218b-f702-4a28-85ac-34d3d84c0fc2" json:"definitionId"`
 	WorkspaceID  string  `json:"workspaceId"`
 	// The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration, as well as to provide type safety for the configuration passed to the destination. The configuration model is composed of four parts: * Processing configuration * Embedding configuration * Indexing configuration * Advanced configuration Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 	Configuration DestinationChroma `json:"configuration"`
+}
+
+func (d DestinationChromaCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationChromaCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationChromaCreateRequest) GetName() string {

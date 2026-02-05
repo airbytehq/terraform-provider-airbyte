@@ -47,7 +47,7 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "18081484-02a5-4662-8dba-b270b582f321"; Requires replacement if changed.
 
 ### Read-Only
 

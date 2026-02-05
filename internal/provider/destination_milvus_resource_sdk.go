@@ -16,6 +16,7 @@ func (r *DestinationMilvusResourceModel) RefreshFromSharedDestinationResponse(ct
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationMilvus{}
 		r.Configuration.Embedding = configurationPriorData.Embedding
 		r.Configuration.Indexing = configurationPriorData.Indexing
 		r.Configuration.OmitRawText = configurationPriorData.OmitRawText
@@ -46,6 +47,7 @@ func (r *DestinationMilvusResourceModel) RefreshFromSharedDestinationResponse(ct
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

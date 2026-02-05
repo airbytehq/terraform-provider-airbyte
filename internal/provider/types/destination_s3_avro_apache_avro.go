@@ -8,7 +8,7 @@ import (
 )
 
 type DestinationS3AvroApacheAvro struct {
-	AdditionalProperties jsontypes.Normalized          `tfsdk:"additional_properties"`
-	CompressionCodec     DestinationS3CompressionCodec `tfsdk:"compression_codec"`
-	FormatType           types.String                  `tfsdk:"format_type"`
+	AdditionalProperties jsontypes.Normalized           `tfsdk:"additional_properties"`
+	CompressionCodec     *DestinationS3CompressionCodec `tfsdk:"compression_codec"`
+	FormatType           types.String                   `tfsdk:"format_type"`
 }

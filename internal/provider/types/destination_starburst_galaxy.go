@@ -7,13 +7,13 @@ import (
 )
 
 type DestinationStarburstGalaxy struct {
-	AcceptTerms        types.Bool         `tfsdk:"accept_terms"`
-	Catalog            types.String       `tfsdk:"catalog"`
-	CatalogSchema      types.String       `tfsdk:"catalog_schema"`
-	Password           types.String       `tfsdk:"password"`
-	Port               types.String       `tfsdk:"port"`
-	PurgeStagingTable  types.Bool         `tfsdk:"purge_staging_table"`
-	ServerHostname     types.String       `tfsdk:"server_hostname"`
-	StagingObjectStore StagingObjectStore `tfsdk:"staging_object_store"`
-	Username           types.String       `tfsdk:"username"`
+	AcceptTerms        types.Bool          `tfsdk:"accept_terms"`
+	Catalog            types.String        `tfsdk:"catalog"`
+	CatalogSchema      types.String        `tfsdk:"catalog_schema"`
+	Password           types.String        `tfsdk:"password"`
+	Port               types.String        `tfsdk:"port"`
+	PurgeStagingTable  types.Bool          `tfsdk:"purge_staging_table"`
+	ServerHostname     types.String        `tfsdk:"server_hostname"`
+	StagingObjectStore *StagingObjectStore `tfsdk:"staging_object_store"`
+	Username           types.String        `tfsdk:"username"`
 }

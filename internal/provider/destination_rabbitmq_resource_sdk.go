@@ -16,6 +16,7 @@ func (r *DestinationRabbitmqResourceModel) RefreshFromSharedDestinationResponse(
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationRabbitmq{}
 		r.Configuration.Exchange = configurationPriorData.Exchange
 		r.Configuration.Host = configurationPriorData.Host
 		r.Configuration.Password = configurationPriorData.Password
@@ -50,6 +51,7 @@ func (r *DestinationRabbitmqResourceModel) RefreshFromSharedDestinationResponse(
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

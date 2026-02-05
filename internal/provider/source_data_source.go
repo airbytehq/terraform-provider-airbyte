@@ -29,7 +29,7 @@ type SourceDataSource struct {
 
 // SourceDataSourceModel describes the data model.
 type SourceDataSourceModel struct {
-	Configuration            tfTypes.SourceConfiguration         `tfsdk:"configuration"`
+	Configuration            *tfTypes.SourceConfiguration        `tfsdk:"configuration"`
 	CreatedAt                types.Int64                         `tfsdk:"created_at"`
 	DefinitionID             types.String                        `tfsdk:"definition_id"`
 	IncludeSecretCoordinates types.Bool                          `queryParam:"style=form,explode=true,name=includeSecretCoordinates" tfsdk:"include_secret_coordinates"`

@@ -29,7 +29,7 @@ type SourceCiscoMerakiDataSource struct {
 
 // SourceCiscoMerakiDataSourceModel describes the data model.
 type SourceCiscoMerakiDataSourceModel struct {
-	Configuration      tfTypes.SourceConfiguration         `tfsdk:"configuration"`
+	Configuration      *tfTypes.SourceConfiguration        `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	Name               types.String                        `tfsdk:"name"`

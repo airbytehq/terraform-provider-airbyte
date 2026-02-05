@@ -62,7 +62,7 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "d4353156-9217-4cad-8dd7-c108fd4f74cf"; Requires replacement if changed.
 
 ### Read-Only
 

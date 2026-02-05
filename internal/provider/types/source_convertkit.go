@@ -10,6 +10,6 @@ import (
 type SourceConvertkit struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 	APISecret            types.String         `tfsdk:"api_secret"`
-	Credentials          AuthenticationType   `tfsdk:"credentials"`
+	Credentials          *AuthenticationType  `tfsdk:"credentials"`
 	StartDate            types.String         `tfsdk:"start_date"`
 }

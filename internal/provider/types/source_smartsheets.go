@@ -8,10 +8,10 @@ import (
 )
 
 type SourceSmartsheets struct {
-	AdditionalProperties jsontypes.Normalized                 `tfsdk:"additional_properties"`
-	Credentials          SourceSmartsheetsAuthorizationMethod `tfsdk:"credentials"`
-	IsReport             types.Bool                           `tfsdk:"is_report"`
-	MetadataFields       []types.String                       `tfsdk:"metadata_fields"`
-	SpreadsheetID        types.String                         `tfsdk:"spreadsheet_id"`
-	StartDatetime        types.String                         `tfsdk:"start_datetime"`
+	AdditionalProperties jsontypes.Normalized                  `tfsdk:"additional_properties"`
+	Credentials          *SourceSmartsheetsAuthorizationMethod `tfsdk:"credentials"`
+	IsReport             types.Bool                            `tfsdk:"is_report"`
+	MetadataFields       []types.String                        `tfsdk:"metadata_fields"`
+	SpreadsheetID        types.String                          `tfsdk:"spreadsheet_id"`
+	StartDatetime        types.String                          `tfsdk:"start_datetime"`
 }

@@ -8,15 +8,15 @@ import (
 )
 
 type DestinationS3 struct {
-	AccessKeyID          types.String              `tfsdk:"access_key_id"`
-	AdditionalProperties jsontypes.Normalized      `tfsdk:"additional_properties"`
-	FileNamePattern      types.String              `tfsdk:"file_name_pattern"`
-	Format               DestinationS3OutputFormat `tfsdk:"format"`
-	RoleArn              types.String              `tfsdk:"role_arn"`
-	S3BucketName         types.String              `tfsdk:"s3_bucket_name"`
-	S3BucketPath         types.String              `tfsdk:"s3_bucket_path"`
-	S3BucketRegion       types.String              `tfsdk:"s3_bucket_region"`
-	S3Endpoint           types.String              `tfsdk:"s3_endpoint"`
-	S3PathFormat         types.String              `tfsdk:"s3_path_format"`
-	SecretAccessKey      types.String              `tfsdk:"secret_access_key"`
+	AccessKeyID          types.String               `tfsdk:"access_key_id"`
+	AdditionalProperties jsontypes.Normalized       `tfsdk:"additional_properties"`
+	FileNamePattern      types.String               `tfsdk:"file_name_pattern"`
+	Format               *DestinationS3OutputFormat `tfsdk:"format"`
+	RoleArn              types.String               `tfsdk:"role_arn"`
+	S3BucketName         types.String               `tfsdk:"s3_bucket_name"`
+	S3BucketPath         types.String               `tfsdk:"s3_bucket_path"`
+	S3BucketRegion       types.String               `tfsdk:"s3_bucket_region"`
+	S3Endpoint           types.String               `tfsdk:"s3_endpoint"`
+	S3PathFormat         types.String               `tfsdk:"s3_path_format"`
+	SecretAccessKey      types.String               `tfsdk:"secret_access_key"`
 }

@@ -8,19 +8,19 @@ import (
 )
 
 type SourceOracleEnterprise struct {
-	AdditionalProperties            jsontypes.Normalized                  `tfsdk:"additional_properties"`
-	CheckPrivileges                 types.Bool                            `tfsdk:"check_privileges"`
-	CheckpointTargetIntervalSeconds types.Int64                           `tfsdk:"checkpoint_target_interval_seconds"`
-	Concurrency                     types.Int64                           `tfsdk:"concurrency"`
-	ConnectionData                  SourceOracleEnterpriseConnectBy       `tfsdk:"connection_data"`
-	Cursor                          SourceOracleEnterpriseUpdateMethod    `tfsdk:"cursor"`
-	Encryption                      SourceOracleEnterpriseEncryption      `tfsdk:"encryption"`
-	Host                            types.String                          `tfsdk:"host"`
-	JdbcURLParams                   types.String                          `tfsdk:"jdbc_url_params"`
-	Password                        types.String                          `tfsdk:"password"`
-	Port                            types.Int64                           `tfsdk:"port"`
-	Schemas                         []types.String                        `tfsdk:"schemas"`
-	TableFilters                    []SourceOracleEnterpriseTableFilter   `tfsdk:"table_filters"`
-	TunnelMethod                    SourceOracleEnterpriseSSHTunnelMethod `tfsdk:"tunnel_method"`
-	Username                        types.String                          `tfsdk:"username"`
+	AdditionalProperties            jsontypes.Normalized                   `tfsdk:"additional_properties"`
+	CheckPrivileges                 types.Bool                             `tfsdk:"check_privileges"`
+	CheckpointTargetIntervalSeconds types.Int64                            `tfsdk:"checkpoint_target_interval_seconds"`
+	Concurrency                     types.Int64                            `tfsdk:"concurrency"`
+	ConnectionData                  *SourceOracleEnterpriseConnectBy       `tfsdk:"connection_data"`
+	Cursor                          *SourceOracleEnterpriseUpdateMethod    `tfsdk:"cursor"`
+	Encryption                      *SourceOracleEnterpriseEncryption      `tfsdk:"encryption"`
+	Host                            types.String                           `tfsdk:"host"`
+	JdbcURLParams                   types.String                           `tfsdk:"jdbc_url_params"`
+	Password                        types.String                           `tfsdk:"password"`
+	Port                            types.Int64                            `tfsdk:"port"`
+	Schemas                         []types.String                         `tfsdk:"schemas"`
+	TableFilters                    []SourceOracleEnterpriseTableFilter    `tfsdk:"table_filters"`
+	TunnelMethod                    *SourceOracleEnterpriseSSHTunnelMethod `tfsdk:"tunnel_method"`
+	Username                        types.String                           `tfsdk:"username"`
 }

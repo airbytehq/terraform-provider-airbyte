@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationBigqueryCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string             `json:"definitionId,omitempty"`
+	DefinitionID  *string             `default:"22f6c74f-5699-40ff-833c-4a879ea40133" json:"definitionId"`
 	WorkspaceID   string              `json:"workspaceId"`
 	Configuration DestinationBigquery `json:"configuration"`
+}
+
+func (d DestinationBigqueryCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationBigqueryCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationBigqueryCreateRequest) GetName() string {

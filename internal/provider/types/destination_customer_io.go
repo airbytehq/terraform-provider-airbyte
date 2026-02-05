@@ -7,7 +7,7 @@ import (
 )
 
 type DestinationCustomerIo struct {
-	AdditionalProperties jsontypes.Normalized             `tfsdk:"additional_properties"`
-	Credentials          DestinationCustomerIoCredentials `tfsdk:"credentials"`
-	ObjectStorageConfig  *ObjectStorageSpec               `tfsdk:"object_storage_config"`
+	AdditionalProperties jsontypes.Normalized              `tfsdk:"additional_properties"`
+	Credentials          *DestinationCustomerIoCredentials `tfsdk:"credentials"`
+	ObjectStorageConfig  *ObjectStorageSpec                `tfsdk:"object_storage_config"`
 }

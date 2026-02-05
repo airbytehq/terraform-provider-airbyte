@@ -16,6 +16,7 @@ func (r *DestinationGcsResourceModel) RefreshFromSharedDestinationResponse(ctx c
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationGcs{}
 		r.Configuration.Credential = configurationPriorData.Credential
 		r.Configuration.Format = configurationPriorData.Format
 		r.Configuration.GcsBucketName = configurationPriorData.GcsBucketName
@@ -47,6 +48,7 @@ func (r *DestinationGcsResourceModel) RefreshFromSharedDestinationResponse(ctx c
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationPinecone struct {
-	Embedding   DestinationPineconeEmbedding             `tfsdk:"embedding"`
-	Indexing    DestinationPineconeIndexing              `tfsdk:"indexing"`
-	OmitRawText types.Bool                               `tfsdk:"omit_raw_text"`
-	Processing  DestinationPineconeProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *DestinationPineconeEmbedding             `tfsdk:"embedding"`
+	Indexing    *DestinationPineconeIndexing              `tfsdk:"indexing"`
+	OmitRawText types.Bool                                `tfsdk:"omit_raw_text"`
+	Processing  *DestinationPineconeProcessingConfigModel `tfsdk:"processing"`
 }

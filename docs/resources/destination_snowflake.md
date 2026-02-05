@@ -53,7 +53,7 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "424892c4-daac-4491-b35d-c6688ba547ba"; Requires replacement if changed.
 
 ### Read-Only
 

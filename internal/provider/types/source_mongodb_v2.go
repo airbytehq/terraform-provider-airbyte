@@ -9,7 +9,7 @@ import (
 
 type SourceMongodbV2 struct {
 	AdditionalProperties             jsontypes.Normalized `tfsdk:"additional_properties"`
-	DatabaseConfig                   ClusterType          `tfsdk:"database_config"`
+	DatabaseConfig                   *ClusterType         `tfsdk:"database_config"`
 	DiscoverSampleSize               types.Int64          `tfsdk:"discover_sample_size"`
 	DiscoverTimeoutSeconds           types.Int64          `tfsdk:"discover_timeout_seconds"`
 	InitialLoadTimeoutHours          types.Int64          `tfsdk:"initial_load_timeout_hours"`

@@ -9,7 +9,7 @@ import (
 
 type GCSStaging struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	Credential           Credential           `tfsdk:"credential"`
+	Credential           *Credential          `tfsdk:"credential"`
 	GcsBucketName        types.String         `tfsdk:"gcs_bucket_name"`
 	GcsBucketPath        types.String         `tfsdk:"gcs_bucket_path"`
 	KeepFilesInGcsBucket types.String         `tfsdk:"keep_files_in_gcs_bucket"`

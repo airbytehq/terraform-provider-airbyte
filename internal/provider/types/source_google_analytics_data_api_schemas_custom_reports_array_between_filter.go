@@ -3,6 +3,6 @@
 package types
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter struct {
-	FromValue SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue `tfsdk:"from_value"`
-	ToValue   SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue   `tfsdk:"to_value"`
+	FromValue *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue `tfsdk:"from_value"`
+	ToValue   *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue   `tfsdk:"to_value"`
 }

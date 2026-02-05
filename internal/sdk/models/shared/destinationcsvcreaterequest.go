@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationCsvCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string        `json:"definitionId,omitempty"`
+	DefinitionID  *string        `default:"8be1cf83-fde1-477f-a4ad-318d23c9f3c6" json:"definitionId"`
 	WorkspaceID   string         `json:"workspaceId"`
 	Configuration DestinationCsv `json:"configuration"`
+}
+
+func (d DestinationCsvCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationCsvCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationCsvCreateRequest) GetName() string {

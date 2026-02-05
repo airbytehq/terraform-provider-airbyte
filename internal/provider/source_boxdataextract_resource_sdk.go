@@ -16,6 +16,7 @@ func (r *SourceBoxDataExtractResourceModel) RefreshFromSharedSourceResponse(ctx 
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceBoxDataExtract{}
 		r.Configuration.AskAiPrompt = configurationPriorData.AskAiPrompt
 		r.Configuration.BoxFolderID = configurationPriorData.BoxFolderID
 		r.Configuration.BoxSubjectID = configurationPriorData.BoxSubjectID
@@ -49,6 +50,7 @@ func (r *SourceBoxDataExtractResourceModel) RefreshFromSharedSourceResponse(ctx 
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

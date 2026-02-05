@@ -37,7 +37,7 @@ resource "airbyte_destination_duckdb" "my_destination_duckdb" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "94bd199c-2ff0-4aa2-b98e-17f0acb72610"; Requires replacement if changed.
 
 ### Read-Only
 

@@ -55,7 +55,7 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "58e6f9da-904e-11ed-a1eb-0242ac120002"; Requires replacement if changed.
 
 ### Read-Only
 

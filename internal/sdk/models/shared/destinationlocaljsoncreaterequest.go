@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationLocalJSONCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string              `json:"definitionId,omitempty"`
+	DefinitionID  *string              `default:"a625d593-bba5-4a1c-a53d-2d246268a816" json:"definitionId"`
 	WorkspaceID   string               `json:"workspaceId"`
 	Configuration DestinationLocalJSON `json:"configuration"`
+}
+
+func (d DestinationLocalJSONCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationLocalJSONCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationLocalJSONCreateRequest) GetName() string {

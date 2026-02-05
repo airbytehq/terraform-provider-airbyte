@@ -17,6 +17,7 @@ func (r *SourceGoogleClassroomResourceModel) RefreshFromSharedSourceResponse(ctx
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceGoogleClassroom{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.ClientID = configurationPriorData.ClientID
 		r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
@@ -45,6 +46,7 @@ func (r *SourceGoogleClassroomResourceModel) RefreshFromSharedSourceResponse(ctx
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

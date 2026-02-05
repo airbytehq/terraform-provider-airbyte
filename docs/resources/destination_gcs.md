@@ -51,7 +51,7 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "ca8f6566-e555-4b40-943a-545bf123117a"; Requires replacement if changed.
 
 ### Read-Only
 

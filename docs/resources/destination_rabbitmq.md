@@ -41,7 +41,7 @@ resource "airbyte_destination_rabbitmq" "my_destination_rabbitmq" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "e06ad785-ad6f-4647-b2e8-3027a5c59454"; Requires replacement if changed.
 
 ### Read-Only
 

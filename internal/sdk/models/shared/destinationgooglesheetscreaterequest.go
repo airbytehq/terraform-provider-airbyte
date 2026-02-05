@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationGoogleSheetsCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string                 `json:"definitionId,omitempty"`
+	DefinitionID  *string                 `default:"a4cbd2d1-8dbe-4818-b8bc-b90ad782d12a" json:"definitionId"`
 	WorkspaceID   string                  `json:"workspaceId"`
 	Configuration DestinationGoogleSheets `json:"configuration"`
+}
+
+func (d DestinationGoogleSheetsCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGoogleSheetsCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationGoogleSheetsCreateRequest) GetName() string {

@@ -8,19 +8,19 @@ import (
 )
 
 type SourceSapHanaEnterprise struct {
-	AdditionalProperties            jsontypes.Normalized                   `tfsdk:"additional_properties"`
-	CheckPrivileges                 types.Bool                             `tfsdk:"check_privileges"`
-	CheckpointTargetIntervalSeconds types.Int64                            `tfsdk:"checkpoint_target_interval_seconds"`
-	Concurrency                     types.Int64                            `tfsdk:"concurrency"`
-	Cursor                          SourceSapHanaEnterpriseUpdateMethod    `tfsdk:"cursor"`
-	Database                        types.String                           `tfsdk:"database"`
-	Encryption                      SourceSapHanaEnterpriseEncryption      `tfsdk:"encryption"`
-	Filters                         []SourceSapHanaEnterpriseTableFilter   `tfsdk:"filters"`
-	Host                            types.String                           `tfsdk:"host"`
-	JdbcURLParams                   types.String                           `tfsdk:"jdbc_url_params"`
-	Password                        types.String                           `tfsdk:"password"`
-	Port                            types.Int64                            `tfsdk:"port"`
-	Schemas                         []types.String                         `tfsdk:"schemas"`
-	TunnelMethod                    SourceSapHanaEnterpriseSSHTunnelMethod `tfsdk:"tunnel_method"`
-	Username                        types.String                           `tfsdk:"username"`
+	AdditionalProperties            jsontypes.Normalized                    `tfsdk:"additional_properties"`
+	CheckPrivileges                 types.Bool                              `tfsdk:"check_privileges"`
+	CheckpointTargetIntervalSeconds types.Int64                             `tfsdk:"checkpoint_target_interval_seconds"`
+	Concurrency                     types.Int64                             `tfsdk:"concurrency"`
+	Cursor                          *SourceSapHanaEnterpriseUpdateMethod    `tfsdk:"cursor"`
+	Database                        types.String                            `tfsdk:"database"`
+	Encryption                      *SourceSapHanaEnterpriseEncryption      `tfsdk:"encryption"`
+	Filters                         []SourceSapHanaEnterpriseTableFilter    `tfsdk:"filters"`
+	Host                            types.String                            `tfsdk:"host"`
+	JdbcURLParams                   types.String                            `tfsdk:"jdbc_url_params"`
+	Password                        types.String                            `tfsdk:"password"`
+	Port                            types.Int64                             `tfsdk:"port"`
+	Schemas                         []types.String                          `tfsdk:"schemas"`
+	TunnelMethod                    *SourceSapHanaEnterpriseSSHTunnelMethod `tfsdk:"tunnel_method"`
+	Username                        types.String                            `tfsdk:"username"`
 }

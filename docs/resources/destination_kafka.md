@@ -59,7 +59,7 @@ resource "airbyte_destination_kafka" "my_destination_kafka" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "9f760101-60ae-462f-9ee6-b7a9dafd454d"; Requires replacement if changed.
 
 ### Read-Only
 
