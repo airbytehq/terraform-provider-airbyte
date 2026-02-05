@@ -21,7 +21,7 @@ This process allows you to test provider builds from GitHub Actions CI workflows
    gh run list --workflow="test-full.yml" --limit 5
    ```
 
-2. **Download the provider binaries** (replace `<RUN_ID>` with actual run ID):
+2. **Download the provider binaries** (replace `<RUN_ID>` with actual run ID; e.g., PR #283 used `21724498442`):
 
    ```bash
    cd test-projects/v1-tf-latest-test
@@ -43,6 +43,19 @@ This process allows you to test provider builds from GitHub Actions CI workflows
    ```
 
    Note: Use `terraform-provider-airbyte_linux_amd64` for Linux systems.
+
+### Step 1.5: Create .terraformrc (provider override)
+
+```bash
+cat > .terraformrc <<'EOF'
+provider_installation {
+  dev_overrides {
+    "airbytehq/airbyte" = "./provider-override"
+  }
+  direct {}
+}
+EOF
+```
 
 ### Step 2: Configure Authentication
 
@@ -89,7 +102,7 @@ This process allows you to test provider builds from GitHub Actions CI workflows
 
 The test setup uses Terraform's [development overrides](https://developer.hashicorp.com/terraform/cli/config/config-file#development-overrides-for-provider-developers) to use a local provider binary instead of downloading from the registry:
 
-1. **`.terraformrc`** - Points Terraform to use the local binary in `./provider-override/` (uses relative path, committed to repo)
+1. **`.terraformrc`** - Points Terraform to use the local binary in `./provider-override/` (uses relative path; create this file locally as shown above)
 2. **`provider-override/`** - Contains the provider binary from CI (gitignored)
 3. **`.env`** - Contains authentication credentials as environment variables (gitignored)
 4. **`main.tf`** - Includes the `token_url` workaround for [#280](https://github.com/airbytehq/terraform-provider-airbyte/issues/280)
@@ -137,7 +150,7 @@ chmod +x provider-override/terraform-provider-airbyte
 test-projects/v1-tf-latest-test/
 ├── .env                    # Your credentials (gitignored)
 ├── .env.example            # Template for credentials
-├── .terraformrc            # Dev override config (uses relative path, committed)
+├── .terraformrc            # Dev override config (created locally)
 ├── main.tf                 # Terraform configuration
 ├── provider-bin/           # Downloaded CI binaries (gitignored)
 └── provider-override/      # Active provider binary (gitignored)
