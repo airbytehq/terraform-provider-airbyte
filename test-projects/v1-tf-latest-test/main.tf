@@ -36,7 +36,6 @@ variable "workspace_id" {
   # Default to the Devin Sandbox workspace for this example
   default     = "266ebdfe-0d7b-4540-9817-de7e4505ba61"
   type        = string
-  default     = "266ebdfe-0d7b-4540-9817-de7e4505ba61" # Default to Devin Sandbox
 }
 
 variable "motherduck_api_key" {
