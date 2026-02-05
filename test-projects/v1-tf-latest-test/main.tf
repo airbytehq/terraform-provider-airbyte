@@ -68,20 +68,20 @@ resource "airbyte_source_faker" "faker_2" {
 # NOTE: Currently fails with "value-not-found" error in Airbyte Cloud
 # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/281
 # TK-TODO: Resolve before merging
-resource "airbyte_destination_motherduck" "motherduck" {
-  name         = "destination-motherduck"
+resource "airbyte_destination_dev_null" "dev_null" {
+  name         = "destination-dev-null"
   workspace_id = var.workspace_id
   configuration = {
-    motherduck_api_key = var.motherduck_api_key
-    destination_path   = "md:airbyte_test"
-    schema             = "main"
+    test_destination = {
+      silent = {}
+    }
   }
 }
 
 resource "airbyte_connection" "faker_1_to_motherduck" {
-  name           = "faker-1-to-motherduck"
+  name           = "faker-1-to-dev-null"
   source_id      = airbyte_source_faker.faker_1.source_id
-  destination_id = airbyte_destination_motherduck.motherduck.destination_id
+  destination_id = airbyte_destination_dev_null.dev_null.destination_id
   schedule = {
     schedule_type = "manual"
   }
@@ -105,9 +105,9 @@ resource "airbyte_connection" "faker_1_to_motherduck" {
 }
 
 resource "airbyte_connection" "faker_2_to_motherduck" {
-  name           = "faker-2-to-motherduck"
+  name           = "faker-2-to-dev-null"
   source_id      = airbyte_source_faker.faker_2.source_id
-  destination_id = airbyte_destination_motherduck.motherduck.destination_id
+  destination_id = airbyte_destination_dev_null.dev_null.destination_id
   schedule = {
     schedule_type = "manual"
   }
@@ -145,9 +145,9 @@ output "faker_2_source_id" {
   description = "The ID of the second faker source"
 }
 
-output "motherduck_destination_id" {
-  value       = airbyte_destination_motherduck.motherduck.destination_id
-  description = "The ID of the MotherDuck destination"
+output "dev_null_destination_id" {
+  value       = airbyte_destination_dev_null.dev_null.destination_id
+  description = "The ID of the dev-null destination"
 }
 
 output "faker_1_connection_id" {
