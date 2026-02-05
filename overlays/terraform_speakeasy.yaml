@@ -56,3 +56,26 @@ actions:
     description: "Use shorter name 'RowFiltering' for Terraform attribute"
     update:
       x-speakeasy-name-override: RowFiltering
+
+  # =============================================================================
+  # Source/Destination Configuration as Dynamic Objects
+  # =============================================================================
+  # The SourceConfiguration and DestinationConfiguration schemas in the upstream
+  # API spec are defined without a type, which causes Speakeasy to generate empty
+  # structs. This means configuration values passed in Terraform are silently
+  # ignored. We need to define these as dynamic objects (type: object with
+  # additionalProperties: true) so Speakeasy generates proper handling for
+  # arbitrary JSON configuration.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/XXX
+
+  - target: "$.components.schemas.SourceConfiguration"
+    description: "Define SourceConfiguration as a dynamic object to accept arbitrary configuration"
+    update:
+      type: object
+      additionalProperties: true
+
+  - target: "$.components.schemas.DestinationConfiguration"
+    description: "Define DestinationConfiguration as a dynamic object to accept arbitrary configuration"
+    update:
+      type: object
+      additionalProperties: true
