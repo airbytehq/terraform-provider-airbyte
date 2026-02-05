@@ -201,6 +201,7 @@ jobs:
             - name: Build provider binaries for testing
               if: ${{ inputs.dry_run }}
               run: |
+                  mkdir -p dist
                   # Build for Linux amd64 (AI/CI environments)
                   GOOS=linux GOARCH=amd64 go build -o dist/terraform-provider-airbyte_linux_amd64
                   # Build for Mac M-series (Engineers)
