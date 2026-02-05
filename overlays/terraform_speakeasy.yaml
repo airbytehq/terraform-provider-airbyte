@@ -63,19 +63,16 @@ actions:
   # The SourceConfiguration and DestinationConfiguration schemas in the upstream
   # API spec are defined without a type, which causes Speakeasy to generate empty
   # structs. This means configuration values passed in Terraform are silently
-  # ignored. We need to define these as dynamic objects (type: object with
-  # additionalProperties: true) so Speakeasy generates proper handling for
-  # arbitrary JSON configuration.
+  # ignored. We use x-speakeasy-type-override: any to tell Speakeasy to treat
+  # these as arbitrary JSON blobs, similar to how we handle circular references.
   # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/XXX
 
   - target: "$.components.schemas.SourceConfiguration"
-    description: "Define SourceConfiguration as a dynamic object to accept arbitrary configuration"
+    description: "Treat SourceConfiguration as arbitrary JSON to accept any configuration"
     update:
-      type: object
-      additionalProperties: true
+      x-speakeasy-type-override: any
 
   - target: "$.components.schemas.DestinationConfiguration"
-    description: "Define DestinationConfiguration as a dynamic object to accept arbitrary configuration"
+    description: "Treat DestinationConfiguration as arbitrary JSON to accept any configuration"
     update:
-      type: object
-      additionalProperties: true
+      x-speakeasy-type-override: any
