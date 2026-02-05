@@ -288,6 +288,7 @@ DESTINATION_CREATE_REQUEST_TEMPLATE = """
           description: The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
           format: uuid
           type: string
+          default: "{definition_id}"
         workspaceId:
           format: uuid
           type: string
@@ -546,10 +547,14 @@ def generate_source_create_request(upper_camel_name: str, hyphen_name: str) -> s
     )
 
 
-def generate_destination_create_request(upper_camel_name: str, hyphen_name: str) -> str:
+def generate_destination_create_request(
+    upper_camel_name: str, hyphen_name: str, definition_id: str
+) -> str:
     """Generate the OpenAPI schema for a destination create request."""
     return DESTINATION_CREATE_REQUEST_TEMPLATE.format(
-        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+        upper_camel_name=upper_camel_name,
+        hyphen_name=hyphen_name,
+        definition_id=definition_id,
     )
 
 
@@ -704,6 +709,7 @@ def main() -> None:
         source_specs.append((schema_name_update, transformed_update))
 
     destination_names = []
+    destination_definition_ids: dict[str, str] = {}
     destination_specs = []
     for dest in destinations:
         docker_repo = dest.get("dockerRepository", "")
@@ -713,6 +719,9 @@ def main() -> None:
             print(f"  Skipping destination {name} - no spec found")
             continue
         destination_names.append(name)
+        definition_id = dest.get("destinationDefinitionId", "")
+        if definition_id:
+            destination_definition_ids[name] = definition_id
         # Generate both create and update schemas
         schema_name, transformed = transform_connector_spec(name, spec, "destination", False)
         destination_specs.append((schema_name, transformed))
@@ -821,7 +830,8 @@ def main() -> None:
     # Add destination create/update request schemas
     for name in destination_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_parts.append(generate_destination_create_request(upper_camel, name))
+        definition_id = destination_definition_ids.get(name, "")
+        output_parts.append(generate_destination_create_request(upper_camel, name, definition_id))
         output_parts.append(generate_destination_update_request(upper_camel, name))
 
     # Add connector configuration schemas
