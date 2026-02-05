@@ -7,7 +7,7 @@
 # This workflow calls the main generation workflow with dry_run=true to ensure
 # both workflows use the same generation logic.
 
-name: Validate Speakeasy Generation (Dry Run)
+name: Test (Full)
 
 on:
   pull_request:
