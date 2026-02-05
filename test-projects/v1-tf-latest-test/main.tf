@@ -38,12 +38,6 @@ variable "workspace_id" {
   type        = string
 }
 
-variable "motherduck_api_key" {
-  description = "MotherDuck API key for destination authentication."
-  sensitive   = true
-  type        = string
-}
-
 # First source: Faker with default settings
 resource "airbyte_source_faker" "faker_1" {
   name         = "source-faker-1"
