@@ -79,22 +79,6 @@ resource "airbyte_connection" "faker_1_to_motherduck" {
   schedule = {
     schedule_type = "manual"
   }
-  configurations = {
-    streams = [
-      {
-        name      = "users"
-        sync_mode = "full_refresh_overwrite"
-      },
-      {
-        name      = "products"
-        sync_mode = "full_refresh_overwrite"
-      },
-      {
-        name      = "purchases"
-        sync_mode = "full_refresh_overwrite"
-      }
-    ]
-  }
   status = "inactive"
 }
 
@@ -104,22 +88,6 @@ resource "airbyte_connection" "faker_2_to_motherduck" {
   destination_id = airbyte_destination_dev_null.dev_null.destination_id
   schedule = {
     schedule_type = "manual"
-  }
-  configurations = {
-    streams = [
-      {
-        name      = "users"
-        sync_mode = "full_refresh_overwrite"
-      },
-      {
-        name      = "products"
-        sync_mode = "full_refresh_overwrite"
-      },
-      {
-        name      = "purchases"
-        sync_mode = "full_refresh_overwrite"
-      }
-    ]
   }
   status = "inactive"
 }
