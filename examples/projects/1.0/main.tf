@@ -28,14 +28,15 @@ variable "airbyte_client_secret" {
   type        = string
 }
 
-resource "airbyte_workspace" "example" {
-  name = "1.0-example-workspace"
+variable "workspace_id" {
+  description = "The Airbyte workspace ID to use for testing."
+  type        = string
 }
 
 # First source: Faker with default settings
 resource "airbyte_source_faker" "faker_1" {
   name         = "source-faker-1"
-  workspace_id = airbyte_workspace.example.workspace_id
+  workspace_id = var.workspace_id
   configuration = {
     count = 1000
     seed  = 42
@@ -45,7 +46,7 @@ resource "airbyte_source_faker" "faker_1" {
 # Second source: Faker with different settings
 resource "airbyte_source_faker" "faker_2" {
   name         = "source-faker-2"
-  workspace_id = airbyte_workspace.example.workspace_id
+  workspace_id = var.workspace_id
   configuration = {
     count = 500
     seed  = 123
@@ -55,7 +56,7 @@ resource "airbyte_source_faker" "faker_2" {
 # Destination: Dev Null (silent mode)
 resource "airbyte_destination_dev_null" "dev_null" {
   name         = "destination-dev-null"
-  workspace_id = airbyte_workspace.example.workspace_id
+  workspace_id = var.workspace_id
   configuration = {
     test_destination = {
       silent = {}
@@ -116,8 +117,8 @@ resource "airbyte_connection" "faker_2_to_dev_null" {
 }
 
 output "workspace_id" {
-  value       = airbyte_workspace.example.workspace_id
-  description = "The ID of the created workspace"
+  value       = var.workspace_id
+  description = "The ID of the workspace"
 }
 
 output "faker_1_source_id" {
