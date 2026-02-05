@@ -54,6 +54,26 @@ terraform plan
 | `.github/workflows/release-drafter.yml` | Creates draft releases with pre-built assets |
 | `.github/workflows/generate-command.yml` | Triggers provider regeneration via Speakeasy |
 
+### End-to-End Testing with CI Artifacts
+
+Before merging PRs or cutting releases, test the provider with real Airbyte Cloud resources using provider binaries built by CI. This validates that the generated code works correctly with the Airbyte API.
+
+**When to test:**
+
+- **Before merging PRs** with significant changes (spec updates, generation config changes, etc.)
+- **Before publishing releases** to catch issues early
+
+**How to test:**
+
+See the comprehensive testing guide in [`test-projects/README.md`](test-projects/README.md) which covers:
+
+1. Downloading provider binaries from CI workflow artifacts
+2. Configuring local Terraform to use the CI-built provider
+3. Running end-to-end tests with real Airbyte Cloud resources
+4. Troubleshooting common issues
+
+The test project uses development overrides to test unreleased provider builds before they reach the Terraform Registry.
+
 ## Releasing
 
 After each merge to main, a draft release is created/updated automatically. You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
