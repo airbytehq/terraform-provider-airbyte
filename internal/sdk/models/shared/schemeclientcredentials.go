@@ -9,7 +9,7 @@ import (
 type SchemeClientCredentials struct {
 	ClientID     string `security:"name=clientID"`
 	ClientSecret string `security:"name=clientSecret"`
-	TokenURL     string `default:"/applications/token"`
+	TokenURL     string `default:"/v1/applications/token"`
 }
 
 func (s SchemeClientCredentials) MarshalJSON() ([]byte, error) {

@@ -412,7 +412,7 @@ SECURITY_SCHEMES = """  securitySchemes:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: /applications/token
+          tokenUrl: /v1/applications/token
           scopes: {}
 security:
   - bearerAuth: []
