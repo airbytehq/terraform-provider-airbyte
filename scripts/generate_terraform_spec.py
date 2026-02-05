@@ -102,7 +102,11 @@ SOURCE_PATH_TEMPLATE = """\
             schema:
               $ref: "#/components/schemas/Source{upper_camel_name}PutRequest"
       responses:
-        "204":
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -195,7 +199,11 @@ DESTINATION_PATH_TEMPLATE = """\
             schema:
               $ref: "#/components/schemas/Destination{upper_camel_name}PutRequest"
       responses:
-        "204":
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
