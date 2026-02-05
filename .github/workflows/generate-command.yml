@@ -198,6 +198,22 @@ jobs:
                       internal/sdk/
                   retention-days: 7
 
+            - name: Build provider binaries for testing
+              if: ${{ inputs.dry_run }}
+              run: |
+                  # Build for Linux amd64 (Devin/CI environments)
+                  GOOS=linux GOARCH=amd64 go build -o dist/terraform-provider-airbyte_linux_amd64
+                  # Build for Mac M-series (Engineers)
+                  GOOS=darwin GOARCH=arm64 go build -o dist/terraform-provider-airbyte_darwin_arm64
+
+            - name: Upload provider binaries as artifact
+              if: ${{ inputs.dry_run }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: provider_binaries
+                  path: dist/
+                  retention-days: 7
+
             - name: Generation Summary
               run: |
                   echo "=== Generation Summary ==="
