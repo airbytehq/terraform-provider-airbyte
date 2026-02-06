@@ -14,9 +14,6 @@ terraform {
 provider "airbyte" {
   client_id     = var.airbyte_client_id
   client_secret = var.airbyte_client_secret
-  # Workaround for https://github.com/airbytehq/terraform-provider-airbyte/issues/280
-  # TK-TODO: Resolve before merging.
-  token_url     = "https://api.airbyte.com/v1/applications/token"
 }
 
 variable "airbyte_client_id" {
@@ -58,10 +55,8 @@ resource "airbyte_source_faker" "faker_2" {
   }
 }
 
-# Destination: MotherDuck
-# NOTE: Currently fails with "value-not-found" error in Airbyte Cloud
-# See: https://github.com/airbytehq/terraform-provider-airbyte/issues/281
-# TK-TODO: Resolve before merging
+# Destination: Dev Null (for testing)
+# Note: MotherDuck issue (#281) resolved upstream; using dev-null for simpler testing
 resource "airbyte_destination_dev_null" "dev_null" {
   name         = "destination-dev-null"
   workspace_id = var.workspace_id
