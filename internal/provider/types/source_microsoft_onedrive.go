@@ -7,7 +7,7 @@ import (
 )
 
 type SourceMicrosoftOnedrive struct {
-	Credentials SourceMicrosoftOnedriveAuthentication          `tfsdk:"credentials"`
+	Credentials *SourceMicrosoftOnedriveAuthentication         `tfsdk:"credentials"`
 	DriveName   types.String                                   `tfsdk:"drive_name"`
 	FolderPath  types.String                                   `tfsdk:"folder_path"`
 	SearchScope types.String                                   `tfsdk:"search_scope"`

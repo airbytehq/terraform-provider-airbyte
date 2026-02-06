@@ -35,7 +35,7 @@ resource "airbyte_destination_streamr_airbyte_connectors" "my_destination_stream
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "eebd85cf-60b2-4af6-9ba0-edeca01437b0"; Requires replacement if changed.
 
 ### Read-Only
 

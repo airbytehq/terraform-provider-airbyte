@@ -52,7 +52,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "d4d3fef9-e319-45c2-881a-bd02ce44cc9f"; Requires replacement if changed.
 
 ### Read-Only
 

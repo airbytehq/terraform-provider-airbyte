@@ -47,7 +47,7 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "22f6c74f-5699-40ff-833c-4a879ea40133"; Requires replacement if changed.
 
 ### Read-Only
 

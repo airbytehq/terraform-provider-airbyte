@@ -46,7 +46,7 @@ resource "airbyte_destination_ragie" "my_destination_ragie" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "08361b9d-8d84-40fc-bdbb-ee497691b3e8"; Requires replacement if changed.
 
 ### Read-Only
 

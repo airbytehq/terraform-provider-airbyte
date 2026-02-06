@@ -17,6 +17,7 @@ func (r *SourceMssqlResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceMssql{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.AdditionalProperties1 = configurationPriorData.AdditionalProperties1
 		r.Configuration.CheckPrivileges = configurationPriorData.CheckPrivileges
@@ -56,6 +57,7 @@ func (r *SourceMssqlResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

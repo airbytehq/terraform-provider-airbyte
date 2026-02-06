@@ -38,7 +38,7 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "e9810f61-4bab-46d2-bb22-edfc902e0644"; Requires replacement if changed.
 
 ### Read-Only
 

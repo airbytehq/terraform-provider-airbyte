@@ -17,6 +17,7 @@ func (r *SourceMicrosoftEntraIDResourceModel) RefreshFromSharedSourceResponse(ct
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceMicrosoftEntraID{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.ClientID = configurationPriorData.ClientID
 		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
@@ -46,6 +47,7 @@ func (r *SourceMicrosoftEntraIDResourceModel) RefreshFromSharedSourceResponse(ct
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

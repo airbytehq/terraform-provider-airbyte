@@ -39,7 +39,7 @@ resource "airbyte_destination_typesense" "my_destination_typesense" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "36be8dc6-9851-49af-b776-9d4c30e4ab6a"; Requires replacement if changed.
 
 ### Read-Only
 

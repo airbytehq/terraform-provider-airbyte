@@ -16,6 +16,7 @@ func (r *DestinationAwsDatalakeResourceModel) RefreshFromSharedDestinationRespon
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationAwsDatalake{}
 		r.Configuration.AwsAccountID = configurationPriorData.AwsAccountID
 		r.Configuration.BucketName = configurationPriorData.BucketName
 		r.Configuration.BucketPrefix = configurationPriorData.BucketPrefix
@@ -54,6 +55,7 @@ func (r *DestinationAwsDatalakeResourceModel) RefreshFromSharedDestinationRespon
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

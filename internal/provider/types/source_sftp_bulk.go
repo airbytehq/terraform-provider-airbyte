@@ -7,7 +7,7 @@ import (
 )
 
 type SourceSftpBulk struct {
-	Credentials    SourceSftpBulkAuthentication          `tfsdk:"credentials"`
+	Credentials    *SourceSftpBulkAuthentication         `tfsdk:"credentials"`
 	DeliveryMethod *SourceSftpBulkDeliveryMethod         `tfsdk:"delivery_method"`
 	FolderPath     types.String                          `tfsdk:"folder_path"`
 	Host           types.String                          `tfsdk:"host"`

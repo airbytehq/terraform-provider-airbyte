@@ -6,8 +6,10 @@ import (
 	"context"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/action"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/ephemeral"
+	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/list"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -17,7 +19,9 @@ import (
 )
 
 var _ provider.Provider = (*AirbyteProvider)(nil)
+var _ provider.ProviderWithActions = (*AirbyteProvider)(nil)
 var _ provider.ProviderWithEphemeralResources = (*AirbyteProvider)(nil)
+var _ provider.ProviderWithFunctions = (*AirbyteProvider)(nil)
 
 type AirbyteProvider struct {
 	// version is set to the provider version on release, "dev" when the
@@ -152,10 +156,19 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	}
 
 	client := sdk.New(opts...)
+	resp.ActionData = client
 	resp.DataSourceData = client
 	resp.EphemeralResourceData = client
 	resp.ListResourceData = client
 	resp.ResourceData = client
+}
+
+func (p *AirbyteProvider) Functions(_ context.Context) []func() function.Function {
+	return []func() function.Function{}
+}
+
+func (p *AirbyteProvider) Actions(_ context.Context) []func() action.Action {
+	return []func() action.Action{}
 }
 
 func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resource {

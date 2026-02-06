@@ -8,7 +8,7 @@ import (
 
 type SourceGcs struct {
 	Bucket         types.String                     `tfsdk:"bucket"`
-	Credentials    SourceGcsAuthentication          `tfsdk:"credentials"`
+	Credentials    *SourceGcsAuthentication         `tfsdk:"credentials"`
 	DeliveryMethod *SourceGcsDeliveryMethod         `tfsdk:"delivery_method"`
 	StartDate      types.String                     `tfsdk:"start_date"`
 	Streams        []SourceGcsFileBasedStreamConfig `tfsdk:"streams"`

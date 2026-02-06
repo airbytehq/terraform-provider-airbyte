@@ -34,7 +34,7 @@ resource "airbyte_destination_sqlite" "my_destination_sqlite" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "b76be0a6-27dc-4560-95f6-2623da0bd7b6"; Requires replacement if changed.
 
 ### Read-Only
 

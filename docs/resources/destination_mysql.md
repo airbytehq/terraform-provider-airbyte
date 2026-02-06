@@ -47,7 +47,7 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "ca81ee7c-3163-4246-af40-094cc31e5e42"; Requires replacement if changed.
 
 ### Read-Only
 

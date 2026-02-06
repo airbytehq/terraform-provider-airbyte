@@ -8,5 +8,5 @@ import (
 
 type NumericFilter struct {
 	Operation []types.String `tfsdk:"operation"`
-	Value     Value          `tfsdk:"value"`
+	Value     *Value         `tfsdk:"value"`
 }

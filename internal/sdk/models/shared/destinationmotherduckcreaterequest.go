@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationMotherduckCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string               `json:"definitionId,omitempty"`
+	DefinitionID  *string               `default:"042ee9b5-eb98-4e99-a4e5-3f0d573bee66" json:"definitionId"`
 	WorkspaceID   string                `json:"workspaceId"`
 	Configuration DestinationMotherduck `json:"configuration"`
+}
+
+func (d DestinationMotherduckCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMotherduckCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationMotherduckCreateRequest) GetName() string {

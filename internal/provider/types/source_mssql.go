@@ -18,7 +18,7 @@ type SourceMssql struct {
 	JdbcURLParams                   types.String                               `tfsdk:"jdbc_url_params"`
 	Password                        types.String                               `tfsdk:"password"`
 	Port                            types.Int64                                `tfsdk:"port"`
-	ReplicationMethod               SourceMssqlUpdateMethod                    `tfsdk:"replication_method"`
+	ReplicationMethod               *SourceMssqlUpdateMethod                   `tfsdk:"replication_method"`
 	Schemas                         []types.String                             `tfsdk:"schemas"`
 	SslMode                         *SourceMssqlEncryption                     `tfsdk:"ssl_mode"`
 	TunnelMethod                    *SourceMssqlSSHTunnelMethod                `tfsdk:"tunnel_method"`

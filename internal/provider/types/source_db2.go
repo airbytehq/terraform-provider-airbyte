@@ -7,11 +7,11 @@ import (
 )
 
 type SourceDb2 struct {
-	Db            types.String        `tfsdk:"db"`
-	Encryption    SourceDb2Encryption `tfsdk:"encryption"`
-	Host          types.String        `tfsdk:"host"`
-	JdbcURLParams types.String        `tfsdk:"jdbc_url_params"`
-	Password      types.String        `tfsdk:"password"`
-	Port          types.Int64         `tfsdk:"port"`
-	Username      types.String        `tfsdk:"username"`
+	Db            types.String         `tfsdk:"db"`
+	Encryption    *SourceDb2Encryption `tfsdk:"encryption"`
+	Host          types.String         `tfsdk:"host"`
+	JdbcURLParams types.String         `tfsdk:"jdbc_url_params"`
+	Password      types.String         `tfsdk:"password"`
+	Port          types.Int64          `tfsdk:"port"`
+	Username      types.String         `tfsdk:"username"`
 }

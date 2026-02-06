@@ -7,7 +7,7 @@ import (
 )
 
 type DestinationHubspot struct {
-	AdditionalProperties jsontypes.Normalized          `tfsdk:"additional_properties"`
-	Credentials          DestinationHubspotCredentials `tfsdk:"credentials"`
-	ObjectStorageConfig  *ObjectStorageConfiguration   `tfsdk:"object_storage_config"`
+	AdditionalProperties jsontypes.Normalized           `tfsdk:"additional_properties"`
+	Credentials          *DestinationHubspotCredentials `tfsdk:"credentials"`
+	ObjectStorageConfig  *ObjectStorageConfiguration    `tfsdk:"object_storage_config"`
 }

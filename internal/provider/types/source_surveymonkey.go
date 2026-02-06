@@ -8,9 +8,9 @@ import (
 )
 
 type SourceSurveymonkey struct {
-	AdditionalProperties jsontypes.Normalized            `tfsdk:"additional_properties"`
-	Credentials          SurveyMonkeyAuthorizationMethod `tfsdk:"credentials"`
-	Origin               types.String                    `tfsdk:"origin"`
-	StartDate            types.String                    `tfsdk:"start_date"`
-	SurveyIds            []types.String                  `tfsdk:"survey_ids"`
+	AdditionalProperties jsontypes.Normalized             `tfsdk:"additional_properties"`
+	Credentials          *SurveyMonkeyAuthorizationMethod `tfsdk:"credentials"`
+	Origin               types.String                     `tfsdk:"origin"`
+	StartDate            types.String                     `tfsdk:"start_date"`
+	SurveyIds            []types.String                   `tfsdk:"survey_ids"`
 }

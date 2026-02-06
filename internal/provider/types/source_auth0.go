@@ -8,8 +8,8 @@ import (
 )
 
 type SourceAuth0 struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	BaseURL              types.String         `tfsdk:"base_url"`
-	Credentials          AuthenticationMethod `tfsdk:"credentials"`
-	StartDate            types.String         `tfsdk:"start_date"`
+	AdditionalProperties jsontypes.Normalized  `tfsdk:"additional_properties"`
+	BaseURL              types.String          `tfsdk:"base_url"`
+	Credentials          *AuthenticationMethod `tfsdk:"credentials"`
+	StartDate            types.String          `tfsdk:"start_date"`
 }

@@ -50,7 +50,7 @@ resource "airbyte_destination_yellowbrick" "my_destination_yellowbrick" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "1f7bac7e-53ff-4e0b-b6df-b74aa85cf703"; Requires replacement if changed.
 
 ### Read-Only
 

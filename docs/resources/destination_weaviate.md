@@ -79,7 +79,7 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "7b7d7a0d-954c-45a0-bcfc-39a634b97736"; Requires replacement if changed.
 
 ### Read-Only
 

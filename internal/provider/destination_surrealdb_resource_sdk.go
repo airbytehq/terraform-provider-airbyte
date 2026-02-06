@@ -16,6 +16,7 @@ func (r *DestinationSurrealdbResourceModel) RefreshFromSharedDestinationResponse
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationSurrealdb{}
 		r.Configuration.SurrealdbDatabase = configurationPriorData.SurrealdbDatabase
 		r.Configuration.SurrealdbNamespace = configurationPriorData.SurrealdbNamespace
 		r.Configuration.SurrealdbPassword = configurationPriorData.SurrealdbPassword
@@ -47,6 +48,7 @@ func (r *DestinationSurrealdbResourceModel) RefreshFromSharedDestinationResponse
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

@@ -33,6 +33,8 @@ type PutSourceGoogleDirectoryResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	SourceResponse *shared.SourceResponse
 }
 
 func (p *PutSourceGoogleDirectoryResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutSourceGoogleDirectoryResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutSourceGoogleDirectoryResponse) GetSourceResponse() *shared.SourceResponse {
+	if p == nil {
+		return nil
+	}
+	return p.SourceResponse
 }

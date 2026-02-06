@@ -34,7 +34,7 @@ resource "airbyte_destination_local_json" "my_destination_localjson" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "a625d593-bba5-4a1c-a53d-2d246268a816"; Requires replacement if changed.
 
 ### Read-Only
 

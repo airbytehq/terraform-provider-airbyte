@@ -38,7 +38,7 @@ resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "8ccd8909-4e99-4141-b48d-4984b70b2d89"; Requires replacement if changed.
 
 ### Read-Only
 

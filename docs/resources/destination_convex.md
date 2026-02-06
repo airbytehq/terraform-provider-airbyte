@@ -35,7 +35,7 @@ resource "airbyte_destination_convex" "my_destination_convex" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "3eb4d99c-11fa-4561-a259-fc88e0c2f8f4"; Requires replacement if changed.
 
 ### Read-Only
 

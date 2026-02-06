@@ -38,7 +38,7 @@ resource "airbyte_destination_csv" "my_destination_csv" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "8be1cf83-fde1-477f-a4ad-318d23c9f3c6"; Requires replacement if changed.
 
 ### Read-Only
 

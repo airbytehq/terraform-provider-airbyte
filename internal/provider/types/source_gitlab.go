@@ -8,12 +8,12 @@ import (
 )
 
 type SourceGitlab struct {
-	AdditionalProperties jsontypes.Normalized            `tfsdk:"additional_properties"`
-	APIURL               types.String                    `tfsdk:"api_url"`
-	Credentials          SourceGitlabAuthorizationMethod `tfsdk:"credentials"`
-	Groups               types.String                    `tfsdk:"groups"`
-	GroupsList           []types.String                  `tfsdk:"groups_list"`
-	Projects             types.String                    `tfsdk:"projects"`
-	ProjectsList         []types.String                  `tfsdk:"projects_list"`
-	StartDate            types.String                    `tfsdk:"start_date"`
+	AdditionalProperties jsontypes.Normalized             `tfsdk:"additional_properties"`
+	APIURL               types.String                     `tfsdk:"api_url"`
+	Credentials          *SourceGitlabAuthorizationMethod `tfsdk:"credentials"`
+	Groups               types.String                     `tfsdk:"groups"`
+	GroupsList           []types.String                   `tfsdk:"groups_list"`
+	Projects             types.String                     `tfsdk:"projects"`
+	ProjectsList         []types.String                   `tfsdk:"projects_list"`
+	StartDate            types.String                     `tfsdk:"start_date"`
 }

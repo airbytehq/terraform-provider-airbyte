@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationAzureBlobStorageCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string                     `json:"definitionId,omitempty"`
+	DefinitionID  *string                     `default:"b4c5d105-31fd-4817-96b6-cb923bfc04cb" json:"definitionId"`
 	WorkspaceID   string                      `json:"workspaceId"`
 	Configuration DestinationAzureBlobStorage `json:"configuration"`
+}
+
+func (d DestinationAzureBlobStorageCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationAzureBlobStorageCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationAzureBlobStorageCreateRequest) GetName() string {

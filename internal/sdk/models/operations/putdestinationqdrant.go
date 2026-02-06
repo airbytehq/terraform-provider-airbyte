@@ -33,6 +33,8 @@ type PutDestinationQdrantResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	DestinationResponse *shared.DestinationResponse
 }
 
 func (p *PutDestinationQdrantResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutDestinationQdrantResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutDestinationQdrantResponse) GetDestinationResponse() *shared.DestinationResponse {
+	if p == nil {
+		return nil
+	}
+	return p.DestinationResponse
 }

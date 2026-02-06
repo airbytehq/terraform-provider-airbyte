@@ -7,6 +7,6 @@ import (
 )
 
 type AvroApacheAvro struct {
-	CompressionCodec CompressionCodec `tfsdk:"compression_codec"`
-	FormatType       types.String     `tfsdk:"format_type"`
+	CompressionCodec *CompressionCodec `tfsdk:"compression_codec"`
+	FormatType       types.String      `tfsdk:"format_type"`
 }

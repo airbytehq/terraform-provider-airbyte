@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationMilvus struct {
-	Embedding   DestinationMilvusEmbedding             `tfsdk:"embedding"`
-	Indexing    DestinationMilvusIndexing              `tfsdk:"indexing"`
-	OmitRawText types.Bool                             `tfsdk:"omit_raw_text"`
-	Processing  DestinationMilvusProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *DestinationMilvusEmbedding             `tfsdk:"embedding"`
+	Indexing    *DestinationMilvusIndexing              `tfsdk:"indexing"`
+	OmitRawText types.Bool                              `tfsdk:"omit_raw_text"`
+	Processing  *DestinationMilvusProcessingConfigModel `tfsdk:"processing"`
 }

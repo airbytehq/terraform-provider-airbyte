@@ -3,6 +3,6 @@
 package types
 
 type BetweenFilter struct {
-	FromValue FromValue `tfsdk:"from_value"`
-	ToValue   ToValue   `tfsdk:"to_value"`
+	FromValue *FromValue `tfsdk:"from_value"`
+	ToValue   *ToValue   `tfsdk:"to_value"`
 }

@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationStreamrAirbyteConnectorsCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string                             `json:"definitionId,omitempty"`
+	DefinitionID  *string                             `default:"eebd85cf-60b2-4af6-9ba0-edeca01437b0" json:"definitionId"`
 	WorkspaceID   string                              `json:"workspaceId"`
 	Configuration DestinationStreamrAirbyteConnectors `json:"configuration"`
+}
+
+func (d DestinationStreamrAirbyteConnectorsCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationStreamrAirbyteConnectorsCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationStreamrAirbyteConnectorsCreateRequest) GetName() string {

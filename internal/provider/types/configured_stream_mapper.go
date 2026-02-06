@@ -7,7 +7,7 @@ import (
 )
 
 type ConfiguredStreamMapper struct {
-	ID                  types.String        `tfsdk:"id"`
-	MapperConfiguration MapperConfiguration `tfsdk:"mapper_configuration"`
-	Type                types.String        `tfsdk:"type"`
+	ID                  types.String         `tfsdk:"id"`
+	MapperConfiguration *MapperConfiguration `tfsdk:"mapper_configuration"`
+	Type                types.String         `tfsdk:"type"`
 }

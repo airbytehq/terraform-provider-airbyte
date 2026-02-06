@@ -7,10 +7,10 @@ import (
 )
 
 type SourceOutbrainAmplify struct {
-	ConversionCount      types.String                              `tfsdk:"conversion_count"`
-	Credentials          SourceOutbrainAmplifyAuthenticationMethod `tfsdk:"credentials"`
-	EndDate              types.String                              `tfsdk:"end_date"`
-	GeoLocationBreakdown types.String                              `tfsdk:"geo_location_breakdown"`
-	ReportGranularity    types.String                              `tfsdk:"report_granularity"`
-	StartDate            types.String                              `tfsdk:"start_date"`
+	ConversionCount      types.String                               `tfsdk:"conversion_count"`
+	Credentials          *SourceOutbrainAmplifyAuthenticationMethod `tfsdk:"credentials"`
+	EndDate              types.String                               `tfsdk:"end_date"`
+	GeoLocationBreakdown types.String                               `tfsdk:"geo_location_breakdown"`
+	ReportGranularity    types.String                               `tfsdk:"report_granularity"`
+	StartDate            types.String                               `tfsdk:"start_date"`
 }

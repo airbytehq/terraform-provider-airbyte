@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationChroma struct {
-	Embedding   DestinationChromaEmbedding             `tfsdk:"embedding"`
-	Indexing    DestinationChromaIndexing              `tfsdk:"indexing"`
-	OmitRawText types.Bool                             `tfsdk:"omit_raw_text"`
-	Processing  DestinationChromaProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *DestinationChromaEmbedding             `tfsdk:"embedding"`
+	Indexing    *DestinationChromaIndexing              `tfsdk:"indexing"`
+	OmitRawText types.Bool                              `tfsdk:"omit_raw_text"`
+	Processing  *DestinationChromaProcessingConfigModel `tfsdk:"processing"`
 }

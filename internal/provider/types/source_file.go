@@ -11,7 +11,7 @@ type SourceFile struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 	DatasetName          types.String         `tfsdk:"dataset_name"`
 	Format               types.String         `tfsdk:"format"`
-	Provider             StorageProvider      `tfsdk:"provider"`
+	Provider             *StorageProvider     `tfsdk:"provider"`
 	ReaderOptions        types.String         `tfsdk:"reader_options"`
 	URL                  types.String         `tfsdk:"url"`
 }

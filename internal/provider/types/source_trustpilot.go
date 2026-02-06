@@ -8,8 +8,8 @@ import (
 )
 
 type SourceTrustpilot struct {
-	AdditionalProperties jsontypes.Normalized                `tfsdk:"additional_properties"`
-	BusinessUnits        []types.String                      `tfsdk:"business_units"`
-	Credentials          SourceTrustpilotAuthorizationMethod `tfsdk:"credentials"`
-	StartDate            types.String                        `tfsdk:"start_date"`
+	AdditionalProperties jsontypes.Normalized                 `tfsdk:"additional_properties"`
+	BusinessUnits        []types.String                       `tfsdk:"business_units"`
+	Credentials          *SourceTrustpilotAuthorizationMethod `tfsdk:"credentials"`
+	StartDate            types.String                         `tfsdk:"start_date"`
 }

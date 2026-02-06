@@ -74,7 +74,7 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "65de8962-48c9-11ee-be56-0242ac120002"; Requires replacement if changed.
 
 ### Read-Only
 

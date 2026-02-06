@@ -17,6 +17,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 	var diags diag.Diagnostics
 
 	if resp != nil {
+		r.Configurations = &tfTypes.StreamConfigurations{}
 		r.Configurations.Streams = []tfTypes.StreamConfiguration{}
 
 		for _, streamsItem := range resp.Configurations.Streams {
@@ -124,6 +125,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 			r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
 		}
 		r.Prefix = types.StringPointerValue(resp.Prefix)
+		r.Schedule = &tfTypes.ConnectionScheduleResponse{}
 		r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
 		r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
 		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))

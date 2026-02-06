@@ -16,6 +16,7 @@ func (r *DestinationSftpJSONResourceModel) RefreshFromSharedDestinationResponse(
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.DestinationSftpJSON{}
 		r.Configuration.DestinationPath = configurationPriorData.DestinationPath
 		r.Configuration.Host = configurationPriorData.Host
 		r.Configuration.Password = configurationPriorData.Password
@@ -47,6 +48,7 @@ func (r *DestinationSftpJSONResourceModel) RefreshFromSharedDestinationResponse(
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

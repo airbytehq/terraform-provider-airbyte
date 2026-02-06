@@ -33,6 +33,8 @@ type PutDestinationS3DataLakeResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The resource was updated successfully
+	DestinationResponse *shared.DestinationResponse
 }
 
 func (p *PutDestinationS3DataLakeResponse) GetContentType() string {
@@ -54,4 +56,11 @@ func (p *PutDestinationS3DataLakeResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return p.RawResponse
+}
+
+func (p *PutDestinationS3DataLakeResponse) GetDestinationResponse() *shared.DestinationResponse {
+	if p == nil {
+		return nil
+	}
+	return p.DestinationResponse
 }

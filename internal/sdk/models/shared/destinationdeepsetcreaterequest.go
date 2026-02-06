@@ -2,13 +2,28 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type DestinationDeepsetCreateRequest struct {
 	// Name of the destination e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-	DefinitionID  *string            `json:"definitionId,omitempty"`
+	DefinitionID  *string            `default:"a6fe9a28-7377-4d2d-aa39-15bcf9578e17" json:"definitionId"`
 	WorkspaceID   string             `json:"workspaceId"`
 	Configuration DestinationDeepset `json:"configuration"`
+}
+
+func (d DestinationDeepsetCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDeepsetCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *DestinationDeepsetCreateRequest) GetName() string {

@@ -17,6 +17,7 @@ func (r *SourceSapHanaEnterpriseResourceModel) RefreshFromSharedSourceResponse(c
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceSapHanaEnterprise{}
 		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 		r.Configuration.CheckPrivileges = configurationPriorData.CheckPrivileges
 		r.Configuration.CheckpointTargetIntervalSeconds = configurationPriorData.CheckpointTargetIntervalSeconds
@@ -56,6 +57,7 @@ func (r *SourceSapHanaEnterpriseResourceModel) RefreshFromSharedSourceResponse(c
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

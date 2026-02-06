@@ -7,6 +7,6 @@ import (
 )
 
 type Collection struct {
-	Deletions DeletionMode `tfsdk:"deletions"`
-	PageSize  types.Int64  `tfsdk:"page_size"`
+	Deletions *DeletionMode `tfsdk:"deletions"`
+	PageSize  types.Int64   `tfsdk:"page_size"`
 }

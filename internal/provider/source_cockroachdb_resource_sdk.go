@@ -16,6 +16,7 @@ func (r *SourceCockroachdbResourceModel) RefreshFromSharedSourceResponse(ctx con
 
 	if resp != nil {
 		configurationPriorData := r.Configuration
+		r.Configuration = &tfTypes.SourceCockroachdb{}
 		r.Configuration.Database = configurationPriorData.Database
 		r.Configuration.Host = configurationPriorData.Host
 		r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
@@ -47,6 +48,7 @@ func (r *SourceCockroachdbResourceModel) RefreshFromSharedSourceResponse(ctx con
 				var jobSpecific tfTypes.JobTypeResourceLimit
 
 				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements = &tfTypes.ResourceRequirements{}
 				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
 				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
 				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)

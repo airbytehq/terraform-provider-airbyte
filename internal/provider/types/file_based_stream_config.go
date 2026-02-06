@@ -8,7 +8,7 @@ import (
 
 type FileBasedStreamConfig struct {
 	DaysToSyncIfHistoryIsFull            types.Int64    `tfsdk:"days_to_sync_if_history_is_full"`
-	Format                               Format         `tfsdk:"format"`
+	Format                               *Format        `tfsdk:"format"`
 	Globs                                []types.String `tfsdk:"globs"`
 	InputSchema                          types.String   `tfsdk:"input_schema"`
 	LegacyPrefix                         types.String   `tfsdk:"legacy_prefix"`

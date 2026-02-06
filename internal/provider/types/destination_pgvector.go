@@ -7,8 +7,8 @@ import (
 )
 
 type DestinationPgvector struct {
-	Embedding   DestinationPgvectorEmbedding             `tfsdk:"embedding"`
-	Indexing    PostgresConnection                       `tfsdk:"indexing"`
-	OmitRawText types.Bool                               `tfsdk:"omit_raw_text"`
-	Processing  DestinationPgvectorProcessingConfigModel `tfsdk:"processing"`
+	Embedding   *DestinationPgvectorEmbedding             `tfsdk:"embedding"`
+	Indexing    *PostgresConnection                       `tfsdk:"indexing"`
+	OmitRawText types.Bool                                `tfsdk:"omit_raw_text"`
+	Processing  *DestinationPgvectorProcessingConfigModel `tfsdk:"processing"`
 }

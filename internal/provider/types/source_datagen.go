@@ -10,6 +10,6 @@ import (
 type SourceDatagen struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 	Concurrency          types.Int64          `tfsdk:"concurrency"`
-	Flavor               DataGenerationType   `tfsdk:"flavor"`
+	Flavor               *DataGenerationType  `tfsdk:"flavor"`
 	MaxRecords           types.Int64          `tfsdk:"max_records"`
 }
