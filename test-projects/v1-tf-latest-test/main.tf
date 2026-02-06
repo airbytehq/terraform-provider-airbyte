@@ -56,7 +56,6 @@ resource "airbyte_source_faker" "faker_2" {
 }
 
 # Destination: Dev Null (for testing)
-# Note: MotherDuck issue (#281) resolved upstream; using dev-null for simpler testing
 resource "airbyte_destination_dev_null" "dev_null" {
   name         = "destination-dev-null"
   workspace_id = var.workspace_id
@@ -67,7 +66,7 @@ resource "airbyte_destination_dev_null" "dev_null" {
   }
 }
 
-resource "airbyte_connection" "faker_1_to_motherduck" {
+resource "airbyte_connection" "faker_1_to_devnull" {
   name           = "faker-1-to-dev-null"
   source_id      = airbyte_source_faker.faker_1.source_id
   destination_id = airbyte_destination_dev_null.dev_null.destination_id
@@ -77,7 +76,7 @@ resource "airbyte_connection" "faker_1_to_motherduck" {
   status = "inactive"
 }
 
-resource "airbyte_connection" "faker_2_to_motherduck" {
+resource "airbyte_connection" "faker_2_to_devnull" {
   name           = "faker-2-to-dev-null"
   source_id      = airbyte_source_faker.faker_2.source_id
   destination_id = airbyte_destination_dev_null.dev_null.destination_id
@@ -108,11 +107,11 @@ output "dev_null_destination_id" {
 }
 
 output "faker_1_connection_id" {
-  value       = airbyte_connection.faker_1_to_motherduck.connection_id
-  description = "The ID of the faker-1 to MotherDuck connection"
+  value       = airbyte_connection.faker_1_to_devnull.connection_id
+  description = "The ID of the faker-1 to dev-null connection"
 }
 
 output "faker_2_connection_id" {
-  value       = airbyte_connection.faker_2_to_motherduck.connection_id
-  description = "The ID of the faker-2 to MotherDuck connection"
+  value       = airbyte_connection.faker_2_to_devnull.connection_id
+  description = "The ID of the faker-2 to dev-null connection"
 }
