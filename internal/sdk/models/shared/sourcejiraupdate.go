@@ -69,9 +69,9 @@ type SourceJiraUpdate struct {
 	// The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.
 	Email *string `json:"email,omitempty"`
 	// (DEPRECATED) Expand the changelog when replicating issues.
-	ExpandIssueChangelog *bool `default:"false" json:"expand_issue_changelog"`
+	ExpandIssueChangelog *bool `json:"expand_issue_changelog,omitempty"`
 	// (DEPRECATED) Expand the transitions when replicating issues.
-	ExpandIssueTransition *bool `default:"false" json:"expand_issue_transition"`
+	ExpandIssueTransition *bool `json:"expand_issue_transition,omitempty"`
 	// Select fields to Expand the `Issues` stream when replicating with:
 	IssuesStreamExpandWith []SourceJiraUpdateIssuesStreamExpandWith `json:"issues_stream_expand_with,omitempty"`
 	// When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced.
@@ -81,7 +81,7 @@ type SourceJiraUpdate struct {
 	// List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
 	Projects []string `json:"projects,omitempty"`
 	// (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.
-	RenderFields *bool `default:"false" json:"render_fields"`
+	RenderFields *bool `json:"render_fields,omitempty"`
 	// The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 	StartDate            *time.Time                  `json:"start_date,omitempty"`
 	sourceType           *SourceJiraUpdateSourceType `const:"jira" json:"sourceType"`

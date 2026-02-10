@@ -345,10 +345,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.`,
 					},
 					"schema": schema.StringAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(`{}`),
-						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema. Default: "{}"`,
+						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
@@ -479,10 +477,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 													Description: `Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false`,
 												},
 												"inference_type": schema.StringAttribute{
-													Computed:    true,
 													Optional:    true,
-													Default:     stringdefault.StaticString(`None`),
-													Description: `How to infer the types of the columns. If none, inference default to strings. Default: "None"; must be one of ["None", "Primitive Types Only"]`,
+													Description: `How to infer the types of the columns. If none, inference default to strings. must be one of ["None", "Primitive Types Only"]`,
 													Validators: []validator.String{
 														stringvalidator.OneOf(
 															"None",

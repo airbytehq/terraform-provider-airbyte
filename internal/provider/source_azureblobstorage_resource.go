@@ -314,10 +314,8 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 													Description: `Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false`,
 												},
 												"inference_type": schema.StringAttribute{
-													Computed:    true,
 													Optional:    true,
-													Default:     stringdefault.StaticString(`None`),
-													Description: `How to infer the types of the columns. If none, inference default to strings. Default: "None"; must be one of ["None", "Primitive Types Only"]`,
+													Description: `How to infer the types of the columns. If none, inference default to strings. must be one of ["None", "Primitive Types Only"]`,
 													Validators: []validator.String{
 														stringvalidator.OneOf(
 															"None",

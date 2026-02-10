@@ -663,10 +663,10 @@ type S3 struct {
 	BucketPath string `json:"bucket_path"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression    *Compression `json:"compression,omitempty"`
-	FileNameFormat *string      `default:"{date}_{timestamp}_{part_number}{format_extension}" json:"file_name_format"`
+	FileNameFormat *string      `json:"file_name_format,omitempty"`
 	// Format of the data output.
 	Format     DestinationCustomerIoOutputFormat `json:"format"`
-	PathFormat *string                           `default:"{sync_id}/{namespace}/{stream_name}/" json:"path_format"`
+	PathFormat *string                           `json:"path_format,omitempty"`
 	// The ARN of the AWS role to assume. Only usable in Airbyte Cloud.
 	RoleArn *string `json:"role_arn,omitempty"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.

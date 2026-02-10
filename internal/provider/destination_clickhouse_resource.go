@@ -100,10 +100,8 @@ func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource
 						Description: `HTTP port of the database. Default(s) HTTP: 8123 — HTTPS: 8443. Default: "8443"`,
 					},
 					"protocol": schema.StringAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     stringdefault.StaticString(`https`),
-						Description: `Protocol for the database connection string. Default: "https"; must be one of ["http", "https"]`,
+						Required:    true,
+						Description: `Protocol for the database connection string. must be one of ["http", "https"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"http",

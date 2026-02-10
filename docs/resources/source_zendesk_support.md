@@ -69,7 +69,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `credentials` (Attributes) Zendesk allows three authentication methods. We recommend using `OAuth2.0 with Refresh Token` for Airbyte Cloud users (recommended), `OAuth2.0 (Legacy)` for existing OAuth connections, and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `ignore_pagination` (Boolean) [Deprecated] Makes each stream read a single page of data. Default: false
+- `ignore_pagination` (Boolean) [Deprecated] Makes each stream read a single page of data.
 - `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Zendesk Support plan. More info about the rate limit plan tiers can be found on Zendesk's API <a href="https://developer.zendesk.com/api-reference/introduction/rate-limits/#zendesk-support-plan-limits">docs</a>. Default: 3
 - `page_size` (Number) The number of records per page for the ticket_comments stream API requests. Lower values may help prevent timeouts on large datasets. The maximum value is 1000. Default: 100
 - `start_date` (String) The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.

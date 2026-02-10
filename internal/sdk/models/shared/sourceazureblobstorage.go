@@ -988,7 +988,7 @@ type CSVFormat struct {
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
 	// How to infer the types of the columns. If none, inference default to strings.
-	InferenceType *InferenceType `default:"None" json:"inference_type"`
+	InferenceType *InferenceType `json:"inference_type,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.

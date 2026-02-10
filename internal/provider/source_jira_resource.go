@@ -14,13 +14,10 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -87,23 +84,17 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.`,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `(DEPRECATED) Expand the changelog when replicating issues. Default: false`,
+						Description: `(DEPRECATED) Expand the changelog when replicating issues.`,
 					},
 					"expand_issue_transition": schema.BoolAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `(DEPRECATED) Expand the transitions when replicating issues. Default: false`,
+						Description: `(DEPRECATED) Expand the transitions when replicating issues.`,
 					},
 					"issues_stream_expand_with": schema.ListAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{})),
 						ElementType: types.StringType,
-						Description: `Select fields to Expand the ` + "`" + `Issues` + "`" + ` stream when replicating with:. Default: []`,
+						Description: `Select fields to Expand the ` + "`" + `Issues` + "`" + ` stream when replicating with:`,
 					},
 					"lookback_window_minutes": schema.Int64Attribute{
 						Computed:    true,
@@ -129,10 +120,8 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.`,
 					},
 					"render_fields": schema.BoolAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `(DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format. Default: false`,
+						Description: `(DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,

@@ -1011,7 +1011,7 @@ type DestinationPostgresUpdate struct {
 	// The default schema tables are written. If not specified otherwise, the "public" schema will be used.
 	Schema *string `default:"public" json:"schema"`
 	// Encrypt data using SSL. When activating SSL, please select one of the connection modes.
-	Ssl *bool `default:"true" json:"ssl"`
+	Ssl *bool `json:"ssl,omitempty"`
 	// SSL connection modes.
 	//   <b>disable</b> - Disables encryption of communication between Airbyte and destination database.
 	//   <b>allow</b> - Enables encryption only when required by the destination database.

@@ -1157,7 +1157,7 @@ type SourceS3CSVFormat struct {
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
 	// How to infer the types of the columns. If none, inference default to strings.
-	InferenceType *SourceS3InferenceType `default:"None" json:"inference_type"`
+	InferenceType *SourceS3InferenceType `json:"inference_type,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
@@ -1688,7 +1688,7 @@ type SourceS3 struct {
 	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
 	RoleArn *string `json:"role_arn,omitempty"`
 	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
-	Schema *string `default:"{}" json:"schema"`
+	Schema *string `json:"schema,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.

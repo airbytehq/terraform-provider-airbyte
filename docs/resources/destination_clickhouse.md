@@ -64,6 +64,7 @@ Required:
 
 - `host` (String) Hostname of the database.
 - `password` (String) Password associated with the username.
+- `protocol` (String) Protocol for the database connection string. must be one of ["http", "https"]
 
 Optional:
 
@@ -71,7 +72,6 @@ Optional:
 - `database` (String) Name of the database. Default: "default"
 - `enable_json` (Boolean) Use the JSON type when possible. If disabled, the JSON will be converted to a string. Default: false
 - `port` (String) HTTP port of the database. Default(s) HTTP: 8123 — HTTPS: 8443. Default: "8443"
-- `protocol` (String) Protocol for the database connection string. Default: "https"; must be one of ["http", "https"]
 - `record_window_size` (Number) Warning: Tuning this parameter can impact the performances. The maximum number of records that should be written to a batch. The batch size limit is still limited to 70 Mb
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 - `username` (String) Username to use to access the database. Default: "default"

@@ -1329,7 +1329,7 @@ type SourceFacebookMarketingUpdateInsightConfig struct {
 	// A list of chosen action_breakdowns for action_breakdowns
 	ActionBreakdowns []SourceFacebookMarketingUpdateSchemasValidActionBreakdowns `json:"action_breakdowns,omitempty"`
 	// Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
-	ActionReportTime *SourceFacebookMarketingUpdateActionReportTime `default:"mixed" json:"action_report_time"`
+	ActionReportTime *SourceFacebookMarketingUpdateActionReportTime `json:"action_report_time,omitempty"`
 	// A list of chosen breakdowns for breakdowns
 	Breakdowns []SourceFacebookMarketingUpdateValidBreakdowns `json:"breakdowns,omitempty"`
 	// The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
@@ -1533,7 +1533,7 @@ type SourceFacebookMarketingUpdate struct {
 	// The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
 	AccountIds []string `json:"account_ids,omitempty"`
 	// Allows action_breakdowns to be an empty list
-	ActionBreakdownsAllowEmpty *bool `default:"true" json:"action_breakdowns_allow_empty"`
+	ActionBreakdownsAllowEmpty *bool `json:"action_breakdowns_allow_empty,omitempty"`
 	// Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
 	AdStatuses []SourceFacebookMarketingUpdateValidAdStatuses `json:"ad_statuses,omitempty"`
 	// Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.

@@ -88,10 +88,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `How often (in seconds) a stream should checkpoint, when possible. Default: 300`,
 					},
 					"concurrency": schema.Int64Attribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     int64default.StaticInt64(1),
-						Description: `Maximum number of concurrent queries to the database. Default: 1`,
+						Description: `Maximum number of concurrent queries to the database.`,
 					},
 					"database": schema.StringAttribute{
 						Required:    true,

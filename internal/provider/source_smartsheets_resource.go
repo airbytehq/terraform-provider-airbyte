@@ -19,7 +19,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -140,10 +139,8 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 						Description: `The spreadsheet ID. Find it by opening the spreadsheet then navigating to File > Properties`,
 					},
 					"start_datetime": schema.StringAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(`2020-01-01T00:00:00+00:00`),
-						Description: `Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: ` + "`" + `2000-01-01T13:00:00` + "`" + `. Default: "2020-01-01T00:00:00+00:00"`,
+						Description: `Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: ` + "`" + `2000-01-01T13:00:00` + "`" + ``,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},

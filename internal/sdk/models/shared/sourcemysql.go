@@ -1111,7 +1111,7 @@ type SourceMysql struct {
 	// How often (in seconds) a stream should checkpoint, when possible.
 	CheckpointTargetIntervalSeconds *int64 `default:"300" json:"checkpoint_target_interval_seconds"`
 	// Maximum number of concurrent queries to the database.
-	Concurrency *int64 `default:"1" json:"concurrency"`
+	Concurrency *int64 `json:"concurrency,omitempty"`
 	// The database name.
 	Database string `json:"database"`
 	// Hostname of the database.
