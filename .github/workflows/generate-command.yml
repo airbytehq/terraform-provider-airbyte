@@ -134,7 +134,7 @@ jobs:
 
             - name: Get next version from release drafter
               id: get-version
-              uses: aaronsteers/semantic-pr-release-drafter@v0.7.0
+              uses: aaronsteers/semantic-pr-release-drafter@v1.1.0
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
