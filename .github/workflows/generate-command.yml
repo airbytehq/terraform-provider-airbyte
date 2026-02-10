@@ -140,16 +140,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Validate resolved version
-              run: |
-                  VERSION="${{ steps.get-version.outputs.resolved-version }}"
-                  if [ -z "$VERSION" ]; then
-                      echo "::error::Failed to resolve version from release drafter. Cannot proceed."
-                      exit 1
-                  fi
-                  echo "Resolved version: $VERSION"
-
-            - name: Lint OpenAPI spec (fast-fail for circular references)
+            - name: Lint OpenAPI spec(fast-fail for circular references)
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
@@ -174,7 +165,7 @@ jobs:
                   rm -f internal/provider/source_*.go
                   rm -rf internal/provider/types/
 
-            - name: Run Speakeasy
+            - name: Generate Provider ${{ steps.get-version.outputs.resolved-version }} with Speakeasy
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
