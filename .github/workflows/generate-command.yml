@@ -134,7 +134,9 @@ jobs:
 
             - name: Get next version from release drafter
               id: get-version
-              uses: aaronsteers/semantic-pr-release-drafter@v0.7.0
+              uses: aaronsteers/semantic-pr-release-drafter@v1.1.0
+              with:
+                  dry-run: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -163,19 +165,20 @@ jobs:
                   rm -f internal/provider/source_*.go
                   rm -rf internal/provider/types/
 
-            - name: Run Speakeasy
+            - name: Generate Provider ${{ steps.get-version.outputs.resolved-version }} with Speakeasy
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
-                  echo "Using version from release drafter: ${{ steps.get-version.outputs.resolved-version }}"
+                  VERSION="${{ steps.get-version.outputs.resolved-version }}"
+                  if [ -z "$VERSION" ]; then
+                      echo "::error::Version resolution returned empty. Cannot proceed without an explicit version."
+                      exit 1
+                  fi
+                  echo "Using version from release drafter: $VERSION"
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
-                      # Dry run: use --skip-compile, we'll build ourselves
-                      # Use --set-version to use the version from semantic-pr-release-drafter
-                      speakeasy run --skip-compile --set-version=${{ steps.get-version.outputs.resolved-version }}
+                      speakeasy run --skip-compile --set-version="$VERSION"
                   else
-                      # Normal generation with console output
-                      # Use --set-version to use the version from semantic-pr-release-drafter
-                      speakeasy run --output console --set-version=${{ steps.get-version.outputs.resolved-version }}
+                      speakeasy run --output console --set-version="$VERSION"
                   fi
 
             - name: Update dependencies

@@ -42,12 +42,13 @@ jobs:
     steps:
       # Step 1: Create/update draft release (no assets yet)
       - name: Create draft release
-        uses: aaronsteers/semantic-pr-release-drafter@v1.0.0
+        uses: aaronsteers/semantic-pr-release-drafter@v1.1.0
         id: release-drafter
         with:
           name-template: 'v$RESOLVED_VERSION'
           tag-template: 'v$RESOLVED_VERSION'
           change-template: '- $TITLE (#$NUMBER)'
+          reset-files: 'true'
           template: |
             ## Changes
 
