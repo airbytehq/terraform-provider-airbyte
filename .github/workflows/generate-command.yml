@@ -140,7 +140,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Lint OpenAPI spec(fast-fail for circular references)
+            - name: Lint OpenAPI spec (fast-fail for circular references)
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
