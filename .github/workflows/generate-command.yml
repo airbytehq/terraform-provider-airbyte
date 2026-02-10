@@ -170,6 +170,10 @@ jobs:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
               run: |
                   VERSION="${{ steps.get-version.outputs.resolved-version }}"
+                  if [ -z "$VERSION" ]; then
+                      echo "::error::Version resolution returned empty. Cannot proceed without an explicit version."
+                      exit 1
+                  fi
                   echo "Using version from release drafter: $VERSION"
                   if [ "${{ inputs.dry_run }}" = "true" ]; then
                       speakeasy run --skip-compile --set-version="$VERSION"
