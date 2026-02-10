@@ -79,8 +79,8 @@ source_id = airbyte_source.my_source.source_id
 
 Run `terraform plan` and confirm:
 
-- There are **no** destroy actions.
-- Terraform shows `moved` for the resource, not `create`/`destroy`.
+- Terraform shows `has moved to` for the resource (e.g., `# airbyte_source_pardot.my_source has moved to airbyte_source.my_source`).
+- There are **no** `must be replaced` or `forces replacement` annotations. If you see these, the `definition_id` is likely wrong — see [Finding the definition_id](#finding-the-definition_id).
 - Any updates shown are configuration changes you expect.
 
 ### Step 4: Apply
@@ -93,10 +93,18 @@ After a successful apply, remove the `moved` block from your configuration. It i
 
 ### Finding the definition_id
 
-The generic resource requires a `definition_id` to identify the connector type. You can find it by:
+> **Important**
+> You **must** use the `definition_id` from your existing Terraform state. Using a different ID (e.g., from the connector registry or documentation) will cause Terraform to **force replacement**, destroying and recreating the resource — which defeats the purpose of the migration.
 
-- Running `terraform state show airbyte_source_pardot.my_source` before migrating and noting the `definition_id` attribute.
-- Looking up the connector in the Airbyte UI under **Settings > Sources** or **Settings > Destinations**.
+Run this command **before** making any changes to your `.tf` files:
+
+```bash
+terraform state show airbyte_source_pardot.my_source | grep definition_id
+```
+
+Copy the `definition_id` value into your new generic resource block.
+
+Alternatively, you can look up the connector in the Airbyte UI under **Settings > Sources** or **Settings > Destinations**, but always cross-check against the state value.
 
 ### Migrating destinations
 
