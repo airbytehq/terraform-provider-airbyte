@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 
@@ -161,7 +162,7 @@ func TestExtractJSONInt64(t *testing.T) {
 
 func TestSourceMoveStateFiltering(t *testing.T) {
 	r := &SourceResource{}
-	movers := r.MoveState(nil)
+	movers := r.MoveState(context.Background())
 	if len(movers) != 1 {
 		t.Fatalf("expected 1 state mover, got %d", len(movers))
 	}
@@ -169,7 +170,7 @@ func TestSourceMoveStateFiltering(t *testing.T) {
 
 func TestDestinationMoveStateFiltering(t *testing.T) {
 	r := &DestinationResource{}
-	movers := r.MoveState(nil)
+	movers := r.MoveState(context.Background())
 	if len(movers) != 1 {
 		t.Fatalf("expected 1 state mover, got %d", len(movers))
 	}
@@ -178,11 +179,11 @@ func TestDestinationMoveStateFiltering(t *testing.T) {
 func TestSourceMoveStateImplementsInterface(t *testing.T) {
 	var _ types.String
 	var r SourceResource
-	_ = r.MoveState(nil)
+	_ = r.MoveState(context.Background())
 }
 
 func TestDestinationMoveStateImplementsInterface(t *testing.T) {
 	var _ types.String
 	var r DestinationResource
-	_ = r.MoveState(nil)
+	_ = r.MoveState(context.Background())
 }
