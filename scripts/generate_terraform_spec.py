@@ -492,6 +492,13 @@ def transform_connector_spec(
     return schema_name, transformed
 
 
+def _strip_hidden_defaults(transformed: dict[str, Any]) -> dict[str, Any]:
+    """Strip default values from airbyte_hidden fields so they aren't forced in API requests."""
+    if transformed.get("airbyte_hidden") is True and "default" in transformed:
+        del transformed["default"]
+    return transformed
+
+
 def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str, Any]:
     """Transform spec properties, handling nested objects and removing constraints for updates."""
     result = {}
@@ -515,18 +522,17 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
             for prop_name, prop_value in value.items():
                 if isinstance(prop_value, dict):
                     transformed = transform_spec_properties(prop_value, is_update)
-                    if transformed.get("airbyte_hidden") is True and "default" in transformed:
-                        del transformed["default"]
-                    result[key][prop_name] = transformed
+                    result[key][prop_name] = _strip_hidden_defaults(transformed)
                 else:
                     result[key][prop_name] = prop_value
         elif key == "oneOf" or key == "anyOf" or key == "allOf":
             result[key] = [
-                transform_spec_properties(item, is_update) if isinstance(item, dict) else item
+                _strip_hidden_defaults(transform_spec_properties(item, is_update))
+                if isinstance(item, dict) else item
                 for item in value
             ]
         elif isinstance(value, dict):
-            result[key] = transform_spec_properties(value, is_update)
+            result[key] = _strip_hidden_defaults(transform_spec_properties(value, is_update))
         else:
             result[key] = value
 
