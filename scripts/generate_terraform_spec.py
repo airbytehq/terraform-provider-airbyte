@@ -514,7 +514,10 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
             result[key] = {}
             for prop_name, prop_value in value.items():
                 if isinstance(prop_value, dict):
-                    result[key][prop_name] = transform_spec_properties(prop_value, is_update)
+                    transformed = transform_spec_properties(prop_value, is_update)
+                    if transformed.get("airbyte_hidden") is True and "default" in transformed:
+                        del transformed["default"]
+                    result[key][prop_name] = transformed
                 else:
                     result[key][prop_name] = prop_value
         elif key == "oneOf" or key == "anyOf" or key == "allOf":
