@@ -76,7 +76,7 @@ gh run list --workflow="test-full.yml" --limit 5
 gh run download <RUN_ID> --name provider_binaries --dir ./provider-bin
 ```
 
-For the full testing guide (configuring dev overrides, authentication, running Terraform with CI-built binaries), see [`test-projects/README.md`](test-projects/README.md).
+For the sample project testing guide (configuring dev overrides, authentication, running Terraform with CI-built binaries), see [`test-projects/README.md`](test-projects/README.md).
 
 ## Releasing
 
