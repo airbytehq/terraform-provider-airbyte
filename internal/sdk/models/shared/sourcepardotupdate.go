@@ -46,7 +46,7 @@ type SourcePardotUpdate struct {
 	// UTC date and time in the format 2000-01-01T00:00:00Z. Any data before this date will not be replicated. Defaults to the year Pardot was released.
 	StartDate *time.Time `default:"2007-01-01T00:00:00Z" json:"start_date"`
 	// The maximum number of records to return per request
-	V5PageSize           *int64                        `default:"1000" json:"v5_page_size"`
+	V5PageSize           *int64                        `json:"v5_page_size,omitempty"`
 	sourceType           *SourcePardotUpdateSourceType `const:"pardot" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

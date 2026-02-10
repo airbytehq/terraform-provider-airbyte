@@ -207,10 +207,7 @@ func (r *DestinationHubspotResource) Schema(ctx context.Context, req resource.Sc
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 									},
 									"file_name_format": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString(`{date}_{timestamp}_{part_number}{format_extension}`),
-										Description: `Default: "{date}_{timestamp}_{part_number}{format_extension}"`,
+										Optional: true,
 									},
 									"format": schema.SingleNestedAttribute{
 										Required: true,
@@ -291,10 +288,7 @@ func (r *DestinationHubspotResource) Schema(ctx context.Context, req resource.Sc
 										Description: `Format of the data output.`,
 									},
 									"path_format": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString(`{sync_id}/{namespace}/{stream_name}/`),
-										Description: `Default: "{sync_id}/{namespace}/{stream_name}/"`,
+										Optional: true,
 									},
 									"role_arn": schema.StringAttribute{
 										Optional:    true,

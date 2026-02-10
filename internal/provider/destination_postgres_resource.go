@@ -18,7 +18,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -127,10 +126,8 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						Description: `The default schema tables are written. If not specified otherwise, the "public" schema will be used. Default: "public"`,
 					},
 					"ssl": schema.BoolAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     booldefault.StaticBool(true),
-						Description: `Encrypt data using SSL. When activating SSL, please select one of the connection modes. Default: true`,
+						Description: `Encrypt data using SSL. When activating SSL, please select one of the connection modes.`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,

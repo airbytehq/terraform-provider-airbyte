@@ -73,7 +73,7 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `is_report` (Boolean) If true, the source will treat the provided sheet_id as a report. If false, the source will treat the provided sheet_id as a sheet. Default: false
 - `metadata_fields` (List of String) A List of available columns which metadata can be pulled from.
-- `start_datetime` (String) Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`. Default: "2020-01-01T00:00:00+00:00"
+- `start_datetime` (String) Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

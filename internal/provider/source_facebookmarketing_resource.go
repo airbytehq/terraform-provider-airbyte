@@ -86,10 +86,8 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						},
 					},
 					"action_breakdowns_allow_empty": schema.BoolAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     booldefault.StaticBool(true),
-						Description: `Allows action_breakdowns to be an empty list. Default: true`,
+						Description: `Allows action_breakdowns to be an empty list`,
 					},
 					"ad_statuses": schema.ListAttribute{
 						Computed:    true,
@@ -174,10 +172,8 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									Description: `A list of chosen action_breakdowns for action_breakdowns. Default: []`,
 								},
 								"action_report_time": schema.StringAttribute{
-									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString(`mixed`),
-									Description: `Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. Default: "mixed"; must be one of ["conversion", "impression", "mixed"]`,
+									Description: `Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. must be one of ["conversion", "impression", "mixed"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"conversion",

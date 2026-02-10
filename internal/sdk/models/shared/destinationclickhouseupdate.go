@@ -421,7 +421,7 @@ type DestinationClickhouseUpdate struct {
 	// HTTP port of the database. Default(s) HTTP: 8123 — HTTPS: 8443
 	Port *string `default:"8443" json:"port"`
 	// Protocol for the database connection string.
-	Protocol *DestinationClickhouseUpdateProtocol `default:"https" json:"protocol"`
+	Protocol *DestinationClickhouseUpdateProtocol `json:"protocol,omitempty"`
 	// Warning: Tuning this parameter can impact the performances. The maximum number of records that should be written to a batch. The batch size limit is still limited to 70 Mb
 	RecordWindowSize *int64 `json:"record_window_size,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.

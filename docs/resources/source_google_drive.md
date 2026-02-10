@@ -26,7 +26,7 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
       }
     }
     folder_url = "https://drive.google.com/drive/folders/1Xaz0vXXXX2enKnNYU5qSt9NS70gvMyYn"
-    start_date = "2021-01-01T00:00:00.000000Z"
+    start_date = "2021-01-01"
     streams = [
       {
         days_to_sync_if_history_is_full = 4

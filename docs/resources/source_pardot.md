@@ -67,7 +67,7 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `is_sandbox` (Boolean) Whether or not the the app is in a Salesforce sandbox. If you do not know what this, assume it is false. Default: false
 - `start_date` (String) UTC date and time in the format 2000-01-01T00:00:00Z. Any data before this date will not be replicated. Defaults to the year Pardot was released. Default: "2007-01-01T00:00:00Z"
-- `v5_page_size` (Number) The maximum number of records to return per request. Default: 1000
+- `v5_page_size` (Number) The maximum number of records to return per request
 
 
 <a id="nestedatt--resource_allocation"></a>

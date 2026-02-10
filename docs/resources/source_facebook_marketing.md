@@ -108,7 +108,7 @@ Required:
 Optional:
 
 - `access_token` (String) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-- `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list. Default: true
+- `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list
 - `ad_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out. Default: []
 - `adset_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out. Default: []
 - `campaign_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out. Default: []
@@ -163,7 +163,7 @@ Required:
 Optional:
 
 - `action_breakdowns` (List of String) A list of chosen action_breakdowns for action_breakdowns. Default: []
-- `action_report_time` (String) Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. Default: "mixed"; must be one of ["conversion", "impression", "mixed"]
+- `action_report_time` (String) Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. must be one of ["conversion", "impression", "mixed"]
 - `breakdowns` (List of String) A list of chosen breakdowns for breakdowns. Default: []
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter. Default: []

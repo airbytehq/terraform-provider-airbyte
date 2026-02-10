@@ -295,7 +295,7 @@ type SourceSmartsheetsUpdate struct {
 	// The spreadsheet ID. Find it by opening the spreadsheet then navigating to File > Properties
 	SpreadsheetID *string `json:"spreadsheet_id,omitempty"`
 	// Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`
-	StartDatetime        *time.Time                         `default:"2020-01-01T00:00:00+00:00" json:"start_datetime"`
+	StartDatetime        *time.Time                         `json:"start_datetime,omitempty"`
 	sourceType           *SourceSmartsheetsUpdateSourceType `const:"smartsheets" json:"sourceType"`
 	AdditionalProperties any                                `additionalProperties:"true" json:"-"`
 }

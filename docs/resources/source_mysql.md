@@ -97,7 +97,7 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `check_privileges` (Boolean) When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature. Default: true
 - `checkpoint_target_interval_seconds` (Number) How often (in seconds) a stream should checkpoint, when possible. Default: 300
-- `concurrency` (Number) Maximum number of concurrent queries to the database. Default: 1
+- `concurrency` (Number) Maximum number of concurrent queries to the database.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `max_db_connections` (Number) Maximum number of concurrent queries to the database. Leave empty to let Airbyte optimize performance.
 - `password` (String) The password associated with the username.

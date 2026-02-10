@@ -72,13 +72,13 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `expand_issue_changelog` (Boolean) (DEPRECATED) Expand the changelog when replicating issues. Default: false
-- `expand_issue_transition` (Boolean) (DEPRECATED) Expand the transitions when replicating issues. Default: false
-- `issues_stream_expand_with` (List of String) Select fields to Expand the `Issues` stream when replicating with:. Default: []
+- `expand_issue_changelog` (Boolean) (DEPRECATED) Expand the changelog when replicating issues.
+- `expand_issue_transition` (Boolean) (DEPRECATED) Expand the transitions when replicating issues.
+- `issues_stream_expand_with` (List of String) Select fields to Expand the `Issues` stream when replicating with:
 - `lookback_window_minutes` (Number) When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced. Default: 0
 - `num_workers` (Number) The number of worker threads to use for the sync. Default: 3
 - `projects` (List of String) List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
-- `render_fields` (Boolean) (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format. Default: false
+- `render_fields` (Boolean) (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.
 - `start_date` (String) The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 
 

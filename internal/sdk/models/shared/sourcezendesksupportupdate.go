@@ -325,7 +325,7 @@ type SourceZendeskSupportUpdate struct {
 	// Zendesk allows three authentication methods. We recommend using `OAuth2.0 with Refresh Token` for Airbyte Cloud users (recommended), `OAuth2.0 (Legacy)` for existing OAuth connections, and `API token` for Airbyte Open Source users.
 	Credentials *SourceZendeskSupportUpdateAuthentication `json:"credentials,omitempty"`
 	// [Deprecated] Makes each stream read a single page of data.
-	IgnorePagination *bool `default:"false" json:"ignore_pagination"`
+	IgnorePagination *bool `json:"ignore_pagination,omitempty"`
 	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Zendesk Support plan. More info about the rate limit plan tiers can be found on Zendesk's API <a href="https://developer.zendesk.com/api-reference/introduction/rate-limits/#zendesk-support-plan-limits">docs</a>.
 	NumWorkers *int64 `default:"3" json:"num_workers"`
 	// The number of records per page for the ticket_comments stream API requests. Lower values may help prevent timeouts on large datasets. The maximum value is 1000.

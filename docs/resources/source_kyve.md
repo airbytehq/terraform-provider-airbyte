@@ -60,7 +60,7 @@ Required:
 Optional:
 
 - `max_pages` (Number) The maximum amount of pages to go trough. Set to 'null' for all pages.
-- `page_size` (Number) The pagesize for pagination, smaller numbers are used in integration tests. Default: 100
+- `page_size` (Number) The pagesize for pagination, smaller numbers are used in integration tests.
 - `url_base` (String) URL to the KYVE Chain API. Default: "https://api.kyve.network"
 
 

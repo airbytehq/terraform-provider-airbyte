@@ -18,7 +18,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -171,10 +170,8 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 						Description: `Zendesk allows three authentication methods. We recommend using ` + "`" + `OAuth2.0 with Refresh Token` + "`" + ` for Airbyte Cloud users (recommended), ` + "`" + `OAuth2.0 (Legacy)` + "`" + ` for existing OAuth connections, and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 					},
 					"ignore_pagination": schema.BoolAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `[Deprecated] Makes each stream read a single page of data. Default: false`,
+						Description: `[Deprecated] Makes each stream read a single page of data.`,
 					},
 					"num_workers": schema.Int64Attribute{
 						Computed:    true,
