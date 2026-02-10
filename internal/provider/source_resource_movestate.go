@@ -46,16 +46,13 @@ func (r *SourceResource) MoveState(ctx context.Context) []resource.StateMover {
 
 				targetState := SourceResourceModel{
 					SourceID:      types.StringValue(sourceID),
-					Name:          types.StringValue(extractJSONString(rawState, "name")),
-					WorkspaceID:   types.StringValue(extractJSONString(rawState, "workspace_id")),
-					DefinitionID:  types.StringValue(extractJSONString(rawState, "definition_id")),
-					SourceType:    types.StringValue(extractJSONString(rawState, "source_type")),
+					Name:          extractJSONTypesString(rawState, "name"),
+					WorkspaceID:   extractJSONTypesString(rawState, "workspace_id"),
+					DefinitionID:  extractJSONTypesString(rawState, "definition_id"),
+					SourceType:    extractJSONTypesString(rawState, "source_type"),
+					SecretID:      extractJSONTypesString(rawState, "secret_id"),
 					CreatedAt:     extractJSONInt64(rawState, "created_at"),
 					Configuration: &tfTypes.SourceConfiguration{},
-				}
-
-				if secretID := extractJSONString(rawState, "secret_id"); secretID != "" {
-					targetState.SecretID = types.StringValue(secretID)
 				}
 
 				resp.Diagnostics.Append(resp.TargetState.Set(ctx, targetState)...)

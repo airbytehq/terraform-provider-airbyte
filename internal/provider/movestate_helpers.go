@@ -19,6 +19,21 @@ func extractJSONString(raw map[string]json.RawMessage, key string) string {
 	return s
 }
 
+func extractJSONTypesString(raw map[string]json.RawMessage, key string) types.String {
+	v, ok := raw[key]
+	if !ok {
+		return types.StringNull()
+	}
+	var s string
+	if err := json.Unmarshal(v, &s); err != nil {
+		return types.StringNull()
+	}
+	if s == "" {
+		return types.StringNull()
+	}
+	return types.StringValue(s)
+}
+
 func extractJSONInt64(raw map[string]json.RawMessage, key string) types.Int64 {
 	v, ok := raw[key]
 	if !ok {

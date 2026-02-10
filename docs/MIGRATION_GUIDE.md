@@ -119,11 +119,11 @@ resource "airbyte_destination" "my_dest" {
 }
 ```
 
-## Alternative methods (Terraform < 1.7) {#alternative-methods-terraform-17}
+## Alternative methods (Terraform < 1.8) {#alternative-methods-terraform-17}
 
-If you cannot use Terraform 1.8+, you can migrate using the `removed` and `import` blocks (Terraform 1.7+) or CLI commands.
+If you cannot use Terraform 1.8+, you can migrate using either `removed` + `import` blocks (Terraform 1.7.x) or CLI commands (any Terraform version).
 
-### Option A: `removed` + `import` blocks (Terraform 1.7+)
+### Option A: `removed` + `import` blocks (Terraform 1.7.x)
 
 ```hcl
 removed {

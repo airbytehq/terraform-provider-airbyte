@@ -46,10 +46,10 @@ func (r *DestinationResource) MoveState(ctx context.Context) []resource.StateMov
 
 				targetState := DestinationResourceModel{
 					DestinationID:   types.StringValue(destinationID),
-					Name:            types.StringValue(extractJSONString(rawState, "name")),
-					WorkspaceID:     types.StringValue(extractJSONString(rawState, "workspace_id")),
-					DefinitionID:    types.StringValue(extractJSONString(rawState, "definition_id")),
-					DestinationType: types.StringValue(extractJSONString(rawState, "destination_type")),
+					Name:            extractJSONTypesString(rawState, "name"),
+					WorkspaceID:     extractJSONTypesString(rawState, "workspace_id"),
+					DefinitionID:    extractJSONTypesString(rawState, "definition_id"),
+					DestinationType: extractJSONTypesString(rawState, "destination_type"),
 					CreatedAt:       extractJSONInt64(rawState, "created_at"),
 					Configuration:   &tfTypes.DestinationConfiguration{},
 				}

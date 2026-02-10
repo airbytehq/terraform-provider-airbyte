@@ -95,6 +95,10 @@ provider_installation {
 ```
 <!-- End Testing the provider locally [usage] -->
 
+## Migrating from Typed to Generic Resources
+
+If you are using typed resources (e.g., `airbyte_source_pardot`) and need to migrate to the generic `airbyte_source` or `airbyte_destination` resource, see the [Migration Guide](docs/MIGRATION_GUIDE.md).
+
 <!-- Start Authentication [security] -->
 ## Authentication
 
