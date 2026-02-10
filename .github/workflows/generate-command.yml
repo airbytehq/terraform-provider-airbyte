@@ -266,11 +266,11 @@ jobs:
                   base: main
                   delete-branch: true
 
-            - name: Enable auto-merge (fully automated PR)
+            - name: Enable auto-merge (new PR only)
               if: |
                   (github.event_name == 'push'
                    || github.event_name == 'schedule'
-                  ) && steps.create-pr.outputs.pull-request-number
+                  ) && steps.create-pr.outputs.pull-request-operation == 'created'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
