@@ -261,7 +261,7 @@ jobs:
                   base: main
                   delete-branch: true
 
-            - name: Enable auto-merge for automated PRs
+            - name: Enable auto-merge (fully automated PR)
               if: |
                   (github.event_name == 'push'
                    || github.event_name == 'schedule'
