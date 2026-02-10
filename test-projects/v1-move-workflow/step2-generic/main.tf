@@ -38,7 +38,7 @@ moved {
 resource "airbyte_source" "my_source" {
   name          = "move-workflow-typed-source"
   workspace_id  = var.workspace_id
-  definition_id = "dfd88b22-b603-4c3d-aad7-571b2c3d0bf8"
+  definition_id = "dfd88b22-b603-4c3d-aad7-3701784586b1"
 
   configuration = {
     count = 100
@@ -54,7 +54,7 @@ moved {
 resource "airbyte_destination" "my_dest" {
   name          = "move-workflow-typed-dest"
   workspace_id  = var.workspace_id
-  definition_id = "a7bcc9d8-13b3-4e49-b80d-d020b90045e6"
+  definition_id = "a7bcc9d8-13b3-4e49-b80d-d020b90045e3"
 
   configuration = {
     test_destination = {
