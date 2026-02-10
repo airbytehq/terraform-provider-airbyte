@@ -67,6 +67,11 @@ name: Generate TF Provider (New PR)
                 description: Validate generation without creating a PR
                 type: boolean
                 default: false
+concurrency:
+    # Push/schedule runs share a group so newer runs cancel stale ones.
+    # Other triggers (workflow_dispatch, workflow_call) get unique groups to avoid cancelling each other.
+    group: ${{ (github.event_name == 'push' || github.event_name == 'schedule') && 'generate-new-pr' || format('generate-{0}', github.run_id) }}
+    cancel-in-progress: true
 jobs:
     generate:
         name: Generate SDK
