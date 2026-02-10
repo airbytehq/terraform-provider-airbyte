@@ -56,23 +56,27 @@ terraform plan
 
 ### End-to-End Testing with CI Artifacts
 
-Before merging PRs or cutting releases, test the provider with real Airbyte Cloud resources using provider binaries built by CI. This validates that the generated code works correctly with the Airbyte API.
+The **"Test (Full)"** workflow ([`test-full.yml`](.github/workflows/test-full.yml)) runs on every PR and produces downloadable provider binaries as CI artifacts. These binaries can be used to test unreleased provider changes with real Airbyte Cloud resources before merging.
 
-**When to test:**
+**CI artifacts produced on every PR:**
 
-- **Before merging PRs** with significant changes (spec updates, generation config changes, etc.)
-- **Before publishing releases** to catch issues early
+| Artifact | Contents | Retention |
+|----------|----------|-----------|
+| `provider_binaries` | Compiled provider binaries (`linux/amd64`, `darwin/arm64`) | 7 days |
+| `generated_provider_code` | Generated provider source code | 7 days |
+| `api_terraform_spec` | Generated OpenAPI spec | 30 days |
 
-**How to test:**
+**To download binaries from a PR's CI run:**
 
-See the comprehensive testing guide in [`test-projects/README.md`](test-projects/README.md) which covers:
+```bash
+# List recent "Test (Full)" runs
+gh run list --workflow="test-full.yml" --limit 5
 
-1. Downloading provider binaries from CI workflow artifacts
-2. Configuring local Terraform to use the CI-built provider
-3. Running end-to-end tests with real Airbyte Cloud resources
-4. Troubleshooting common issues
+# Download binaries (replace <RUN_ID> with the run ID)
+gh run download <RUN_ID> --name provider_binaries --dir ./provider-bin
+```
 
-The test project uses development overrides to test unreleased provider builds before they reach the Terraform Registry.
+For the full testing guide (configuring dev overrides, authentication, running Terraform with CI-built binaries), see [`test-projects/README.md`](test-projects/README.md).
 
 ## Releasing
 
