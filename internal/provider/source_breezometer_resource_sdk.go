@@ -18,14 +18,16 @@ func (r *SourceBreezometerResourceModel) RefreshFromSharedSourceResponse(ctx con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceBreezometer{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.DaysToForecast = configurationPriorData.DaysToForecast
-		r.Configuration.HistoricHours = configurationPriorData.HistoricHours
-		r.Configuration.HoursToForecast = configurationPriorData.HoursToForecast
-		r.Configuration.Latitude = configurationPriorData.Latitude
-		r.Configuration.Longitude = configurationPriorData.Longitude
-		r.Configuration.Radius = configurationPriorData.Radius
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.DaysToForecast = configurationPriorData.DaysToForecast
+			r.Configuration.HistoricHours = configurationPriorData.HistoricHours
+			r.Configuration.HoursToForecast = configurationPriorData.HoursToForecast
+			r.Configuration.Latitude = configurationPriorData.Latitude
+			r.Configuration.Longitude = configurationPriorData.Longitude
+			r.Configuration.Radius = configurationPriorData.Radius
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

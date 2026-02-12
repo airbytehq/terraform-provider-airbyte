@@ -18,13 +18,15 @@ func (r *SourcePexelsAPIResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourcePexelsAPI{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Color = configurationPriorData.Color
-		r.Configuration.Locale = configurationPriorData.Locale
-		r.Configuration.Orientation = configurationPriorData.Orientation
-		r.Configuration.Query = configurationPriorData.Query
-		r.Configuration.Size = configurationPriorData.Size
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Color = configurationPriorData.Color
+			r.Configuration.Locale = configurationPriorData.Locale
+			r.Configuration.Orientation = configurationPriorData.Orientation
+			r.Configuration.Query = configurationPriorData.Query
+			r.Configuration.Size = configurationPriorData.Size
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

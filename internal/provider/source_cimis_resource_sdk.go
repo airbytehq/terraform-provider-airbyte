@@ -19,15 +19,17 @@ func (r *SourceCimisResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceCimis{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.DailyDataItems = configurationPriorData.DailyDataItems
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.HourlyDataItems = configurationPriorData.HourlyDataItems
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Targets = configurationPriorData.Targets
-		r.Configuration.TargetsType = configurationPriorData.TargetsType
-		r.Configuration.UnitOfMeasure = configurationPriorData.UnitOfMeasure
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.DailyDataItems = configurationPriorData.DailyDataItems
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.HourlyDataItems = configurationPriorData.HourlyDataItems
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Targets = configurationPriorData.Targets
+			r.Configuration.TargetsType = configurationPriorData.TargetsType
+			r.Configuration.UnitOfMeasure = configurationPriorData.UnitOfMeasure
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

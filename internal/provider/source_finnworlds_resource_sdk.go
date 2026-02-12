@@ -19,15 +19,17 @@ func (r *SourceFinnworldsResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFinnworlds{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BondType = configurationPriorData.BondType
-		r.Configuration.Commodities = configurationPriorData.Commodities
-		r.Configuration.Countries = configurationPriorData.Countries
-		r.Configuration.Key = configurationPriorData.Key
-		r.Configuration.List = configurationPriorData.List
-		r.Configuration.ListCountriesForBonds = configurationPriorData.ListCountriesForBonds
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Tickers = configurationPriorData.Tickers
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BondType = configurationPriorData.BondType
+			r.Configuration.Commodities = configurationPriorData.Commodities
+			r.Configuration.Countries = configurationPriorData.Countries
+			r.Configuration.Key = configurationPriorData.Key
+			r.Configuration.List = configurationPriorData.List
+			r.Configuration.ListCountriesForBonds = configurationPriorData.ListCountriesForBonds
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Tickers = configurationPriorData.Tickers
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

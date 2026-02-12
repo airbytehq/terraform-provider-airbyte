@@ -17,11 +17,13 @@ func (r *SourceKyveResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceKyve{}
-		r.Configuration.MaxPages = configurationPriorData.MaxPages
-		r.Configuration.PageSize = configurationPriorData.PageSize
-		r.Configuration.PoolIds = configurationPriorData.PoolIds
-		r.Configuration.StartIds = configurationPriorData.StartIds
-		r.Configuration.URLBase = configurationPriorData.URLBase
+		if configurationPriorData != nil {
+			r.Configuration.MaxPages = configurationPriorData.MaxPages
+			r.Configuration.PageSize = configurationPriorData.PageSize
+			r.Configuration.PoolIds = configurationPriorData.PoolIds
+			r.Configuration.StartIds = configurationPriorData.StartIds
+			r.Configuration.URLBase = configurationPriorData.URLBase
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

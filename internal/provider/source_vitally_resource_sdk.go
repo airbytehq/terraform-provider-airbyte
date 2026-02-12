@@ -18,11 +18,13 @@ func (r *SourceVitallyResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceVitally{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BasicAuthHeader = configurationPriorData.BasicAuthHeader
-		r.Configuration.Domain = configurationPriorData.Domain
-		r.Configuration.SecretToken = configurationPriorData.SecretToken
-		r.Configuration.Status = configurationPriorData.Status
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BasicAuthHeader = configurationPriorData.BasicAuthHeader
+			r.Configuration.Domain = configurationPriorData.Domain
+			r.Configuration.SecretToken = configurationPriorData.SecretToken
+			r.Configuration.Status = configurationPriorData.Status
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

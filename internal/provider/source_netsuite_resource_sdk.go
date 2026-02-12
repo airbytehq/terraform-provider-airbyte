@@ -18,15 +18,17 @@ func (r *SourceNetsuiteResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceNetsuite{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ConsumerKey = configurationPriorData.ConsumerKey
-		r.Configuration.ConsumerSecret = configurationPriorData.ConsumerSecret
-		r.Configuration.ObjectTypes = configurationPriorData.ObjectTypes
-		r.Configuration.Realm = configurationPriorData.Realm
-		r.Configuration.StartDatetime = configurationPriorData.StartDatetime
-		r.Configuration.TokenKey = configurationPriorData.TokenKey
-		r.Configuration.TokenSecret = configurationPriorData.TokenSecret
-		r.Configuration.WindowInDays = configurationPriorData.WindowInDays
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ConsumerKey = configurationPriorData.ConsumerKey
+			r.Configuration.ConsumerSecret = configurationPriorData.ConsumerSecret
+			r.Configuration.ObjectTypes = configurationPriorData.ObjectTypes
+			r.Configuration.Realm = configurationPriorData.Realm
+			r.Configuration.StartDatetime = configurationPriorData.StartDatetime
+			r.Configuration.TokenKey = configurationPriorData.TokenKey
+			r.Configuration.TokenSecret = configurationPriorData.TokenSecret
+			r.Configuration.WindowInDays = configurationPriorData.WindowInDays
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

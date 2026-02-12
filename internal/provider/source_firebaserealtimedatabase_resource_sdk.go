@@ -17,10 +17,12 @@ func (r *SourceFirebaseRealtimeDatabaseResourceModel) RefreshFromSharedSourceRes
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFirebaseRealtimeDatabase{}
-		r.Configuration.BufferSize = configurationPriorData.BufferSize
-		r.Configuration.DatabaseName = configurationPriorData.DatabaseName
-		r.Configuration.GoogleApplicationCredentials = configurationPriorData.GoogleApplicationCredentials
-		r.Configuration.Path = configurationPriorData.Path
+		if configurationPriorData != nil {
+			r.Configuration.BufferSize = configurationPriorData.BufferSize
+			r.Configuration.DatabaseName = configurationPriorData.DatabaseName
+			r.Configuration.GoogleApplicationCredentials = configurationPriorData.GoogleApplicationCredentials
+			r.Configuration.Path = configurationPriorData.Path
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -18,10 +18,12 @@ func (r *SourceEmploymentHeroResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceEmploymentHero{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.EmployeesConfigids = configurationPriorData.EmployeesConfigids
-		r.Configuration.OrganizationConfigids = configurationPriorData.OrganizationConfigids
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.EmployeesConfigids = configurationPriorData.EmployeesConfigids
+			r.Configuration.OrganizationConfigids = configurationPriorData.OrganizationConfigids
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

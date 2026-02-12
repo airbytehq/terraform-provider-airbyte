@@ -18,12 +18,14 @@ func (r *SourceZohoInvoiceResourceModel) RefreshFromSharedSourceResponse(ctx con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceZohoInvoice{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.OrganizationID = configurationPriorData.OrganizationID
-		r.Configuration.Region = configurationPriorData.Region
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.OrganizationID = configurationPriorData.OrganizationID
+			r.Configuration.Region = configurationPriorData.Region
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

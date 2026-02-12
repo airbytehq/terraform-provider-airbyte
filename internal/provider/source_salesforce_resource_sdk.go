@@ -19,15 +19,17 @@ func (r *SourceSalesforceResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSalesforce{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.ForceUseBulkAPI = configurationPriorData.ForceUseBulkAPI
-		r.Configuration.IsSandbox = configurationPriorData.IsSandbox
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.StreamSliceStep = configurationPriorData.StreamSliceStep
-		r.Configuration.StreamsCriteria = configurationPriorData.StreamsCriteria
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.ForceUseBulkAPI = configurationPriorData.ForceUseBulkAPI
+			r.Configuration.IsSandbox = configurationPriorData.IsSandbox
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.StreamSliceStep = configurationPriorData.StreamSliceStep
+			r.Configuration.StreamsCriteria = configurationPriorData.StreamsCriteria
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

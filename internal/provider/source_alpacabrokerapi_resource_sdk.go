@@ -19,12 +19,14 @@ func (r *SourceAlpacaBrokerAPIResourceModel) RefreshFromSharedSourceResponse(ctx
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAlpacaBrokerAPI{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Environment = configurationPriorData.Environment
-		r.Configuration.Limit = configurationPriorData.Limit
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Environment = configurationPriorData.Environment
+			r.Configuration.Limit = configurationPriorData.Limit
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

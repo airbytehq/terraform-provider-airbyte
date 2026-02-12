@@ -19,11 +19,13 @@ func (r *SourceExchangeRatesResourceModel) RefreshFromSharedSourceResponse(ctx c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceExchangeRates{}
-		r.Configuration.AccessKey = configurationPriorData.AccessKey
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Base = configurationPriorData.Base
-		r.Configuration.IgnoreWeekends = configurationPriorData.IgnoreWeekends
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccessKey = configurationPriorData.AccessKey
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Base = configurationPriorData.Base
+			r.Configuration.IgnoreWeekends = configurationPriorData.IgnoreWeekends
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

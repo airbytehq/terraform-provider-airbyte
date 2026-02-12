@@ -19,13 +19,15 @@ func (r *SourceCircleciResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceCircleci{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.JobNumber = configurationPriorData.JobNumber
-		r.Configuration.OrgID = configurationPriorData.OrgID
-		r.Configuration.ProjectID = configurationPriorData.ProjectID
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.WorkflowID = configurationPriorData.WorkflowID
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.JobNumber = configurationPriorData.JobNumber
+			r.Configuration.OrgID = configurationPriorData.OrgID
+			r.Configuration.ProjectID = configurationPriorData.ProjectID
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.WorkflowID = configurationPriorData.WorkflowID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

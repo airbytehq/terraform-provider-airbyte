@@ -18,15 +18,17 @@ func (r *DestinationBigqueryResourceModel) RefreshFromSharedDestinationResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationBigquery{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.CdcDeletionMode = configurationPriorData.CdcDeletionMode
-		r.Configuration.CredentialsJSON = configurationPriorData.CredentialsJSON
-		r.Configuration.DatasetID = configurationPriorData.DatasetID
-		r.Configuration.DatasetLocation = configurationPriorData.DatasetLocation
-		r.Configuration.DisableTypeDedupe = configurationPriorData.DisableTypeDedupe
-		r.Configuration.LoadingMethod = configurationPriorData.LoadingMethod
-		r.Configuration.ProjectID = configurationPriorData.ProjectID
-		r.Configuration.RawDataDataset = configurationPriorData.RawDataDataset
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.CdcDeletionMode = configurationPriorData.CdcDeletionMode
+			r.Configuration.CredentialsJSON = configurationPriorData.CredentialsJSON
+			r.Configuration.DatasetID = configurationPriorData.DatasetID
+			r.Configuration.DatasetLocation = configurationPriorData.DatasetLocation
+			r.Configuration.DisableTypeDedupe = configurationPriorData.DisableTypeDedupe
+			r.Configuration.LoadingMethod = configurationPriorData.LoadingMethod
+			r.Configuration.ProjectID = configurationPriorData.ProjectID
+			r.Configuration.RawDataDataset = configurationPriorData.RawDataDataset
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

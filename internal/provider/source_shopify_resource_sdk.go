@@ -19,15 +19,17 @@ func (r *SourceShopifyResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceShopify{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BulkWindowInDays = configurationPriorData.BulkWindowInDays
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.FetchTransactionsUserID = configurationPriorData.FetchTransactionsUserID
-		r.Configuration.JobCheckpointInterval = configurationPriorData.JobCheckpointInterval
-		r.Configuration.JobProductVariantsIncludePresPrices = configurationPriorData.JobProductVariantsIncludePresPrices
-		r.Configuration.JobTerminationThreshold = configurationPriorData.JobTerminationThreshold
-		r.Configuration.Shop = configurationPriorData.Shop
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BulkWindowInDays = configurationPriorData.BulkWindowInDays
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.FetchTransactionsUserID = configurationPriorData.FetchTransactionsUserID
+			r.Configuration.JobCheckpointInterval = configurationPriorData.JobCheckpointInterval
+			r.Configuration.JobProductVariantsIncludePresPrices = configurationPriorData.JobProductVariantsIncludePresPrices
+			r.Configuration.JobTerminationThreshold = configurationPriorData.JobTerminationThreshold
+			r.Configuration.Shop = configurationPriorData.Shop
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

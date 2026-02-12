@@ -19,12 +19,14 @@ func (r *SourceSenseforceResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSenseforce{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BackendURL = configurationPriorData.BackendURL
-		r.Configuration.DatasetID = configurationPriorData.DatasetID
-		r.Configuration.SliceRange = configurationPriorData.SliceRange
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BackendURL = configurationPriorData.BackendURL
+			r.Configuration.DatasetID = configurationPriorData.DatasetID
+			r.Configuration.SliceRange = configurationPriorData.SliceRange
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

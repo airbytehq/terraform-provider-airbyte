@@ -18,11 +18,13 @@ func (r *DestinationDeepsetResourceModel) RefreshFromSharedDestinationResponse(c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationDeepset{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.BaseURL = configurationPriorData.BaseURL
-		r.Configuration.Retries = configurationPriorData.Retries
-		r.Configuration.Workspace = configurationPriorData.Workspace
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.BaseURL = configurationPriorData.BaseURL
+			r.Configuration.Retries = configurationPriorData.Retries
+			r.Configuration.Workspace = configurationPriorData.Workspace
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

@@ -18,11 +18,13 @@ func (r *SourceTmdbResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTmdb{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Language = configurationPriorData.Language
-		r.Configuration.MovieID = configurationPriorData.MovieID
-		r.Configuration.Query = configurationPriorData.Query
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Language = configurationPriorData.Language
+			r.Configuration.MovieID = configurationPriorData.MovieID
+			r.Configuration.Query = configurationPriorData.Query
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

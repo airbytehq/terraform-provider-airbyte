@@ -19,11 +19,13 @@ func (r *SourceLinnworksResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceLinnworks{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ApplicationID = configurationPriorData.ApplicationID
-		r.Configuration.ApplicationSecret = configurationPriorData.ApplicationSecret
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Token = configurationPriorData.Token
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ApplicationID = configurationPriorData.ApplicationID
+			r.Configuration.ApplicationSecret = configurationPriorData.ApplicationSecret
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Token = configurationPriorData.Token
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

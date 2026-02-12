@@ -19,13 +19,15 @@ func (r *SourceFinancialModellingResourceModel) RefreshFromSharedSourceResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFinancialModelling{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Exchange = configurationPriorData.Exchange
-		r.Configuration.Marketcaplowerthan = configurationPriorData.Marketcaplowerthan
-		r.Configuration.Marketcapmorethan = configurationPriorData.Marketcapmorethan
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.TimeFrame = configurationPriorData.TimeFrame
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Exchange = configurationPriorData.Exchange
+			r.Configuration.Marketcaplowerthan = configurationPriorData.Marketcaplowerthan
+			r.Configuration.Marketcapmorethan = configurationPriorData.Marketcapmorethan
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.TimeFrame = configurationPriorData.TimeFrame
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

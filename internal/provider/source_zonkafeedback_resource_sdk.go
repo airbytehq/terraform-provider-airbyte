@@ -18,9 +18,11 @@ func (r *SourceZonkaFeedbackResourceModel) RefreshFromSharedSourceResponse(ctx c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceZonkaFeedback{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.AuthToken = configurationPriorData.AuthToken
-		r.Configuration.Datacenter = configurationPriorData.Datacenter
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.AuthToken = configurationPriorData.AuthToken
+			r.Configuration.Datacenter = configurationPriorData.Datacenter
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

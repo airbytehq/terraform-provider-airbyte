@@ -17,11 +17,13 @@ func (r *DestinationGcsResourceModel) RefreshFromSharedDestinationResponse(ctx c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationGcs{}
-		r.Configuration.Credential = configurationPriorData.Credential
-		r.Configuration.Format = configurationPriorData.Format
-		r.Configuration.GcsBucketName = configurationPriorData.GcsBucketName
-		r.Configuration.GcsBucketPath = configurationPriorData.GcsBucketPath
-		r.Configuration.GcsBucketRegion = configurationPriorData.GcsBucketRegion
+		if configurationPriorData != nil {
+			r.Configuration.Credential = configurationPriorData.Credential
+			r.Configuration.Format = configurationPriorData.Format
+			r.Configuration.GcsBucketName = configurationPriorData.GcsBucketName
+			r.Configuration.GcsBucketPath = configurationPriorData.GcsBucketPath
+			r.Configuration.GcsBucketRegion = configurationPriorData.GcsBucketRegion
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

@@ -19,15 +19,17 @@ func (r *SourcePaypalTransactionResourceModel) RefreshFromSharedSourceResponse(c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourcePaypalTransaction{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.DisputeStartDate = configurationPriorData.DisputeStartDate
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.IsSandbox = configurationPriorData.IsSandbox
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.TimeWindow = configurationPriorData.TimeWindow
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.DisputeStartDate = configurationPriorData.DisputeStartDate
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.IsSandbox = configurationPriorData.IsSandbox
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.TimeWindow = configurationPriorData.TimeWindow
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

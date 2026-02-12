@@ -18,10 +18,12 @@ func (r *SourceMondayResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMonday{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BoardIds = configurationPriorData.BoardIds
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BoardIds = configurationPriorData.BoardIds
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)
