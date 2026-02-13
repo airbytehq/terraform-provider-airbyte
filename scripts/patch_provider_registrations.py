@@ -91,6 +91,9 @@ def main() -> None:
     if content != original:
         provider_path.write_text(content)
         print(f"Patched {provider_path}")
+    elif missing_data_sources or missing_resources:
+        print("ERROR: Registrations are missing but patching failed. Check warnings above.", file=sys.stderr)
+        sys.exit(1)
     else:
         print("No changes needed.")
 
