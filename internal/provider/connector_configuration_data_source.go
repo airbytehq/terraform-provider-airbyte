@@ -163,6 +163,7 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		}
 		if secretsJSON != "" && !isValidJSONObject(secretsJSON) {
 			addDiagnostic(resp, ignoreErrors, "Invalid configuration_secrets", "The `configuration_secrets` attribute must be an object (not an array or primitive).")
+			secretsJSON = ""
 			if !ignoreErrors {
 				return
 			}
