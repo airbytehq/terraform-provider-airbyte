@@ -166,8 +166,9 @@ jobs:
             - name: Clean generated code
               run: |
                   rm -rf internal/sdk
-                  rm -f internal/provider/destination_*.go
-                  rm -f internal/provider/source_*.go
+                  # Delete generated source/destination files but preserve hand-written ones
+                  find internal/provider/ -name 'destination_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete
+                  find internal/provider/ -name 'source_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete
                   rm -rf internal/provider/types/
 
             - name: Generate Provider ${{ steps.get-version.outputs.resolved-version }} with Speakeasy
