@@ -73,17 +73,20 @@ def main() -> None:
     content = provider_path.read_text()
     original = content
 
-    already_present = all(reg in content for reg in CUSTOM_DATA_SOURCES + CUSTOM_RESOURCES)
-    if already_present:
+    missing_data_sources = [reg for reg in CUSTOM_DATA_SOURCES if reg not in content]
+    missing_resources = [reg for reg in CUSTOM_RESOURCES if reg not in content]
+
+    if not missing_data_sources and not missing_resources:
         print("All custom registrations already present, no changes needed.")
         return
 
-    print("Patching custom data source registrations...")
-    content = patch_registrations(content, DATA_SOURCES_MARKER, CUSTOM_DATA_SOURCES)
+    if missing_data_sources:
+        print("Patching custom data source registrations...")
+        content = patch_registrations(content, DATA_SOURCES_MARKER, missing_data_sources)
 
-    if CUSTOM_RESOURCES:
+    if missing_resources:
         print("Patching custom resource registrations...")
-        content = patch_registrations(content, RESOURCES_MARKER, CUSTOM_RESOURCES)
+        content = patch_registrations(content, RESOURCES_MARKER, missing_resources)
 
     if content != original:
         provider_path.write_text(content)

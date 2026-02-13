@@ -149,6 +149,55 @@ resource "airbyte_source_custom" "my_source" {
 }
 ```
 
+#### Migration Option C: Generic Resource with Data Source (Recommended)
+
+The `airbyte_connector_configuration` data source resolves connector names to definition IDs and lets you split sensitive from non-sensitive configuration for clean Terraform diffs:
+
+```hcl
+data "airbyte_connector_configuration" "my_postgres" {
+  connector_name = "source-postgres"
+  configuration  = jsonencode({
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "readonly"
+  })
+  configuration_secrets = jsonencode({
+    password = var.db_password
+  })
+}
+
+resource "airbyte_source" "my_source" {
+  name          = "My Postgres Source"
+  workspace_id  = airbyte_workspace.my_workspace.id
+  definition_id = data.airbyte_connector_configuration.my_postgres.definition_id
+  configuration = data.airbyte_connector_configuration.my_postgres.configuration_json
+}
+```
+
+Non-sensitive values (`host`, `port`, etc.) produce clean diffs in `terraform plan`, while the merged `configuration_json` passed to the resource is marked sensitive.
+
+#### Migration Option D: Generic Resource with Inline JSON
+
+For simpler cases where you don't need the data source, pass JSON configuration directly to `airbyte_source` / `airbyte_destination`:
+
+```hcl
+resource "airbyte_source" "my_source" {
+  name          = "My Postgres Source"
+  workspace_id  = airbyte_workspace.my_workspace.id
+  definition_id = "decd338e-5647-4c0b-adf4-da0e75f5a750"
+  configuration = jsonencode({
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "readonly"
+    password = var.db_password
+  })
+}
+```
+
+The entire `configuration` attribute is sensitive, so all values are hidden in plan output. Use this approach when you don't need per-field diff visibility.
+
 ### 4. User Notification
 
 **Channels**:

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -37,11 +39,11 @@ func (d *ConnectorConfigurationDataSource) Metadata(ctx context.Context, req dat
 
 func (d *ConnectorConfigurationDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: `Validates and merges connector configuration for use with airbyte_source or airbyte_destination resources.
+		MarkdownDescription: `Resolves and merges connector configuration for use with airbyte_source or airbyte_destination resources.
 
-This data source resolves a connector name to its definition ID, optionally validates the configuration
-against the connector's JSONSchema spec, and merges non-sensitive and sensitive configuration into a
-single JSON blob suitable for passing to a resource.
+This data source resolves a connector name to its definition ID, verifies that the provided configuration
+values are valid JSON, and merges non-sensitive and sensitive configuration into a single JSON blob
+suitable for passing to a resource.
 
 Use this data source to get clean Terraform diffs on non-sensitive configuration values while keeping
 secrets hidden in state and plan output.`,
@@ -99,24 +101,40 @@ type registryResponse struct {
 	Destinations []registryEntry `json:"destinations"`
 }
 
-func resolveDefinitionID(connectorName string) (string, error) {
+func resolveDefinitionID(ctx context.Context, connectorName string) (string, error) {
 	dockerName := "airbyte/" + connectorName
 
-	definitionID, err := searchRegistry(cloudRegistryURL, dockerName, connectorName)
-	if err == nil && definitionID != "" {
-		return definitionID, nil
+	cloudID, cloudErr := searchRegistry(ctx, cloudRegistryURL, dockerName, connectorName)
+	if cloudErr == nil && cloudID != "" {
+		return cloudID, nil
 	}
 
-	definitionID, err = searchRegistry(ossRegistryURL, dockerName, connectorName)
-	if err == nil && definitionID != "" {
-		return definitionID, nil
+	ossID, ossErr := searchRegistry(ctx, ossRegistryURL, dockerName, connectorName)
+	if ossErr == nil && ossID != "" {
+		return ossID, nil
+	}
+
+	if cloudErr != nil || ossErr != nil {
+		var parts []string
+		if cloudErr != nil {
+			parts = append(parts, fmt.Sprintf("cloud: %v", cloudErr))
+		}
+		if ossErr != nil {
+			parts = append(parts, fmt.Sprintf("oss: %v", ossErr))
+		}
+		return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
 	}
 
 	return "", fmt.Errorf("connector %q not found in Cloud or OSS registries", connectorName)
 }
 
-func searchRegistry(registryURL, dockerName, connectorName string) (string, error) {
-	resp, err := http.Get(registryURL)
+func searchRegistry(ctx context.Context, registryURL, dockerName, connectorName string) (string, error) {
+	client := &http.Client{Timeout: 30 * time.Second}
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, registryURL, nil)
+	if err != nil {
+		return "", fmt.Errorf("failed to create request for %s: %w", registryURL, err)
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("failed to fetch registry from %s: %w", registryURL, err)
 	}
@@ -136,7 +154,7 @@ func searchRegistry(registryURL, dockerName, connectorName string) (string, erro
 		return "", fmt.Errorf("failed to parse registry JSON: %w", err)
 	}
 
-	isSource := len(connectorName) > 7 && connectorName[:7] == "source-"
+	isSource := strings.HasPrefix(connectorName, "source-")
 	if isSource {
 		for _, entry := range registry.Sources {
 			if entry.DockerRepository == dockerName {
@@ -168,7 +186,7 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		ignoreErrors = data.IgnoreErrors.ValueBool()
 	}
 
-	definitionID, err := resolveDefinitionID(connectorName)
+	definitionID, err := resolveDefinitionID(ctx, connectorName)
 	if err != nil {
 		addDiagnostic(resp, ignoreErrors, "Failed to resolve connector definition ID", err.Error())
 		if !ignoreErrors {
@@ -178,8 +196,8 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	data.DefinitionID = types.StringValue(definitionID)
 
 	configJSON := data.Configuration.ValueString()
-	if !isValidJSON(configJSON) {
-		addDiagnostic(resp, ignoreErrors, "Invalid configuration JSON", fmt.Sprintf("The `configuration` attribute must be valid JSON, got: %s", configJSON))
+	if !isValidJSONObject(configJSON) {
+		addDiagnostic(resp, ignoreErrors, "Invalid configuration JSON", fmt.Sprintf("The `configuration` attribute must be a valid JSON object (not an array or primitive), got: %s", configJSON))
 		if !ignoreErrors {
 			return
 		}
@@ -188,8 +206,8 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	var secretsJSON string
 	if !data.ConfigurationSecrets.IsNull() && !data.ConfigurationSecrets.IsUnknown() {
 		secretsJSON = data.ConfigurationSecrets.ValueString()
-		if !isValidJSON(secretsJSON) {
-			addDiagnostic(resp, ignoreErrors, "Invalid configuration_secrets JSON", fmt.Sprintf("The `configuration_secrets` attribute must be valid JSON, got: %s", secretsJSON))
+		if !isValidJSONObject(secretsJSON) {
+			addDiagnostic(resp, ignoreErrors, "Invalid configuration_secrets JSON", fmt.Sprintf("The `configuration_secrets` attribute must be a valid JSON object (not an array or primitive), got: %s", secretsJSON))
 			if !ignoreErrors {
 				return
 			}
@@ -210,12 +228,12 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func isValidJSON(s string) bool {
+func isValidJSONObject(s string) bool {
 	if s == "" {
 		return false
 	}
-	var js json.RawMessage
-	return json.Unmarshal([]byte(s), &js) == nil
+	var obj map[string]interface{}
+	return json.Unmarshal([]byte(s), &obj) == nil
 }
 
 func mergeJSON(base, overlay string) (string, error) {
