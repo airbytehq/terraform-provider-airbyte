@@ -1,11 +1,6 @@
-.PHONY: all speakeasy post-generate docs clean-generated generate-spec generate-full
+.PHONY: post-generate docs clean-generated generate-spec generate-full
 
 POE := uvx --from=poethepoet poe
-
-all: speakeasy
-
-speakeasy:
-	speakeasy run
 
 post-generate:
 	$(POE) post-generate
