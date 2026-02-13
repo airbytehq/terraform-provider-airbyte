@@ -321,6 +321,17 @@ func attrValueToGo(val attr.Value) (interface{}, error) {
 			result[i] = goVal
 		}
 		return result, nil
+	case types.Set:
+		elements := v.Elements()
+		result := make([]interface{}, len(elements))
+		for i, attrVal := range elements {
+			goVal, err := attrValueToGo(attrVal)
+			if err != nil {
+				return nil, err
+			}
+			result[i] = goVal
+		}
+		return result, nil
 	default:
 		return nil, fmt.Errorf("unsupported value type: %T", val)
 	}
