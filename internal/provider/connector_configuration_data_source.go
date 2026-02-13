@@ -203,8 +203,8 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 			return
 		}
 	}
-	if configJSON != "" && !isValidJSONObject(configJSON) {
-		addDiagnostic(resp, ignoreErrors, "Invalid configuration", "The `configuration` attribute must be an object (not an array or primitive).")
+	if configJSON == "" || !isValidJSONObject(configJSON) {
+		addDiagnostic(resp, ignoreErrors, "Invalid configuration", "The `configuration` attribute must be a non-empty JSON object (not an empty string, array, or primitive).")
 		if !ignoreErrors {
 			return
 		}
