@@ -121,6 +121,9 @@ Available configuration:
 
 ### Resources
 
+<details>
+<summary>Click to expand Resources list (649)</summary>
+
 * [airbyte_connection](docs/resources/connection.md)
 * [airbyte_declarative_source_definition](docs/resources/declarative_source_definition.md)
 * [airbyte_destination](docs/resources/destination.md)
@@ -770,7 +773,12 @@ Available configuration:
 * [airbyte_source_zoom](docs/resources/source_zoom.md)
 * [airbyte_source_definition](docs/resources/source_definition.md)
 * [airbyte_workspace](docs/resources/workspace.md)
+
+</details>
 ### Data Sources
+
+<details>
+<summary>Click to expand Data Sources list (650)</summary>
 
 * [airbyte_connection](docs/data-sources/connection.md)
 * [airbyte_connections](docs/data-sources/connections.md)
@@ -1422,6 +1430,8 @@ Available configuration:
 * [airbyte_source_zoom](docs/data-sources/source_zoom.md)
 * [airbyte_source_definition](docs/data-sources/source_definition.md)
 * [airbyte_workspace](docs/data-sources/workspace.md)
+
+</details>
 <!-- End Available Resources and Data Sources [operations] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
