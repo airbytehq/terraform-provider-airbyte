@@ -1,0 +1,28 @@
+[tasks]
+
+[tasks.clean-generated]
+help = "Delete generated files, preserving hand-written movestate/helpers."
+shell = """
+rm -rf internal/sdk
+find internal/provider/ -name 'destination_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete 2>/dev/null || true
+find internal/provider/ -name 'source_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete 2>/dev/null || true
+rm -rf internal/provider/types/
+"""
+
+[tasks.generate-spec]
+help = "Generate Terraform OpenAPI spec from Airbyte connector registries."
+shell = """
+mkdir -p generated
+uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
+"""
+
+[tasks.post-generate]
+help = "Patch provider registrations and tidy Go modules after Speakeasy generation."
+shell = """
+python3 scripts/patch_provider_registrations.py internal/provider/provider.go
+go mod tidy
+"""
+
+[tasks.generate-full]
+help = "Full generation pipeline: clean, generate spec, run Speakeasy, and post-generate."
+sequence = ["clean-generated", "generate-spec", { cmd = "speakeasy run" }, "post-generate"]

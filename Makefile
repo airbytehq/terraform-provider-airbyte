@@ -5,8 +5,7 @@ speakeasy:
 	speakeasy run
 
 post-generate:
-	python3 scripts/patch_provider_registrations.py internal/provider/provider.go
-	go mod tidy
+	uvx --from=poethepoet poe post-generate
 
 docs:
 	go mod tidy

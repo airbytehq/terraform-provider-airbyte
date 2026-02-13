@@ -113,11 +113,7 @@ jobs:
               uses: astral-sh/setup-uv@v5
 
             - name: Generate Terraform OpenAPI spec
-              run: |
-                  mkdir -p generated
-                  # Generate spec with both Cloud and OSS connectors
-                  # This includes all connectors from both registries for maximum compatibility
-                  uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
+              run: uvx --from=poethepoet poe generate-spec
 
             - name: Upload generated spec as artifact
               uses: actions/upload-artifact@v4
@@ -164,12 +160,7 @@ jobs:
                   echo "Lint passed - no unhandled circular references detected."
 
             - name: Clean generated code
-              run: |
-                  rm -rf internal/sdk
-                  # Delete generated source/destination files but preserve hand-written ones
-                  find internal/provider/ -name 'destination_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete
-                  find internal/provider/ -name 'source_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete
-                  rm -rf internal/provider/types/
+              run: uvx --from=poethepoet poe clean-generated
 
             - name: Generate Provider ${{ steps.get-version.outputs.resolved-version }} with Speakeasy
               env:
@@ -188,7 +179,7 @@ jobs:
                   fi
 
             - name: Post-generation patching
-              run: make post-generate
+              run: uvx --from=poethepoet poe post-generate
 
             - name: Build generated code
               if: ${{ inputs.dry_run }}
