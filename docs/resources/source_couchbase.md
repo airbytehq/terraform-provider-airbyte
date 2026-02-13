@@ -57,7 +57,7 @@ Required:
 
 - `bucket` (String) The name of the bucket to sync data from
 - `connection_string` (String) The connection string for the Couchbase server (e.g., couchbase://localhost or couchbases://example.com)
-- `password` (String) The password to use for authentication
+- `password` (String, Sensitive) The password to use for authentication
 - `username` (String) The username to use for authentication
 
 Optional:

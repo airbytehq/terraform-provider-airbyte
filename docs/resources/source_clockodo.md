@@ -57,7 +57,7 @@ resource "airbyte_source_clockodo" "my_source_clockodo" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it in the 'Personal data' section of your Clockodo account.
+- `api_key` (String, Sensitive) API key to use. Find it in the 'Personal data' section of your Clockodo account.
 - `email_address` (String) Your Clockodo account email address. Find it in your Clockodo account settings.
 - `start_date` (String)
 - `years` (List of String) 2024, 2025

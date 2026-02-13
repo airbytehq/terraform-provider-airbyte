@@ -72,6 +72,7 @@ func (r *SourceSegmentResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use. Generate it in Segment's Workspace settings.`,
 					},
 					"region": schema.StringAttribute{

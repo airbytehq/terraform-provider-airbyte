@@ -87,7 +87,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String) The password associated with this username.
+- `password` (String, Sensitive) The password associated with this username.
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
@@ -111,10 +111,10 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `azure_blob_storage_account_key` (String) The Azure blob storage account key. Mutually exclusive with a Shared Access Signature
+- `azure_blob_storage_account_key` (String, Sensitive) The Azure blob storage account key. Mutually exclusive with a Shared Access Signature
 - `bulk_load_validate_values_pre_load` (Boolean) When enabled, Airbyte will validate all values before loading them into the destination table. This provides stronger data integrity guarantees but may significantly impact performance. Default: false
 - `load_type` (String) Default: "BULK"; must be "BULK"
-- `shared_access_signature` (String) A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview.Mutually exclusive with an account key
+- `shared_access_signature` (String, Sensitive) A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview.Mutually exclusive with an account key
 
 
 <a id="nestedatt--configuration--load_type--insert_load"></a>
@@ -154,7 +154,7 @@ Optional:
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
 - `name` (String) Default: "encrypted_verify_certificate"; must be "encrypted_verify_certificate"
 - `trust_store_name` (String) Specifies the name of the trust store.
-- `trust_store_password` (String) Specifies the password of the trust store.
+- `trust_store_password` (String, Sensitive) Specifies the password of the trust store.
 
 
 <a id="nestedatt--configuration--ssl_method--unencrypted"></a>
@@ -192,7 +192,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -206,7 +206,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 

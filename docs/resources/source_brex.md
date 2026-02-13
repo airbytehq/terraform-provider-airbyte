@@ -53,7 +53,7 @@ resource "airbyte_source_brex" "my_source_brex" {
 Required:
 
 - `start_date` (String)
-- `user_token` (String) User token to authenticate API requests. Generate it from your Brex dashboard under Developer > Settings.
+- `user_token` (String, Sensitive) User token to authenticate API requests. Generate it from your Brex dashboard under Developer > Settings.
 
 Optional:
 

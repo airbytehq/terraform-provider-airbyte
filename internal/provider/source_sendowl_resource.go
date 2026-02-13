@@ -71,6 +71,7 @@ func (r *SourceSendowlResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Enter your API secret`,
 					},
 					"start_date": schema.StringAttribute{

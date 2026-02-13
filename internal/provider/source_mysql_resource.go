@@ -109,6 +109,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -267,18 +268,22 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)`,
 									},
 									"client_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
@@ -312,18 +317,22 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)`,
 									},
 									"client_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
@@ -444,6 +453,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -465,6 +475,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{

@@ -71,6 +71,7 @@ func (r *SourcePandadocResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://app.pandadoc.com/a/#/settings/api-dashboard/configuration`,
 					},
 					"start_date": schema.StringAttribute{

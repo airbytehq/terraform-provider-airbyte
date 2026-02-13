@@ -52,7 +52,7 @@ resource "airbyte_source_repairshopr" "my_source_repairshopr" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `subdomain` (String)
 
 Optional:

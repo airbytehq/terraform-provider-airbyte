@@ -51,7 +51,7 @@ resource "airbyte_source_luma" "my_source_luma" {
 
 Required:
 
-- `api_key` (String) Get your API key on lu.ma Calendars dashboard → Settings.
+- `api_key` (String, Sensitive) Get your API key on lu.ma Calendars dashboard → Settings.
 
 Optional:
 

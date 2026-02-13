@@ -66,6 +66,7 @@ func (r *SourceProductboardResource) Schema(ctx context.Context, req resource.Sc
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Productboard access token. See https://developer.productboard.com/reference/authentication for steps to generate one.`,
 					},
 					"additional_properties": schema.StringAttribute{

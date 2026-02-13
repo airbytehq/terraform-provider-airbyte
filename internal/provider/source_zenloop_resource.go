@@ -63,6 +63,7 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a>`,
 					},
 					"date_from": schema.StringAttribute{
@@ -71,10 +72,12 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"survey_group_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups`,
 					},
 					"survey_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys`,
 					},
 				},

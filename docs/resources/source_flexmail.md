@@ -53,7 +53,7 @@ resource "airbyte_source_flexmail" "my_source_flexmail" {
 Required:
 
 - `account_id` (String) Your Flexmail account ID. You can find it in your Flexmail account settings.
-- `personal_access_token` (String) A personal access token for API authentication. Manage your tokens in Flexmail under Settings > API > Personal access tokens.
+- `personal_access_token` (String, Sensitive) A personal access token for API authentication. Manage your tokens in Flexmail under Settings > API > Personal access tokens.
 
 Optional:
 

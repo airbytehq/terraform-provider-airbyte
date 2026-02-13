@@ -55,7 +55,7 @@ resource "airbyte_source_zapsign" "my_source_zapsign" {
 
 Required:
 
-- `api_token` (String) Your static API token for authentication. You can find it in your ZapSign account under the 'Settings' or 'API' section. For more details, refer to the [Getting Started](https://docs.zapsign.com.br/english/getting-started#how-do-i-get-my-api-token) guide.
+- `api_token` (String, Sensitive) Your static API token for authentication. You can find it in your ZapSign account under the 'Settings' or 'API' section. For more details, refer to the [Getting Started](https://docs.zapsign.com.br/english/getting-started#how-do-i-get-my-api-token) guide.
 - `start_date` (String)
 
 Optional:

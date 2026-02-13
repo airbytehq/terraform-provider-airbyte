@@ -54,7 +54,7 @@ resource "airbyte_source_nylas" "my_source_nylas" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `api_server` (String) must be one of ["us", "eu"]
 - `end_date` (String)
 - `start_date` (String)

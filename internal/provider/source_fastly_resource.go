@@ -71,6 +71,7 @@ func (r *SourceFastlyResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"fastly_api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Fastly API token. You can generate this token in the Fastly web interface under Account Settings or via the Fastly API. Ensure the token has the appropriate scope for your use case.`,
 					},
 					"start_date": schema.StringAttribute{

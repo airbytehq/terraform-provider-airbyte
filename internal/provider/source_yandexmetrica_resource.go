@@ -73,6 +73,7 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 					},
 					"auth_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Yandex Metrica API access token`,
 					},
 					"counter_id": schema.StringAttribute{

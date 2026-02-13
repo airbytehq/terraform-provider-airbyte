@@ -52,7 +52,7 @@ resource "airbyte_source_aviationstack" "my_source_aviationstack" {
 
 Required:
 
-- `access_key` (String) Your unique API key for authenticating with the Aviation API. You can find it in your Aviation account dashboard at https://aviationstack.com/dashboard
+- `access_key` (String, Sensitive) Your unique API key for authenticating with the Aviation API. You can find it in your Aviation account dashboard at https://aviationstack.com/dashboard
 - `start_date` (String)
 
 Optional:

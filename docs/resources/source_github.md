@@ -92,12 +92,12 @@ Optional:
 
 Required:
 
-- `access_token` (String) OAuth access token
+- `access_token` (String, Sensitive) OAuth access token
 
 Optional:
 
-- `client_id` (String) OAuth Client Id
-- `client_secret` (String) OAuth Client secret
+- `client_id` (String, Sensitive) OAuth Client Id
+- `client_secret` (String, Sensitive) OAuth Client secret
 
 
 <a id="nestedatt--configuration--credentials--personal_access_token"></a>
@@ -105,7 +105,7 @@ Optional:
 
 Required:
 
-- `personal_access_token` (String) Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
+- `personal_access_token` (String, Sensitive) Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
 
 
 

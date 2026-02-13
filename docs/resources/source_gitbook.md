@@ -52,7 +52,7 @@ resource "airbyte_source_gitbook" "my_source_gitbook" {
 
 Required:
 
-- `access_token` (String) Personal access token for authenticating with the GitBook API. You can view and manage your access tokens in the Developer settings of your GitBook user account.
+- `access_token` (String, Sensitive) Personal access token for authenticating with the GitBook API. You can view and manage your access tokens in the Developer settings of your GitBook user account.
 - `space_id` (String)
 
 Optional:

@@ -57,7 +57,7 @@ resource "airbyte_source_breezometer" "my_source_breezometer" {
 
 Required:
 
-- `api_key` (String) Your API Access Key. See <a href="https://docs.breezometer.com/api-documentation/introduction/#authentication/">here</a>.
+- `api_key` (String, Sensitive) Your API Access Key. See <a href="https://docs.breezometer.com/api-documentation/introduction/#authentication/">here</a>.
 - `latitude` (String) Latitude of the monitored location.
 - `longitude` (String) Longitude of the monitored location.
 

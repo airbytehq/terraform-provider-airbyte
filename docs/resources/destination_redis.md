@@ -72,7 +72,7 @@ Required:
 Optional:
 
 - `cache_type` (String) Redis cache type to store data in. Default: "hash"; must be "hash"
-- `password` (String) Password associated with Redis.
+- `password` (String, Sensitive) Password associated with Redis.
 - `port` (Number) Port of Redis. Default: 6379
 - `ssl` (Boolean) Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible. Default: false
 - `ssl_mode` (Attributes) SSL connection modes. 
@@ -96,13 +96,13 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
+- `ca_certificate` (String, Sensitive) CA certificate
+- `client_certificate` (String, Sensitive) Client certificate
+- `client_key` (String, Sensitive) Client key
 
 Optional:
 
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
+- `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 
@@ -126,7 +126,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -138,7 +138,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 

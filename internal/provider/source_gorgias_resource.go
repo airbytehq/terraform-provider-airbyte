@@ -74,7 +74,8 @@ func (r *SourceGorgiasResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Domain name given for gorgias, found as your url prefix for accessing your website`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

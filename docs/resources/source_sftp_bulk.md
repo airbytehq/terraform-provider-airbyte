@@ -108,7 +108,7 @@ Optional:
 
 Required:
 
-- `password` (String) Password
+- `password` (String, Sensitive) Password
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_private_key"></a>
@@ -116,7 +116,7 @@ Required:
 
 Required:
 
-- `private_key` (String) The Private key
+- `private_key` (String, Sensitive) The Private key
 
 
 
@@ -249,7 +249,7 @@ Optional:
 
 Optional:
 
-- `api_key` (String) The API key to use matching the environment. Default: ""
+- `api_key` (String, Sensitive) The API key to use matching the environment. Default: ""
 - `api_url` (String) The URL of the unstructured API to use. Default: "https://api.unstructured.io"
 - `parameters` (Attributes List) List of parameters send to the API (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing--via_api--parameters))
 

@@ -53,7 +53,7 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
 
 Required:
 
-- `private_key` (String) Primary account API key to access your Mailgun data.
+- `private_key` (String, Sensitive) Primary account API key to access your Mailgun data.
 
 Optional:
 

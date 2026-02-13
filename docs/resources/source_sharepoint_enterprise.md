@@ -35,7 +35,7 @@ resource "airbyte_source_sharepoint_enterprise" "my_source_sharepointenterprise"
     folder_path  = "...my_folder_path..."
     search_scope = "ACCESSIBLE_DRIVES"
     site_url     = "...my_site_url..."
-    start_date   = "2021-01-01T00:00:00.000000Z"
+    start_date   = "2021-01-01"
     streams = [
       {
         days_to_sync_if_history_is_full = 0
@@ -58,6 +58,7 @@ resource "airbyte_source_sharepoint_enterprise" "my_source_sharepointenterprise"
         primary_key                                 = "...my_primary_key..."
         recent_n_files_to_read_for_schema_discovery = 5
         schemaless                                  = true
+        use_first_found_file_for_schema_discovery   = true
         validation_policy                           = "Skip Record"
       }
     ]
@@ -120,13 +121,13 @@ Optional:
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft SharePoint user
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft SharePoint user
 
 Optional:
 
-- `refresh_token` (String) Refresh Token of your Microsoft developer application
+- `refresh_token` (String, Sensitive) Refresh Token of your Microsoft developer application
 - `scopes` (String) Scopes to request when authorizing. If you want to change scopes after source was created, you need to Re-authenticate to actually apply this change to your access token. Default: "offline_access Files.Read.All Sites.Read.All Sites.Selected User.Read.All Group.Read.All Application.Read.All Device.Read.All"
 
 
@@ -135,10 +136,10 @@ Optional:
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft SharePoint user
-- `user_principal_name` (String) Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft SharePoint user
+- `user_principal_name` (String, Sensitive) Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
 
 
 
@@ -158,6 +159,7 @@ Optional:
 - `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 - `recent_n_files_to_read_for_schema_discovery` (Number) The number of resent files which will be used to discover the schema for this stream.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
+- `use_first_found_file_for_schema_discovery` (Boolean) When enabled, the source will use the first found file for schema discovery. Helps to avoid long discovery step. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. Default: "Emit Record"; must be one of ["Emit Record", "Skip Record", "Wait for Discover"]
 
 <a id="nestedatt--configuration--streams--format"></a>

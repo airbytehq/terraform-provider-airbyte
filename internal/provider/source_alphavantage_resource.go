@@ -79,6 +79,7 @@ func (r *SourceAlphaVantageResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"interval": schema.StringAttribute{

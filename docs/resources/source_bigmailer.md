@@ -51,7 +51,7 @@ resource "airbyte_source_bigmailer" "my_source_bigmailer" {
 
 Required:
 
-- `api_key` (String) API key to use. You can create and find it on the API key management page in your BigMailer account.
+- `api_key` (String, Sensitive) API key to use. You can create and find it on the API key management page in your BigMailer account.
 
 Optional:
 

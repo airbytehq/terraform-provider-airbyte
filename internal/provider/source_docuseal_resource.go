@@ -72,6 +72,7 @@ func (r *SourceDocusealResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API key for authenticating with the DocuSeal API. Obtain it from the DocuSeal API Console at https://console.docuseal.com/api.`,
 					},
 					"limit": schema.StringAttribute{

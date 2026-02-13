@@ -69,6 +69,7 @@ func (r *SourceXsollaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Go to Xsolla Dashboard and from company setting get the api_key`,
 					},
 					"project_id": schema.Float64Attribute{

@@ -85,6 +85,7 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 									},
 									"openai_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource`,
 									},
 								},
@@ -102,7 +103,8 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cohere_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the Cohere API to embed text.`,
@@ -131,7 +133,8 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"openai_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
@@ -150,6 +153,7 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 									"api_key": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
@@ -189,6 +193,7 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 								Attributes: map[string]schema.Attribute{
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter the password you want to use to access the database`,
 									},
 								},

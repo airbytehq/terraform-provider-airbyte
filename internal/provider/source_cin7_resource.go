@@ -73,6 +73,7 @@ func (r *SourceCin7Resource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API key associated with your account.`,
 					},
 				},

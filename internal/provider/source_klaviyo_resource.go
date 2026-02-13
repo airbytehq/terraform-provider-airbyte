@@ -73,6 +73,7 @@ func (r *SourceKlaviyoResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.`,
 					},
 					"disable_fetching_predictive_analytics": schema.BoolAttribute{

@@ -51,7 +51,7 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 
 Optional:
 

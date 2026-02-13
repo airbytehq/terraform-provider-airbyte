@@ -70,10 +70,12 @@ func (r *SourceMicrosoftDataverseResource) Schema(ctx context.Context, req resou
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `App Registration Client Id`,
 					},
 					"client_secret_value": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `App Registration Client Secret`,
 					},
 					"odata_maxpagesize": schema.Int64Attribute{
@@ -84,6 +86,7 @@ func (r *SourceMicrosoftDataverseResource) Schema(ctx context.Context, req resou
 					},
 					"tenant_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Tenant Id of your Microsoft Dataverse Instance`,
 					},
 					"url": schema.StringAttribute{

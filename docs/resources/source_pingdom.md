@@ -54,7 +54,7 @@ resource "airbyte_source_pingdom" "my_source_pingdom" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

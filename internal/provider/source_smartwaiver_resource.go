@@ -72,6 +72,7 @@ func (r *SourceSmartwaiverResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `You can retrieve your token by visiting your dashboard then click on My Account then click on API keys.`,
 					},
 					"start_date": schema.StringAttribute{

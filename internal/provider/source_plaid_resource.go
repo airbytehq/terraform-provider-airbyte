@@ -67,6 +67,7 @@ func (r *SourcePlaidResource) Schema(ctx context.Context, req resource.SchemaReq
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The end-user's Link access token.`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -76,6 +77,7 @@ func (r *SourcePlaidResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Plaid API key to use to hit the API.`,
 					},
 					"client_id": schema.StringAttribute{

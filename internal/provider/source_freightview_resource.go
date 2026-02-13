@@ -68,10 +68,12 @@ func (r *SourceFreightviewResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

@@ -69,6 +69,7 @@ func (r *SourceStiggResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Stigg Server API Key. You can find this in your Stigg dashboard under Settings > API Keys.`,
 					},
 				},

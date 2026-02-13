@@ -86,6 +86,7 @@ func (r *DestinationAstraResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"openai_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource`,
 									},
 								},
@@ -103,7 +104,8 @@ func (r *DestinationAstraResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cohere_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the Cohere API to embed text.`,
@@ -132,7 +134,8 @@ func (r *DestinationAstraResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"openai_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
@@ -151,6 +154,7 @@ func (r *DestinationAstraResource) Schema(ctx context.Context, req resource.Sche
 									"api_key": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
@@ -187,6 +191,7 @@ func (r *DestinationAstraResource) Schema(ctx context.Context, req resource.Sche
 						Attributes: map[string]schema.Attribute{
 							"astra_db_app_token": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The application token authorizes a user to connect to a specific Astra DB database. It is created when the user clicks the Generate Token button on the Overview tab of the Database page in the Astra UI.`,
 							},
 							"astra_db_endpoint": schema.StringAttribute{

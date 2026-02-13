@@ -51,7 +51,7 @@ resource "airbyte_source_everhour" "my_source_everhour" {
 
 Required:
 
-- `api_key` (String) Everhour API Key. See the <a href="https://everhour.docs.apiary.io/#introduction/authentication">docs</a> for information on how to generate this key.
+- `api_key` (String, Sensitive) Everhour API Key. See the <a href="https://everhour.docs.apiary.io/#introduction/authentication">docs</a> for information on how to generate this key.
 
 Optional:
 

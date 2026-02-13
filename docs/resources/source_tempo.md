@@ -51,7 +51,7 @@ resource "airbyte_source_tempo" "my_source_tempo" {
 
 Required:
 
-- `api_token` (String) Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
+- `api_token` (String, Sensitive) Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
 
 Optional:
 

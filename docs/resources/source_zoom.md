@@ -56,7 +56,7 @@ Required:
 
 - `account_id` (String) The account ID for your Zoom account. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
 - `client_id` (String) The client ID for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
-- `client_secret` (String) The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
+- `client_secret` (String, Sensitive) The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
 
 Optional:
 

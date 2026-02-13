@@ -51,7 +51,7 @@ resource "airbyte_source_eventzilla" "my_source_eventzilla" {
 
 Required:
 
-- `x_api_key` (String) API key to use. Generate it by creating a new application within your Eventzilla account settings under Settings > App Management.
+- `x_api_key` (String, Sensitive) API key to use. Generate it by creating a new application within your Eventzilla account settings under Settings > App Management.
 
 Optional:
 

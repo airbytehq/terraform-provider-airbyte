@@ -75,6 +75,7 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The access key id to access Dynamodb. Airbyte requires read permissions to the database`,
 									},
 									"additional_properties": schema.StringAttribute{
@@ -84,6 +85,7 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"secret_access_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The corresponding secret to the access key id.`,
 									},
 								},
@@ -169,6 +171,7 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"reserved_attribute_names": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Comma separated reserved attribute names present in your tables`,
 					},
 				},

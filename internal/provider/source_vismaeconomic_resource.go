@@ -69,10 +69,12 @@ func (r *SourceVismaEconomicResource) Schema(ctx context.Context, req resource.S
 					},
 					"agreement_grant_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Identifier for the grant issued by an agreement`,
 					},
 					"app_secret_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Identification token for app accessing data`,
 					},
 				},

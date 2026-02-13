@@ -63,7 +63,8 @@ func (r *SourceApptivoResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"additional_properties": schema.StringAttribute{
 						CustomType:  jsontypes.NormalizedType{},
@@ -72,6 +73,7 @@ func (r *SourceApptivoResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it in your Apptivo account under Business Settings -> API Access.`,
 					},
 				},

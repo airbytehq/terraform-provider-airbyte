@@ -86,6 +86,7 @@ func (r *SourceKyribaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password to be used in basic auth`,
 					},
 					"start_date": schema.StringAttribute{

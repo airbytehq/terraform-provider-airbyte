@@ -71,7 +71,8 @@ func (r *SourceTrackPmsResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"api_secret": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"customer_domain": schema.StringAttribute{
 						Required: true,

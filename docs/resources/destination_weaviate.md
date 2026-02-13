@@ -121,7 +121,7 @@ Required:
 
 - `api_base` (String) The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 - `deployment` (String) The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-- `openai_key` (String) The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+- `openai_key` (String, Sensitive) The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 
 
 <a id="nestedatt--configuration--embedding--cohere"></a>
@@ -129,7 +129,7 @@ Required:
 
 Required:
 
-- `cohere_key` (String)
+- `cohere_key` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--embedding--fake"></a>
@@ -154,7 +154,7 @@ Required:
 
 Required:
 
-- `openai_key` (String)
+- `openai_key` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--embedding--open_ai_compatible"></a>
@@ -167,7 +167,7 @@ Required:
 
 Optional:
 
-- `api_key` (String) Default: ""
+- `api_key` (String, Sensitive) Default: ""
 - `model_name` (String) The name of the model to use for embedding. Default: "text-embedding-ada-002"
 
 
@@ -185,7 +185,7 @@ Optional:
 - `additional_headers` (Attributes List) Additional HTTP headers to send with every request. (see [below for nested schema](#nestedatt--configuration--indexing--additional_headers))
 - `batch_size` (Number) The number of records to send to Weaviate in each batch. Default: 128
 - `default_vectorizer` (String) The vectorizer to use if new classes need to be created. Default: "none"; must be one of ["none", "text2vec-cohere", "text2vec-huggingface", "text2vec-openai", "text2vec-palm", "text2vec-contextionary", "text2vec-transformers", "text2vec-gpt4all"]
-- `tenant_id` (String) The tenant ID to use for multi tenancy. Default: ""
+- `tenant_id` (String, Sensitive) The tenant ID to use for multi tenancy. Default: ""
 - `text_field` (String) The field in the object that contains the embedded text. Default: "text"
 
 <a id="nestedatt--configuration--indexing--auth"></a>
@@ -202,7 +202,7 @@ Optional:
 
 Required:
 
-- `token` (String) API Token for the Weaviate instance
+- `token` (String, Sensitive) API Token for the Weaviate instance
 
 
 <a id="nestedatt--configuration--indexing--auth--no_authentication"></a>
@@ -214,7 +214,7 @@ Required:
 
 Required:
 
-- `password` (String) Password for the Weaviate cluster
+- `password` (String, Sensitive) Password for the Weaviate cluster
 - `username` (String) Username for the Weaviate cluster
 
 
@@ -225,7 +225,7 @@ Required:
 Required:
 
 - `header_key` (String)
-- `value` (String)
+- `value` (String, Sensitive)
 
 
 

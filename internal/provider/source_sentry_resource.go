@@ -73,6 +73,7 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"auth_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"`,
 					},
 					"discover_fields": schema.ListAttribute{

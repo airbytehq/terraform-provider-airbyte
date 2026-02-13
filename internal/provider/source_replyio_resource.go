@@ -69,6 +69,7 @@ func (r *SourceReplyIoResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API Token for Reply`,
 					},
 				},

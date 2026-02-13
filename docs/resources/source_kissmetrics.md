@@ -57,7 +57,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String)
+- `password` (String, Sensitive)
 
 
 <a id="nestedatt--resource_allocation"></a>

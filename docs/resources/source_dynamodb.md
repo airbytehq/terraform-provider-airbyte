@@ -62,7 +62,7 @@ Optional:
 - `endpoint` (String) the URL of the Dynamodb database. Default: ""
 - `ignore_missing_read_permissions_tables` (Boolean) Ignore tables with missing scan/read permissions. Default: false
 - `region` (String) The region of the Dynamodb database. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
-- `reserved_attribute_names` (String) Comma separated reserved attribute names present in your tables
+- `reserved_attribute_names` (String, Sensitive) Comma separated reserved attribute names present in your tables
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -77,8 +77,8 @@ Optional:
 
 Required:
 
-- `access_key_id` (String) The access key id to access Dynamodb. Airbyte requires read permissions to the database
-- `secret_access_key` (String) The corresponding secret to the access key id.
+- `access_key_id` (String, Sensitive) The access key id to access Dynamodb. Airbyte requires read permissions to the database
+- `secret_access_key` (String, Sensitive) The corresponding secret to the access key id.
 
 Optional:
 

@@ -51,7 +51,7 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
 
 Required:
 
-- `api_token` (String) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
+- `api_token` (String, Sensitive) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
 
 Optional:
 

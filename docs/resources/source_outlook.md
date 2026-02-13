@@ -54,9 +54,9 @@ resource "airbyte_source_outlook" "my_source_outlook" {
 
 Required:
 
-- `client_id` (String) The Client ID of your Microsoft Azure application
-- `client_secret` (String) The Client Secret of your Microsoft Azure application
-- `refresh_token` (String) Refresh token obtained from Microsoft OAuth flow
+- `client_id` (String, Sensitive) The Client ID of your Microsoft Azure application
+- `client_secret` (String, Sensitive) The Client Secret of your Microsoft Azure application
+- `refresh_token` (String, Sensitive) Refresh token obtained from Microsoft OAuth flow
 
 Optional:
 

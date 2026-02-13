@@ -71,7 +71,8 @@ func (r *SourceDbtResource) Schema(ctx context.Context, req resource.SchemaReque
 						Description: `Parsed as JSON.`,
 					},
 					"api_key_2": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

@@ -57,7 +57,7 @@ resource "airbyte_source_sentry" "my_source_sentry" {
 
 Required:
 
-- `auth_token` (String) Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"
+- `auth_token` (String, Sensitive) Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"
 - `organization` (String) The slug of the organization the groups belong to.
 - `project` (String) The name (slug) of the Project you want to sync.
 

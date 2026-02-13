@@ -78,7 +78,7 @@ Optional:
 
 Required:
 
-- `api_key` (String) The Api Key of your Lever Hiring account.
+- `api_key` (String, Sensitive) The Api Key of your Lever Hiring account.
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_lever_o_auth"></a>
@@ -86,12 +86,12 @@ Required:
 
 Required:
 
-- `refresh_token` (String) The token for obtaining new access token.
+- `refresh_token` (String, Sensitive) The token for obtaining new access token.
 
 Optional:
 
 - `client_id` (String) The Client ID of your Lever Hiring developer application.
-- `client_secret` (String) The Client Secret of your Lever Hiring developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Lever Hiring developer application.
 
 
 

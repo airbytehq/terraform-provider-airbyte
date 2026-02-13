@@ -88,7 +88,8 @@ func (r *SourceAirbyteJenkinsSourceResource) Schema(ctx context.Context, req res
 						Required: true,
 					},
 					"token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"user": schema.StringAttribute{
 						Required:    true,

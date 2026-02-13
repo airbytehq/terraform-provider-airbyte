@@ -82,6 +82,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Password associated with Redis.`,
 					},
 					"port": schema.Int64Attribute{
@@ -116,18 +117,22 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client certificate`,
 									},
 									"client_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client key`,
 									},
 									"client_key_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
 									},
 								},
@@ -176,6 +181,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -191,6 +197,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{

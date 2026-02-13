@@ -56,9 +56,9 @@ resource "airbyte_source_mendeley" "my_source_mendeley" {
 
 Required:
 
-- `client_id` (String) Could be found at `https://dev.mendeley.com/myapps.html`
-- `client_refresh_token` (String) Use cURL or Postman with the OAuth 2.0 Authorization tab. Set the Auth URL to https://api.mendeley.com/oauth/authorize, the Token URL to https://api.mendeley.com/oauth/token, and use all as the scope.
-- `client_secret` (String) Could be found at `https://dev.mendeley.com/myapps.html`
+- `client_id` (String, Sensitive) Could be found at `https://dev.mendeley.com/myapps.html`
+- `client_refresh_token` (String, Sensitive) Use cURL or Postman with the OAuth 2.0 Authorization tab. Set the Auth URL to https://api.mendeley.com/oauth/authorize, the Token URL to https://api.mendeley.com/oauth/token, and use all as the scope.
+- `client_secret` (String, Sensitive) Could be found at `https://dev.mendeley.com/myapps.html`
 - `start_date` (String)
 
 Optional:

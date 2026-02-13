@@ -69,6 +69,7 @@ func (r *SourceZapierSupportedStorageResource) Schema(ctx context.Context, req r
 					},
 					"secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Secret key supplied by zapier`,
 					},
 				},

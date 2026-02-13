@@ -74,7 +74,8 @@ func (r *SourceWorkdayResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"password": schema.StringAttribute{
-								Required: true,
+								Required:  true,
+								Sensitive: true,
 							},
 							"username": schema.StringAttribute{
 								Required: true,
@@ -106,7 +107,8 @@ func (r *SourceWorkdayResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Report IDs can be found by clicking the three dots on the right side of the report > Web Service > View URLs > in JSON url copy everything between Workday tenant/ and ?format=json.`,
 					},
 					"tenant_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

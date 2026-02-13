@@ -53,7 +53,7 @@ resource "airbyte_source_dolibarr" "my_source_dolibarr" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `my_dolibarr_domain_url` (String) enter your "domain/dolibarr_url" without https:// Example: mydomain.com/dolibarr
 - `start_date` (String)
 

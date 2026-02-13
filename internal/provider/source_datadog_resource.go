@@ -75,10 +75,12 @@ func (r *SourceDatadogResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Datadog API key`,
 					},
 					"application_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Datadog application key`,
 					},
 					"end_date": schema.StringAttribute{

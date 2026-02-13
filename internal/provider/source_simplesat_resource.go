@@ -70,7 +70,8 @@ func (r *SourceSimplesatResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"end_date": schema.StringAttribute{
 						Optional:    true,

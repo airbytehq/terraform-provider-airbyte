@@ -52,7 +52,7 @@ resource "airbyte_destination_deepset" "my_destination_deepset" {
 
 Required:
 
-- `api_key` (String) Your deepset cloud API key
+- `api_key` (String, Sensitive) Your deepset cloud API key
 - `workspace` (String) Name of workspace to which to sync the data.
 
 Optional:

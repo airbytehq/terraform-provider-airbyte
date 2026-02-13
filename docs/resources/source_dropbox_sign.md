@@ -52,7 +52,7 @@ resource "airbyte_source_dropbox_sign" "my_source_dropboxsign" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://app.hellosign.com/home/myAccount#api
+- `api_key` (String, Sensitive) API key to use. Find it at https://app.hellosign.com/home/myAccount#api
 - `start_date` (String)
 
 Optional:

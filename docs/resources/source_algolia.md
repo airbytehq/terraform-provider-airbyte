@@ -55,7 +55,7 @@ resource "airbyte_source_algolia" "my_source_algolia" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `application_id` (String) The application ID for your application found in settings
 - `start_date` (String)
 

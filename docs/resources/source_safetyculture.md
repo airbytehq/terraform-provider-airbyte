@@ -51,7 +51,7 @@ resource "airbyte_source_safetyculture" "my_source_safetyculture" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

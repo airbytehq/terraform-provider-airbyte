@@ -51,7 +51,7 @@ resource "airbyte_source_systeme" "my_source_systeme" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

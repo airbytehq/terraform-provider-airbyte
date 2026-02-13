@@ -73,8 +73,8 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Retently developer application.
-- `client_secret` (String) The Client Secret of your Retently developer application.
-- `refresh_token` (String) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
+- `client_secret` (String, Sensitive) The Client Secret of your Retently developer application.
+- `refresh_token` (String, Sensitive) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
 
 Optional:
 
@@ -86,7 +86,7 @@ Optional:
 
 Required:
 
-- `api_key` (String) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
+- `api_key` (String, Sensitive) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
 
 Optional:
 

@@ -71,6 +71,7 @@ func (r *SourceEventbriteResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"private_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The private token to use for authenticating API requests.`,
 					},
 					"start_date": schema.StringAttribute{

@@ -69,6 +69,7 @@ func (r *SourceRecruiteeResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.`,
 					},
 					"company_id": schema.Int64Attribute{

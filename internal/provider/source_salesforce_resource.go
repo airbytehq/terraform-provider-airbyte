@@ -78,6 +78,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>`,
 					},
 					"force_use_bulk_api": schema.BoolAttribute{
@@ -92,8 +93,15 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						Default:     booldefault.StaticBool(false),
 						Description: `Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>. Default: false`,
 					},
+					"lookback_window": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(`PT10M`),
+						Description: `The duration (ISO8601 duration) to re-read data from the source when running incremental syncs. This compensates for records that may not be immediately available when querying the Salesforce API due to eventual consistency delays. The connector will re-query this amount of time before the last cursor position on each sync. Increase this value if you observe missing records in your destination. See <a href="https://docs.airbyte.com/integrations/sources/salesforce#limitations--troubleshooting">Limitations & Troubleshooting</a> for details. Default: "PT10M"`,
+					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.`,
 					},
 					"start_date": schema.StringAttribute{

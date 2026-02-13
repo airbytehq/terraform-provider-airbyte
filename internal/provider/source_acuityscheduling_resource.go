@@ -70,7 +70,8 @@ func (r *SourceAcuitySchedulingResource) Schema(ctx context.Context, req resourc
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

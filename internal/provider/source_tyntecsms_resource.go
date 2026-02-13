@@ -69,6 +69,7 @@ func (r *SourceTyntecSmsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Tyntec API Key. See <a href="https://www.tyntec.com/docs/docs-center-sms-api-quick-start">here</a>`,
 					},
 					"from": schema.StringAttribute{

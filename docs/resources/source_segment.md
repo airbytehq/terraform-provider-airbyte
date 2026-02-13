@@ -53,7 +53,7 @@ resource "airbyte_source_segment" "my_source_segment" {
 
 Required:
 
-- `api_token` (String) API token to use. Generate it in Segment's Workspace settings.
+- `api_token` (String, Sensitive) API token to use. Generate it in Segment's Workspace settings.
 - `start_date` (String)
 
 Optional:

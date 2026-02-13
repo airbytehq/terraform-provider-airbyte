@@ -51,7 +51,7 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
 
 Required:
 
-- `api_key` (String) PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
+- `api_key` (String, Sensitive) PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
 
 Optional:
 

@@ -69,6 +69,7 @@ func (r *SourceHellobatonResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `authentication key required to access the api endpoints`,
 					},
 					"company": schema.StringAttribute{

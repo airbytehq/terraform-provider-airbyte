@@ -69,6 +69,7 @@ func (r *SourceGrafanaResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Grafana API Key or Service Account Token`,
 					},
 					"url": schema.StringAttribute{

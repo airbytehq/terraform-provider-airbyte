@@ -64,6 +64,7 @@ func (r *SourceRingcentralResource) Schema(ctx context.Context, req resource.Sch
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Could be seen at response to basic api call to an endpoint with ~ operator.  Example- (https://platform.devtest.ringcentral.com/restapi/v1.0/account/~/extension/~/business-hours)`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -73,10 +74,12 @@ func (r *SourceRingcentralResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"auth_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Token could be recieved by following instructions at https://developers.ringcentral.com/api-reference/authentication`,
 					},
 					"extension_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Could be seen at response to basic api call to an endpoint with ~ operator.  Example- (https://platform.devtest.ringcentral.com/restapi/v1.0/account/~/extension/~/business-hours)`,
 					},
 				},

@@ -53,7 +53,7 @@ resource "airbyte_source_factorial" "my_source_factorial" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

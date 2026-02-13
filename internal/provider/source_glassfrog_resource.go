@@ -69,6 +69,7 @@ func (r *SourceGlassfrogResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key provided by Glassfrog`,
 					},
 				},

@@ -99,6 +99,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -154,6 +155,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -169,6 +171,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
@@ -207,6 +210,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 									"file_name_pattern": schema.StringAttribute{
@@ -273,6 +277,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"secret_access_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 								},

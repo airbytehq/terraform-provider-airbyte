@@ -88,6 +88,7 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					},
 					"app_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Your Amazon Application ID.`,
 					},
 					"aws_environment": schema.StringAttribute{
@@ -136,10 +137,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					},
 					"lwa_app_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Login with Amazon Client ID.`,
 					},
 					"lwa_client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Login with Amazon Client Secret.`,
 					},
 					"max_async_job_count": schema.Int64Attribute{
@@ -171,6 +174,7 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Refresh Token obtained via OAuth flow authorization.`,
 					},
 					"region": schema.StringAttribute{

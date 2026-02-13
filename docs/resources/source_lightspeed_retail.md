@@ -52,7 +52,7 @@ resource "airbyte_source_lightspeed_retail" "my_source_lightspeedretail" {
 
 Required:
 
-- `api_key` (String) API key or access token
+- `api_key` (String, Sensitive) API key or access token
 - `subdomain` (String) The subdomain for the retailer, e.g., 'example' in 'example.retail.lightspeed.app'.
 
 Optional:

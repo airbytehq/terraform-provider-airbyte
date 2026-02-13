@@ -52,7 +52,7 @@ resource "airbyte_source_concord" "my_source_concord" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `env` (String) The environment from where you want to access the API. must be one of ["uat", "api"]
 
 Optional:

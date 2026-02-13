@@ -53,7 +53,7 @@ resource "airbyte_source_buzzsprout" "my_source_buzzsprout" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `podcast_id` (String) Podcast ID found in `https://www.buzzsprout.com/my/profile/api`
 - `start_date` (String)
 

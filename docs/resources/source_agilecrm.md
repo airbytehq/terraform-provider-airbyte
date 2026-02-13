@@ -53,7 +53,7 @@ resource "airbyte_source_agilecrm" "my_source_agilecrm" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at Admin Settings -> API & Analytics -> API Key in your Agile CRM account.
+- `api_key` (String, Sensitive) API key to use. Find it at Admin Settings -> API & Analytics -> API Key in your Agile CRM account.
 - `domain` (String) The specific subdomain for your Agile CRM account
 - `email` (String) Your Agile CRM account email address. This is used as the username for authentication.
 

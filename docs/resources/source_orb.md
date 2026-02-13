@@ -62,7 +62,7 @@ resource "airbyte_source_orb" "my_source_orb" {
 
 Required:
 
-- `api_key` (String) Orb API Key, issued from the Orb admin console.
+- `api_key` (String, Sensitive) Orb API Key, issued from the Orb admin console.
 - `start_date` (String) UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
 
 Optional:

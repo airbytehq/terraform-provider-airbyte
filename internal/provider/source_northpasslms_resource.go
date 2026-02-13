@@ -68,7 +68,8 @@ func (r *SourceNorthpassLmsResource) Schema(ctx context.Context, req resource.Sc
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

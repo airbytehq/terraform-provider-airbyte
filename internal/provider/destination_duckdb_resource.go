@@ -73,6 +73,7 @@ func (r *DestinationDuckdbResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"motherduck_api_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `API key to use for authentication to a MotherDuck database.`,
 					},
 					"schema": schema.StringAttribute{

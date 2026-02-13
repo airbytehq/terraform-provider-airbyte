@@ -56,8 +56,8 @@ resource "airbyte_source_signnow" "my_source_signnow" {
 
 Required:
 
-- `api_key_id` (String) Api key which could be found in API section after enlarging keys section
-- `auth_token` (String) The authorization token is needed for `signing_links` stream which could be seen from enlarged view of `https://app.signnow.com/webapp/api-dashboard/keys`
+- `api_key_id` (String, Sensitive) Api key which could be found in API section after enlarging keys section
+- `auth_token` (String, Sensitive) The authorization token is needed for `signing_links` stream which could be seen from enlarged view of `https://app.signnow.com/webapp/api-dashboard/keys`
 - `start_date` (String)
 
 Optional:

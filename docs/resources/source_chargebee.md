@@ -56,7 +56,7 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
 Required:
 
 - `site` (String) The site prefix for your Chargebee instance.
-- `site_api_key` (String) Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
+- `site_api_key` (String, Sensitive) Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 
 Optional:

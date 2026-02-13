@@ -57,10 +57,10 @@ resource "airbyte_source_pardot" "my_source_pardot" {
 
 Required:
 
-- `client_id` (String) The Consumer Key that can be found when viewing your app in Salesforce
-- `client_secret` (String) The Consumer Secret that can be found when viewing your app in Salesforce
+- `client_id` (String, Sensitive) The Consumer Key that can be found when viewing your app in Salesforce
+- `client_secret` (String, Sensitive) The Consumer Secret that can be found when viewing your app in Salesforce
 - `pardot_business_unit_id` (String) Pardot Business ID, can be found at Setup > Pardot > Pardot Account Setup
-- `refresh_token` (String) Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.
+- `refresh_token` (String, Sensitive) Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.
 
 Optional:
 

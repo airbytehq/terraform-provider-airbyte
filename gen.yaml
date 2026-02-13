@@ -28,7 +28,7 @@ generation:
     skipResponseBodyAssertions: false
   telemetryEnabled: true
 terraform:
-  version: 1.0.0-rc5
+  version: 1.0.0
   additionalActions: []
   additionalDataSources: []
   additionalDependencies: {}

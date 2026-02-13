@@ -71,7 +71,8 @@ func (r *SourceServiceNowResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"username": schema.StringAttribute{
 						Required: true,

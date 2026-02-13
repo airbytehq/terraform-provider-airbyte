@@ -51,7 +51,7 @@ resource "airbyte_source_web_scrapper" "my_source_webscrapper" {
 
 Required:
 
-- `api_token` (String) API token to use. Find it at https://cloud.webscraper.io/api
+- `api_token` (String, Sensitive) API token to use. Find it at https://cloud.webscraper.io/api
 
 Optional:
 

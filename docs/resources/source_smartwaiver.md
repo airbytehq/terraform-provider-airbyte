@@ -53,7 +53,7 @@ resource "airbyte_source_smartwaiver" "my_source_smartwaiver" {
 
 Required:
 
-- `api_key` (String) You can retrieve your token by visiting your dashboard then click on My Account then click on API keys.
+- `api_key` (String, Sensitive) You can retrieve your token by visiting your dashboard then click on My Account then click on API keys.
 - `start_date_2` (String)
 
 Optional:

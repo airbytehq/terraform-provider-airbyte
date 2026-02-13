@@ -62,7 +62,7 @@ resource "airbyte_source_fauna" "my_source_fauna" {
 
 Required:
 
-- `secret` (String) Fauna secret, used when authenticating with the database.
+- `secret` (String, Sensitive) Fauna secret, used when authenticating with the database.
 
 Optional:
 

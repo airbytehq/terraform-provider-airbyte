@@ -69,6 +69,7 @@ func (r *SourceWufooResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Wufoo API Key. You can find it by logging into your Wufoo account, selecting 'API Information' from the 'More' dropdown on any form, and locating the 16-digit code.`,
 					},
 					"subdomain": schema.StringAttribute{

@@ -52,7 +52,7 @@ resource "airbyte_source_fillout" "my_source_fillout" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it in the Developer settings tab of your Fillout account.
+- `api_key` (String, Sensitive) API key to use. Find it in the Developer settings tab of your Fillout account.
 - `start_date` (String)
 
 Optional:

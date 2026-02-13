@@ -99,6 +99,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.`,
 									},
 								},
@@ -113,6 +114,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.`,
 									},
 									"client_id": schema.StringAttribute{
@@ -121,6 +123,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.`,
 									},
 								},

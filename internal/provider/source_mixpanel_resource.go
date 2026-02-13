@@ -83,6 +83,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.`,
 									},
 								},
@@ -101,6 +102,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
 									},
 									"username": schema.StringAttribute{

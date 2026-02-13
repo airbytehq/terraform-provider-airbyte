@@ -77,6 +77,7 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.`,
 					},
 				},

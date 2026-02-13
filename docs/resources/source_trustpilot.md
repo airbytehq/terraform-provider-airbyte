@@ -84,7 +84,7 @@ Optional:
 
 Required:
 
-- `client_id` (String) The API key of the Trustpilot API application.
+- `client_id` (String, Sensitive) The API key of the Trustpilot API application.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -92,10 +92,10 @@ Required:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `client_id` (String) The API key of the Trustpilot API application. (represents the OAuth Client ID)
-- `client_secret` (String) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
-- `refresh_token` (String) The key to refresh the expired access_token.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
+- `client_id` (String, Sensitive) The API key of the Trustpilot API application. (represents the OAuth Client ID)
+- `client_secret` (String, Sensitive) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
+- `refresh_token` (String, Sensitive) The key to refresh the expired access_token.
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 

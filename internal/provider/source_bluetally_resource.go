@@ -71,6 +71,7 @@ func (r *SourceBluetallyResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API key to authenticate with the BlueTally API. You can generate it by navigating to your account settings, selecting 'API Keys', and clicking 'Create API Key'.`,
 					},
 					"start_date": schema.StringAttribute{

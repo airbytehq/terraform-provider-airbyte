@@ -68,6 +68,7 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -626,6 +627,7 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"secret_access_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>`,
 					},
 				},

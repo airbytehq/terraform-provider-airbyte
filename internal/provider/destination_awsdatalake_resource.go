@@ -99,10 +99,12 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `AWS User Access Key Id`,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Secret Access Key`,
 									},
 								},

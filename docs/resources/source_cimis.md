@@ -64,7 +64,7 @@ resource "airbyte_source_cimis" "my_source_cimis" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `end_date` (String)
 - `start_date` (String)
 - `targets` (List of String)

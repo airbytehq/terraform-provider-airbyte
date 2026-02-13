@@ -53,7 +53,7 @@ resource "airbyte_source_opsgenie" "my_source_opsgenie" {
 
 Required:
 
-- `api_token` (String) API token used to access the Opsgenie platform
+- `api_token` (String, Sensitive) API token used to access the Opsgenie platform
 
 Optional:
 

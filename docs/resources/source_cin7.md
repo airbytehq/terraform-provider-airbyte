@@ -53,7 +53,7 @@ resource "airbyte_source_cin7" "my_source_cin7" {
 Required:
 
 - `accountid` (String) The ID associated with your account.
-- `api_key` (String) The API key associated with your account.
+- `api_key` (String, Sensitive) The API key associated with your account.
 
 Optional:
 

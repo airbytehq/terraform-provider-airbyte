@@ -68,6 +68,7 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Access Key ID of the AWS IAM Role to use for pulling messages`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -142,6 +143,7 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Secret Key of the AWS IAM Role to use for pulling messages`,
 					},
 					"target": schema.StringAttribute{

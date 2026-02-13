@@ -115,7 +115,8 @@ func (r *SourceJotformResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"end_date": schema.StringAttribute{
 						Required: true,

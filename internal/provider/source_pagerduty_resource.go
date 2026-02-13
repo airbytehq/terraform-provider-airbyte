@@ -122,6 +122,7 @@ func (r *SourcePagerdutyResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key for PagerDuty API authentication`,
 					},
 				},

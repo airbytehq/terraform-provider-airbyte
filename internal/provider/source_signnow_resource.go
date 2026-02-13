@@ -72,10 +72,12 @@ func (r *SourceSignnowResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Api key which could be found in API section after enlarging keys section`,
 					},
 					"auth_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The authorization token is needed for ` + "`" + `signing_links` + "`" + ` stream which could be seen from enlarged view of ` + "`" + `https://app.signnow.com/webapp/api-dashboard/keys` + "`" + ``,
 					},
 					"name_filter_for_documents": schema.ListAttribute{

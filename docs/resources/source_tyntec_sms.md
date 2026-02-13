@@ -54,7 +54,7 @@ resource "airbyte_source_tyntec_sms" "my_source_tyntecsms" {
 
 Required:
 
-- `api_key` (String) Your Tyntec API Key. See <a href="https://www.tyntec.com/docs/docs-center-sms-api-quick-start">here</a>
+- `api_key` (String, Sensitive) Your Tyntec API Key. See <a href="https://www.tyntec.com/docs/docs-center-sms-api-quick-start">here</a>
 - `from` (String) The phone number of the SMS message sender (international).
 - `to` (String) The phone number of the SMS message recipient (international).
 

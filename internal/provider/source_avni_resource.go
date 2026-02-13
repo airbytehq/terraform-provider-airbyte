@@ -70,6 +70,7 @@ func (r *SourceAvniResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your avni platform password`,
 					},
 					"start_date": schema.StringAttribute{

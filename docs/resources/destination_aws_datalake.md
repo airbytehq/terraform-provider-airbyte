@@ -109,8 +109,8 @@ Required:
 
 Required:
 
-- `aws_access_key_id` (String) AWS User Access Key Id
-- `aws_secret_access_key` (String) Secret Access Key
+- `aws_access_key_id` (String, Sensitive) AWS User Access Key Id
+- `aws_secret_access_key` (String, Sensitive) Secret Access Key
 
 
 

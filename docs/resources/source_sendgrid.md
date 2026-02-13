@@ -52,7 +52,7 @@ resource "airbyte_source_sendgrid" "my_source_sendgrid" {
 
 Required:
 
-- `api_key` (String) Sendgrid API Key, use <a href=\"https://app.sendgrid.com/settings/api_keys/\">admin</a> to generate this key.
+- `api_key` (String, Sensitive) Sendgrid API Key, use <a href=\"https://app.sendgrid.com/settings/api_keys/\">admin</a> to generate this key.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

@@ -53,7 +53,7 @@ resource "airbyte_source_docuseal" "my_source_docuseal" {
 
 Required:
 
-- `api_key` (String) Your API key for authenticating with the DocuSeal API. Obtain it from the DocuSeal API Console at https://console.docuseal.com/api.
+- `api_key` (String, Sensitive) Your API key for authenticating with the DocuSeal API. Obtain it from the DocuSeal API Console at https://console.docuseal.com/api.
 - `start_date` (String)
 
 Optional:

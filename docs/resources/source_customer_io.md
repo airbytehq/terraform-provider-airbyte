@@ -51,7 +51,7 @@ resource "airbyte_source_customer_io" "my_source_customerio" {
 
 Required:
 
-- `app_api_key` (String)
+- `app_api_key` (String, Sensitive)
 
 Optional:
 

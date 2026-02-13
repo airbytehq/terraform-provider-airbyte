@@ -78,7 +78,7 @@ Optional:
 Required:
 
 - `client_id` (String) OAuth2.0 client id
-- `client_secret` (String) OAuth2.0 client secret
+- `client_secret` (String, Sensitive) OAuth2.0 client secret
 
 
 

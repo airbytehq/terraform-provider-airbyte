@@ -71,6 +71,7 @@ func (r *SourceFilloutResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it in the Developer settings tab of your Fillout account.`,
 					},
 					"start_date": schema.StringAttribute{

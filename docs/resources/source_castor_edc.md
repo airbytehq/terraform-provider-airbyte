@@ -54,8 +54,8 @@ resource "airbyte_source_castor_edc" "my_source_castoredc" {
 
 Required:
 
-- `client_id` (String) Visit `https://YOUR_REGION.castoredc.com/account/settings`
-- `client_secret` (String) Visit `https://YOUR_REGION.castoredc.com/account/settings`
+- `client_id` (String, Sensitive) Visit `https://YOUR_REGION.castoredc.com/account/settings`
+- `client_secret` (String, Sensitive) Visit `https://YOUR_REGION.castoredc.com/account/settings`
 - `start_date` (String)
 
 Optional:

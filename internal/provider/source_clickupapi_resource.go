@@ -70,6 +70,7 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.`,
 					},
 					"include_closed_tasks": schema.BoolAttribute{

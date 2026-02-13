@@ -70,7 +70,8 @@ func (r *SourceHighLevelResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"location_id": schema.StringAttribute{
 						Required: true,

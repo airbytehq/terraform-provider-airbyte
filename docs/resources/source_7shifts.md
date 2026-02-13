@@ -52,7 +52,7 @@ resource "airbyte_source_7shifts" "my_source_7shifts" {
 
 Required:
 
-- `access_token` (String) Access token to use for authentication. Generate it in the 7shifts Developer Tools.
+- `access_token` (String, Sensitive) Access token to use for authentication. Generate it in the 7shifts Developer Tools.
 - `start_date` (String)
 
 Optional:

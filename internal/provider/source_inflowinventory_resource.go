@@ -68,7 +68,8 @@ func (r *SourceInflowinventoryResource) Schema(ctx context.Context, req resource
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"companyid": schema.StringAttribute{
 						Required: true,

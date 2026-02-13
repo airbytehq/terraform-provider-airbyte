@@ -51,7 +51,7 @@ resource "airbyte_source_countercyclical" "my_source_countercyclical" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

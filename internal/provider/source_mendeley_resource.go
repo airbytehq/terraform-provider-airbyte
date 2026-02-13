@@ -72,14 +72,17 @@ func (r *SourceMendeleyResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Could be found at ` + "`" + `https://dev.mendeley.com/myapps.html` + "`" + ``,
 					},
 					"client_refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Use cURL or Postman with the OAuth 2.0 Authorization tab. Set the Auth URL to https://api.mendeley.com/oauth/authorize, the Token URL to https://api.mendeley.com/oauth/token, and use all as the scope.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Could be found at ` + "`" + `https://dev.mendeley.com/myapps.html` + "`" + ``,
 					},
 					"name_for_institution": schema.StringAttribute{

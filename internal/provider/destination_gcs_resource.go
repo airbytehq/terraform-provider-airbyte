@@ -84,10 +84,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"hmac_key_access_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.`,
 									},
 									"hmac_key_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.`,
 									},
 								},

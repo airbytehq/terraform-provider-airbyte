@@ -52,7 +52,7 @@ resource "airbyte_source_churnkey" "my_source_churnkey" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `x_ck_app` (String)
 
 Optional:

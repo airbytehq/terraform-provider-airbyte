@@ -53,7 +53,7 @@ resource "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
 
 Required:
 
-- `token` (String) Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
+- `token` (String, Sensitive) Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
 
 Optional:
 

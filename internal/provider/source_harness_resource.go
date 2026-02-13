@@ -73,7 +73,8 @@ func (r *SourceHarnessResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"api_url": schema.StringAttribute{
 						Computed:    true,

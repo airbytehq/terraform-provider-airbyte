@@ -63,6 +63,7 @@ func (r *DestinationFirestoreResource) Schema(ctx context.Context, req resource.
 				Attributes: map[string]schema.Attribute{
 					"credentials_json": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.`,
 					},
 					"project_id": schema.StringAttribute{

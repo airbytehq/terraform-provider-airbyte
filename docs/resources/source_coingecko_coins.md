@@ -63,7 +63,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `api_key` (String) API Key (for pro users)
+- `api_key` (String, Sensitive) API Key (for pro users)
 - `days` (String) The number of days of data for market chart. Default: "30"; must be one of ["1", "7", "14", "30", "90", "180", "365", "max"]
 - `end_date` (String) The end date for the historical data stream in dd-mm-yyyy format.
 

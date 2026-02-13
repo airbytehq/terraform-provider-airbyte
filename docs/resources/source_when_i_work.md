@@ -52,8 +52,8 @@ resource "airbyte_source_when_i_work" "my_source_wheniwork" {
 
 Required:
 
-- `email` (String) Email of your when-i-work account
-- `password` (String) Password for your when-i-work account
+- `email` (String, Sensitive) Email of your when-i-work account
+- `password` (String, Sensitive) Password for your when-i-work account
 
 Optional:
 

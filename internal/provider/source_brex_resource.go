@@ -77,6 +77,7 @@ func (r *SourceBrexResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"user_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `User token to authenticate API requests. Generate it from your Brex dashboard under Developer > Settings.`,
 					},
 				},

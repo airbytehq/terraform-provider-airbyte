@@ -53,8 +53,8 @@ resource "airbyte_source_callrail" "my_source_callrail" {
 
 Required:
 
-- `account_id` (String) Account ID
-- `api_key` (String) API access key
+- `account_id` (String, Sensitive) Account ID
+- `api_key` (String, Sensitive) API access key
 - `start_date` (String) Start getting data from that date.
 
 Optional:

@@ -70,10 +70,12 @@ func (r *SourceAirbyteVictoropsSourceResource) Schema(ctx context.Context, req r
 						Description: `Parsed as JSON.`,
 					},
 					"api_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"current_phase": schema.StringAttribute{
 						Computed:    true,

@@ -64,6 +64,7 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"storage_access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.`,
 					},
 					"storage_account_name": schema.StringAttribute{

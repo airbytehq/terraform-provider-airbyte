@@ -71,6 +71,7 @@ func (r *SourceDingConnectResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API key for authenticating with the DingConnect API. You can generate this key by navigating to the Developer tab in the Account Settings section of your DingConnect account.`,
 					},
 					"start_date": schema.StringAttribute{

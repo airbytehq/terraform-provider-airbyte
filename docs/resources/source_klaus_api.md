@@ -55,7 +55,7 @@ resource "airbyte_source_klaus_api" "my_source_klausapi" {
 Required:
 
 - `account` (Number) getting data by account
-- `api_key` (String) API access key used to retrieve data from the KLAUS API.
+- `api_key` (String, Sensitive) API access key used to retrieve data from the KLAUS API.
 - `workspace` (Number) getting data by workspace
 
 Optional:

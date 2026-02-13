@@ -55,7 +55,7 @@ resource "airbyte_source_twelve_data" "my_source_twelvedata" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

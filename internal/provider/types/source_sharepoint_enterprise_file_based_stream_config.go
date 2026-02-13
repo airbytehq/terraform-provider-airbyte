@@ -15,5 +15,6 @@ type SourceSharepointEnterpriseFileBasedStreamConfig struct {
 	PrimaryKey                           types.String                      `tfsdk:"primary_key"`
 	RecentNFilesToReadForSchemaDiscovery types.Int64                       `tfsdk:"recent_n_files_to_read_for_schema_discovery"`
 	Schemaless                           types.Bool                        `tfsdk:"schemaless"`
+	UseFirstFoundFileForSchemaDiscovery  types.Bool                        `tfsdk:"use_first_found_file_for_schema_discovery"`
 	ValidationPolicy                     types.String                      `tfsdk:"validation_policy"`
 }

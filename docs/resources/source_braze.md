@@ -53,7 +53,7 @@ resource "airbyte_source_braze" "my_source_braze" {
 
 Required:
 
-- `api_key` (String) Braze REST API key
+- `api_key` (String, Sensitive) Braze REST API key
 - `start_date` (String) Rows after this date will be synced
 - `url` (String) Braze REST API endpoint
 

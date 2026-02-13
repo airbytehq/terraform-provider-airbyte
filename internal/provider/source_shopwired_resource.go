@@ -71,10 +71,12 @@ func (r *SourceShopwiredResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Key, which acts as the username for Basic Authentication. You can find it in your ShopWired account under API settings.`,
 					},
 					"api_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Secret, which acts as the password for Basic Authentication. You can find it in your ShopWired account under API settings.`,
 					},
 					"start_date": schema.StringAttribute{

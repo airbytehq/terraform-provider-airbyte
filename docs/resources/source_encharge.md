@@ -51,7 +51,7 @@ resource "airbyte_source_encharge" "my_source_encharge" {
 
 Required:
 
-- `api_key` (String) The API key to use for authentication
+- `api_key` (String, Sensitive) The API key to use for authentication
 
 Optional:
 

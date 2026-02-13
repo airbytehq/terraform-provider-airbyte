@@ -68,7 +68,8 @@ func (r *SourceProductiveResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"organization_id": schema.StringAttribute{
 						Required:    true,

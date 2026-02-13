@@ -55,7 +55,7 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
 
 Required:
 
-- `api_key` (String) Freshcaller API Key. See the docs for more information on how to obtain this key.
+- `api_key` (String, Sensitive) Freshcaller API Key. See the docs for more information on how to obtain this key.
 - `domain` (String) Used to construct Base URL for the Freshcaller APIs
 
 Optional:

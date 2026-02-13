@@ -92,6 +92,7 @@ func (r *SourceAlpacaBrokerAPIResource) Schema(ctx context.Context, req resource
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Your Alpaca API Secret Key. You can find this in the Alpaca developer web console under your account settings.`,
 					},
 					"start_date": schema.StringAttribute{

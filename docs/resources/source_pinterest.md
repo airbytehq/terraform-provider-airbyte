@@ -92,9 +92,9 @@ Optional:
 
 Required:
 
-- `client_id` (String) The Client ID of your OAuth application
-- `client_secret` (String) The Client Secret of your OAuth application.
-- `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
+- `client_id` (String, Sensitive) The Client ID of your OAuth application
+- `client_secret` (String, Sensitive) The Client Secret of your OAuth application.
+- `refresh_token` (String, Sensitive) Refresh Token to obtain new Access Token, when it's expired.
 
 
 <a id="nestedatt--configuration--custom_reports"></a>

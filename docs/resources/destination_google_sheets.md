@@ -71,9 +71,9 @@ Optional:
 
 Required:
 
-- `client_id` (String) The Client ID of your Google Sheets developer application.
-- `client_secret` (String) The Client Secret of your Google Sheets developer application.
-- `refresh_token` (String) The token for obtaining new access token.
+- `client_id` (String, Sensitive) The Client ID of your Google Sheets developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Google Sheets developer application.
+- `refresh_token` (String, Sensitive) The token for obtaining new access token.
 
 
 <a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
@@ -81,7 +81,7 @@ Required:
 
 Required:
 
-- `service_account_info` (String) Enter your service account key in JSON format. See the <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#service-account'>docs</a> for more information on how to generate this key.
+- `service_account_info` (String, Sensitive) Enter your service account key in JSON format. See the <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#service-account'>docs</a> for more information on how to generate this key.
 
 
 

@@ -52,7 +52,7 @@ resource "airbyte_source_captain_data" "my_source_captaindata" {
 
 Required:
 
-- `api_key` (String) Your Captain Data project API key.
+- `api_key` (String, Sensitive) Your Captain Data project API key.
 - `project_uid` (String) Your Captain Data project uuid.
 
 Optional:

@@ -82,6 +82,7 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.`,
 					},
 					"data_region": schema.StringAttribute{
@@ -107,6 +108,7 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.`,
 					},
 					"start_date": schema.StringAttribute{

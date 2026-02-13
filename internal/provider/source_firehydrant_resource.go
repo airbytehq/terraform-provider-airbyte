@@ -69,6 +69,7 @@ func (r *SourceFirehydrantResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Bot token to use for authenticating with the FireHydrant API. You can find or create a bot token by logging into your organization and visiting the Bot users page at https://app.firehydrant.io/organizations/bots.`,
 					},
 				},

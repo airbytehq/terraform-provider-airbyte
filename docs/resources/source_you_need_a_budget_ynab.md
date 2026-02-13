@@ -51,7 +51,7 @@ resource "airbyte_source_you_need_a_budget_ynab" "my_source_youneedabudgetynab" 
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

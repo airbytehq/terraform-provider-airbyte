@@ -180,12 +180,12 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Google Analytics developer application.
-- `client_secret` (String) The Client Secret of your Google Analytics developer application.
-- `refresh_token` (String) The token for obtaining a new access token.
+- `client_secret` (String, Sensitive) The Client Secret of your Google Analytics developer application.
+- `refresh_token` (String, Sensitive) The token for obtaining a new access token.
 
 Optional:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 
 
 <a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
@@ -193,7 +193,7 @@ Optional:
 
 Required:
 
-- `credentials_json` (String) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
+- `credentials_json` (String, Sensitive) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 
 
 

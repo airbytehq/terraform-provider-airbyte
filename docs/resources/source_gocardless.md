@@ -54,7 +54,7 @@ resource "airbyte_source_gocardless" "my_source_gocardless" {
 
 Required:
 
-- `access_token` (String) Gocardless API TOKEN
+- `access_token` (String, Sensitive) Gocardless API TOKEN
 - `gocardless_version` (String) GoCardless version. This is a date. You can find the latest here: 
 https://developer.gocardless.com/api-reference/#api-usage-making-requests
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.

@@ -70,6 +70,7 @@ func (r *SourceGetlagoResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.`,
 					},
 					"api_url": schema.StringAttribute{

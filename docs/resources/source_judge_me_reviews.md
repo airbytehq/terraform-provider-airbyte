@@ -53,7 +53,7 @@ resource "airbyte_source_judge_me_reviews" "my_source_judgemereviews" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `shop_domain` (String) example.myshopify.com
 - `start_date` (String)
 

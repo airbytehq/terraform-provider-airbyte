@@ -63,6 +63,7 @@ func (r *DestinationStreamrAirbyteConnectorsResource) Schema(ctx context.Context
 				Attributes: map[string]schema.Attribute{
 					"private_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `You private key on Streamr`,
 					},
 					"stream_id": schema.StringAttribute{

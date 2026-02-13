@@ -51,7 +51,7 @@ resource "airbyte_source_glassfrog" "my_source_glassfrog" {
 
 Required:
 
-- `api_key` (String) API key provided by Glassfrog
+- `api_key` (String, Sensitive) API key provided by Glassfrog
 
 Optional:
 

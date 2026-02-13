@@ -71,6 +71,7 @@ func (r *SourceEzofficeinventoryResource) Schema(ctx context.Context, req resour
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your EZOfficeInventory Access Token. API Access is disabled by default. Enable API Access in Settings > Integrations > API Integration and click on Update to generate a new access token`,
 					},
 					"start_date": schema.StringAttribute{

@@ -58,12 +58,12 @@ Required:
 - `api_username` (String)
 - `client_id` (String)
 - `host` (String) https://cb8715249e.trial.akeneo.cloud
-- `password` (String)
+- `password` (String, Sensitive)
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `secret` (String)
+- `secret` (String, Sensitive)
 
 
 <a id="nestedatt--resource_allocation"></a>

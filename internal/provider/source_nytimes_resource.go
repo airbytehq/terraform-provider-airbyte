@@ -73,6 +73,7 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"end_date": schema.StringAttribute{

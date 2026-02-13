@@ -52,8 +52,8 @@ resource "airbyte_source_breezy_hr" "my_source_breezyhr" {
 
 Required:
 
-- `api_key` (String)
-- `company_id` (String)
+- `api_key` (String, Sensitive)
+- `company_id` (String, Sensitive)
 
 Optional:
 

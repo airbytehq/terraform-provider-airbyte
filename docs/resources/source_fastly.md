@@ -52,7 +52,7 @@ resource "airbyte_source_fastly" "my_source_fastly" {
 
 Required:
 
-- `fastly_api_token` (String) Your Fastly API token. You can generate this token in the Fastly web interface under Account Settings or via the Fastly API. Ensure the token has the appropriate scope for your use case.
+- `fastly_api_token` (String, Sensitive) Your Fastly API token. You can generate this token in the Fastly web interface under Account Settings or via the Fastly API. Ensure the token has the appropriate scope for your use case.
 - `start_date` (String)
 
 Optional:

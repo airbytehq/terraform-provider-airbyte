@@ -64,6 +64,7 @@ func (r *SourceFacebookPagesResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Facebook Page Access Token`,
 					},
 					"additional_properties": schema.StringAttribute{

@@ -52,7 +52,7 @@ resource "airbyte_source_less_annoying_crm" "my_source_lessannoyingcrm" {
 
 Required:
 
-- `api_key` (String) API key to use. Manage and create your API keys on the Programmer API settings page at https://account.lessannoyingcrm.com/app/Settings/Api.
+- `api_key` (String, Sensitive) API key to use. Manage and create your API keys on the Programmer API settings page at https://account.lessannoyingcrm.com/app/Settings/Api.
 - `start_date` (String)
 
 Optional:

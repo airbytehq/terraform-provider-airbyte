@@ -71,6 +71,7 @@ func (r *SourceOncehubResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it in your OnceHub account under the API & Webhooks Integration page.`,
 					},
 					"start_date": schema.StringAttribute{

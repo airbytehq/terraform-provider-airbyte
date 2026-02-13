@@ -88,7 +88,7 @@ Optional:
 
 Required:
 
-- `api_password` (String) The API Password for your private application in the `Shopify` store.
+- `api_password` (String, Sensitive) The API Password for your private application in the `Shopify` store.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -96,9 +96,9 @@ Required:
 
 Optional:
 
-- `access_token` (String) The Access Token for making authenticated requests.
-- `client_id` (String) The Client ID of the Shopify developer application.
-- `client_secret` (String) The Client Secret of the Shopify developer application.
+- `access_token` (String, Sensitive) The Access Token for making authenticated requests.
+- `client_id` (String, Sensitive) The Client ID of the Shopify developer application.
+- `client_secret` (String, Sensitive) The Client Secret of the Shopify developer application.
 
 
 

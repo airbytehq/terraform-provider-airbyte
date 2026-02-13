@@ -72,13 +72,16 @@ func (r *SourceUptickResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `eg. https://demo-fire.onuptick.com (no trailing slash)`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"username": schema.StringAttribute{
 						Required: true,

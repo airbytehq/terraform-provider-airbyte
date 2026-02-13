@@ -53,7 +53,7 @@ resource "airbyte_source_capsule_crm" "my_source_capsulecrm" {
 
 Required:
 
-- `bearer_token` (String) Bearer token to authenticate API requests. Generate it from the 'My Preferences' > 'API Authentication Tokens' page in your Capsule account.
+- `bearer_token` (String, Sensitive) Bearer token to authenticate API requests. Generate it from the 'My Preferences' > 'API Authentication Tokens' page in your Capsule account.
 - `entity` (String) must be one of ["parties", "opportunities", "kases"]
 - `start_date` (String)
 

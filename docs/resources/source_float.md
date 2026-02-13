@@ -52,7 +52,7 @@ resource "airbyte_source_float" "my_source_float" {
 
 Required:
 
-- `access_token` (String) API token obtained from your Float Account Settings page
+- `access_token` (String, Sensitive) API token obtained from your Float Account Settings page
 - `start_date` (String)
 
 Optional:

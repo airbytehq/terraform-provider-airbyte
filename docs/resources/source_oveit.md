@@ -53,7 +53,7 @@ resource "airbyte_source_oveit" "my_source_oveit" {
 Required:
 
 - `email` (String) Oveit's login Email
-- `password` (String) Oveit's login Password
+- `password` (String, Sensitive) Oveit's login Password
 
 Optional:
 

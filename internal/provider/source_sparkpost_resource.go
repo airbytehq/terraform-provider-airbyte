@@ -72,7 +72,8 @@ func (r *SourceSparkpostResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"api_prefix": schema.StringAttribute{
 						Computed:    true,

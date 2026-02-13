@@ -72,6 +72,7 @@ func (r *SourceDatascopeResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"start_date": schema.StringAttribute{

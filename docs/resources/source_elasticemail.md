@@ -54,7 +54,7 @@ resource "airbyte_source_elasticemail" "my_source_elasticemail" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

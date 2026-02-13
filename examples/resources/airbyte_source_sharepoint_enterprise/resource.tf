@@ -20,7 +20,7 @@ resource "airbyte_source_sharepoint_enterprise" "my_source_sharepointenterprise"
     folder_path  = "...my_folder_path..."
     search_scope = "ACCESSIBLE_DRIVES"
     site_url     = "...my_site_url..."
-    start_date   = "2021-01-01T00:00:00.000000Z"
+    start_date   = "2021-01-01"
     streams = [
       {
         days_to_sync_if_history_is_full = 0
@@ -43,6 +43,7 @@ resource "airbyte_source_sharepoint_enterprise" "my_source_sharepointenterprise"
         primary_key                                 = "...my_primary_key..."
         recent_n_files_to_read_for_schema_discovery = 5
         schemaless                                  = true
+        use_first_found_file_for_schema_discovery   = true
         validation_policy                           = "Skip Record"
       }
     ]

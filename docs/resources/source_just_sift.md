@@ -51,7 +51,7 @@ resource "airbyte_source_just_sift" "my_source_justsift" {
 
 Required:
 
-- `api_token` (String) API token to use for accessing the Sift API. Obtain this token from your Sift account administrator.
+- `api_token` (String, Sensitive) API token to use for accessing the Sift API. Obtain this token from your Sift account administrator.
 
 Optional:
 

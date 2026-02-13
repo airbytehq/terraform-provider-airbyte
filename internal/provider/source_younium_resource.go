@@ -74,6 +74,7 @@ func (r *SourceYouniumResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Account password for younium account API key`,
 					},
 					"playground": schema.BoolAttribute{

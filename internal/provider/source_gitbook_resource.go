@@ -64,6 +64,7 @@ func (r *SourceGitbookResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Personal access token for authenticating with the GitBook API. You can view and manage your access tokens in the Developer settings of your GitBook user account.`,
 					},
 					"additional_properties": schema.StringAttribute{

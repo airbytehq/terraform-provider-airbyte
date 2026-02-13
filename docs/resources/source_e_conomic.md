@@ -52,8 +52,8 @@ resource "airbyte_source_e_conomic" "my_source_economic" {
 
 Required:
 
-- `agreement_grant_token` (String) Token that identifies the grant issued by an agreement, allowing your app to access data. Obtain it from your e-conomic account settings.
-- `app_secret_token` (String) Your private token that identifies your app. Find it in your e-conomic account settings.
+- `agreement_grant_token` (String, Sensitive) Token that identifies the grant issued by an agreement, allowing your app to access data. Obtain it from your e-conomic account settings.
+- `app_secret_token` (String, Sensitive) Your private token that identifies your app. Find it in your e-conomic account settings.
 
 Optional:
 

@@ -69,6 +69,7 @@ func (r *SourcePivotalTrackerResource) Schema(ctx context.Context, req resource.
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Pivotal Tracker API token`,
 					},
 				},

@@ -52,7 +52,7 @@ resource "airbyte_source_mixmax" "my_source_mixmax" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

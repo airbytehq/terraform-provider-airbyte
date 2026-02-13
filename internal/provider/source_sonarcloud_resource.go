@@ -98,6 +98,7 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"user_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.`,
 					},
 				},

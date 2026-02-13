@@ -49,7 +49,7 @@ resource "airbyte_destination_streamr_airbyte_connectors" "my_destination_stream
 
 Required:
 
-- `private_key` (String) You private key on Streamr
+- `private_key` (String, Sensitive) You private key on Streamr
 - `stream_id` (String) Your full Stream ID
 
 

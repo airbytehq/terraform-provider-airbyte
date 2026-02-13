@@ -51,7 +51,7 @@ resource "airbyte_source_ruddr" "my_source_ruddr" {
 
 Required:
 
-- `api_token` (String) API token to use. Generate it in the API Keys section of your Ruddr workspace settings.
+- `api_token` (String, Sensitive) API token to use. Generate it in the API Keys section of your Ruddr workspace settings.
 
 Optional:
 

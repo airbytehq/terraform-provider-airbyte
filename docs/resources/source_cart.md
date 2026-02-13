@@ -77,9 +77,9 @@ Optional:
 
 Required:
 
-- `site_id` (String) You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
-- `user_name` (String) Enter your application's User Name
-- `user_secret` (String) Enter your application's User Secret
+- `site_id` (String, Sensitive) You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
+- `user_name` (String, Sensitive) Enter your application's User Name
+- `user_secret` (String, Sensitive) Enter your application's User Secret
 
 
 <a id="nestedatt--configuration--credentials--single_store_access_token"></a>
@@ -87,7 +87,7 @@ Required:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `store_name` (String) The name of Cart.com Online Store. All API URLs start with https://[mystorename.com]/api/v1/, where [mystorename.com] is the domain name of your store.
 
 

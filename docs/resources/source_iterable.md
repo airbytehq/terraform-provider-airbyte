@@ -52,7 +52,7 @@ resource "airbyte_source_iterable" "my_source_iterable" {
 
 Required:
 
-- `api_key` (String) Iterable API Key. See the <a href=\"https://docs.airbyte.com/integrations/sources/iterable\">docs</a>  for more information on how to obtain this key.
+- `api_key` (String, Sensitive) Iterable API Key. See the <a href=\"https://docs.airbyte.com/integrations/sources/iterable\">docs</a>  for more information on how to obtain this key.
 - `start_date` (String) The date from which you'd like to replicate data for Iterable, in the format YYYY-MM-DDT00:00:00Z.  All data generated after this date will be replicated.
 
 Optional:

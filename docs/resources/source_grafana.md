@@ -52,7 +52,7 @@ resource "airbyte_source_grafana" "my_source_grafana" {
 
 Required:
 
-- `api_key` (String) Grafana API Key or Service Account Token
+- `api_key` (String, Sensitive) Grafana API Key or Service Account Token
 - `url` (String) The URL of your Grafana instance (e.g., https://your-grafana.grafana.net)
 
 Optional:

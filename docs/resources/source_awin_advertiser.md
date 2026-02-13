@@ -56,7 +56,7 @@ resource "airbyte_source_awin_advertiser" "my_source_awinadvertiser" {
 Required:
 
 - `advertiser_id` (String) Your Awin Advertiser ID. You can find this in your Awin dashboard or account settings.
-- `api_key` (String) Your Awin API key. Generate this from your Awin account under API Credentials.
+- `api_key` (String, Sensitive) Your Awin API key. Generate this from your Awin account under API Credentials.
 - `lookback_days` (Number) Number of days to look back on each sync to catch any updates to existing records.
 - `start_date` (String) Start date for data replication in YYYY-MM-DD format
 

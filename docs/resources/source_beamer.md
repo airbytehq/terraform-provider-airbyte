@@ -52,7 +52,7 @@ resource "airbyte_source_beamer" "my_source_beamer" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

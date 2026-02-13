@@ -71,6 +71,7 @@ func (r *SourceZonkaFeedbackResource) Schema(ctx context.Context, req resource.S
 					},
 					"auth_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Auth token to use. Generate it by navigating to Company Settings > Developers > API in your Zonka Feedback account.`,
 					},
 					"datacenter": schema.StringAttribute{

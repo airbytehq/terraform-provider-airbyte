@@ -52,7 +52,7 @@ resource "airbyte_source_hellobaton" "my_source_hellobaton" {
 
 Required:
 
-- `api_key` (String) authentication key required to access the api endpoints
+- `api_key` (String, Sensitive) authentication key required to access the api endpoints
 - `company` (String) Company name that generates your base api url
 
 Optional:

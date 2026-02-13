@@ -53,7 +53,7 @@ resource "airbyte_source_calendly" "my_source_calendly" {
 
 Required:
 
-- `api_key` (String) Go to Integrations → API & Webhooks to obtain your bearer token. https://calendly.com/integrations/api_webhooks
+- `api_key` (String, Sensitive) Go to Integrations → API & Webhooks to obtain your bearer token. https://calendly.com/integrations/api_webhooks
 - `start_date` (String)
 
 Optional:

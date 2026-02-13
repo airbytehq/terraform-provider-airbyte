@@ -54,7 +54,7 @@ resource "airbyte_source_shortio" "my_source_shortio" {
 Required:
 
 - `domain_id` (String)
-- `secret_key` (String) Short.io Secret Key
+- `secret_key` (String, Sensitive) Short.io Secret Key
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

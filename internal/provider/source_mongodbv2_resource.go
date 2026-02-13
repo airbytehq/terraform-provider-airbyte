@@ -102,6 +102,7 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The password associated with this username.`,
 									},
 									"schema_enforced": schema.BoolAttribute{
@@ -147,6 +148,7 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 									},
 									"password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The password associated with this username.`,
 									},
 									"schema_enforced": schema.BoolAttribute{

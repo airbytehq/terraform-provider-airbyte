@@ -56,15 +56,15 @@ resource "airbyte_source_intercom" "my_source_intercom" {
 
 Required:
 
-- `access_token` (String) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
+- `access_token` (String, Sensitive) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
 - `activity_logs_time_step` (Number) Set lower value in case of failing long running sync of Activity Logs stream. Default: 30
 - `additional_properties` (String) Parsed as JSON.
-- `client_id` (String) Client Id for your Intercom application.
-- `client_secret` (String) Client Secret for your Intercom application.
+- `client_id` (String, Sensitive) Client Id for your Intercom application.
+- `client_secret` (String, Sensitive) Client Secret for your Intercom application.
 - `lookback_window` (Number) The number of days to shift the state value backward for record sync. Default: 0
 
 

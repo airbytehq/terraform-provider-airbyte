@@ -73,6 +73,7 @@ func (r *SourceAssemblyaiResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your AssemblyAI API key. You can find it in the AssemblyAI dashboard at https://www.assemblyai.com/app/api-keys.`,
 					},
 					"request_id": schema.StringAttribute{

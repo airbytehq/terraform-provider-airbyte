@@ -52,7 +52,7 @@ resource "airbyte_source_datascope" "my_source_datascope" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 - `start_date` (String) Start date for the data to be replicated
 
 Optional:

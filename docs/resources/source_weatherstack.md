@@ -53,7 +53,7 @@ resource "airbyte_source_weatherstack" "my_source_weatherstack" {
 
 Required:
 
-- `access_key` (String) API access key used to retrieve data from the Weatherstack API.(https://weatherstack.com/product)
+- `access_key` (String, Sensitive) API access key used to retrieve data from the Weatherstack API.(https://weatherstack.com/product)
 - `historical_date` (String) This is required for enabling the Historical date API with format- (YYYY-MM-DD). * Note, only supported by paid accounts
 - `query` (String) A location to query such as city, IP, latitudeLongitude, or zipcode. Multiple locations with semicolon seperated if using a professional plan or higher. For more info- (https://weatherstack.com/documentation#query_parameter)
 

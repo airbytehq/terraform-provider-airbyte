@@ -74,6 +74,7 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Orb API Key, issued from the Orb admin console.`,
 					},
 					"end_date": schema.StringAttribute{

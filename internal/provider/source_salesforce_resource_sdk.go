@@ -24,6 +24,7 @@ func (r *SourceSalesforceResourceModel) RefreshFromSharedSourceResponse(ctx cont
 		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
 		r.Configuration.ForceUseBulkAPI = configurationPriorData.ForceUseBulkAPI
 		r.Configuration.IsSandbox = configurationPriorData.IsSandbox
+		r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
 		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
 		r.Configuration.StartDate = configurationPriorData.StartDate
 		r.Configuration.StreamSliceStep = configurationPriorData.StreamSliceStep
@@ -151,6 +152,12 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest(ct
 	} else {
 		isSandbox = nil
 	}
+	lookbackWindow := new(string)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueString()
+	} else {
+		lookbackWindow = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
@@ -191,6 +198,7 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest(ct
 		ClientSecret:         clientSecret,
 		ForceUseBulkAPI:      forceUseBulkAPI,
 		IsSandbox:            isSandbox,
+		LookbackWindow:       lookbackWindow,
 		RefreshToken:         refreshToken,
 		StartDate:            startDate,
 		StreamSliceStep:      streamSliceStep,
@@ -247,6 +255,12 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest(ctx c
 	} else {
 		isSandbox = nil
 	}
+	lookbackWindow := new(string)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueString()
+	} else {
+		lookbackWindow = nil
+	}
 	refreshToken := new(string)
 	if !r.Configuration.RefreshToken.IsUnknown() && !r.Configuration.RefreshToken.IsNull() {
 		*refreshToken = r.Configuration.RefreshToken.ValueString()
@@ -293,6 +307,7 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest(ctx c
 		ClientSecret:         clientSecret,
 		ForceUseBulkAPI:      forceUseBulkAPI,
 		IsSandbox:            isSandbox,
+		LookbackWindow:       lookbackWindow,
 		RefreshToken:         refreshToken,
 		StartDate:            startDate,
 		StreamSliceStep:      streamSliceStep,

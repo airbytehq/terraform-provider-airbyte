@@ -69,6 +69,7 @@ func (r *SourceBigmailerResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. You can create and find it on the API key management page in your BigMailer account.`,
 					},
 				},

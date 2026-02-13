@@ -51,7 +51,7 @@ resource "airbyte_source_printify" "my_source_printify" {
 
 Required:
 
-- `api_token` (String) Your Printify API token. Obtain it from your Printify account settings.
+- `api_token` (String, Sensitive) Your Printify API token. Obtain it from your Printify account settings.
 
 Optional:
 

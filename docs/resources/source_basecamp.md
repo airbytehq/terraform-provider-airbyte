@@ -56,9 +56,9 @@ resource "airbyte_source_basecamp" "my_source_basecamp" {
 Required:
 
 - `account_id` (Number)
-- `client_id` (String)
-- `client_refresh_token_2` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token_2` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

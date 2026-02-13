@@ -69,6 +69,7 @@ func (r *SourceConfluenceResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.`,
 					},
 					"domain_name": schema.StringAttribute{

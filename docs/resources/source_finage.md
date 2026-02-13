@@ -60,7 +60,7 @@ resource "airbyte_source_finage" "my_source_finage" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 - `symbols` (List of String) List of symbols
 

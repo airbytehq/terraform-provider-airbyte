@@ -71,7 +71,8 @@ func (r *SourceFrontResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"page_limit": schema.StringAttribute{
 						Computed:    true,

@@ -69,10 +69,12 @@ func (r *SourceModeResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API secret to use as the password for Basic Authentication.`,
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use as the username for Basic Authentication.`,
 					},
 					"workspace": schema.StringAttribute{

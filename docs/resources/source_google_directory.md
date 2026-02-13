@@ -73,7 +73,7 @@ Optional:
 
 Required:
 
-- `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
+- `credentials_json` (String, Sensitive) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 - `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
 
 
@@ -82,9 +82,9 @@ Required:
 
 Required:
 
-- `client_id` (String) The Client ID of the developer application.
-- `client_secret` (String) The Client Secret of the developer application.
-- `refresh_token` (String) The Token for obtaining a new access token.
+- `client_id` (String, Sensitive) The Client ID of the developer application.
+- `client_secret` (String, Sensitive) The Client Secret of the developer application.
+- `refresh_token` (String, Sensitive) The Token for obtaining a new access token.
 
 
 

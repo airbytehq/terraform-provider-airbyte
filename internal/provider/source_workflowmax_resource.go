@@ -74,7 +74,8 @@ func (r *SourceWorkflowmaxResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Parsed as JSON.`,
 					},
 					"api_key_2": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

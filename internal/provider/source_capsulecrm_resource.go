@@ -72,6 +72,7 @@ func (r *SourceCapsuleCrmResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"bearer_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Bearer token to authenticate API requests. Generate it from the 'My Preferences' > 'API Authentication Tokens' page in your Capsule account.`,
 					},
 					"entity": schema.StringAttribute{

@@ -51,7 +51,7 @@ resource "airbyte_source_tickettailor" "my_source_tickettailor" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://www.getdrip.com/user/edit
+- `api_key` (String, Sensitive) API key to use. Find it at https://www.getdrip.com/user/edit
 
 Optional:
 

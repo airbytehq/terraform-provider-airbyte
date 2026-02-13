@@ -71,6 +71,7 @@ func (r *SourceLessAnnoyingCrmResource) Schema(ctx context.Context, req resource
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Manage and create your API keys on the Programmer API settings page at https://account.lessannoyingcrm.com/app/Settings/Api.`,
 					},
 					"start_date": schema.StringAttribute{

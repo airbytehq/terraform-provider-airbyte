@@ -91,6 +91,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Long-term Authorized Access Token.`,
 									},
 									"advertiser_id": schema.StringAttribute{
@@ -99,10 +100,12 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"app_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Developer Application App ID.`,
 									},
 									"secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Developer Application Secret.`,
 									},
 								},
@@ -117,6 +120,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The long-term authorized access token.`,
 									},
 									"advertiser_id": schema.StringAttribute{

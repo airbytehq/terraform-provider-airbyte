@@ -52,7 +52,7 @@ resource "airbyte_source_payfit" "my_source_payfit" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `company_id` (String)
 
 Optional:

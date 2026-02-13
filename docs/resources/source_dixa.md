@@ -53,7 +53,7 @@ resource "airbyte_source_dixa" "my_source_dixa" {
 
 Required:
 
-- `api_token` (String) Dixa API token
+- `api_token` (String, Sensitive) Dixa API token
 - `start_date` (String) The connector pulls records updated from this date onwards.
 
 Optional:

@@ -53,9 +53,9 @@ resource "airbyte_source_chift" "my_source_chift" {
 
 Required:
 
-- `account_id` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `account_id` (String, Sensitive)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 
 Optional:
 

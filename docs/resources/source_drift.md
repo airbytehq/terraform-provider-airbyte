@@ -73,7 +73,7 @@ Optional:
 
 Required:
 
-- `access_token` (String) Drift Access Token. See the <a href="https://docs.airbyte.com/integrations/sources/drift">docs</a> for more information on how to generate this key.
+- `access_token` (String, Sensitive) Drift Access Token. See the <a href="https://docs.airbyte.com/integrations/sources/drift">docs</a> for more information on how to generate this key.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -81,10 +81,10 @@ Required:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `client_id` (String) The Client ID of your Drift developer application.
-- `client_secret` (String) The Client Secret of your Drift developer application.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
+- `client_id` (String, Sensitive) The Client ID of your Drift developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Drift developer application.
+- `refresh_token` (String, Sensitive) Refresh Token to renew the expired Access Token.
 
 
 

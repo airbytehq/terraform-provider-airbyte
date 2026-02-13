@@ -56,9 +56,9 @@ resource "airbyte_source_mercado_ads" "my_source_mercadoads" {
 
 Required:
 
-- `client_id` (String)
-- `client_refresh_token` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 
 Optional:
 

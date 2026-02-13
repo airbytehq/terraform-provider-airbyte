@@ -75,10 +75,12 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"consumer_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Consumer key associated with your integration`,
 					},
 					"consumer_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Consumer secret associated with your integration`,
 					},
 					"object_types": schema.ListAttribute{
@@ -90,6 +92,7 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"realm": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Netsuite realm e.g. 2344535, as for ` + "`" + `production` + "`" + ` or 2344535_SB1, as for the ` + "`" + `sandbox` + "`" + ``,
 					},
 					"start_datetime": schema.StringAttribute{
@@ -101,10 +104,12 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"token_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Access token key`,
 					},
 					"token_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Access token secret`,
 					},
 					"window_in_days": schema.Int64Attribute{

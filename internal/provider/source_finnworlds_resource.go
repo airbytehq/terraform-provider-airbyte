@@ -96,7 +96,8 @@ func (r *SourceFinnworldsResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"list": schema.StringAttribute{
 						Computed:    true,

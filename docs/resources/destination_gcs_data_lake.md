@@ -71,7 +71,7 @@ Required:
 - `gcs_bucket_name` (String) The name of the GCS bucket that will host the Iceberg data.
 - `main_branch_name` (String) The primary or default branch name in the catalog. Most query engines will use "main" by default. See <a href="https://iceberg.apache.org/docs/latest/branching/">Iceberg documentation</a> for more information.
 - `namespace` (String) The default namespace to use for tables. This will ONLY be used if the `Destination Namespace` setting is set to `Destination-defined` or `Source-defined`
-- `service_account_json` (String) The contents of the JSON service account key file. See the <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">Google Cloud documentation</a> for more information on how to obtain this.
+- `service_account_json` (String, Sensitive) The contents of the JSON service account key file. See the <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">Google Cloud documentation</a> for more information on how to obtain this.
 - `warehouse_location` (String) The root location of the data warehouse used by the Iceberg catalog. Must include the storage protocol "gs://" for Google Cloud Storage. For example: "gs://your-bucket/path/to/warehouse/
 
 Optional:
@@ -107,8 +107,8 @@ Optional:
 Required:
 
 - `catalog_name` (String) The name of the catalog in Polaris. This corresponds to the catalog name created via the Polaris Management API.
-- `client_id` (String) The OAuth Client ID for authenticating with the Polaris server.
-- `client_secret` (String) The OAuth Client Secret for authenticating with the Polaris server.
+- `client_id` (String, Sensitive) The OAuth Client ID for authenticating with the Polaris server.
+- `client_secret` (String, Sensitive) The OAuth Client Secret for authenticating with the Polaris server.
 - `server_uri` (String) The base URL of the Polaris server. For example: http://localhost:8181/api/catalog
 
 Optional:

@@ -53,9 +53,9 @@ resource "airbyte_source_ringcentral" "my_source_ringcentral" {
 
 Required:
 
-- `account_id` (String) Could be seen at response to basic api call to an endpoint with ~ operator.  Example- (https://platform.devtest.ringcentral.com/restapi/v1.0/account/~/extension/~/business-hours)
-- `auth_token` (String) Token could be recieved by following instructions at https://developers.ringcentral.com/api-reference/authentication
-- `extension_id` (String) Could be seen at response to basic api call to an endpoint with ~ operator.  Example- (https://platform.devtest.ringcentral.com/restapi/v1.0/account/~/extension/~/business-hours)
+- `account_id` (String, Sensitive) Could be seen at response to basic api call to an endpoint with ~ operator.  Example- (https://platform.devtest.ringcentral.com/restapi/v1.0/account/~/extension/~/business-hours)
+- `auth_token` (String, Sensitive) Token could be recieved by following instructions at https://developers.ringcentral.com/api-reference/authentication
+- `extension_id` (String, Sensitive) Could be seen at response to basic api call to an endpoint with ~ operator.  Example- (https://platform.devtest.ringcentral.com/restapi/v1.0/account/~/extension/~/business-hours)
 
 Optional:
 

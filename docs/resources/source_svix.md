@@ -52,7 +52,7 @@ resource "airbyte_source_svix" "my_source_svix" {
 
 Required:
 
-- `api_key` (String) API key or access token
+- `api_key` (String, Sensitive) API key or access token
 - `start_date` (String)
 
 Optional:

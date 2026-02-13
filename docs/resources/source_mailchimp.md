@@ -75,7 +75,7 @@ Optional:
 
 Required:
 
-- `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
+- `apikey` (String, Sensitive) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -83,12 +83,12 @@ Required:
 
 Required:
 
-- `access_token` (String) An access token generated using the above client ID and secret.
+- `access_token` (String, Sensitive) An access token generated using the above client ID and secret.
 
 Optional:
 
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
+- `client_id` (String, Sensitive) The Client ID of your OAuth application.
+- `client_secret` (String, Sensitive) The Client Secret of your OAuth application.
 
 
 

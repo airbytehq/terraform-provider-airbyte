@@ -73,6 +73,7 @@ func (r *SourceRocketChatResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Token. See <a href="https://developer.rocket.chat/reference/api/rest-api/endpoints/other-important-endpoints/access-tokens-endpoints">here</a>. The token is case sensitive.`,
 					},
 					"user_id": schema.StringAttribute{

@@ -54,7 +54,7 @@ resource "airbyte_source_airbyte_pagerduty_source" "my_source_airbytepagerdutyso
 
 Required:
 
-- `token` (String)
+- `token` (String, Sensitive)
 
 Optional:
 

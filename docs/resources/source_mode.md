@@ -53,8 +53,8 @@ resource "airbyte_source_mode" "my_source_mode" {
 
 Required:
 
-- `api_secret` (String) API secret to use as the password for Basic Authentication.
-- `api_token` (String) API token to use as the username for Basic Authentication.
+- `api_secret` (String, Sensitive) API secret to use as the password for Basic Authentication.
+- `api_token` (String, Sensitive) API token to use as the username for Basic Authentication.
 - `workspace` (String)
 
 Optional:

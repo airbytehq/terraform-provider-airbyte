@@ -51,7 +51,7 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
 
 Required:
 
-- `api_key` (String) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
+- `api_key` (String, Sensitive) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
 
 Optional:
 

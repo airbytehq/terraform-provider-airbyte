@@ -63,7 +63,7 @@ Required:
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 5432
 - `ssl` (Boolean) Encrypt client/server communications for increased security. Default: false
 

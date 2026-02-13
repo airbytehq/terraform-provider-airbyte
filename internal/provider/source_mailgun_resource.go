@@ -82,6 +82,7 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"private_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Primary account API key to access your Mailgun data.`,
 					},
 					"start_date": schema.StringAttribute{

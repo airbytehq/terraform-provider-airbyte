@@ -79,7 +79,7 @@ Optional:
 
 Required:
 
-- `api_key` (String) The API key for a Square application
+- `api_key` (String, Sensitive) The API key for a Square application
 
 
 <a id="nestedatt--configuration--credentials--oauth_authentication"></a>
@@ -87,9 +87,9 @@ Required:
 
 Required:
 
-- `client_id` (String) The Square-issued ID of your application
-- `client_secret` (String) The Square-issued application secret for your application
-- `refresh_token` (String) A refresh token generated using the above client ID and secret
+- `client_id` (String, Sensitive) The Square-issued ID of your application
+- `client_secret` (String, Sensitive) The Square-issued application secret for your application
+- `refresh_token` (String, Sensitive) A refresh token generated using the above client ID and secret
 
 
 

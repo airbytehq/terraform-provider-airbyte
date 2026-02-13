@@ -70,11 +70,13 @@ func (r *SourceOnfleetResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use for authenticating requests. You can create and manage your API keys in the API section of the Onfleet dashboard.`,
 					},
 					"password": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString(`x`),
 						Description: `Placeholder for basic HTTP auth password - should be set to empty string. Default: "x"`,
 					},

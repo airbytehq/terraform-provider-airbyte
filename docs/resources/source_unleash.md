@@ -54,7 +54,7 @@ resource "airbyte_source_unleash" "my_source_unleash" {
 
 Required:
 
-- `api_token` (String) Your API Token (Server-Side SDK [Client]). See <a href="https://docs.getunleash.io/how-to/how-to-create-api-tokens/">here</a>. The token is case sensitive.
+- `api_token` (String, Sensitive) Your API Token (Server-Side SDK [Client]). See <a href="https://docs.getunleash.io/how-to/how-to-create-api-tokens/">here</a>. The token is case sensitive.
 - `api_url` (String) Your API URL. No trailing slash. ex: https://unleash.host.com/api
 
 Optional:

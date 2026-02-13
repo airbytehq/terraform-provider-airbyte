@@ -64,6 +64,7 @@ func (r *SourceConvexResource) Schema(ctx context.Context, req resource.SchemaRe
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API access key used to retrieve data from Convex.`,
 					},
 					"additional_properties": schema.StringAttribute{

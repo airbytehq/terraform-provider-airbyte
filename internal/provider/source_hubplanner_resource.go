@@ -69,6 +69,7 @@ func (r *SourceHubplannerResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.`,
 					},
 				},

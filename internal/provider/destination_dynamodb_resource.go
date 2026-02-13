@@ -65,6 +65,7 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.`,
 					},
 					"dynamodb_endpoint": schema.StringAttribute{
@@ -123,6 +124,7 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 					},
 					"secret_access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The corresponding secret to the access key id.`,
 					},
 				},

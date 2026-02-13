@@ -77,15 +77,15 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
 
 Required:
 
-- `lwa_app_id` (String) Your Login with Amazon Client ID.
-- `lwa_client_secret` (String) Your Login with Amazon Client Secret.
-- `refresh_token` (String) The Refresh Token obtained via OAuth flow authorization.
+- `lwa_app_id` (String, Sensitive) Your Login with Amazon Client ID.
+- `lwa_client_secret` (String, Sensitive) Your Login with Amazon Client Secret.
+- `refresh_token` (String, Sensitive) The Refresh Token obtained via OAuth flow authorization.
 
 Optional:
 
 - `account_type` (String) Type of the Account you're going to authorize the Airbyte application by. Default: "Seller"; must be one of ["Seller", "Vendor"]
 - `additional_properties` (String) Parsed as JSON.
-- `app_id` (String) Your Amazon Application ID.
+- `app_id` (String, Sensitive) Your Amazon Application ID.
 - `aws_environment` (String) Select the AWS Environment. Default: "PRODUCTION"; must be one of ["PRODUCTION", "SANDBOX"]
 - `financial_events_max_results_per_page` (Number) The maximum number of results to return per page for the ListFinancialEvents stream. If the response exceeds the maximum number of transactions or 10 MB, the API returns an InvalidInput error. Lower this value if you encounter InvalidInput errors during sync. Valid range is 1-100. Default: 100
 - `financial_events_step` (String) The time window size for fetching financial events data in chunks for the ListFinancialEvents and ListFinancialEventGroups streams. Options include hourly (1H, 6H, 12H) and daily (1D, 7D, 14D, 30D, 60D, 90D, 180D) granularity. - **Hourly step sizes (e.g., 1H, 6H)** are recommended for very high data volumes where daily windows cause pagination token expiration (TTL errors). They fetch smaller chunks per request, reducing the risk of timeouts. - **Daily step sizes (e.g., 1D, 7D)** are better for moderate data volumes. They balance sync speed with API efficiency. - **Larger step sizes (e.g., 30D, 180D)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls. Select a step size that matches your data volume to optimize syncing speed and API performance. Default: "180D"; must be one of ["1H", "2H", "4H", "6H", "8H", "12H", "1D", "7D", "14D", "30D", "60D", "90D", "180D"]

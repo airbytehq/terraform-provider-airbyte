@@ -63,7 +63,8 @@ func (r *SourceChiftResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"additional_properties": schema.StringAttribute{
 						CustomType:  jsontypes.NormalizedType{},
@@ -71,10 +72,12 @@ func (r *SourceChiftResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

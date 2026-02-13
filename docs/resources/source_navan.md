@@ -53,8 +53,8 @@ resource "airbyte_source_navan" "my_source_navan" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

@@ -51,7 +51,7 @@ resource "airbyte_source_reply_io" "my_source_replyio" {
 
 Required:
 
-- `api_key` (String) The API Token for Reply
+- `api_key` (String, Sensitive) The API Token for Reply
 
 Optional:
 

@@ -74,6 +74,7 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{

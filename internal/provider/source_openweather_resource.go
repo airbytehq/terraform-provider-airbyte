@@ -72,6 +72,7 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"appid": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API KEY`,
 					},
 					"lang": schema.StringAttribute{

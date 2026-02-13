@@ -62,9 +62,9 @@ resource "airbyte_source_spotify_ads" "my_source_spotifyads" {
 Required:
 
 - `ad_account_id` (String) The ID of the Spotify Ad Account you want to sync data from.
-- `client_id` (String) The Client ID of your Spotify Developer application.
-- `client_secret` (String) The Client Secret of your Spotify Developer application.
-- `refresh_token` (String) The Refresh Token obtained from the initial OAuth 2.0 authorization flow.
+- `client_id` (String, Sensitive) The Client ID of your Spotify Developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Spotify Developer application.
+- `refresh_token` (String, Sensitive) The Refresh Token obtained from the initial OAuth 2.0 authorization flow.
 - `start_date` (String) The date to start syncing data from, in YYYY-MM-DD format.
 
 Optional:

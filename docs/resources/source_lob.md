@@ -53,7 +53,7 @@ resource "airbyte_source_lob" "my_source_lob" {
 
 Required:
 
-- `api_key` (String) API key to use for authentication. You can find your account's API keys in your Dashboard Settings at https://dashboard.lob.com/settings/api-keys.
+- `api_key` (String, Sensitive) API key to use for authentication. You can find your account's API keys in your Dashboard Settings at https://dashboard.lob.com/settings/api-keys.
 - `start_date` (String)
 
 Optional:

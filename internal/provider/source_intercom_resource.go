@@ -68,6 +68,7 @@ func (r *SourceIntercomResource) Schema(ctx context.Context, req resource.Schema
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.`,
 					},
 					"activity_logs_time_step": schema.Int64Attribute{
@@ -86,10 +87,12 @@ func (r *SourceIntercomResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"client_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Client Id for your Intercom application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Client Secret for your Intercom application.`,
 					},
 					"lookback_window": schema.Int64Attribute{

@@ -79,6 +79,7 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Password`,
 									},
 								},
@@ -93,6 +94,7 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"private_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Private key`,
 									},
 								},
@@ -417,6 +419,7 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 																"api_key": schema.StringAttribute{
 																	Computed:    true,
 																	Optional:    true,
+																	Sensitive:   true,
 																	Default:     stringdefault.StaticString(``),
 																	Description: `The API key to use matching the environment. Default: ""`,
 																},

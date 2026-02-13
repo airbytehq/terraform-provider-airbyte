@@ -53,8 +53,8 @@ resource "airbyte_source_commcare" "my_source_commcare" {
 
 Required:
 
-- `api_key` (String) Commcare API Key
-- `app_id` (String) The Application ID we are interested in
+- `api_key` (String, Sensitive) Commcare API Key
+- `app_id` (String, Sensitive) The Application ID we are interested in
 
 Optional:
 

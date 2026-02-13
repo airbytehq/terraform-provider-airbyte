@@ -55,7 +55,7 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
 Required:
 
 - `email` (String) Your My Hours username
-- `password` (String) The password associated to the username
+- `password` (String, Sensitive) The password associated to the username
 - `start_date` (String) Start date for collecting time logs
 
 Optional:

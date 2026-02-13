@@ -69,6 +69,7 @@ func (r *SourceFlowluResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API key to use for authentication`,
 					},
 					"company": schema.StringAttribute{

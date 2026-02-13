@@ -69,6 +69,7 @@ func (r *SourceZendeskSellResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API token for authenticating to Zendesk Sell`,
 					},
 				},

@@ -52,7 +52,7 @@ resource "airbyte_source_insightful" "my_source_insightful" {
 
 Required:
 
-- `api_token` (String) Your API token for accessing the Insightful API. Generate it by logging in as an Admin to your organization's account, navigating to the API page, and creating a new token. Note that this token will only be shown once, so store it securely.
+- `api_token` (String, Sensitive) Your API token for accessing the Insightful API. Generate it by logging in as an Admin to your organization's account, navigating to the API page, and creating a new token. Note that this token will only be shown once, so store it securely.
 - `start_date` (String)
 
 Optional:

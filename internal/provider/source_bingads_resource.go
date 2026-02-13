@@ -99,11 +99,13 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Microsoft Advertising developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString(``),
 						Description: `The Client Secret of your Microsoft Advertising developer application. Default: ""`,
 					},
@@ -181,6 +183,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"developer_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.`,
 					},
 					"lookback_window": schema.Int64Attribute{
@@ -194,6 +197,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Refresh Token to renew the expired Access Token.`,
 					},
 					"reports_start_date": schema.StringAttribute{
@@ -206,6 +210,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					"tenant_id": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString(`common`),
 						Description: `The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value. Default: "common"`,
 					},

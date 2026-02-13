@@ -73,10 +73,12 @@ func (r *SourcePardotResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Consumer Key that can be found when viewing your app in Salesforce`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Consumer Secret that can be found when viewing your app in Salesforce`,
 					},
 					"is_sandbox": schema.BoolAttribute{
@@ -91,6 +93,7 @@ func (r *SourcePardotResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.`,
 					},
 					"start_date": schema.StringAttribute{

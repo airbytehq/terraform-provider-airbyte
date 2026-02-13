@@ -61,7 +61,7 @@ Required:
 Optional:
 
 - `exchange` (String) The exchange name.
-- `password` (String) The password to connect.
+- `password` (String, Sensitive) The password to connect.
 - `port` (Number) The RabbitMQ port.
 - `ssl` (Boolean) SSL enabled. Default: true
 - `username` (String) The username to connect.

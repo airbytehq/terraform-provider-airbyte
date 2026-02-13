@@ -77,6 +77,7 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
 									},
 									"email": schema.StringAttribute{
@@ -96,14 +97,17 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of the developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of the developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Token for obtaining a new access token.`,
 									},
 								},

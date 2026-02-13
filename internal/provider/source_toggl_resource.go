@@ -72,6 +72,7 @@ func (r *SourceTogglResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Token. See <a href="https://developers.track.toggl.com/docs/authentication">here</a>. The token is case sensitive.`,
 					},
 					"end_date": schema.StringAttribute{

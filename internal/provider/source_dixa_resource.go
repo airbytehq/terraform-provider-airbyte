@@ -72,6 +72,7 @@ func (r *SourceDixaResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Dixa API token`,
 					},
 					"batch_size": schema.Int64Attribute{

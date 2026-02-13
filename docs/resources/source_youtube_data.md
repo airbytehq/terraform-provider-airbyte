@@ -80,7 +80,7 @@ Optional:
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--credentials--google_o_auth20"></a>
@@ -88,9 +88,9 @@ Required:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `refresh_token` (String, Sensitive)
 
 
 

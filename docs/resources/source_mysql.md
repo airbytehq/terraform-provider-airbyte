@@ -100,7 +100,7 @@ Optional:
 - `concurrency` (Number) Maximum number of concurrent queries to the database.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `max_db_connections` (Number) Maximum number of concurrent queries to the database. Leave empty to let Airbyte optimize performance.
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) Port of the database. Default: 3306
 - `ssl_mode` (Attributes) The encryption method which is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `table_filters` (Attributes List) Optional filters to include only specific tables from the specified database. (see [below for nested schema](#nestedatt--configuration--table_filters))
@@ -169,14 +169,14 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)
-- `client_key` (String) Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_certificate` (String, Sensitive) Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)
+- `client_key` (String, Sensitive) Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 - `mode` (String) Default: "verify_ca"; must be "verify_ca"
 
 
@@ -185,14 +185,14 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)
-- `client_key` (String) Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_certificate` (String, Sensitive) Client certificate (this is not a required field, but if you want to use it, you will need to add the Client key as well)
+- `client_key` (String, Sensitive) Client key (this is not a required field, but if you want to use it, you will need to add the Client certificate as well)
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 - `mode` (String) Default: "verify_identity"; must be "verify_identity"
 
 
@@ -235,7 +235,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -249,7 +249,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 

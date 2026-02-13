@@ -74,12 +74,12 @@ Optional:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
 
 Optional:
 
-- `client_id` (String) The Client ID of the SurveyMonkey developer application.
-- `client_secret` (String) The Client Secret of the SurveyMonkey developer application.
+- `client_id` (String, Sensitive) The Client ID of the SurveyMonkey developer application.
+- `client_secret` (String, Sensitive) The Client Secret of the SurveyMonkey developer application.
 
 
 

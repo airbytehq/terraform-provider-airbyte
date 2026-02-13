@@ -64,6 +64,7 @@ func (r *SourceGoldcastResource) Schema(ctx context.Context, req resource.Schema
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Access Key. See <a href="https://help.goldcast.io/hc/en-us/articles/22931655725723-How-To-Create-an-API-Token-in-Goldcast">here</a>. The key is case sensitive.`,
 					},
 					"additional_properties": schema.StringAttribute{

@@ -69,6 +69,7 @@ func (r *SourceRecreationResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"apikey": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"query_campsites": schema.StringAttribute{

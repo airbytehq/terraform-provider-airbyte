@@ -69,6 +69,7 @@ func (r *SourceSimplecastResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use. Find it at your Private Apps page on the Simplecast dashboard.`,
 					},
 				},

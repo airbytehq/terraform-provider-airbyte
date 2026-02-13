@@ -56,7 +56,7 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 - `period` (String) The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
 - `start_date` (String) The start date in ISO 8601 format.
 - `symbol_id` (String) The symbol ID to use. See the documentation for a list. https://docs.coinapi.io/#list-all-symbols-get

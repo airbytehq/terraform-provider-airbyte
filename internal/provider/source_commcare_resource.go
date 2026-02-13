@@ -67,10 +67,12 @@ func (r *SourceCommcareResource) Schema(ctx context.Context, req resource.Schema
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Commcare API Key`,
 					},
 					"app_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Application ID we are interested in`,
 					},
 					"project_space": schema.StringAttribute{

@@ -83,6 +83,7 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 								},
@@ -97,6 +98,7 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Add Password for authentication.`,
 									},
 									"username": schema.StringAttribute{

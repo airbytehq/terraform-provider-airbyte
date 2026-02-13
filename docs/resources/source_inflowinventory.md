@@ -52,7 +52,7 @@ resource "airbyte_source_inflowinventory" "my_source_inflowinventory" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `companyid` (String)
 
 Optional:

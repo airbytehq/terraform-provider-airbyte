@@ -51,7 +51,7 @@ resource "airbyte_source_goldcast" "my_source_goldcast" {
 
 Required:
 
-- `access_key` (String) Your API Access Key. See <a href="https://help.goldcast.io/hc/en-us/articles/22931655725723-How-To-Create-an-API-Token-in-Goldcast">here</a>. The key is case sensitive.
+- `access_key` (String, Sensitive) Your API Access Key. See <a href="https://help.goldcast.io/hc/en-us/articles/22931655725723-How-To-Create-an-API-Token-in-Goldcast">here</a>. The key is case sensitive.
 
 Optional:
 

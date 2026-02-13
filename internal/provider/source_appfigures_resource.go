@@ -72,7 +72,8 @@ func (r *SourceAppfiguresResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"group_by": schema.StringAttribute{
 						Computed:    true,

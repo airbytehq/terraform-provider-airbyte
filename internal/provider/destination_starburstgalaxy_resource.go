@@ -82,6 +82,7 @@ func (r *DestinationStarburstGalaxyResource) Schema(ctx context.Context, req res
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Starburst Galaxy password for the specified user.`,
 					},
 					"port": schema.StringAttribute{
@@ -117,6 +118,7 @@ func (r *DestinationStarburstGalaxyResource) Schema(ctx context.Context, req res
 									},
 									"s3_access_key_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access key with access to the bucket. Airbyte requires read and write permissions to a given bucket.`,
 									},
 									"s3_bucket_name": schema.StringAttribute{
@@ -151,6 +153,7 @@ func (r *DestinationStarburstGalaxyResource) Schema(ctx context.Context, req res
 									},
 									"s3_secret_access_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Secret key used with the specified access key.`,
 									},
 								},

@@ -70,7 +70,8 @@ func (r *SourcePipelinerResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"service": schema.StringAttribute{
 						Required:    true,

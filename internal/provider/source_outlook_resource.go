@@ -70,14 +70,17 @@ func (r *SourceOutlookResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Microsoft Azure application`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Microsoft Azure application`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Refresh token obtained from Microsoft OAuth flow`,
 					},
 					"tenant_id": schema.StringAttribute{

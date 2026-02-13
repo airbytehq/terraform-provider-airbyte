@@ -52,7 +52,7 @@ resource "airbyte_source_wufoo" "my_source_wufoo" {
 
 Required:
 
-- `api_key` (String) Your Wufoo API Key. You can find it by logging into your Wufoo account, selecting 'API Information' from the 'More' dropdown on any form, and locating the 16-digit code.
+- `api_key` (String, Sensitive) Your Wufoo API Key. You can find it by logging into your Wufoo account, selecting 'API Information' from the 'More' dropdown on any form, and locating the 16-digit code.
 - `subdomain` (String) Your account subdomain/username for Wufoo.
 
 Optional:

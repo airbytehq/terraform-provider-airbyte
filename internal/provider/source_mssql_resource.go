@@ -111,6 +111,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -262,6 +263,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `certificate of the server, or of the CA that signed the server certificate`,
 									},
 									"host_name_in_certificate": schema.StringAttribute{
@@ -388,6 +390,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -409,6 +412,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{

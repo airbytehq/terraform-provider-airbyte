@@ -71,6 +71,7 @@ func (r *SourceInsightfulResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API token for accessing the Insightful API. Generate it by logging in as an Admin to your organization's account, navigating to the API page, and creating a new token. Note that this token will only be shown once, so store it securely.`,
 					},
 					"start_date": schema.StringAttribute{

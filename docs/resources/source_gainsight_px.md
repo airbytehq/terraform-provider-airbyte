@@ -51,7 +51,7 @@ resource "airbyte_source_gainsight_px" "my_source_gainsightpx" {
 
 Required:
 
-- `api_key` (String) The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
+- `api_key` (String, Sensitive) The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
 
 Optional:
 

@@ -52,7 +52,7 @@ resource "airbyte_source_nocrm" "my_source_nocrm" {
 
 Required:
 
-- `api_key` (String) API key to use. Generate it from the admin section of your noCRM.io account.
+- `api_key` (String, Sensitive) API key to use. Generate it from the admin section of your noCRM.io account.
 - `subdomain` (String) The subdomain specific to your noCRM.io account, e.g., 'yourcompany' in 'yourcompany.nocrm.io'.
 
 Optional:

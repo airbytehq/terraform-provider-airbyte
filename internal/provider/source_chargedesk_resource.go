@@ -68,7 +68,8 @@ func (r *SourceChargedeskResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.Int64Attribute{
 						Optional:    true,

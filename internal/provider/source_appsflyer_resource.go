@@ -67,6 +67,7 @@ func (r *SourceAppsflyerResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Pull API token for authentication. If you change the account admin, the token changes, and you must update scripts with the new token. <a href="https://support.appsflyer.com/hc/en-us/articles/360004562377">Get the API token in the Dashboard</a>.`,
 					},
 					"app_id": schema.StringAttribute{

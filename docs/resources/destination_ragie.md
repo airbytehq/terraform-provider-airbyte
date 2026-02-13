@@ -60,7 +60,7 @@ resource "airbyte_destination_ragie" "my_destination_ragie" {
 
 Required:
 
-- `api_key` (String) API Key for Ragie.ai.
+- `api_key` (String, Sensitive) API Key for Ragie.ai.
 
 Optional:
 

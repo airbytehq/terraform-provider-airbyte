@@ -52,7 +52,7 @@ resource "airbyte_source_squarespace" "my_source_squarespace" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://developers.squarespace.com/commerce-apis/authentication-and-permissions
+- `api_key` (String, Sensitive) API key to use. Find it at https://developers.squarespace.com/commerce-apis/authentication-and-permissions
 - `start_date` (String) Any data before this date will not be replicated.
 
 Optional:

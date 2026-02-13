@@ -52,7 +52,7 @@ resource "airbyte_source_configcat" "my_source_configcat" {
 
 Required:
 
-- `password` (String) Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
+- `password` (String, Sensitive) Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 - `username` (String) Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 
 Optional:

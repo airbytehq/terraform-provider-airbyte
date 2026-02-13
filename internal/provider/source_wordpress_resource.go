@@ -77,6 +77,7 @@ func (r *SourceWordpressResource) Schema(ctx context.Context, req resource.Schem
 					"password": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString(`x`),
 						Description: `Placeholder for basic HTTP auth password - should be set to empty string. Default: "x"`,
 					},
@@ -90,6 +91,7 @@ func (r *SourceWordpressResource) Schema(ctx context.Context, req resource.Schem
 					"username": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString(`x`),
 						Description: `Placeholder for basic HTTP auth username - should be set to empty string. Default: "x"`,
 					},

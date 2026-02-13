@@ -56,7 +56,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `motherduck_api_key` (String) API key to use for authentication to a MotherDuck database.
+- `motherduck_api_key` (String, Sensitive) API key to use for authentication to a MotherDuck database.
 - `schema` (String) Database schema name, default for duckdb is 'main'.
 
 

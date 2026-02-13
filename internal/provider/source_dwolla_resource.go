@@ -72,10 +72,12 @@ func (r *SourceDwollaResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"environment": schema.StringAttribute{
 						Computed:    true,

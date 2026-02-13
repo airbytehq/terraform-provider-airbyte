@@ -51,7 +51,7 @@ resource "airbyte_source_omnisend" "my_source_omnisend" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 
 Optional:
 

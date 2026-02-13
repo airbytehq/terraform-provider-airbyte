@@ -69,6 +69,7 @@ func (r *SourceChargifyResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Maxio Advanced Billing/Chargify API Key.`,
 					},
 					"domain": schema.StringAttribute{
@@ -76,7 +77,8 @@ func (r *SourceChargifyResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Chargify domain. Normally this domain follows the following format`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"username": schema.StringAttribute{
 						Required: true,

@@ -103,14 +103,14 @@ Optional:
 
 Required:
 
-- `private_key` (String) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication">docs</a> for more information on how to obtain this key.
+- `private_key` (String, Sensitive) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication">docs</a> for more information on how to obtain this key.
 - `username` (String) The username you created to allow Airbyte to access the database.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `auth_type` (String) Default: "Key Pair Authentication"; must be "Key Pair Authentication"
-- `private_key_password` (String) Passphrase for private key
+- `private_key_password` (String, Sensitive) Passphrase for private key
 
 
 <a id="nestedatt--configuration--credentials--username_and_password"></a>
@@ -118,7 +118,7 @@ Optional:
 
 Required:
 
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 - `username` (String) The username you created to allow Airbyte to access the database.
 
 Optional:

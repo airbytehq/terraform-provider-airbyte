@@ -53,7 +53,7 @@ resource "airbyte_source_google_tasks" "my_source_googletasks" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

@@ -55,7 +55,7 @@ resource "airbyte_source_chameleon" "my_source_chameleon" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

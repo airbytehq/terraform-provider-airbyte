@@ -51,7 +51,7 @@ resource "airbyte_source_getgist" "my_source_getgist" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it in the Integration Settings on your Gist dashboard at https://app.getgist.com/projects/_/settings/api-key.
+- `api_key` (String, Sensitive) API key to use. Find it in the Integration Settings on your Gist dashboard at https://app.getgist.com/projects/_/settings/api-key.
 
 Optional:
 

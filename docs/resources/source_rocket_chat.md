@@ -54,7 +54,7 @@ resource "airbyte_source_rocket_chat" "my_source_rocketchat" {
 Required:
 
 - `endpoint` (String) Your rocket.chat instance URL.
-- `token` (String) Your API Token. See <a href="https://developer.rocket.chat/reference/api/rest-api/endpoints/other-important-endpoints/access-tokens-endpoints">here</a>. The token is case sensitive.
+- `token` (String, Sensitive) Your API Token. See <a href="https://developer.rocket.chat/reference/api/rest-api/endpoints/other-important-endpoints/access-tokens-endpoints">here</a>. The token is case sensitive.
 - `user_id` (String) Your User Id.
 
 Optional:

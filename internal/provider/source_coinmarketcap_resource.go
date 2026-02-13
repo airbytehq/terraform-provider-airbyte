@@ -72,6 +72,7 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Key. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication">here</a>. The token is case sensitive.`,
 					},
 					"data_type": schema.StringAttribute{

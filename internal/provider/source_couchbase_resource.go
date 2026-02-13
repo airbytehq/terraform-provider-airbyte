@@ -79,6 +79,7 @@ func (r *SourceCouchbaseResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The password to use for authentication`,
 					},
 					"start_date": schema.StringAttribute{

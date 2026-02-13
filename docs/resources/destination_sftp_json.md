@@ -54,7 +54,7 @@ Required:
 
 - `destination_path` (String) Path to the directory where json files will be written.
 - `host` (String) Hostname of the SFTP server.
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `username` (String) Username to use to access the SFTP server.
 
 Optional:

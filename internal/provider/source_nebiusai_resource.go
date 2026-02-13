@@ -72,6 +72,7 @@ func (r *SourceNebiusAiResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key or access token`,
 					},
 					"limit": schema.StringAttribute{

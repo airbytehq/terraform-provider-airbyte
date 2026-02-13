@@ -85,6 +85,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key of the Trustpilot API application.`,
 									},
 								},
@@ -100,18 +101,22 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key of the Trustpilot API application. (represents the OAuth Client ID)`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Secret of the Trustpilot API application. (represents the OAuth Client Secret)`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The key to refresh the expired access_token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{

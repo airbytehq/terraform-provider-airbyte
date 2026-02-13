@@ -71,14 +71,17 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your Google Sheets developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Google Sheets developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining new access token.`,
 									},
 								},
@@ -93,6 +96,7 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 								Attributes: map[string]schema.Attribute{
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter your service account key in JSON format. See the <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#service-account'>docs</a> for more information on how to generate this key.`,
 									},
 								},

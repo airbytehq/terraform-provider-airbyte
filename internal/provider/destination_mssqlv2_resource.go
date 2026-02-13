@@ -124,6 +124,7 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 									},
 									"shared_access_signature": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview`,
 									},
 								},
@@ -164,6 +165,7 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The password associated with this username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -239,6 +241,7 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 									},
 									"trust_store_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Specifies the password of the trust store.`,
 									},
 								},

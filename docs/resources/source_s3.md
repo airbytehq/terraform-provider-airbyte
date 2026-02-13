@@ -111,8 +111,8 @@ Required:
 
 Optional:
 
-- `aws_access_key_id` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-- `aws_secret_access_key` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_access_key_id` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_secret_access_key` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `dataset` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
 - `delivery_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--delivery_method))
 - `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required. Default: ""
@@ -328,8 +328,8 @@ Optional:
 
 Optional:
 
-- `aws_access_key_id` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-- `aws_secret_access_key` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_access_key_id` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_secret_access_key` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `bucket` (String) Name of the S3 bucket where the file(s) exist.
 - `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS. Default: ""
 - `path_prefix` (String) By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate. Default: ""

@@ -61,7 +61,7 @@ Required:
 Optional:
 
 - `authentication_method` (Attributes) The type of authentication to be used (see [below for nested schema](#nestedatt--configuration--authentication_method))
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 - `upsert` (Boolean) If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys. Default: true
 
 <a id="nestedatt--configuration--authentication_method"></a>
@@ -78,7 +78,7 @@ Optional:
 Required:
 
 - `api_key_id` (String) The Key ID to used when accessing an enterprise Elasticsearch instance.
-- `api_key_secret` (String) The secret associated with the API Key ID.
+- `api_key_secret` (String, Sensitive) The secret associated with the API Key ID.
 
 
 <a id="nestedatt--configuration--authentication_method--username_password"></a>
@@ -86,7 +86,7 @@ Required:
 
 Required:
 
-- `password` (String) Basic auth password to access a secure Elasticsearch server
+- `password` (String, Sensitive) Basic auth password to access a secure Elasticsearch server
 - `username` (String) Basic auth username to access a secure Elasticsearch server
 
 

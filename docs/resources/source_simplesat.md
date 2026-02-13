@@ -53,7 +53,7 @@ resource "airbyte_source_simplesat" "my_source_simplesat" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

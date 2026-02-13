@@ -58,7 +58,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String)
+- `password` (String, Sensitive)
 - `start_date` (Number) Date from when the sync should start in epoch Unix timestamp
 
 

@@ -52,7 +52,7 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
 
 Required:
 
-- `storage_access_key` (String) Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
+- `storage_access_key` (String, Sensitive) Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
 - `storage_account_name` (String) The name of your storage account.
 
 Optional:

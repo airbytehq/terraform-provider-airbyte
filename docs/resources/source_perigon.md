@@ -52,7 +52,7 @@ resource "airbyte_source_perigon" "my_source_perigon" {
 
 Required:
 
-- `api_key` (String) Your API key for authenticating with the Perigon API. Obtain it by creating an account at https://www.perigon.io/sign-up and verifying your email. The API key will be visible on your account dashboard.
+- `api_key` (String, Sensitive) Your API key for authenticating with the Perigon API. Obtain it by creating an account at https://www.perigon.io/sign-up and verifying your email. The API key will be visible on your account dashboard.
 - `start_date` (String)
 
 Optional:

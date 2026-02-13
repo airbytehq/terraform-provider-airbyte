@@ -51,7 +51,7 @@ resource "airbyte_source_humanitix" "my_source_humanitix" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

@@ -51,7 +51,7 @@ resource "airbyte_source_paperform" "my_source_paperform" {
 
 Required:
 
-- `api_key` (String) API key to use. Generate it on your account page at https://paperform.co/account/developer.
+- `api_key` (String, Sensitive) API key to use. Generate it on your account page at https://paperform.co/account/developer.
 
 Optional:
 

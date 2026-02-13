@@ -53,13 +53,13 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
 
 Required:
 
-- `api_token` (String) Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a>
+- `api_token` (String, Sensitive) Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a>
 
 Optional:
 
 - `date_from` (String) Zenloop date_from. Format: 2021-10-24T03:30:30Z or 2021-10-24. Leave empty if only data from current data should be synced
-- `survey_group_id` (String) Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups
-- `survey_id` (String) Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
+- `survey_group_id` (String, Sensitive) Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups
+- `survey_id` (String, Sensitive) Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
 
 
 <a id="nestedatt--resource_allocation"></a>

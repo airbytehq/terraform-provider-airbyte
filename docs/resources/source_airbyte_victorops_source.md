@@ -55,8 +55,8 @@ resource "airbyte_source_airbyte_victorops_source" "my_source_airbytevictoropsso
 
 Required:
 
-- `api_id` (String)
-- `api_key` (String)
+- `api_id` (String, Sensitive)
+- `api_key` (String, Sensitive)
 
 Optional:
 

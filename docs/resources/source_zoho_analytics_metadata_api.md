@@ -55,10 +55,10 @@ resource "airbyte_source_zoho_analytics_metadata_api" "my_source_zohoanalyticsme
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `org_id` (Number)
-- `refresh_token` (String)
+- `refresh_token` (String, Sensitive)
 
 Optional:
 

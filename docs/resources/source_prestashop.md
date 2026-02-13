@@ -53,7 +53,7 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
 
 Required:
 
-- `access_key` (String) Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
+- `access_key` (String, Sensitive) Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
 - `start_date` (String) The Start date in the format YYYY-MM-DD.
 - `url` (String) Shop URL without trailing slash.
 

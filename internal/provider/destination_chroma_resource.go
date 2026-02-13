@@ -85,6 +85,7 @@ func (r *DestinationChromaResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"openai_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource`,
 									},
 								},
@@ -118,7 +119,8 @@ func (r *DestinationChromaResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cohere_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the Cohere API to embed text.`,
@@ -175,7 +177,8 @@ func (r *DestinationChromaResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"openai_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
@@ -196,6 +199,7 @@ func (r *DestinationChromaResource) Schema(ctx context.Context, req resource.Sch
 									"api_key": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
@@ -245,6 +249,7 @@ func (r *DestinationChromaResource) Schema(ctx context.Context, req resource.Sch
 											"password": schema.StringAttribute{
 												Computed:    true,
 												Optional:    true,
+												Sensitive:   true,
 												Default:     stringdefault.StaticString(``),
 												Description: `Password used in server/client mode only. Default: ""`,
 											},

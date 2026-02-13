@@ -72,7 +72,8 @@ func (r *SourceCircleciResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"job_number": schema.StringAttribute{
 						Computed:    true,

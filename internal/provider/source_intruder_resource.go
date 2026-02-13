@@ -64,6 +64,7 @@ func (r *SourceIntruderResource) Schema(ctx context.Context, req resource.Schema
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Access token. See <a href="https://developers.intruder.io/docs/authentication">here</a>.`,
 					},
 					"additional_properties": schema.StringAttribute{

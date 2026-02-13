@@ -57,14 +57,14 @@ resource "airbyte_source_sigma_computing" "my_source_sigmacomputing" {
 Required:
 
 - `base_url` (String) The base url of your sigma organization
-- `client_id` (String)
-- `client_refresh_token` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `oauth_access_token` (String) The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
+- `oauth_access_token` (String, Sensitive) The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
 - `oauth_token_expiry_date` (String) The date the current access token expires in. This field might be overridden by the connector based on the token refresh endpoint response.
 
 

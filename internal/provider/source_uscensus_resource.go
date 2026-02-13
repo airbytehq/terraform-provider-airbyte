@@ -72,6 +72,7 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.`,
 					},
 					"query_params": schema.StringAttribute{

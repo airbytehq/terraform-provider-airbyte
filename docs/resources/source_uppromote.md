@@ -52,7 +52,7 @@ resource "airbyte_source_uppromote" "my_source_uppromote" {
 
 Required:
 
-- `api_key` (String) For developing your own custom integration with UpPromote, you can create an API key. This is available from Professional plan.  Simply go to Settings > Integration > API > Create API Key.
+- `api_key` (String, Sensitive) For developing your own custom integration with UpPromote, you can create an API key. This is available from Professional plan.  Simply go to Settings > Integration > API > Create API Key.
 - `start_date` (String) Data before this date will not be fetched.
 
 Optional:

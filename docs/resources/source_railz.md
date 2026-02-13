@@ -53,7 +53,7 @@ resource "airbyte_source_railz" "my_source_railz" {
 Required:
 
 - `client_id` (String) Client ID (client_id)
-- `secret_key` (String) Secret key (secret_key)
+- `secret_key` (String, Sensitive) Secret key (secret_key)
 - `start_date` (String) Start date
 
 

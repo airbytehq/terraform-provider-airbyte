@@ -115,7 +115,7 @@ Required:
 
 - `client_id` (String) The consumer key used for OAuth2 authentication. This is generated in NetSuite when creating an integration record.
 - `key_id` (String) The certificate ID for the OAuth 2.0 Client Credentials Setup entry.
-- `oauth2_private_key` (String) The private portion of the certificate with which OAuth2 was setup. ( created with openssl req -new -x509 -newkey rsa:4096 -keyout private.pem -sigopt rsa_padding_mode:pss -sha256 -sigopt rsa_pss_saltlen:64 -out public.pem -nodes -days 365 )
+- `oauth2_private_key` (String, Sensitive) The private portion of the certificate with which OAuth2 was setup. ( created with openssl req -new -x509 -newkey rsa:4096 -keyout private.pem -sigopt rsa_padding_mode:pss -sha256 -sigopt rsa_pss_saltlen:64 -out public.pem -nodes -days 365 )
 
 Optional:
 
@@ -128,7 +128,7 @@ Optional:
 
 Required:
 
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 
 Optional:
 
@@ -142,9 +142,9 @@ Optional:
 Required:
 
 - `client_id` (String) The consumer key used for token-based authentication. This is generated in NetSuite when creating an integration record.
-- `client_secret` (String) The consumer secret used for token-based authentication. This is generated in NetSuite when creating an integration record.
+- `client_secret` (String, Sensitive) The consumer secret used for token-based authentication. This is generated in NetSuite when creating an integration record.
 - `token_id` (String) The token ID used for token-based authentication. This is generated in NetSuite when creating a token-based role.
-- `token_secret` (String) The token secret used for token-based authentication. This is generated in NetSuite when creating a token-based role.Ensure to keep this value secure.
+- `token_secret` (String, Sensitive) The token secret used for token-based authentication. This is generated in NetSuite when creating a token-based role.Ensure to keep this value secure.
 
 Optional:
 
@@ -195,7 +195,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -209,7 +209,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 

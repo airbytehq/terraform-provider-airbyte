@@ -52,7 +52,7 @@ resource "airbyte_source_pandadoc" "my_source_pandadoc" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://app.pandadoc.com/a/#/settings/api-dashboard/configuration
+- `api_key` (String, Sensitive) API key to use. Find it at https://app.pandadoc.com/a/#/settings/api-dashboard/configuration
 - `start_date` (String)
 
 Optional:

@@ -53,7 +53,7 @@ resource "airbyte_source_clarif_ai" "my_source_clarifai" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 - `user_id` (String) User ID found in settings
 

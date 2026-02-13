@@ -69,6 +69,7 @@ func (r *SourceMailersendResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Token. See <a href="https://www.mailersend.com/help/managing-api-tokens">here</a>.`,
 					},
 					"domain_id": schema.StringAttribute{

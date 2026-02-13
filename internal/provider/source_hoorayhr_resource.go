@@ -68,7 +68,8 @@ func (r *SourceHoorayhrResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Parsed as JSON.`,
 					},
 					"hoorayhrpassword": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"hoorayhrusername": schema.StringAttribute{
 						Required: true,

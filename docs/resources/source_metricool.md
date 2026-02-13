@@ -59,7 +59,7 @@ Required:
 
 - `blog_ids` (List of String) Brand IDs
 - `user_id` (String) Account ID
-- `user_token` (String) User token to authenticate API requests. Find it in the Account Settings menu, API section of your Metricool account.
+- `user_token` (String, Sensitive) User token to authenticate API requests. Find it in the Account Settings menu, API section of your Metricool account.
 
 Optional:
 

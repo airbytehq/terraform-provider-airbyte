@@ -59,9 +59,9 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
 
 Required:
 
-- `access_key` (String) The Access Key ID of the AWS IAM Role to use for pulling messages
+- `access_key` (String, Sensitive) The Access Key ID of the AWS IAM Role to use for pulling messages
 - `queue_url` (String) URL of the SQS Queue
-- `secret_key` (String) The Secret Key of the AWS IAM Role to use for pulling messages
+- `secret_key` (String, Sensitive) The Secret Key of the AWS IAM Role to use for pulling messages
 
 Optional:
 

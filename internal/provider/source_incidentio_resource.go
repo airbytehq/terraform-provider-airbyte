@@ -69,6 +69,7 @@ func (r *SourceIncidentIoResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://app.incident.io/settings/api-keys`,
 					},
 				},

@@ -55,9 +55,9 @@ resource "airbyte_source_free_agent_connector" "my_source_freeagentconnector" {
 
 Required:
 
-- `client_id` (String)
-- `client_refresh_token_2` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token_2` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 
 Optional:
 

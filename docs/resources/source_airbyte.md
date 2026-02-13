@@ -55,7 +55,7 @@ resource "airbyte_source_airbyte" "my_source_airbyte" {
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

@@ -20,6 +20,7 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     client_secret         = "...my_client_secret..."
     force_use_bulk_api    = true
     is_sandbox            = false
+    lookback_window       = "PT10M"
     refresh_token         = "...my_refresh_token..."
     start_date            = "2021-07-25"
     stream_slice_step     = "PT12H"
@@ -64,14 +65,15 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
 Required:
 
 - `client_id` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
-- `client_secret` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
-- `refresh_token` (String) Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
+- `client_secret` (String, Sensitive) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
+- `refresh_token` (String, Sensitive) Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `force_use_bulk_api` (Boolean) Toggle to use Bulk API (this might cause empty fields for some streams). Default: false
 - `is_sandbox` (Boolean) Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>. Default: false
+- `lookback_window` (String) The duration (ISO8601 duration) to re-read data from the source when running incremental syncs. This compensates for records that may not be immediately available when querying the Salesforce API due to eventual consistency delays. The connector will re-query this amount of time before the last cursor position on each sync. Increase this value if you observe missing records in your destination. See <a href="https://docs.airbyte.com/integrations/sources/salesforce#limitations--troubleshooting">Limitations & Troubleshooting</a> for details. Default: "PT10M"
 - `start_date` (String) Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
 - `stream_slice_step` (String) The size of the time window (ISO8601 duration) to slice requests. Default: "P30D"
 - `streams_criteria` (Attributes List) Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector. (see [below for nested schema](#nestedatt--configuration--streams_criteria))

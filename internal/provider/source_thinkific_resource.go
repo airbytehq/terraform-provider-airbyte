@@ -69,6 +69,7 @@ func (r *SourceThinkificResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Thinkific API key for authentication.`,
 					},
 					"subdomain": schema.StringAttribute{

@@ -74,7 +74,8 @@ func (r *SourceTestrailResource) Schema(ctx context.Context, req resource.Schema
 						Description: `The unique domain name for accessing testrail`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -70,7 +70,8 @@ func (r *SourceLeadfeederResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Parsed as JSON.`,
 					},
 					"api_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

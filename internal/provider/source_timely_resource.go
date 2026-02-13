@@ -75,6 +75,7 @@ func (r *SourceTimelyResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"bearer_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Bearer Token for your Timely account`,
 					},
 					"start_date": schema.StringAttribute{

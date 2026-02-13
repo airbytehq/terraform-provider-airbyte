@@ -71,6 +71,7 @@ func (r *SourceSolarwindsServiceDeskResource) Schema(ctx context.Context, req re
 					},
 					"api_key_2": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Refer to ` + "`" + `https://documentation.solarwinds.com/en/success_center/swsd/content/completeguidetoswsd/token-authentication-for-api-integration.htm#link4` + "`" + ``,
 					},
 					"start_date": schema.StringAttribute{

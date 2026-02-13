@@ -69,10 +69,12 @@ func (r *SourceSharepointListsEnterpriseResource) Schema(ctx context.Context, re
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Azure AD Application (Client) ID`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Azure AD Application Client Secret`,
 					},
 					"site_id": schema.StringAttribute{

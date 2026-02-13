@@ -69,6 +69,7 @@ func (r *SourceEventzillaResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"x_api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Generate it by creating a new application within your Eventzilla account settings under Settings > App Management.`,
 					},
 				},

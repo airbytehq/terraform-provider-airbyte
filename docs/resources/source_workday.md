@@ -65,7 +65,7 @@ Required:
 - `credentials` (Attributes) Credentials for connecting to the Workday (RAAS) API. (see [below for nested schema](#nestedatt--configuration--credentials))
 - `host` (String)
 - `report_ids` (Attributes List) Report IDs can be found by clicking the three dots on the right side of the report > Web Service > View URLs > in JSON url copy everything between Workday tenant/ and ?format=json. (see [below for nested schema](#nestedatt--configuration--report_ids))
-- `tenant_id` (String)
+- `tenant_id` (String, Sensitive)
 
 Optional:
 
@@ -77,7 +77,7 @@ Optional:
 
 Required:
 
-- `password` (String)
+- `password` (String, Sensitive)
 - `username` (String)
 
 

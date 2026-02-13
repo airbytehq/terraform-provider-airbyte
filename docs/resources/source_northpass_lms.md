@@ -51,7 +51,7 @@ resource "airbyte_source_northpass_lms" "my_source_northpasslms" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

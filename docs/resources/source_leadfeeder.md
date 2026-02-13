@@ -52,7 +52,7 @@ resource "airbyte_source_leadfeeder" "my_source_leadfeeder" {
 
 Required:
 
-- `api_token` (String)
+- `api_token` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

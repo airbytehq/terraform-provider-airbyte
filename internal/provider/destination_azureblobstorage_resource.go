@@ -73,6 +73,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 					},
 					"azure_blob_storage_account_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The Azure Blob Storage account key. If you set this value, you must not set the "Shared Access Signature", "Azure Tenant ID", "Azure Client ID", or "Azure Client Secret" fields.`,
 					},
 					"azure_blob_storage_account_name": schema.StringAttribute{
@@ -99,6 +100,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 					},
 					"azure_client_secret": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The Azure Active Directory (Entra ID) client secret. Required for Entra ID authentication.`,
 					},
 					"azure_tenant_id": schema.StringAttribute{
@@ -185,6 +187,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 					},
 					"shared_access_signature": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the "Azure Blob Storage Account Key", "Azure Tenant ID", "Azure Client ID", or "Azure Client Secret" fields.`,
 					},
 				},

@@ -110,6 +110,7 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 									},
 									"oauth2_private_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The private portion of the certificate with which OAuth2 was setup. ( created with openssl req -new -x509 -newkey rsa:4096 -keyout private.pem -sigopt rsa_padding_mode:pss -sha256 -sigopt rsa_pss_saltlen:64 -out public.pem -nodes -days 365 )`,
 									},
 								},
@@ -142,6 +143,7 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The password associated with the username.`,
 									},
 								},
@@ -178,6 +180,7 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The consumer secret used for token-based authentication. This is generated in NetSuite when creating an integration record.`,
 									},
 									"token_id": schema.StringAttribute{
@@ -186,6 +189,7 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 									},
 									"token_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token secret used for token-based authentication. This is generated in NetSuite when creating a token-based role.Ensure to keep this value secure.`,
 									},
 								},
@@ -336,6 +340,7 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -357,6 +362,7 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 									},
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{

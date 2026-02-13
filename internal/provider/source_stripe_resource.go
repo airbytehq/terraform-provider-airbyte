@@ -72,10 +72,11 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"call_rate_limit": schema.Int64Attribute{
 						Optional:    true,
-						Description: `The number of API calls per second that you allow connector to make. This value can not be bigger than real API call rate limit (https://stripe.com/docs/rate-limits). If not specified the default maximum is 25 and 100 calls per second for test and production tokens respectively.`,
+						Description: `The number of API calls per second that you allow connector to make. This value can not be bigger than real API call rate limit (https://stripe.com/docs/rate-limits). If not specified the default maximum is 25 calls per second for test/sandbox tokens and 100 for production tokens.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).`,
 					},
 					"lookback_window_days": schema.Int64Attribute{
@@ -87,17 +88,17 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 					"num_workers": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     int64default.StaticInt64(10),
-						Description: `The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account. Default: 10`,
+						Default:     int64default.StaticInt64(25),
+						Description: `The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account. Default: 25`,
 						Validators: []validator.Int64{
-							int64validator.Between(1, 20),
+							int64validator.Between(2, 100),
 						},
 					},
 					"slice_range": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     int64default.StaticInt64(365),
-						Description: `The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted. Default: 365`,
+						Default:     int64default.StaticInt64(30),
+						Description: `The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted. Default: 30`,
 						Validators: []validator.Int64{
 							int64validator.AtLeast(1),
 						},

@@ -53,7 +53,7 @@ resource "airbyte_source_illumina_basespace" "my_source_illuminabasespace" {
 
 Required:
 
-- `access_token` (String) BaseSpace access token. Instructions for obtaining your access token can be found in the BaseSpace Developer Documentation.
+- `access_token` (String, Sensitive) BaseSpace access token. Instructions for obtaining your access token can be found in the BaseSpace Developer Documentation.
 - `domain` (String) Domain name of the BaseSpace instance (e.g., euw2.sh.basespace.illumina.com)
 
 Optional:

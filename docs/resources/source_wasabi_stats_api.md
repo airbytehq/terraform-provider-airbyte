@@ -52,7 +52,7 @@ resource "airbyte_source_wasabi_stats_api" "my_source_wasabistatsapi" {
 
 Required:
 
-- `api_key` (String) The API key format is `AccessKey:SecretKey`
+- `api_key` (String, Sensitive) The API key format is `AccessKey:SecretKey`
 - `start_date` (String)
 
 Optional:

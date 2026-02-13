@@ -52,8 +52,8 @@ resource "airbyte_source_fullstory" "my_source_fullstory" {
 
 Required:
 
-- `api_key` (String) API Key for the fullstory.com API.
-- `uid` (String) User ID for the fullstory.com API.
+- `api_key` (String, Sensitive) API Key for the fullstory.com API.
+- `uid` (String, Sensitive) User ID for the fullstory.com API.
 
 Optional:
 

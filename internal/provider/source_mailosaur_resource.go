@@ -69,6 +69,7 @@ func (r *SourceMailosaurResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Enter your api key here`,
 					},
 					"username": schema.StringAttribute{

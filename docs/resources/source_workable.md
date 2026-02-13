@@ -54,7 +54,7 @@ resource "airbyte_source_workable" "my_source_workable" {
 Required:
 
 - `account_subdomain` (String) Your Workable account subdomain, e.g. https://your_account_subdomain.workable.com.
-- `api_key` (String) Your Workable API Key. See <a href="https://workable.readme.io/reference/generate-an-access-token">here</a>.
+- `api_key` (String, Sensitive) Your Workable API Key. See <a href="https://workable.readme.io/reference/generate-an-access-token">here</a>.
 - `start_date` (String) Get data that was created since this date (format: YYYYMMDDTHHMMSSZ).
 
 Optional:

@@ -61,7 +61,7 @@ resource "airbyte_source_harvest" "my_source_harvest" {
 
 Required:
 
-- `account_id` (String) Harvest account ID. Required for all Harvest requests in pair with Personal Access Token
+- `account_id` (String, Sensitive) Harvest account ID. Required for all Harvest requests in pair with Personal Access Token
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
@@ -84,8 +84,8 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Harvest developer application.
-- `client_secret` (String) The Client Secret of your Harvest developer application.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
+- `client_secret` (String, Sensitive) The Client Secret of your Harvest developer application.
+- `refresh_token` (String, Sensitive) Refresh Token to renew the expired Access Token.
 
 Optional:
 
@@ -97,7 +97,7 @@ Optional:
 
 Required:
 
-- `api_token` (String) Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
+- `api_token` (String, Sensitive) Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
 
 Optional:
 

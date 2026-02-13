@@ -52,7 +52,7 @@ resource "airbyte_source_copper" "my_source_copper" {
 
 Required:
 
-- `api_key` (String) Copper API key
+- `api_key` (String, Sensitive) Copper API key
 - `user_email` (String) user email used to login in to Copper
 
 Optional:

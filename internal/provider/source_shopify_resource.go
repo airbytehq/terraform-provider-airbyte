@@ -88,6 +88,7 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								Attributes: map[string]schema.Attribute{
 									"api_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
 								},
@@ -103,14 +104,17 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client ID of the Shopify developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of the Shopify developer application.`,
 									},
 								},

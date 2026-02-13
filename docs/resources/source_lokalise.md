@@ -52,7 +52,7 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
 
 Required:
 
-- `api_key` (String) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
+- `api_key` (String, Sensitive) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
 - `project_id` (String) Lokalise project ID. Available at Project Settings > General.
 
 Optional:

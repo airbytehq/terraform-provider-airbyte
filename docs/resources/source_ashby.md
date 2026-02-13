@@ -52,7 +52,7 @@ resource "airbyte_source_ashby" "my_source_ashby" {
 
 Required:
 
-- `api_key` (String) The Ashby API Key, see <a href=\"https://developers.ashbyhq.com/reference/authentication\">doc</a> here.
+- `api_key` (String, Sensitive) The Ashby API Key, see <a href=\"https://developers.ashbyhq.com/reference/authentication\">doc</a> here.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

@@ -55,9 +55,9 @@ resource "airbyte_source_zoho_invoice" "my_source_zohoinvoice" {
 
 Required:
 
-- `client_id` (String)
-- `client_refresh_token` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `region` (String) must be one of ["com", "eu", "in", "com.cn", "com.au", "jp", "sa", "ca"]
 
 Optional:

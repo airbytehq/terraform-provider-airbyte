@@ -73,6 +73,7 @@ func (r *SourceFlexmailResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"personal_access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `A personal access token for API authentication. Manage your tokens in Flexmail under Settings > API > Personal access tokens.`,
 					},
 				},

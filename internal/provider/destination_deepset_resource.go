@@ -70,6 +70,7 @@ func (r *DestinationDeepsetResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your deepset cloud API key`,
 					},
 					"base_url": schema.StringAttribute{

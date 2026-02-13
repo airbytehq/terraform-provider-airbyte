@@ -54,7 +54,7 @@ resource "airbyte_source_firebase_realtime_database" "my_source_firebaserealtime
 Required:
 
 - `database_name` (String) Database name (This will be part of the url pointing to the database, https://<database_name>.firebaseio.com/)
-- `google_application_credentials` (String) Cert credentials in JSON format of Service Account with Firebase Realtime Database Viewer role. (see, https://firebase.google.com/docs/projects/iam/roles-predefined-product#realtime-database)
+- `google_application_credentials` (String, Sensitive) Cert credentials in JSON format of Service Account with Firebase Realtime Database Viewer role. (see, https://firebase.google.com/docs/projects/iam/roles-predefined-product#realtime-database)
 
 Optional:
 

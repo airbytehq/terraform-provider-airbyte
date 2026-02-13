@@ -72,6 +72,7 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"country": schema.StringAttribute{

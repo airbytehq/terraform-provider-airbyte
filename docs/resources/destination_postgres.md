@@ -91,7 +91,7 @@ Optional:
 - `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
 - `drop_cascade` (Boolean) Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `raw_data_schema` (String) Airbyte will use this schema for various internal tables. In legacy raw tables mode, the raw tables will be stored in this schema. Defaults to "airbyte_internal".
 - `schema` (String) The default schema tables are written. If not specified otherwise, the "public" schema will be used. Default: "public"
 - `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the connection modes.
@@ -159,12 +159,12 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 - `mode` (String) Default: "verify-ca"; must be "verify-ca"
 
 
@@ -173,14 +173,14 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
+- `ca_certificate` (String, Sensitive) CA certificate
+- `client_certificate` (String, Sensitive) Client certificate
+- `client_key` (String, Sensitive) Client key
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 - `mode` (String) Default: "verify-full"; must be "verify-full"
 
 
@@ -210,7 +210,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -224,7 +224,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 

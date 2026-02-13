@@ -52,7 +52,7 @@ resource "airbyte_source_close_com" "my_source_closecom" {
 
 Required:
 
-- `api_key` (String) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
+- `api_key` (String, Sensitive) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
 
 Optional:
 

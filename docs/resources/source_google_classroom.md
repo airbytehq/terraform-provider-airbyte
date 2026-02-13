@@ -53,9 +53,9 @@ resource "airbyte_source_google_classroom" "my_source_googleclassroom" {
 
 Required:
 
-- `client_id` (String)
-- `client_refresh_token` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 
 Optional:
 

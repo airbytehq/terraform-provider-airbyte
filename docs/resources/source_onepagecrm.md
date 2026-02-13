@@ -57,7 +57,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String) Enter your API Key of your API app
+- `password` (String, Sensitive) Enter your API Key of your API app
 
 
 <a id="nestedatt--resource_allocation"></a>

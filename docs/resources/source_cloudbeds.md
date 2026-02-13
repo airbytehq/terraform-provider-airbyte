@@ -51,7 +51,7 @@ resource "airbyte_source_cloudbeds" "my_source_cloudbeds" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

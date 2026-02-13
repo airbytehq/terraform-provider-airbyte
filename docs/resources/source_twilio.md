@@ -54,8 +54,8 @@ resource "airbyte_source_twilio" "my_source_twilio" {
 
 Required:
 
-- `account_sid` (String) Twilio account SID
-- `auth_token` (String) Twilio Auth Token.
+- `account_sid` (String, Sensitive) Twilio account SID
+- `auth_token` (String, Sensitive) Twilio Auth Token.
 - `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

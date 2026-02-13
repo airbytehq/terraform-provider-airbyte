@@ -54,7 +54,7 @@ resource "airbyte_source_nexiopay" "my_source_nexiopay" {
 
 Required:
 
-- `api_key` (String) Your Nexio API key (password). You can find it in the Nexio Dashboard under Settings > User Management. Select the API user and copy the API key.
+- `api_key` (String, Sensitive) Your Nexio API key (password). You can find it in the Nexio Dashboard under Settings > User Management. Select the API user and copy the API key.
 - `start_date` (String)
 - `username` (String) Your Nexio API username. You can find it in the Nexio Dashboard under Settings > User Management. Select the API user and copy the username.
 

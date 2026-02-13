@@ -53,7 +53,7 @@ resource "airbyte_source_clockify" "my_source_clockify" {
 
 Required:
 
-- `api_key` (String) You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.
+- `api_key` (String, Sensitive) You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.
 - `workspace_id` (String) WorkSpace Id
 
 Optional:

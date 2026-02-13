@@ -54,7 +54,7 @@ resource "airbyte_source_recharge" "my_source_recharge" {
 
 Required:
 
-- `access_token` (String) The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
+- `access_token` (String, Sensitive) The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
 - `start_date` (String) The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

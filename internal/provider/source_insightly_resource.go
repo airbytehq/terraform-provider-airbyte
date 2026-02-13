@@ -78,6 +78,7 @@ func (r *SourceInsightlyResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"token": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Your Insightly API token.`,
 					},
 				},

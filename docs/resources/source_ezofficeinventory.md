@@ -53,7 +53,7 @@ resource "airbyte_source_ezofficeinventory" "my_source_ezofficeinventory" {
 
 Required:
 
-- `api_key` (String) Your EZOfficeInventory Access Token. API Access is disabled by default. Enable API Access in Settings > Integrations > API Integration and click on Update to generate a new access token
+- `api_key` (String, Sensitive) Your EZOfficeInventory Access Token. API Access is disabled by default. Enable API Access in Settings > Integrations > API Integration and click on Update to generate a new access token
 - `start_date` (String) Earliest date you want to sync historical streams (inventory_histories, asset_histories, asset_stock_histories) from
 - `subdomain` (String) The company name used in signup, also visible in the URL when logged in.
 

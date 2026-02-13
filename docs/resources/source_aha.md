@@ -52,7 +52,7 @@ resource "airbyte_source_aha" "my_source_aha" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 - `url` (String) URL
 
 Optional:

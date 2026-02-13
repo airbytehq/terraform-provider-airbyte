@@ -70,7 +70,8 @@ func (r *SourceMuxResource) Schema(ctx context.Context, req resource.SchemaReque
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"playback_id": schema.StringAttribute{
 						Optional:    true,

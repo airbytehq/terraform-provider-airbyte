@@ -107,10 +107,10 @@ Optional:
 
 Required:
 
-- `access_token` (String) Access Token
-- `client_id` (String) Client ID
-- `client_secret` (String) Client Secret
-- `refresh_token` (String) Access Token
+- `access_token` (String, Sensitive) Access Token
+- `client_id` (String, Sensitive) Client ID
+- `client_secret` (String, Sensitive) Client Secret
+- `refresh_token` (String, Sensitive) Access Token
 
 
 <a id="nestedatt--configuration--credentials--service_account_authentication"></a>
@@ -118,7 +118,7 @@ Required:
 
 Required:
 
-- `service_account` (String) Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
+- `service_account` (String, Sensitive) Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
 
 
 
@@ -251,7 +251,7 @@ Optional:
 
 Optional:
 
-- `api_key` (String) The API key to use matching the environment. Default: ""
+- `api_key` (String, Sensitive) The API key to use matching the environment. Default: ""
 - `api_url` (String) The URL of the unstructured API to use. Default: "https://api.unstructured.io"
 - `parameters` (Attributes List) List of parameters send to the API (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing--via_api--parameters))
 

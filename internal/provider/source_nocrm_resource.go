@@ -69,6 +69,7 @@ func (r *SourceNocrmResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Generate it from the admin section of your noCRM.io account.`,
 					},
 					"subdomain": schema.StringAttribute{

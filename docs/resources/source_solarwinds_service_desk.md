@@ -52,7 +52,7 @@ resource "airbyte_source_solarwinds_service_desk" "my_source_solarwindsservicede
 
 Required:
 
-- `api_key_2` (String) Refer to `https://documentation.solarwinds.com/en/success_center/swsd/content/completeguidetoswsd/token-authentication-for-api-integration.htm#link4`
+- `api_key_2` (String, Sensitive) Refer to `https://documentation.solarwinds.com/en/success_center/swsd/content/completeguidetoswsd/token-authentication-for-api-integration.htm#link4`
 - `start_date` (String)
 
 Optional:

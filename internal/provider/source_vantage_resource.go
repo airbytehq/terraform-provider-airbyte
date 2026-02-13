@@ -64,6 +64,7 @@ func (r *SourceVantageResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.`,
 					},
 					"additional_properties": schema.StringAttribute{

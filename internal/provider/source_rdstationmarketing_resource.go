@@ -78,14 +78,17 @@ func (r *SourceRdStationMarketingResource) Schema(ctx context.Context, req resou
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your RD Station developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your RD Station developer application`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining the new access token.`,
 									},
 								},

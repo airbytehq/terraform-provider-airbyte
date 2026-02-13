@@ -67,6 +67,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The AWS Access Key ID with permissions for S3 and Glue operations.`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -121,6 +122,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Optional token for authentication with the Nessie server.`,
 									},
 									"additional_properties": schema.StringAttribute{
@@ -180,10 +182,12 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The OAuth Client ID for authenticating with the Polaris server.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The OAuth Client Secret for authenticating with the Polaris server.`,
 									},
 									"namespace": schema.StringAttribute{
@@ -312,6 +316,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 					},
 					"secret_access_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The AWS Secret Access Key paired with the Access Key ID for AWS authentication.`,
 					},
 					"warehouse_location": schema.StringAttribute{

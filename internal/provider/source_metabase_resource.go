@@ -78,10 +78,12 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"session_token": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 						MarkdownDescription: `To generate your session token, you need to run the following command: ` + "```" + ` curl -X POST \` + "\n" +
 							`  -H "Content-Type: application/json" \` + "\n" +
 							`  -d '{"username": "person@metabase.com", "password": "fakepassword"}' \` + "\n" +

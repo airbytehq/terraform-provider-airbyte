@@ -51,7 +51,7 @@ resource "airbyte_source_invoiced" "my_source_invoiced" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://invoiced.com/account
+- `api_key` (String, Sensitive) API key to use. Find it at https://invoiced.com/account
 
 Optional:
 

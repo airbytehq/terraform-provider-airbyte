@@ -82,9 +82,9 @@ Optional:
 
 Required:
 
-- `access_token` (String) Long-term Authorized Access Token.
-- `app_id` (String) The Developer Application App ID.
-- `secret` (String) The Developer Application Secret.
+- `access_token` (String, Sensitive) Long-term Authorized Access Token.
+- `app_id` (String, Sensitive) The Developer Application App ID.
+- `secret` (String, Sensitive) The Developer Application Secret.
 
 Optional:
 
@@ -96,7 +96,7 @@ Optional:
 
 Required:
 
-- `access_token` (String) The long-term authorized access token.
+- `access_token` (String, Sensitive) The long-term authorized access token.
 - `advertiser_id` (String) The Advertiser ID which generated for the developer's Sandbox application.
 
 

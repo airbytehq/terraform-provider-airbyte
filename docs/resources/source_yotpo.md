@@ -54,7 +54,7 @@ resource "airbyte_source_yotpo" "my_source_yotpo" {
 
 Required:
 
-- `access_token` (String) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
+- `access_token` (String, Sensitive) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
 - `app_key` (String) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
 - `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 

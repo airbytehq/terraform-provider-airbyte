@@ -51,7 +51,7 @@ resource "airbyte_source_vantage" "my_source_vantage" {
 
 Required:
 
-- `access_token` (String) Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
+- `access_token` (String, Sensitive) Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
 
 Optional:
 

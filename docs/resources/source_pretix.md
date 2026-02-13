@@ -51,7 +51,7 @@ resource "airbyte_source_pretix" "my_source_pretix" {
 
 Required:
 
-- `api_token` (String) API token to use. Obtain it from the pretix web interface by creating a new token under your team settings.
+- `api_token` (String, Sensitive) API token to use. Obtain it from the pretix web interface by creating a new token under your team settings.
 
 Optional:
 

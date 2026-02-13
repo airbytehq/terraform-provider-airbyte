@@ -55,8 +55,8 @@ resource "airbyte_source_plaid" "my_source_plaid" {
 
 Required:
 
-- `access_token` (String) The end-user's Link access token.
-- `api_key` (String) The Plaid API key to use to hit the API.
+- `access_token` (String, Sensitive) The end-user's Link access token.
+- `api_key` (String, Sensitive) The Plaid API key to use to hit the API.
 - `client_id` (String) The Plaid client id.
 - `plaid_env` (String) The Plaid environment. must be one of ["sandbox", "development", "production"]
 

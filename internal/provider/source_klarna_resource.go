@@ -72,6 +72,7 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)`,
 					},
 					"playground": schema.BoolAttribute{

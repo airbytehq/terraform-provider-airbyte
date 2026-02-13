@@ -71,6 +71,7 @@ func (r *SourceDelightedResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `A Delighted API key.`,
 					},
 					"since": schema.StringAttribute{

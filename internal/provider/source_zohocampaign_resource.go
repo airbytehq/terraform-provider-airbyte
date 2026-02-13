@@ -70,13 +70,16 @@ func (r *SourceZohoCampaignResource) Schema(ctx context.Context, req resource.Sc
 						Description: `Parsed as JSON.`,
 					},
 					"client_id_2": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret_2": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"data_center": schema.StringAttribute{
 						Required:    true,

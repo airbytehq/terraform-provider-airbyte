@@ -52,7 +52,7 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
 
 Required:
 
-- `credentials_json` (String) The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
+- `credentials_json` (String, Sensitive) The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
 - `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
 
 Optional:

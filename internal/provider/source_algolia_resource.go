@@ -71,7 +71,8 @@ func (r *SourceAlgoliaResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"application_id": schema.StringAttribute{
 						Required:    true,

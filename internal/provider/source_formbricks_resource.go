@@ -69,6 +69,7 @@ func (r *SourceFormbricksResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. You can generate and find it in your Postman account settings.`,
 					},
 				},

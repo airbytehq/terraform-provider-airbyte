@@ -102,10 +102,10 @@ Optional:
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
-- `refresh_token` (String) Refresh Token of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft OneDrive user
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
+- `refresh_token` (String, Sensitive) Refresh Token of your Microsoft developer application
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft OneDrive user
 
 
 <a id="nestedatt--configuration--credentials--service_key_authentication"></a>
@@ -113,10 +113,10 @@ Required:
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft OneDrive user
-- `user_principal_name` (String) Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft OneDrive user
+- `user_principal_name` (String, Sensitive) Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
 
 
 

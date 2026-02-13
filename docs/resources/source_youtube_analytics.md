@@ -69,9 +69,9 @@ Optional:
 
 Required:
 
-- `client_id` (String) The Client ID of your developer application
-- `client_secret` (String) The client secret of your developer application
-- `refresh_token` (String) A refresh token generated using the above client ID and secret
+- `client_id` (String, Sensitive) The Client ID of your developer application
+- `client_secret` (String, Sensitive) The client secret of your developer application
+- `refresh_token` (String, Sensitive) A refresh token generated using the above client ID and secret
 
 Optional:
 

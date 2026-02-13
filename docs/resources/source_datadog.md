@@ -64,8 +64,8 @@ resource "airbyte_source_datadog" "my_source_datadog" {
 
 Required:
 
-- `api_key` (String) Datadog API key
-- `application_key` (String) Datadog application key
+- `api_key` (String, Sensitive) Datadog API key
+- `application_key` (String, Sensitive) Datadog application key
 
 Optional:
 

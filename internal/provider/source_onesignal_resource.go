@@ -74,10 +74,12 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"app_api_key": schema.StringAttribute{
-									Required: true,
+									Required:  true,
+									Sensitive: true,
 								},
 								"app_id": schema.StringAttribute{
-									Required: true,
+									Required:  true,
+									Sensitive: true,
 								},
 								"app_name": schema.StringAttribute{
 									Optional: true,
@@ -99,6 +101,7 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"user_auth_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.`,
 					},
 				},

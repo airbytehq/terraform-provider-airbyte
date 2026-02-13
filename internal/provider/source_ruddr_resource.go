@@ -69,6 +69,7 @@ func (r *SourceRuddrResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use. Generate it in the API Keys section of your Ruddr workspace settings.`,
 					},
 				},

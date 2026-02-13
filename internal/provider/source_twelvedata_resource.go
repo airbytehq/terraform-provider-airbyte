@@ -71,7 +71,8 @@ func (r *SourceTwelveDataResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"country": schema.StringAttribute{
 						Optional:    true,

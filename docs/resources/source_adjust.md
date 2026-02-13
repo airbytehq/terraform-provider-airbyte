@@ -62,7 +62,7 @@ resource "airbyte_source_adjust" "my_source_adjust" {
 
 Required:
 
-- `api_token` (String) Adjust API key, see https://help.adjust.com/en/article/report-service-api-authentication
+- `api_token` (String, Sensitive) Adjust API key, see https://help.adjust.com/en/article/report-service-api-authentication
 - `dimensions` (List of String) Dimensions allow a user to break down metrics into groups using one or several parameters. For example, the number of installs by date, country and network. See https://help.adjust.com/en/article/reports-endpoint#dimensions for more information about the dimensions.
 - `ingest_start` (String) Data ingest start date.
 - `metrics` (List of String) Select at least one metric to query.

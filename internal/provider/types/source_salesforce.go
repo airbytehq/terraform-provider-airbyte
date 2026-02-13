@@ -13,6 +13,7 @@ type SourceSalesforce struct {
 	ClientSecret         types.String         `tfsdk:"client_secret"`
 	ForceUseBulkAPI      types.Bool           `tfsdk:"force_use_bulk_api"`
 	IsSandbox            types.Bool           `tfsdk:"is_sandbox"`
+	LookbackWindow       types.String         `tfsdk:"lookback_window"`
 	RefreshToken         types.String         `tfsdk:"refresh_token"`
 	StartDate            types.String         `tfsdk:"start_date"`
 	StreamSliceStep      types.String         `tfsdk:"stream_slice_step"`

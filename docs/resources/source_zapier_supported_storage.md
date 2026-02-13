@@ -51,7 +51,7 @@ resource "airbyte_source_zapier_supported_storage" "my_source_zapiersupportedsto
 
 Required:
 
-- `secret` (String) Secret key supplied by zapier
+- `secret` (String, Sensitive) Secret key supplied by zapier
 
 Optional:
 

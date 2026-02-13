@@ -58,7 +58,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String)
+- `password` (String, Sensitive)
 - `start_date` (String) Date from when the sync should start
 
 

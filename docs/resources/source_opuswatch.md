@@ -52,7 +52,7 @@ resource "airbyte_source_opuswatch" "my_source_opuswatch" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

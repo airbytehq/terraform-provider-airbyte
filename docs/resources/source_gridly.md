@@ -51,7 +51,7 @@ resource "airbyte_source_gridly" "my_source_gridly" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `grid_id` (String) ID of a grid, or can be ID of a branch
 
 

@@ -67,7 +67,8 @@ func (r *SourceAirbyteHarnessSourceResource) Schema(ctx context.Context, req res
 						Required: true,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"api_url": schema.StringAttribute{
 						Computed:    true,

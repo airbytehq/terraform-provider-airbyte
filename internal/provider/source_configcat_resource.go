@@ -69,6 +69,7 @@ func (r *SourceConfigcatResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.`,
 					},
 					"username": schema.StringAttribute{

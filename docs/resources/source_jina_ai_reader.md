@@ -56,7 +56,7 @@ resource "airbyte_source_jina_ai_reader" "my_source_jinaaireader" {
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `api_key` (String) Your Jina AI API Key. See <a href="https://jina.ai/reader/#apiform">here</a>.
+- `api_key` (String, Sensitive) Your Jina AI API Key. See <a href="https://jina.ai/reader/#apiform">here</a>.
 - `gather_images` (Boolean)
 - `gather_links` (Boolean)
 - `read_prompt` (String) Default: "https://www.google.com"

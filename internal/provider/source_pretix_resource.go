@@ -69,6 +69,7 @@ func (r *SourcePretixResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use. Obtain it from the pretix web interface by creating a new token under your team settings.`,
 					},
 				},

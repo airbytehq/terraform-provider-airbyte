@@ -77,10 +77,12 @@ func (r *SourceDb2Resource) Schema(ctx context.Context, req resource.SchemaReque
 								Attributes: map[string]schema.Attribute{
 									"key_store_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Key Store Password`,
 									},
 									"ssl_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations`,
 									},
 								},
@@ -113,6 +115,7 @@ func (r *SourceDb2Resource) Schema(ctx context.Context, req resource.SchemaReque
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{

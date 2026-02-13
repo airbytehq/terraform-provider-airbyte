@@ -55,9 +55,9 @@ resource "airbyte_source_zoho_books" "my_source_zohobooks" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `refresh_token` (String, Sensitive)
 - `region` (String) The region code for the Zoho Books API, such as 'com', 'eu', 'in', etc. must be one of ["com", "eu", "in", "com.cn", "com.au", "jp", "sa", "ca"]
 - `start_date` (String)
 

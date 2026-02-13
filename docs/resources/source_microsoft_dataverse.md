@@ -55,9 +55,9 @@ resource "airbyte_source_microsoft_dataverse" "my_source_microsoftdataverse" {
 
 Required:
 
-- `client_id` (String) App Registration Client Id
-- `client_secret_value` (String) App Registration Client Secret
-- `tenant_id` (String) Tenant Id of your Microsoft Dataverse Instance
+- `client_id` (String, Sensitive) App Registration Client Id
+- `client_secret_value` (String, Sensitive) App Registration Client Secret
+- `tenant_id` (String, Sensitive) Tenant Id of your Microsoft Dataverse Instance
 - `url` (String) URL to Microsoft Dataverse API
 
 Optional:

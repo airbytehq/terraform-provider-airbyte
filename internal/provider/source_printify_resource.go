@@ -69,6 +69,7 @@ func (r *SourcePrintifyResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Printify API token. Obtain it from your Printify account settings.`,
 					},
 				},

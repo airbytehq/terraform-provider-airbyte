@@ -55,9 +55,9 @@ resource "airbyte_source_zoho_bigin" "my_source_zohobigin" {
 
 Required:
 
-- `client_id` (String)
-- `client_refresh_token` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `module_name` (String)
 
 Optional:

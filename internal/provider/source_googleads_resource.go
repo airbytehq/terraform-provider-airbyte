@@ -89,6 +89,7 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
 								Optional:    true,
+								Sensitive:   true,
 								Description: `The Access Token for making authenticated requests. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"client_id": schema.StringAttribute{
@@ -97,14 +98,17 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"client_secret": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The Client Secret of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"developer_token": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The Developer Token granted by Google to use their APIs. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"refresh_token": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The token used to obtain a new Access Token. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 						},

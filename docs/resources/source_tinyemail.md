@@ -51,7 +51,7 @@ resource "airbyte_source_tinyemail" "my_source_tinyemail" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

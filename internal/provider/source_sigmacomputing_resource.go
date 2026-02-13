@@ -74,16 +74,20 @@ func (r *SourceSigmaComputingResource) Schema(ctx context.Context, req resource.
 						Description: `The base url of your sigma organization`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"oauth_access_token": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The current access token. This field might be overridden by the connector based on the token refresh endpoint response.`,
 					},
 					"oauth_token_expiry_date": schema.StringAttribute{

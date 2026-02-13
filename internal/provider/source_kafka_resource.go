@@ -157,6 +157,7 @@ func (r *SourceKafkaResource) Schema(ctx context.Context, req resource.SchemaReq
 									"schema_registry_password": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
@@ -211,6 +212,7 @@ func (r *SourceKafkaResource) Schema(ctx context.Context, req resource.SchemaReq
 									"sasl_jaas_config": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `The JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""`,
 									},
@@ -234,6 +236,7 @@ func (r *SourceKafkaResource) Schema(ctx context.Context, req resource.SchemaReq
 									"sasl_jaas_config": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `The JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""`,
 									},

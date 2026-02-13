@@ -71,7 +71,8 @@ func (r *SourceShortcutResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Parsed as JSON.`,
 					},
 					"api_key_2": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"query": schema.StringAttribute{
 						Computed:    true,

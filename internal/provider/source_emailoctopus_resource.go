@@ -69,6 +69,7 @@ func (r *SourceEmailoctopusResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.`,
 					},
 				},
