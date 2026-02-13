@@ -165,18 +165,15 @@ jobs:
             - name: Generate Provider ${{ steps.get-version.outputs.resolved-version }} with Speakeasy
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+                  VERSION: ${{ steps.get-version.outputs.resolved-version }}
+                  SKIP_COMPILE: ${{ inputs.dry_run }}
               run: |
-                  VERSION="${{ steps.get-version.outputs.resolved-version }}"
                   if [ -z "$VERSION" ]; then
                       echo "::error::Version resolution returned empty. Cannot proceed without an explicit version."
                       exit 1
                   fi
                   echo "Using version from release drafter: $VERSION"
-                  if [ "${{ inputs.dry_run }}" = "true" ]; then
-                      speakeasy run --skip-compile --set-version="$VERSION"
-                  else
-                      speakeasy run --output console --set-version="$VERSION"
-                  fi
+                  uvx --from=poethepoet poe speakeasy-run
 
             - name: Post-generation patching
               run: uvx --from=poethepoet poe post-generate

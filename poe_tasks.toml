@@ -31,6 +31,21 @@ go mod download
 go generate ./...
 """
 
+[tasks.speakeasy-run]
+help = "Run Speakeasy code generation. Set VERSION env var to pin version, SKIP_COMPILE=true to skip built-in compilation."
+shell = """
+ARGS=""
+if [ -n "$VERSION" ]; then
+    ARGS="$ARGS --set-version=$VERSION"
+fi
+if [ "$SKIP_COMPILE" = "true" ]; then
+    ARGS="$ARGS --skip-compile"
+else
+    ARGS="$ARGS --output console"
+fi
+speakeasy run $ARGS
+"""
+
 [tasks.generate-full]
 help = "Full generation pipeline: clean, generate spec, run Speakeasy, and post-generate."
-sequence = ["clean-generated", "generate-spec", { cmd = "speakeasy run" }, "post-generate"]
+sequence = ["clean-generated", "generate-spec", "speakeasy-run", "post-generate"]
