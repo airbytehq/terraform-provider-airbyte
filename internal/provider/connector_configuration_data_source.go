@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -26,8 +27,8 @@ type ConnectorConfigurationDataSource struct{}
 type ConnectorConfigurationDataSourceModel struct {
 	ConnectorName          types.String `tfsdk:"connector_name"`
 	ConnectorVersion       types.String `tfsdk:"connector_version"`
-	Configuration          types.String `tfsdk:"configuration"`
-	ConfigurationSecrets   types.String `tfsdk:"configuration_secrets"`
+	Configuration        types.Dynamic `tfsdk:"configuration"`
+	ConfigurationSecrets types.Dynamic `tfsdk:"configuration_secrets"`
 	IgnoreErrors           types.Bool   `tfsdk:"ignore_errors"`
 	DefinitionID           types.String `tfsdk:"definition_id"`
 	ConfigurationJSON      types.String `tfsdk:"configuration_json"`
@@ -41,9 +42,8 @@ func (d *ConnectorConfigurationDataSource) Schema(ctx context.Context, req datas
 	resp.Schema = schema.Schema{
 		MarkdownDescription: `Resolves and merges connector configuration for use with airbyte_source or airbyte_destination resources.
 
-This data source resolves a connector name to its definition ID, verifies that the provided configuration
-values are valid JSON, and merges non-sensitive and sensitive configuration into a single JSON blob
-suitable for passing to a resource.
+This data source resolves a connector name to its definition ID and merges non-sensitive and sensitive
+configuration into a single JSON blob suitable for passing to a resource.
 
 Use this data source to get clean Terraform diffs on non-sensitive configuration values while keeping
 secrets hidden in state and plan output.`,
@@ -56,14 +56,14 @@ secrets hidden in state and plan output.`,
 				Optional:            true,
 				MarkdownDescription: "The version of the connector. If not specified, the latest version from the registry is used. Currently unused; reserved for future JSONSchema validation.",
 			},
-			"configuration": schema.StringAttribute{
+			"configuration": schema.DynamicAttribute{
 				Required:            true,
-				MarkdownDescription: "JSON-encoded non-sensitive configuration values. These will be visible in Terraform plan output.",
+				MarkdownDescription: "Non-sensitive configuration values as an HCL object. These will be visible in Terraform plan output.",
 			},
-			"configuration_secrets": schema.StringAttribute{
+			"configuration_secrets": schema.DynamicAttribute{
 				Optional:            true,
 				Sensitive:           true,
-				MarkdownDescription: "JSON-encoded sensitive configuration values (API keys, passwords, etc.). These are hidden in Terraform plan output. Keys in this map are merged with (and override) keys in `configuration`.",
+				MarkdownDescription: "Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are merged with (and override) keys in `configuration`.",
 			},
 			"ignore_errors": schema.BoolAttribute{
 				Optional:            true,
@@ -195,9 +195,15 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	}
 	data.DefinitionID = types.StringValue(definitionID)
 
-	configJSON := data.Configuration.ValueString()
-	if !isValidJSONObject(configJSON) {
-		addDiagnostic(resp, ignoreErrors, "Invalid configuration JSON", fmt.Sprintf("The `configuration` attribute must be a valid JSON object (not an array or primitive), got: %s", configJSON))
+	configJSON, err := dynamicToJSON(data.Configuration)
+	if err != nil {
+		addDiagnostic(resp, ignoreErrors, "Invalid configuration", err.Error())
+		if !ignoreErrors {
+			return
+		}
+	}
+	if configJSON != "" && !isValidJSONObject(configJSON) {
+		addDiagnostic(resp, ignoreErrors, "Invalid configuration", "The `configuration` attribute must be an object (not an array or primitive).")
 		if !ignoreErrors {
 			return
 		}
@@ -205,9 +211,15 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 
 	var secretsJSON string
 	if !data.ConfigurationSecrets.IsNull() && !data.ConfigurationSecrets.IsUnknown() {
-		secretsJSON = data.ConfigurationSecrets.ValueString()
-		if !isValidJSONObject(secretsJSON) {
-			addDiagnostic(resp, ignoreErrors, "Invalid configuration_secrets JSON", "The `configuration_secrets` attribute must be a valid JSON object (not an array or primitive).")
+		secretsJSON, err = dynamicToJSON(data.ConfigurationSecrets)
+		if err != nil {
+			addDiagnostic(resp, ignoreErrors, "Invalid configuration_secrets", err.Error())
+			if !ignoreErrors {
+				return
+			}
+		}
+		if secretsJSON != "" && !isValidJSONObject(secretsJSON) {
+			addDiagnostic(resp, ignoreErrors, "Invalid configuration_secrets", "The `configuration_secrets` attribute must be an object (not an array or primitive).")
 			if !ignoreErrors {
 				return
 			}
@@ -226,6 +238,89 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	data.ConfigurationJSON = types.StringValue(merged)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func dynamicToJSON(val types.Dynamic) (string, error) {
+	if val.IsNull() || val.IsUnknown() {
+		return "", nil
+	}
+	underlying := val.UnderlyingValue()
+	if strVal, ok := underlying.(types.String); ok {
+		return strVal.ValueString(), nil
+	}
+	goVal, err := attrValueToGo(underlying)
+	if err != nil {
+		return "", err
+	}
+	b, err := json.Marshal(goVal)
+	if err != nil {
+		return "", fmt.Errorf("failed to marshal to JSON: %w", err)
+	}
+	return string(b), nil
+}
+
+func attrValueToGo(val attr.Value) (interface{}, error) {
+	if val.IsNull() || val.IsUnknown() {
+		return nil, nil
+	}
+	switch v := val.(type) {
+	case types.String:
+		return v.ValueString(), nil
+	case types.Bool:
+		return v.ValueBool(), nil
+	case types.Number:
+		bf := v.ValueBigFloat()
+		if bf.IsInt() {
+			i, _ := bf.Int64()
+			return i, nil
+		}
+		f, _ := bf.Float64()
+		return f, nil
+	case types.Object:
+		result := make(map[string]interface{})
+		for k, attrVal := range v.Attributes() {
+			goVal, err := attrValueToGo(attrVal)
+			if err != nil {
+				return nil, err
+			}
+			result[k] = goVal
+		}
+		return result, nil
+	case types.Map:
+		result := make(map[string]interface{})
+		for k, attrVal := range v.Elements() {
+			goVal, err := attrValueToGo(attrVal)
+			if err != nil {
+				return nil, err
+			}
+			result[k] = goVal
+		}
+		return result, nil
+	case types.List:
+		elements := v.Elements()
+		result := make([]interface{}, len(elements))
+		for i, attrVal := range elements {
+			goVal, err := attrValueToGo(attrVal)
+			if err != nil {
+				return nil, err
+			}
+			result[i] = goVal
+		}
+		return result, nil
+	case types.Tuple:
+		elements := v.Elements()
+		result := make([]interface{}, len(elements))
+		for i, attrVal := range elements {
+			goVal, err := attrValueToGo(attrVal)
+			if err != nil {
+				return nil, err
+			}
+			result[i] = goVal
+		}
+		return result, nil
+	default:
+		return nil, fmt.Errorf("unsupported value type: %T", val)
+	}
 }
 
 func isValidJSONObject(s string) bool {

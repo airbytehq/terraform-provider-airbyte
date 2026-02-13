@@ -52,14 +52,14 @@ resource "airbyte_source" "my_source" {
   workspace_id  = var.workspace_id
   definition_id = "5e6175e5-68e1-4c17-bff9-56103bbb0d80"
 
-  configuration = {
+  configuration = jsonencode({
     client_id               = var.pardot_client_id
     client_secret           = var.pardot_client_secret
     refresh_token           = var.pardot_refresh_token
     pardot_business_unit_id = "0Uv5g0000008OT2CAM"
     start_date              = "2024-07-11T00:00:00Z"
     is_sandbox              = false
-  }
+  })
 }
 ```
 
@@ -106,15 +106,15 @@ The `airbyte_connector_configuration` data source resolves a connector name (e.g
 ```hcl
 data "airbyte_connector_configuration" "my_postgres" {
   connector_name = "source-postgres"
-  configuration  = jsonencode({
+  configuration = {
     host     = "db.example.com"
     port     = 5432
     database = "mydb"
     username = "readonly"
-  })
-  configuration_secrets = jsonencode({
+  }
+  configuration_secrets = {
     password = var.db_password
-  })
+  }
 }
 
 resource "airbyte_source" "my_source" {
@@ -163,9 +163,9 @@ resource "airbyte_destination" "my_dest" {
   workspace_id  = var.workspace_id
   definition_id = "<BIGQUERY_DEFINITION_ID>"
 
-  configuration = {
+  configuration = jsonencode({
     # Your destination configuration here
-  }
+  })
 }
 ```
 
@@ -193,9 +193,9 @@ resource "airbyte_source" "my_source" {
   workspace_id  = var.workspace_id
   definition_id = "<PARDOT_DEFINITION_ID>"
 
-  configuration = {
+  configuration = jsonencode({
     # Your configuration here
-  }
+  })
 }
 ```
 

@@ -96,10 +96,10 @@ resource "airbyte_connection" "faker_2_to_devnull" {
 
 data "airbyte_connector_configuration" "faker_generic" {
   connector_name = "source-faker"
-  configuration  = jsonencode({
+  configuration = {
     count = 200
     seed  = 99
-  })
+  }
 }
 
 resource "airbyte_source" "faker_via_data_source" {
