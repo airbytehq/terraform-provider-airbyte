@@ -1,0 +1,102 @@
+name: Schema Compare Command
+
+on:
+  workflow_dispatch:
+    inputs:
+      old_ref:
+        description: 'Old git ref to compare (e.g., v0.13.0)'
+        required: true
+        default: 'v0.13.0'
+      new_ref:
+        description: 'New git ref to compare (e.g., main)'
+        required: true
+        default: 'main'
+  repository_dispatch:
+    types: [schema-compare-command]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  schema-compare:
+    name: Compare Terraform Schemas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for checking out different refs
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.7.0'
+          terraform_wrapper: false
+
+      - name: Determine refs
+        id: refs
+        run: |
+          # Use inputs from workflow_dispatch or repository_dispatch
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "old_ref=${{ github.event.inputs.old_ref }}" >> $GITHUB_OUTPUT
+            echo "new_ref=${{ github.event.inputs.new_ref }}" >> $GITHUB_OUTPUT
+          else
+            # repository_dispatch from slash command
+            OLD_REF="${{ github.event.client_payload.slash_command.args.named.old || 'v0.13.0' }}"
+            NEW_REF="${{ github.event.client_payload.slash_command.args.named.new || 'main' }}"
+            echo "old_ref=$OLD_REF" >> $GITHUB_OUTPUT
+            echo "new_ref=$NEW_REF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run schema comparison
+        id: compare
+        run: |
+          echo "Comparing ${{ steps.refs.outputs.old_ref }} -> ${{ steps.refs.outputs.new_ref }}"
+          
+          # Run the comparison script and capture output
+          ./scripts/compare_terraform_schema.sh \
+            "${{ steps.refs.outputs.old_ref }}" \
+            "${{ steps.refs.outputs.new_ref }}" \
+            | tee /tmp/schema-compare-output.txt
+          
+          # Save output for comment
+          {
+            echo 'output<<EOF'
+            cat /tmp/schema-compare-output.txt
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+
+      - name: Post comment on PR (if triggered from slash command)
+        if: github.event_name == 'repository_dispatch' && github.event.client_payload.github.payload.issue.number
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ github.event.client_payload.github.payload.issue.number }}
+          body: |
+            ## Schema Comparison Results
+            
+            Comparing `${{ steps.refs.outputs.old_ref }}` -> `${{ steps.refs.outputs.new_ref }}`
+            
+            <details>
+            <summary>Click to expand full output</summary>
+            
+            ```
+            ${{ steps.compare.outputs.output }}
+            ```
+            
+            </details>
+            
+            [View workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+      - name: Upload schema files as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: schema-comparison
+          path: /tmp/terraform-schema-compare/
+          retention-days: 7
