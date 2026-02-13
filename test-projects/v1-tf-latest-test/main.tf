@@ -94,7 +94,7 @@ resource "airbyte_connection" "faker_2_to_devnull" {
 # The data source resolves the connector name to a definition_id and merges
 # non-sensitive + sensitive configuration into a single sensitive JSON blob.
 
-data "airbyte_connector_configuration" "faker_generic" {
+data "airbyte_connector_configuration" "faker_config" {
   connector_name = "source-faker"
   configuration = {
     count = 200
@@ -105,8 +105,8 @@ data "airbyte_connector_configuration" "faker_generic" {
 resource "airbyte_source" "faker_via_data_source" {
   name          = "source-faker-generic-ds"
   workspace_id  = var.workspace_id
-  definition_id = data.airbyte_connector_configuration.faker_generic.definition_id
-  configuration = data.airbyte_connector_configuration.faker_generic.configuration_json
+  definition_id = data.airbyte_connector_configuration.faker_config.definition_id
+  configuration = data.airbyte_connector_configuration.faker_config.configuration_json
 }
 
 # ---------------------------------------------------------------------------

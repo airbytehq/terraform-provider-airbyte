@@ -104,7 +104,7 @@ The generic resource requires a `definition_id` to identify the connector type. 
 The `airbyte_connector_configuration` data source resolves a connector name (e.g. `source-postgres`) to its `definition_id` and lets you split sensitive from non-sensitive configuration for clean Terraform diffs:
 
 ```hcl
-data "airbyte_connector_configuration" "my_postgres" {
+data "airbyte_connector_configuration" "postgres_config" {
   connector_name = "source-postgres"
   configuration = {
     host     = "db.example.com"
@@ -117,11 +117,11 @@ data "airbyte_connector_configuration" "my_postgres" {
   }
 }
 
-resource "airbyte_source" "my_source" {
+resource "airbyte_source" "my_postgres" {
   name          = "My Postgres Source"
   workspace_id  = var.workspace_id
-  definition_id = data.airbyte_connector_configuration.my_postgres.definition_id
-  configuration = data.airbyte_connector_configuration.my_postgres.configuration_json
+  definition_id = data.airbyte_connector_configuration.postgres_config.definition_id
+  configuration = data.airbyte_connector_configuration.postgres_config.configuration_json
 }
 ```
 

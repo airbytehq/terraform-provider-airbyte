@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"strings"
 
-	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -51,7 +50,6 @@ func (r *DestinationResource) MoveState(ctx context.Context) []resource.StateMov
 					DefinitionID:    extractJSONTypesString(rawState, "definition_id"),
 					DestinationType: extractJSONTypesString(rawState, "destination_type"),
 					CreatedAt:       extractJSONInt64(rawState, "created_at"),
-					Configuration:   &tfTypes.DestinationConfiguration{},
 				}
 
 				resp.Diagnostics.Append(resp.TargetState.Set(ctx, targetState)...)
