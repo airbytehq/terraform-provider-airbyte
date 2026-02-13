@@ -36,6 +36,25 @@ export TF_REATTACH_PROVIDERS='...'
 terraform plan
 ```
 
+### Poe Tasks
+
+All build and generation tasks are managed via [Poe the Poet](https://poethepoet.naber.dev/) and defined in [`poe_tasks.toml`](poe_tasks.toml). Run any task with:
+
+```bash
+uvx --from=poethepoet poe <task-name>
+```
+
+| Task | Description | Underlying Command |
+|------|-------------|--------------------|
+| `clean-generated` | Delete generated files, preserving hand-written movestate/helpers | `rm -rf internal/sdk` + `find ... -delete` |
+| `generate-spec` | Generate Terraform OpenAPI spec from Airbyte connector registries | `uv run scripts/generate_terraform_spec.py` |
+| `lint-spec` | Lint the OpenAPI spec for circular references | `speakeasy lint openapi -s generated/api_terraform.yaml` |
+| `generate-code` | Generate Terraform provider code from the OpenAPI spec | `speakeasy run --skip-compile` |
+| `post-generate` | Patch provider registrations and tidy Go modules | `python3 scripts/patch_provider_registrations.py` + `go mod tidy` |
+| `docs-generate` | Generate Terraform provider documentation | `go generate ./...` |
+| `bin-generate` | Build cross-platform provider binaries (Linux amd64 + macOS arm64) | `go build -o dist/...` |
+| `generate-full` | Full pipeline: clean, spec, lint, generate, post-generate | Runs the above in sequence |
+
 ### Configuration Files
 
 | File | Purpose |
