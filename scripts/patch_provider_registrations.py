@@ -43,11 +43,16 @@ def patch_registrations(content: str, marker: str, registrations: list[str]) -> 
         return content
 
     insert_point = brace_idx + 1
-    insert_lines = "\n".join(f"\t\t{reg}," for reg in registrations)
+    new_registrations = [reg for reg in registrations if reg not in content]
+    if not new_registrations:
+        for reg in registrations:
+            print(f"  Skipping {reg} (already registered)")
+        return content
+    insert_lines = "\n".join(f"\t\t{reg}," for reg in new_registrations)
     patched = content[:insert_point] + "\n" + insert_lines + content[insert_point:]
 
     for reg in registrations:
-        if content.count(reg) > 0:
+        if reg in content:
             print(f"  Skipping {reg} (already registered)")
         else:
             print(f"  Added {reg}")

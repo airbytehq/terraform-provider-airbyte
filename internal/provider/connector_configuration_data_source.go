@@ -122,6 +122,10 @@ func searchRegistry(registryURL, dockerName, connectorName string) (string, erro
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("registry %s returned HTTP %d", registryURL, resp.StatusCode)
+	}
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", fmt.Errorf("failed to read registry response: %w", err)
