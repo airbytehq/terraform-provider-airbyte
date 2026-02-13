@@ -56,3 +56,17 @@ actions:
     description: "Use shorter name 'RowFiltering' for Terraform attribute"
     update:
       x-speakeasy-name-override: RowFiltering
+
+  # =============================================================================
+  # Sensitive Field Handling
+  # =============================================================================
+  # Connector specs use `airbyte_secret: true` to mark sensitive fields (API keys,
+  # passwords, tokens, etc.). Speakeasy needs `x-speakeasy-param-sensitive: true`
+  # to generate `Sensitive: true` in the Terraform provider schema, which prevents
+  # secrets from appearing in plan output and CI/CD logs.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/234
+
+  - target: "$.components.schemas..properties.*[?(@.airbyte_secret == true)]"
+    description: "Mark airbyte_secret fields as sensitive for Terraform"
+    update:
+      x-speakeasy-param-sensitive: true
