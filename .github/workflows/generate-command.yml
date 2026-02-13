@@ -159,7 +159,7 @@ jobs:
                       exit 1
                   fi
                   echo "Using version from release drafter: $VERSION"
-                  uvx --from=poethepoet poe speakeasy-run
+                  uvx --from=poethepoet poe generate-code
 
             - name: Post-generation patching
               run: uvx --from=poethepoet poe post-generate

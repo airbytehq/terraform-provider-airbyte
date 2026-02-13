@@ -54,8 +54,8 @@ rm -f lint_output.txt
 echo "Lint passed - no unhandled circular references detected."
 """
 
-[tasks.speakeasy-run]
-help = "Run Speakeasy code generation (always --skip-compile). Set VERSION env var to pin version."
+[tasks.generate-code]
+help = "Generate Terraform provider code from OpenAPI spec (always --skip-compile). Set VERSION env var to pin version."
 shell = """
 ARGS="--skip-compile"
 if [ -n "$VERSION" ]; then
@@ -66,4 +66,4 @@ speakeasy run $ARGS
 
 [tasks.generate-full]
 help = "Full generation pipeline: clean, generate spec, run Speakeasy, and post-generate."
-sequence = ["clean-generated", "generate-spec", "lint-spec", "speakeasy-run", "post-generate"]
+sequence = ["clean-generated", "generate-spec", "lint-spec", "generate-code", "post-generate"]
