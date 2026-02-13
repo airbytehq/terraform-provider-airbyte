@@ -104,7 +104,7 @@ Optional:
 
 Required:
 
-- `password` (String) Enter the password associated with the username.
+- `password` (String, Sensitive) Enter the password associated with the username.
 - `username` (String) Username to use to access the database.
 
 
@@ -113,7 +113,7 @@ Required:
 
 Required:
 
-- `password` (String) Enter the password associated with the username.
+- `password` (String, Sensitive) Enter the password associated with the username.
 - `username` (String) Username to use to access the database.
 
 
@@ -151,7 +151,7 @@ Optional:
 
 Required:
 
-- `ssl_ca_certificate` (String) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-ca.
+- `ssl_ca_certificate` (String, Sensitive) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-ca.
  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
 
 
@@ -160,7 +160,7 @@ Required:
 
 Required:
 
-- `ssl_ca_certificate` (String) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.
+- `ssl_ca_certificate` (String, Sensitive) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.
  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
 
 

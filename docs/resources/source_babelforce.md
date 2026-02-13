@@ -55,8 +55,8 @@ resource "airbyte_source_babelforce" "my_source_babelforce" {
 
 Required:
 
-- `access_key_id` (String) The Babelforce access key ID
-- `access_token` (String) The Babelforce access token
+- `access_key_id` (String, Sensitive) The Babelforce access key ID
+- `access_token` (String, Sensitive) The Babelforce access token
 
 Optional:
 

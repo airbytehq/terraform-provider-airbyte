@@ -67,6 +67,7 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Access token for making authenticated requests.`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -80,14 +81,17 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
 					},
 					"realm_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `A token used when refreshing the access token.`,
 					},
 					"sandbox": schema.BoolAttribute{

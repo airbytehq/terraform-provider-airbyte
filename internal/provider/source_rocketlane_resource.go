@@ -69,6 +69,7 @@ func (r *SourceRocketlaneResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Generate it from the API section in Settings of your Rocketlane account.`,
 					},
 				},

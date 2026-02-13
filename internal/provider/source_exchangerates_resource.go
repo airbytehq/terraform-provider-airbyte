@@ -67,6 +67,7 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.`,
 					},
 					"additional_properties": schema.StringAttribute{

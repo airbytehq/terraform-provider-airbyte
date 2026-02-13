@@ -71,7 +71,8 @@ func (r *SourceEmploymentHeroResource) Schema(ctx context.Context, req resource.
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"employees_configids": schema.ListAttribute{
 						Optional:    true,

@@ -83,18 +83,22 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token`,
 									},
 								},
@@ -109,6 +113,7 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								Attributes: map[string]schema.Attribute{
 									"service_account": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
 									},
 								},
@@ -417,6 +422,7 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 																"api_key": schema.StringAttribute{
 																	Computed:    true,
 																	Optional:    true,
+																	Sensitive:   true,
 																	Default:     stringdefault.StaticString(``),
 																	Description: `The API key to use matching the environment. Default: ""`,
 																},

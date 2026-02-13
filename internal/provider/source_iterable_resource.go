@@ -71,6 +71,7 @@ func (r *SourceIterableResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Iterable API Key. See the <a href=\"https://docs.airbyte.com/integrations/sources/iterable\">docs</a>  for more information on how to obtain this key.`,
 					},
 					"start_date": schema.StringAttribute{

@@ -55,7 +55,7 @@ resource "airbyte_source_toggl" "my_source_toggl" {
 
 Required:
 
-- `api_token` (String) Your API Token. See <a href="https://developers.track.toggl.com/docs/authentication">here</a>. The token is case sensitive.
+- `api_token` (String, Sensitive) Your API Token. See <a href="https://developers.track.toggl.com/docs/authentication">here</a>. The token is case sensitive.
 - `end_date` (String) To retrieve time entries created before the given date (inclusive).
 - `organization_id` (Number) Your organization id. See <a href="https://developers.track.toggl.com/docs/organization">here</a>.
 - `start_date` (String) To retrieve time entries created after the given date (inclusive).

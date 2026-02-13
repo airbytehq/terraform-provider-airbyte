@@ -76,14 +76,17 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.`,
 							},
 							"client_id": schema.StringAttribute{
 								Optional:    true,
+								Sensitive:   true,
 								Description: `The Client ID of the SurveyMonkey developer application.`,
 							},
 							"client_secret": schema.StringAttribute{
 								Optional:    true,
+								Sensitive:   true,
 								Description: `The Client Secret of the SurveyMonkey developer application.`,
 							},
 						},

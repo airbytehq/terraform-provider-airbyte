@@ -66,6 +66,7 @@ func (r *SourcePrestashopResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.`,
 					},
 					"additional_properties": schema.StringAttribute{

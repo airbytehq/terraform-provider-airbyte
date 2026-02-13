@@ -52,7 +52,7 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
 
 Required:
 
-- `api_token` (String) The Pipedrive API Token.
+- `api_token` (String, Sensitive) The Pipedrive API Token.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
 
 Optional:

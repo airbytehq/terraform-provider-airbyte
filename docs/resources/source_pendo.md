@@ -51,7 +51,7 @@ resource "airbyte_source_pendo" "my_source_pendo" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

@@ -69,6 +69,7 @@ func (r *SourcePapersignResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Generate it on your account page at https://paperform.co/account/developer.`,
 					},
 				},

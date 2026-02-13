@@ -72,10 +72,12 @@ func (r *SourceWaiteraidResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"auth_hash": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your WaiterAid API key, obtained from API request with Username and Password`,
 					},
 					"restid": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your WaiterAid restaurant id from API request to getRestaurants`,
 					},
 					"start_date": schema.StringAttribute{

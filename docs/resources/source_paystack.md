@@ -53,7 +53,7 @@ resource "airbyte_source_paystack" "my_source_paystack" {
 
 Required:
 
-- `secret_key` (String) The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
+- `secret_key` (String, Sensitive) The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

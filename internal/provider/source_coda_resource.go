@@ -69,6 +69,7 @@ func (r *SourceCodaResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"auth_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Bearer token`,
 					},
 				},

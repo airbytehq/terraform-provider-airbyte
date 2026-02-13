@@ -69,6 +69,7 @@ func (r *SourceCampaynResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it in your Campayn account settings. Keep it secure as it grants access to your Campayn data.`,
 					},
 					"sub_domain": schema.StringAttribute{

@@ -75,6 +75,7 @@ func (r *SourceLinnworksResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"application_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Linnworks Application Secret`,
 					},
 					"start_date": schema.StringAttribute{
@@ -85,7 +86,8 @@ func (r *SourceLinnworksResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

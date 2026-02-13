@@ -54,9 +54,9 @@ resource "airbyte_source_zoho_expense" "my_source_zohoexpense" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `refresh_token` (String, Sensitive)
 
 Optional:
 

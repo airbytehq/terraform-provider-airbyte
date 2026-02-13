@@ -71,7 +71,7 @@ Optional:
 
 Required:
 
-- `bearer_token` (String) Access token for making authenticated requests; filled after complete oauth2 flow.
+- `bearer_token` (String, Sensitive) Access token for making authenticated requests; filled after complete oauth2 flow.
 
 
 <a id="nestedatt--configuration--authorization--o_auth2"></a>
@@ -79,12 +79,12 @@ Required:
 
 Required:
 
-- `client_id` (String) The client ID of your Ticktick application. Read more <a href="https://developer.ticktick.com/api#/openapi?id=getting-started">here</a>.
-- `client_secret` (String) The client secret of of your Ticktick application. application. Read more <a href="https://developer.ticktick.com/api#/openapi?id=getting-started">here</a>.
+- `client_id` (String, Sensitive) The client ID of your Ticktick application. Read more <a href="https://developer.ticktick.com/api#/openapi?id=getting-started">here</a>.
+- `client_secret` (String, Sensitive) The client secret of of your Ticktick application. application. Read more <a href="https://developer.ticktick.com/api#/openapi?id=getting-started">here</a>.
 
 Optional:
 
-- `client_access_token` (String) Access token for making authenticated requests; filled after complete oauth2 flow.
+- `client_access_token` (String, Sensitive) Access token for making authenticated requests; filled after complete oauth2 flow.
 
 
 

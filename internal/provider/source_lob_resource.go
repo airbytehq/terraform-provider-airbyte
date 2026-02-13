@@ -72,6 +72,7 @@ func (r *SourceLobResource) Schema(ctx context.Context, req resource.SchemaReque
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use for authentication. You can find your account's API keys in your Dashboard Settings at https://dashboard.lob.com/settings/api-keys.`,
 					},
 					"limit": schema.StringAttribute{

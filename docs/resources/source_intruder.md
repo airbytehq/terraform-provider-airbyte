@@ -51,7 +51,7 @@ resource "airbyte_source_intruder" "my_source_intruder" {
 
 Required:
 
-- `access_token` (String) Your API Access token. See <a href="https://developers.intruder.io/docs/authentication">here</a>.
+- `access_token` (String, Sensitive) Your API Access token. See <a href="https://developers.intruder.io/docs/authentication">here</a>.
 
 Optional:
 

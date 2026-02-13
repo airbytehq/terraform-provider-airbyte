@@ -53,7 +53,7 @@ resource "airbyte_source_paddle" "my_source_paddle" {
 
 Required:
 
-- `api_key` (String) Your Paddle API key. You can generate it by navigating to Paddle > Developer tools > Authentication > Generate API key. Treat this key like a password and keep it secure.
+- `api_key` (String, Sensitive) Your Paddle API key. You can generate it by navigating to Paddle > Developer tools > Authentication > Generate API key. Treat this key like a password and keep it secure.
 - `start_date` (String)
 
 Optional:

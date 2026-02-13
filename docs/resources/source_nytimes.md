@@ -55,7 +55,7 @@ resource "airbyte_source_nytimes" "my_source_nytimes" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 - `period` (Number) Period of time (in days). must be one of ["1", "7", "30"]
 - `start_date` (String) Start date to begin the article retrieval (format YYYY-MM)
 

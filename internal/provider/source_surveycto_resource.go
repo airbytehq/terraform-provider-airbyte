@@ -78,6 +78,7 @@ func (r *SourceSurveyctoResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password to authenticate into the SurveyCTO server`,
 					},
 					"server_name": schema.StringAttribute{

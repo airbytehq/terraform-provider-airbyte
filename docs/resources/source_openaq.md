@@ -54,7 +54,7 @@ resource "airbyte_source_openaq" "my_source_openaq" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `country_ids` (List of String) The list of IDs of countries (comma separated) you need the data for, check more: https://docs.openaq.org/resources/countries
 
 Optional:

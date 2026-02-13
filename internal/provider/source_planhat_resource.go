@@ -69,6 +69,7 @@ func (r *SourcePlanhatResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Planhat <a href="https://docs.planhat.com/#authentication">API Access Token</a>`,
 					},
 				},

@@ -85,6 +85,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 									},
 									"openai_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource`,
 									},
 								},
@@ -104,7 +105,8 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cohere_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the Cohere API to embed text.`,
@@ -175,7 +177,8 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"openai_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
@@ -196,6 +199,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 									"api_key": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
@@ -240,7 +244,8 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 											Required: true,
 										},
 										"value": schema.StringAttribute{
-											Required: true,
+											Required:  true,
+											Sensitive: true,
 										},
 									},
 								},
@@ -254,6 +259,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 										Attributes: map[string]schema.Attribute{
 											"token": schema.StringAttribute{
 												Required:    true,
+												Sensitive:   true,
 												Description: `API Token for the Weaviate instance`,
 											},
 										},
@@ -280,6 +286,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 										Attributes: map[string]schema.Attribute{
 											"password": schema.StringAttribute{
 												Required:    true,
+												Sensitive:   true,
 												Description: `Password for the Weaviate cluster`,
 											},
 											"username": schema.StringAttribute{
@@ -329,6 +336,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 							"tenant_id": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
+								Sensitive:   true,
 								Default:     stringdefault.StaticString(``),
 								Description: `The tenant ID to use for multi tenancy. Default: ""`,
 							},

@@ -74,6 +74,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Attributes: map[string]schema.Attribute{
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Password associated with the username.`,
 									},
 									"username": schema.StringAttribute{
@@ -231,6 +232,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -246,6 +248,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{

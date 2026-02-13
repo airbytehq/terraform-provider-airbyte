@@ -53,8 +53,8 @@ resource "airbyte_source_genesys" "my_source_genesys" {
 
 Required:
 
-- `client_id` (String) Your OAuth user Client ID
-- `client_secret` (String) Your OAuth user Client Secret
+- `client_id` (String, Sensitive) Your OAuth user Client ID
+- `client_secret` (String, Sensitive) Your OAuth user Client Secret
 - `start_date` (String) Start Date in format: YYYY-MM-DD
 - `tenant_endpoint` (String) Please choose the right endpoint where your Tenant is located. More info by this <a href="https://help.mypurecloud.com/articles/aws-regions-for-genesys-cloud-deployment/">Link</a>. must be one of ["Americas (US East)", "Americas (US East 2)", "Americas (US West)", "Americas (Canada)", "Americas (São Paulo)", "EMEA (Frankfurt)", "EMEA (Dublin)", "EMEA (London)", "Asia Pacific (Mumbai)", "Asia Pacific (Seoul)", "Asia Pacific (Sydney)"]
 

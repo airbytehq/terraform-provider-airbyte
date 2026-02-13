@@ -58,7 +58,7 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
 
 Required:
 
-- `org_id` (String) Specify the Organization ID
+- `org_id` (String, Sensitive) Specify the Organization ID
 
 Optional:
 
@@ -80,7 +80,7 @@ Optional:
 
 Required:
 
-- `access_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
+- `access_token` (String, Sensitive) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -88,9 +88,9 @@ Required:
 
 Required:
 
-- `client_id` (String) The client ID of the LinkedIn developer application.
-- `client_secret` (String) The client secret of the LinkedIn developer application.
-- `refresh_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
+- `client_id` (String, Sensitive) The client ID of the LinkedIn developer application.
+- `client_secret` (String, Sensitive) The client secret of the LinkedIn developer application.
+- `refresh_token` (String, Sensitive) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 
 

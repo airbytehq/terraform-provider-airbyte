@@ -52,7 +52,7 @@ resource "airbyte_source_rootly" "my_source_rootly" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

@@ -51,7 +51,7 @@ resource "airbyte_source_todoist" "my_source_todoist" {
 
 Required:
 
-- `token` (String) API authorization bearer token for authenticating the API
+- `token` (String, Sensitive) API authorization bearer token for authenticating the API
 
 Optional:
 

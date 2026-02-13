@@ -69,6 +69,7 @@ func (r *SourceAhaResource) Schema(ctx context.Context, req resource.SchemaReque
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"url": schema.StringAttribute{

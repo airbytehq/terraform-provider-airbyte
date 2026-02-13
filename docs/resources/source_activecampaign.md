@@ -53,7 +53,7 @@ resource "airbyte_source_activecampaign" "my_source_activecampaign" {
 Required:
 
 - `account_username` (String) Account Username
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 
 Optional:
 

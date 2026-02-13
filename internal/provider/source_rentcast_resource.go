@@ -72,7 +72,8 @@ func (r *SourceRentcastResource) Schema(ctx context.Context, req resource.Schema
 						Description: `The full address of the property, in the format of Street, City, State, Zip. Used to retrieve data for a specific property, or together with the radius parameter to search for listings in a specific area`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"bath_rooms": schema.Int64Attribute{
 						Optional:    true,

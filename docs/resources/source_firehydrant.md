@@ -51,7 +51,7 @@ resource "airbyte_source_firehydrant" "my_source_firehydrant" {
 
 Required:
 
-- `api_token` (String) Bot token to use for authenticating with the FireHydrant API. You can find or create a bot token by logging into your organization and visiting the Bot users page at https://app.firehydrant.io/organizations/bots.
+- `api_token` (String, Sensitive) Bot token to use for authenticating with the FireHydrant API. You can find or create a bot token by logging into your organization and visiting the Bot users page at https://app.firehydrant.io/organizations/bots.
 
 Optional:
 

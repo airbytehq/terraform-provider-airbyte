@@ -69,6 +69,7 @@ func (r *SourceGooglePagespeedInsightsResource) Schema(ctx context.Context, req 
 					},
 					"api_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.`,
 					},
 					"categories": schema.ListAttribute{

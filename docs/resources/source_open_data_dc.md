@@ -53,7 +53,7 @@ resource "airbyte_source_open_data_dc" "my_source_opendatadc" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

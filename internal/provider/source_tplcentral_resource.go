@@ -70,7 +70,8 @@ func (r *SourceTplcentralResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"customer_id": schema.Int64Attribute{
 						Optional: true,

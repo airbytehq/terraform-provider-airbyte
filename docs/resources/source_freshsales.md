@@ -52,7 +52,7 @@ resource "airbyte_source_freshsales" "my_source_freshsales" {
 
 Required:
 
-- `api_key` (String) Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
+- `api_key` (String, Sensitive) Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
 - `domain_name` (String) The Name of your Freshsales domain
 
 Optional:

@@ -51,7 +51,7 @@ resource "airbyte_source_mailtrap" "my_source_mailtrap" {
 
 Required:
 
-- `api_token` (String) API token to use. Find it at https://mailtrap.io/account
+- `api_token` (String, Sensitive) API token to use. Find it at https://mailtrap.io/account
 
 Optional:
 

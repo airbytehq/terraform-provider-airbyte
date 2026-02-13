@@ -73,6 +73,7 @@ func (r *SourceNexiopayResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Nexio API key (password). You can find it in the Nexio Dashboard under Settings > User Management. Select the API user and copy the API key.`,
 					},
 					"start_date": schema.StringAttribute{

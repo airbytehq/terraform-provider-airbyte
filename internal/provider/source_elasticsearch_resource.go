@@ -86,6 +86,7 @@ func (r *SourceElasticsearchResource) Schema(ctx context.Context, req resource.S
 									},
 									"api_key_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The secret associated with the API Key ID.`,
 									},
 								},
@@ -124,6 +125,7 @@ func (r *SourceElasticsearchResource) Schema(ctx context.Context, req resource.S
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Basic auth password to access a secure Elasticsearch server`,
 									},
 									"username": schema.StringAttribute{

@@ -70,7 +70,8 @@ func (r *SourceJudgeMeReviewsResource) Schema(ctx context.Context, req resource.
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"shop_domain": schema.StringAttribute{
 						Required:    true,

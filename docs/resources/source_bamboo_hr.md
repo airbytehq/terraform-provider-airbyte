@@ -56,7 +56,7 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
 
 Required:
 
-- `api_key` (String) Api key of bamboo hr
+- `api_key` (String, Sensitive) Api key of bamboo hr
 - `subdomain` (String) Sub Domain of bamboo hr
 
 Optional:

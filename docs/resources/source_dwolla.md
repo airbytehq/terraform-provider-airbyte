@@ -54,8 +54,8 @@ resource "airbyte_source_dwolla" "my_source_dwolla" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

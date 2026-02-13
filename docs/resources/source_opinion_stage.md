@@ -51,7 +51,7 @@ resource "airbyte_source_opinion_stage" "my_source_opinionstage" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

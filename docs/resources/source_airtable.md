@@ -79,13 +79,13 @@ Optional:
 
 Required:
 
-- `client_id` (String) The client ID of the Airtable developer application.
-- `client_secret` (String) The client secret of the Airtable developer application.
-- `refresh_token` (String) The key to refresh the expired access token.
+- `client_id` (String, Sensitive) The client ID of the Airtable developer application.
+- `client_secret` (String, Sensitive) The client secret of the Airtable developer application.
+- `refresh_token` (String, Sensitive) The key to refresh the expired access token.
 
 Optional:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
@@ -94,7 +94,7 @@ Optional:
 
 Required:
 
-- `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
+- `api_key` (String, Sensitive) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
 
 
 

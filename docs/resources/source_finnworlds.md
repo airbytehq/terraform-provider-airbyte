@@ -66,7 +66,7 @@ resource "airbyte_source_finnworlds" "my_source_finnworlds" {
 
 Required:
 
-- `key` (String)
+- `key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

@@ -123,7 +123,7 @@ Optional:
 
 Optional:
 
-- `sasl_jaas_config` (String) JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
+- `sasl_jaas_config` (String, Sensitive) JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
 - `sasl_mechanism` (String) SASL mechanism used for client connections. This may be any mechanism for which a security provider is available. Default: "PLAIN"; must be one of ["GSSAPI", "OAUTHBEARER", "SCRAM-SHA-256", "SCRAM-SHA-512", "PLAIN"]
 - `security_protocol` (String) Default: "SASL_PLAINTEXT"; must be "SASL_PLAINTEXT"
 
@@ -133,7 +133,7 @@ Optional:
 
 Optional:
 
-- `sasl_jaas_config` (String) JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
+- `sasl_jaas_config` (String, Sensitive) JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
 - `sasl_mechanism` (String) SASL mechanism used for client connections. This may be any mechanism for which a security provider is available. Default: "GSSAPI"; must be one of ["GSSAPI", "OAUTHBEARER", "SCRAM-SHA-256", "SCRAM-SHA-512", "PLAIN"]
 - `security_protocol` (String) Default: "SASL_SSL"; must be "SASL_SSL"
 

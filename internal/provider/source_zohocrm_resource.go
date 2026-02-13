@@ -73,10 +73,12 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `OAuth2.0 Client ID`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `OAuth2.0 Client Secret`,
 					},
 					"dc_region": schema.StringAttribute{
@@ -121,6 +123,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `OAuth2.0 Refresh Token`,
 					},
 					"start_datetime": schema.StringAttribute{

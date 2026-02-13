@@ -52,7 +52,7 @@ resource "airbyte_source_katana" "my_source_katana" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://katanamrp.com/login/
+- `api_key` (String, Sensitive) API key to use. Find it at https://katanamrp.com/login/
 - `start_date` (String)
 
 Optional:

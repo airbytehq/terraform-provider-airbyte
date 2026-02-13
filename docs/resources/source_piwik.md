@@ -53,8 +53,8 @@ resource "airbyte_source_piwik" "my_source_piwik" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `organization_id` (String) The organization id appearing at URL of your piwik website
 
 Optional:

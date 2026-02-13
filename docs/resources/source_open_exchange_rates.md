@@ -53,7 +53,7 @@ resource "airbyte_source_open_exchange_rates" "my_source_openexchangerates" {
 
 Required:
 
-- `app_id` (String) App ID provided by Open Exchange Rates
+- `app_id` (String, Sensitive) App ID provided by Open Exchange Rates
 - `start_date` (String) Start getting data from that date.
 
 Optional:

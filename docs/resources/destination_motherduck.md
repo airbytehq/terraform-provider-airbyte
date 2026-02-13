@@ -51,7 +51,7 @@ resource "airbyte_destination_motherduck" "my_destination_motherduck" {
 
 Required:
 
-- `motherduck_api_key` (String) API access token to use for authentication to a MotherDuck database.
+- `motherduck_api_key` (String, Sensitive) API access token to use for authentication to a MotherDuck database.
 
 Optional:
 

@@ -99,13 +99,13 @@ Optional:
 
 Required:
 
-- `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
-- `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
-- `refresh_token` (String) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `client_id` (String, Sensitive) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `client_secret` (String, Sensitive) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `refresh_token` (String, Sensitive) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 
 Optional:
 
-- `access_token` (String) Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `access_token` (String, Sensitive) Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 
 
 <a id="nestedatt--configuration--authorization--service_account_key_authentication"></a>
@@ -114,7 +114,7 @@ Optional:
 Required:
 
 - `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
-- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
+- `service_account_info` (String, Sensitive) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 
 
 

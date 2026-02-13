@@ -52,7 +52,7 @@ resource "airbyte_source_eventbrite" "my_source_eventbrite" {
 
 Required:
 
-- `private_token` (String) The private token to use for authenticating API requests.
+- `private_token` (String, Sensitive) The private token to use for authenticating API requests.
 - `start_date` (String)
 
 Optional:

@@ -69,6 +69,7 @@ func (r *SourceCaptainDataResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Captain Data project API key.`,
 					},
 					"project_uid": schema.StringAttribute{

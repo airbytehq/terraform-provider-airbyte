@@ -71,13 +71,16 @@ func (r *SourceMercadoAdsResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"end_date": schema.StringAttribute{
 						Optional:    true,

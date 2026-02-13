@@ -52,7 +52,7 @@ resource "airbyte_source_recreation" "my_source_recreation" {
 
 Required:
 
-- `apikey` (String) API Key
+- `apikey` (String, Sensitive) API Key
 
 Optional:
 

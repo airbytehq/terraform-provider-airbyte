@@ -69,6 +69,7 @@ func (r *SourcePipedriveResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Pipedrive API Token.`,
 					},
 					"replication_start_date": schema.StringAttribute{

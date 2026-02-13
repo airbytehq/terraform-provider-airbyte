@@ -68,16 +68,19 @@ func (r *SourceZohoDeskResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"include_custom_domain": schema.BoolAttribute{
 						Optional: true,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"token_refresh_endpoint": schema.StringAttribute{
 						Required: true,

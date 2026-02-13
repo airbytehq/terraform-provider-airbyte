@@ -69,6 +69,7 @@ func (r *SourceTodoistResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API authorization bearer token for authenticating the API`,
 					},
 				},

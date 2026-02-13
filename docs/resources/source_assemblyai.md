@@ -54,7 +54,7 @@ resource "airbyte_source_assemblyai" "my_source_assemblyai" {
 
 Required:
 
-- `api_key` (String) Your AssemblyAI API key. You can find it in the AssemblyAI dashboard at https://www.assemblyai.com/app/api-keys.
+- `api_key` (String, Sensitive) Your AssemblyAI API key. You can find it in the AssemblyAI dashboard at https://www.assemblyai.com/app/api-keys.
 - `start_date` (String)
 
 Optional:

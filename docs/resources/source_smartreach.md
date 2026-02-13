@@ -52,7 +52,7 @@ resource "airbyte_source_smartreach" "my_source_smartreach" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `teamid` (Number)
 
 Optional:

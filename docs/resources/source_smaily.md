@@ -53,7 +53,7 @@ resource "airbyte_source_smaily" "my_source_smaily" {
 
 Required:
 
-- `api_password` (String) API user password. See https://smaily.com/help/api/general/create-api-user/
+- `api_password` (String, Sensitive) API user password. See https://smaily.com/help/api/general/create-api-user/
 - `api_subdomain` (String) API Subdomain. See https://smaily.com/help/api/general/create-api-user/
 - `api_username` (String) API user username. See https://smaily.com/help/api/general/create-api-user/
 

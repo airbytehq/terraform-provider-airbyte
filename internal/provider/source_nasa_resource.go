@@ -73,6 +73,7 @@ func (r *SourceNasaResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API access key used to retrieve data from the NASA APOD API.`,
 					},
 					"concept_tags": schema.BoolAttribute{

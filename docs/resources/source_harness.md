@@ -54,7 +54,7 @@ resource "airbyte_source_harness" "my_source_harness" {
 Required:
 
 - `account_id` (String) Harness Account ID
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

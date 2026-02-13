@@ -51,7 +51,7 @@ resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
 
 Required:
 
-- `access_token` (String) Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
+- `access_token` (String, Sensitive) Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
 
 Optional:
 

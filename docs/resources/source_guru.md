@@ -61,7 +61,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String)
+- `password` (String, Sensitive)
 - `search_cards_query` (String) Query for searching cards
 - `team_id` (String) Team ID received through response of /teams streams, make sure about access to the team
 

@@ -70,7 +70,8 @@ func (r *SourceDolibarrResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"my_dolibarr_domain_url": schema.StringAttribute{
 						Required:    true,

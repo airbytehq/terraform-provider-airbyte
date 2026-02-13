@@ -53,7 +53,7 @@ resource "airbyte_source_ding_connect" "my_source_dingconnect" {
 
 Required:
 
-- `api_key` (String) Your API key for authenticating with the DingConnect API. You can generate this key by navigating to the Developer tab in the Account Settings section of your DingConnect account.
+- `api_key` (String, Sensitive) Your API key for authenticating with the DingConnect API. You can generate this key by navigating to the Developer tab in the Account Settings section of your DingConnect account.
 - `start_date` (String)
 
 Optional:

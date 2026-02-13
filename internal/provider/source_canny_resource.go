@@ -69,6 +69,7 @@ func (r *SourceCannyResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `You can find your secret API key in Your Canny Subdomain > Settings > API`,
 					},
 				},

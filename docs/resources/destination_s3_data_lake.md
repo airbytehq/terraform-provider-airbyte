@@ -71,11 +71,11 @@ Required:
 
 Optional:
 
-- `access_key_id` (String) The AWS Access Key ID with permissions for S3 and Glue operations.
+- `access_key_id` (String, Sensitive) The AWS Access Key ID with permissions for S3 and Glue operations.
 - `additional_properties` (String) Parsed as JSON.
 - `main_branch_name` (String) The primary or default branch name in the catalog. Most query engines will use "main" by default. See <a href="https://iceberg.apache.org/docs/latest/branching/">Iceberg documentation</a> for more information. Default: "main"
 - `s3_endpoint` (String) Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
-- `secret_access_key` (String) The AWS Secret Access Key paired with the Access Key ID for AWS authentication.
+- `secret_access_key` (String, Sensitive) The AWS Secret Access Key paired with the Access Key ID for AWS authentication.
 
 <a id="nestedatt--configuration--catalog_type"></a>
 ### Nested Schema for `configuration.catalog_type`
@@ -114,7 +114,7 @@ Required:
 
 Optional:
 
-- `access_token` (String) Optional token for authentication with the Nessie server.
+- `access_token` (String, Sensitive) Optional token for authentication with the Nessie server.
 - `additional_properties` (String) Parsed as JSON.
 - `catalog_type` (String) Default: "NESSIE"; must be "NESSIE"
 
@@ -125,8 +125,8 @@ Optional:
 Required:
 
 - `catalog_name` (String) The name of the catalog in Polaris. This corresponds to the catalog name created via the Polaris Management API.
-- `client_id` (String) The OAuth Client ID for authenticating with the Polaris server.
-- `client_secret` (String) The OAuth Client Secret for authenticating with the Polaris server.
+- `client_id` (String, Sensitive) The OAuth Client ID for authenticating with the Polaris server.
+- `client_secret` (String, Sensitive) The OAuth Client Secret for authenticating with the Polaris server.
 - `namespace` (String) The Polaris namespace to be used in the Table identifier.
            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
            `Destination-defined` or `Source-defined`

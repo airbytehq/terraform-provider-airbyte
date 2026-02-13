@@ -51,7 +51,7 @@ resource "airbyte_source_formbricks" "my_source_formbricks" {
 
 Required:
 
-- `api_key` (String) API key to use. You can generate and find it in your Postman account settings.
+- `api_key` (String, Sensitive) API key to use. You can generate and find it in your Postman account settings.
 
 Optional:
 

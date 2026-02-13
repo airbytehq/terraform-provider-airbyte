@@ -80,7 +80,7 @@ Optional:
 Required:
 
 - `api_key_id` (String) The Key ID to used when accessing an enterprise Elasticsearch instance.
-- `api_key_secret` (String) The secret associated with the API Key ID.
+- `api_key_secret` (String, Sensitive) The secret associated with the API Key ID.
 
 Optional:
 
@@ -100,7 +100,7 @@ Optional:
 
 Required:
 
-- `password` (String) Basic auth password to access a secure Elasticsearch server
+- `password` (String, Sensitive) Basic auth password to access a secure Elasticsearch server
 - `username` (String) Basic auth username to access a secure Elasticsearch server
 
 Optional:

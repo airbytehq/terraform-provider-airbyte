@@ -87,7 +87,7 @@ Optional:
 Required:
 
 - `client_id` (String)
-- `secret` (String)
+- `secret` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--authentication--personal_access_token"></a>
@@ -95,7 +95,7 @@ Required:
 
 Required:
 
-- `personal_access_token` (String)
+- `personal_access_token` (String, Sensitive)
 
 
 

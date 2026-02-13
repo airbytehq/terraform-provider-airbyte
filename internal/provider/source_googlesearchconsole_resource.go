@@ -86,18 +86,22 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 								},
@@ -116,6 +120,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 									},
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.`,
 									},
 								},

@@ -79,9 +79,9 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `refresh_token` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--credentials--authenticate_with_personal_access_token"></a>
@@ -89,7 +89,7 @@ Required:
 
 Required:
 
-- `personal_access_token` (String) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
+- `personal_access_token` (String, Sensitive) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 
 
 

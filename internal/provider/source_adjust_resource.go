@@ -78,6 +78,7 @@ func (r *SourceAdjustResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Adjust API key, see https://help.adjust.com/en/article/report-service-api-authentication`,
 					},
 					"dimensions": schema.ListAttribute{

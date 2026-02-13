@@ -70,7 +70,8 @@ func (r *SourceGuruResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"search_cards_query": schema.StringAttribute{
 						Optional:    true,

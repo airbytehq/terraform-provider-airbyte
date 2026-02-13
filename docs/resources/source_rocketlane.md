@@ -51,7 +51,7 @@ resource "airbyte_source_rocketlane" "my_source_rocketlane" {
 
 Required:
 
-- `api_key` (String) API key to use. Generate it from the API section in Settings of your Rocketlane account.
+- `api_key` (String, Sensitive) API key to use. Generate it from the API section in Settings of your Rocketlane account.
 
 Optional:
 

@@ -78,6 +78,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.`,
 									},
 								},
@@ -93,14 +94,17 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
@@ -116,14 +120,17 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your OAuth application.`,
 									},
 									"key_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The key ID (kid).`,
 									},
 									"private_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The private key in PEM format`,
 									},
 									"scope": schema.StringAttribute{

@@ -71,6 +71,7 @@ func (r *SourceNinjaoneRmmResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Token could be generated natively by authorize section of NinjaOne swagger documentation ` + "`" + `https://app.ninjarmm.com/apidocs/?links.active=authorization` + "`" + ``,
 					},
 					"start_date": schema.StringAttribute{

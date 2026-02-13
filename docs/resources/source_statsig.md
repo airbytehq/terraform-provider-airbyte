@@ -53,7 +53,7 @@ resource "airbyte_source_statsig" "my_source_statsig" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `end_date` (String)
 - `start_date` (String)
 

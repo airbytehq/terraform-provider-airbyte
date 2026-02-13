@@ -52,7 +52,7 @@ resource "airbyte_source_xsolla" "my_source_xsolla" {
 
 Required:
 
-- `api_key` (String) Go to Xsolla Dashboard and from company setting get the api_key
+- `api_key` (String, Sensitive) Go to Xsolla Dashboard and from company setting get the api_key
 - `project_id` (Number) You can find this parameter in your Publisher Account next to the name of the project . Example: 44056
 
 Optional:

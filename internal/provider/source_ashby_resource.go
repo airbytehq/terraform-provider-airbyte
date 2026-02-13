@@ -72,6 +72,7 @@ func (r *SourceAshbyResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Ashby API Key, see <a href=\"https://developers.ashbyhq.com/reference/authentication\">doc</a> here.`,
 					},
 					"start_date": schema.StringAttribute{

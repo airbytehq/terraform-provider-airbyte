@@ -70,6 +70,7 @@ func (r *SourceJinaAiReaderResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"api_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Your Jina AI API Key. See <a href="https://jina.ai/reader/#apiform">here</a>.`,
 					},
 					"gather_images": schema.BoolAttribute{

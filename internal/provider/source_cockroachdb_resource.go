@@ -79,6 +79,7 @@ func (r *SourceCockroachdbResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{

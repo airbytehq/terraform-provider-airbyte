@@ -53,7 +53,7 @@ resource "airbyte_source_avni" "my_source_avni" {
 
 Required:
 
-- `password` (String) Your avni platform password
+- `password` (String, Sensitive) Your avni platform password
 - `username` (String) Your avni platform Username
 
 Optional:

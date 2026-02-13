@@ -74,10 +74,12 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Paypal developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Paypal developer application.`,
 					},
 					"dispute_start_date": schema.StringAttribute{
@@ -102,6 +104,7 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 					},
 					"refresh_token": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The key to refresh the expired access token.`,
 					},
 					"start_date": schema.StringAttribute{

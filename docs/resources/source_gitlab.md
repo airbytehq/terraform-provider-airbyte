@@ -90,10 +90,10 @@ Optional:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `client_id` (String) The API ID of the Gitlab developer application.
-- `client_secret` (String) The API Secret the Gitlab developer application.
-- `refresh_token` (String) The key to refresh the expired access_token.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
+- `client_id` (String, Sensitive) The API ID of the Gitlab developer application.
+- `client_secret` (String, Sensitive) The API Secret the Gitlab developer application.
+- `refresh_token` (String, Sensitive) The key to refresh the expired access_token.
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
@@ -102,7 +102,7 @@ Required:
 
 Required:
 
-- `access_token` (String) Log into your Gitlab account and then generate a personal Access Token.
+- `access_token` (String, Sensitive) Log into your Gitlab account and then generate a personal Access Token.
 
 
 

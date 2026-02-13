@@ -103,9 +103,9 @@ Optional:
 
 Required:
 
-- `client_id` (String) Client ID for the Google Drive API
-- `client_secret` (String) Client Secret for the Google Drive API
-- `refresh_token` (String) Refresh Token for the Google Drive API
+- `client_id` (String, Sensitive) Client ID for the Google Drive API
+- `client_secret` (String, Sensitive) Client Secret for the Google Drive API
+- `refresh_token` (String, Sensitive) Refresh Token for the Google Drive API
 
 
 <a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
@@ -113,7 +113,7 @@ Required:
 
 Required:
 
-- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
+- `service_account_info` (String, Sensitive) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 
 
 

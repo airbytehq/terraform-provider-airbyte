@@ -52,7 +52,7 @@ resource "airbyte_source_sage_hr" "my_source_sagehr" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `subdomain` (String)
 
 Optional:

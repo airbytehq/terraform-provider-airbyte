@@ -52,7 +52,7 @@ resource "airbyte_source_facebook_pages" "my_source_facebookpages" {
 
 Required:
 
-- `access_token` (String) Facebook Page Access Token
+- `access_token` (String, Sensitive) Facebook Page Access Token
 - `page_id` (String) Page ID
 
 Optional:

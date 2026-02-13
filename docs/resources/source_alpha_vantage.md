@@ -55,7 +55,7 @@ resource "airbyte_source_alpha_vantage" "my_source_alphavantage" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 - `symbol` (String) Stock symbol (with exchange code)
 
 Optional:

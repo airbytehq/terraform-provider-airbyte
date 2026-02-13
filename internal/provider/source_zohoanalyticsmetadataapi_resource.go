@@ -71,10 +71,12 @@ func (r *SourceZohoAnalyticsMetadataAPIResource) Schema(ctx context.Context, req
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"data_center": schema.StringAttribute{
 						Computed:    true,
@@ -96,7 +98,8 @@ func (r *SourceZohoAnalyticsMetadataAPIResource) Schema(ctx context.Context, req
 						Required: true,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

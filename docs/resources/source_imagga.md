@@ -53,8 +53,8 @@ resource "airbyte_source_imagga" "my_source_imagga" {
 
 Required:
 
-- `api_key` (String) Your Imagga API key, available in your Imagga dashboard. Could be found at `https://imagga.com/profile/dashboard`
-- `api_secret` (String) Your Imagga API secret, available in your Imagga dashboard. Could be found at `https://imagga.com/profile/dashboard`
+- `api_key` (String, Sensitive) Your Imagga API key, available in your Imagga dashboard. Could be found at `https://imagga.com/profile/dashboard`
+- `api_secret` (String, Sensitive) Your Imagga API secret, available in your Imagga dashboard. Could be found at `https://imagga.com/profile/dashboard`
 
 Optional:
 

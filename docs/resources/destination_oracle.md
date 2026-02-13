@@ -72,7 +72,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) The port of the database. Default: 1521
 - `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 - `schema` (String) The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema. Default: "airbyte"
@@ -98,7 +98,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -110,7 +110,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 

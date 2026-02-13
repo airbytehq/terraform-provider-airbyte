@@ -69,6 +69,7 @@ func (r *SourcePersonaResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key or access token`,
 					},
 				},

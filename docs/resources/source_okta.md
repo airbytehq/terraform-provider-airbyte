@@ -78,7 +78,7 @@ Optional:
 
 Required:
 
-- `api_token` (String) An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
+- `api_token` (String, Sensitive) An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -86,9 +86,9 @@ Required:
 
 Required:
 
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
-- `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
+- `client_id` (String, Sensitive) The Client ID of your OAuth application.
+- `client_secret` (String, Sensitive) The Client Secret of your OAuth application.
+- `refresh_token` (String, Sensitive) Refresh Token to obtain new Access Token, when it's expired.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20_with_private_key"></a>
@@ -96,9 +96,9 @@ Required:
 
 Required:
 
-- `client_id` (String) The Client ID of your OAuth application.
-- `key_id` (String) The key ID (kid).
-- `private_key` (String) The private key in PEM format
+- `client_id` (String, Sensitive) The Client ID of your OAuth application.
+- `key_id` (String, Sensitive) The key ID (kid).
+- `private_key` (String, Sensitive) The private key in PEM format
 - `scope` (String) The OAuth scope.
 
 

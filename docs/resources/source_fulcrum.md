@@ -51,7 +51,7 @@ resource "airbyte_source_fulcrum" "my_source_fulcrum" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://web.fulcrumapp.com/settings/api
+- `api_key` (String, Sensitive) API key to use. Find it at https://web.fulcrumapp.com/settings/api
 
 Optional:
 

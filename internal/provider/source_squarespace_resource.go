@@ -71,6 +71,7 @@ func (r *SourceSquarespaceResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://developers.squarespace.com/commerce-apis/authentication-and-permissions`,
 					},
 					"start_date": schema.StringAttribute{

@@ -56,9 +56,9 @@ resource "airbyte_source_google_forms" "my_source_googleforms" {
 
 Required:
 
-- `client_id` (String)
-- `client_refresh_token` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `form_id` (List of String)
 
 Optional:

@@ -57,11 +57,11 @@ resource "airbyte_source_microsoft_lists" "my_source_microsoftlists" {
 Required:
 
 - `application_id_uri` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `domain` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `domain` (String, Sensitive)
 - `site_id` (String)
-- `tenant_id` (String)
+- `tenant_id` (String, Sensitive)
 
 Optional:
 

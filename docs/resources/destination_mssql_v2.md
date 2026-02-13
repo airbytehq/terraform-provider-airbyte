@@ -75,7 +75,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String) The password associated with this username.
+- `password` (String, Sensitive) The password associated with this username.
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"
 
 <a id="nestedatt--configuration--load_type"></a>
@@ -94,7 +94,7 @@ Required:
 - `azure_blob_storage_account_name` (String) The name of the Azure Blob Storage account. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#storage-accounts
 - `azure_blob_storage_container_name` (String) The name of the Azure Blob Storage container. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#containers
 - `bulk_load_data_source` (String) Specifies the external data source name configured in MSSQL, which references the Azure Blob container. See: https://learn.microsoft.com/sql/t-sql/statements/bulk-insert-transact-sql
-- `shared_access_signature` (String) A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview
+- `shared_access_signature` (String, Sensitive) A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview
 
 Optional:
 
@@ -140,7 +140,7 @@ Optional:
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
 - `name` (String) Default: "encrypted_verify_certificate"; must be "encrypted_verify_certificate"
 - `trust_store_name` (String) Specifies the name of the trust store.
-- `trust_store_password` (String) Specifies the password of the trust store.
+- `trust_store_password` (String, Sensitive) Specifies the password of the trust store.
 
 
 <a id="nestedatt--configuration--ssl_method--unencrypted"></a>

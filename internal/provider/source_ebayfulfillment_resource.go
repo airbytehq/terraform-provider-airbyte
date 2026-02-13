@@ -84,13 +84,15 @@ func (r *SourceEbayFulfillmentResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"redirect_uri": schema.StringAttribute{
 						Required: true,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"refresh_token_endpoint": schema.StringAttribute{
 						Computed:    true,

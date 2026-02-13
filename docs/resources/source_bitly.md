@@ -53,7 +53,7 @@ resource "airbyte_source_bitly" "my_source_bitly" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `end_date` (String)
 - `start_date` (String)
 

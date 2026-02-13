@@ -58,11 +58,11 @@ resource "airbyte_source_quickbooks" "my_source_quickbooks" {
 
 Required:
 
-- `access_token` (String) Access token for making authenticated requests.
+- `access_token` (String, Sensitive) Access token for making authenticated requests.
 - `client_id` (String) Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
-- `client_secret` (String) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
-- `realm_id` (String) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
-- `refresh_token` (String) A token used when refreshing the access token.
+- `client_secret` (String, Sensitive) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
+- `realm_id` (String, Sensitive) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
+- `refresh_token` (String, Sensitive) A token used when refreshing the access token.
 - `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 

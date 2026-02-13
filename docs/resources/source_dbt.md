@@ -53,7 +53,7 @@ resource "airbyte_source_dbt" "my_source_dbt" {
 Required:
 
 - `account_id` (String)
-- `api_key_2` (String)
+- `api_key_2` (String, Sensitive)
 
 Optional:
 

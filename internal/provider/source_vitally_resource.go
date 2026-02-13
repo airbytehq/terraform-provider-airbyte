@@ -71,6 +71,7 @@ func (r *SourceVitallyResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"basic_auth_header": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Basic Auth Header`,
 					},
 					"domain": schema.StringAttribute{

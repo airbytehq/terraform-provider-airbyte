@@ -53,7 +53,7 @@ resource "airbyte_source_bunny_inc" "my_source_bunnyinc" {
 
 Required:
 
-- `apikey` (String)
+- `apikey` (String, Sensitive)
 - `subdomain` (String) The subdomain specific to your Bunny account or service.
 
 Optional:

@@ -72,6 +72,7 @@ func (r *SourceShutterstockResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your OAuth 2.0 token for accessing the Shutterstock API. Obtain this token from your Shutterstock developer account.`,
 					},
 					"query_for_audio_search": schema.StringAttribute{

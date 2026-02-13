@@ -53,7 +53,7 @@ resource "airbyte_source_appsflyer" "my_source_appsflyer" {
 
 Required:
 
-- `api_token` (String) Pull API token for authentication. If you change the account admin, the token changes, and you must update scripts with the new token. <a href="https://support.appsflyer.com/hc/en-us/articles/360004562377">Get the API token in the Dashboard</a>.
+- `api_token` (String, Sensitive) Pull API token for authentication. If you change the account admin, the token changes, and you must update scripts with the new token. <a href="https://support.appsflyer.com/hc/en-us/articles/360004562377">Get the API token in the Dashboard</a>.
 - `app_id` (String) App identifier as found in AppsFlyer.
 - `start_date` (String) The default value to use if no bookmark exists for an endpoint. Raw Reports historical lookback is limited to 90 days.
 

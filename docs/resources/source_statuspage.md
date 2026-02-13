@@ -51,7 +51,7 @@ resource "airbyte_source_statuspage" "my_source_statuspage" {
 
 Required:
 
-- `api_key` (String) Your API Key. See <a href="https://developer.statuspage.io/#section/Authentication/api_key">here</a>.
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://developer.statuspage.io/#section/Authentication/api_key">here</a>.
 
 Optional:
 

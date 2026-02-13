@@ -56,8 +56,8 @@ resource "airbyte_source_commercetools" "my_source_commercetools" {
 
 Required:
 
-- `client_id` (String) Id of API Client.
-- `client_secret` (String) The password of secret of API Client.
+- `client_id` (String, Sensitive) Id of API Client.
+- `client_secret` (String, Sensitive) The password of secret of API Client.
 - `host` (String) The cloud provider your shop is hosted. See: https://docs.commercetools.com/api/authorization. must be one of ["gcp", "aws"]
 - `project_key` (String) The project key
 - `region` (String) The region of the platform.

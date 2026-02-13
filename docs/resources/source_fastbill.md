@@ -52,7 +52,7 @@ resource "airbyte_source_fastbill" "my_source_fastbill" {
 
 Required:
 
-- `api_key` (String) Fastbill API key
+- `api_key` (String, Sensitive) Fastbill API key
 - `username` (String) Username for Fastbill account
 
 Optional:

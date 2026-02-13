@@ -51,7 +51,7 @@ resource "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 
 Optional:
 

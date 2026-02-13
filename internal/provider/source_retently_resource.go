@@ -86,10 +86,12 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Retently developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.`,
 									},
 								},
@@ -109,6 +111,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
 									},
 								},

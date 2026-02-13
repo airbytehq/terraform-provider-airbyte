@@ -72,6 +72,7 @@ func (r *SourceGiphyResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your GIPHY API Key. You can create and find your API key in the GIPHY Developer Dashboard at https://developers.giphy.com/dashboard/.`,
 					},
 					"query": schema.StringAttribute{

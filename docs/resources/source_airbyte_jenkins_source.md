@@ -56,7 +56,7 @@ resource "airbyte_source_airbyte_jenkins_source" "my_source_airbytejenkinssource
 Required:
 
 - `server_url` (String)
-- `token` (String)
+- `token` (String, Sensitive)
 - `user` (String) Jenkins User
 
 Optional:

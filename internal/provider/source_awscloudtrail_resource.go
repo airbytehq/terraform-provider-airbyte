@@ -72,6 +72,7 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 					},
 					"aws_key_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.`,
 					},
 					"aws_region_name": schema.StringAttribute{
@@ -82,6 +83,7 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 					},
 					"aws_secret_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.`,
 					},
 					"lookup_attributes_filter": schema.SingleNestedAttribute{

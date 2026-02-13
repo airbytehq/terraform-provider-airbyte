@@ -53,8 +53,8 @@ resource "airbyte_source_partnerstack" "my_source_partnerstack" {
 
 Required:
 
-- `private_key` (String) The Live Private Key for a Partnerstack account.
-- `public_key` (String) The Live Public Key for a Partnerstack account.
+- `private_key` (String, Sensitive) The Live Private Key for a Partnerstack account.
+- `public_key` (String, Sensitive) The Live Public Key for a Partnerstack account.
 
 Optional:
 

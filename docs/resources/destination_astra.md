@@ -106,7 +106,7 @@ Required:
 
 - `api_base` (String) The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 - `deployment` (String) The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-- `openai_key` (String) The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+- `openai_key` (String, Sensitive) The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 
 
 <a id="nestedatt--configuration--embedding--cohere"></a>
@@ -114,7 +114,7 @@ Required:
 
 Required:
 
-- `cohere_key` (String)
+- `cohere_key` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--embedding--fake"></a>
@@ -126,7 +126,7 @@ Required:
 
 Required:
 
-- `openai_key` (String)
+- `openai_key` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--embedding--open_ai_compatible"></a>
@@ -139,7 +139,7 @@ Required:
 
 Optional:
 
-- `api_key` (String) Default: ""
+- `api_key` (String, Sensitive) Default: ""
 - `model_name` (String) The name of the model to use for embedding. Default: "text-embedding-ada-002"
 
 
@@ -149,7 +149,7 @@ Optional:
 
 Required:
 
-- `astra_db_app_token` (String) The application token authorizes a user to connect to a specific Astra DB database. It is created when the user clicks the Generate Token button on the Overview tab of the Database page in the Astra UI.
+- `astra_db_app_token` (String, Sensitive) The application token authorizes a user to connect to a specific Astra DB database. It is created when the user clicks the Generate Token button on the Overview tab of the Database page in the Astra UI.
 - `astra_db_endpoint` (String) The endpoint specifies which Astra DB database queries are sent to. It can be copied from the Database Details section of the Overview tab of the Database page in the Astra UI.
 - `astra_db_keyspace` (String) Keyspaces (or Namespaces) serve as containers for organizing data within a database. You can create a new keyspace uisng the Data Explorer tab in the Astra UI. The keyspace default_keyspace is created for you when you create a Vector Database in Astra DB.
 - `collection` (String) Collections hold data. They are analagous to tables in traditional Cassandra terminology. This tool will create the collection with the provided name automatically if it does not already exist. Alternatively, you can create one thorugh the Data Explorer tab in the Astra UI.

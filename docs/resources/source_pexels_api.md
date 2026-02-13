@@ -56,7 +56,7 @@ resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
 
 Required:
 
-- `api_key` (String) API key is required to access pexels api, For getting your's goto https://www.pexels.com/api/documentation and create account for free.
+- `api_key` (String, Sensitive) API key is required to access pexels api, For getting your's goto https://www.pexels.com/api/documentation and create account for free.
 - `query` (String) Optional, the search query, Example Ocean, Tigers, Pears, etc.
 
 Optional:

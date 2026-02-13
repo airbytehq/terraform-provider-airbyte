@@ -78,6 +78,7 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>`,
 									},
 								},
@@ -92,6 +93,7 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
@@ -100,10 +102,12 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Salesloft developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining a new access token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{

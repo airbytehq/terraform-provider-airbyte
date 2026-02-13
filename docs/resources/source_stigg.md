@@ -51,7 +51,7 @@ resource "airbyte_source_stigg" "my_source_stigg" {
 
 Required:
 
-- `api_key` (String) Your Stigg Server API Key. You can find this in your Stigg dashboard under Settings > API Keys.
+- `api_key` (String, Sensitive) Your Stigg Server API Key. You can find this in your Stigg dashboard under Settings > API Keys.
 
 Optional:
 

@@ -107,13 +107,13 @@ Required:
 
 Optional:
 
-- `access_token` (String) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
+- `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 - `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list
 - `ad_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out. Default: []
 - `adset_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out. Default: []
 - `campaign_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out. Default: []
-- `client_id` (String) The Client Id for your OAuth app
-- `client_secret` (String) The Client Secret for your OAuth app
+- `client_id` (String, Sensitive) The Client Id for your OAuth app
+- `client_secret` (String, Sensitive) The Client Secret for your OAuth app
 - `custom_insights` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_insights))
 - `default_ads_insights_action_breakdowns` (List of String) Action breakdowns for the Built-in Ads Insights stream that will be used in the request. You can override default values or remove them to make it empty if needed. Default: ["action_type","action_target_id","action_destination"]
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
@@ -136,12 +136,12 @@ Optional:
 
 Required:
 
-- `client_id` (String) Client ID for the Facebook Marketing API
-- `client_secret` (String) Client Secret for the Facebook Marketing API
+- `client_id` (String, Sensitive) Client ID for the Facebook Marketing API
+- `client_secret` (String, Sensitive) Client Secret for the Facebook Marketing API
 
 Optional:
 
-- `access_token` (String) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
+- `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 
 
 <a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
@@ -149,7 +149,7 @@ Optional:
 
 Required:
 
-- `access_token` (String) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
+- `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 
 
 

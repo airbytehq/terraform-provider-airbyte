@@ -52,7 +52,7 @@ resource "airbyte_source_productive" "my_source_productive" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `organization_id` (String) The organization ID which could be seen from `https://app.productive.io/xxxx-xxxx/settings/api-integrations` page
 
 Optional:

@@ -79,8 +79,8 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
-- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
-- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
+- `client_secret` (String, Sensitive) The Client Secret of your Microsoft Teams developer application.
+- `tenant_id` (String, Sensitive) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_microsoft_o_auth20"></a>
@@ -89,9 +89,9 @@ Required:
 Required:
 
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
-- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
-- `refresh_token` (String) A Refresh Token to renew the expired Access Token.
-- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
+- `client_secret` (String, Sensitive) The Client Secret of your Microsoft Teams developer application.
+- `refresh_token` (String, Sensitive) A Refresh Token to renew the expired Access Token.
+- `tenant_id` (String, Sensitive) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 
 

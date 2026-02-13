@@ -82,12 +82,12 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Gong OAuth application.
-- `client_secret` (String) The Client Secret of your Gong OAuth application.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
+- `client_secret` (String, Sensitive) The Client Secret of your Gong OAuth application.
+- `refresh_token` (String, Sensitive) Refresh Token to renew the expired Access Token.
 
 Optional:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `additional_properties` (String) Parsed as JSON.
 - `token_expiry_date` (String) The date-time when the access token expires.
 
@@ -97,8 +97,8 @@ Optional:
 
 Required:
 
-- `access_key` (String) Gong Access Key
-- `access_key_secret` (String) Gong Access Key Secret
+- `access_key` (String, Sensitive) Gong Access Key
+- `access_key_secret` (String, Sensitive) Gong Access Key Secret
 
 Optional:
 

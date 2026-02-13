@@ -98,6 +98,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"azure_blob_storage_account_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Azure blob storage account key. Mutually exclusive with a Shared Access Signature`,
 									},
 									"azure_blob_storage_account_name": schema.StringAttribute{
@@ -129,6 +130,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"shared_access_signature": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview.Mutually exclusive with an account key`,
 									},
 								},
@@ -169,6 +171,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The password associated with this username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -244,6 +247,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"trust_store_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Specifies the password of the trust store.`,
 									},
 								},
@@ -355,6 +359,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -376,6 +381,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{

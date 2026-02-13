@@ -100,6 +100,7 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"site_api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.`,
 					},
 					"start_date": schema.StringAttribute{

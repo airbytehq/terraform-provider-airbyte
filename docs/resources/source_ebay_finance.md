@@ -59,7 +59,7 @@ resource "airbyte_source_ebay_finance" "my_source_ebayfinance" {
 Required:
 
 - `redirect_uri` (String)
-- `refresh_token` (String)
+- `refresh_token` (String, Sensitive)
 - `start_date` (String)
 - `username` (String) Ebay Developer Client ID
 
@@ -67,8 +67,8 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `api_host` (String) https://apiz.sandbox.ebay.com for sandbox & https://apiz.ebay.com for production. Default: "https://apiz.ebay.com"; must be one of ["https://apiz.sandbox.ebay.com", "https://apiz.ebay.com"]
-- `client_access_token` (String)
-- `password` (String) Ebay Client Secret
+- `client_access_token` (String, Sensitive)
+- `password` (String, Sensitive) Ebay Client Secret
 - `token_refresh_endpoint` (String) Default: "https://api.ebay.com/identity/v1/oauth2/token"; must be one of ["https://api.sandbox.ebay.com/identity/v1/oauth2/token", "https://api.ebay.com/identity/v1/oauth2/token"]
 
 

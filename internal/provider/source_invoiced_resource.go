@@ -69,6 +69,7 @@ func (r *SourceInvoicedResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://invoiced.com/account`,
 					},
 				},

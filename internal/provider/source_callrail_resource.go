@@ -67,6 +67,7 @@ func (r *SourceCallrailResource) Schema(ctx context.Context, req resource.Schema
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Account ID`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -76,6 +77,7 @@ func (r *SourceCallrailResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API access key`,
 					},
 					"start_date": schema.StringAttribute{

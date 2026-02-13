@@ -52,7 +52,7 @@ resource "airbyte_source_thinkific_courses" "my_source_thinkificcourses" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `x_auth_subdomain` (String)
 
 Optional:

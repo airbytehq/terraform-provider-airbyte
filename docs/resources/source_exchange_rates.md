@@ -54,7 +54,7 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
 
 Required:
 
-- `access_key` (String) Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.
+- `access_key` (String, Sensitive) Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.
 - `start_date` (String) Start getting data from that date.
 
 Optional:

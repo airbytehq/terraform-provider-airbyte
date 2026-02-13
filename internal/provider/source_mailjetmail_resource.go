@@ -73,6 +73,7 @@ func (r *SourceMailjetMailResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Secret Key. See <a href="https://dev.mailjet.com/email/guides/#authentication">here</a>.`,
 					},
 				},

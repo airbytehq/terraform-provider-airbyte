@@ -51,7 +51,7 @@ resource "airbyte_source_coda" "my_source_coda" {
 
 Required:
 
-- `auth_token` (String) Bearer token
+- `auth_token` (String, Sensitive) Bearer token
 
 Optional:
 

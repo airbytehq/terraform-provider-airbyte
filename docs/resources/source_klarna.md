@@ -54,7 +54,7 @@ resource "airbyte_source_klarna" "my_source_klarna" {
 
 Required:
 
-- `password` (String) A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
+- `password` (String, Sensitive) A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
 - `region` (String) Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'. must be one of ["eu", "na", "oc"]
 - `username` (String) Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
 

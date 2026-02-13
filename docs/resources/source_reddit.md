@@ -59,7 +59,7 @@ resource "airbyte_source_reddit" "my_source_reddit" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

@@ -185,6 +185,7 @@ func (r *DestinationKafkaResource) Schema(ctx context.Context, req resource.Sche
 									"sasl_jaas_config": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""`,
 									},
@@ -228,6 +229,7 @@ func (r *DestinationKafkaResource) Schema(ctx context.Context, req resource.Sche
 									"sasl_jaas_config": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(``),
 										Description: `JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""`,
 									},

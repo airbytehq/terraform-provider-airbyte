@@ -56,7 +56,7 @@ resource "airbyte_destination_pubsub" "my_destination_pubsub" {
 
 Required:
 
-- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.
+- `credentials_json` (String, Sensitive) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.
 - `project_id` (String) The GCP project ID for the project containing the target PubSub.
 - `topic_id` (String) The PubSub topic ID in the given GCP project ID.
 

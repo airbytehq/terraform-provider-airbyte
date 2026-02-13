@@ -69,6 +69,7 @@ func (r *SourceFreshsalesResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.`,
 					},
 					"domain_name": schema.StringAttribute{

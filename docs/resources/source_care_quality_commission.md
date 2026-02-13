@@ -51,7 +51,7 @@ resource "airbyte_source_care_quality_commission" "my_source_carequalitycommissi
 
 Required:
 
-- `api_key` (String) Your CQC Primary Key. See https://www.cqc.org.uk/about-us/transparency/using-cqc-data#api for steps to generate one.
+- `api_key` (String, Sensitive) Your CQC Primary Key. See https://www.cqc.org.uk/about-us/transparency/using-cqc-data#api for steps to generate one.
 
 Optional:
 

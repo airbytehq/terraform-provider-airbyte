@@ -51,7 +51,7 @@ resource "airbyte_source_lemlist" "my_source_lemlist" {
 
 Required:
 
-- `api_key` (String) Lemlist API key,
+- `api_key` (String, Sensitive) Lemlist API key,
 
 Optional:
 

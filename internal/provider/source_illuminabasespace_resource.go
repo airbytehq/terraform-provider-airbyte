@@ -65,6 +65,7 @@ func (r *SourceIlluminaBasespaceResource) Schema(ctx context.Context, req resour
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `BaseSpace access token. Instructions for obtaining your access token can be found in the BaseSpace Developer Documentation.`,
 					},
 					"additional_properties": schema.StringAttribute{

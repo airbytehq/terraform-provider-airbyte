@@ -74,6 +74,7 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.`,
 					},
 					"account_ids": schema.ListAttribute{
@@ -112,10 +113,12 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 					},
 					"client_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The Client Id for your OAuth app`,
 					},
 					"client_secret": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The Client Secret for your OAuth app`,
 					},
 					"credentials": schema.SingleNestedAttribute{
@@ -126,14 +129,17 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID for the Facebook Marketing API`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret for the Facebook Marketing API`,
 									},
 								},
@@ -148,6 +154,7 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.`,
 									},
 								},

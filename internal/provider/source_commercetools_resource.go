@@ -72,10 +72,12 @@ func (r *SourceCommercetoolsResource) Schema(ctx context.Context, req resource.S
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Id of API Client.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The password of secret of API Client.`,
 					},
 					"host": schema.StringAttribute{

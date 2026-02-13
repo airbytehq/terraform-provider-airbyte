@@ -73,6 +73,7 @@ func (r *SourceCoingeckoCoinsResource) Schema(ctx context.Context, req resource.
 					},
 					"api_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `API Key (for pro users)`,
 					},
 					"coin_id": schema.StringAttribute{

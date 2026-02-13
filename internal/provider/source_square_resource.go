@@ -80,6 +80,7 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key for a Square application`,
 									},
 								},
@@ -94,14 +95,17 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Square-issued ID of your application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Square-issued application secret for your application`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `A refresh token generated using the above client ID and secret`,
 									},
 								},

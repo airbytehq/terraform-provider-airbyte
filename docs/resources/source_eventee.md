@@ -51,7 +51,7 @@ resource "airbyte_source_eventee" "my_source_eventee" {
 
 Required:
 
-- `api_token` (String) API token to use. Generate it at https://admin.eventee.co/ in 'Settings -> Features'.
+- `api_token` (String, Sensitive) API token to use. Generate it at https://admin.eventee.co/ in 'Settings -> Features'.
 
 Optional:
 

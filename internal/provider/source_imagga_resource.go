@@ -70,10 +70,12 @@ func (r *SourceImaggaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Imagga API key, available in your Imagga dashboard. Could be found at ` + "`" + `https://imagga.com/profile/dashboard` + "`" + ``,
 					},
 					"api_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Imagga API secret, available in your Imagga dashboard. Could be found at ` + "`" + `https://imagga.com/profile/dashboard` + "`" + ``,
 					},
 					"img_for_detection": schema.StringAttribute{

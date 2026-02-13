@@ -52,7 +52,7 @@ resource "airbyte_source_campayn" "my_source_campayn" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it in your Campayn account settings. Keep it secure as it grants access to your Campayn data.
+- `api_key` (String, Sensitive) API key to use. Find it in your Campayn account settings. Keep it secure as it grants access to your Campayn data.
 - `sub_domain` (String)
 
 Optional:

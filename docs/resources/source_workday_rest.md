@@ -59,7 +59,7 @@ Required:
 
 - `credentials` (Attributes) Credentials for connecting to the Workday (REST) API. (see [below for nested schema](#nestedatt--configuration--credentials))
 - `host` (String)
-- `tenant_id` (String)
+- `tenant_id` (String, Sensitive)
 
 Optional:
 
@@ -72,7 +72,7 @@ Optional:
 
 Required:
 
-- `access_token` (String) Follow the instructions in the "OAuth 2.0 in Postman - API Client for Integrations" article in the Workday community docs to obtain access token.
+- `access_token` (String, Sensitive) Follow the instructions in the "OAuth 2.0 in Postman - API Client for Integrations" article in the Workday community docs to obtain access token.
 
 
 

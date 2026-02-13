@@ -54,7 +54,7 @@ resource "airbyte_source_twitter" "my_source_twitter" {
 
 Required:
 
-- `api_key` (String) App only Bearer Token. See the <a href="https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens">docs</a> for more information on how to obtain this token.
+- `api_key` (String, Sensitive) App only Bearer Token. See the <a href="https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens">docs</a> for more information on how to obtain this token.
 - `query` (String) Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
 
 Optional:

@@ -59,7 +59,7 @@ resource "airbyte_source_tplcentral" "my_source_tplcentral" {
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 
 Optional:
 

@@ -68,6 +68,7 @@ func (r *DestinationRagieResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key for Ragie.ai.`,
 					},
 					"api_url": schema.StringAttribute{

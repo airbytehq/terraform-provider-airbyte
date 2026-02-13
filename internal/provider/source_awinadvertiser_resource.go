@@ -76,6 +76,7 @@ func (r *SourceAwinAdvertiserResource) Schema(ctx context.Context, req resource.
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Awin API key. Generate this from your Awin account under API Credentials.`,
 					},
 					"lookback_days": schema.Int64Attribute{

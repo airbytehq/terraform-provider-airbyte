@@ -74,7 +74,8 @@ func (r *SourceFreshchatResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

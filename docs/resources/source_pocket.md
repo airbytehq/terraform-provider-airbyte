@@ -61,8 +61,8 @@ resource "airbyte_source_pocket" "my_source_pocket" {
 
 Required:
 
-- `access_token` (String) The user's Pocket access token.
-- `consumer_key` (String) Your application's Consumer Key.
+- `access_token` (String, Sensitive) The user's Pocket access token.
+- `consumer_key` (String, Sensitive) Your application's Consumer Key.
 
 Optional:
 

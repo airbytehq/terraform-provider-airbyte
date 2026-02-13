@@ -58,8 +58,8 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
 
 Required:
 
-- `aws_key_id` (String) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-- `aws_secret_key` (String) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
+- `aws_key_id` (String, Sensitive) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
+- `aws_secret_key` (String, Sensitive) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
 
 Optional:
 

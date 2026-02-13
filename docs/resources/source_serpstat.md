@@ -62,7 +62,7 @@ resource "airbyte_source_serpstat" "my_source_serpstat" {
 
 Required:
 
-- `api_key` (String) Serpstat API key can be found here: https://serpstat.com/users/profile/
+- `api_key` (String, Sensitive) Serpstat API key can be found here: https://serpstat.com/users/profile/
 
 Optional:
 

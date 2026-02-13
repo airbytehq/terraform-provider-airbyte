@@ -57,8 +57,8 @@ resource "airbyte_source_codefresh" "my_source_codefresh" {
 
 Required:
 
-- `account_id` (String)
-- `api_key` (String)
+- `account_id` (String, Sensitive)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

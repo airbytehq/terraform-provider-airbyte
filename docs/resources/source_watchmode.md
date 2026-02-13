@@ -53,7 +53,7 @@ resource "airbyte_source_watchmode" "my_source_watchmode" {
 
 Required:
 
-- `api_key` (String) Your API key for authenticating with the Watchmode API. You can request a free API key at https://api.watchmode.com/requestApiKey/.
+- `api_key` (String, Sensitive) Your API key for authenticating with the Watchmode API. You can request a free API key at https://api.watchmode.com/requestApiKey/.
 - `start_date` (String)
 
 Optional:

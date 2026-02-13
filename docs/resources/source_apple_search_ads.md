@@ -59,8 +59,8 @@ resource "airbyte_source_apple_search_ads" "my_source_applesearchads" {
 
 Required:
 
-- `client_id` (String) A user identifier for the token request. See <a href="https://developer.apple.com/documentation/apple_search_ads/implementing_oauth_for_the_apple_search_ads_api">here</a>
-- `client_secret` (String) A string that authenticates the user’s setup request. See <a href="https://developer.apple.com/documentation/apple_search_ads/implementing_oauth_for_the_apple_search_ads_api">here</a>
+- `client_id` (String, Sensitive) A user identifier for the token request. See <a href="https://developer.apple.com/documentation/apple_search_ads/implementing_oauth_for_the_apple_search_ads_api">here</a>
+- `client_secret` (String, Sensitive) A string that authenticates the user’s setup request. See <a href="https://developer.apple.com/documentation/apple_search_ads/implementing_oauth_for_the_apple_search_ads_api">here</a>
 - `org_id` (Number) The identifier of the organization that owns the campaign. Your Org Id is the same as your account in the Apple Search Ads UI.
 - `start_date` (String) Start getting data from that date.
 

@@ -68,7 +68,8 @@ func (r *SourceChurnkeyResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"x_ck_app": schema.StringAttribute{
 						Required: true,

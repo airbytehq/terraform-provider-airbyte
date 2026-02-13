@@ -67,6 +67,7 @@ func (r *SourceSenseforceResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API access token. See <a href="https://manual.senseforce.io/manual/sf-platform/public-api/get-your-access-token/">here</a>. The toke is case sensitive.`,
 					},
 					"additional_properties": schema.StringAttribute{

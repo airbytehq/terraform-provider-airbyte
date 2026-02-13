@@ -67,10 +67,12 @@ func (r *SourceBabelforceResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Babelforce access key ID`,
 					},
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Babelforce access token`,
 					},
 					"additional_properties": schema.StringAttribute{

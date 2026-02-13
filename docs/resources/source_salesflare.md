@@ -51,7 +51,7 @@ resource "airbyte_source_salesflare" "my_source_salesflare" {
 
 Required:
 
-- `api_key` (String) Enter you api key like this : Bearer YOUR_API_KEY
+- `api_key` (String, Sensitive) Enter you api key like this : Bearer YOUR_API_KEY
 
 Optional:
 

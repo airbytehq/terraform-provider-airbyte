@@ -57,7 +57,7 @@ resource "airbyte_source_surveycto" "my_source_surveycto" {
 Required:
 
 - `form_id` (List of String) Unique identifier for one of your forms
-- `password` (String) Password to authenticate into the SurveyCTO server
+- `password` (String, Sensitive) Password to authenticate into the SurveyCTO server
 - `server_name` (String) The name of the SurveryCTO server
 - `username` (String) Username to authenticate into the SurveyCTO server
 

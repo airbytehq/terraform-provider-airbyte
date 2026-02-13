@@ -76,6 +76,7 @@ func (r *SourceKekaResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your client secret for secure authentication.`,
 					},
 					"grant_type": schema.StringAttribute{

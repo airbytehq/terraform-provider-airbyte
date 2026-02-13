@@ -81,6 +81,7 @@ func (r *SourceSinglestoreResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -131,18 +132,22 @@ func (r *SourceSinglestoreResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 								},
@@ -160,18 +165,22 @@ func (r *SourceSinglestoreResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 								},

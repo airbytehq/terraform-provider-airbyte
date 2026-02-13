@@ -69,6 +69,7 @@ func (r *SourceMailtrapResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use. Find it at https://mailtrap.io/account`,
 					},
 				},

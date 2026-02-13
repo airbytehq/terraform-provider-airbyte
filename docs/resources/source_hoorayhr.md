@@ -52,7 +52,7 @@ resource "airbyte_source_hoorayhr" "my_source_hoorayhr" {
 
 Required:
 
-- `hoorayhrpassword` (String)
+- `hoorayhrpassword` (String, Sensitive)
 - `hoorayhrusername` (String)
 
 Optional:

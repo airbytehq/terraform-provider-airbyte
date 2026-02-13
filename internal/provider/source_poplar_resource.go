@@ -66,6 +66,7 @@ func (r *SourcePoplarResource) Schema(ctx context.Context, req resource.SchemaRe
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Poplar API Access Token. Generate it from the [API Credentials page](https://app.heypoplar.com/credentials) in your account. Use a production token for live data or a test token for testing purposes.`,
 					},
 					"additional_properties": schema.StringAttribute{

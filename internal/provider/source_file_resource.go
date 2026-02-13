@@ -103,10 +103,12 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"sas_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.`,
 									},
 									"shared_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.`,
 									},
 									"storage_account": schema.StringAttribute{
@@ -130,6 +132,7 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"service_account_json": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.`,
 									},
 								},
@@ -174,6 +177,7 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 									},
 									"aws_secret_access_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
 								},
@@ -195,7 +199,8 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Required: true,
 									},
 									"password": schema.StringAttribute{
-										Optional: true,
+										Optional:  true,
+										Sensitive: true,
 									},
 									"port": schema.StringAttribute{
 										Computed:    true,
@@ -225,7 +230,8 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Required: true,
 									},
 									"password": schema.StringAttribute{
-										Optional: true,
+										Optional:  true,
+										Sensitive: true,
 									},
 									"port": schema.StringAttribute{
 										Computed:    true,
@@ -255,7 +261,8 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Required: true,
 									},
 									"password": schema.StringAttribute{
-										Optional: true,
+										Optional:  true,
+										Sensitive: true,
 									},
 									"port": schema.StringAttribute{
 										Computed:    true,

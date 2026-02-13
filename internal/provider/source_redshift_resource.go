@@ -79,6 +79,7 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{

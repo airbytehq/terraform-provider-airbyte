@@ -78,7 +78,7 @@ Optional:
 
 Optional:
 
-- `api_key` (String) Kit/ConvertKit API Key. Default: "{{ config.get('credentials',{}).get('api_key') or config.get('api_secret') }}"
+- `api_key` (String, Sensitive) Kit/ConvertKit API Key. Default: "{{ config.get('credentials',{}).get('api_key') or config.get('api_secret') }}"
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -86,13 +86,13 @@ Optional:
 
 Required:
 
-- `client_id` (String) The client ID of your OAuth application.
-- `client_secret` (String) The client secret of your OAuth application.
-- `refresh_token` (String) A current, non-expired refresh token genereted using the provided client ID and secret.
+- `client_id` (String, Sensitive) The client ID of your OAuth application.
+- `client_secret` (String, Sensitive) The client secret of your OAuth application.
+- `refresh_token` (String, Sensitive) A current, non-expired refresh token genereted using the provided client ID and secret.
 
 Optional:
 
-- `access_token` (String) An access token generated using the provided client information and refresh token.
+- `access_token` (String, Sensitive) An access token generated using the provided client information and refresh token.
 - `expires_at` (String) The time at which the current access token is set to expire
 
 

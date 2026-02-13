@@ -54,7 +54,7 @@ resource "airbyte_source_plausible" "my_source_plausible" {
 
 Required:
 
-- `api_key` (String) Plausible API Key. See the <a href="https://plausible.io/docs/stats-api">docs</a> for information on how to generate this key.
+- `api_key` (String, Sensitive) Plausible API Key. See the <a href="https://plausible.io/docs/stats-api">docs</a> for information on how to generate this key.
 - `site_id` (String) The domain of the site you want to retrieve data for. Enter the name of your site as configured on Plausible, i.e., excluding "https://" and "www". Can be retrieved from the 'domain' field in your Plausible site settings.
 
 Optional:

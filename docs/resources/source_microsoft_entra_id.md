@@ -54,10 +54,10 @@ resource "airbyte_source_microsoft_entra_id" "my_source_microsoftentraid" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `tenant_id` (String)
-- `user_id` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `tenant_id` (String, Sensitive)
+- `user_id` (String, Sensitive)
 
 Optional:
 

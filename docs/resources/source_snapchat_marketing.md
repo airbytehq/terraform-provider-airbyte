@@ -64,9 +64,9 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
 
 Required:
 
-- `client_id` (String) The Client ID of your Snapchat developer application.
-- `client_secret` (String) The Client Secret of your Snapchat developer application.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
+- `client_id` (String, Sensitive) The Client ID of your Snapchat developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Snapchat developer application.
+- `refresh_token` (String, Sensitive) Refresh Token to renew the expired Access Token.
 
 Optional:
 

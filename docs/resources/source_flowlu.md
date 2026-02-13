@@ -52,7 +52,7 @@ resource "airbyte_source_flowlu" "my_source_flowlu" {
 
 Required:
 
-- `api_key` (String) The API key to use for authentication
+- `api_key` (String, Sensitive) The API key to use for authentication
 - `company` (String)
 
 Optional:

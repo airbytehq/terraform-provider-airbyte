@@ -97,14 +97,17 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OAuth access token`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `OAuth Client Id`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `OAuth Client secret`,
 									},
 								},
@@ -119,6 +122,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								Attributes: map[string]schema.Attribute{
 									"personal_access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
 									},
 								},

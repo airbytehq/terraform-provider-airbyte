@@ -59,7 +59,7 @@ Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `start_date` (String) UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this date will not be synced.
-- `tenant_id` (String) Enter your Xero organization's Tenant ID
+- `tenant_id` (String, Sensitive) Enter your Xero organization's Tenant ID
 
 Optional:
 
@@ -78,7 +78,7 @@ Optional:
 
 Required:
 
-- `access_token` (String) The access token used to call the Xero API.
+- `access_token` (String, Sensitive) The access token used to call the Xero API.
 
 
 <a id="nestedatt--configuration--credentials--o_auth_custom_connection"></a>
@@ -87,7 +87,7 @@ Required:
 Required:
 
 - `client_id` (String) Your Xero application's Client ID.
-- `client_secret` (String) Your Xero application's Client Secret.
+- `client_secret` (String, Sensitive) Your Xero application's Client Secret.
 
 
 

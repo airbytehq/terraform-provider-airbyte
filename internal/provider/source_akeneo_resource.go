@@ -78,10 +78,12 @@ func (r *SourceAkeneoResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `https://cb8715249e.trial.akeneo.cloud`,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"secret": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

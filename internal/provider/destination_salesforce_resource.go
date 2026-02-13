@@ -77,6 +77,7 @@ func (r *DestinationSalesforceResource) Schema(ctx context.Context, req resource
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>.`,
 					},
 					"is_sandbox": schema.BoolAttribute{
@@ -117,6 +118,7 @@ func (r *DestinationSalesforceResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.`,
 									},
 									"additional_properties": schema.StringAttribute{
@@ -326,6 +328,7 @@ func (r *DestinationSalesforceResource) Schema(ctx context.Context, req resource
 									},
 									"secret_access_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>`,
 									},
 									"storage_type": schema.StringAttribute{
@@ -348,6 +351,7 @@ func (r *DestinationSalesforceResource) Schema(ctx context.Context, req resource
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.`,
 					},
 				},

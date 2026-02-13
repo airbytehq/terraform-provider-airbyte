@@ -84,7 +84,7 @@ Optional:
 - `entra_service_principal_auth` (Boolean) Interpret password as a client secret for a Microsft Entra service principal. Default: false
 - `entra_tenant_id` (String) If using Entra service principal, the ID of the tenant
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 5432
 - `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas (case sensitive) to sync from. Defaults to public. Default: ["public"]
@@ -179,14 +179,14 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
+- `client_certificate` (String, Sensitive) Client certificate
+- `client_key` (String, Sensitive) Client key
+- `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 <a id="nestedatt--configuration--ssl_mode--verify_full"></a>
@@ -194,14 +194,14 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
+- `client_certificate` (String, Sensitive) Client certificate
+- `client_key` (String, Sensitive) Client key
+- `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 
@@ -225,7 +225,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -237,7 +237,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 

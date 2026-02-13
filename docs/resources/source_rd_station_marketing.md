@@ -77,9 +77,9 @@ Optional:
 
 Optional:
 
-- `client_id` (String) The Client ID of your RD Station developer application.
-- `client_secret` (String) The Client Secret of your RD Station developer application
-- `refresh_token` (String) The token for obtaining the new access token.
+- `client_id` (String, Sensitive) The Client ID of your RD Station developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your RD Station developer application
+- `refresh_token` (String, Sensitive) The token for obtaining the new access token.
 
 
 

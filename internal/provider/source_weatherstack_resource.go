@@ -67,6 +67,7 @@ func (r *SourceWeatherstackResource) Schema(ctx context.Context, req resource.Sc
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API access key used to retrieve data from the Weatherstack API.(https://weatherstack.com/product)`,
 					},
 					"additional_properties": schema.StringAttribute{

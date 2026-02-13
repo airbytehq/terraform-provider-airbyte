@@ -56,7 +56,7 @@ resource "airbyte_source_nasa" "my_source_nasa" {
 
 Required:
 
-- `api_key` (String) API access key used to retrieve data from the NASA APOD API.
+- `api_key` (String, Sensitive) API access key used to retrieve data from the NASA APOD API.
 
 Optional:
 

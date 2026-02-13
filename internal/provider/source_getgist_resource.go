@@ -69,6 +69,7 @@ func (r *SourceGetgistResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it in the Integration Settings on your Gist dashboard at https://app.getgist.com/projects/_/settings/api-key.`,
 					},
 				},

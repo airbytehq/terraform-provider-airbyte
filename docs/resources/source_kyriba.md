@@ -56,7 +56,7 @@ resource "airbyte_source_kyriba" "my_source_kyriba" {
 Required:
 
 - `domain` (String) Kyriba domain
-- `password` (String) Password to be used in basic auth
+- `password` (String, Sensitive) Password to be used in basic auth
 - `start_date` (String) The date the sync should start from.
 - `username` (String) Username to be used in basic auth
 

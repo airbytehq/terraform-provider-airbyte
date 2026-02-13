@@ -73,7 +73,8 @@ func (r *SourceAirbyteResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"host": schema.StringAttribute{
 						Optional:    true,

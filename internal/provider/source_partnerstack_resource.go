@@ -72,10 +72,12 @@ func (r *SourcePartnerstackResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"private_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Live Private Key for a Partnerstack account.`,
 					},
 					"public_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Live Public Key for a Partnerstack account.`,
 					},
 					"start_date": schema.StringAttribute{

@@ -111,7 +111,7 @@ Optional:
 - `database` (String) The name of the tenant database to connect to. This is required for multi-tenant SAP HANA systems. For single-tenant systems, this can be left empty.
 - `filters` (Attributes List) Inclusion filters for table selection per schema. If no filters are specified for a schema, all tables in that schema will be synced. (see [below for nested schema](#nestedatt--configuration--filters))
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) Port of the database. SAP recommends the following port numbers: 443 - Default listening port for SAP HANA Cloud client connections to the listener. Default: 443
 - `schemas` (List of String) The list of schemas to sync from. Defaults to user. Case sensitive.
 
@@ -168,7 +168,7 @@ Optional:
 
 Required:
 
-- `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
+- `ssl_certificate` (String, Sensitive) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 
 Optional:
 
@@ -211,7 +211,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -225,7 +225,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 

@@ -51,7 +51,7 @@ resource "airbyte_source_pivotal_tracker" "my_source_pivotaltracker" {
 
 Required:
 
-- `api_token` (String) Pivotal Tracker API token
+- `api_token` (String, Sensitive) Pivotal Tracker API token
 
 Optional:
 

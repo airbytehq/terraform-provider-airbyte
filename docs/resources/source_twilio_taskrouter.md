@@ -52,8 +52,8 @@ resource "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
 
 Required:
 
-- `account_sid` (String) Twilio Account ID
-- `auth_token` (String) Twilio Auth Token
+- `account_sid` (String, Sensitive) Twilio Account ID
+- `auth_token` (String, Sensitive) Twilio Auth Token
 
 Optional:
 

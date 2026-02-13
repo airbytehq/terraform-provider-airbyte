@@ -71,6 +71,7 @@ func (r *SourceFirebaseRealtimeDatabaseResource) Schema(ctx context.Context, req
 					},
 					"google_application_credentials": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Cert credentials in JSON format of Service Account with Firebase Realtime Database Viewer role. (see, https://firebase.google.com/docs/projects/iam/roles-predefined-product#realtime-database)`,
 					},
 					"path": schema.StringAttribute{

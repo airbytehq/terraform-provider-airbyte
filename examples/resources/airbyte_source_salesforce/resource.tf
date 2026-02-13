@@ -5,6 +5,7 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     client_secret         = "...my_client_secret..."
     force_use_bulk_api    = true
     is_sandbox            = false
+    lookback_window       = "PT10M"
     refresh_token         = "...my_refresh_token..."
     start_date            = "2021-07-25"
     stream_slice_step     = "PT12H"

@@ -52,7 +52,7 @@ resource "airbyte_source_tavus" "my_source_tavus" {
 
 Required:
 
-- `api_key` (String) Your Tavus API key. You can find this in your Tavus account settings or API dashboard.
+- `api_key` (String, Sensitive) Your Tavus API key. You can find this in your Tavus account settings or API dashboard.
 - `start_date` (String)
 
 Optional:

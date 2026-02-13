@@ -86,6 +86,7 @@ func (r *SourceRevolutMerchantResource) Schema(ctx context.Context, req resource
 					},
 					"secret_api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Secret API key to use for authenticating with the Revolut Merchant API. Find it in your Revolut Business account under APIs > Merchant API.`,
 					},
 					"start_date": schema.StringAttribute{

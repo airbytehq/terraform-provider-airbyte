@@ -117,6 +117,8 @@ type SourceSalesforce struct {
 	ForceUseBulkAPI *bool `default:"false" json:"force_use_bulk_api"`
 	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
 	IsSandbox *bool `default:"false" json:"is_sandbox"`
+	// The duration (ISO8601 duration) to re-read data from the source when running incremental syncs. This compensates for records that may not be immediately available when querying the Salesforce API due to eventual consistency delays. The connector will re-query this amount of time before the last cursor position on each sync. Increase this value if you observe missing records in your destination. See <a href="https://docs.airbyte.com/integrations/sources/salesforce#limitations--troubleshooting">Limitations & Troubleshooting</a> for details.
+	LookbackWindow *string `default:"PT10M" json:"lookback_window"`
 	// Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 	RefreshToken string `json:"refresh_token"`
 	// Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
@@ -170,6 +172,13 @@ func (s *SourceSalesforce) GetIsSandbox() *bool {
 		return nil
 	}
 	return s.IsSandbox
+}
+
+func (s *SourceSalesforce) GetLookbackWindow() *string {
+	if s == nil {
+		return nil
+	}
+	return s.LookbackWindow
 }
 
 func (s *SourceSalesforce) GetRefreshToken() string {

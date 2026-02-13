@@ -52,7 +52,7 @@ resource "airbyte_source_circa" "my_source_circa" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://app.circa.co/settings/integrations/api
+- `api_key` (String, Sensitive) API key to use. Find it at https://app.circa.co/settings/integrations/api
 - `start_date` (String)
 
 Optional:

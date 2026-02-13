@@ -59,7 +59,7 @@ resource "airbyte_source_jotform" "my_source_jotform" {
 Required:
 
 - `api_endpoint` (Attributes) (see [below for nested schema](#nestedatt--configuration--api_endpoint))
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `end_date` (String)
 - `start_date` (String)
 

@@ -54,7 +54,7 @@ resource "airbyte_source_adobe_commerce_magento" "my_source_adobecommercemagento
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 - `store_host` (String) magento.mystore.com
 

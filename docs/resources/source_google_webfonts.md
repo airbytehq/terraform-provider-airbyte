@@ -54,7 +54,7 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
 
 Required:
 
-- `api_key` (String) API key is required to access google apis, For getting your's goto google console and generate api key for Webfonts
+- `api_key` (String, Sensitive) API key is required to access google apis, For getting your's goto google console and generate api key for Webfonts
 
 Optional:
 

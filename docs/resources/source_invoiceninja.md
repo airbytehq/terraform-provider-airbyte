@@ -51,7 +51,7 @@ resource "airbyte_source_invoiceninja" "my_source_invoiceninja" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

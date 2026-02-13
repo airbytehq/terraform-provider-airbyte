@@ -85,10 +85,12 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.`,
 									},
 								},
@@ -103,6 +105,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.`,
 									},
 								},

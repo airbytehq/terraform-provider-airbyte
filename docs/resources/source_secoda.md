@@ -51,7 +51,7 @@ resource "airbyte_source_secoda" "my_source_secoda" {
 
 Required:
 
-- `api_key` (String) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
+- `api_key` (String, Sensitive) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
 
 Optional:
 

@@ -53,7 +53,7 @@ resource "airbyte_source_wrike" "my_source_wrike" {
 
 Required:
 
-- `access_token` (String) Permanent access token. You can find documentation on how to acquire a permanent access token  <a href="https://developers.wrike.com/oauth-20-authorization/">here</a>
+- `access_token` (String, Sensitive) Permanent access token. You can find documentation on how to acquire a permanent access token  <a href="https://developers.wrike.com/oauth-20-authorization/">here</a>
 
 Optional:
 

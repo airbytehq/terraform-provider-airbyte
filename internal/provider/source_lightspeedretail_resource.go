@@ -69,6 +69,7 @@ func (r *SourceLightspeedRetailResource) Schema(ctx context.Context, req resourc
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key or access token`,
 					},
 					"subdomain": schema.StringAttribute{

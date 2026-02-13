@@ -53,7 +53,7 @@ resource "airbyte_source_us_census" "my_source_uscensus" {
 
 Required:
 
-- `api_key` (String) Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.
+- `api_key` (String, Sensitive) Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.
 - `query_path` (String) The path portion of the GET request
 
 Optional:

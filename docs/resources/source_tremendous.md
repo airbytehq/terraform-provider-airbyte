@@ -52,7 +52,7 @@ resource "airbyte_source_tremendous" "my_source_tremendous" {
 
 Required:
 
-- `api_key` (String) API key to use. You can generate an API key through the Tremendous dashboard under Team Settings > Developers. Save the key once you’ve generated it.
+- `api_key` (String, Sensitive) API key to use. You can generate an API key through the Tremendous dashboard under Team Settings > Developers. Save the key once you’ve generated it.
 - `environment` (String) must be one of ["api", "testflight"]
 
 Optional:

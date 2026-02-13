@@ -68,7 +68,8 @@ func (r *SourceThinkificCoursesResource) Schema(ctx context.Context, req resourc
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"x_auth_subdomain": schema.StringAttribute{
 						Required: true,

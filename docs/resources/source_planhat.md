@@ -51,7 +51,7 @@ resource "airbyte_source_planhat" "my_source_planhat" {
 
 Required:
 
-- `api_token` (String) Your Planhat <a href="https://docs.planhat.com/#authentication">API Access Token</a>
+- `api_token` (String, Sensitive) Your Planhat <a href="https://docs.planhat.com/#authentication">API Access Token</a>
 
 Optional:
 

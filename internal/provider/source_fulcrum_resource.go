@@ -69,6 +69,7 @@ func (r *SourceFulcrumResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://web.fulcrumapp.com/settings/api`,
 					},
 				},

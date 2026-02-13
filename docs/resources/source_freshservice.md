@@ -53,7 +53,7 @@ resource "airbyte_source_freshservice" "my_source_freshservice" {
 
 Required:
 
-- `api_key` (String) Freshservice API Key. See <a href="https://api.freshservice.com/#authentication">here</a>. The key is case sensitive.
+- `api_key` (String, Sensitive) Freshservice API Key. See <a href="https://api.freshservice.com/#authentication">here</a>. The key is case sensitive.
 - `domain_name` (String) The name of your Freshservice domain
 - `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 

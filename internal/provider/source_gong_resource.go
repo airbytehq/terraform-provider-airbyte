@@ -80,6 +80,7 @@ func (r *SourceGongResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 									"additional_properties": schema.StringAttribute{
@@ -93,10 +94,12 @@ func (r *SourceGongResource) Schema(ctx context.Context, req resource.SchemaRequ
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Gong OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh Token to renew the expired Access Token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
@@ -118,10 +121,12 @@ func (r *SourceGongResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"access_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Gong Access Key`,
 									},
 									"access_key_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Gong Access Key Secret`,
 									},
 									"additional_properties": schema.StringAttribute{

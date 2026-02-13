@@ -69,6 +69,7 @@ func (r *SourceSecodaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.`,
 					},
 				},

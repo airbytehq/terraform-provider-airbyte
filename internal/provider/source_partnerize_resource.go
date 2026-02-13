@@ -69,10 +69,12 @@ func (r *SourcePartnerizeResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"application_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The application key identifies the network you are making the request against. Find it in your account settings under 'User Application Key' at https://console.partnerize.com.`,
 					},
 					"user_api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The user API key identifies the user on whose behalf the request is made. Find it in your account settings under 'User API Key' at https://console.partnerize.com.`,
 					},
 				},

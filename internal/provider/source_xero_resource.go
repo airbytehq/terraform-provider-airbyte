@@ -78,6 +78,7 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The access token used to call the Xero API.`,
 									},
 								},
@@ -96,6 +97,7 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Your Xero application's Client Secret.`,
 									},
 								},
@@ -116,6 +118,7 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"tenant_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter your Xero organization's Tenant ID`,
 					},
 				},

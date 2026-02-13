@@ -52,7 +52,7 @@ resource "airbyte_source_bluetally" "my_source_bluetally" {
 
 Required:
 
-- `api_key` (String) Your API key to authenticate with the BlueTally API. You can generate it by navigating to your account settings, selecting 'API Keys', and clicking 'Create API Key'.
+- `api_key` (String, Sensitive) Your API key to authenticate with the BlueTally API. You can generate it by navigating to your account settings, selecting 'API Keys', and clicking 'Create API Key'.
 - `start_date` (String)
 
 Optional:

@@ -57,7 +57,7 @@ resource "airbyte_source_looker" "my_source_looker" {
 Required:
 
 - `client_id` (String) The Client ID is first part of an API3 key that is specific to each Looker user. See the <a href="https://docs.airbyte.com/integrations/sources/looker">docs</a> for more information on how to generate this key.
-- `client_secret` (String) The Client Secret is second part of an API3 key.
+- `client_secret` (String, Sensitive) The Client Secret is second part of an API3 key.
 - `domain` (String) Domain for your Looker account, e.g. airbyte.cloud.looker.com,looker.[clientname].com,IP address
 
 Optional:

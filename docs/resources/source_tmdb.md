@@ -54,7 +54,7 @@ resource "airbyte_source_tmdb" "my_source_tmdb" {
 
 Required:
 
-- `api_key` (String) API Key from tmdb account
+- `api_key` (String, Sensitive) API Key from tmdb account
 - `language` (String) Language expressed in ISO 639-1 scheme, Mandate for required streams (Example en-US)
 - `movie_id` (String) Target movie ID, Mandate for movie streams (Example is 550)
 - `query` (String) Target movie ID, Mandate for search streams

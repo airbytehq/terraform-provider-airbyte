@@ -69,6 +69,7 @@ func (r *SourceUbidotsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use for authentication. Obtain it from your Ubidots account.`,
 					},
 				},

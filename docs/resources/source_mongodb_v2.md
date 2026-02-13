@@ -98,7 +98,7 @@ Required:
 
 - `connection_string` (String) The connection string of the cluster that you want to replicate.
 - `databases` (List of String) The names of the MongoDB databases that contain the collection(s) to replicate.
-- `password` (String) The password associated with this username.
+- `password` (String, Sensitive) The password associated with this username.
 - `username` (String) The username which is used to access the database.
 
 Optional:
@@ -120,7 +120,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `auth_source` (String) The authentication source where the user information is stored. Default: "admin"
-- `password` (String) The password associated with this username.
+- `password` (String, Sensitive) The password associated with this username.
 - `schema_enforced` (Boolean) When enabled, syncs will validate and structure records against the stream's schema. Default: true
 - `username` (String) The username which is used to access the database.
 

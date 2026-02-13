@@ -54,7 +54,7 @@ resource "airbyte_source_mention" "my_source_mention" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `stats_start_date` (String)
 
 Optional:

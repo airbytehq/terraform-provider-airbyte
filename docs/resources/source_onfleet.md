@@ -52,12 +52,12 @@ resource "airbyte_source_onfleet" "my_source_onfleet" {
 
 Required:
 
-- `api_key` (String) API key to use for authenticating requests. You can create and manage your API keys in the API section of the Onfleet dashboard.
+- `api_key` (String, Sensitive) API key to use for authenticating requests. You can create and manage your API keys in the API section of the Onfleet dashboard.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String) Placeholder for basic HTTP auth password - should be set to empty string. Default: "x"
+- `password` (String, Sensitive) Placeholder for basic HTTP auth password - should be set to empty string. Default: "x"
 
 
 <a id="nestedatt--resource_allocation"></a>

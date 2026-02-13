@@ -66,6 +66,7 @@ func (r *SourceFloatResource) Schema(ctx context.Context, req resource.SchemaReq
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token obtained from your Float Account Settings page`,
 					},
 					"additional_properties": schema.StringAttribute{

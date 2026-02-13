@@ -49,7 +49,7 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
 
 Required:
 
-- `apikey` (String) Personal API key
+- `apikey` (String, Sensitive) Personal API key
 
 Optional:
 

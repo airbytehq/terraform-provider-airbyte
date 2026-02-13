@@ -92,7 +92,7 @@ Optional:
 
 Required:
 
-- `api_token` (String) A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.
+- `api_token` (String, Sensitive) A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.
 
 
 <a id="nestedatt--configuration--credentials--sign_in_via_slack_o_auth"></a>
@@ -100,9 +100,9 @@ Required:
 
 Required:
 
-- `access_token` (String) Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.
+- `access_token` (String, Sensitive) Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.
 - `client_id` (String) Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.
-- `client_secret` (String) Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
+- `client_secret` (String, Sensitive) Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
 
 
 

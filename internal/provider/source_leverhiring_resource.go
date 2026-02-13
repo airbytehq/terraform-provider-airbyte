@@ -80,6 +80,7 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Api Key of your Lever Hiring account.`,
 									},
 								},
@@ -98,10 +99,12 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Lever Hiring developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining new access token.`,
 									},
 								},

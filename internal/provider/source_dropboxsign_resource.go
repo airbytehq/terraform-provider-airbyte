@@ -71,6 +71,7 @@ func (r *SourceDropboxSignResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://app.hellosign.com/home/myAccount#api`,
 					},
 					"start_date": schema.StringAttribute{

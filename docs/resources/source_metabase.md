@@ -60,8 +60,8 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String)
-- `session_token` (String) To generate your session token, you need to run the following command: ``` curl -X POST \
+- `password` (String, Sensitive)
+- `session_token` (String, Sensitive) To generate your session token, you need to run the following command: ``` curl -X POST \
   -H "Content-Type: application/json" \
   -d '{"username": "person@metabase.com", "password": "fakepassword"}' \
   http://localhost:3000/api/session

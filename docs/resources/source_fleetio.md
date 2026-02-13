@@ -52,8 +52,8 @@ resource "airbyte_source_fleetio" "my_source_fleetio" {
 
 Required:
 
-- `account_token` (String)
-- `api_key` (String)
+- `account_token` (String, Sensitive)
+- `api_key` (String, Sensitive)
 
 Optional:
 

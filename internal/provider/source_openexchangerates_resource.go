@@ -73,6 +73,7 @@ func (r *SourceOpenExchangeRatesResource) Schema(ctx context.Context, req resour
 					},
 					"app_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `App ID provided by Open Exchange Rates`,
 					},
 					"base": schema.StringAttribute{

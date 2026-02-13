@@ -60,8 +60,8 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String) Placeholder for basic HTTP auth password - should be set to empty string. Default: "x"
-- `username` (String) Placeholder for basic HTTP auth username - should be set to empty string. Default: "x"
+- `password` (String, Sensitive) Placeholder for basic HTTP auth password - should be set to empty string. Default: "x"
+- `username` (String, Sensitive) Placeholder for basic HTTP auth username - should be set to empty string. Default: "x"
 
 
 <a id="nestedatt--resource_allocation"></a>

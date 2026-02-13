@@ -54,12 +54,12 @@ resource "airbyte_source_instagram" "my_source_instagram" {
 
 Required:
 
-- `access_token` (String) The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
+- `access_token` (String, Sensitive) The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
 
 Optional:
 
-- `client_id` (String) The Client ID for your Oauth application
-- `client_secret` (String) The Client Secret for your Oauth application
+- `client_id` (String, Sensitive) The Client ID for your Oauth application
+- `client_secret` (String, Sensitive) The Client Secret for your Oauth application
 - `num_workers` (Number) The number of worker threads to use for the sync. Default: 15
 - `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
 

@@ -78,6 +78,7 @@ func (r *SourceDriftResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Drift Access Token. See the <a href="https://docs.airbyte.com/integrations/sources/drift">docs</a> for more information on how to generate this key.`,
 									},
 								},
@@ -92,18 +93,22 @@ func (r *SourceDriftResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your Drift developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Drift developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh Token to renew the expired Access Token.`,
 									},
 								},

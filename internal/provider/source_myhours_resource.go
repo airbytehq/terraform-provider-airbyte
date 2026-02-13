@@ -87,6 +87,7 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The password associated to the username`,
 					},
 					"start_date": schema.StringAttribute{

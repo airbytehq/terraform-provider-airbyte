@@ -77,6 +77,7 @@ func (r *SourceEasypostResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API Key from your easypost settings`,
 					},
 				},

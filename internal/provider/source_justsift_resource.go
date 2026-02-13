@@ -69,6 +69,7 @@ func (r *SourceJustSiftResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use for accessing the Sift API. Obtain this token from your Sift account administrator.`,
 					},
 				},

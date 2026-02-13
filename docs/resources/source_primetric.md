@@ -51,8 +51,8 @@ resource "airbyte_source_primetric" "my_source_primetric" {
 
 Required:
 
-- `client_id` (String) The Client ID of your Primetric developer application. The Client ID is visible <a href=\"https://app.primetric.com/administrator/integrations">here</a>.
-- `client_secret` (String) The Client Secret of your Primetric developer application. You can manage your client's credentials <a href=\"https://app.primetric.com/administrator/integrations">here</a>.
+- `client_id` (String, Sensitive) The Client ID of your Primetric developer application. The Client ID is visible <a href=\"https://app.primetric.com/administrator/integrations">here</a>.
+- `client_secret` (String, Sensitive) The Client Secret of your Primetric developer application. You can manage your client's credentials <a href=\"https://app.primetric.com/administrator/integrations">here</a>.
 
 
 <a id="nestedatt--resource_allocation"></a>

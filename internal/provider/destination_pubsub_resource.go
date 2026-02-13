@@ -106,6 +106,7 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"credentials_json": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.`,
 					},
 					"ordering_enabled": schema.BoolAttribute{

@@ -106,13 +106,15 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"private_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 										MarkdownDescription: `RSA Private key to use for Snowflake connection. See the <a` + "\n" +
 											` href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more` + "\n" +
 											` information on how to obtain this key.`,
 									},
 									"private_key_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Passphrase for private key`,
 									},
 								},
@@ -144,6 +146,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter the password associated with the username.`,
 									},
 								},

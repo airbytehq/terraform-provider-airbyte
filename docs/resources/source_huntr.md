@@ -51,7 +51,7 @@ resource "airbyte_source_huntr" "my_source_huntr" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

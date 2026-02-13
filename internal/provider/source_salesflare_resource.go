@@ -69,6 +69,7 @@ func (r *SourceSalesflareResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter you api key like this : Bearer YOUR_API_KEY`,
 					},
 				},

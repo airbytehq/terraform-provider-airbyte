@@ -71,6 +71,7 @@ func (r *SourceTremendousResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. You can generate an API key through the Tremendous dashboard under Team Settings > Developers. Save the key once you’ve generated it.`,
 					},
 					"environment": schema.StringAttribute{

@@ -53,7 +53,7 @@ resource "airbyte_source_mailersend" "my_source_mailersend" {
 
 Required:
 
-- `api_token` (String) Your API Token. See <a href="https://www.mailersend.com/help/managing-api-tokens">here</a>.
+- `api_token` (String, Sensitive) Your API Token. See <a href="https://www.mailersend.com/help/managing-api-tokens">here</a>.
 - `domain_id` (String) The domain entity in mailersend
 
 Optional:

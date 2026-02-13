@@ -27,6 +27,7 @@ airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
   * [Authentication](#authentication)
   * [Installation](#installation)
   * [Testing the provider locally](#testing-the-provider-locally)
+  * [Migrating from Typed to Generic Resources](#migrating-from-typed-to-generic-resources)
   * [Authentication](#authentication-1)
   * [Available Resources and Data Sources](#available-resources-and-data-sources)
 
@@ -42,7 +43,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "1.0.0-rc5"
+      version = "1.0.0"
     }
   }
 }
@@ -396,6 +397,7 @@ Available configuration:
 * [airbyte_source_google_webfonts](docs/resources/source_google_webfonts.md)
 * [airbyte_source_gorgias](docs/resources/source_gorgias.md)
 * [airbyte_source_grafana](docs/resources/source_grafana.md)
+* [airbyte_source_granola](docs/resources/source_granola.md)
 * [airbyte_source_greenhouse](docs/resources/source_greenhouse.md)
 * [airbyte_source_greythr](docs/resources/source_greythr.md)
 * [airbyte_source_gridly](docs/resources/source_gridly.md)
@@ -1048,6 +1050,7 @@ Available configuration:
 * [airbyte_source_google_webfonts](docs/data-sources/source_google_webfonts.md)
 * [airbyte_source_gorgias](docs/data-sources/source_gorgias.md)
 * [airbyte_source_grafana](docs/data-sources/source_grafana.md)
+* [airbyte_source_granola](docs/data-sources/source_granola.md)
 * [airbyte_source_greenhouse](docs/data-sources/source_greenhouse.md)
 * [airbyte_source_greythr](docs/data-sources/source_greythr.md)
 * [airbyte_source_gridly](docs/data-sources/source_gridly.md)

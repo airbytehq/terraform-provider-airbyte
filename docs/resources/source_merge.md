@@ -53,8 +53,8 @@ resource "airbyte_source_merge" "my_source_merge" {
 
 Required:
 
-- `account_token` (String) Link your other integrations with account credentials on accounts section to get account token (ref - https://app.merge.dev/linked-accounts/accounts)
-- `api_token` (String) API token can be seen at  https://app.merge.dev/keys
+- `account_token` (String, Sensitive) Link your other integrations with account credentials on accounts section to get account token (ref - https://app.merge.dev/linked-accounts/accounts)
+- `api_token` (String, Sensitive) API token can be seen at  https://app.merge.dev/keys
 - `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 
 Optional:

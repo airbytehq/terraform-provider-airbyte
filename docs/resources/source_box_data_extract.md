@@ -62,7 +62,7 @@ Required:
 - `box_subject_id` (String) If subject type is "enterprise", use your enterprise ID If subject type is "user", use the user id to login as.
 - `box_subject_type` (String) Represents the type of user to login as ("user" or "enterprise"). Enterprise will login with the application service account. User will login with the user if app can impersonate users. must be one of ["user", "enterprise"]
 - `client_id` (String) You Box App client ID. Find yours in the <a href="https://app.box.com/developers/console">developer console</a>.
-- `client_secret` (String) You Box App client secret. Find yours in the <a href="https://app.box.com/developers/console">developer console</a>.
+- `client_secret` (String, Sensitive) You Box App client secret. Find yours in the <a href="https://app.box.com/developers/console">developer console</a>.
 - `is_recursive` (Boolean) Read the folders recursively.
 
 Optional:

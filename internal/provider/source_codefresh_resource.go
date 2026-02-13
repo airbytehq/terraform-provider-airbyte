@@ -66,7 +66,8 @@ func (r *SourceCodefreshResource) Schema(ctx context.Context, req resource.Schem
 				},
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"additional_properties": schema.StringAttribute{
 						CustomType:  jsontypes.NormalizedType{},
@@ -74,7 +75,8 @@ func (r *SourceCodefreshResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"report_date_range": schema.ListAttribute{
 						Optional:    true,

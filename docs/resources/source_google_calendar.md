@@ -55,9 +55,9 @@ resource "airbyte_source_google_calendar" "my_source_googlecalendar" {
 Required:
 
 - `calendarid` (String)
-- `client_id` (String)
-- `client_refresh_token_2` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_refresh_token_2` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 
 Optional:
 

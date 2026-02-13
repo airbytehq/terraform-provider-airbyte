@@ -52,8 +52,8 @@ resource "airbyte_source_visma_economic" "my_source_vismaeconomic" {
 
 Required:
 
-- `agreement_grant_token` (String) Identifier for the grant issued by an agreement
-- `app_secret_token` (String) Identification token for app accessing data
+- `agreement_grant_token` (String, Sensitive) Identifier for the grant issued by an agreement
+- `app_secret_token` (String, Sensitive) Identification token for app accessing data
 
 Optional:
 

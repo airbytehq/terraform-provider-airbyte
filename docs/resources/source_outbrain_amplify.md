@@ -83,7 +83,7 @@ Optional:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 
 
 <a id="nestedatt--configuration--credentials--username_password"></a>
@@ -91,7 +91,7 @@ Required:
 
 Required:
 
-- `password` (String) Add Password for authentication.
+- `password` (String, Sensitive) Add Password for authentication.
 - `username` (String) Add Username for authentication.
 
 

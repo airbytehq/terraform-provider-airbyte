@@ -59,7 +59,7 @@ Required:
 
 - `component_keys` (List of String) Comma-separated list of component keys.
 - `organization` (String) Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.
-- `user_token` (String) Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
+- `user_token` (String, Sensitive) Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
 
 Optional:
 

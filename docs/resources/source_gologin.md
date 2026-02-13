@@ -52,7 +52,7 @@ resource "airbyte_source_gologin" "my_source_gologin" {
 
 Required:
 
-- `api_key` (String) API Key found at `https://app.gologin.com/personalArea/TokenApi`
+- `api_key` (String, Sensitive) API Key found at `https://app.gologin.com/personalArea/TokenApi`
 - `start_date` (String)
 
 Optional:

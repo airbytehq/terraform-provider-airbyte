@@ -53,8 +53,8 @@ resource "airbyte_source_help_scout" "my_source_helpscout" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

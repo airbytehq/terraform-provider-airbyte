@@ -72,7 +72,8 @@ func (r *SourcePingdomResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"probes": schema.StringAttribute{
 						Optional: true,

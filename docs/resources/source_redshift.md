@@ -59,7 +59,7 @@ Required:
 
 - `database` (String) Name of the database.
 - `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com).
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `username` (String) Username to use to access the database.
 
 Optional:

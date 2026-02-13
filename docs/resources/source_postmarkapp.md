@@ -52,8 +52,8 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
 
 Required:
 
-- `x_postmark_account_token` (String) API Key for account
-- `x_postmark_server_token` (String) API Key for server
+- `x_postmark_account_token` (String, Sensitive) API Key for account
+- `x_postmark_server_token` (String, Sensitive) API Key for server
 
 Optional:
 

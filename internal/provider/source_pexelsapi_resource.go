@@ -69,6 +69,7 @@ func (r *SourcePexelsAPIResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key is required to access pexels api, For getting your's goto https://www.pexels.com/api/documentation and create account for free.`,
 					},
 					"color": schema.StringAttribute{

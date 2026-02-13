@@ -52,7 +52,7 @@ resource "airbyte_source_cal_com" "my_source_calcom" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://cal.com/account
+- `api_key` (String, Sensitive) API key to use. Find it at https://cal.com/account
 - `org_id` (String)
 
 Optional:

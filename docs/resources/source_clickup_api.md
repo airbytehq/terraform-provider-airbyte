@@ -52,7 +52,7 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
 
 Required:
 
-- `api_token` (String) Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.
+- `api_token` (String, Sensitive) Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.
 
 Optional:
 

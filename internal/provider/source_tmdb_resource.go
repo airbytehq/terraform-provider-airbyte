@@ -69,6 +69,7 @@ func (r *SourceTmdbResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key from tmdb account`,
 					},
 					"language": schema.StringAttribute{

@@ -51,7 +51,7 @@ resource "airbyte_source_mailerlite" "my_source_mailerlite" {
 
 Required:
 
-- `api_token` (String) Your API Token. See <a href="https://developers.mailerlite.com/docs/#authentication">here</a>.
+- `api_token` (String, Sensitive) Your API Token. See <a href="https://developers.mailerlite.com/docs/#authentication">here</a>.
 
 Optional:
 

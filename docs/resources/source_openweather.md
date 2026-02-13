@@ -56,7 +56,7 @@ resource "airbyte_source_openweather" "my_source_openweather" {
 
 Required:
 
-- `appid` (String) API KEY
+- `appid` (String, Sensitive) API KEY
 - `lat` (String) Latitude, decimal (-90; 90). If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use the OpenWeather Geocoding API
 - `lon` (String) Longitude, decimal (-180; 180). If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use the OpenWeather Geocoding API
 

@@ -66,7 +66,7 @@ resource "airbyte_destination_starburst_galaxy" "my_destination_starburstgalaxy"
 Required:
 
 - `catalog` (String) Name of the Starburst Galaxy Amazon S3 catalog.
-- `password` (String) Starburst Galaxy password for the specified user.
+- `password` (String, Sensitive) Starburst Galaxy password for the specified user.
 - `server_hostname` (String) Starburst Galaxy cluster hostname.
 - `staging_object_store` (Attributes) Temporary storage on which temporary Iceberg table is created. (see [below for nested schema](#nestedatt--configuration--staging_object_store))
 - `username` (String) Starburst Galaxy user.
@@ -90,10 +90,10 @@ Optional:
 
 Required:
 
-- `s3_access_key_id` (String) Access key with access to the bucket. Airbyte requires read and write permissions to a given bucket.
+- `s3_access_key_id` (String, Sensitive) Access key with access to the bucket. Airbyte requires read and write permissions to a given bucket.
 - `s3_bucket_name` (String) Name of the S3 bucket
 - `s3_bucket_path` (String) Directory in the S3 bucket where staging data is stored.
-- `s3_secret_access_key` (String) Secret key used with the specified access key.
+- `s3_secret_access_key` (String, Sensitive) Secret key used with the specified access key.
 
 Optional:
 

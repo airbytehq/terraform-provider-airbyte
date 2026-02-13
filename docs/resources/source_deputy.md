@@ -52,7 +52,7 @@ resource "airbyte_source_deputy" "my_source_deputy" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `base_url` (String) The base url for your deputy account to make API requests
 
 Optional:

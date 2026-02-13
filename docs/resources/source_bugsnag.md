@@ -52,7 +52,7 @@ resource "airbyte_source_bugsnag" "my_source_bugsnag" {
 
 Required:
 
-- `auth_token` (String) Personal auth token for accessing the Bugsnag API. Generate it in the My Account section of Bugsnag settings.
+- `auth_token` (String, Sensitive) Personal auth token for accessing the Bugsnag API. Generate it in the My Account section of Bugsnag settings.
 - `start_date` (String)
 
 Optional:

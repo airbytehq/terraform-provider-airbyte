@@ -70,6 +70,7 @@ func (r *SourceClockifyResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.`,
 					},
 					"api_url": schema.StringAttribute{

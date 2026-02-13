@@ -51,7 +51,7 @@ resource "airbyte_source_simfin" "my_source_simfin" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

@@ -70,6 +70,7 @@ func (r *SourceDremioResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key that is generated when you authenticate to Dremio API`,
 					},
 					"base_url": schema.StringAttribute{

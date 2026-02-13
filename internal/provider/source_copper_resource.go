@@ -69,6 +69,7 @@ func (r *SourceCopperResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Copper API key`,
 					},
 					"user_email": schema.StringAttribute{

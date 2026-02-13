@@ -72,7 +72,8 @@ func (r *SourceHibobResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Toggle true if this instance is a HiBob sandbox`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"username": schema.StringAttribute{
 						Required: true,

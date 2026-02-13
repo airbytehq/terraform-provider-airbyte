@@ -62,7 +62,8 @@ func (r *SourceGridlyResource) Schema(ctx context.Context, req resource.SchemaRe
 				},
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"grid_id": schema.StringAttribute{
 						Required:    true,

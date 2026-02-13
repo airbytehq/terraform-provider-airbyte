@@ -65,7 +65,7 @@ resource "airbyte_source_rentcast" "my_source_rentcast" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

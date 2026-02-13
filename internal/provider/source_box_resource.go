@@ -68,10 +68,12 @@ func (r *SourceBoxResource) Schema(ctx context.Context, req resource.SchemaReque
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"user": schema.Float64Attribute{
 						Required: true,

@@ -80,7 +80,8 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"secret": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Validators: []validator.Object{
@@ -93,7 +94,8 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"personal_access_token": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Validators: []validator.Object{

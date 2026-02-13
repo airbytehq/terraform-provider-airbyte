@@ -88,7 +88,7 @@ Required:
 - `additional_properties` (Map of Map of String)
 - `database` (String) The name of the database.
 - `host` (String) The hostname of the database.
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 - `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `username` (String) The username which is used to access the database.
 
@@ -160,7 +160,7 @@ Optional:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `certificate` (String) certificate of the server, or of the CA that signed the server certificate
+- `certificate` (String, Sensitive) certificate of the server, or of the CA that signed the server certificate
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
 - `mode` (String) Default: "encrypted_verify_certificate"; must be "encrypted_verify_certificate"
 
@@ -200,7 +200,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -214,7 +214,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 

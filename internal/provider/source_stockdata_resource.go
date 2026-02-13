@@ -72,7 +72,8 @@ func (r *SourceStockdataResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"filter_entities": schema.BoolAttribute{
 						Computed:    true,

@@ -69,6 +69,7 @@ func (r *SourceEverhourResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Everhour API Key. See the <a href="https://everhour.docs.apiary.io/#introduction/authentication">docs</a> for information on how to generate this key.`,
 					},
 				},

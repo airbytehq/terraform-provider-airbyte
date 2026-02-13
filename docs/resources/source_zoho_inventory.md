@@ -55,9 +55,9 @@ resource "airbyte_source_zoho_inventory" "my_source_zohoinventory" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `refresh_token` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

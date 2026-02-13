@@ -71,13 +71,16 @@ func (r *SourceZohoBooksResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"region": schema.StringAttribute{
 						Required:    true,

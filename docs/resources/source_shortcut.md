@@ -53,7 +53,7 @@ resource "airbyte_source_shortcut" "my_source_shortcut" {
 
 Required:
 
-- `api_key_2` (String)
+- `api_key_2` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

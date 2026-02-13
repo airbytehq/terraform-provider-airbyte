@@ -55,7 +55,7 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
 
 Required:
 
-- `api_key` (String) Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
+- `api_key` (String, Sensitive) Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
 
 Optional:
 

@@ -68,7 +68,8 @@ func (r *SourceJamfProResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"subdomain": schema.StringAttribute{
 						Required:    true,

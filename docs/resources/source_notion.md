@@ -71,7 +71,7 @@ Optional:
 
 Required:
 
-- `token` (String) The Access Token for your private Notion integration. See the <a href='https://docs.airbyte.com/integrations/sources/notion#step-1-create-an-integration-in-notion'>docs</a> for more information on how to obtain this token.
+- `token` (String, Sensitive) The Access Token for your private Notion integration. See the <a href='https://docs.airbyte.com/integrations/sources/notion#step-1-create-an-integration-in-notion'>docs</a> for more information on how to obtain this token.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -79,9 +79,9 @@ Required:
 
 Required:
 
-- `access_token` (String) The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
-- `client_id` (String) The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
-- `client_secret` (String) The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+- `access_token` (String, Sensitive) The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+- `client_id` (String, Sensitive) The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+- `client_secret` (String, Sensitive) The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 
 
 

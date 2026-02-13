@@ -71,6 +71,7 @@ func (r *SourceGologinResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key found at ` + "`" + `https://app.gologin.com/personalArea/TokenApi` + "`" + ``,
 					},
 					"start_date": schema.StringAttribute{

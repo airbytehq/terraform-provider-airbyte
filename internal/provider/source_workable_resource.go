@@ -76,6 +76,7 @@ func (r *SourceWorkableResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Workable API Key. See <a href="https://workable.readme.io/reference/generate-an-access-token">here</a>.`,
 					},
 					"start_date": schema.StringAttribute{

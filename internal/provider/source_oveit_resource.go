@@ -73,6 +73,7 @@ func (r *SourceOveitResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Oveit's login Password`,
 					},
 				},

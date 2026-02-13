@@ -83,6 +83,7 @@ func (r *SourceConvertkitResource) Schema(ctx context.Context, req resource.Sche
 									"api_key": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
+										Sensitive:   true,
 										Default:     stringdefault.StaticString(`{{ config.get('credentials',{}).get('api_key') or config.get('api_secret') }}`),
 										Description: `Kit/ConvertKit API Key. Default: "{{ config.get('credentials',{}).get('api_key') or config.get('api_secret') }}"`,
 									},
@@ -98,14 +99,17 @@ func (r *SourceConvertkitResource) Schema(ctx context.Context, req resource.Sche
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `An access token generated using the provided client information and refresh token.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret of your OAuth application.`,
 									},
 									"expires_at": schema.StringAttribute{
@@ -117,6 +121,7 @@ func (r *SourceConvertkitResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `A current, non-expired refresh token genereted using the provided client ID and secret.`,
 									},
 								},

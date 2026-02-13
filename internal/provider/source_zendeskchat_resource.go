@@ -78,6 +78,7 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Access Token to make authenticated requests.`,
 									},
 								},
@@ -92,18 +93,22 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your OAuth application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},

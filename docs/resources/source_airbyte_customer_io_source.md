@@ -50,7 +50,7 @@ resource "airbyte_source_airbyte_customer_io_source" "my_source_airbytecustomeri
 
 Required:
 
-- `app_api_key` (String)
+- `app_api_key` (String, Sensitive)
 
 
 <a id="nestedatt--resource_allocation"></a>

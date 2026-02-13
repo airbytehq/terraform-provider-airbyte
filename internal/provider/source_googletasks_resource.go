@@ -71,7 +71,8 @@ func (r *SourceGoogleTasksResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"records_limit": schema.StringAttribute{
 						Computed:    true,

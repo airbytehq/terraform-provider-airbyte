@@ -64,7 +64,7 @@ resource "airbyte_source_newsdata" "my_source_newsdata" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 
 Optional:
 

@@ -69,6 +69,7 @@ func (r *SourceDripResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://www.getdrip.com/user/edit`,
 					},
 				},

@@ -68,6 +68,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The user's Pocket access token.`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -77,6 +78,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"consumer_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your application's Consumer Key.`,
 					},
 					"content_type": schema.StringAttribute{

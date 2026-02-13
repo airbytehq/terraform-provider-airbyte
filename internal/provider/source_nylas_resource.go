@@ -71,7 +71,8 @@ func (r *SourceNylasResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"api_server": schema.StringAttribute{
 						Required:    true,

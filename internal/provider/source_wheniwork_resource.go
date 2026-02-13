@@ -69,10 +69,12 @@ func (r *SourceWhenIWorkResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"email": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Email of your when-i-work account`,
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password for your when-i-work account`,
 					},
 				},

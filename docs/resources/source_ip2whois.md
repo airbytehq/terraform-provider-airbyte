@@ -53,7 +53,7 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `api_key` (String) Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 - `domain` (String) Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 
 

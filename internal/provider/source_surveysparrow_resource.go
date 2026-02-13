@@ -68,6 +68,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.`,
 					},
 					"additional_properties": schema.StringAttribute{

@@ -69,6 +69,7 @@ func (r *SourceTempoResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.`,
 					},
 				},

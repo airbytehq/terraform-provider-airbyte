@@ -66,10 +66,12 @@ func (r *SourceGenesysResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your OAuth user Client ID`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your OAuth user Client Secret`,
 					},
 					"start_date": schema.StringAttribute{

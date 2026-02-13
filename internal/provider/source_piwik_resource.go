@@ -68,10 +68,12 @@ func (r *SourcePiwikResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"organization_id": schema.StringAttribute{
 						Required:    true,

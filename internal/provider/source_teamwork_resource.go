@@ -70,7 +70,8 @@ func (r *SourceTeamworkResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"site_name": schema.StringAttribute{
 						Required:    true,

@@ -54,7 +54,7 @@ resource "airbyte_source_timely" "my_source_timely" {
 Required:
 
 - `account_id` (String) The Account ID for your Timely account
-- `bearer_token` (String) The Bearer Token for your Timely account
+- `bearer_token` (String, Sensitive) The Bearer Token for your Timely account
 - `start_date` (String) Earliest date from which you want to pull data from.
 
 Optional:

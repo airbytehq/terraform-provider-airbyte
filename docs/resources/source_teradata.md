@@ -67,7 +67,7 @@ Required:
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3)
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 1025
 - `replication_method` (String) Replication method to use for extracting data from the database. STANDARD replication requires no setup on the DB side but will not be able to represent deletions incrementally. CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Default: "STANDARD"; must be one of ["STANDARD", "CDC"]
 - `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the connection modes. Default: false
@@ -129,7 +129,7 @@ Optional:
 
 Required:
 
-- `ssl_ca_certificate` (String) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-ca.
+- `ssl_ca_certificate` (String, Sensitive) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-ca.
  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
 
 Optional:
@@ -142,7 +142,7 @@ Optional:
 
 Required:
 
-- `ssl_ca_certificate` (String) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.
+- `ssl_ca_certificate` (String, Sensitive) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.
  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
 
 Optional:

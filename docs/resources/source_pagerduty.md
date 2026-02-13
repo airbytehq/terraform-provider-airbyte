@@ -62,7 +62,7 @@ resource "airbyte_source_pagerduty" "my_source_pagerduty" {
 
 Required:
 
-- `token` (String) API key for PagerDuty API authentication
+- `token` (String, Sensitive) API key for PagerDuty API authentication
 
 Optional:
 

@@ -79,7 +79,7 @@ Required:
 
 - `database` (String) Name of the database.
 - `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `username` (String) Username to use to access the database.
 
 Optional:
@@ -114,7 +114,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -126,7 +126,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
@@ -148,9 +148,9 @@ Optional:
 
 Required:
 
-- `access_key_id` (String) This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
+- `access_key_id` (String, Sensitive) This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 - `s3_bucket_name` (String) The name of the staging S3 bucket.
-- `secret_access_key` (String) The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
+- `secret_access_key` (String, Sensitive) The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 
 Optional:
 

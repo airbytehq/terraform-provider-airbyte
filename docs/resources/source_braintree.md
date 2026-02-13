@@ -56,7 +56,7 @@ Required:
 
 - `environment` (String) Environment specifies where the data will come from. must be one of ["Development", "Sandbox", "Qa", "Production"]
 - `merchant_id` (String) The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
-- `private_key` (String) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+- `private_key` (String, Sensitive) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 - `public_key` (String) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 
 Optional:

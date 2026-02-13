@@ -53,7 +53,7 @@ resource "airbyte_source_easypost" "my_source_easypost" {
 Required:
 
 - `start_date` (String)
-- `username` (String) The API Key from your easypost settings
+- `username` (String, Sensitive) The API Key from your easypost settings
 
 Optional:
 

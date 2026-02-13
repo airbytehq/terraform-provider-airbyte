@@ -72,6 +72,7 @@ func (r *SourceCalendlyResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Go to Integrations → API & Webhooks to obtain your bearer token. https://calendly.com/integrations/api_webhooks`,
 					},
 					"lookback_days": schema.Float64Attribute{

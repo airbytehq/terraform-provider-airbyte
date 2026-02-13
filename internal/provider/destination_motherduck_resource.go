@@ -75,6 +75,7 @@ func (r *DestinationMotherduckResource) Schema(ctx context.Context, req resource
 					},
 					"motherduck_api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API access token to use for authentication to a MotherDuck database.`,
 					},
 					"schema": schema.StringAttribute{

@@ -52,7 +52,7 @@ resource "airbyte_source_boldsign" "my_source_boldsign" {
 
 Required:
 
-- `api_key` (String) Your BoldSign API key. You can generate it by navigating to the API menu in the BoldSign app, selecting 'API Key', and clicking 'Generate API Key'. Copy the generated key and paste it here.
+- `api_key` (String, Sensitive) Your BoldSign API key. You can generate it by navigating to the API menu in the BoldSign app, selecting 'API Key', and clicking 'Generate API Key'. Copy the generated key and paste it here.
 - `start_date` (String)
 
 Optional:

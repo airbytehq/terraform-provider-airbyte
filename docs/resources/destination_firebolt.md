@@ -63,7 +63,7 @@ Required:
 
 - `account` (String) Firebolt account to login.
 - `client_id` (String) Firebolt service account ID.
-- `client_secret` (String) Firebolt secret, corresponding to the service account ID.
+- `client_secret` (String, Sensitive) Firebolt secret, corresponding to the service account ID.
 - `database` (String) The database to connect to.
 - `engine` (String) Engine name to connect to.
 
@@ -85,8 +85,8 @@ Optional:
 
 Required:
 
-- `aws_key_id` (String) AWS access key granting read and write access to S3.
-- `aws_key_secret` (String) Corresponding secret part of the AWS Key
+- `aws_key_id` (String, Sensitive) AWS access key granting read and write access to S3.
+- `aws_key_secret` (String, Sensitive) Corresponding secret part of the AWS Key
 - `s3_bucket` (String) The name of the S3 bucket.
 - `s3_region` (String) Region name of the S3 bucket.
 

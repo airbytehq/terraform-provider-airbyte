@@ -56,7 +56,7 @@ resource "airbyte_source_giphy" "my_source_giphy" {
 
 Required:
 
-- `api_key` (String) Your GIPHY API Key. You can create and find your API key in the GIPHY Developer Dashboard at https://developers.giphy.com/dashboard/.
+- `api_key` (String, Sensitive) Your GIPHY API Key. You can create and find your API key in the GIPHY Developer Dashboard at https://developers.giphy.com/dashboard/.
 - `start_date` (String)
 
 Optional:

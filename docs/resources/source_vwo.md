@@ -52,7 +52,7 @@ resource "airbyte_source_vwo" "my_source_vwo" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

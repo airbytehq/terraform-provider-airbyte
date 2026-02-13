@@ -71,7 +71,8 @@ func (r *SourceAdobeCommerceMagentoResource) Schema(ctx context.Context, req res
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"api_version": schema.StringAttribute{
 						Computed:    true,

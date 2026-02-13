@@ -73,6 +73,7 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Firebolt secret, corresponding to the service account ID.`,
 					},
 					"database": schema.StringAttribute{
@@ -95,10 +96,12 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"aws_key_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `AWS access key granting read and write access to S3.`,
 									},
 									"aws_key_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Corresponding secret part of the AWS Key`,
 									},
 									"s3_bucket": schema.StringAttribute{

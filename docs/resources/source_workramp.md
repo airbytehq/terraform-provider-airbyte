@@ -53,7 +53,7 @@ resource "airbyte_source_workramp" "my_source_workramp" {
 Required:
 
 - `academy_id` (String) The id of the Academy
-- `api_key` (String) The API Token for Workramp
+- `api_key` (String, Sensitive) The API Token for Workramp
 
 Optional:
 

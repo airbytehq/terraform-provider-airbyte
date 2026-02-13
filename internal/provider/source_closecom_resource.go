@@ -72,6 +72,7 @@ func (r *SourceCloseComResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).`,
 					},
 					"start_date": schema.StringAttribute{

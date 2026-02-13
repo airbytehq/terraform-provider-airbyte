@@ -66,6 +66,7 @@ func (r *SourceAviationstackResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your unique API key for authenticating with the Aviation API. You can find it in your Aviation account dashboard at https://aviationstack.com/dashboard`,
 					},
 					"additional_properties": schema.StringAttribute{

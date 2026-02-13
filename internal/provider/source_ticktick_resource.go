@@ -77,6 +77,7 @@ func (r *SourceTicktickResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"bearer_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access token for making authenticated requests; filled after complete oauth2 flow.`,
 									},
 								},
@@ -91,14 +92,17 @@ func (r *SourceTicktickResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"client_access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Access token for making authenticated requests; filled after complete oauth2 flow.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of your Ticktick application. Read more <a href="https://developer.ticktick.com/api#/openapi?id=getting-started">here</a>.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret of of your Ticktick application. application. Read more <a href="https://developer.ticktick.com/api#/openapi?id=getting-started">here</a>.`,
 									},
 								},

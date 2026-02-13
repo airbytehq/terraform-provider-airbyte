@@ -51,7 +51,7 @@ resource "airbyte_source_simplecast" "my_source_simplecast" {
 
 Required:
 
-- `api_token` (String) API token to use. Find it at your Private Apps page on the Simplecast dashboard.
+- `api_token` (String, Sensitive) API token to use. Find it at your Private Apps page on the Simplecast dashboard.
 
 Optional:
 

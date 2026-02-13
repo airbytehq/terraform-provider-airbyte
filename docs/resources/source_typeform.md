@@ -84,10 +84,10 @@ Optional:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `client_id` (String) The Client ID of the Typeform developer application.
-- `client_secret` (String) The Client Secret the Typeform developer application.
-- `refresh_token` (String) The key to refresh the expired access_token.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
+- `client_id` (String, Sensitive) The Client ID of the Typeform developer application.
+- `client_secret` (String, Sensitive) The Client Secret the Typeform developer application.
+- `refresh_token` (String, Sensitive) The key to refresh the expired access_token.
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
@@ -96,7 +96,7 @@ Required:
 
 Required:
 
-- `access_token` (String) Log into your Typeform account and then generate a personal Access Token.
+- `access_token` (String, Sensitive) Log into your Typeform account and then generate a personal Access Token.
 
 
 

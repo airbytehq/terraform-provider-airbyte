@@ -69,6 +69,7 @@ func (r *SourceIp2whoisResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.`,
 					},
 					"domain": schema.StringAttribute{

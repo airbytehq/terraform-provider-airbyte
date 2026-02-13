@@ -72,6 +72,7 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The password to connect.`,
 					},
 					"port": schema.Int64Attribute{

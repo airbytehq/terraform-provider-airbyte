@@ -121,7 +121,7 @@ Optional:
 
 Optional:
 
-- `sasl_jaas_config` (String) The JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
+- `sasl_jaas_config` (String, Sensitive) The JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
 
 
 <a id="nestedatt--configuration--protocol--sasl_ssl"></a>
@@ -130,7 +130,7 @@ Optional:
 Optional:
 
 - `oauthbearer_token_endpoint_url` (String) Endpoint for requesting tokens if setting SASL Mechanism to OAUTHBEARER. Default: ""
-- `sasl_jaas_config` (String) The JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
+- `sasl_jaas_config` (String, Sensitive) The JAAS login context parameters for SASL connections in the format used by JAAS configuration files. Default: ""
 - `sasl_mechanism` (String) The SASL mechanism used for client connections. This may be any mechanism for which a security provider is available. Default: "GSSAPI"; must be one of ["GSSAPI", "OAUTHBEARER", "SCRAM-SHA-256", "SCRAM-SHA-512", "PLAIN", "AWS_MSK_IAM"]
 
 
@@ -174,7 +174,7 @@ Optional:
 Optional:
 
 - `deserialization_strategy` (String) Default: "TopicNameStrategy"; must be one of ["TopicNameStrategy", "RecordNameStrategy", "TopicRecordNameStrategy"]
-- `schema_registry_password` (String) Default: ""
+- `schema_registry_password` (String, Sensitive) Default: ""
 - `schema_registry_url` (String)
 - `schema_registry_username` (String) Default: ""
 

@@ -73,6 +73,7 @@ func (r *SourceOpsgenieResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token used to access the Opsgenie platform`,
 					},
 					"endpoint": schema.StringAttribute{

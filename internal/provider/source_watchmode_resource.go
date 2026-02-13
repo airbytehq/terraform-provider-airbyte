@@ -72,6 +72,7 @@ func (r *SourceWatchmodeResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API key for authenticating with the Watchmode API. You can request a free API key at https://api.watchmode.com/requestApiKey/.`,
 					},
 					"search_val": schema.StringAttribute{

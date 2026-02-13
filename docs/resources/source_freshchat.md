@@ -54,7 +54,7 @@ resource "airbyte_source_freshchat" "my_source_freshchat" {
 Required:
 
 - `account_name` (String) The unique account name for your Freshchat instance
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

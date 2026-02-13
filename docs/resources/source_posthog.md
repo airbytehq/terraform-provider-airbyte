@@ -53,7 +53,7 @@ resource "airbyte_source_posthog" "my_source_posthog" {
 
 Required:
 
-- `api_key` (String) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
+- `api_key` (String, Sensitive) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
 - `start_date` (String) The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 
 Optional:

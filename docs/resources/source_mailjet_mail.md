@@ -53,7 +53,7 @@ resource "airbyte_source_mailjet_mail" "my_source_mailjetmail" {
 Required:
 
 - `api_key` (String) Your API Key. See <a href="https://dev.mailjet.com/email/guides/#authentication">here</a>.
-- `api_key_secret` (String) Your API Secret Key. See <a href="https://dev.mailjet.com/email/guides/#authentication">here</a>.
+- `api_key_secret` (String, Sensitive) Your API Secret Key. See <a href="https://dev.mailjet.com/email/guides/#authentication">here</a>.
 
 Optional:
 

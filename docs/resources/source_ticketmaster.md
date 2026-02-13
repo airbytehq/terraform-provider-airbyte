@@ -51,7 +51,7 @@ resource "airbyte_source_ticketmaster" "my_source_ticketmaster" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

@@ -56,9 +56,9 @@ resource "airbyte_source_uptick" "my_source_uptick" {
 Required:
 
 - `base_url` (String) eg. https://demo-fire.onuptick.com (no trailing slash)
-- `client_id` (String)
-- `client_secret` (String)
-- `password` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `password` (String, Sensitive)
 - `username` (String)
 
 Optional:

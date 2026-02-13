@@ -80,6 +80,7 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
 								},
@@ -94,14 +95,17 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of the LinkedIn developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret of the LinkedIn developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
 								},
@@ -115,6 +119,7 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 					},
 					"org_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Specify the Organization ID`,
 					},
 					"start_date": schema.StringAttribute{

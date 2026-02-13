@@ -51,7 +51,7 @@ resource "airbyte_source_persona" "my_source_persona" {
 
 Required:
 
-- `api_key` (String) API key or access token
+- `api_key` (String, Sensitive) API key or access token
 
 Optional:
 

@@ -68,7 +68,8 @@ func (r *SourceKissmetricsResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"username": schema.StringAttribute{
 						Required: true,

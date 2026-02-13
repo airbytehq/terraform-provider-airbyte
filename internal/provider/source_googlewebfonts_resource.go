@@ -73,6 +73,7 @@ func (r *SourceGoogleWebfontsResource) Schema(ctx context.Context, req resource.
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key is required to access google apis, For getting your's goto google console and generate api key for Webfonts`,
 					},
 					"pretty_print": schema.StringAttribute{

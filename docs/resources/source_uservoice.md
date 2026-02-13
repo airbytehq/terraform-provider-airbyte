@@ -53,7 +53,7 @@ resource "airbyte_source_uservoice" "my_source_uservoice" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 - `subdomain` (String)
 

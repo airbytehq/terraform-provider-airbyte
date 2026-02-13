@@ -64,6 +64,7 @@ func (r *SourceSpotlercrmResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Access Token to authenticate API requests. Generate it by logging into your CRM system, navigating to Settings / Integrations / API V4, and clicking 'generate new key'.`,
 					},
 					"additional_properties": schema.StringAttribute{

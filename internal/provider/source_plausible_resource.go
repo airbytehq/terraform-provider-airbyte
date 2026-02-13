@@ -72,6 +72,7 @@ func (r *SourcePlausibleResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Plausible API Key. See the <a href="https://plausible.io/docs/stats-api">docs</a> for information on how to generate this key.`,
 					},
 					"api_url": schema.StringAttribute{

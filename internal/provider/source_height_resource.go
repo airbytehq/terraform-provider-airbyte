@@ -71,7 +71,8 @@ func (r *SourceHeightResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"search_query": schema.StringAttribute{
 						Computed:    true,

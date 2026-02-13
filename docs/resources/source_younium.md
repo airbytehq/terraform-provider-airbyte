@@ -55,7 +55,7 @@ resource "airbyte_source_younium" "my_source_younium" {
 Required:
 
 - `legal_entity` (String) Legal Entity that data should be pulled from
-- `password` (String) Account password for younium account API key
+- `password` (String, Sensitive) Account password for younium account API key
 - `username` (String) Username for Younium account
 
 Optional:

@@ -58,7 +58,7 @@ resource "airbyte_source_circleci" "my_source_circleci" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `org_id` (String) The org ID found in `https://app.circleci.com/settings/organization/circleci/xxxxx/overview`
 - `project_id` (String) Project ID found in the project settings, Visit `https://app.circleci.com/settings/project/circleci/ORG_SLUG/YYYYY`
 - `start_date` (String)

@@ -71,6 +71,7 @@ func (r *SourceTavusResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Tavus API key. You can find this in your Tavus account settings or API dashboard.`,
 					},
 					"start_date": schema.StringAttribute{

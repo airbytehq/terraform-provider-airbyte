@@ -68,6 +68,7 @@ func (r *SourceGocardlessResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Gocardless API TOKEN`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^(sandbox|live)_.+$`), "must match pattern "+regexp.MustCompile(`^(sandbox|live)_.+$`).String()),

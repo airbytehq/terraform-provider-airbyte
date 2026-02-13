@@ -71,6 +71,7 @@ func (r *SourceBugsnagResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"auth_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Personal auth token for accessing the Bugsnag API. Generate it in the My Account section of Bugsnag settings.`,
 					},
 					"start_date": schema.StringAttribute{

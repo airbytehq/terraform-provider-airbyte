@@ -69,6 +69,7 @@ func (r *SourceJobnimbusResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it by logging into your JobNimbus account, navigating to settings, and creating a new API key under the API section.`,
 					},
 				},

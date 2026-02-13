@@ -72,7 +72,8 @@ func (r *SourceFinancialModellingResource) Schema(ctx context.Context, req resou
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"exchange": schema.StringAttribute{
 						Computed:    true,

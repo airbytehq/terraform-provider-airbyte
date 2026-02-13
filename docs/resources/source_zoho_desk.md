@@ -55,9 +55,9 @@ resource "airbyte_source_zoho_desk" "my_source_zohodesk" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
+- `refresh_token` (String, Sensitive)
 - `token_refresh_endpoint` (String)
 
 Optional:

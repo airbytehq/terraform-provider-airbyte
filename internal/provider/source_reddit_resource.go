@@ -73,7 +73,8 @@ func (r *SourceRedditResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Parsed as JSON.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"exact": schema.BoolAttribute{
 						Optional:    true,

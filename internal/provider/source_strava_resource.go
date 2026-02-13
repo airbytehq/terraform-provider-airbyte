@@ -84,6 +84,7 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Strava developer application.`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9a-fA-F]+$`), "must match pattern "+regexp.MustCompile(`^[0-9a-fA-F]+$`).String()),
@@ -91,6 +92,7 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Refresh Token with the activity: read_all permissions.`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9a-fA-F]+$`), "must match pattern "+regexp.MustCompile(`^[0-9a-fA-F]+$`).String()),

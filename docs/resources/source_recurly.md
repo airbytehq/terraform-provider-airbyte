@@ -56,7 +56,7 @@ resource "airbyte_source_recurly" "my_source_recurly" {
 
 Required:
 
-- `api_key` (String) Recurly API Key. See the  <a href="https://docs.airbyte.com/integrations/sources/recurly">docs</a> for more information on how to generate this key.
+- `api_key` (String, Sensitive) Recurly API Key. See the  <a href="https://docs.airbyte.com/integrations/sources/recurly">docs</a> for more information on how to generate this key.
 
 Optional:
 

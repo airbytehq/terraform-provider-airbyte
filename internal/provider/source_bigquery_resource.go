@@ -63,6 +63,7 @@ func (r *SourceBigqueryResource) Schema(ctx context.Context, req resource.Schema
 				Attributes: map[string]schema.Attribute{
 					"credentials_json": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.`,
 					},
 					"dataset_id": schema.StringAttribute{

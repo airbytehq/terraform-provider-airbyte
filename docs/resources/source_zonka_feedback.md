@@ -52,7 +52,7 @@ resource "airbyte_source_zonka_feedback" "my_source_zonkafeedback" {
 
 Required:
 
-- `auth_token` (String) Auth token to use. Generate it by navigating to Company Settings > Developers > API in your Zonka Feedback account.
+- `auth_token` (String, Sensitive) Auth token to use. Generate it by navigating to Company Settings > Developers > API in your Zonka Feedback account.
 - `datacenter` (String) The identifier for the data center, such as 'us1' or 'e' for EU. must be one of ["us1", "e"]
 
 Optional:

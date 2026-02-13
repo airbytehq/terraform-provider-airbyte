@@ -69,6 +69,7 @@ func (r *SourceLumaResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Get your API key on lu.ma Calendars dashboard → Settings.`,
 					},
 				},

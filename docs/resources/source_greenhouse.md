@@ -51,7 +51,7 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
 
 Required:
 
-- `api_key` (String) Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
+- `api_key` (String, Sensitive) Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
 
 Optional:
 

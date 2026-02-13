@@ -71,6 +71,7 @@ func (r *SourceWasabiStatsAPIResource) Schema(ctx context.Context, req resource.
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API key format is ` + "`" + `AccessKey:SecretKey` + "`" + ``,
 					},
 					"start_date": schema.StringAttribute{

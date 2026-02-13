@@ -63,6 +63,7 @@ func (r *DestinationTimeplusResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"apikey": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Personal API key`,
 					},
 					"endpoint": schema.StringAttribute{

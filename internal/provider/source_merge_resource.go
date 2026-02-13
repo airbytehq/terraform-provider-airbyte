@@ -66,6 +66,7 @@ func (r *SourceMergeResource) Schema(ctx context.Context, req resource.SchemaReq
 				Attributes: map[string]schema.Attribute{
 					"account_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Link your other integrations with account credentials on accounts section to get account token (ref - https://app.merge.dev/linked-accounts/accounts)`,
 					},
 					"additional_properties": schema.StringAttribute{
@@ -75,6 +76,7 @@ func (r *SourceMergeResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token can be seen at  https://app.merge.dev/keys`,
 					},
 					"start_date": schema.StringAttribute{

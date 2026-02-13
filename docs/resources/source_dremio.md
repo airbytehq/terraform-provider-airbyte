@@ -52,7 +52,7 @@ resource "airbyte_source_dremio" "my_source_dremio" {
 
 Required:
 
-- `api_key` (String) API Key that is generated when you authenticate to Dremio API
+- `api_key` (String, Sensitive) API Key that is generated when you authenticate to Dremio API
 
 Optional:
 

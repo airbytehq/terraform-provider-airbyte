@@ -54,7 +54,7 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
 
 Required:
 
-- `auth_token` (String) Your Yandex Metrica API access token
+- `auth_token` (String, Sensitive) Your Yandex Metrica API access token
 - `counter_id` (String) Counter ID
 - `start_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD".
 

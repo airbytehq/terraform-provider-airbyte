@@ -53,8 +53,8 @@ resource "airbyte_source_waiteraid" "my_source_waiteraid" {
 
 Required:
 
-- `auth_hash` (String) Your WaiterAid API key, obtained from API request with Username and Password
-- `restid` (String) Your WaiterAid restaurant id from API request to getRestaurants
+- `auth_hash` (String, Sensitive) Your WaiterAid API key, obtained from API request with Username and Password
+- `restid` (String, Sensitive) Your WaiterAid restaurant id from API request to getRestaurants
 - `start_date` (String) Start getting data from that date.
 
 Optional:

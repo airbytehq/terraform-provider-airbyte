@@ -87,18 +87,22 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of the Airtable developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret of the Airtable developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The key to refresh the expired access token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
@@ -120,6 +124,7 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.`,
 									},
 								},

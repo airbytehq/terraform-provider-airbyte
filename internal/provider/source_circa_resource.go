@@ -71,6 +71,7 @@ func (r *SourceCircaResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://app.circa.co/settings/integrations/api`,
 					},
 					"start_date": schema.StringAttribute{

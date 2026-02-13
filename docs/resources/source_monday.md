@@ -77,7 +77,7 @@ Optional:
 
 Required:
 
-- `api_token` (String) API Token for making authenticated requests.
+- `api_token` (String, Sensitive) API Token for making authenticated requests.
 
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
@@ -85,9 +85,9 @@ Required:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
+- `client_id` (String, Sensitive) The Client ID of your OAuth application.
+- `client_secret` (String, Sensitive) The Client Secret of your OAuth application.
 
 Optional:
 

@@ -52,7 +52,7 @@ resource "airbyte_source_100ms" "my_source_100ms" {
 
 Required:
 
-- `management_token` (String) The management token used for authenticating API requests. You can find or generate this token in your 100ms dashboard under the API section. Refer to the documentation at https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#management-token-for-rest-api for more details.
+- `management_token` (String, Sensitive) The management token used for authenticating API requests. You can find or generate this token in your 100ms dashboard under the API section. Refer to the documentation at https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#management-token-for-rest-api for more details.
 - `start_date` (String)
 
 Optional:

@@ -66,6 +66,7 @@ func (r *SourcePrimetricResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Primetric developer application. The Client ID is visible <a href=\"https://app.primetric.com/administrator/integrations">here</a>.`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9]+$`), "must match pattern "+regexp.MustCompile(`^[a-zA-Z0-9]+$`).String()),
@@ -73,6 +74,7 @@ func (r *SourcePrimetricResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Primetric developer application. You can manage your client's credentials <a href=\"https://app.primetric.com/administrator/integrations">here</a>.`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9]+$`), "must match pattern "+regexp.MustCompile(`^[a-zA-Z0-9]+$`).String()),

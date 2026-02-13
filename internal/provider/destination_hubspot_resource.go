@@ -83,14 +83,17 @@ func (r *DestinationHubspotResource) Schema(ctx context.Context, req resource.Sc
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your HubSpot developer application. See the <a href=\"https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart\">Hubspot docs</a> if you need help finding this ID.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret for your HubSpot developer application. See the <a href=\"https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart\">Hubspot docs</a> if you need help finding this secret.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh token to renew an expired access token. See the <a href=\"https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart\">Hubspot docs</a> if you need help finding this token.`,
 									},
 									"type": schema.StringAttribute{
@@ -139,6 +142,7 @@ func (r *DestinationHubspotResource) Schema(ctx context.Context, req resource.Sc
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.`,
 									},
 									"additional_properties": schema.StringAttribute{
@@ -348,6 +352,7 @@ func (r *DestinationHubspotResource) Schema(ctx context.Context, req resource.Sc
 									},
 									"secret_access_key": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>`,
 									},
 									"storage_type": schema.StringAttribute{

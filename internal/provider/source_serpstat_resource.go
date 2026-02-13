@@ -74,6 +74,7 @@ func (r *SourceSerpstatResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Serpstat API key can be found here: https://serpstat.com/users/profile/`,
 					},
 					"domain": schema.StringAttribute{

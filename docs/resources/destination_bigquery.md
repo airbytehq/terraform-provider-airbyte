@@ -69,7 +69,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `cdc_deletion_mode` (String) Whether to execute CDC deletions as hard deletes (i.e. propagate source deletions to the destination), or soft deletes (i.e. leave a tombstone record in the destination). Defaults to hard deletes. Default: "Hard delete"; must be one of ["Hard delete", "Soft delete"]
-- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
+- `credentials_json` (String, Sensitive) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 - `disable_type_dedupe` (Boolean) Write the legacy "raw tables" format, to enable backwards compatibility with older versions of this connector. Default: false
 - `loading_method` (Attributes) The way data will be uploaded to BigQuery. (see [below for nested schema](#nestedatt--configuration--loading_method))
 - `raw_data_dataset` (String) Airbyte will use this dataset for various internal tables. In legacy raw tables mode, the raw tables will be stored in this dataset. Defaults to "airbyte_internal".
@@ -118,8 +118,8 @@ Optional:
 
 Required:
 
-- `hmac_key_access_id` (String) HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
-- `hmac_key_secret` (String) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.
+- `hmac_key_access_id` (String, Sensitive) HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
+- `hmac_key_secret` (String, Sensitive) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.
 
 Optional:
 

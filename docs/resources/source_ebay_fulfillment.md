@@ -57,9 +57,9 @@ resource "airbyte_source_ebay_fulfillment" "my_source_ebayfulfillment" {
 
 Required:
 
-- `password` (String)
+- `password` (String, Sensitive)
 - `redirect_uri` (String)
-- `refresh_token` (String)
+- `refresh_token` (String, Sensitive)
 - `start_date` (String)
 - `username` (String)
 

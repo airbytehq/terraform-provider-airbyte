@@ -53,8 +53,8 @@ resource "airbyte_source_shopwired" "my_source_shopwired" {
 
 Required:
 
-- `api_key` (String) Your API Key, which acts as the username for Basic Authentication. You can find it in your ShopWired account under API settings.
-- `api_secret` (String) Your API Secret, which acts as the password for Basic Authentication. You can find it in your ShopWired account under API settings.
+- `api_key` (String, Sensitive) Your API Key, which acts as the username for Basic Authentication. You can find it in your ShopWired account under API settings.
+- `api_secret` (String, Sensitive) Your API Secret, which acts as the password for Basic Authentication. You can find it in your ShopWired account under API settings.
 - `start_date` (String)
 
 Optional:

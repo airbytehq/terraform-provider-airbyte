@@ -56,7 +56,7 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
 
 Required:
 
-- `api_key` (String) Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
 - `start_date` (String) Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
 
 Optional:

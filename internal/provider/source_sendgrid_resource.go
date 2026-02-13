@@ -71,6 +71,7 @@ func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Sendgrid API Key, use <a href=\"https://app.sendgrid.com/settings/api_keys/\">admin</a> to generate this key.`,
 					},
 					"start_date": schema.StringAttribute{

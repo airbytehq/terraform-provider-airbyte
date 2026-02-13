@@ -57,7 +57,7 @@ resource "airbyte_source_employment_hero" "my_source_employmenthero" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

@@ -1400,6 +1400,8 @@ type SourceSharepointEnterpriseUpdateFileBasedStreamConfig struct {
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
+	// When enabled, the source will use the first found file for schema discovery. Helps to avoid long discovery step.
+	UseFirstFoundFileForSchemaDiscovery *bool `default:"false" json:"use_first_found_file_for_schema_discovery"`
 	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
 	ValidationPolicy *SourceSharepointEnterpriseUpdateValidationPolicy `default:"Emit Record" json:"validation_policy"`
 }
@@ -1469,6 +1471,13 @@ func (s *SourceSharepointEnterpriseUpdateFileBasedStreamConfig) GetSchemaless() 
 		return nil
 	}
 	return s.Schemaless
+}
+
+func (s *SourceSharepointEnterpriseUpdateFileBasedStreamConfig) GetUseFirstFoundFileForSchemaDiscovery() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.UseFirstFoundFileForSchemaDiscovery
 }
 
 func (s *SourceSharepointEnterpriseUpdateFileBasedStreamConfig) GetValidationPolicy() *SourceSharepointEnterpriseUpdateValidationPolicy {

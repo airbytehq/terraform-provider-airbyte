@@ -62,7 +62,7 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
 
 Required:
 
-- `access_token` (String) Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
+- `access_token` (String, Sensitive) Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
 
 Optional:
 

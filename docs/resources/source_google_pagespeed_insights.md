@@ -67,7 +67,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `api_key` (String) Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.
+- `api_key` (String, Sensitive) Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.
 
 
 <a id="nestedatt--resource_allocation"></a>

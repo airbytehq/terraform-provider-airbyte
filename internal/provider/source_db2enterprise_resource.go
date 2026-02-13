@@ -185,6 +185,7 @@ func (r *SourceDb2EnterpriseResource) Schema(ctx context.Context, req resource.S
 									},
 									"ssl_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.`,
 									},
 								},
@@ -235,6 +236,7 @@ func (r *SourceDb2EnterpriseResource) Schema(ctx context.Context, req resource.S
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -323,6 +325,7 @@ func (r *SourceDb2EnterpriseResource) Schema(ctx context.Context, req resource.S
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
@@ -344,6 +347,7 @@ func (r *SourceDb2EnterpriseResource) Schema(ctx context.Context, req resource.S
 									},
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{

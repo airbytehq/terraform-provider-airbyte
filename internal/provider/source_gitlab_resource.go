@@ -85,18 +85,22 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API ID of the Gitlab developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API Secret the Gitlab developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The key to refresh the expired access_token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
@@ -118,6 +122,7 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
 								},

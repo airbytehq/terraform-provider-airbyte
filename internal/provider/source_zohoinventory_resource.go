@@ -72,10 +72,12 @@ func (r *SourceZohoInventoryResource) Schema(ctx context.Context, req resource.S
 						Description: `Parsed as JSON.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"domain": schema.StringAttribute{
 						Computed:    true,
@@ -96,7 +98,8 @@ func (r *SourceZohoInventoryResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

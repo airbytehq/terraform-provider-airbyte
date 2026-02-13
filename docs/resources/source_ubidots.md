@@ -51,7 +51,7 @@ resource "airbyte_source_ubidots" "my_source_ubidots" {
 
 Required:
 
-- `api_token` (String) API token to use for authentication. Obtain it from your Ubidots account.
+- `api_token` (String, Sensitive) API token to use for authentication. Obtain it from your Ubidots account.
 
 Optional:
 

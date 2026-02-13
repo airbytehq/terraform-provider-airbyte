@@ -58,8 +58,8 @@ resource "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
 
 Required:
 
-- `client_id` (String) The Client ID of your Paypal developer application.
-- `client_secret` (String) The Client Secret of your Paypal developer application.
+- `client_id` (String, Sensitive) The Client ID of your Paypal developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Paypal developer application.
 - `start_date` (String) Start Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 
 Optional:
@@ -68,7 +68,7 @@ Optional:
 - `dispute_start_date` (String) Start Date parameter for the list dispute endpoint in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This Start Date must be in range within 180 days before present time, and requires ONLY 3 miliseconds(mandatory). If you don't use this option, it defaults to a start date set 180 days in the past.
 - `end_date` (String) End Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This can be help you select specific range of time, mainly for test purposes  or data integrity tests. When this is not used, now_utc() is used by the streams. This does not apply to Disputes and Product streams.
 - `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment. Default: false
-- `refresh_token` (String) The key to refresh the expired access token.
+- `refresh_token` (String, Sensitive) The key to refresh the expired access token.
 - `time_window` (Number) The number of days per request. Must be a number between 1 and 31. Default: 7
 
 

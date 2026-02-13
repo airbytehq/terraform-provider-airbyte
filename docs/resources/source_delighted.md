@@ -52,7 +52,7 @@ resource "airbyte_source_delighted" "my_source_delighted" {
 
 Required:
 
-- `api_key` (String) A Delighted API key.
+- `api_key` (String, Sensitive) A Delighted API key.
 - `since` (String) The date from which you'd like to replicate the data
 
 Optional:

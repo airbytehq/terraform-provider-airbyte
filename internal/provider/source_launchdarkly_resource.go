@@ -64,6 +64,7 @@ func (r *SourceLaunchdarklyResource) Schema(ctx context.Context, req resource.Sc
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.`,
 					},
 					"additional_properties": schema.StringAttribute{

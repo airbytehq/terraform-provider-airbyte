@@ -51,7 +51,7 @@ resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
 
 Required:
 
-- `api_key` (String) EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
+- `api_key` (String, Sensitive) EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
 
 Optional:
 

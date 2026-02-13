@@ -53,8 +53,8 @@ resource "airbyte_source_box" "my_source_box" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `user` (Number)
 
 Optional:

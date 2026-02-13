@@ -56,7 +56,7 @@ resource "airbyte_source_shutterstock" "my_source_shutterstock" {
 
 Required:
 
-- `api_token` (String) Your OAuth 2.0 token for accessing the Shutterstock API. Obtain this token from your Shutterstock developer account.
+- `api_token` (String, Sensitive) Your OAuth 2.0 token for accessing the Shutterstock API. Obtain this token from your Shutterstock developer account.
 - `start_date` (String)
 
 Optional:

@@ -69,6 +69,7 @@ func (r *SourceFastbillResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Fastbill API key`,
 					},
 					"username": schema.StringAttribute{

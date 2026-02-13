@@ -72,7 +72,7 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 5432
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"
 - `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the connection modes. Default: false
@@ -119,11 +119,11 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 
 
 <a id="nestedatt--configuration--ssl_mode--verify_full"></a>
@@ -131,13 +131,13 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
+- `ca_certificate` (String, Sensitive) CA certificate
+- `client_certificate` (String, Sensitive) Client certificate
+- `client_key` (String, Sensitive) Client key
 
 Optional:
 
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 
 
 
@@ -161,7 +161,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -173,7 +173,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 

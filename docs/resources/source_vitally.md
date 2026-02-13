@@ -61,7 +61,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `basic_auth_header` (String) Basic Auth Header
+- `basic_auth_header` (String, Sensitive) Basic Auth Header
 
 
 <a id="nestedatt--resource_allocation"></a>

@@ -59,7 +59,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `api_secret` (String)
+- `api_secret` (String, Sensitive)
 
 
 <a id="nestedatt--resource_allocation"></a>

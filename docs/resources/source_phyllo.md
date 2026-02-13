@@ -54,8 +54,8 @@ resource "airbyte_source_phyllo" "my_source_phyllo" {
 
 Required:
 
-- `client_id` (String) Your Client ID for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.
-- `client_secret` (String) Your Client Secret for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.
+- `client_id` (String, Sensitive) Your Client ID for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.
+- `client_secret` (String, Sensitive) Your Client Secret for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.
 - `start_date` (String)
 
 Optional:

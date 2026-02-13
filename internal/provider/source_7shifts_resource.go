@@ -66,6 +66,7 @@ func (r *Source7shiftsResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Access token to use for authentication. Generate it in the 7shifts Developer Tools.`,
 					},
 					"additional_properties": schema.StringAttribute{

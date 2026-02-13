@@ -73,6 +73,7 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Api key of bamboo hr`,
 					},
 					"custom_reports_fields": schema.StringAttribute{

@@ -69,6 +69,7 @@ func (r *SourceMailerliteResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Token. See <a href="https://developers.mailerlite.com/docs/#authentication">here</a>.`,
 					},
 				},

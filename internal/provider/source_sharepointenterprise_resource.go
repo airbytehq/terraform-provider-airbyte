@@ -79,14 +79,17 @@ func (r *SourceSharepointEnterpriseResource) Schema(ctx context.Context, req res
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Refresh Token of your Microsoft developer application`,
 									},
 									"scopes": schema.StringAttribute{
@@ -97,6 +100,7 @@ func (r *SourceSharepointEnterpriseResource) Schema(ctx context.Context, req res
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft SharePoint user`,
 									},
 								},
@@ -112,18 +116,22 @@ func (r *SourceSharepointEnterpriseResource) Schema(ctx context.Context, req res
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft SharePoint user`,
 									},
 									"user_principal_name": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls`,
 									},
 								},
@@ -528,6 +536,12 @@ func (r *SourceSharepointEnterpriseResource) Schema(ctx context.Context, req res
 									Optional:    true,
 									Default:     booldefault.StaticBool(false),
 									Description: `When enabled, syncs will not validate or structure records against the stream's schema. Default: false`,
+								},
+								"use_first_found_file_for_schema_discovery": schema.BoolAttribute{
+									Computed:    true,
+									Optional:    true,
+									Default:     booldefault.StaticBool(false),
+									Description: `When enabled, the source will use the first found file for schema discovery. Helps to avoid long discovery step. Default: false`,
 								},
 								"validation_policy": schema.StringAttribute{
 									Computed:    true,

@@ -64,7 +64,7 @@ Required:
 - `db` (String) Name of the database.
 - `encryption` (Attributes) Encryption method to use when communicating with the database (see [below for nested schema](#nestedatt--configuration--encryption))
 - `host` (String) Host of the Db2.
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `username` (String) Username to use to access the database.
 
 Optional:
@@ -85,11 +85,11 @@ Optional:
 
 Required:
 
-- `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations
+- `ssl_certificate` (String, Sensitive) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations
 
 Optional:
 
-- `key_store_password` (String) Key Store Password
+- `key_store_password` (String, Sensitive) Key Store Password
 
 
 <a id="nestedatt--configuration--encryption--unencrypted"></a>

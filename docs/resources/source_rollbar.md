@@ -53,8 +53,8 @@ resource "airbyte_source_rollbar" "my_source_rollbar" {
 
 Required:
 
-- `account_access_token` (String)
-- `project_access_token` (String)
+- `account_access_token` (String, Sensitive)
+- `project_access_token` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

@@ -125,10 +125,12 @@ func (r *DestinationGcsDataLakeResource) Schema(ctx context.Context, req resourc
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The OAuth Client ID for authenticating with the Polaris server.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The OAuth Client Secret for authenticating with the Polaris server.`,
 									},
 									"server_uri": schema.StringAttribute{
@@ -172,6 +174,7 @@ func (r *DestinationGcsDataLakeResource) Schema(ctx context.Context, req resourc
 					},
 					"service_account_json": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The contents of the JSON service account key file. See the <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">Google Cloud documentation</a> for more information on how to obtain this.`,
 					},
 					"warehouse_location": schema.StringAttribute{

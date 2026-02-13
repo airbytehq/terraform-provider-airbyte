@@ -59,7 +59,7 @@ resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
 
 Required:
 
-- `api_key` (String) Your API ACCESS Key
+- `api_key` (String, Sensitive) Your API ACCESS Key
 - `end_date` (String) The target date for the aggregate window.
 - `multiplier` (Number) The size of the timespan multiplier.
 - `start_date` (String) The beginning date for the aggregate window.

@@ -71,7 +71,7 @@ Required:
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3). For more information read about <a href="https://docs.singlestore.com/cloud/developer-resources/connect-with-application-development-tools/connect-with-java-jdbc/the-singlestore-jdbc-driver/#connection-string-parameters">JDBC URL parameters</a>.
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 3306
 - `replication_method` (String) Replication method to use for extracting data from the database. STANDARD replication requires no setup on the DB side but will not be able to represent deletions incrementally. Default: "STANDARD"; must be "STANDARD"
 - `ssl_mode` (Attributes) SSL connection modes. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
@@ -99,13 +99,13 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
-- `client_certificate` (String) Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)
-- `client_key` (String) Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_certificate` (String, Sensitive) Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)
+- `client_key` (String, Sensitive) Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 
 
 <a id="nestedatt--configuration--ssl_mode--verify_full"></a>
@@ -113,13 +113,13 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
-- `client_certificate` (String) Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)
-- `client_key` (String) Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)
-- `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
+- `client_certificate` (String, Sensitive) Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)
+- `client_key` (String, Sensitive) Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)
+- `client_key_password` (String, Sensitive) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 
 
 

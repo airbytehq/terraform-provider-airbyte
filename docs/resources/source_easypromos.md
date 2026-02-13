@@ -51,7 +51,7 @@ resource "airbyte_source_easypromos" "my_source_easypromos" {
 
 Required:
 
-- `bearer_token` (String)
+- `bearer_token` (String, Sensitive)
 
 Optional:
 

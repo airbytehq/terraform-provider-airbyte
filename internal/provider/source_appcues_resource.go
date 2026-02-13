@@ -74,7 +74,8 @@ func (r *SourceAppcuesResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

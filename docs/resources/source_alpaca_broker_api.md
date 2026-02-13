@@ -63,7 +63,7 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `environment` (String) The trading environment, either 'live', 'paper' or 'broker-api.sandbox'. Default: "broker-api.sandbox"; must be one of ["api", "paper-api", "broker-api.sandbox"]
 - `limit` (String) Limit for each response objects. Default: "20"
-- `password` (String) Your Alpaca API Secret Key. You can find this in the Alpaca developer web console under your account settings.
+- `password` (String, Sensitive) Your Alpaca API Secret Key. You can find this in the Alpaca developer web console under your account settings.
 
 
 <a id="nestedatt--resource_allocation"></a>

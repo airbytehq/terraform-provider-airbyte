@@ -78,13 +78,16 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Validators: []validator.Object{
@@ -98,6 +101,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"personal_access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
 									},
 								},

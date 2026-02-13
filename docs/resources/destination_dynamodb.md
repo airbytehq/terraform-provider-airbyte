@@ -52,9 +52,9 @@ resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
 
 Required:
 
-- `access_key_id` (String) The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
+- `access_key_id` (String, Sensitive) The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
 - `dynamodb_table_name_prefix` (String) The prefix to use when naming DynamoDB tables.
-- `secret_access_key` (String) The corresponding secret to the access key id.
+- `secret_access_key` (String, Sensitive) The corresponding secret to the access key id.
 
 Optional:
 

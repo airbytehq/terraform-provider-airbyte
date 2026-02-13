@@ -86,7 +86,7 @@ Optional:
 
 Required:
 
-- `auth_user_password` (String) OS-level password for logging into the jump server host
+- `auth_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--credentials--ssh_key_authentication"></a>
@@ -94,7 +94,7 @@ Required:
 
 Required:
 
-- `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `auth_ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 
 

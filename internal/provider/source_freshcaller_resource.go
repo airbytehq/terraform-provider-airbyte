@@ -71,6 +71,7 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Freshcaller API Key. See the docs for more information on how to obtain this key.`,
 					},
 					"domain": schema.StringAttribute{

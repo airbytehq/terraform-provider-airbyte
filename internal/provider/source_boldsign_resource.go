@@ -71,6 +71,7 @@ func (r *SourceBoldsignResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your BoldSign API key. You can generate it by navigating to the API menu in the BoldSign app, selecting 'API Key', and clicking 'Generate API Key'. Copy the generated key and paste it here.`,
 					},
 					"start_date": schema.StringAttribute{

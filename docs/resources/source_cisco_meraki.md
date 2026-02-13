@@ -52,7 +52,7 @@ resource "airbyte_source_cisco_meraki" "my_source_ciscomeraki" {
 
 Required:
 
-- `api_key` (String) Your Meraki API key. Obtain it by logging into your Meraki Dashboard at https://dashboard.meraki.com/, navigating to 'My Profile' via the avatar icon in the top right corner, and generating the API key. Save this key securely as it represents your admin credentials.
+- `api_key` (String, Sensitive) Your Meraki API key. Obtain it by logging into your Meraki Dashboard at https://dashboard.meraki.com/, navigating to 'My Profile' via the avatar icon in the top right corner, and generating the API key. Save this key securely as it represents your admin credentials.
 - `start_date` (String)
 
 Optional:

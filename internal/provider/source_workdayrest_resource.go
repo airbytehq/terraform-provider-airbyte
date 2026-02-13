@@ -76,6 +76,7 @@ func (r *SourceWorkdayRestResource) Schema(ctx context.Context, req resource.Sch
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `Follow the instructions in the "OAuth 2.0 in Postman - API Client for Integrations" article in the Workday community docs to obtain access token.`,
 							},
 						},
@@ -101,7 +102,8 @@ func (r *SourceWorkdayRestResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"tenant_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 				},
 				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,

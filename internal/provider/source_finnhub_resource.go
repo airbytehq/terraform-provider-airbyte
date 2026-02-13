@@ -74,6 +74,7 @@ func (r *SourceFinnhubResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API key to use for authentication`,
 					},
 					"exchange": schema.StringAttribute{

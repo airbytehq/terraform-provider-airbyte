@@ -91,6 +91,7 @@ func (r *SourceBoxDataExtractResource) Schema(ctx context.Context, req resource.
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `You Box App client secret. Find yours in the <a href="https://app.box.com/developers/console">developer console</a>.`,
 					},
 					"extract_ai_prompt": schema.StringAttribute{

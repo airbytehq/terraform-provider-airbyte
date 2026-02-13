@@ -65,7 +65,7 @@ resource "airbyte_source_gnews" "my_source_gnews" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 - `query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
   quotation marks are used to search for articles with the exact same keyword
 sequence. 

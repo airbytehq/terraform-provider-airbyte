@@ -69,6 +69,7 @@ func (r *SourceCareQualityCommissionResource) Schema(ctx context.Context, req re
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your CQC Primary Key. See https://www.cqc.org.uk/about-us/transparency/using-cqc-data#api for steps to generate one.`,
 					},
 				},

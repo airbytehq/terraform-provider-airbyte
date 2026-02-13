@@ -69,10 +69,12 @@ func (r *SourceFullstoryResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key for the fullstory.com API.`,
 					},
 					"uid": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `User ID for the fullstory.com API.`,
 					},
 				},

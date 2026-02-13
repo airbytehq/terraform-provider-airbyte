@@ -52,8 +52,8 @@ resource "airbyte_source_apptivo" "my_source_apptivo" {
 
 Required:
 
-- `access_key` (String)
-- `api_key` (String) API key to use. Find it in your Apptivo account under Business Settings -> API Access.
+- `access_key` (String, Sensitive)
+- `api_key` (String, Sensitive) API key to use. Find it in your Apptivo account under Business Settings -> API Access.
 
 Optional:
 

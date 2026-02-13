@@ -71,6 +71,7 @@ func (r *SourceBrazeResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Braze REST API key`,
 					},
 					"start_date": schema.StringAttribute{

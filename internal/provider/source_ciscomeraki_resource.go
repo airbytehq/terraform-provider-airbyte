@@ -71,6 +71,7 @@ func (r *SourceCiscoMerakiResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Meraki API key. Obtain it by logging into your Meraki Dashboard at https://dashboard.meraki.com/, navigating to 'My Profile' via the avatar icon in the top right corner, and generating the API key. Save this key securely as it represents your admin credentials.`,
 					},
 					"start_date": schema.StringAttribute{

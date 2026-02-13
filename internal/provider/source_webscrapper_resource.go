@@ -69,6 +69,7 @@ func (r *SourceWebScrapperResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use. Find it at https://cloud.webscraper.io/api`,
 					},
 				},

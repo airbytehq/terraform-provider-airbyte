@@ -98,6 +98,7 @@ func (r *SourceMetricoolResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"user_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `User token to authenticate API requests. Find it in the Account Settings menu, API section of your Metricool account.`,
 					},
 				},

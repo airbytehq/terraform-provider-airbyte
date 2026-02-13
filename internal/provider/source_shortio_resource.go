@@ -72,6 +72,7 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Short.io Secret Key`,
 					},
 					"start_date": schema.StringAttribute{

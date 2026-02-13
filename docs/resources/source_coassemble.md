@@ -52,8 +52,8 @@ resource "airbyte_source_coassemble" "my_source_coassemble" {
 
 Required:
 
-- `user_id` (String)
-- `user_token` (String)
+- `user_id` (String, Sensitive)
+- `user_token` (String, Sensitive)
 
 Optional:
 

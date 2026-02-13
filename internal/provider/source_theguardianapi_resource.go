@@ -72,6 +72,7 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.`,
 					},
 					"end_date": schema.StringAttribute{

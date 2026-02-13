@@ -65,7 +65,7 @@ resource "airbyte_source_jira" "my_source_jira" {
 
 Required:
 
-- `api_token` (String) Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.
+- `api_token` (String, Sensitive) Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.
 - `domain` (String) The Domain for your Jira account, e.g. airbyteio.atlassian.net, airbyteio.jira.com, jira.your-domain.com
 - `email` (String) The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.
 

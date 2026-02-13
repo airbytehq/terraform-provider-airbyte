@@ -63,6 +63,7 @@ func (r *DestinationGlassflowResource) Schema(ctx context.Context, req resource.
 				Attributes: map[string]schema.Attribute{
 					"pipeline_access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The GlassFlow pipeline access token.`,
 					},
 					"pipeline_id": schema.StringAttribute{

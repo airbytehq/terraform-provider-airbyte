@@ -67,13 +67,13 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `azure_blob_storage_account_key` (String) The Azure Blob Storage account key. If you set this value, you must not set the "Shared Access Signature", "Azure Tenant ID", "Azure Client ID", or "Azure Client Secret" fields.
+- `azure_blob_storage_account_key` (String, Sensitive) The Azure Blob Storage account key. If you set this value, you must not set the "Shared Access Signature", "Azure Tenant ID", "Azure Client ID", or "Azure Client Secret" fields.
 - `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
 - `azure_blob_storage_spill_size` (Number) The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable. Default: 500
 - `azure_client_id` (String) The Azure Active Directory (Entra ID) client ID. Required for Entra ID authentication.
-- `azure_client_secret` (String) The Azure Active Directory (Entra ID) client secret. Required for Entra ID authentication.
+- `azure_client_secret` (String, Sensitive) The Azure Active Directory (Entra ID) client secret. Required for Entra ID authentication.
 - `azure_tenant_id` (String) The Azure Active Directory (Entra ID) tenant ID. Required for Entra ID authentication.
-- `shared_access_signature` (String) A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the "Azure Blob Storage Account Key", "Azure Tenant ID", "Azure Client ID", or "Azure Client Secret" fields.
+- `shared_access_signature` (String, Sensitive) A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the "Azure Blob Storage Account Key", "Azure Tenant ID", "Azure Client ID", or "Azure Client Secret" fields.
 
 <a id="nestedatt--configuration--format"></a>
 ### Nested Schema for `configuration.format`

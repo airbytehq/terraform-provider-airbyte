@@ -52,7 +52,7 @@ resource "airbyte_source_poplar" "my_source_poplar" {
 
 Required:
 
-- `access_token` (String) Your Poplar API Access Token. Generate it from the [API Credentials page](https://app.heypoplar.com/credentials) in your account. Use a production token for live data or a test token for testing purposes.
+- `access_token` (String, Sensitive) Your Poplar API Access Token. Generate it from the [API Credentials page](https://app.heypoplar.com/credentials) in your account. Use a production token for live data or a test token for testing purposes.
 - `start_date` (String)
 
 Optional:

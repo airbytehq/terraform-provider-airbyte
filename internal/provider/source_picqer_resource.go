@@ -74,7 +74,8 @@ func (r *SourcePicqerResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `The organization name which is used to login to picqer`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

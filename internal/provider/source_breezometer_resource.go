@@ -69,6 +69,7 @@ func (r *SourceBreezometerResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Access Key. See <a href="https://docs.breezometer.com/api-documentation/introduction/#authentication/">here</a>.`,
 					},
 					"days_to_forecast": schema.Int64Attribute{

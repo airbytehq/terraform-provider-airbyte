@@ -53,7 +53,7 @@ resource "airbyte_source_high_level" "my_source_highlevel" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `location_id` (String)
 - `start_date` (String)
 

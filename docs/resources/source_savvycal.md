@@ -51,7 +51,7 @@ resource "airbyte_source_savvycal" "my_source_savvycal" {
 
 Required:
 
-- `api_key` (String) Go to SavvyCal → Settings → Developer → Personal Tokens and make a new token. Then, copy the private key. https://savvycal.com/developers
+- `api_key` (String, Sensitive) Go to SavvyCal → Settings → Developer → Personal Tokens and make a new token. Then, copy the private key. https://savvycal.com/developers
 
 Optional:
 

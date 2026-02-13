@@ -85,6 +85,7 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 					},
 					"credentials_json": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.`,
 					},
 					"dataset_id": schema.StringAttribute{
@@ -207,10 +208,12 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 													},
 													"hmac_key_access_id": schema.StringAttribute{
 														Required:    true,
+														Sensitive:   true,
 														Description: `HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.`,
 													},
 													"hmac_key_secret": schema.StringAttribute{
 														Required:    true,
+														Sensitive:   true,
 														Description: `The corresponding secret for the access ID. It is a 40-character base-64 encoded string.`,
 													},
 												},

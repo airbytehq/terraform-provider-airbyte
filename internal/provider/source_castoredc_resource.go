@@ -73,10 +73,12 @@ func (r *SourceCastorEdcResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Visit ` + "`" + `https://YOUR_REGION.castoredc.com/account/settings` + "`" + ``,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Visit ` + "`" + `https://YOUR_REGION.castoredc.com/account/settings` + "`" + ``,
 					},
 					"start_date": schema.StringAttribute{

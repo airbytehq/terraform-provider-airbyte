@@ -52,7 +52,7 @@ resource "airbyte_source_thinkific" "my_source_thinkific" {
 
 Required:
 
-- `api_key` (String) Your Thinkific API key for authentication.
+- `api_key` (String, Sensitive) Your Thinkific API key for authentication.
 - `subdomain` (String) The subdomain of your Thinkific URL (e.g., if your URL is example.thinkific.com, your subdomain is "example".
 
 Optional:

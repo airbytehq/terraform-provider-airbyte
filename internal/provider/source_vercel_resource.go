@@ -66,6 +66,7 @@ func (r *SourceVercelResource) Schema(ctx context.Context, req resource.SchemaRe
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Access token to authenticate with the Vercel API. Create and manage tokens in your Vercel account settings.`,
 					},
 					"additional_properties": schema.StringAttribute{

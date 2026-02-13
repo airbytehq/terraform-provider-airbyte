@@ -49,7 +49,7 @@ resource "airbyte_destination_glassflow" "my_destination_glassflow" {
 
 Required:
 
-- `pipeline_access_token` (String) The GlassFlow pipeline access token.
+- `pipeline_access_token` (String, Sensitive) The GlassFlow pipeline access token.
 - `pipeline_id` (String) The GlassFlow pipeline id.
 
 

@@ -51,7 +51,7 @@ resource "airbyte_source_jobnimbus" "my_source_jobnimbus" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it by logging into your JobNimbus account, navigating to settings, and creating a new API key under the API section.
+- `api_key` (String, Sensitive) API key to use. Find it by logging into your JobNimbus account, navigating to settings, and creating a new API key under the API section.
 
 Optional:
 

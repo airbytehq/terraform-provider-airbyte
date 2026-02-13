@@ -57,11 +57,11 @@ resource "airbyte_source_zoho_crm" "my_source_zohocrm" {
 
 Required:
 
-- `client_id` (String) OAuth2.0 Client ID
-- `client_secret` (String) OAuth2.0 Client Secret
+- `client_id` (String, Sensitive) OAuth2.0 Client ID
+- `client_secret` (String, Sensitive) OAuth2.0 Client Secret
 - `dc_region` (String) Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>. must be one of ["US", "AU", "EU", "IN", "CN", "JP"]
 - `environment` (String) Please choose the environment. must be one of ["Production", "Developer", "Sandbox"]
-- `refresh_token` (String) OAuth2.0 Refresh Token
+- `refresh_token` (String, Sensitive) OAuth2.0 Refresh Token
 
 Optional:
 

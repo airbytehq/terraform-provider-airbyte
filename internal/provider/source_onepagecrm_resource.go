@@ -69,6 +69,7 @@ func (r *SourceOnepagecrmResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Enter your API Key of your API app`,
 					},
 					"username": schema.StringAttribute{

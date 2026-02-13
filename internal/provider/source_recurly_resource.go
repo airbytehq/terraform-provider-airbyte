@@ -84,6 +84,7 @@ func (r *SourceRecurlyResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Recurly API Key. See the  <a href="https://docs.airbyte.com/integrations/sources/recurly">docs</a> for more information on how to generate this key.`,
 					},
 					"begin_time": schema.StringAttribute{

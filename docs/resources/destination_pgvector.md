@@ -110,7 +110,7 @@ Required:
 
 - `api_base` (String) The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 - `deployment` (String) The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-- `openai_key` (String) The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+- `openai_key` (String, Sensitive) The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 
 
 <a id="nestedatt--configuration--embedding--cohere"></a>
@@ -118,7 +118,7 @@ Required:
 
 Required:
 
-- `cohere_key` (String)
+- `cohere_key` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--embedding--fake"></a>
@@ -130,7 +130,7 @@ Required:
 
 Required:
 
-- `openai_key` (String)
+- `openai_key` (String, Sensitive)
 
 
 <a id="nestedatt--configuration--embedding--open_ai_compatible"></a>
@@ -143,7 +143,7 @@ Required:
 
 Optional:
 
-- `api_key` (String) Default: ""
+- `api_key` (String, Sensitive) Default: ""
 - `model_name` (String) The name of the model to use for embedding. Default: "text-embedding-ada-002"
 
 
@@ -168,7 +168,7 @@ Optional:
 
 Required:
 
-- `password` (String) Enter the password you want to use to access the database
+- `password` (String, Sensitive) Enter the password you want to use to access the database
 
 
 

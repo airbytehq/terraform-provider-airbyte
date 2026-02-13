@@ -51,7 +51,7 @@ resource "airbyte_source_zenefits" "my_source_zenefits" {
 
 Required:
 
-- `token` (String) Use Sync with Zenefits button on the link given on the readme file, and get the token to access the api
+- `token` (String, Sensitive) Use Sync with Zenefits button on the link given on the readme file, and get the token to access the api
 
 Optional:
 

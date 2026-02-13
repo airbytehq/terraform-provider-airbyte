@@ -54,8 +54,8 @@ resource "airbyte_source_taboola" "my_source_taboola" {
 Required:
 
 - `account_id` (String) The ID associated with your taboola account
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 
 Optional:
 

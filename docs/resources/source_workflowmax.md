@@ -54,7 +54,7 @@ resource "airbyte_source_workflowmax" "my_source_workflowmax" {
 Required:
 
 - `account_id` (String) The account id for workflowmax
-- `api_key_2` (String)
+- `api_key_2` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

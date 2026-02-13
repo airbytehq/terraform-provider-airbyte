@@ -52,7 +52,7 @@ resource "airbyte_source_getlago" "my_source_getlago" {
 
 Required:
 
-- `api_key` (String) Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
 
 Optional:
 

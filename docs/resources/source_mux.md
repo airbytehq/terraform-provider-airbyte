@@ -60,7 +60,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String)
+- `password` (String, Sensitive)
 - `playback_id` (String) The playback id for your video asset shown in website details
 
 

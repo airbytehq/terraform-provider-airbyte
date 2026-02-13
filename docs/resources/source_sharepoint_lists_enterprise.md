@@ -54,8 +54,8 @@ resource "airbyte_source_sharepoint_lists_enterprise" "my_source_sharepointlists
 
 Required:
 
-- `client_id` (String) Azure AD Application (Client) ID
-- `client_secret` (String) Azure AD Application Client Secret
+- `client_id` (String, Sensitive) Azure AD Application (Client) ID
+- `client_secret` (String, Sensitive) Azure AD Application Client Secret
 - `site_id` (String) SharePoint Site ID. Can be obtained from the site URL or using Microsoft Graph Explorer. Format: {hostname},{site-collection-id},{web-id}
 - `tenant_id` (String) Azure AD Tenant (Directory) ID
 

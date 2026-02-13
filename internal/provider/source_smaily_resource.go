@@ -69,6 +69,7 @@ func (r *SourceSmailyResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API user password. See https://smaily.com/help/api/general/create-api-user/`,
 					},
 					"api_subdomain": schema.StringAttribute{

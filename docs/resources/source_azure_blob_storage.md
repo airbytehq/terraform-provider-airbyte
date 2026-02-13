@@ -112,9 +112,9 @@ Optional:
 
 Required:
 
-- `app_client_id` (String) Client ID of your Microsoft developer application
-- `app_client_secret` (String) Client Secret of your Microsoft developer application
-- `app_tenant_id` (String) Tenant ID of the Microsoft Azure Application
+- `app_client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `app_client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
+- `app_tenant_id` (String, Sensitive) Tenant ID of the Microsoft Azure Application
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_oauth2"></a>
@@ -122,10 +122,10 @@ Required:
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
-- `refresh_token` (String) Refresh Token of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft Azure Application user
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
+- `refresh_token` (String, Sensitive) Refresh Token of your Microsoft developer application
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft Azure Application user
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_storage_account_key"></a>
@@ -133,7 +133,7 @@ Required:
 
 Required:
 
-- `azure_blob_storage_account_key` (String) The Azure blob storage account key.
+- `azure_blob_storage_account_key` (String, Sensitive) The Azure blob storage account key.
 
 
 

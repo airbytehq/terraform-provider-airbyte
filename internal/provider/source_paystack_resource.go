@@ -80,6 +80,7 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^(s|r)k_(live|test)_[a-zA-Z0-9]+$`), "must match pattern "+regexp.MustCompile(`^(s|r)k_(live|test)_[a-zA-Z0-9]+$`).String()),

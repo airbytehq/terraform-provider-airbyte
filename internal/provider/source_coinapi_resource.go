@@ -69,6 +69,7 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"end_date": schema.StringAttribute{

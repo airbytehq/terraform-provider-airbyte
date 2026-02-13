@@ -51,7 +51,7 @@ resource "airbyte_source_referralhero" "my_source_referralhero" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 
 Optional:
 

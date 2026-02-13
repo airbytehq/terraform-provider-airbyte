@@ -80,7 +80,7 @@ Optional:
 
 - `connection_data` (Attributes) Connect data that will be used for DB connection (see [below for nested schema](#nestedatt--configuration--connection_data))
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) Port of the database.
 Oracle Corporations recommends the following port numbers:
 1521 - Default listening port for client connections to the listener. 
@@ -110,7 +110,7 @@ Optional:
 
 Required:
 
-- `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
+- `ssl_certificate` (String, Sensitive) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 
 
 
@@ -159,7 +159,7 @@ Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 Optional:
 
@@ -171,7 +171,7 @@ Optional:
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 

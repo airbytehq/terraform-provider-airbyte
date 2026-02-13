@@ -76,7 +76,7 @@ Optional:
 
 Required:
 
-- `api_key` (String) API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
+- `api_key` (String, Sensitive) API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_o_auth"></a>
@@ -84,10 +84,10 @@ Required:
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `client_id` (String) The Client ID of your Salesloft developer application.
-- `client_secret` (String) The Client Secret of your Salesloft developer application.
-- `refresh_token` (String) The token for obtaining a new access token.
+- `client_secret` (String, Sensitive) The Client Secret of your Salesloft developer application.
+- `refresh_token` (String, Sensitive) The token for obtaining a new access token.
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 

@@ -51,7 +51,7 @@ resource "airbyte_source_zendesk_sell" "my_source_zendesksell" {
 
 Required:
 
-- `api_token` (String) The API token for authenticating to Zendesk Sell
+- `api_token` (String, Sensitive) The API token for authenticating to Zendesk Sell
 
 Optional:
 

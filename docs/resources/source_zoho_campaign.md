@@ -54,9 +54,9 @@ resource "airbyte_source_zoho_campaign" "my_source_zohocampaign" {
 
 Required:
 
-- `client_id_2` (String)
-- `client_refresh_token` (String)
-- `client_secret_2` (String)
+- `client_id_2` (String, Sensitive)
+- `client_refresh_token` (String, Sensitive)
+- `client_secret_2` (String, Sensitive)
 - `data_center` (String) must be one of ["com", "eu", "in", "com.au", ".jp", ".com.cn"]
 
 Optional:

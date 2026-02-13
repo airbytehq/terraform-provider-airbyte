@@ -57,7 +57,7 @@ Required:
 
 - `api_key` (String)
 - `client_id` (String) Your client identifier for authentication.
-- `client_secret` (String) Your client secret for secure authentication.
+- `client_secret` (String, Sensitive) Your client secret for secure authentication.
 - `grant_type` (String)
 - `scope` (String)
 

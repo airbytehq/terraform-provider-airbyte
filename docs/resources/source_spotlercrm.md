@@ -51,7 +51,7 @@ resource "airbyte_source_spotlercrm" "my_source_spotlercrm" {
 
 Required:
 
-- `access_token` (String) Access Token to authenticate API requests. Generate it by logging into your CRM system, navigating to Settings / Integrations / API V4, and clicking 'generate new key'.
+- `access_token` (String, Sensitive) Access Token to authenticate API requests. Generate it by logging into your CRM system, navigating to Settings / Integrations / API V4, and clicking 'generate new key'.
 
 Optional:
 

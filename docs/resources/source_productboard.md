@@ -52,7 +52,7 @@ resource "airbyte_source_productboard" "my_source_productboard" {
 
 Required:
 
-- `access_token` (String) Your Productboard access token. See https://developer.productboard.com/reference/authentication for steps to generate one.
+- `access_token` (String, Sensitive) Your Productboard access token. See https://developer.productboard.com/reference/authentication for steps to generate one.
 - `start_date` (String)
 
 Optional:

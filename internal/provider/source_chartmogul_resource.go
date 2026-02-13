@@ -71,6 +71,7 @@ func (r *SourceChartmogulResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.`,
 					},
 					"start_date": schema.StringAttribute{

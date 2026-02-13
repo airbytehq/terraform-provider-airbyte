@@ -66,7 +66,7 @@ resource "airbyte_source_newsdata_io" "my_source_newsdataio" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

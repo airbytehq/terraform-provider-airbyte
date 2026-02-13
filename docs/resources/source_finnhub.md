@@ -57,7 +57,7 @@ resource "airbyte_source_finnhub" "my_source_finnhub" {
 
 Required:
 
-- `api_key` (String) The API key to use for authentication
+- `api_key` (String, Sensitive) The API key to use for authentication
 - `start_date_2` (String)
 - `symbols` (List of String)
 

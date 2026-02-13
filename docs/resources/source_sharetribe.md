@@ -55,14 +55,14 @@ resource "airbyte_source_sharetribe" "my_source_sharetribe" {
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String, Sensitive)
+- `client_secret` (String, Sensitive)
 - `start_date` (String)
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `oauth_access_token` (String) The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
+- `oauth_access_token` (String, Sensitive) The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
 - `oauth_token_expiry_date` (String) The date the current access token expires in. This field might be overridden by the connector based on the token refresh endpoint response.
 
 

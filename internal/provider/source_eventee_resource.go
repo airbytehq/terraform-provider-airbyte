@@ -69,6 +69,7 @@ func (r *SourceEventeeResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API token to use. Generate it at https://admin.eventee.co/ in 'Settings -> Features'.`,
 					},
 				},

@@ -70,6 +70,7 @@ func (r *SourceRailzResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Secret key (secret_key)`,
 					},
 					"start_date": schema.StringAttribute{

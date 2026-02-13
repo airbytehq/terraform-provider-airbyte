@@ -54,14 +54,14 @@ resource "airbyte_source_chargify" "my_source_chargify" {
 
 Required:
 
-- `api_key` (String) Maxio Advanced Billing/Chargify API Key.
+- `api_key` (String, Sensitive) Maxio Advanced Billing/Chargify API Key.
 - `domain` (String) Chargify domain. Normally this domain follows the following format
 - `username` (String)
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `password` (String)
+- `password` (String, Sensitive)
 
 
 <a id="nestedatt--resource_allocation"></a>

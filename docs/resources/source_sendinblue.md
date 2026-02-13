@@ -51,7 +51,7 @@ resource "airbyte_source_sendinblue" "my_source_sendinblue" {
 
 Required:
 
-- `api_key` (String) Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
 
 Optional:
 

@@ -52,7 +52,7 @@ resource "airbyte_source_oncehub" "my_source_oncehub" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it in your OnceHub account under the API & Webhooks Integration page.
+- `api_key` (String, Sensitive) API key to use. Find it in your OnceHub account under the API & Webhooks Integration page.
 - `start_date` (String)
 
 Optional:

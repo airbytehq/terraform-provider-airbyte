@@ -65,7 +65,8 @@ func (r *SourceRollbarResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 				Attributes: map[string]schema.Attribute{
 					"account_access_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"additional_properties": schema.StringAttribute{
 						CustomType:  jsontypes.NormalizedType{},
@@ -73,7 +74,8 @@ func (r *SourceRollbarResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Parsed as JSON.`,
 					},
 					"project_access_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

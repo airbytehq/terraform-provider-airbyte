@@ -51,7 +51,7 @@ resource "airbyte_source_instatus" "my_source_instatus" {
 
 Required:
 
-- `api_key` (String) Instatus REST API key
+- `api_key` (String, Sensitive) Instatus REST API key
 
 Optional:
 

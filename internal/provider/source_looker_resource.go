@@ -73,6 +73,7 @@ func (r *SourceLookerResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret is second part of an API3 key.`,
 					},
 					"domain": schema.StringAttribute{

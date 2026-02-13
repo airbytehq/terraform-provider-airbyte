@@ -68,7 +68,8 @@ func (r *SourcePabblySubscriptionsBillingResource) Schema(ctx context.Context, r
 						Description: `Parsed as JSON.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"username": schema.StringAttribute{
 						Required: true,

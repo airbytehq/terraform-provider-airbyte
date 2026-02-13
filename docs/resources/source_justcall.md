@@ -52,7 +52,7 @@ resource "airbyte_source_justcall" "my_source_justcall" {
 
 Required:
 
-- `api_key_2` (String)
+- `api_key_2` (String, Sensitive)
 - `start_date` (String)
 
 Optional:

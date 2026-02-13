@@ -84,17 +84,20 @@ func (r *SourceEbayFinanceResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"client_access_token": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Ebay Client Secret`,
 					},
 					"redirect_uri": schema.StringAttribute{
 						Required: true,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -69,6 +69,7 @@ func (r *SourceSendinblueResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.`,
 					},
 				},

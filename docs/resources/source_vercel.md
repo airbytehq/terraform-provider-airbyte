@@ -52,7 +52,7 @@ resource "airbyte_source_vercel" "my_source_vercel" {
 
 Required:
 
-- `access_token` (String) Access token to authenticate with the Vercel API. Create and manage tokens in your Vercel account settings.
+- `access_token` (String, Sensitive) Access token to authenticate with the Vercel API. Create and manage tokens in your Vercel account settings.
 - `start_date` (String)
 
 Optional:

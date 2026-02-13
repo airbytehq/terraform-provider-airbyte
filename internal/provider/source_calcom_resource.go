@@ -69,6 +69,7 @@ func (r *SourceCalComResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API key to use. Find it at https://cal.com/account`,
 					},
 					"org_id": schema.StringAttribute{

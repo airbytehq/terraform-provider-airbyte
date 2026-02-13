@@ -522,6 +522,12 @@ func (r *SourceSharepointEnterpriseResourceModel) ToSharedSourceSharepointEnterp
 		} else {
 			schemaless = nil
 		}
+		useFirstFoundFileForSchemaDiscovery := new(bool)
+		if !r.Configuration.Streams[streamsIndex].UseFirstFoundFileForSchemaDiscovery.IsUnknown() && !r.Configuration.Streams[streamsIndex].UseFirstFoundFileForSchemaDiscovery.IsNull() {
+			*useFirstFoundFileForSchemaDiscovery = r.Configuration.Streams[streamsIndex].UseFirstFoundFileForSchemaDiscovery.ValueBool()
+		} else {
+			useFirstFoundFileForSchemaDiscovery = nil
+		}
 		validationPolicy := new(shared.SourceSharepointEnterpriseValidationPolicy)
 		if !r.Configuration.Streams[streamsIndex].ValidationPolicy.IsUnknown() && !r.Configuration.Streams[streamsIndex].ValidationPolicy.IsNull() {
 			*validationPolicy = shared.SourceSharepointEnterpriseValidationPolicy(r.Configuration.Streams[streamsIndex].ValidationPolicy.ValueString())
@@ -537,6 +543,7 @@ func (r *SourceSharepointEnterpriseResourceModel) ToSharedSourceSharepointEnterp
 			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
+			UseFirstFoundFileForSchemaDiscovery:  useFirstFoundFileForSchemaDiscovery,
 			ValidationPolicy:                     validationPolicy,
 		})
 	}
@@ -991,6 +998,12 @@ func (r *SourceSharepointEnterpriseResourceModel) ToSharedSourceSharepointEnterp
 		} else {
 			schemaless = nil
 		}
+		useFirstFoundFileForSchemaDiscovery := new(bool)
+		if !r.Configuration.Streams[streamsIndex].UseFirstFoundFileForSchemaDiscovery.IsUnknown() && !r.Configuration.Streams[streamsIndex].UseFirstFoundFileForSchemaDiscovery.IsNull() {
+			*useFirstFoundFileForSchemaDiscovery = r.Configuration.Streams[streamsIndex].UseFirstFoundFileForSchemaDiscovery.ValueBool()
+		} else {
+			useFirstFoundFileForSchemaDiscovery = nil
+		}
 		validationPolicy := new(shared.SourceSharepointEnterpriseUpdateValidationPolicy)
 		if !r.Configuration.Streams[streamsIndex].ValidationPolicy.IsUnknown() && !r.Configuration.Streams[streamsIndex].ValidationPolicy.IsNull() {
 			*validationPolicy = shared.SourceSharepointEnterpriseUpdateValidationPolicy(r.Configuration.Streams[streamsIndex].ValidationPolicy.ValueString())
@@ -1006,6 +1019,7 @@ func (r *SourceSharepointEnterpriseResourceModel) ToSharedSourceSharepointEnterp
 			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
+			UseFirstFoundFileForSchemaDiscovery:  useFirstFoundFileForSchemaDiscovery,
 			ValidationPolicy:                     validationPolicy,
 		})
 	}

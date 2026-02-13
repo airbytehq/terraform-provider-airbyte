@@ -81,10 +81,12 @@ func (r *SourceSpotifyAdsResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Spotify Developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Spotify Developer application.`,
 					},
 					"fields": schema.ListAttribute{
@@ -104,6 +106,7 @@ func (r *SourceSpotifyAdsResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Refresh Token obtained from the initial OAuth 2.0 authorization flow.`,
 					},
 					"start_date": schema.StringAttribute{

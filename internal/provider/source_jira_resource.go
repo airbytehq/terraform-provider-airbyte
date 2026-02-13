@@ -73,6 +73,7 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.`,
 					},
 					"domain": schema.StringAttribute{

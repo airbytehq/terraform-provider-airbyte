@@ -69,6 +69,7 @@ func (r *SourceUnleashResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API Token (Server-Side SDK [Client]). See <a href="https://docs.getunleash.io/how-to/how-to-create-api-tokens/">here</a>. The token is case sensitive.`,
 					},
 					"api_url": schema.StringAttribute{

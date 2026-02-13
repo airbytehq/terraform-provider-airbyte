@@ -4,7 +4,7 @@ resource "airbyte_source_stripe" "my_source_stripe" {
     call_rate_limit      = 25
     client_secret        = "...my_client_secret..."
     lookback_window_days = 4
-    num_workers          = 1
+    num_workers          = 2
     slice_range          = 1
     start_date           = "2017-01-25T00:00:00Z"
   }

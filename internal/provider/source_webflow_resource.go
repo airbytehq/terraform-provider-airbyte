@@ -73,6 +73,7 @@ func (r *SourceWebflowResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api`,
 					},
 					"site_id": schema.StringAttribute{

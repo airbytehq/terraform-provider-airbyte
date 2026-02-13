@@ -52,7 +52,7 @@ resource "airbyte_source_ninjaone_rmm" "my_source_ninjaonermm" {
 
 Required:
 
-- `api_key` (String) Token could be generated natively by authorize section of NinjaOne swagger documentation `https://app.ninjarmm.com/apidocs/?links.active=authorization`
+- `api_key` (String, Sensitive) Token could be generated natively by authorize section of NinjaOne swagger documentation `https://app.ninjarmm.com/apidocs/?links.active=authorization`
 - `start_date` (String)
 
 Optional:

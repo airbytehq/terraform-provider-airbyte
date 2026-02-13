@@ -69,10 +69,12 @@ func (r *SourceEConomicResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"agreement_grant_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Token that identifies the grant issued by an agreement, allowing your app to access data. Obtain it from your e-conomic account settings.`,
 					},
 					"app_secret_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your private token that identifies your app. Find it in your e-conomic account settings.`,
 					},
 				},

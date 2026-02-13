@@ -76,6 +76,7 @@ func (r *SourceTrelloResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.`,
 					},
 					"start_date": schema.StringAttribute{
@@ -87,6 +88,7 @@ func (r *SourceTrelloResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.`,
 					},
 				},

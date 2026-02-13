@@ -58,7 +58,7 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
 
 Required:
 
-- `api_key` (String) Freshdesk API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshdesk">docs</a> for more information on how to obtain this key.
+- `api_key` (String, Sensitive) Freshdesk API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshdesk">docs</a> for more information on how to obtain this key.
 - `domain` (String) Freshdesk domain
 
 Optional:

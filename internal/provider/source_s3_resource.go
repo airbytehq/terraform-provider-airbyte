@@ -75,10 +75,12 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 				Attributes: map[string]schema.Attribute{
 					"aws_access_key_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 					},
 					"aws_secret_access_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 					},
 					"bucket": schema.StringAttribute{
@@ -296,10 +298,12 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Attributes: map[string]schema.Attribute{
 							"aws_access_key_id": schema.StringAttribute{
 								Optional:    true,
+								Sensitive:   true,
 								Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 							},
 							"aws_secret_access_key": schema.StringAttribute{
 								Optional:    true,
+								Sensitive:   true,
 								Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 							},
 							"bucket": schema.StringAttribute{

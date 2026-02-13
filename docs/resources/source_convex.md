@@ -52,7 +52,7 @@ resource "airbyte_source_convex" "my_source_convex" {
 
 Required:
 
-- `access_key` (String) API access key used to retrieve data from Convex.
+- `access_key` (String, Sensitive) API access key used to retrieve data from Convex.
 - `deployment_url` (String)
 
 Optional:

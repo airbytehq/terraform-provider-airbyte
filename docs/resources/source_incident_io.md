@@ -51,7 +51,7 @@ resource "airbyte_source_incident_io" "my_source_incidentio" {
 
 Required:
 
-- `api_key` (String) API key to use. Find it at https://app.incident.io/settings/api-keys
+- `api_key` (String, Sensitive) API key to use. Find it at https://app.incident.io/settings/api-keys
 
 Optional:
 

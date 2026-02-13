@@ -80,14 +80,17 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID for the Google Drive API`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret for the Google Drive API`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh Token for the Google Drive API`,
 									},
 								},
@@ -102,6 +105,7 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
 									},
 								},

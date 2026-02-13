@@ -69,6 +69,7 @@ func (r *SourceZenefitsResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Use Sync with Zenefits button on the link given on the readme file, and get the token to access the api`,
 					},
 				},

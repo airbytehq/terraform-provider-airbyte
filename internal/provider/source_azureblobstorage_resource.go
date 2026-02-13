@@ -91,14 +91,17 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"app_client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"app_client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"app_tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft Azure Application`,
 									},
 								},
@@ -114,18 +117,22 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh Token of your Microsoft developer application`,
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft Azure Application user`,
 									},
 								},
@@ -141,6 +148,7 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"azure_blob_storage_account_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Azure blob storage account key.`,
 									},
 								},

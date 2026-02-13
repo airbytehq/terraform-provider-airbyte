@@ -52,7 +52,7 @@ resource "airbyte_source_appfollow" "my_source_appfollow" {
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `api_secret` (String) API Key provided by Appfollow
+- `api_secret` (String, Sensitive) API Key provided by Appfollow
 
 
 <a id="nestedatt--resource_allocation"></a>

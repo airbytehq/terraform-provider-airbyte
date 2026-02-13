@@ -73,6 +73,7 @@ func (r *SourceWorkrampResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The API Token for Workramp`,
 					},
 				},

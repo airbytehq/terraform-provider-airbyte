@@ -69,6 +69,7 @@ func (r *SourceSmartengageResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 				},

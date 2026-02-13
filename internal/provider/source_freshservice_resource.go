@@ -71,6 +71,7 @@ func (r *SourceFreshserviceResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Freshservice API Key. See <a href="https://api.freshservice.com/#authentication">here</a>. The key is case sensitive.`,
 					},
 					"domain_name": schema.StringAttribute{

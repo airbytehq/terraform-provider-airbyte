@@ -73,10 +73,12 @@ func (r *SourcePhylloResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Client ID for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Client Secret for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.`,
 					},
 					"environment": schema.StringAttribute{

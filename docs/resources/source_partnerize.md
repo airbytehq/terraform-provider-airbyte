@@ -52,8 +52,8 @@ resource "airbyte_source_partnerize" "my_source_partnerize" {
 
 Required:
 
-- `application_key` (String) The application key identifies the network you are making the request against. Find it in your account settings under 'User Application Key' at https://console.partnerize.com.
-- `user_api_key` (String) The user API key identifies the user on whose behalf the request is made. Find it in your account settings under 'User API Key' at https://console.partnerize.com.
+- `application_key` (String, Sensitive) The application key identifies the network you are making the request against. Find it in your account settings under 'User Application Key' at https://console.partnerize.com.
+- `user_api_key` (String, Sensitive) The user API key identifies the user on whose behalf the request is made. Find it in your account settings under 'User API Key' at https://console.partnerize.com.
 
 Optional:
 

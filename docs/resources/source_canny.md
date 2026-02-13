@@ -51,7 +51,7 @@ resource "airbyte_source_canny" "my_source_canny" {
 
 Required:
 
-- `api_key` (String) You can find your secret API key in Your Canny Subdomain > Settings > API
+- `api_key` (String, Sensitive) You can find your secret API key in Your Canny Subdomain > Settings > API
 
 Optional:
 
