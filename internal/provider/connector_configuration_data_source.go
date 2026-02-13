@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/big"
 	"net/http"
 	"strings"
 	"time"
@@ -271,8 +272,10 @@ func attrValueToGo(val attr.Value) (interface{}, error) {
 	case types.Number:
 		bf := v.ValueBigFloat()
 		if bf.IsInt() {
-			i, _ := bf.Int64()
-			return i, nil
+			i, acc := bf.Int64()
+			if acc == big.Exact {
+				return i, nil
+			}
 		}
 		f, _ := bf.Float64()
 		return f, nil
