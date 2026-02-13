@@ -17,28 +17,55 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
+const (
+	ossRegistryURL   = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
+	cloudRegistryURL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
+)
+
 var _ datasource.DataSource = &ConnectorConfigurationDataSource{}
 
-func NewConnectorConfigurationDataSource() datasource.DataSource {
-	return &ConnectorConfigurationDataSource{}
+// ConnectorConfigurationDataSource resolves connector metadata from the Airbyte
+// registry and merges non-sensitive and sensitive configuration into a single
+// JSON blob for use with airbyte_source or airbyte_destination resources.
+type ConnectorConfigurationDataSource struct {
+	httpClient *http.Client
 }
 
-type ConnectorConfigurationDataSource struct{}
-
+// ConnectorConfigurationDataSourceModel describes the data source schema.
 type ConnectorConfigurationDataSourceModel struct {
-	ConnectorName          types.String `tfsdk:"connector_name"`
-	ConnectorVersion       types.String `tfsdk:"connector_version"`
+	ConnectorName        types.String  `tfsdk:"connector_name"`
+	ConnectorVersion     types.String  `tfsdk:"connector_version"`
 	Configuration        types.Dynamic `tfsdk:"configuration"`
 	ConfigurationSecrets types.Dynamic `tfsdk:"configuration_secrets"`
-	IgnoreErrors           types.Bool   `tfsdk:"ignore_errors"`
-	DefinitionID           types.String `tfsdk:"definition_id"`
-	ConfigurationJSON      types.String `tfsdk:"configuration_json"`
+	IgnoreErrors         types.Bool    `tfsdk:"ignore_errors"`
+	DefinitionID         types.String  `tfsdk:"definition_id"`
+	ConfigurationJSON    types.String  `tfsdk:"configuration_json"`
 }
 
+type registryEntry struct {
+	SourceDefinitionID      string `json:"sourceDefinitionId"`
+	DestinationDefinitionID string `json:"destinationDefinitionId"`
+	DockerRepository        string `json:"dockerRepository"`
+}
+
+type registryResponse struct {
+	Sources      []registryEntry `json:"sources"`
+	Destinations []registryEntry `json:"destinations"`
+}
+
+// NewConnectorConfigurationDataSource creates a new instance of the data source.
+func NewConnectorConfigurationDataSource() datasource.DataSource {
+	return &ConnectorConfigurationDataSource{
+		httpClient: &http.Client{Timeout: 30 * time.Second},
+	}
+}
+
+// Metadata sets the data source type name.
 func (d *ConnectorConfigurationDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_connector_configuration"
 }
 
+// Schema defines the data source attributes.
 func (d *ConnectorConfigurationDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: `Resolves and merges connector configuration for use with airbyte_source or airbyte_destination resources.
@@ -64,7 +91,7 @@ secrets hidden in state and plan output.`,
 			"configuration_secrets": schema.DynamicAttribute{
 				Optional:            true,
 				Sensitive:           true,
-				MarkdownDescription: "Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are merged with (and override) keys in `configuration`.",
+				MarkdownDescription: "Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are deep-merged with (and override) keys in `configuration`.",
 			},
 			"ignore_errors": schema.BoolAttribute{
 				Optional:            true,
@@ -83,96 +110,11 @@ secrets hidden in state and plan output.`,
 	}
 }
 
+// Configure is a no-op; this data source has no provider-level dependencies.
 func (d *ConnectorConfigurationDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
 }
 
-const (
-	ossRegistryURL   = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
-	cloudRegistryURL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
-)
-
-type registryEntry struct {
-	SourceDefinitionID      string `json:"sourceDefinitionId"`
-	DestinationDefinitionID string `json:"destinationDefinitionId"`
-	DockerRepository        string `json:"dockerRepository"`
-}
-
-type registryResponse struct {
-	Sources      []registryEntry `json:"sources"`
-	Destinations []registryEntry `json:"destinations"`
-}
-
-func resolveDefinitionID(ctx context.Context, connectorName string) (string, error) {
-	dockerName := "airbyte/" + connectorName
-
-	cloudID, cloudErr := searchRegistry(ctx, cloudRegistryURL, dockerName, connectorName)
-	if cloudErr == nil && cloudID != "" {
-		return cloudID, nil
-	}
-
-	ossID, ossErr := searchRegistry(ctx, ossRegistryURL, dockerName, connectorName)
-	if ossErr == nil && ossID != "" {
-		return ossID, nil
-	}
-
-	if cloudErr != nil || ossErr != nil {
-		var parts []string
-		if cloudErr != nil {
-			parts = append(parts, fmt.Sprintf("cloud: %v", cloudErr))
-		}
-		if ossErr != nil {
-			parts = append(parts, fmt.Sprintf("oss: %v", ossErr))
-		}
-		return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
-	}
-
-	return "", fmt.Errorf("connector %q not found in Cloud or OSS registries", connectorName)
-}
-
-func searchRegistry(ctx context.Context, registryURL, dockerName, connectorName string) (string, error) {
-	client := &http.Client{Timeout: 30 * time.Second}
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, registryURL, nil)
-	if err != nil {
-		return "", fmt.Errorf("failed to create request for %s: %w", registryURL, err)
-	}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", fmt.Errorf("failed to fetch registry from %s: %w", registryURL, err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("registry %s returned HTTP %d", registryURL, resp.StatusCode)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", fmt.Errorf("failed to read registry response: %w", err)
-	}
-
-	var registry registryResponse
-	if err := json.Unmarshal(body, &registry); err != nil {
-		return "", fmt.Errorf("failed to parse registry JSON: %w", err)
-	}
-
-	isSource := strings.HasPrefix(connectorName, "source-")
-	if isSource {
-		for _, entry := range registry.Sources {
-			if entry.DockerRepository == dockerName {
-				return entry.SourceDefinitionID, nil
-			}
-		}
-	} else {
-		for _, entry := range registry.Destinations {
-			if entry.DockerRepository == dockerName {
-				return entry.DestinationDefinitionID, nil
-			}
-		}
-	}
-
-	return "", nil
-}
-
+// Read resolves the connector definition ID and merges configuration.
 func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var data ConnectorConfigurationDataSourceModel
 
@@ -187,7 +129,7 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		ignoreErrors = data.IgnoreErrors.ValueBool()
 	}
 
-	definitionID, err := resolveDefinitionID(ctx, connectorName)
+	definitionID, err := d.resolveDefinitionID(ctx, connectorName)
 	if err != nil {
 		addDiagnostic(resp, ignoreErrors, "Failed to resolve connector definition ID", err.Error())
 		if !ignoreErrors {
@@ -227,18 +169,85 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		}
 	}
 
-	merged, err := mergeJSON(configJSON, secretsJSON)
+	merged, err := deepMergeJSON(configJSON, secretsJSON)
 	if err != nil {
-		addDiagnostic(resp, ignoreErrors, "Failed to merge configuration", err.Error())
-		if !ignoreErrors {
-			return
-		}
-		merged = configJSON
+		resp.Diagnostics.AddError("Failed to merge configuration", err.Error())
+		return
 	}
 
 	data.ConfigurationJSON = types.StringValue(merged)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName string) (string, error) {
+	dockerName := "airbyte/" + connectorName
+
+	cloudID, cloudErr := d.searchRegistry(ctx, cloudRegistryURL, dockerName, connectorName)
+	if cloudErr == nil && cloudID != "" {
+		return cloudID, nil
+	}
+
+	ossID, ossErr := d.searchRegistry(ctx, ossRegistryURL, dockerName, connectorName)
+	if ossErr == nil && ossID != "" {
+		return ossID, nil
+	}
+
+	if cloudErr != nil || ossErr != nil {
+		var parts []string
+		if cloudErr != nil {
+			parts = append(parts, fmt.Sprintf("cloud: %v", cloudErr))
+		}
+		if ossErr != nil {
+			parts = append(parts, fmt.Sprintf("oss: %v", ossErr))
+		}
+		return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
+	}
+
+	return "", fmt.Errorf("connector %q not found in Cloud or OSS registries", connectorName)
+}
+
+func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, registryURL, dockerName, connectorName string) (string, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, registryURL, nil)
+	if err != nil {
+		return "", fmt.Errorf("failed to create request for %s: %w", registryURL, err)
+	}
+	resp, err := d.httpClient.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("failed to fetch registry from %s: %w", registryURL, err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("registry %s returned HTTP %d", registryURL, resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("failed to read registry response: %w", err)
+	}
+
+	var registry registryResponse
+	if err := json.Unmarshal(body, &registry); err != nil {
+		return "", fmt.Errorf("failed to parse registry JSON: %w", err)
+	}
+
+	isSource := strings.HasPrefix(connectorName, "source-")
+	if isSource {
+		for _, entry := range registry.Sources {
+			if entry.DockerRepository == dockerName {
+				return entry.SourceDefinitionID, nil
+			}
+		}
+	} else {
+		for _, entry := range registry.Destinations {
+			if entry.DockerRepository == dockerName {
+				return entry.DestinationDefinitionID, nil
+			}
+		}
+	}
+
+	return "", nil
 }
 
 func dynamicToJSON(val types.Dynamic) (string, error) {
@@ -342,10 +351,13 @@ func isValidJSONObject(s string) bool {
 		return false
 	}
 	var obj map[string]interface{}
-	return json.Unmarshal([]byte(s), &obj) == nil
+	if err := json.Unmarshal([]byte(s), &obj); err != nil {
+		return false
+	}
+	return obj != nil
 }
 
-func mergeJSON(base, overlay string) (string, error) {
+func deepMergeJSON(base, overlay string) (string, error) {
 	var baseMap map[string]interface{}
 	if err := json.Unmarshal([]byte(base), &baseMap); err != nil {
 		return "", fmt.Errorf("failed to parse base configuration: %w", err)
@@ -356,9 +368,7 @@ func mergeJSON(base, overlay string) (string, error) {
 		if err := json.Unmarshal([]byte(overlay), &overlayMap); err != nil {
 			return "", fmt.Errorf("failed to parse secrets configuration: %w", err)
 		}
-		for k, v := range overlayMap {
-			baseMap[k] = v
-		}
+		deepMergeMaps(baseMap, overlayMap)
 	}
 
 	result, err := json.Marshal(baseMap)
@@ -366,6 +376,23 @@ func mergeJSON(base, overlay string) (string, error) {
 		return "", fmt.Errorf("failed to marshal merged configuration: %w", err)
 	}
 	return string(result), nil
+}
+
+func deepMergeMaps(dst, src map[string]interface{}) {
+	for k, srcVal := range src {
+		dstVal, exists := dst[k]
+		if !exists {
+			dst[k] = srcVal
+			continue
+		}
+		srcMap, srcOK := srcVal.(map[string]interface{})
+		dstMap, dstOK := dstVal.(map[string]interface{})
+		if srcOK && dstOK {
+			deepMergeMaps(dstMap, srcMap)
+		} else {
+			dst[k] = srcVal
+		}
+	}
 }
 
 func addDiagnostic(resp *datasource.ReadResponse, ignoreErrors bool, summary, detail string) {

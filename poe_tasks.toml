@@ -23,6 +23,14 @@ python3 scripts/patch_provider_registrations.py internal/provider/provider.go
 go mod tidy
 """
 
+[tasks.docs]
+help = "Generate Terraform provider documentation."
+shell = """
+go mod tidy
+go mod download
+go generate ./...
+"""
+
 [tasks.generate-full]
 help = "Full generation pipeline: clean, generate spec, run Speakeasy, and post-generate."
 sequence = ["clean-generated", "generate-spec", { cmd = "speakeasy run" }, "post-generate"]
