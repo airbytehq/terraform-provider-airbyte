@@ -166,7 +166,6 @@ jobs:
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
                   VERSION: ${{ steps.get-version.outputs.resolved-version }}
-                  SKIP_COMPILE: ${{ inputs.dry_run }}
               run: |
                   if [ -z "$VERSION" ]; then
                       echo "::error::Version resolution returned empty. Cannot proceed without an explicit version."
@@ -179,7 +178,6 @@ jobs:
               run: uvx --from=poethepoet poe post-generate
 
             - name: Build generated code
-              if: ${{ inputs.dry_run }}
               run: |
                   go build ./...
 

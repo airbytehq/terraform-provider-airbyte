@@ -32,16 +32,11 @@ go generate ./...
 """
 
 [tasks.speakeasy-run]
-help = "Run Speakeasy code generation. Set VERSION env var to pin version, SKIP_COMPILE=true to skip built-in compilation."
+help = "Run Speakeasy code generation (always --skip-compile). Set VERSION env var to pin version."
 shell = """
-ARGS=""
+ARGS="--skip-compile"
 if [ -n "$VERSION" ]; then
     ARGS="$ARGS --set-version=$VERSION"
-fi
-if [ "$SKIP_COMPILE" = "true" ]; then
-    ARGS="$ARGS --skip-compile"
-else
-    ARGS="$ARGS --output console"
 fi
 speakeasy run $ARGS
 """

@@ -135,8 +135,9 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		if !ignoreErrors {
 			return
 		}
+	} else {
+		data.DefinitionID = types.StringValue(definitionID)
 	}
-	data.DefinitionID = types.StringValue(definitionID)
 
 	configJSON, err := dynamicToJSON(data.Configuration)
 	if err != nil {
@@ -238,19 +239,20 @@ func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, r
 		return "", fmt.Errorf("failed to parse registry JSON: %w", err)
 	}
 
-	isSource := strings.HasPrefix(connectorName, "source-")
-	if isSource {
+	if strings.HasPrefix(connectorName, "source-") {
 		for _, entry := range registry.Sources {
 			if entry.DockerRepository == dockerName {
 				return entry.SourceDefinitionID, nil
 			}
 		}
-	} else {
+	} else if strings.HasPrefix(connectorName, "destination-") {
 		for _, entry := range registry.Destinations {
 			if entry.DockerRepository == dockerName {
 				return entry.DestinationDefinitionID, nil
 			}
 		}
+	} else {
+		return "", fmt.Errorf("connector_name %q must start with 'source-' or 'destination-'", connectorName)
 	}
 
 	return "", nil
