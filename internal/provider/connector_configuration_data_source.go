@@ -169,13 +169,18 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		}
 	}
 
-	merged, err := deepMergeJSON(configJSON, secretsJSON)
-	if err != nil {
-		resp.Diagnostics.AddError("Failed to merge configuration", err.Error())
+	if configJSON != "" && isValidJSONObject(configJSON) {
+		merged, err := deepMergeJSON(configJSON, secretsJSON)
+		if err != nil {
+			resp.Diagnostics.AddError("Failed to merge configuration", err.Error())
+			return
+		}
+		data.ConfigurationJSON = types.StringValue(merged)
+	} else if ignoreErrors {
+		data.ConfigurationJSON = types.StringValue("{}")
+	} else {
 		return
 	}
-
-	data.ConfigurationJSON = types.StringValue(merged)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
