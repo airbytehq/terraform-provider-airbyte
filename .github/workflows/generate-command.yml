@@ -76,7 +76,7 @@ jobs:
     generate:
         name: Generate SDK
         runs-on: ubuntu-latest-16core
-        timeout-minutes: 45
+        timeout-minutes: 60
         permissions:
             contents: write
             pull-requests: write
