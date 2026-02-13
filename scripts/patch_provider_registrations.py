@@ -94,8 +94,6 @@ def main() -> None:
     elif missing_data_sources or missing_resources:
         print("ERROR: Registrations are missing but patching failed. Check warnings above.", file=sys.stderr)
         sys.exit(1)
-    else:
-        print("No changes needed.")
 
 
 if __name__ == "__main__":
