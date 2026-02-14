@@ -10,34 +10,37 @@
 The Terraform provider is generated through a multi-step pipeline. Here is the end-to-end flow, with links to each artifact:
 
 ```
-┌─────────────────────────────────────┐
-│  1. Upstream OpenAPI Spec           │
-│  (airbyte-platform-internal)        │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  2. Spec Transformation Script      │
-│  (generate_terraform_spec.py)       │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  3. Transformed OpenAPI Spec        │
-│  (airbyte.yaml)                     │
-└──────────────┬──────────────────────┘
-               │  + overlay applied
-               ▼
-┌─────────────────────────────────────┐
-│  4. Speakeasy Overlay               │
-│  (terraform_speakeasy.yaml)         │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  5. Speakeasy Code Generation       │
-│  (internal/sdk/, internal/provider/)│
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────┐
+│  1. Upstream OpenAPI Spec                │
+│  (airbyte-platform-internal)             │
+└──────────────────┬───────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────────┐
+│  2. Spec Transformation Script           │
+│  (generate_terraform_spec.py)            │
+└──────────────────┬───────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────────┐
+│  3a. Committed OpenAPI Spec (legacy)     │
+│  (airbyte.yaml)                          │
+├──────────────────────────────────────────┤
+│  3b. Generated OpenAPI Spec (ephemeral)  │
+│  (generated/api_terraform.yaml)          │
+└──────────────────┬───────────────────────┘
+                   │  + overlay applied
+                   ▼
+┌──────────────────────────────────────────┐
+│  4. Speakeasy Overlay                    │
+│  (terraform_speakeasy.yaml)              │
+└──────────────────┬───────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────────┐
+│  5. Speakeasy Code Generation            │
+│  (internal/sdk/, internal/provider/)     │
+└──────────────────────────────────────────┘
 ```
 
 ### Step-by-step details
@@ -48,8 +51,9 @@ The Terraform provider is generated through a multi-step pipeline. Here is the e
 2. **Spec Transformation Script** — A Python script fetches connector definitions from the Airbyte connector registries, merges them with the upstream spec, and produces a Terraform-specific OpenAPI spec:\
    [`scripts/generate_terraform_spec.py`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)
 
-3. **Transformed OpenAPI Spec** — The output of the transformation script, checked into this repo as the input for Speakeasy generation:\
-   [`airbyte.yaml`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/airbyte.yaml)
+3. **Transformed OpenAPI Spec** — The transformation script produces the Terraform-specific OpenAPI spec. There are two versions of this artifact:
+   - **Committed (legacy):** [`airbyte.yaml`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/airbyte.yaml) — a checked-in snapshot at the repo root.
+   - **Generated (ephemeral):** `generated/api_terraform.yaml` — produced fresh during CI/local generation (gitignored). This is what [Speakeasy actually consumes](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/.speakeasy/workflow.yaml).
 
 4. **Speakeasy Overlay** — Terraform-specific customizations applied on top of the transformed spec before code generation (e.g., handling polymorphism, adjusting schemas):\
    [`overlays/terraform_speakeasy.yaml`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/overlays/terraform_speakeasy.yaml)
