@@ -5,6 +5,64 @@
 > [!Important]
 > This repository contains predominantly generated code. We do not accept direct changes to generated files. Report issues on GitHub or submit fixes to the upstream OpenAPI spec in [airbyte-platform](https://github.com/airbytehq/airbyte-platform).
 
+## Code Generation Lineage
+
+The Terraform provider is generated through a multi-step pipeline. Here is the end-to-end flow, with links to each artifact:
+
+```
+┌─────────────────────────────────────┐
+│  1. Upstream OpenAPI Spec           │
+│  (airbyte-platform-internal)        │
+└──────────────┬──────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────┐
+│  2. Spec Transformation Script      │
+│  (generate_terraform_spec.py)       │
+└──────────────┬──────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────┐
+│  3. Transformed OpenAPI Spec        │
+│  (airbyte.yaml)                     │
+└──────────────┬──────────────────────┘
+               │  + overlay applied
+               ▼
+┌─────────────────────────────────────┐
+│  4. Speakeasy Overlay               │
+│  (terraform_speakeasy.yaml)         │
+└──────────────┬──────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────┐
+│  5. Speakeasy Code Generation       │
+│  (internal/sdk/, internal/provider/)│
+└─────────────────────────────────────┘
+```
+
+### Step-by-step details
+
+1. **Upstream OpenAPI Spec** — The source-of-truth API definition lives in `airbyte-platform-internal`:\
+   [`oss/airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml)
+
+2. **Spec Transformation Script** — A Python script fetches connector definitions from the Airbyte connector registries, merges them with the upstream spec, and produces a Terraform-specific OpenAPI spec:\
+   [`scripts/generate_terraform_spec.py`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)
+
+3. **Transformed OpenAPI Spec** — The output of the transformation script, checked into this repo as the input for Speakeasy generation:\
+   [`airbyte.yaml`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/airbyte.yaml)
+
+4. **Speakeasy Overlay** — Terraform-specific customizations applied on top of the transformed spec before code generation (e.g., handling polymorphism, adjusting schemas):\
+   [`overlays/terraform_speakeasy.yaml`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/overlays/terraform_speakeasy.yaml)
+
+5. **Generated Code** — Speakeasy consumes the spec + overlay and generates the Go SDK (`internal/sdk/`) and Terraform provider resources (`internal/provider/`). These files should never be edited by hand.
+
+> [!Tip]
+> If you need to change provider behavior, determine which layer is appropriate:
+> - **API changes** → submit to the [upstream OpenAPI spec](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml)
+> - **Terraform-specific schema tweaks** → modify the [overlay](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/overlays/terraform_speakeasy.yaml)
+> - **Spec transformation logic** → modify the [generation script](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)
+> - Then trigger regeneration (see below)
+
 ## For Maintainers
 
 ### Regenerating the Provider
@@ -132,7 +190,7 @@ You may publish a prerelease by following the steps below:
 
 ### Updating the OpenAPI Spec
 
-In general, no upstream action should be needed to capture updates to upstream OpenAPI spec changes. A legacy `api_terraform.yaml` file is no longer used, and instead this provider performs its own spec transformations (as needed) directly from the upstream OpenAPI spec document.
+In general, no upstream action should be needed to capture updates to upstream OpenAPI spec changes. A legacy `api_terraform.yaml` file is no longer used, and instead this provider performs its own spec transformations (as needed) directly from the upstream OpenAPI spec document. See [Code Generation Lineage](#code-generation-lineage) above for the full flow.
 
 The OpenAPI spec is maintained in the [airbyte-platform-internal](https://github.com/airbytehq/airbyte-platform-internal) repository at [`oss/airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml).
 
