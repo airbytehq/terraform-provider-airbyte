@@ -9,7 +9,7 @@ type SourceCreateRequest struct {
 	DefinitionID *string `json:"definitionId,omitempty"`
 	WorkspaceID  string  `json:"workspaceId"`
 	// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-	Configuration SourceConfiguration `json:"configuration"`
+	Configuration any `json:"configuration"`
 	// Optional secretID obtained through the  OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
 	// actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.
@@ -37,9 +37,9 @@ func (s *SourceCreateRequest) GetWorkspaceID() string {
 	return s.WorkspaceID
 }
 
-func (s *SourceCreateRequest) GetConfiguration() SourceConfiguration {
+func (s *SourceCreateRequest) GetConfiguration() any {
 	if s == nil {
-		return SourceConfiguration{}
+		return nil
 	}
 	return s.Configuration
 }

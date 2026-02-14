@@ -4,9 +4,11 @@ package provider
 
 import (
 	"context"
+	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -15,7 +17,8 @@ func (r *SourceResourceModel) RefreshFromSharedSourceResponse(ctx context.Contex
 	var diags diag.Diagnostics
 
 	if resp != nil {
-		r.Configuration = &tfTypes.SourceConfiguration{}
+		configurationResult, _ := json.Marshal(resp.Configuration)
+		r.Configuration = jsontypes.NewNormalizedValue(string(configurationResult))
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)
@@ -108,7 +111,8 @@ func (r *SourceResourceModel) ToSharedSourceCreateRequest(ctx context.Context) (
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	configuration := shared.SourceConfiguration{}
+	var configuration interface{}
+	_ = json.Unmarshal([]byte(r.Configuration.ValueString()), &configuration)
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -239,7 +243,8 @@ func (r *SourceResourceModel) ToSharedSourcePutRequest(ctx context.Context) (*sh
 	var name string
 	name = r.Name.ValueString()
 
-	configuration := shared.SourceConfiguration{}
+	var configuration interface{}
+	_ = json.Unmarshal([]byte(r.Configuration.ValueString()), &configuration)
 	var resourceAllocation *shared.ScopedResourceRequirements
 	if r.ResourceAllocation != nil {
 		var defaultVar *shared.ResourceRequirements

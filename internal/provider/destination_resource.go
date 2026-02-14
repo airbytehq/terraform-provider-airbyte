@@ -13,6 +13,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	speakeasy_objectvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/objectvalidators"
 	speakeasy_stringvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/stringvalidators"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -40,7 +41,7 @@ type DestinationResource struct {
 
 // DestinationResourceModel describes the resource data model.
 type DestinationResourceModel struct {
-	Configuration      *tfTypes.DestinationConfiguration   `tfsdk:"configuration"`
+	Configuration      jsontypes.Normalized                `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	DestinationID      types.String                        `tfsdk:"destination_id"`
@@ -58,12 +59,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Destination Resource",
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
-				Required: true,
-				PlanModifiers: []planmodifier.Object{
-					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+			"configuration": schema.StringAttribute{
+				CustomType: jsontypes.NormalizedType{},
+				Required:   true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.`,
+				Description: `The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. Parsed as JSON.`,
 			},
 			"created_at": schema.Int64Attribute{
 				Computed: true,
