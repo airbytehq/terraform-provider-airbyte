@@ -34,23 +34,13 @@ jobs:
               with:
                 ref: ${{ inputs.branch }}
 
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+
             - name: Delete all generated code
               run: |
-                # Delete ALL generated code to force fully clean regeneration
                 echo "=== Cleaning branch: ${{ inputs.branch }} ==="
-                
-                echo "=== Removing internal/sdk (SDK models and utils) ==="
-                rm -rf internal/sdk
-                
-                echo "=== Removing generated provider destination resources ==="
-                rm -f internal/provider/destination_*.go
-                
-                echo "=== Removing generated provider source resources ==="
-                rm -f internal/provider/source_*.go
-                
-                echo "=== Removing generated provider types ==="
-                rm -rf internal/provider/types/
-                
+                uvx --from=poethepoet poe clean-generated
                 echo "=== Done. All generated code removed. ==="
 
             - name: Commit and push cleaned state

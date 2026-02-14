@@ -52,14 +52,14 @@ resource "airbyte_source" "my_source" {
   workspace_id  = var.workspace_id
   definition_id = "5e6175e5-68e1-4c17-bff9-56103bbb0d80"
 
-  configuration = {
+  configuration = jsonencode({
     client_id               = var.pardot_client_id
     client_secret           = var.pardot_client_secret
     refresh_token           = var.pardot_refresh_token
     pardot_business_unit_id = "0Uv5g0000008OT2CAM"
     start_date              = "2024-07-11T00:00:00Z"
     is_sandbox              = false
-  }
+  })
 }
 ```
 
@@ -97,6 +97,56 @@ The generic resource requires a `definition_id` to identify the connector type. 
 
 - Running `terraform state show airbyte_source_pardot.my_source` before migrating and noting the `definition_id` attribute.
 - Looking up the connector in the Airbyte UI under **Settings > Sources** or **Settings > Destinations**.
+- Using the `airbyte_connector_configuration` data source to resolve the connector name automatically (see below).
+
+### Using the connector configuration data source
+
+The `airbyte_connector_configuration` data source resolves a connector name (e.g. `source-postgres`) to its `definition_id` and lets you split sensitive from non-sensitive configuration for clean Terraform diffs:
+
+```hcl
+data "airbyte_connector_configuration" "postgres_config" {
+  connector_name = "source-postgres"
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "readonly"
+  }
+  configuration_secrets = {
+    password = var.db_password
+  }
+}
+
+resource "airbyte_source" "my_postgres" {
+  name          = "My Postgres Source"
+  workspace_id  = var.workspace_id
+  definition_id = data.airbyte_connector_configuration.postgres_config.definition_id
+  configuration = data.airbyte_connector_configuration.postgres_config.configuration_json
+}
+```
+
+Non-sensitive values (`host`, `port`, etc.) produce clean diffs in `terraform plan`, while the merged `configuration_json` passed to the resource is marked sensitive.
+
+### Inline JSON configuration
+
+For simpler cases where you don't need the data source, pass JSON configuration directly to `airbyte_source` or `airbyte_destination`:
+
+```hcl
+resource "airbyte_source" "my_source" {
+  name          = "My Postgres Source"
+  workspace_id  = var.workspace_id
+  definition_id = "decd338e-5647-4c0b-adf4-da0e75f5a750"
+  configuration = jsonencode({
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "readonly"
+    password = var.db_password
+  })
+}
+```
+
+The entire `configuration` attribute is sensitive, so all values are hidden in plan output. Use this approach when you don't need per-field diff visibility.
 
 ### Migrating destinations
 
@@ -113,9 +163,9 @@ resource "airbyte_destination" "my_dest" {
   workspace_id  = var.workspace_id
   definition_id = "<BIGQUERY_DEFINITION_ID>"
 
-  configuration = {
+  configuration = jsonencode({
     # Your destination configuration here
-  }
+  })
 }
 ```
 
@@ -143,9 +193,9 @@ resource "airbyte_source" "my_source" {
   workspace_id  = var.workspace_id
   definition_id = "<PARDOT_DEFINITION_ID>"
 
-  configuration = {
+  configuration = jsonencode({
     # Your configuration here
-  }
+  })
 }
 ```
 

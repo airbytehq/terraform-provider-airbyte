@@ -70,3 +70,63 @@ actions:
     description: "Mark airbyte_secret fields as sensitive for Terraform"
     update:
       x-speakeasy-param-sensitive: true
+
+  # =============================================================================
+  # Generic Source/Destination Configuration
+  # =============================================================================
+  # SourceConfiguration and DestinationConfiguration are defined in the upstream
+  # api.yaml as free-form objects (no type, no properties). Speakeasy generates
+  # these as empty Go structs, making the generic airbyte_source/airbyte_destination
+  # resources unable to pass configuration to the API.
+  #
+  # Adding x-speakeasy-type-override: any tells Speakeasy to generate these as
+  # `any` (interface{}) in the SDK and `jsontypes.Normalized` in the Terraform
+  # schema, allowing arbitrary JSON configuration to be passed through.
+  #
+  # The configuration attribute is also marked as sensitive since it may contain
+  # secrets (API keys, passwords, etc.) when used with the generic resources.
+  # Users who want clean diffs on non-sensitive values should use the
+  # airbyte_connector_configuration data source to bifurcate their config.
+  #
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/234
+
+  - target: "$.components.schemas.SourceConfiguration"
+    description: "Allow arbitrary JSON for generic source configuration"
+    update:
+      x-speakeasy-type-override: any
+
+  - target: "$.components.schemas.DestinationConfiguration"
+    description: "Allow arbitrary JSON for generic destination configuration"
+    update:
+      x-speakeasy-type-override: any
+
+  - target: "$.components.schemas.SourceCreateRequest.properties.configuration"
+    description: "Mark generic source configuration as sensitive"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.SourcePutRequest.properties.configuration"
+    description: "Mark generic source configuration as sensitive (update)"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.SourcePatchRequest.properties.configuration"
+    description: "Mark generic source configuration as sensitive (patch)"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.DestinationCreateRequest.properties.configuration"
+    description: "Mark generic destination configuration as sensitive"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.DestinationPutRequest.properties.configuration"
+    description: "Mark generic destination configuration as sensitive (update)"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.DestinationPatchRequest.properties.configuration"
+    description: "Mark generic destination configuration as sensitive (patch)"
+    update:
+      x-speakeasy-param-sensitive: true

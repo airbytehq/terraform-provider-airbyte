@@ -113,11 +113,7 @@ jobs:
               uses: astral-sh/setup-uv@v5
 
             - name: Generate Terraform OpenAPI spec
-              run: |
-                  mkdir -p generated
-                  # Generate spec with both Cloud and OSS connectors
-                  # This includes all connectors from both registries for maximum compatibility
-                  uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
+              run: uvx --from=poethepoet poe generate-spec
 
             - name: Upload generated spec as artifact
               uses: actions/upload-artifact@v4
@@ -148,52 +144,27 @@ jobs:
             - name: Lint OpenAPI spec (fast-fail for circular references)
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
-              run: |
-                  echo "Running Speakeasy lint to detect circular references and other issues..."
-                  # Run lint and capture output - this is much faster than full generation
-                  # and will catch circular reference issues before they cause hangs
-                  speakeasy lint openapi -s generated/api_terraform.yaml 2>&1 | tee lint_output.txt
-                  
-                  # Check for circular reference warnings that don't have x-speakeasy-type-override
-                  if grep -i "circular" lint_output.txt | grep -v "x-speakeasy-type-override"; then
-                      echo "::error::Circular reference detected without x-speakeasy-type-override annotation!"
-                      echo "Add 'x-speakeasy-type-override: any' to schemas with circular references."
-                      exit 1
-                  fi
-                  
-                  echo "Lint passed - no unhandled circular references detected."
+              run: uvx --from=poethepoet poe lint-spec
 
             - name: Clean generated code
-              run: |
-                  rm -rf internal/sdk
-                  # Delete generated source/destination files but preserve hand-written ones
-                  find internal/provider/ -name 'destination_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete
-                  find internal/provider/ -name 'source_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete
-                  rm -rf internal/provider/types/
+              run: uvx --from=poethepoet poe clean-generated
 
             - name: Generate Provider ${{ steps.get-version.outputs.resolved-version }} with Speakeasy
               env:
                   SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+                  VERSION: ${{ steps.get-version.outputs.resolved-version }}
               run: |
-                  VERSION="${{ steps.get-version.outputs.resolved-version }}"
                   if [ -z "$VERSION" ]; then
                       echo "::error::Version resolution returned empty. Cannot proceed without an explicit version."
                       exit 1
                   fi
                   echo "Using version from release drafter: $VERSION"
-                  if [ "${{ inputs.dry_run }}" = "true" ]; then
-                      speakeasy run --skip-compile --set-version="$VERSION"
-                  else
-                      speakeasy run --output console --set-version="$VERSION"
-                  fi
+                  uvx --from=poethepoet poe generate-code
 
-            - name: Update dependencies
-              if: ${{ inputs.dry_run }}
-              run: |
-                  go mod tidy
+            - name: Post-generation patching
+              run: uvx --from=poethepoet poe post-generate
 
             - name: Build generated code
-              if: ${{ inputs.dry_run }}
               run: |
                   go build ./...
 
@@ -209,12 +180,7 @@ jobs:
 
             - name: Build provider binaries for testing
               if: ${{ inputs.dry_run }}
-              run: |
-                  mkdir -p dist
-                  # Build for Linux amd64 (AI/CI environments)
-                  GOOS=linux GOARCH=amd64 go build -o dist/terraform-provider-airbyte_linux_amd64
-                  # Build for Mac M-series (Engineers)
-                  GOOS=darwin GOARCH=arm64 go build -o dist/terraform-provider-airbyte_darwin_arm64
+              run: uvx --from=poethepoet poe bin-generate
 
             - name: Upload provider binaries as artifact
               if: ${{ inputs.dry_run }}

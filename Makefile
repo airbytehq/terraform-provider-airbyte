@@ -1,11 +1,22 @@
-.PHONY: all docs
-all: speakeasy
+.PHONY: post-generate docs-generate bin-generate clean-generated generate-spec generate-full
 
-speakeasy:
-	speakeasy run
+POE := uvx --from=poethepoet poe
 
-docs:
-	go mod tidy
-	go mod download
-	go generate ./...
+post-generate:
+	$(POE) post-generate
+
+docs-generate:
+	$(POE) docs-generate
+
+bin-generate:
+	$(POE) bin-generate
+
+clean-generated:
+	$(POE) clean-generated
+
+generate-spec:
+	$(POE) generate-spec
+
+generate-full:
+	$(POE) generate-full
 

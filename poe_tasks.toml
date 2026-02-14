@@ -1,0 +1,69 @@
+[tasks]
+
+[tasks.clean-generated]
+help = "Delete generated files, preserving hand-written movestate/helpers."
+shell = """
+rm -rf internal/sdk
+find internal/provider/ -name 'destination_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete 2>/dev/null || true
+find internal/provider/ -name 'source_*.go' ! -name '*movestate*' ! -name '*helpers*' -delete 2>/dev/null || true
+rm -rf internal/provider/types/
+"""
+
+[tasks.generate-spec]
+help = "Generate Terraform OpenAPI spec from Airbyte connector registries."
+shell = """
+mkdir -p generated
+uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
+"""
+
+[tasks.post-generate]
+help = "Patch provider registrations and tidy Go modules after Speakeasy generation."
+shell = """
+python3 scripts/patch_provider_registrations.py internal/provider/provider.go
+go mod tidy
+"""
+
+[tasks.docs-generate]
+help = "Generate Terraform provider documentation."
+shell = """
+go mod tidy
+go mod download
+go generate ./...
+"""
+
+[tasks.bin-generate]
+help = "Build cross-platform provider binaries (Linux amd64 + macOS arm64)."
+shell = """
+mkdir -p dist
+GOOS=linux GOARCH=amd64 go build -o dist/terraform-provider-airbyte_linux_amd64
+GOOS=darwin GOARCH=arm64 go build -o dist/terraform-provider-airbyte_darwin_arm64
+"""
+
+[tasks.lint-spec]
+help = "Lint the generated OpenAPI spec for circular references and other issues."
+shell = """
+echo "Running Speakeasy lint to detect circular references and other issues..."
+speakeasy lint openapi -s generated/api_terraform.yaml 2>&1 | tee lint_output.txt
+if grep -i "circular" lint_output.txt | grep -v "x-speakeasy-type-override"; then
+    echo "ERROR: Circular reference detected without x-speakeasy-type-override annotation!"
+    echo "Add 'x-speakeasy-type-override: any' to schemas with circular references."
+    rm -f lint_output.txt
+    exit 1
+fi
+rm -f lint_output.txt
+echo "Lint passed - no unhandled circular references detected."
+"""
+
+[tasks.generate-code]
+help = "Generate Terraform provider code from OpenAPI spec (always --skip-compile). Set VERSION env var to pin version."
+shell = """
+ARGS="--skip-compile"
+if [ -n "$VERSION" ]; then
+    ARGS="$ARGS --set-version=$VERSION"
+fi
+speakeasy run $ARGS
+"""
+
+[tasks.generate-full]
+help = "Full generation pipeline: clean, generate spec, run Speakeasy, and post-generate."
+sequence = ["clean-generated", "generate-spec", "lint-spec", "generate-code", "post-generate"]
