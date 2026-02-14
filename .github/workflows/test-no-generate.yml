@@ -5,7 +5,7 @@
 #
 # Jobs:
 # - build: Compiles the provider and runs golangci-lint
-# - verify-go-generate: Verifies that Go-generated code (docs templates) is up to date
+# - verify-docs-drift: Checks that generated docs (from `go generate`) are up to date
 # - test: Runs Terraform acceptance tests against multiple Terraform versions
 #
 # Note: This workflow does NOT run Speakeasy generation. For Speakeasy regeneration
@@ -49,8 +49,8 @@ jobs:
           version: latest
           args: --timeout 5m
 
-  verify-go-generate:
-    name: Verify Go Generate
+  verify-docs-drift:
+    name: Verify Docs Are Up-to-Date
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
@@ -58,23 +58,26 @@ jobs:
         with:
           go-version-file: 'go.mod'
           cache: true
-      - run: go generate ./...
-      - name: git diff
-        id: git_diff
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Regenerate docs
+        run: uvx --from=poethepoet poe docs-generate
+      - name: Check for docs drift
+        id: docs_drift
         run: |
           git diff --compact-summary --exit-code || \
-            (echo; echo "Unexpected difference in directories after code generation. Run 'go generate ./...' command and commit."; exit 1)
+            (echo; echo "Generated files are out of date. Run 'uvx --from=poethepoet poe docs-generate' and commit the result."; exit 1)
       - name: Create diff artifact
-        if: failure() && steps.git_diff.outcome == 'failure'
+        if: failure() && steps.docs_drift.outcome == 'failure'
         run: |
-          git diff > generated-code-diff.patch
-          echo "Generated code diff saved to generated-code-diff.patch"
+          git diff > generated-docs-diff.patch
+          echo "Generated docs diff saved to generated-docs-diff.patch"
       - name: Upload diff artifact
-        if: failure() && steps.git_diff.outcome == 'failure'
+        if: failure() && steps.docs_drift.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
-          name: generated-code-diff
-          path: generated-code-diff.patch
+          name: generated-docs-diff
+          path: generated-docs-diff.patch
           retention-days: 7
 
   # Run acceptance tests in a matrix with Terraform CLI versions
