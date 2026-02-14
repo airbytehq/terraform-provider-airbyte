@@ -58,6 +58,8 @@ jobs:
         with:
           go-version-file: 'go.mod'
           cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - name: Regenerate docs
         run: uvx --from=poethepoet poe docs-generate
       - name: Check for docs drift
