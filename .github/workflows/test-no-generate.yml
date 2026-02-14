@@ -59,7 +59,7 @@ jobs:
           go-version-file: 'go.mod'
           cache: true
       - name: Regenerate docs
-        run: go generate ./...
+        run: uvx --from=poethepoet poe docs-generate
       - name: Check for docs drift
         id: docs_drift
         run: |
