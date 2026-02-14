@@ -5,7 +5,7 @@ package shared
 type SourcePutRequest struct {
 	Name string `json:"name"`
 	// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-	Configuration SourceConfiguration `json:"configuration"`
+	Configuration any `json:"configuration"`
 	// actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
@@ -17,9 +17,9 @@ func (s *SourcePutRequest) GetName() string {
 	return s.Name
 }
 
-func (s *SourcePutRequest) GetConfiguration() SourceConfiguration {
+func (s *SourcePutRequest) GetConfiguration() any {
 	if s == nil {
-		return SourceConfiguration{}
+		return nil
 	}
 	return s.Configuration
 }

@@ -5,9 +5,9 @@ package shared
 type ConfigTemplateUpdateRequestBody struct {
 	OrganizationID string `json:"organizationId"`
 	// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-	PartialDefaultConfig *SourceConfiguration `json:"partialDefaultConfig,omitempty"`
+	PartialDefaultConfig any `json:"partialDefaultConfig,omitempty"`
 	// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-	PartialUserConfigSpec *SourceConfiguration `json:"partialUserConfigSpec,omitempty"`
+	PartialUserConfigSpec any `json:"partialUserConfigSpec,omitempty"`
 }
 
 func (c *ConfigTemplateUpdateRequestBody) GetOrganizationID() string {
@@ -17,14 +17,14 @@ func (c *ConfigTemplateUpdateRequestBody) GetOrganizationID() string {
 	return c.OrganizationID
 }
 
-func (c *ConfigTemplateUpdateRequestBody) GetPartialDefaultConfig() *SourceConfiguration {
+func (c *ConfigTemplateUpdateRequestBody) GetPartialDefaultConfig() any {
 	if c == nil {
 		return nil
 	}
 	return c.PartialDefaultConfig
 }
 
-func (c *ConfigTemplateUpdateRequestBody) GetPartialUserConfigSpec() *SourceConfiguration {
+func (c *ConfigTemplateUpdateRequestBody) GetPartialUserConfigSpec() any {
 	if c == nil {
 		return nil
 	}
