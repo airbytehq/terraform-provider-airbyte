@@ -18,9 +18,11 @@ func (r *SourceMicrosoftTeamsResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMicrosoftTeams{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.Period = configurationPriorData.Period
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.Period = configurationPriorData.Period
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

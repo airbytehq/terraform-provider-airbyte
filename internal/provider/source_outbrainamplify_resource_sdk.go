@@ -17,12 +17,14 @@ func (r *SourceOutbrainAmplifyResourceModel) RefreshFromSharedSourceResponse(ctx
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceOutbrainAmplify{}
-		r.Configuration.ConversionCount = configurationPriorData.ConversionCount
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.GeoLocationBreakdown = configurationPriorData.GeoLocationBreakdown
-		r.Configuration.ReportGranularity = configurationPriorData.ReportGranularity
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.ConversionCount = configurationPriorData.ConversionCount
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.GeoLocationBreakdown = configurationPriorData.GeoLocationBreakdown
+			r.Configuration.ReportGranularity = configurationPriorData.ReportGranularity
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -18,9 +18,11 @@ func (r *SourceCampaynResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceCampayn{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.SubDomain = configurationPriorData.SubDomain
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.SubDomain = configurationPriorData.SubDomain
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

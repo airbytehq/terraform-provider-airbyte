@@ -18,15 +18,17 @@ func (r *DestinationS3DataLakeResourceModel) RefreshFromSharedDestinationRespons
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationS3DataLake{}
-		r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.CatalogType = configurationPriorData.CatalogType
-		r.Configuration.MainBranchName = configurationPriorData.MainBranchName
-		r.Configuration.S3BucketName = configurationPriorData.S3BucketName
-		r.Configuration.S3BucketRegion = configurationPriorData.S3BucketRegion
-		r.Configuration.S3Endpoint = configurationPriorData.S3Endpoint
-		r.Configuration.SecretAccessKey = configurationPriorData.SecretAccessKey
-		r.Configuration.WarehouseLocation = configurationPriorData.WarehouseLocation
+		if configurationPriorData != nil {
+			r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.CatalogType = configurationPriorData.CatalogType
+			r.Configuration.MainBranchName = configurationPriorData.MainBranchName
+			r.Configuration.S3BucketName = configurationPriorData.S3BucketName
+			r.Configuration.S3BucketRegion = configurationPriorData.S3BucketRegion
+			r.Configuration.S3Endpoint = configurationPriorData.S3Endpoint
+			r.Configuration.SecretAccessKey = configurationPriorData.SecretAccessKey
+			r.Configuration.WarehouseLocation = configurationPriorData.WarehouseLocation
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

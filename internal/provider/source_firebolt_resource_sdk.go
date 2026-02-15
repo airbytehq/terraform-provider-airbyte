@@ -18,13 +18,15 @@ func (r *SourceFireboltResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFirebolt{}
-		r.Configuration.Account = configurationPriorData.Account
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.Database = configurationPriorData.Database
-		r.Configuration.Engine = configurationPriorData.Engine
-		r.Configuration.Host = configurationPriorData.Host
+		if configurationPriorData != nil {
+			r.Configuration.Account = configurationPriorData.Account
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.Database = configurationPriorData.Database
+			r.Configuration.Engine = configurationPriorData.Engine
+			r.Configuration.Host = configurationPriorData.Host
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

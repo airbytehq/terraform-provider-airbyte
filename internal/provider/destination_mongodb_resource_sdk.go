@@ -17,10 +17,12 @@ func (r *DestinationMongodbResourceModel) RefreshFromSharedDestinationResponse(c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationMongodb{}
-		r.Configuration.AuthType = configurationPriorData.AuthType
-		r.Configuration.Database = configurationPriorData.Database
-		r.Configuration.InstanceType = configurationPriorData.InstanceType
-		r.Configuration.TunnelMethod = configurationPriorData.TunnelMethod
+		if configurationPriorData != nil {
+			r.Configuration.AuthType = configurationPriorData.AuthType
+			r.Configuration.Database = configurationPriorData.Database
+			r.Configuration.InstanceType = configurationPriorData.InstanceType
+			r.Configuration.TunnelMethod = configurationPriorData.TunnelMethod
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

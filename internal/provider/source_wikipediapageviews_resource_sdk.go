@@ -18,14 +18,16 @@ func (r *SourceWikipediaPageviewsResourceModel) RefreshFromSharedSourceResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceWikipediaPageviews{}
-		r.Configuration.Access = configurationPriorData.Access
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Agent = configurationPriorData.Agent
-		r.Configuration.Article = configurationPriorData.Article
-		r.Configuration.Country = configurationPriorData.Country
-		r.Configuration.End = configurationPriorData.End
-		r.Configuration.Project = configurationPriorData.Project
-		r.Configuration.Start = configurationPriorData.Start
+		if configurationPriorData != nil {
+			r.Configuration.Access = configurationPriorData.Access
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Agent = configurationPriorData.Agent
+			r.Configuration.Article = configurationPriorData.Article
+			r.Configuration.Country = configurationPriorData.Country
+			r.Configuration.End = configurationPriorData.End
+			r.Configuration.Project = configurationPriorData.Project
+			r.Configuration.Start = configurationPriorData.Start
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

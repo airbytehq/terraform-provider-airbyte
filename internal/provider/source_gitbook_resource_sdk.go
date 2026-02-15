@@ -18,9 +18,11 @@ func (r *SourceGitbookResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGitbook{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.SpaceID = configurationPriorData.SpaceID
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.SpaceID = configurationPriorData.SpaceID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

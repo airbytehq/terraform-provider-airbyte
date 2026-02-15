@@ -18,12 +18,14 @@ func (r *SourceFileResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFile{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.DatasetName = configurationPriorData.DatasetName
-		r.Configuration.Format = configurationPriorData.Format
-		r.Configuration.Provider = configurationPriorData.Provider
-		r.Configuration.ReaderOptions = configurationPriorData.ReaderOptions
-		r.Configuration.URL = configurationPriorData.URL
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.DatasetName = configurationPriorData.DatasetName
+			r.Configuration.Format = configurationPriorData.Format
+			r.Configuration.Provider = configurationPriorData.Provider
+			r.Configuration.ReaderOptions = configurationPriorData.ReaderOptions
+			r.Configuration.URL = configurationPriorData.URL
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

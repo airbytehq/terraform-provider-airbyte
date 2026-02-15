@@ -18,8 +18,10 @@ func (r *SourceAppfollowResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAppfollow{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APISecret = configurationPriorData.APISecret
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APISecret = configurationPriorData.APISecret
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

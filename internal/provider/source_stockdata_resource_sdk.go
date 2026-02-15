@@ -19,12 +19,14 @@ func (r *SourceStockdataResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceStockdata{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.FilterEntities = configurationPriorData.FilterEntities
-		r.Configuration.Industries = configurationPriorData.Industries
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Symbols = configurationPriorData.Symbols
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.FilterEntities = configurationPriorData.FilterEntities
+			r.Configuration.Industries = configurationPriorData.Industries
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Symbols = configurationPriorData.Symbols
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

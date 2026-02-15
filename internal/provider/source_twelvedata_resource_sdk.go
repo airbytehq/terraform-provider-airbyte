@@ -18,12 +18,14 @@ func (r *SourceTwelveDataResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTwelveData{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Country = configurationPriorData.Country
-		r.Configuration.Exchange = configurationPriorData.Exchange
-		r.Configuration.Interval = configurationPriorData.Interval
-		r.Configuration.Symbol = configurationPriorData.Symbol
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Country = configurationPriorData.Country
+			r.Configuration.Exchange = configurationPriorData.Exchange
+			r.Configuration.Interval = configurationPriorData.Interval
+			r.Configuration.Symbol = configurationPriorData.Symbol
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

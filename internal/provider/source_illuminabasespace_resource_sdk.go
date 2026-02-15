@@ -18,10 +18,12 @@ func (r *SourceIlluminaBasespaceResourceModel) RefreshFromSharedSourceResponse(c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceIlluminaBasespace{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Domain = configurationPriorData.Domain
-		r.Configuration.User = configurationPriorData.User
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Domain = configurationPriorData.Domain
+			r.Configuration.User = configurationPriorData.User
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

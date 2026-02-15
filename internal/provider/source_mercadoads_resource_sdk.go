@@ -19,13 +19,15 @@ func (r *SourceMercadoAdsResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMercadoAds{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.LookbackDays = configurationPriorData.LookbackDays
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.LookbackDays = configurationPriorData.LookbackDays
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

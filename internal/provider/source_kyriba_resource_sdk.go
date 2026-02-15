@@ -18,12 +18,14 @@ func (r *SourceKyribaResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceKyriba{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Domain = configurationPriorData.Domain
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Domain = configurationPriorData.Domain
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

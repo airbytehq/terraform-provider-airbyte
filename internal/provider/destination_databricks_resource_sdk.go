@@ -17,15 +17,17 @@ func (r *DestinationDatabricksResourceModel) RefreshFromSharedDestinationRespons
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationDatabricks{}
-		r.Configuration.AcceptTerms = configurationPriorData.AcceptTerms
-		r.Configuration.Authentication = configurationPriorData.Authentication
-		r.Configuration.Database = configurationPriorData.Database
-		r.Configuration.Hostname = configurationPriorData.Hostname
-		r.Configuration.HTTPPath = configurationPriorData.HTTPPath
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.PurgeStagingData = configurationPriorData.PurgeStagingData
-		r.Configuration.RawSchemaOverride = configurationPriorData.RawSchemaOverride
-		r.Configuration.Schema = configurationPriorData.Schema
+		if configurationPriorData != nil {
+			r.Configuration.AcceptTerms = configurationPriorData.AcceptTerms
+			r.Configuration.Authentication = configurationPriorData.Authentication
+			r.Configuration.Database = configurationPriorData.Database
+			r.Configuration.Hostname = configurationPriorData.Hostname
+			r.Configuration.HTTPPath = configurationPriorData.HTTPPath
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.PurgeStagingData = configurationPriorData.PurgeStagingData
+			r.Configuration.RawSchemaOverride = configurationPriorData.RawSchemaOverride
+			r.Configuration.Schema = configurationPriorData.Schema
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

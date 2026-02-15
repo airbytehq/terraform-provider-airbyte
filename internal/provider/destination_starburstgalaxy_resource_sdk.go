@@ -17,15 +17,17 @@ func (r *DestinationStarburstGalaxyResourceModel) RefreshFromSharedDestinationRe
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationStarburstGalaxy{}
-		r.Configuration.AcceptTerms = configurationPriorData.AcceptTerms
-		r.Configuration.Catalog = configurationPriorData.Catalog
-		r.Configuration.CatalogSchema = configurationPriorData.CatalogSchema
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.PurgeStagingTable = configurationPriorData.PurgeStagingTable
-		r.Configuration.ServerHostname = configurationPriorData.ServerHostname
-		r.Configuration.StagingObjectStore = configurationPriorData.StagingObjectStore
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.AcceptTerms = configurationPriorData.AcceptTerms
+			r.Configuration.Catalog = configurationPriorData.Catalog
+			r.Configuration.CatalogSchema = configurationPriorData.CatalogSchema
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.PurgeStagingTable = configurationPriorData.PurgeStagingTable
+			r.Configuration.ServerHostname = configurationPriorData.ServerHostname
+			r.Configuration.StagingObjectStore = configurationPriorData.StagingObjectStore
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

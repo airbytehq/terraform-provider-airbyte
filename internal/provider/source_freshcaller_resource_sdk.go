@@ -19,12 +19,14 @@ func (r *SourceFreshcallerResourceModel) RefreshFromSharedSourceResponse(ctx con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFreshcaller{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Domain = configurationPriorData.Domain
-		r.Configuration.RequestsPerMinute = configurationPriorData.RequestsPerMinute
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.SyncLagMinutes = configurationPriorData.SyncLagMinutes
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Domain = configurationPriorData.Domain
+			r.Configuration.RequestsPerMinute = configurationPriorData.RequestsPerMinute
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.SyncLagMinutes = configurationPriorData.SyncLagMinutes
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

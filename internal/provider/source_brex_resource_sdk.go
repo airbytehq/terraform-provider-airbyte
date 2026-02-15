@@ -19,9 +19,11 @@ func (r *SourceBrexResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceBrex{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.UserToken = configurationPriorData.UserToken
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.UserToken = configurationPriorData.UserToken
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -19,10 +19,12 @@ func (r *SourceTrustpilotResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTrustpilot{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BusinessUnits = configurationPriorData.BusinessUnits
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BusinessUnits = configurationPriorData.BusinessUnits
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

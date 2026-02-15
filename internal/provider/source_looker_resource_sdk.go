@@ -18,11 +18,13 @@ func (r *SourceLookerResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceLooker{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.Domain = configurationPriorData.Domain
-		r.Configuration.RunLookIds = configurationPriorData.RunLookIds
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.Domain = configurationPriorData.Domain
+			r.Configuration.RunLookIds = configurationPriorData.RunLookIds
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

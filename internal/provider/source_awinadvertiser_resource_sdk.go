@@ -19,12 +19,14 @@ func (r *SourceAwinAdvertiserResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAwinAdvertiser{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.AdvertiserID = configurationPriorData.AdvertiserID
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.LookbackDays = configurationPriorData.LookbackDays
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.StepIncrement = configurationPriorData.StepIncrement
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.AdvertiserID = configurationPriorData.AdvertiserID
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.LookbackDays = configurationPriorData.LookbackDays
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.StepIncrement = configurationPriorData.StepIncrement
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

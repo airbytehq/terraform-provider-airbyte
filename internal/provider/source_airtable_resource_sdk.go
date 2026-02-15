@@ -19,10 +19,12 @@ func (r *SourceAirtableResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAirtable{}
-		r.Configuration.AddBaseIDToStreamName = configurationPriorData.AddBaseIDToStreamName
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+		if configurationPriorData != nil {
+			r.Configuration.AddBaseIDToStreamName = configurationPriorData.AddBaseIDToStreamName
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

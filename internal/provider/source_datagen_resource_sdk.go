@@ -18,10 +18,12 @@ func (r *SourceDatagenResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceDatagen{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Concurrency = configurationPriorData.Concurrency
-		r.Configuration.Flavor = configurationPriorData.Flavor
-		r.Configuration.MaxRecords = configurationPriorData.MaxRecords
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Concurrency = configurationPriorData.Concurrency
+			r.Configuration.Flavor = configurationPriorData.Flavor
+			r.Configuration.MaxRecords = configurationPriorData.MaxRecords
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -17,13 +17,15 @@ func (r *SourceCoinAPIResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceCoinAPI{}
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.Environment = configurationPriorData.Environment
-		r.Configuration.Limit = configurationPriorData.Limit
-		r.Configuration.Period = configurationPriorData.Period
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.SymbolID = configurationPriorData.SymbolID
+		if configurationPriorData != nil {
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.Environment = configurationPriorData.Environment
+			r.Configuration.Limit = configurationPriorData.Limit
+			r.Configuration.Period = configurationPriorData.Period
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.SymbolID = configurationPriorData.SymbolID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

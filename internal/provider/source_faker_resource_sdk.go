@@ -18,12 +18,14 @@ func (r *SourceFakerResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFaker{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.AlwaysUpdated = configurationPriorData.AlwaysUpdated
-		r.Configuration.Count = configurationPriorData.Count
-		r.Configuration.Parallelism = configurationPriorData.Parallelism
-		r.Configuration.RecordsPerSlice = configurationPriorData.RecordsPerSlice
-		r.Configuration.Seed = configurationPriorData.Seed
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.AlwaysUpdated = configurationPriorData.AlwaysUpdated
+			r.Configuration.Count = configurationPriorData.Count
+			r.Configuration.Parallelism = configurationPriorData.Parallelism
+			r.Configuration.RecordsPerSlice = configurationPriorData.RecordsPerSlice
+			r.Configuration.Seed = configurationPriorData.Seed
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

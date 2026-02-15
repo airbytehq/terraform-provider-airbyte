@@ -18,9 +18,11 @@ func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromSharedSourceResponse(ct
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceYoutubeAnalytics{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ContentOwnerID = configurationPriorData.ContentOwnerID
-		r.Configuration.Credentials = configurationPriorData.Credentials
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ContentOwnerID = configurationPriorData.ContentOwnerID
+			r.Configuration.Credentials = configurationPriorData.Credentials
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

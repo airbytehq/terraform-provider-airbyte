@@ -17,11 +17,13 @@ func (r *DestinationSurrealdbResourceModel) RefreshFromSharedDestinationResponse
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationSurrealdb{}
-		r.Configuration.SurrealdbDatabase = configurationPriorData.SurrealdbDatabase
-		r.Configuration.SurrealdbNamespace = configurationPriorData.SurrealdbNamespace
-		r.Configuration.SurrealdbPassword = configurationPriorData.SurrealdbPassword
-		r.Configuration.SurrealdbURL = configurationPriorData.SurrealdbURL
-		r.Configuration.SurrealdbUsername = configurationPriorData.SurrealdbUsername
+		if configurationPriorData != nil {
+			r.Configuration.SurrealdbDatabase = configurationPriorData.SurrealdbDatabase
+			r.Configuration.SurrealdbNamespace = configurationPriorData.SurrealdbNamespace
+			r.Configuration.SurrealdbPassword = configurationPriorData.SurrealdbPassword
+			r.Configuration.SurrealdbURL = configurationPriorData.SurrealdbURL
+			r.Configuration.SurrealdbUsername = configurationPriorData.SurrealdbUsername
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

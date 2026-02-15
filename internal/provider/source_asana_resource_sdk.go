@@ -18,11 +18,13 @@ func (r *SourceAsanaResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAsana{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
-		r.Configuration.OrganizationExportIds = configurationPriorData.OrganizationExportIds
-		r.Configuration.TestMode = configurationPriorData.TestMode
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+			r.Configuration.OrganizationExportIds = configurationPriorData.OrganizationExportIds
+			r.Configuration.TestMode = configurationPriorData.TestMode
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

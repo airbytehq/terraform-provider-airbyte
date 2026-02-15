@@ -18,11 +18,13 @@ func (r *SourceGoogleWebfontsResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGoogleWebfonts{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Alt = configurationPriorData.Alt
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.PrettyPrint = configurationPriorData.PrettyPrint
-		r.Configuration.Sort = configurationPriorData.Sort
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Alt = configurationPriorData.Alt
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.PrettyPrint = configurationPriorData.PrettyPrint
+			r.Configuration.Sort = configurationPriorData.Sort
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -18,10 +18,12 @@ func (r *SourceOpenDataDcResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceOpenDataDc{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Location = configurationPriorData.Location
-		r.Configuration.Marid = configurationPriorData.Marid
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Location = configurationPriorData.Location
+			r.Configuration.Marid = configurationPriorData.Marid
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

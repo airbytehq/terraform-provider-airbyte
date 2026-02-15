@@ -18,15 +18,17 @@ func (r *SourceTplcentralResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTplcentral{}
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.CustomerID = configurationPriorData.CustomerID
-		r.Configuration.FacilityID = configurationPriorData.FacilityID
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.TplKey = configurationPriorData.TplKey
-		r.Configuration.URLBase = configurationPriorData.URLBase
-		r.Configuration.UserLogin = configurationPriorData.UserLogin
-		r.Configuration.UserLoginID = configurationPriorData.UserLoginID
+		if configurationPriorData != nil {
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.CustomerID = configurationPriorData.CustomerID
+			r.Configuration.FacilityID = configurationPriorData.FacilityID
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.TplKey = configurationPriorData.TplKey
+			r.Configuration.URLBase = configurationPriorData.URLBase
+			r.Configuration.UserLogin = configurationPriorData.UserLogin
+			r.Configuration.UserLoginID = configurationPriorData.UserLoginID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

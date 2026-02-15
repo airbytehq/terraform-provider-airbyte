@@ -19,12 +19,14 @@ func (r *SourceSonarCloudResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSonarCloud{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ComponentKeys = configurationPriorData.ComponentKeys
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.Organization = configurationPriorData.Organization
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.UserToken = configurationPriorData.UserToken
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ComponentKeys = configurationPriorData.ComponentKeys
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.Organization = configurationPriorData.Organization
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.UserToken = configurationPriorData.UserToken
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

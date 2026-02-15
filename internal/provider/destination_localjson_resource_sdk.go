@@ -17,7 +17,9 @@ func (r *DestinationLocalJSONResourceModel) RefreshFromSharedDestinationResponse
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationLocalJSON{}
-		r.Configuration.DestinationPath = configurationPriorData.DestinationPath
+		if configurationPriorData != nil {
+			r.Configuration.DestinationPath = configurationPriorData.DestinationPath
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

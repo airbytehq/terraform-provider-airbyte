@@ -17,11 +17,13 @@ func (r *DestinationSftpJSONResourceModel) RefreshFromSharedDestinationResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationSftpJSON{}
-		r.Configuration.DestinationPath = configurationPriorData.DestinationPath
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.DestinationPath = configurationPriorData.DestinationPath
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

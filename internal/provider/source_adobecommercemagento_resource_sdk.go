@@ -19,11 +19,13 @@ func (r *SourceAdobeCommerceMagentoResourceModel) RefreshFromSharedSourceRespons
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAdobeCommerceMagento{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.APIVersion = configurationPriorData.APIVersion
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.StoreHost = configurationPriorData.StoreHost
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.APIVersion = configurationPriorData.APIVersion
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.StoreHost = configurationPriorData.StoreHost
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

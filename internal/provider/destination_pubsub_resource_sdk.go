@@ -18,15 +18,17 @@ func (r *DestinationPubsubResourceModel) RefreshFromSharedDestinationResponse(ct
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationPubsub{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BatchingDelayThreshold = configurationPriorData.BatchingDelayThreshold
-		r.Configuration.BatchingElementCountThreshold = configurationPriorData.BatchingElementCountThreshold
-		r.Configuration.BatchingEnabled = configurationPriorData.BatchingEnabled
-		r.Configuration.BatchingRequestBytesThreshold = configurationPriorData.BatchingRequestBytesThreshold
-		r.Configuration.CredentialsJSON = configurationPriorData.CredentialsJSON
-		r.Configuration.OrderingEnabled = configurationPriorData.OrderingEnabled
-		r.Configuration.ProjectID = configurationPriorData.ProjectID
-		r.Configuration.TopicID = configurationPriorData.TopicID
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BatchingDelayThreshold = configurationPriorData.BatchingDelayThreshold
+			r.Configuration.BatchingElementCountThreshold = configurationPriorData.BatchingElementCountThreshold
+			r.Configuration.BatchingEnabled = configurationPriorData.BatchingEnabled
+			r.Configuration.BatchingRequestBytesThreshold = configurationPriorData.BatchingRequestBytesThreshold
+			r.Configuration.CredentialsJSON = configurationPriorData.CredentialsJSON
+			r.Configuration.OrderingEnabled = configurationPriorData.OrderingEnabled
+			r.Configuration.ProjectID = configurationPriorData.ProjectID
+			r.Configuration.TopicID = configurationPriorData.TopicID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

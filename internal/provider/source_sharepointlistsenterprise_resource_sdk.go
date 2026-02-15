@@ -18,11 +18,13 @@ func (r *SourceSharepointListsEnterpriseResourceModel) RefreshFromSharedSourceRe
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSharepointListsEnterprise{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.SiteID = configurationPriorData.SiteID
-		r.Configuration.TenantID = configurationPriorData.TenantID
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.SiteID = configurationPriorData.SiteID
+			r.Configuration.TenantID = configurationPriorData.TenantID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -18,8 +18,10 @@ func (r *SourceLaunchdarklyResourceModel) RefreshFromSharedSourceResponse(ctx co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceLaunchdarkly{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

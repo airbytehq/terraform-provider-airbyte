@@ -18,9 +18,11 @@ func (r *SourceVismaEconomicResourceModel) RefreshFromSharedSourceResponse(ctx c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceVismaEconomic{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.AgreementGrantToken = configurationPriorData.AgreementGrantToken
-		r.Configuration.AppSecretToken = configurationPriorData.AppSecretToken
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.AgreementGrantToken = configurationPriorData.AgreementGrantToken
+			r.Configuration.AppSecretToken = configurationPriorData.AppSecretToken
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

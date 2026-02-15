@@ -18,11 +18,13 @@ func (r *SourceMyHoursResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMyHours{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Email = configurationPriorData.Email
-		r.Configuration.LogsBatchSize = configurationPriorData.LogsBatchSize
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Email = configurationPriorData.Email
+			r.Configuration.LogsBatchSize = configurationPriorData.LogsBatchSize
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

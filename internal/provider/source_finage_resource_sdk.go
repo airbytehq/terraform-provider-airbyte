@@ -19,15 +19,17 @@ func (r *SourceFinageResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFinage{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Period = configurationPriorData.Period
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Symbols = configurationPriorData.Symbols
-		r.Configuration.TechIndicatorType = configurationPriorData.TechIndicatorType
-		r.Configuration.Time = configurationPriorData.Time
-		r.Configuration.TimeAggregates = configurationPriorData.TimeAggregates
-		r.Configuration.TimePeriod = configurationPriorData.TimePeriod
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Period = configurationPriorData.Period
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Symbols = configurationPriorData.Symbols
+			r.Configuration.TechIndicatorType = configurationPriorData.TechIndicatorType
+			r.Configuration.Time = configurationPriorData.Time
+			r.Configuration.TimeAggregates = configurationPriorData.TimeAggregates
+			r.Configuration.TimePeriod = configurationPriorData.TimePeriod
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

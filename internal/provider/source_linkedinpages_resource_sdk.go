@@ -19,11 +19,13 @@ func (r *SourceLinkedinPagesResourceModel) RefreshFromSharedSourceResponse(ctx c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceLinkedinPages{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.OrgID = configurationPriorData.OrgID
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.TimeGranularityType = configurationPriorData.TimeGranularityType
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.OrgID = configurationPriorData.OrgID
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.TimeGranularityType = configurationPriorData.TimeGranularityType
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)
