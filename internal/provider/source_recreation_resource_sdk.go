@@ -18,9 +18,11 @@ func (r *SourceRecreationResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceRecreation{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Apikey = configurationPriorData.Apikey
-		r.Configuration.QueryCampsites = configurationPriorData.QueryCampsites
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Apikey = configurationPriorData.Apikey
+			r.Configuration.QueryCampsites = configurationPriorData.QueryCampsites
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

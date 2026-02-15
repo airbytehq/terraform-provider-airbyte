@@ -19,15 +19,17 @@ func (r *SourceQuickbooksResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceQuickbooks{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.RealmID = configurationPriorData.RealmID
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
-		r.Configuration.Sandbox = configurationPriorData.Sandbox
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.TokenExpiryDate = configurationPriorData.TokenExpiryDate
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.RealmID = configurationPriorData.RealmID
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+			r.Configuration.Sandbox = configurationPriorData.Sandbox
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.TokenExpiryDate = configurationPriorData.TokenExpiryDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

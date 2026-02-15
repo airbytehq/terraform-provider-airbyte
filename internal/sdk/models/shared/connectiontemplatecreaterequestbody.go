@@ -10,7 +10,7 @@ type ConnectionTemplateCreateRequestBody struct {
 	OrganizationID  string `json:"organizationId"`
 	DestinationName string `json:"destinationName"`
 	// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
-	DestinationConfiguration DestinationConfiguration `json:"destinationConfiguration"`
+	DestinationConfiguration any `json:"destinationConfiguration"`
 	// A unique identifier for an actor definition.
 	DestinationActorDefinitionID string `json:"destinationActorDefinitionId"`
 	// Method used for computing final namespace in destination
@@ -50,9 +50,9 @@ func (c *ConnectionTemplateCreateRequestBody) GetDestinationName() string {
 	return c.DestinationName
 }
 
-func (c *ConnectionTemplateCreateRequestBody) GetDestinationConfiguration() DestinationConfiguration {
+func (c *ConnectionTemplateCreateRequestBody) GetDestinationConfiguration() any {
 	if c == nil {
-		return DestinationConfiguration{}
+		return nil
 	}
 	return c.DestinationConfiguration
 }

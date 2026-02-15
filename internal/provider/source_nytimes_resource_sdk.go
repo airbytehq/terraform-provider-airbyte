@@ -18,12 +18,14 @@ func (r *SourceNytimesResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceNytimes{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.Period = configurationPriorData.Period
-		r.Configuration.ShareType = configurationPriorData.ShareType
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.Period = configurationPriorData.Period
+			r.Configuration.ShareType = configurationPriorData.ShareType
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

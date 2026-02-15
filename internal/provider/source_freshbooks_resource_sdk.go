@@ -19,15 +19,17 @@ func (r *SourceFreshbooksResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFreshbooks{}
-		r.Configuration.AccountID = configurationPriorData.AccountID
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BusinessUUID = configurationPriorData.BusinessUUID
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.OauthAccessToken = configurationPriorData.OauthAccessToken
-		r.Configuration.OauthTokenExpiryDate = configurationPriorData.OauthTokenExpiryDate
-		r.Configuration.RedirectURI = configurationPriorData.RedirectURI
+		if configurationPriorData != nil {
+			r.Configuration.AccountID = configurationPriorData.AccountID
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BusinessUUID = configurationPriorData.BusinessUUID
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.OauthAccessToken = configurationPriorData.OauthAccessToken
+			r.Configuration.OauthTokenExpiryDate = configurationPriorData.OauthTokenExpiryDate
+			r.Configuration.RedirectURI = configurationPriorData.RedirectURI
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

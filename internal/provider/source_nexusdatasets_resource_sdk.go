@@ -18,14 +18,16 @@ func (r *SourceNexusDatasetsResourceModel) RefreshFromSharedSourceResponse(ctx c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceNexusDatasets{}
-		r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.BaseURL = configurationPriorData.BaseURL
-		r.Configuration.DatasetName = configurationPriorData.DatasetName
-		r.Configuration.Mode = configurationPriorData.Mode
-		r.Configuration.SecretKey = configurationPriorData.SecretKey
-		r.Configuration.UserID = configurationPriorData.UserID
+		if configurationPriorData != nil {
+			r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.BaseURL = configurationPriorData.BaseURL
+			r.Configuration.DatasetName = configurationPriorData.DatasetName
+			r.Configuration.Mode = configurationPriorData.Mode
+			r.Configuration.SecretKey = configurationPriorData.SecretKey
+			r.Configuration.UserID = configurationPriorData.UserID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -35,8 +35,14 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 				var mappers tfTypes.ConfiguredStreamMapper
 
 				mappers.ID = types.StringPointerValue(mappersItem.ID)
+				if mappers.MapperConfiguration == nil {
+					mappers.MapperConfiguration = &tfTypes.MapperConfiguration{}
+				}
 				if mappersItem.MapperConfiguration.Encryption != nil {
 					mappers.MapperConfiguration.Encryption = &tfTypes.Encryption{}
+					if mappers.MapperConfiguration.Encryption == nil {
+						mappers.MapperConfiguration.Encryption = &tfTypes.Encryption{}
+					}
 					if mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration != nil {
 						mappers.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionMapperAESConfiguration{}
 						mappers.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionMapperAESConfiguration.Algorithm))

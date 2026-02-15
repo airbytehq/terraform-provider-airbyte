@@ -18,13 +18,15 @@ func (r *SourceRecurlyResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceRecurly{}
-		r.Configuration.AccountsStepDays = configurationPriorData.AccountsStepDays
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.BeginTime = configurationPriorData.BeginTime
-		r.Configuration.EndTime = configurationPriorData.EndTime
-		r.Configuration.IsSandbox = configurationPriorData.IsSandbox
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+		if configurationPriorData != nil {
+			r.Configuration.AccountsStepDays = configurationPriorData.AccountsStepDays
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.BeginTime = configurationPriorData.BeginTime
+			r.Configuration.EndTime = configurationPriorData.EndTime
+			r.Configuration.IsSandbox = configurationPriorData.IsSandbox
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -7,9 +7,9 @@ type ConfigTemplateCreateRequestBody struct {
 	// A unique identifier for an actor definition.
 	ActorDefinitionID string `json:"actorDefinitionId"`
 	// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-	PartialDefaultConfig SourceConfiguration `json:"partialDefaultConfig"`
+	PartialDefaultConfig any `json:"partialDefaultConfig"`
 	// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-	PartialUserConfigSpec *SourceConfiguration `json:"partialUserConfigSpec,omitempty"`
+	PartialUserConfigSpec any `json:"partialUserConfigSpec,omitempty"`
 }
 
 func (c *ConfigTemplateCreateRequestBody) GetOrganizationID() string {
@@ -26,14 +26,14 @@ func (c *ConfigTemplateCreateRequestBody) GetActorDefinitionID() string {
 	return c.ActorDefinitionID
 }
 
-func (c *ConfigTemplateCreateRequestBody) GetPartialDefaultConfig() SourceConfiguration {
+func (c *ConfigTemplateCreateRequestBody) GetPartialDefaultConfig() any {
 	if c == nil {
-		return SourceConfiguration{}
+		return nil
 	}
 	return c.PartialDefaultConfig
 }
 
-func (c *ConfigTemplateCreateRequestBody) GetPartialUserConfigSpec() *SourceConfiguration {
+func (c *ConfigTemplateCreateRequestBody) GetPartialUserConfigSpec() any {
 	if c == nil {
 		return nil
 	}

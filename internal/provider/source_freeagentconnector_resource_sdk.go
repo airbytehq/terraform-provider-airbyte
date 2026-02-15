@@ -19,12 +19,14 @@ func (r *SourceFreeAgentConnectorResourceModel) RefreshFromSharedSourceResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFreeAgentConnector{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientRefreshToken2 = configurationPriorData.ClientRefreshToken2
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.PayrollYear = configurationPriorData.PayrollYear
-		r.Configuration.UpdatedSince = configurationPriorData.UpdatedSince
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientRefreshToken2 = configurationPriorData.ClientRefreshToken2
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.PayrollYear = configurationPriorData.PayrollYear
+			r.Configuration.UpdatedSince = configurationPriorData.UpdatedSince
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

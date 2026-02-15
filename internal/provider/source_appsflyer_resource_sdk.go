@@ -17,10 +17,12 @@ func (r *SourceAppsflyerResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAppsflyer{}
-		r.Configuration.APIToken = configurationPriorData.APIToken
-		r.Configuration.AppID = configurationPriorData.AppID
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Timezone = configurationPriorData.Timezone
+		if configurationPriorData != nil {
+			r.Configuration.APIToken = configurationPriorData.APIToken
+			r.Configuration.AppID = configurationPriorData.AppID
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Timezone = configurationPriorData.Timezone
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

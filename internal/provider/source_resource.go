@@ -13,6 +13,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	speakeasy_objectvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/objectvalidators"
 	speakeasy_stringvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/stringvalidators"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -40,7 +41,7 @@ type SourceResource struct {
 
 // SourceResourceModel describes the resource data model.
 type SourceResourceModel struct {
-	Configuration      *tfTypes.SourceConfiguration        `tfsdk:"configuration"`
+	Configuration      jsontypes.Normalized                `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	Name               types.String                        `tfsdk:"name"`
@@ -59,12 +60,13 @@ func (r *SourceResource) Schema(ctx context.Context, req resource.SchemaRequest,
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Source Resource",
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
-				Required: true,
-				PlanModifiers: []planmodifier.Object{
-					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+			"configuration": schema.StringAttribute{
+				CustomType: jsontypes.NormalizedType{},
+				Required:   true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,
+				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source. Parsed as JSON.`,
 			},
 			"created_at": schema.Int64Attribute{
 				Computed: true,

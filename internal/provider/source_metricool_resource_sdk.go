@@ -19,12 +19,14 @@ func (r *SourceMetricoolResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMetricool{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BlogIds = configurationPriorData.BlogIds
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.UserID = configurationPriorData.UserID
-		r.Configuration.UserToken = configurationPriorData.UserToken
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BlogIds = configurationPriorData.BlogIds
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.UserID = configurationPriorData.UserID
+			r.Configuration.UserToken = configurationPriorData.UserToken
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

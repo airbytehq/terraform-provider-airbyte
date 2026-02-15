@@ -18,12 +18,14 @@ func (r *SourceBabelforceResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceBabelforce{}
-		r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.DateCreatedFrom = configurationPriorData.DateCreatedFrom
-		r.Configuration.DateCreatedTo = configurationPriorData.DateCreatedTo
-		r.Configuration.Region = configurationPriorData.Region
+		if configurationPriorData != nil {
+			r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.DateCreatedFrom = configurationPriorData.DateCreatedFrom
+			r.Configuration.DateCreatedTo = configurationPriorData.DateCreatedTo
+			r.Configuration.Region = configurationPriorData.Region
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

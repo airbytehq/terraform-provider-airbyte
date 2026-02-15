@@ -18,11 +18,13 @@ func (r *SourceTvmazeScheduleResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTvmazeSchedule{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.DomesticScheduleCountryCode = configurationPriorData.DomesticScheduleCountryCode
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.WebScheduleCountryCode = configurationPriorData.WebScheduleCountryCode
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.DomesticScheduleCountryCode = configurationPriorData.DomesticScheduleCountryCode
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.WebScheduleCountryCode = configurationPriorData.WebScheduleCountryCode
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -18,12 +18,14 @@ func (r *SourceZohoDeskResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceZohoDesk{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.IncludeCustomDomain = configurationPriorData.IncludeCustomDomain
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
-		r.Configuration.TokenRefreshEndpoint = configurationPriorData.TokenRefreshEndpoint
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.IncludeCustomDomain = configurationPriorData.IncludeCustomDomain
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+			r.Configuration.TokenRefreshEndpoint = configurationPriorData.TokenRefreshEndpoint
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

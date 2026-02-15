@@ -17,8 +17,10 @@ func (r *SourceGridlyResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGridly{}
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.GridID = configurationPriorData.GridID
+		if configurationPriorData != nil {
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.GridID = configurationPriorData.GridID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

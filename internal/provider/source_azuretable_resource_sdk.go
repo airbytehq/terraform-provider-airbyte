@@ -17,9 +17,11 @@ func (r *SourceAzureTableResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAzureTable{}
-		r.Configuration.StorageAccessKey = configurationPriorData.StorageAccessKey
-		r.Configuration.StorageAccountName = configurationPriorData.StorageAccountName
-		r.Configuration.StorageEndpointSuffix = configurationPriorData.StorageEndpointSuffix
+		if configurationPriorData != nil {
+			r.Configuration.StorageAccessKey = configurationPriorData.StorageAccessKey
+			r.Configuration.StorageAccountName = configurationPriorData.StorageAccountName
+			r.Configuration.StorageEndpointSuffix = configurationPriorData.StorageEndpointSuffix
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

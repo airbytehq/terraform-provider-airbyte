@@ -18,15 +18,17 @@ func (r *SourceAmazonAdsResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAmazonAds{}
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.LookBackWindow = configurationPriorData.LookBackWindow
-		r.Configuration.MarketplaceIds = configurationPriorData.MarketplaceIds
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
-		r.Configuration.Profiles = configurationPriorData.Profiles
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
-		r.Configuration.Region = configurationPriorData.Region
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.LookBackWindow = configurationPriorData.LookBackWindow
+			r.Configuration.MarketplaceIds = configurationPriorData.MarketplaceIds
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+			r.Configuration.Profiles = configurationPriorData.Profiles
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+			r.Configuration.Region = configurationPriorData.Region
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

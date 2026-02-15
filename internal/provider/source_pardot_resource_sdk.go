@@ -19,14 +19,16 @@ func (r *SourcePardotResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourcePardot{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.IsSandbox = configurationPriorData.IsSandbox
-		r.Configuration.PardotBusinessUnitID = configurationPriorData.PardotBusinessUnitID
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.V5PageSize = configurationPriorData.V5PageSize
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.IsSandbox = configurationPriorData.IsSandbox
+			r.Configuration.PardotBusinessUnitID = configurationPriorData.PardotBusinessUnitID
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.V5PageSize = configurationPriorData.V5PageSize
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

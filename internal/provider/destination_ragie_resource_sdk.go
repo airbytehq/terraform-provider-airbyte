@@ -17,15 +17,17 @@ func (r *DestinationRagieResourceModel) RefreshFromSharedDestinationResponse(ctx
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationRagie{}
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.APIURL = configurationPriorData.APIURL
-		r.Configuration.ContentFields = configurationPriorData.ContentFields
-		r.Configuration.DocumentNameField = configurationPriorData.DocumentNameField
-		r.Configuration.ExternalIDField = configurationPriorData.ExternalIDField
-		r.Configuration.MetadataFields = configurationPriorData.MetadataFields
-		r.Configuration.MetadataStatic = configurationPriorData.MetadataStatic
-		r.Configuration.Partition = configurationPriorData.Partition
-		r.Configuration.ProcessingMode = configurationPriorData.ProcessingMode
+		if configurationPriorData != nil {
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.APIURL = configurationPriorData.APIURL
+			r.Configuration.ContentFields = configurationPriorData.ContentFields
+			r.Configuration.DocumentNameField = configurationPriorData.DocumentNameField
+			r.Configuration.ExternalIDField = configurationPriorData.ExternalIDField
+			r.Configuration.MetadataFields = configurationPriorData.MetadataFields
+			r.Configuration.MetadataStatic = configurationPriorData.MetadataStatic
+			r.Configuration.Partition = configurationPriorData.Partition
+			r.Configuration.ProcessingMode = configurationPriorData.ProcessingMode
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

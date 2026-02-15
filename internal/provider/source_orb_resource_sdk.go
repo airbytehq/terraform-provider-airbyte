@@ -19,15 +19,17 @@ func (r *SourceOrbResourceModel) RefreshFromSharedSourceResponse(ctx context.Con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceOrb{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.LookbackWindowDays = configurationPriorData.LookbackWindowDays
-		r.Configuration.NumericEventPropertiesKeys = configurationPriorData.NumericEventPropertiesKeys
-		r.Configuration.PlanID = configurationPriorData.PlanID
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.StringEventPropertiesKeys = configurationPriorData.StringEventPropertiesKeys
-		r.Configuration.SubscriptionUsageGroupingKey = configurationPriorData.SubscriptionUsageGroupingKey
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.LookbackWindowDays = configurationPriorData.LookbackWindowDays
+			r.Configuration.NumericEventPropertiesKeys = configurationPriorData.NumericEventPropertiesKeys
+			r.Configuration.PlanID = configurationPriorData.PlanID
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.StringEventPropertiesKeys = configurationPriorData.StringEventPropertiesKeys
+			r.Configuration.SubscriptionUsageGroupingKey = configurationPriorData.SubscriptionUsageGroupingKey
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

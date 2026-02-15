@@ -19,14 +19,16 @@ func (r *SourceGoogleAdsResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGoogleAds{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ConversionWindowDays = configurationPriorData.ConversionWindowDays
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.CustomQueriesArray = configurationPriorData.CustomQueriesArray
-		r.Configuration.CustomerID = configurationPriorData.CustomerID
-		r.Configuration.CustomerStatusFilter = configurationPriorData.CustomerStatusFilter
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ConversionWindowDays = configurationPriorData.ConversionWindowDays
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.CustomQueriesArray = configurationPriorData.CustomQueriesArray
+			r.Configuration.CustomerID = configurationPriorData.CustomerID
+			r.Configuration.CustomerStatusFilter = configurationPriorData.CustomerStatusFilter
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

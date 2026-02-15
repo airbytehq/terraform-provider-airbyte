@@ -17,12 +17,14 @@ func (r *DestinationTypesenseResourceModel) RefreshFromSharedDestinationResponse
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationTypesense{}
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.BatchSize = configurationPriorData.BatchSize
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.Path = configurationPriorData.Path
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.Protocol = configurationPriorData.Protocol
+		if configurationPriorData != nil {
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.BatchSize = configurationPriorData.BatchSize
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.Path = configurationPriorData.Path
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.Protocol = configurationPriorData.Protocol
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

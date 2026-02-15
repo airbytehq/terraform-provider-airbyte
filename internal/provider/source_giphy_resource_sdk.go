@@ -19,13 +19,15 @@ func (r *SourceGiphyResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGiphy{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Query = configurationPriorData.Query
-		r.Configuration.QueryForClips = configurationPriorData.QueryForClips
-		r.Configuration.QueryForGif = configurationPriorData.QueryForGif
-		r.Configuration.QueryForStickers = configurationPriorData.QueryForStickers
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Query = configurationPriorData.Query
+			r.Configuration.QueryForClips = configurationPriorData.QueryForClips
+			r.Configuration.QueryForGif = configurationPriorData.QueryForGif
+			r.Configuration.QueryForStickers = configurationPriorData.QueryForStickers
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

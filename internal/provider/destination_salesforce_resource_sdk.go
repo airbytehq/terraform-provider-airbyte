@@ -18,12 +18,14 @@ func (r *DestinationSalesforceResourceModel) RefreshFromSharedDestinationRespons
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationSalesforce{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.IsSandbox = configurationPriorData.IsSandbox
-		r.Configuration.ObjectStorageConfig = configurationPriorData.ObjectStorageConfig
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.IsSandbox = configurationPriorData.IsSandbox
+			r.Configuration.ObjectStorageConfig = configurationPriorData.ObjectStorageConfig
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

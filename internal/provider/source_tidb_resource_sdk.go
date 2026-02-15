@@ -17,14 +17,16 @@ func (r *SourceTidbResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTidb{}
-		r.Configuration.Database = configurationPriorData.Database
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.Ssl = configurationPriorData.Ssl
-		r.Configuration.TunnelMethod = configurationPriorData.TunnelMethod
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.Database = configurationPriorData.Database
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.Ssl = configurationPriorData.Ssl
+			r.Configuration.TunnelMethod = configurationPriorData.TunnelMethod
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -29,7 +30,7 @@ type DestinationPostgresDataSource struct {
 
 // DestinationPostgresDataSourceModel describes the data model.
 type DestinationPostgresDataSourceModel struct {
-	Configuration      *tfTypes.DestinationConfiguration   `tfsdk:"configuration"`
+	Configuration      jsontypes.Normalized                `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
 	DestinationID      types.String                        `tfsdk:"destination_id"`
@@ -50,9 +51,10 @@ func (r *DestinationPostgresDataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "DestinationPostgres DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
+				CustomType:  jsontypes.NormalizedType{},
 				Computed:    true,
-				Description: `The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.`,
+				Description: `The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. Parsed as JSON.`,
 			},
 			"created_at": schema.Int64Attribute{
 				Computed: true,

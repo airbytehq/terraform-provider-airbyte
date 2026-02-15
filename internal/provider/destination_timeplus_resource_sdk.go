@@ -17,8 +17,10 @@ func (r *DestinationTimeplusResourceModel) RefreshFromSharedDestinationResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationTimeplus{}
-		r.Configuration.Apikey = configurationPriorData.Apikey
-		r.Configuration.Endpoint = configurationPriorData.Endpoint
+		if configurationPriorData != nil {
+			r.Configuration.Apikey = configurationPriorData.Apikey
+			r.Configuration.Endpoint = configurationPriorData.Endpoint
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

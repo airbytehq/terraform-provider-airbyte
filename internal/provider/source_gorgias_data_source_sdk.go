@@ -4,9 +4,11 @@ package provider
 
 import (
 	"context"
+	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -15,7 +17,8 @@ func (r *SourceGorgiasDataSourceModel) RefreshFromSharedSourceResponse(ctx conte
 	var diags diag.Diagnostics
 
 	if resp != nil {
-		r.Configuration = &tfTypes.SourceConfiguration{}
+		configurationResult, _ := json.Marshal(resp.Configuration)
+		r.Configuration = jsontypes.NewNormalizedValue(string(configurationResult))
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -17,10 +17,12 @@ func (r *DestinationQdrantResourceModel) RefreshFromSharedDestinationResponse(ct
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationQdrant{}
-		r.Configuration.Embedding = configurationPriorData.Embedding
-		r.Configuration.Indexing = configurationPriorData.Indexing
-		r.Configuration.OmitRawText = configurationPriorData.OmitRawText
-		r.Configuration.Processing = configurationPriorData.Processing
+		if configurationPriorData != nil {
+			r.Configuration.Embedding = configurationPriorData.Embedding
+			r.Configuration.Indexing = configurationPriorData.Indexing
+			r.Configuration.OmitRawText = configurationPriorData.OmitRawText
+			r.Configuration.Processing = configurationPriorData.Processing
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

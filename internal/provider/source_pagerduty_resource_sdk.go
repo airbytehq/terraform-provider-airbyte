@@ -18,15 +18,17 @@ func (r *SourcePagerdutyResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourcePagerduty{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.CutoffDays = configurationPriorData.CutoffDays
-		r.Configuration.DefaultSeverity = configurationPriorData.DefaultSeverity
-		r.Configuration.ExcludeServices = configurationPriorData.ExcludeServices
-		r.Configuration.IncidentLogEntriesOverview = configurationPriorData.IncidentLogEntriesOverview
-		r.Configuration.MaxRetries = configurationPriorData.MaxRetries
-		r.Configuration.PageSize = configurationPriorData.PageSize
-		r.Configuration.ServiceDetails = configurationPriorData.ServiceDetails
-		r.Configuration.Token = configurationPriorData.Token
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.CutoffDays = configurationPriorData.CutoffDays
+			r.Configuration.DefaultSeverity = configurationPriorData.DefaultSeverity
+			r.Configuration.ExcludeServices = configurationPriorData.ExcludeServices
+			r.Configuration.IncidentLogEntriesOverview = configurationPriorData.IncidentLogEntriesOverview
+			r.Configuration.MaxRetries = configurationPriorData.MaxRetries
+			r.Configuration.PageSize = configurationPriorData.PageSize
+			r.Configuration.ServiceDetails = configurationPriorData.ServiceDetails
+			r.Configuration.Token = configurationPriorData.Token
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

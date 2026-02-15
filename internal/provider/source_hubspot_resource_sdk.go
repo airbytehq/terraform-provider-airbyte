@@ -19,12 +19,14 @@ func (r *SourceHubspotResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceHubspot{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.EnableExperimentalStreams = configurationPriorData.EnableExperimentalStreams
-		r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
-		r.Configuration.NumWorker = configurationPriorData.NumWorker
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.EnableExperimentalStreams = configurationPriorData.EnableExperimentalStreams
+			r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
+			r.Configuration.NumWorker = configurationPriorData.NumWorker
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

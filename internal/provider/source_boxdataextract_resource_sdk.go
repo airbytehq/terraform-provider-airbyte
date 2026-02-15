@@ -17,15 +17,17 @@ func (r *SourceBoxDataExtractResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceBoxDataExtract{}
-		r.Configuration.AskAiPrompt = configurationPriorData.AskAiPrompt
-		r.Configuration.BoxFolderID = configurationPriorData.BoxFolderID
-		r.Configuration.BoxSubjectID = configurationPriorData.BoxSubjectID
-		r.Configuration.BoxSubjectType = configurationPriorData.BoxSubjectType
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.ExtractAiPrompt = configurationPriorData.ExtractAiPrompt
-		r.Configuration.ExtractStructuredAiFields = configurationPriorData.ExtractStructuredAiFields
-		r.Configuration.IsRecursive = configurationPriorData.IsRecursive
+		if configurationPriorData != nil {
+			r.Configuration.AskAiPrompt = configurationPriorData.AskAiPrompt
+			r.Configuration.BoxFolderID = configurationPriorData.BoxFolderID
+			r.Configuration.BoxSubjectID = configurationPriorData.BoxSubjectID
+			r.Configuration.BoxSubjectType = configurationPriorData.BoxSubjectType
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.ExtractAiPrompt = configurationPriorData.ExtractAiPrompt
+			r.Configuration.ExtractStructuredAiFields = configurationPriorData.ExtractStructuredAiFields
+			r.Configuration.IsRecursive = configurationPriorData.IsRecursive
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

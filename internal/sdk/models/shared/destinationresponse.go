@@ -10,8 +10,8 @@ type DestinationResponse struct {
 	DefinitionID    string `json:"definitionId"`
 	WorkspaceID     string `json:"workspaceId"`
 	// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
-	Configuration DestinationConfiguration `json:"configuration"`
-	CreatedAt     int64                    `json:"createdAt"`
+	Configuration any   `json:"configuration"`
+	CreatedAt     int64 `json:"createdAt"`
 	// actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
@@ -51,9 +51,9 @@ func (d *DestinationResponse) GetWorkspaceID() string {
 	return d.WorkspaceID
 }
 
-func (d *DestinationResponse) GetConfiguration() DestinationConfiguration {
+func (d *DestinationResponse) GetConfiguration() any {
 	if d == nil {
-		return DestinationConfiguration{}
+		return nil
 	}
 	return d.Configuration
 }

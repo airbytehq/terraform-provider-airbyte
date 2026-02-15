@@ -20,15 +20,17 @@ func (r *SourceNewsdataIoResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceNewsdataIo{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Categories = configurationPriorData.Categories
-		r.Configuration.Countries = configurationPriorData.Countries
-		r.Configuration.Domains = configurationPriorData.Domains
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.Languages = configurationPriorData.Languages
-		r.Configuration.SearchQuery = configurationPriorData.SearchQuery
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Categories = configurationPriorData.Categories
+			r.Configuration.Countries = configurationPriorData.Countries
+			r.Configuration.Domains = configurationPriorData.Domains
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.Languages = configurationPriorData.Languages
+			r.Configuration.SearchQuery = configurationPriorData.SearchQuery
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

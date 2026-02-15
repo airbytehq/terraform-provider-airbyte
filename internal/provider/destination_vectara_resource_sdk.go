@@ -17,13 +17,15 @@ func (r *DestinationVectaraResourceModel) RefreshFromSharedDestinationResponse(c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationVectara{}
-		r.Configuration.CorpusName = configurationPriorData.CorpusName
-		r.Configuration.CustomerID = configurationPriorData.CustomerID
-		r.Configuration.MetadataFields = configurationPriorData.MetadataFields
-		r.Configuration.Oauth2 = configurationPriorData.Oauth2
-		r.Configuration.Parallelize = configurationPriorData.Parallelize
-		r.Configuration.TextFields = configurationPriorData.TextFields
-		r.Configuration.TitleField = configurationPriorData.TitleField
+		if configurationPriorData != nil {
+			r.Configuration.CorpusName = configurationPriorData.CorpusName
+			r.Configuration.CustomerID = configurationPriorData.CustomerID
+			r.Configuration.MetadataFields = configurationPriorData.MetadataFields
+			r.Configuration.Oauth2 = configurationPriorData.Oauth2
+			r.Configuration.Parallelize = configurationPriorData.Parallelize
+			r.Configuration.TextFields = configurationPriorData.TextFields
+			r.Configuration.TitleField = configurationPriorData.TitleField
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

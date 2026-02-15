@@ -18,12 +18,14 @@ func (r *SourceMicrosoftDataverseResourceModel) RefreshFromSharedSourceResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMicrosoftDataverse{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecretValue = configurationPriorData.ClientSecretValue
-		r.Configuration.OdataMaxpagesize = configurationPriorData.OdataMaxpagesize
-		r.Configuration.TenantID = configurationPriorData.TenantID
-		r.Configuration.URL = configurationPriorData.URL
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecretValue = configurationPriorData.ClientSecretValue
+			r.Configuration.OdataMaxpagesize = configurationPriorData.OdataMaxpagesize
+			r.Configuration.TenantID = configurationPriorData.TenantID
+			r.Configuration.URL = configurationPriorData.URL
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

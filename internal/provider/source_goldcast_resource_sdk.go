@@ -18,8 +18,10 @@ func (r *SourceGoldcastResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGoldcast{}
-		r.Configuration.AccessKey = configurationPriorData.AccessKey
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+		if configurationPriorData != nil {
+			r.Configuration.AccessKey = configurationPriorData.AccessKey
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

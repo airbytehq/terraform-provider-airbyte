@@ -17,10 +17,12 @@ func (r *SourceZenloopResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceZenloop{}
-		r.Configuration.APIToken = configurationPriorData.APIToken
-		r.Configuration.DateFrom = configurationPriorData.DateFrom
-		r.Configuration.SurveyGroupID = configurationPriorData.SurveyGroupID
-		r.Configuration.SurveyID = configurationPriorData.SurveyID
+		if configurationPriorData != nil {
+			r.Configuration.APIToken = configurationPriorData.APIToken
+			r.Configuration.DateFrom = configurationPriorData.DateFrom
+			r.Configuration.SurveyGroupID = configurationPriorData.SurveyGroupID
+			r.Configuration.SurveyID = configurationPriorData.SurveyID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)
