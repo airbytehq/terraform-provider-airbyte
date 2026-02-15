@@ -19,11 +19,13 @@ func (r *SourceSurveymonkeyResourceModel) RefreshFromSharedSourceResponse(ctx co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSurveymonkey{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.Origin = configurationPriorData.Origin
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.SurveyIds = configurationPriorData.SurveyIds
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.Origin = configurationPriorData.Origin
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.SurveyIds = configurationPriorData.SurveyIds
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

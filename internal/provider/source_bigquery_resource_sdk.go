@@ -17,9 +17,11 @@ func (r *SourceBigqueryResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceBigquery{}
-		r.Configuration.CredentialsJSON = configurationPriorData.CredentialsJSON
-		r.Configuration.DatasetID = configurationPriorData.DatasetID
-		r.Configuration.ProjectID = configurationPriorData.ProjectID
+		if configurationPriorData != nil {
+			r.Configuration.CredentialsJSON = configurationPriorData.CredentialsJSON
+			r.Configuration.DatasetID = configurationPriorData.DatasetID
+			r.Configuration.ProjectID = configurationPriorData.ProjectID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

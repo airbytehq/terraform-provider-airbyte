@@ -18,10 +18,12 @@ func (r *SourcePosthogResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourcePosthog{}
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.BaseURL = configurationPriorData.BaseURL
-		r.Configuration.EventsTimeStep = configurationPriorData.EventsTimeStep
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.BaseURL = configurationPriorData.BaseURL
+			r.Configuration.EventsTimeStep = configurationPriorData.EventsTimeStep
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

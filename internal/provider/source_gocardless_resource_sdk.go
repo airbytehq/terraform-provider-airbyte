@@ -18,11 +18,13 @@ func (r *SourceGocardlessResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGocardless{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.GocardlessEnvironment = configurationPriorData.GocardlessEnvironment
-		r.Configuration.GocardlessVersion = configurationPriorData.GocardlessVersion
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.GocardlessEnvironment = configurationPriorData.GocardlessEnvironment
+			r.Configuration.GocardlessVersion = configurationPriorData.GocardlessVersion
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

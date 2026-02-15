@@ -19,11 +19,13 @@ func (r *SourceYotpoResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceYotpo{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.AppKey = configurationPriorData.AppKey
-		r.Configuration.Email = configurationPriorData.Email
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.AppKey = configurationPriorData.AppKey
+			r.Configuration.Email = configurationPriorData.Email
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

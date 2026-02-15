@@ -18,10 +18,12 @@ func (r *SourceModeResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMode{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APISecret = configurationPriorData.APISecret
-		r.Configuration.APIToken = configurationPriorData.APIToken
-		r.Configuration.Workspace = configurationPriorData.Workspace
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APISecret = configurationPriorData.APISecret
+			r.Configuration.APIToken = configurationPriorData.APIToken
+			r.Configuration.Workspace = configurationPriorData.Workspace
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -18,15 +18,17 @@ func (r *SourceMongodbV2ResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMongodbV2{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.DatabaseConfig = configurationPriorData.DatabaseConfig
-		r.Configuration.DiscoverSampleSize = configurationPriorData.DiscoverSampleSize
-		r.Configuration.DiscoverTimeoutSeconds = configurationPriorData.DiscoverTimeoutSeconds
-		r.Configuration.InitialLoadTimeoutHours = configurationPriorData.InitialLoadTimeoutHours
-		r.Configuration.InitialWaitingSeconds = configurationPriorData.InitialWaitingSeconds
-		r.Configuration.InvalidCdcCursorPositionBehavior = configurationPriorData.InvalidCdcCursorPositionBehavior
-		r.Configuration.QueueSize = configurationPriorData.QueueSize
-		r.Configuration.UpdateCaptureMode = configurationPriorData.UpdateCaptureMode
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.DatabaseConfig = configurationPriorData.DatabaseConfig
+			r.Configuration.DiscoverSampleSize = configurationPriorData.DiscoverSampleSize
+			r.Configuration.DiscoverTimeoutSeconds = configurationPriorData.DiscoverTimeoutSeconds
+			r.Configuration.InitialLoadTimeoutHours = configurationPriorData.InitialLoadTimeoutHours
+			r.Configuration.InitialWaitingSeconds = configurationPriorData.InitialWaitingSeconds
+			r.Configuration.InvalidCdcCursorPositionBehavior = configurationPriorData.InvalidCdcCursorPositionBehavior
+			r.Configuration.QueueSize = configurationPriorData.QueueSize
+			r.Configuration.UpdateCaptureMode = configurationPriorData.UpdateCaptureMode
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

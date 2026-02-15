@@ -18,15 +18,17 @@ func (r *SourceTeradataResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTeradata{}
-		r.Configuration.Database = configurationPriorData.Database
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.ReplicationMethod = configurationPriorData.ReplicationMethod
-		r.Configuration.Ssl = configurationPriorData.Ssl
-		r.Configuration.SslMode = configurationPriorData.SslMode
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.Database = configurationPriorData.Database
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.ReplicationMethod = configurationPriorData.ReplicationMethod
+			r.Configuration.Ssl = configurationPriorData.Ssl
+			r.Configuration.SslMode = configurationPriorData.SslMode
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

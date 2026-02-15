@@ -18,13 +18,15 @@ func (r *SourceAzureBlobStorageResourceModel) RefreshFromSharedSourceResponse(ct
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAzureBlobStorage{}
-		r.Configuration.AzureBlobStorageAccountName = configurationPriorData.AzureBlobStorageAccountName
-		r.Configuration.AzureBlobStorageContainerName = configurationPriorData.AzureBlobStorageContainerName
-		r.Configuration.AzureBlobStorageEndpoint = configurationPriorData.AzureBlobStorageEndpoint
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.DeliveryMethod = configurationPriorData.DeliveryMethod
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Streams = configurationPriorData.Streams
+		if configurationPriorData != nil {
+			r.Configuration.AzureBlobStorageAccountName = configurationPriorData.AzureBlobStorageAccountName
+			r.Configuration.AzureBlobStorageContainerName = configurationPriorData.AzureBlobStorageContainerName
+			r.Configuration.AzureBlobStorageEndpoint = configurationPriorData.AzureBlobStorageEndpoint
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.DeliveryMethod = configurationPriorData.DeliveryMethod
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Streams = configurationPriorData.Streams
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

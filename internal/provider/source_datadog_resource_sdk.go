@@ -18,15 +18,17 @@ func (r *SourceDatadogResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceDatadog{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.ApplicationKey = configurationPriorData.ApplicationKey
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.MaxRecordsPerRequest = configurationPriorData.MaxRecordsPerRequest
-		r.Configuration.Queries = configurationPriorData.Queries
-		r.Configuration.Query = configurationPriorData.Query
-		r.Configuration.Site = configurationPriorData.Site
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.ApplicationKey = configurationPriorData.ApplicationKey
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.MaxRecordsPerRequest = configurationPriorData.MaxRecordsPerRequest
+			r.Configuration.Queries = configurationPriorData.Queries
+			r.Configuration.Query = configurationPriorData.Query
+			r.Configuration.Site = configurationPriorData.Site
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

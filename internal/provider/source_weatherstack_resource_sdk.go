@@ -18,10 +18,12 @@ func (r *SourceWeatherstackResourceModel) RefreshFromSharedSourceResponse(ctx co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceWeatherstack{}
-		r.Configuration.AccessKey = configurationPriorData.AccessKey
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.HistoricalDate = configurationPriorData.HistoricalDate
-		r.Configuration.Query = configurationPriorData.Query
+		if configurationPriorData != nil {
+			r.Configuration.AccessKey = configurationPriorData.AccessKey
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.HistoricalDate = configurationPriorData.HistoricalDate
+			r.Configuration.Query = configurationPriorData.Query
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

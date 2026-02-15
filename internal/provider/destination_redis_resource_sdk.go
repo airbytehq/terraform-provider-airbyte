@@ -17,14 +17,16 @@ func (r *DestinationRedisResourceModel) RefreshFromSharedDestinationResponse(ctx
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationRedis{}
-		r.Configuration.CacheType = configurationPriorData.CacheType
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.Ssl = configurationPriorData.Ssl
-		r.Configuration.SslMode = configurationPriorData.SslMode
-		r.Configuration.TunnelMethod = configurationPriorData.TunnelMethod
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.CacheType = configurationPriorData.CacheType
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.Ssl = configurationPriorData.Ssl
+			r.Configuration.SslMode = configurationPriorData.SslMode
+			r.Configuration.TunnelMethod = configurationPriorData.TunnelMethod
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

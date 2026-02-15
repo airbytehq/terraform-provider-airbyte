@@ -17,8 +17,10 @@ func (r *DestinationConvexResourceModel) RefreshFromSharedDestinationResponse(ct
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationConvex{}
-		r.Configuration.AccessKey = configurationPriorData.AccessKey
-		r.Configuration.DeploymentURL = configurationPriorData.DeploymentURL
+		if configurationPriorData != nil {
+			r.Configuration.AccessKey = configurationPriorData.AccessKey
+			r.Configuration.DeploymentURL = configurationPriorData.DeploymentURL
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

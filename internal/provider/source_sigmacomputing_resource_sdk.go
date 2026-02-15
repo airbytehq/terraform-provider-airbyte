@@ -19,13 +19,15 @@ func (r *SourceSigmaComputingResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSigmaComputing{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.BaseURL = configurationPriorData.BaseURL
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.OauthAccessToken = configurationPriorData.OauthAccessToken
-		r.Configuration.OauthTokenExpiryDate = configurationPriorData.OauthTokenExpiryDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.BaseURL = configurationPriorData.BaseURL
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.OauthAccessToken = configurationPriorData.OauthAccessToken
+			r.Configuration.OauthTokenExpiryDate = configurationPriorData.OauthTokenExpiryDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

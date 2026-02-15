@@ -19,13 +19,15 @@ func (r *SourceFreshdeskResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFreshdesk{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Domain = configurationPriorData.Domain
-		r.Configuration.LookbackWindowInDays = configurationPriorData.LookbackWindowInDays
-		r.Configuration.RateLimitPlan = configurationPriorData.RateLimitPlan
-		r.Configuration.RequestsPerMinute = configurationPriorData.RequestsPerMinute
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Domain = configurationPriorData.Domain
+			r.Configuration.LookbackWindowInDays = configurationPriorData.LookbackWindowInDays
+			r.Configuration.RateLimitPlan = configurationPriorData.RateLimitPlan
+			r.Configuration.RequestsPerMinute = configurationPriorData.RequestsPerMinute
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

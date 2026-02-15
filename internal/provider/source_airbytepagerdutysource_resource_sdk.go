@@ -17,11 +17,13 @@ func (r *SourceAirbytePagerdutySourceResourceModel) RefreshFromSharedSourceRespo
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAirbytePagerdutySource{}
-		r.Configuration.CutoffDays = configurationPriorData.CutoffDays
-		r.Configuration.DefaultSeverity = configurationPriorData.DefaultSeverity
-		r.Configuration.IncidentLogEntriesOverview = configurationPriorData.IncidentLogEntriesOverview
-		r.Configuration.PageSize = configurationPriorData.PageSize
-		r.Configuration.Token = configurationPriorData.Token
+		if configurationPriorData != nil {
+			r.Configuration.CutoffDays = configurationPriorData.CutoffDays
+			r.Configuration.DefaultSeverity = configurationPriorData.DefaultSeverity
+			r.Configuration.IncidentLogEntriesOverview = configurationPriorData.IncidentLogEntriesOverview
+			r.Configuration.PageSize = configurationPriorData.PageSize
+			r.Configuration.Token = configurationPriorData.Token
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -19,13 +19,15 @@ func (r *SourceIntercomResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceIntercom{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.ActivityLogsTimeStep = configurationPriorData.ActivityLogsTimeStep
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.ActivityLogsTimeStep = configurationPriorData.ActivityLogsTimeStep
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

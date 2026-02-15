@@ -19,11 +19,13 @@ func (r *SourceRechargeResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceRecharge{}
-		r.Configuration.AccessToken = configurationPriorData.AccessToken
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.LookbackWindowDays = configurationPriorData.LookbackWindowDays
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.UseOrdersDeprecatedAPI = configurationPriorData.UseOrdersDeprecatedAPI
+		if configurationPriorData != nil {
+			r.Configuration.AccessToken = configurationPriorData.AccessToken
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.LookbackWindowDays = configurationPriorData.LookbackWindowDays
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.UseOrdersDeprecatedAPI = configurationPriorData.UseOrdersDeprecatedAPI
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

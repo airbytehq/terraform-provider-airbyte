@@ -19,14 +19,16 @@ func (r *SourceRedditResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceReddit{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Exact = configurationPriorData.Exact
-		r.Configuration.IncludeOver18 = configurationPriorData.IncludeOver18
-		r.Configuration.Limit = configurationPriorData.Limit
-		r.Configuration.Query = configurationPriorData.Query
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Subreddits = configurationPriorData.Subreddits
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Exact = configurationPriorData.Exact
+			r.Configuration.IncludeOver18 = configurationPriorData.IncludeOver18
+			r.Configuration.Limit = configurationPriorData.Limit
+			r.Configuration.Query = configurationPriorData.Query
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Subreddits = configurationPriorData.Subreddits
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

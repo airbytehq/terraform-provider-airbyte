@@ -18,13 +18,15 @@ func (r *SourceTheGuardianAPIResourceModel) RefreshFromSharedSourceResponse(ctx 
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceTheGuardianAPI{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.Query = configurationPriorData.Query
-		r.Configuration.Section = configurationPriorData.Section
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Tag = configurationPriorData.Tag
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.Query = configurationPriorData.Query
+			r.Configuration.Section = configurationPriorData.Section
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Tag = configurationPriorData.Tag
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

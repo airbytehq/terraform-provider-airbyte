@@ -19,14 +19,16 @@ func (r *SourceZohoCrmResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceZohoCrm{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.DcRegion = configurationPriorData.DcRegion
-		r.Configuration.Edition = configurationPriorData.Edition
-		r.Configuration.Environment = configurationPriorData.Environment
-		r.Configuration.RefreshToken = configurationPriorData.RefreshToken
-		r.Configuration.StartDatetime = configurationPriorData.StartDatetime
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.DcRegion = configurationPriorData.DcRegion
+			r.Configuration.Edition = configurationPriorData.Edition
+			r.Configuration.Environment = configurationPriorData.Environment
+			r.Configuration.RefreshToken = configurationPriorData.RefreshToken
+			r.Configuration.StartDatetime = configurationPriorData.StartDatetime
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

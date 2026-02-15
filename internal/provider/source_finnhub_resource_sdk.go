@@ -19,12 +19,14 @@ func (r *SourceFinnhubResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceFinnhub{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Exchange = configurationPriorData.Exchange
-		r.Configuration.MarketNewsCategory = configurationPriorData.MarketNewsCategory
-		r.Configuration.StartDate2 = configurationPriorData.StartDate2
-		r.Configuration.Symbols = configurationPriorData.Symbols
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Exchange = configurationPriorData.Exchange
+			r.Configuration.MarketNewsCategory = configurationPriorData.MarketNewsCategory
+			r.Configuration.StartDate2 = configurationPriorData.StartDate2
+			r.Configuration.Symbols = configurationPriorData.Symbols
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

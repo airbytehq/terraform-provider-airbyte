@@ -18,10 +18,12 @@ func (r *SourceRingcentralResourceModel) RefreshFromSharedSourceResponse(ctx con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceRingcentral{}
-		r.Configuration.AccountID = configurationPriorData.AccountID
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.AuthToken = configurationPriorData.AuthToken
-		r.Configuration.ExtensionID = configurationPriorData.ExtensionID
+		if configurationPriorData != nil {
+			r.Configuration.AccountID = configurationPriorData.AccountID
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.AuthToken = configurationPriorData.AuthToken
+			r.Configuration.ExtensionID = configurationPriorData.ExtensionID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

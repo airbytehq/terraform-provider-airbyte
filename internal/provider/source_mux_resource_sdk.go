@@ -19,11 +19,13 @@ func (r *SourceMuxResourceModel) RefreshFromSharedSourceResponse(ctx context.Con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMux{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.PlaybackID = configurationPriorData.PlaybackID
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.PlaybackID = configurationPriorData.PlaybackID
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

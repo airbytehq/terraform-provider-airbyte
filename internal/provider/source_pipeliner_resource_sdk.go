@@ -18,11 +18,13 @@ func (r *SourcePipelinerResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourcePipeliner{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Service = configurationPriorData.Service
-		r.Configuration.Spaceid = configurationPriorData.Spaceid
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Service = configurationPriorData.Service
+			r.Configuration.Spaceid = configurationPriorData.Spaceid
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

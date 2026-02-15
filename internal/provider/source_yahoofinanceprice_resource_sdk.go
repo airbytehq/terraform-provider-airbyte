@@ -18,10 +18,12 @@ func (r *SourceYahooFinancePriceResourceModel) RefreshFromSharedSourceResponse(c
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceYahooFinancePrice{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Interval = configurationPriorData.Interval
-		r.Configuration.Range = configurationPriorData.Range
-		r.Configuration.Tickers = configurationPriorData.Tickers
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Interval = configurationPriorData.Interval
+			r.Configuration.Range = configurationPriorData.Range
+			r.Configuration.Tickers = configurationPriorData.Tickers
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -18,10 +18,12 @@ func (r *SourceWebflowResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceWebflow{}
-		r.Configuration.AcceptVersion = configurationPriorData.AcceptVersion
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.SiteID = configurationPriorData.SiteID
+		if configurationPriorData != nil {
+			r.Configuration.AcceptVersion = configurationPriorData.AcceptVersion
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.SiteID = configurationPriorData.SiteID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

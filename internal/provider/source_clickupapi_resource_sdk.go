@@ -18,9 +18,11 @@ func (r *SourceClickupAPIResourceModel) RefreshFromSharedSourceResponse(ctx cont
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceClickupAPI{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIToken = configurationPriorData.APIToken
-		r.Configuration.IncludeClosedTasks = configurationPriorData.IncludeClosedTasks
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIToken = configurationPriorData.APIToken
+			r.Configuration.IncludeClosedTasks = configurationPriorData.IncludeClosedTasks
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

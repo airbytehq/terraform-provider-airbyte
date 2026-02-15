@@ -18,11 +18,13 @@ func (r *SourceZohoCampaignResourceModel) RefreshFromSharedSourceResponse(ctx co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceZohoCampaign{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID2 = configurationPriorData.ClientID2
-		r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
-		r.Configuration.ClientSecret2 = configurationPriorData.ClientSecret2
-		r.Configuration.DataCenter = configurationPriorData.DataCenter
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID2 = configurationPriorData.ClientID2
+			r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
+			r.Configuration.ClientSecret2 = configurationPriorData.ClientSecret2
+			r.Configuration.DataCenter = configurationPriorData.DataCenter
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

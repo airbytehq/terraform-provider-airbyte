@@ -18,10 +18,12 @@ func (r *DestinationMotherduckResourceModel) RefreshFromSharedDestinationRespons
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationMotherduck{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.DestinationPath = configurationPriorData.DestinationPath
-		r.Configuration.MotherduckAPIKey = configurationPriorData.MotherduckAPIKey
-		r.Configuration.Schema = configurationPriorData.Schema
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.DestinationPath = configurationPriorData.DestinationPath
+			r.Configuration.MotherduckAPIKey = configurationPriorData.MotherduckAPIKey
+			r.Configuration.Schema = configurationPriorData.Schema
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

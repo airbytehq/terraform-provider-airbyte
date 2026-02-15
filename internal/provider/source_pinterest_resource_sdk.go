@@ -19,13 +19,15 @@ func (r *SourcePinterestResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourcePinterest{}
-		r.Configuration.AccountID = configurationPriorData.AccountID
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.CustomReports = configurationPriorData.CustomReports
-		r.Configuration.NumThreads = configurationPriorData.NumThreads
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Status = configurationPriorData.Status
+		if configurationPriorData != nil {
+			r.Configuration.AccountID = configurationPriorData.AccountID
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.CustomReports = configurationPriorData.CustomReports
+			r.Configuration.NumThreads = configurationPriorData.NumThreads
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Status = configurationPriorData.Status
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)
