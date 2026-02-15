@@ -19,15 +19,17 @@ func (r *SourceSlackResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSlack{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ChannelFilter = configurationPriorData.ChannelFilter
-		r.Configuration.ChannelMessagesWindowSize = configurationPriorData.ChannelMessagesWindowSize
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.IncludePrivateChannels = configurationPriorData.IncludePrivateChannels
-		r.Configuration.JoinChannels = configurationPriorData.JoinChannels
-		r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ChannelFilter = configurationPriorData.ChannelFilter
+			r.Configuration.ChannelMessagesWindowSize = configurationPriorData.ChannelMessagesWindowSize
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.IncludePrivateChannels = configurationPriorData.IncludePrivateChannels
+			r.Configuration.JoinChannels = configurationPriorData.JoinChannels
+			r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

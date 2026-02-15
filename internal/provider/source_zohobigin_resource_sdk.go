@@ -18,12 +18,14 @@ func (r *SourceZohoBiginResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceZohoBigin{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.DataCenter = configurationPriorData.DataCenter
-		r.Configuration.ModuleName = configurationPriorData.ModuleName
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientRefreshToken = configurationPriorData.ClientRefreshToken
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.DataCenter = configurationPriorData.DataCenter
+			r.Configuration.ModuleName = configurationPriorData.ModuleName
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

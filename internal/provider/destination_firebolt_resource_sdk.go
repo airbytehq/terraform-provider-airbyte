@@ -17,13 +17,15 @@ func (r *DestinationFireboltResourceModel) RefreshFromSharedDestinationResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationFirebolt{}
-		r.Configuration.Account = configurationPriorData.Account
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.Database = configurationPriorData.Database
-		r.Configuration.Engine = configurationPriorData.Engine
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.LoadingMethod = configurationPriorData.LoadingMethod
+		if configurationPriorData != nil {
+			r.Configuration.Account = configurationPriorData.Account
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.Database = configurationPriorData.Database
+			r.Configuration.Engine = configurationPriorData.Engine
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.LoadingMethod = configurationPriorData.LoadingMethod
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

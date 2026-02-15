@@ -19,13 +19,15 @@ func (r *SourceNasaResourceModel) RefreshFromSharedSourceResponse(ctx context.Co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceNasa{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.ConceptTags = configurationPriorData.ConceptTags
-		r.Configuration.Count = configurationPriorData.Count
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Thumbs = configurationPriorData.Thumbs
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.ConceptTags = configurationPriorData.ConceptTags
+			r.Configuration.Count = configurationPriorData.Count
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Thumbs = configurationPriorData.Thumbs
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

@@ -17,8 +17,10 @@ func (r *DestinationStreamrAirbyteConnectorsResourceModel) RefreshFromSharedDest
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationStreamrAirbyteConnectors{}
-		r.Configuration.PrivateKey = configurationPriorData.PrivateKey
-		r.Configuration.StreamID = configurationPriorData.StreamID
+		if configurationPriorData != nil {
+			r.Configuration.PrivateKey = configurationPriorData.PrivateKey
+			r.Configuration.StreamID = configurationPriorData.StreamID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

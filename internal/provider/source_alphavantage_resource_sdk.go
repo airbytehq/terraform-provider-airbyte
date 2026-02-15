@@ -18,12 +18,14 @@ func (r *SourceAlphaVantageResourceModel) RefreshFromSharedSourceResponse(ctx co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAlphaVantage{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Adjusted = configurationPriorData.Adjusted
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Interval = configurationPriorData.Interval
-		r.Configuration.Outputsize = configurationPriorData.Outputsize
-		r.Configuration.Symbol = configurationPriorData.Symbol
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Adjusted = configurationPriorData.Adjusted
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Interval = configurationPriorData.Interval
+			r.Configuration.Outputsize = configurationPriorData.Outputsize
+			r.Configuration.Symbol = configurationPriorData.Symbol
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

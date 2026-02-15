@@ -17,7 +17,9 @@ func (r *SourceRssResourceModel) RefreshFromSharedSourceResponse(ctx context.Con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceRss{}
-		r.Configuration.URL = configurationPriorData.URL
+		if configurationPriorData != nil {
+			r.Configuration.URL = configurationPriorData.URL
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

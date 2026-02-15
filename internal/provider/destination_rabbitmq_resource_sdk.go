@@ -17,14 +17,16 @@ func (r *DestinationRabbitmqResourceModel) RefreshFromSharedDestinationResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationRabbitmq{}
-		r.Configuration.Exchange = configurationPriorData.Exchange
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.RoutingKey = configurationPriorData.RoutingKey
-		r.Configuration.Ssl = configurationPriorData.Ssl
-		r.Configuration.Username = configurationPriorData.Username
-		r.Configuration.VirtualHost = configurationPriorData.VirtualHost
+		if configurationPriorData != nil {
+			r.Configuration.Exchange = configurationPriorData.Exchange
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.RoutingKey = configurationPriorData.RoutingKey
+			r.Configuration.Ssl = configurationPriorData.Ssl
+			r.Configuration.Username = configurationPriorData.Username
+			r.Configuration.VirtualHost = configurationPriorData.VirtualHost
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

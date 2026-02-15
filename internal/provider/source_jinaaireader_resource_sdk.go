@@ -18,12 +18,14 @@ func (r *SourceJinaAiReaderResourceModel) RefreshFromSharedSourceResponse(ctx co
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceJinaAiReader{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.GatherImages = configurationPriorData.GatherImages
-		r.Configuration.GatherLinks = configurationPriorData.GatherLinks
-		r.Configuration.ReadPrompt = configurationPriorData.ReadPrompt
-		r.Configuration.SearchPrompt = configurationPriorData.SearchPrompt
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.GatherImages = configurationPriorData.GatherImages
+			r.Configuration.GatherLinks = configurationPriorData.GatherLinks
+			r.Configuration.ReadPrompt = configurationPriorData.ReadPrompt
+			r.Configuration.SearchPrompt = configurationPriorData.SearchPrompt
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

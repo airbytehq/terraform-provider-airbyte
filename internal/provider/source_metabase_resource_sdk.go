@@ -18,11 +18,13 @@ func (r *SourceMetabaseResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMetabase{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.InstanceAPIURL = configurationPriorData.InstanceAPIURL
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.SessionToken = configurationPriorData.SessionToken
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.InstanceAPIURL = configurationPriorData.InstanceAPIURL
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.SessionToken = configurationPriorData.SessionToken
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

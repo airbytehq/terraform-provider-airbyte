@@ -18,11 +18,13 @@ func (r *SourceSurveyctoResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSurveycto{}
-		r.Configuration.FormID = configurationPriorData.FormID
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.ServerName = configurationPriorData.ServerName
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.FormID = configurationPriorData.FormID
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.ServerName = configurationPriorData.ServerName
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

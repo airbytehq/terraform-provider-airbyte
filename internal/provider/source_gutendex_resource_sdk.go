@@ -18,14 +18,16 @@ func (r *SourceGutendexResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGutendex{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.AuthorYearEnd = configurationPriorData.AuthorYearEnd
-		r.Configuration.AuthorYearStart = configurationPriorData.AuthorYearStart
-		r.Configuration.Copyright = configurationPriorData.Copyright
-		r.Configuration.Languages = configurationPriorData.Languages
-		r.Configuration.Search = configurationPriorData.Search
-		r.Configuration.Sort = configurationPriorData.Sort
-		r.Configuration.Topic = configurationPriorData.Topic
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.AuthorYearEnd = configurationPriorData.AuthorYearEnd
+			r.Configuration.AuthorYearStart = configurationPriorData.AuthorYearStart
+			r.Configuration.Copyright = configurationPriorData.Copyright
+			r.Configuration.Languages = configurationPriorData.Languages
+			r.Configuration.Search = configurationPriorData.Search
+			r.Configuration.Sort = configurationPriorData.Sort
+			r.Configuration.Topic = configurationPriorData.Topic
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

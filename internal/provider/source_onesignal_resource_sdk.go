@@ -19,11 +19,13 @@ func (r *SourceOnesignalResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceOnesignal{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Applications = configurationPriorData.Applications
-		r.Configuration.OutcomeNames = configurationPriorData.OutcomeNames
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.UserAuthKey = configurationPriorData.UserAuthKey
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Applications = configurationPriorData.Applications
+			r.Configuration.OutcomeNames = configurationPriorData.OutcomeNames
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.UserAuthKey = configurationPriorData.UserAuthKey
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

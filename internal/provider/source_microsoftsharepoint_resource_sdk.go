@@ -18,13 +18,15 @@ func (r *SourceMicrosoftSharepointResourceModel) RefreshFromSharedSourceResponse
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceMicrosoftSharepoint{}
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.DeliveryMethod = configurationPriorData.DeliveryMethod
-		r.Configuration.FolderPath = configurationPriorData.FolderPath
-		r.Configuration.SearchScope = configurationPriorData.SearchScope
-		r.Configuration.SiteURL = configurationPriorData.SiteURL
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Streams = configurationPriorData.Streams
+		if configurationPriorData != nil {
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.DeliveryMethod = configurationPriorData.DeliveryMethod
+			r.Configuration.FolderPath = configurationPriorData.FolderPath
+			r.Configuration.SearchScope = configurationPriorData.SearchScope
+			r.Configuration.SiteURL = configurationPriorData.SiteURL
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Streams = configurationPriorData.Streams
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

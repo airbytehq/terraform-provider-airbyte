@@ -18,11 +18,13 @@ func (r *SourceUnleashResourceModel) RefreshFromSharedSourceResponse(ctx context
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceUnleash{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIToken = configurationPriorData.APIToken
-		r.Configuration.APIURL = configurationPriorData.APIURL
-		r.Configuration.Nameprefix = configurationPriorData.Nameprefix
-		r.Configuration.ProjectName = configurationPriorData.ProjectName
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIToken = configurationPriorData.APIToken
+			r.Configuration.APIURL = configurationPriorData.APIURL
+			r.Configuration.Nameprefix = configurationPriorData.Nameprefix
+			r.Configuration.ProjectName = configurationPriorData.ProjectName
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

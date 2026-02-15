@@ -17,8 +17,10 @@ func (r *DestinationGlassflowResourceModel) RefreshFromSharedDestinationResponse
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationGlassflow{}
-		r.Configuration.PipelineAccessToken = configurationPriorData.PipelineAccessToken
-		r.Configuration.PipelineID = configurationPriorData.PipelineID
+		if configurationPriorData != nil {
+			r.Configuration.PipelineAccessToken = configurationPriorData.PipelineAccessToken
+			r.Configuration.PipelineID = configurationPriorData.PipelineID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

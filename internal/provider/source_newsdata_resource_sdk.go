@@ -18,13 +18,15 @@ func (r *SourceNewsdataResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceNewsdata{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.Category = configurationPriorData.Category
-		r.Configuration.Country = configurationPriorData.Country
-		r.Configuration.Domain = configurationPriorData.Domain
-		r.Configuration.Language = configurationPriorData.Language
-		r.Configuration.OneOf = configurationPriorData.OneOf
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.Category = configurationPriorData.Category
+			r.Configuration.Country = configurationPriorData.Country
+			r.Configuration.Domain = configurationPriorData.Domain
+			r.Configuration.Language = configurationPriorData.Language
+			r.Configuration.OneOf = configurationPriorData.OneOf
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

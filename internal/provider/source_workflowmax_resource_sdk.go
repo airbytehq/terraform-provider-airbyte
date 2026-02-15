@@ -19,10 +19,12 @@ func (r *SourceWorkflowmaxResourceModel) RefreshFromSharedSourceResponse(ctx con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceWorkflowmax{}
-		r.Configuration.AccountID = configurationPriorData.AccountID
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey2 = configurationPriorData.APIKey2
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccountID = configurationPriorData.AccountID
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey2 = configurationPriorData.APIKey2
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

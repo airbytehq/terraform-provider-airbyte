@@ -19,13 +19,15 @@ func (r *SourceAdjustResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAdjust{}
-		r.Configuration.AdditionalMetrics = configurationPriorData.AdditionalMetrics
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIToken = configurationPriorData.APIToken
-		r.Configuration.Dimensions = configurationPriorData.Dimensions
-		r.Configuration.IngestStart = configurationPriorData.IngestStart
-		r.Configuration.Metrics = configurationPriorData.Metrics
-		r.Configuration.UntilToday = configurationPriorData.UntilToday
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalMetrics = configurationPriorData.AdditionalMetrics
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIToken = configurationPriorData.APIToken
+			r.Configuration.Dimensions = configurationPriorData.Dimensions
+			r.Configuration.IngestStart = configurationPriorData.IngestStart
+			r.Configuration.Metrics = configurationPriorData.Metrics
+			r.Configuration.UntilToday = configurationPriorData.UntilToday
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

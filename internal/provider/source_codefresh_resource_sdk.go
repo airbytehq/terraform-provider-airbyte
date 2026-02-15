@@ -19,12 +19,14 @@ func (r *SourceCodefreshResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceCodefresh{}
-		r.Configuration.AccountID = configurationPriorData.AccountID
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.ReportDateRange = configurationPriorData.ReportDateRange
-		r.Configuration.ReportGranularity = configurationPriorData.ReportGranularity
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccountID = configurationPriorData.AccountID
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.ReportDateRange = configurationPriorData.ReportDateRange
+			r.Configuration.ReportGranularity = configurationPriorData.ReportGranularity
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

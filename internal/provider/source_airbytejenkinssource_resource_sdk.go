@@ -17,12 +17,14 @@ func (r *SourceAirbyteJenkinsSourceResourceModel) RefreshFromSharedSourceRespons
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAirbyteJenkinsSource{}
-		r.Configuration.Depth = configurationPriorData.Depth
-		r.Configuration.Last100Builds = configurationPriorData.Last100Builds
-		r.Configuration.PageSize = configurationPriorData.PageSize
-		r.Configuration.ServerURL = configurationPriorData.ServerURL
-		r.Configuration.Token = configurationPriorData.Token
-		r.Configuration.User = configurationPriorData.User
+		if configurationPriorData != nil {
+			r.Configuration.Depth = configurationPriorData.Depth
+			r.Configuration.Last100Builds = configurationPriorData.Last100Builds
+			r.Configuration.PageSize = configurationPriorData.PageSize
+			r.Configuration.ServerURL = configurationPriorData.ServerURL
+			r.Configuration.Token = configurationPriorData.Token
+			r.Configuration.User = configurationPriorData.User
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

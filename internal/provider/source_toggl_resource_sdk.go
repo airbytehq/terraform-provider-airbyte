@@ -18,12 +18,14 @@ func (r *SourceTogglResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceToggl{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIToken = configurationPriorData.APIToken
-		r.Configuration.EndDate = configurationPriorData.EndDate
-		r.Configuration.OrganizationID = configurationPriorData.OrganizationID
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.WorkspaceID = configurationPriorData.WorkspaceID
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIToken = configurationPriorData.APIToken
+			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.OrganizationID = configurationPriorData.OrganizationID
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.WorkspaceID = configurationPriorData.WorkspaceID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

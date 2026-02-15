@@ -18,12 +18,14 @@ func (r *SourceAkeneoResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAkeneo{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIUsername = configurationPriorData.APIUsername
-		r.Configuration.ClientID = configurationPriorData.ClientID
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Secret = configurationPriorData.Secret
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIUsername = configurationPriorData.APIUsername
+			r.Configuration.ClientID = configurationPriorData.ClientID
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Secret = configurationPriorData.Secret
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

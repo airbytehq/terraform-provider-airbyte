@@ -19,10 +19,12 @@ func (r *SourceSmartwaiverResourceModel) RefreshFromSharedSourceResponse(ctx con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSmartwaiver{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.StartDate2 = configurationPriorData.StartDate2
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.StartDate2 = configurationPriorData.StartDate2
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

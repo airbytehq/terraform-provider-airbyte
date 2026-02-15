@@ -19,12 +19,14 @@ func (r *SourceChargebeeResourceModel) RefreshFromSharedSourceResponse(ctx conte
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceChargebee{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
-		r.Configuration.ProductCatalog = configurationPriorData.ProductCatalog
-		r.Configuration.Site = configurationPriorData.Site
-		r.Configuration.SiteAPIKey = configurationPriorData.SiteAPIKey
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+			r.Configuration.ProductCatalog = configurationPriorData.ProductCatalog
+			r.Configuration.Site = configurationPriorData.Site
+			r.Configuration.SiteAPIKey = configurationPriorData.SiteAPIKey
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

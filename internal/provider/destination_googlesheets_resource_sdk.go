@@ -17,8 +17,10 @@ func (r *DestinationGoogleSheetsResourceModel) RefreshFromSharedDestinationRespo
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationGoogleSheets{}
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.SpreadsheetID = configurationPriorData.SpreadsheetID
+		if configurationPriorData != nil {
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.SpreadsheetID = configurationPriorData.SpreadsheetID
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

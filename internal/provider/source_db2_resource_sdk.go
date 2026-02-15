@@ -17,13 +17,15 @@ func (r *SourceDb2ResourceModel) RefreshFromSharedSourceResponse(ctx context.Con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceDb2{}
-		r.Configuration.Db = configurationPriorData.Db
-		r.Configuration.Encryption = configurationPriorData.Encryption
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
-		r.Configuration.Password = configurationPriorData.Password
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.Db = configurationPriorData.Db
+			r.Configuration.Encryption = configurationPriorData.Encryption
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.JdbcURLParams = configurationPriorData.JdbcURLParams
+			r.Configuration.Password = configurationPriorData.Password
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

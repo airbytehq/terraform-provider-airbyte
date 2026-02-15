@@ -19,13 +19,15 @@ func (r *SourceLinkedinAdsResourceModel) RefreshFromSharedSourceResponse(ctx con
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceLinkedinAds{}
-		r.Configuration.AccountIds = configurationPriorData.AccountIds
-		r.Configuration.AdAnalyticsReports = configurationPriorData.AdAnalyticsReports
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccountIds = configurationPriorData.AccountIds
+			r.Configuration.AdAnalyticsReports = configurationPriorData.AdAnalyticsReports
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

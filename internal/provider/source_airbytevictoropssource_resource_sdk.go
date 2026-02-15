@@ -18,12 +18,14 @@ func (r *SourceAirbyteVictoropsSourceResourceModel) RefreshFromSharedSourceRespo
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceAirbyteVictoropsSource{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIID = configurationPriorData.APIID
-		r.Configuration.APIKey = configurationPriorData.APIKey
-		r.Configuration.CurrentPhase = configurationPriorData.CurrentPhase
-		r.Configuration.MaxContentLength = configurationPriorData.MaxContentLength
-		r.Configuration.PageLimit = configurationPriorData.PageLimit
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIID = configurationPriorData.APIID
+			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.CurrentPhase = configurationPriorData.CurrentPhase
+			r.Configuration.MaxContentLength = configurationPriorData.MaxContentLength
+			r.Configuration.PageLimit = configurationPriorData.PageLimit
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

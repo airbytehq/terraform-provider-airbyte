@@ -18,11 +18,13 @@ func (r *SourceDynamodbResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceDynamodb{}
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.Endpoint = configurationPriorData.Endpoint
-		r.Configuration.IgnoreMissingReadPermissionsTables = configurationPriorData.IgnoreMissingReadPermissionsTables
-		r.Configuration.Region = configurationPriorData.Region
-		r.Configuration.ReservedAttributeNames = configurationPriorData.ReservedAttributeNames
+		if configurationPriorData != nil {
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.Endpoint = configurationPriorData.Endpoint
+			r.Configuration.IgnoreMissingReadPermissionsTables = configurationPriorData.IgnoreMissingReadPermissionsTables
+			r.Configuration.Region = configurationPriorData.Region
+			r.Configuration.ReservedAttributeNames = configurationPriorData.ReservedAttributeNames
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

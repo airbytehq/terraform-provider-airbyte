@@ -19,15 +19,17 @@ func (r *SourceGithubResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceGithub{}
-		r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
-		r.Configuration.APIURL = configurationPriorData.APIURL
-		r.Configuration.Branch = configurationPriorData.Branch
-		r.Configuration.Branches = configurationPriorData.Branches
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.MaxWaitingTime = configurationPriorData.MaxWaitingTime
-		r.Configuration.Repositories = configurationPriorData.Repositories
-		r.Configuration.Repository = configurationPriorData.Repository
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
+			r.Configuration.APIURL = configurationPriorData.APIURL
+			r.Configuration.Branch = configurationPriorData.Branch
+			r.Configuration.Branches = configurationPriorData.Branches
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.MaxWaitingTime = configurationPriorData.MaxWaitingTime
+			r.Configuration.Repositories = configurationPriorData.Repositories
+			r.Configuration.Repository = configurationPriorData.Repository
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

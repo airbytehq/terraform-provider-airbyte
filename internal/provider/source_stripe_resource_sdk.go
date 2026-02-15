@@ -18,13 +18,15 @@ func (r *SourceStripeResourceModel) RefreshFromSharedSourceResponse(ctx context.
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceStripe{}
-		r.Configuration.AccountID = configurationPriorData.AccountID
-		r.Configuration.CallRateLimit = configurationPriorData.CallRateLimit
-		r.Configuration.ClientSecret = configurationPriorData.ClientSecret
-		r.Configuration.LookbackWindowDays = configurationPriorData.LookbackWindowDays
-		r.Configuration.NumWorkers = configurationPriorData.NumWorkers
-		r.Configuration.SliceRange = configurationPriorData.SliceRange
-		r.Configuration.StartDate = configurationPriorData.StartDate
+		if configurationPriorData != nil {
+			r.Configuration.AccountID = configurationPriorData.AccountID
+			r.Configuration.CallRateLimit = configurationPriorData.CallRateLimit
+			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
+			r.Configuration.LookbackWindowDays = configurationPriorData.LookbackWindowDays
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
+			r.Configuration.SliceRange = configurationPriorData.SliceRange
+			r.Configuration.StartDate = configurationPriorData.StartDate
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

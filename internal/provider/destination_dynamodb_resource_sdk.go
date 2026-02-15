@@ -17,11 +17,13 @@ func (r *DestinationDynamodbResourceModel) RefreshFromSharedDestinationResponse(
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationDynamodb{}
-		r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
-		r.Configuration.DynamodbEndpoint = configurationPriorData.DynamodbEndpoint
-		r.Configuration.DynamodbRegion = configurationPriorData.DynamodbRegion
-		r.Configuration.DynamodbTableNamePrefix = configurationPriorData.DynamodbTableNamePrefix
-		r.Configuration.SecretAccessKey = configurationPriorData.SecretAccessKey
+		if configurationPriorData != nil {
+			r.Configuration.AccessKeyID = configurationPriorData.AccessKeyID
+			r.Configuration.DynamodbEndpoint = configurationPriorData.DynamodbEndpoint
+			r.Configuration.DynamodbRegion = configurationPriorData.DynamodbRegion
+			r.Configuration.DynamodbTableNamePrefix = configurationPriorData.DynamodbTableNamePrefix
+			r.Configuration.SecretAccessKey = configurationPriorData.SecretAccessKey
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)

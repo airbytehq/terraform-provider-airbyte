@@ -18,14 +18,16 @@ func (r *SourceSftpBulkResourceModel) RefreshFromSharedSourceResponse(ctx contex
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.SourceSftpBulk{}
-		r.Configuration.Credentials = configurationPriorData.Credentials
-		r.Configuration.DeliveryMethod = configurationPriorData.DeliveryMethod
-		r.Configuration.FolderPath = configurationPriorData.FolderPath
-		r.Configuration.Host = configurationPriorData.Host
-		r.Configuration.Port = configurationPriorData.Port
-		r.Configuration.StartDate = configurationPriorData.StartDate
-		r.Configuration.Streams = configurationPriorData.Streams
-		r.Configuration.Username = configurationPriorData.Username
+		if configurationPriorData != nil {
+			r.Configuration.Credentials = configurationPriorData.Credentials
+			r.Configuration.DeliveryMethod = configurationPriorData.DeliveryMethod
+			r.Configuration.FolderPath = configurationPriorData.FolderPath
+			r.Configuration.Host = configurationPriorData.Host
+			r.Configuration.Port = configurationPriorData.Port
+			r.Configuration.StartDate = configurationPriorData.StartDate
+			r.Configuration.Streams = configurationPriorData.Streams
+			r.Configuration.Username = configurationPriorData.Username
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.Name = types.StringValue(resp.Name)

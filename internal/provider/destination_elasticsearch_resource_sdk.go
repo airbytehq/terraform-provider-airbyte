@@ -17,10 +17,12 @@ func (r *DestinationElasticsearchResourceModel) RefreshFromSharedDestinationResp
 	if resp != nil {
 		configurationPriorData := r.Configuration
 		r.Configuration = &tfTypes.DestinationElasticsearch{}
-		r.Configuration.AuthenticationMethod = configurationPriorData.AuthenticationMethod
-		r.Configuration.CaCertificate = configurationPriorData.CaCertificate
-		r.Configuration.Endpoint = configurationPriorData.Endpoint
-		r.Configuration.Upsert = configurationPriorData.Upsert
+		if configurationPriorData != nil {
+			r.Configuration.AuthenticationMethod = configurationPriorData.AuthenticationMethod
+			r.Configuration.CaCertificate = configurationPriorData.CaCertificate
+			r.Configuration.Endpoint = configurationPriorData.Endpoint
+			r.Configuration.Upsert = configurationPriorData.Upsert
+		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
 		r.DestinationID = types.StringValue(resp.DestinationID)
