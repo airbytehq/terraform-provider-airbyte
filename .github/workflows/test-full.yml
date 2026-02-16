@@ -35,10 +35,16 @@ jobs:
         with:
           filters: |
             generation:
-              - '**'
-              - '!README.md'
-              - '!docs/**'
-              - '!examples/**'
+              - 'scripts/**'
+              - 'gen.yaml'
+              - 'gen.lock'
+              - '.speakeasy/**'
+              - '.github/**'
+              - 'internal/**'
+              - 'go.mod'
+              - 'go.sum'
+              - 'main.go'
+              - 'provider/**'
     outputs:
       should_run: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.generation == 'true' }}
 
