@@ -37,7 +37,7 @@ resource "airbyte_source_pabbly_subscriptions_billing" "my_source_pabblysubscrip
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "b461c060-9d6a-43c9-a73c-634eaf83c4bf"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

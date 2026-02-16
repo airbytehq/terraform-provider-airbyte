@@ -37,7 +37,7 @@ resource "airbyte_source_retailexpress_by_maropost" "my_source_retailexpressbyma
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "73c01e46-6b1d-434f-8f15-b9a0e67c8999"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

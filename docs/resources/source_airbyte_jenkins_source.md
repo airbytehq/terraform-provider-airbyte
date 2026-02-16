@@ -40,7 +40,7 @@ resource "airbyte_source_airbyte_jenkins_source" "my_source_airbytejenkinssource
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "d6f73702-d7a0-4e95-9758-b0fb1af0bfba"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

@@ -39,7 +39,7 @@ resource "airbyte_source_airbyte_pagerduty_source" "my_source_airbytepagerdutyso
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "2817b3f0-04e4-4c7a-9f32-7a5e8a83db95"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

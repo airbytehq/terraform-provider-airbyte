@@ -62,7 +62,7 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "e55879a8-0ef8-4557-abcf-ab34c53ec460"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
