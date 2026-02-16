@@ -26,11 +26,11 @@ jobs:
   check-paths:
     name: Check Changed Paths
     runs-on: ubuntu-latest
-    outputs:
-      should_run: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.generation == 'true' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Filter changed paths
+        uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
@@ -38,6 +38,8 @@ jobs:
               - '!README.md'
               - '!docs/**'
               - '!examples/**'
+    outputs:
+      should_run: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.generation == 'true' }}
 
   validate:
     name: Validate Generation (Dry Run)
