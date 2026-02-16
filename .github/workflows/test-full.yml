@@ -44,8 +44,6 @@ jobs:
 
   validate:
     name: Validate Generation (Dry Run)
-    needs: check-paths
-    if: needs.check-paths.outputs.should_run == 'true'
     uses: ./.github/workflows/generate-command.yml
     with:
       dry_run: true
