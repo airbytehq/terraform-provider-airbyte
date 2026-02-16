@@ -257,6 +257,7 @@ SOURCE_CREATE_REQUEST_TEMPLATE = """
           description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
           format: uuid
           type: string
+          default: "{definition_id}"
         workspaceId:
           format: uuid
           type: string
@@ -549,10 +550,14 @@ def generate_destination_path(upper_camel_name: str) -> str:
     return DESTINATION_PATH_TEMPLATE.format(upper_camel_name=upper_camel_name)
 
 
-def generate_source_create_request(upper_camel_name: str, hyphen_name: str) -> str:
+def generate_source_create_request(
+    upper_camel_name: str, hyphen_name: str, definition_id: str
+) -> str:
     """Generate the OpenAPI schema for a source create request."""
     return SOURCE_CREATE_REQUEST_TEMPLATE.format(
-        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+        upper_camel_name=upper_camel_name,
+        hyphen_name=hyphen_name,
+        definition_id=definition_id,
     )
 
 
@@ -702,6 +707,7 @@ def main() -> None:
 
     # Collect connector names and specs
     source_names = []
+    source_definition_ids: dict[str, str] = {}
     source_specs = []
     for source in sources:
         docker_repo = source.get("dockerRepository", "")
@@ -711,6 +717,9 @@ def main() -> None:
             print(f"  Skipping source {name} - no spec found")
             continue
         source_names.append(name)
+        definition_id = source.get("sourceDefinitionId", "")
+        if definition_id:
+            source_definition_ids[name] = definition_id
         # Generate both create and update schemas
         schema_name, transformed = transform_connector_spec(name, spec, "source", False)
         source_specs.append((schema_name, transformed))
@@ -833,7 +842,8 @@ def main() -> None:
     # Add source create/update request schemas
     for name in source_names_for_terraform:
         upper_camel = lower_hyphen_to_upper_camel(name)
-        output_parts.append(generate_source_create_request(upper_camel, name))
+        definition_id = source_definition_ids.get(name, "")
+        output_parts.append(generate_source_create_request(upper_camel, name, definition_id))
         output_parts.append(generate_source_update_request(upper_camel, name))
 
     # Add destination create/update request schemas
