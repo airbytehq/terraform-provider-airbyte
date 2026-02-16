@@ -42,7 +42,7 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "3981c999-bd7d-4afc-849b-e53dea90c948"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

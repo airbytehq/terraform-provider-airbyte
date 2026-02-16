@@ -38,7 +38,7 @@ resource "airbyte_source_timely" "my_source_timely" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "bc617b5f-1b9e-4a2d-bebe-782fd454a771"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

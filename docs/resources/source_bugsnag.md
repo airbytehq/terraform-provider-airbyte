@@ -37,7 +37,7 @@ resource "airbyte_source_bugsnag" "my_source_bugsnag" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "fa6c7629-0556-4b29-9f2c-7f6f4e54e997"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

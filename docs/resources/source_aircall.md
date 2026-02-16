@@ -38,7 +38,7 @@ resource "airbyte_source_aircall" "my_source_aircall" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "912eb6b7-a893-4a5b-b1c0-36ebbe2de8cd"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

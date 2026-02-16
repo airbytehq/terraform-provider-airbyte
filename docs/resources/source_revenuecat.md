@@ -37,7 +37,7 @@ resource "airbyte_source_revenuecat" "my_source_revenuecat" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "d8b3b5d6-7b64-49f7-9e73-73a1da277cf2"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

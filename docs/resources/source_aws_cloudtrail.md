@@ -43,7 +43,7 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "6ff047c0-f5d5-4ce5-8c81-204a830fa7e1"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

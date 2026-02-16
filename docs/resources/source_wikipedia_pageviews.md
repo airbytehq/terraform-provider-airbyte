@@ -42,7 +42,7 @@ resource "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "87c58f70-6f7a-4f70-aba5-bab1a458f5ba"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

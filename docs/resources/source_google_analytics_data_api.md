@@ -137,7 +137,7 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "3cc2eafd-84aa-4dca-93af-322d9dfeec1a"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

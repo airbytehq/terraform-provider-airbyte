@@ -49,7 +49,7 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "200330b2-ea62-4d11-ac6d-cfe3e3f8ab2b"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

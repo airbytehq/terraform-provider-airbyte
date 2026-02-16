@@ -36,7 +36,7 @@ resource "airbyte_source_you_need_a_budget_ynab" "my_source_youneedabudgetynab" 
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "a60d9f16-e0bd-459f-9419-fd47f9788be1"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
