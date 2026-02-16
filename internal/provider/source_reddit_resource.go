@@ -122,11 +122,12 @@ func (r *SourceRedditResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`3ed344ac-4099-402c-bf83-1cfdc53295d9`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "3ed344ac-4099-402c-bf83-1cfdc53295d9"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

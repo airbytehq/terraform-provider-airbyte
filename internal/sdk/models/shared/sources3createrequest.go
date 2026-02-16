@@ -2,16 +2,31 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceS3CreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID *string `json:"definitionId,omitempty"`
+	DefinitionID *string `default:"69589781-7828-43c5-9f63-8925b1c1ccc2" json:"definitionId"`
 	WorkspaceID  string  `json:"workspaceId"`
 	// NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes because it is responsible for converting legacy S3 v3 configs into v4 configs using the File-Based CDK.
 	Configuration SourceS3 `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceS3CreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceS3CreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceS3CreateRequest) GetName() string {

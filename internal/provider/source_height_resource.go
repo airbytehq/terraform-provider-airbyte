@@ -98,11 +98,12 @@ func (r *SourceHeightResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`8f4b2d64-970a-4a6f-b316-3d1144c67be8`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "8f4b2d64-970a-4a6f-b316-3d1144c67be8"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

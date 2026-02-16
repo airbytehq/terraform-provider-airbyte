@@ -105,11 +105,12 @@ func (r *SourcePosthogResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`af6d50ee-dddf-4126-a8ee-7faee990774f`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "af6d50ee-dddf-4126-a8ee-7faee990774f"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

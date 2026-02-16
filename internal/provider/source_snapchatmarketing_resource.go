@@ -171,11 +171,12 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`200330b2-ea62-4d11-ac6d-cfe3e3f8ab2b`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "200330b2-ea62-4d11-ac6d-cfe3e3f8ab2b"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

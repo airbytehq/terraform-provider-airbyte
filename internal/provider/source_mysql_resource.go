@@ -534,11 +534,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`435bb9a5-7887-4809-aa58-28c27df0d7ad`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "435bb9a5-7887-4809-aa58-28c27df0d7ad"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

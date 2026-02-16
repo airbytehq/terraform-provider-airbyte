@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceWasabiStatsAPICreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string              `json:"definitionId,omitempty"`
+	DefinitionID  *string              `default:"6b0d43cb-8d31-4f9f-9832-6e577aa80db4" json:"definitionId"`
 	WorkspaceID   string               `json:"workspaceId"`
 	Configuration SourceWasabiStatsAPI `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceWasabiStatsAPICreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWasabiStatsAPICreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceWasabiStatsAPICreateRequest) GetName() string {

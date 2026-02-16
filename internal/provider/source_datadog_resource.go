@@ -167,11 +167,12 @@ func (r *SourceDatadogResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`1cfc30c7-82db-43f4-9fd7-ac1b42312cda`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "1cfc30c7-82db-43f4-9fd7-ac1b42312cda"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

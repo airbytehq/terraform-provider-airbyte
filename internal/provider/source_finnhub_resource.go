@@ -122,11 +122,12 @@ func (r *SourceFinnhubResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`ec96d68b-e32c-4f0a-ba28-0b01f176a3bb`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "ec96d68b-e32c-4f0a-ba28-0b01f176a3bb"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

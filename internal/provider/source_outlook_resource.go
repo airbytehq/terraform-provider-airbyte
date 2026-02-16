@@ -101,11 +101,12 @@ func (r *SourceOutlookResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`886bdbfe-7935-4d96-b097-e3c1db73b951`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "886bdbfe-7935-4d96-b097-e3c1db73b951"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

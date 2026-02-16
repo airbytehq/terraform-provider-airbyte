@@ -110,11 +110,12 @@ func (r *SourceNexiopayResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`699d7359-204a-4650-81d2-ca03d607cacc`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "699d7359-204a-4650-81d2-ca03d607cacc"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

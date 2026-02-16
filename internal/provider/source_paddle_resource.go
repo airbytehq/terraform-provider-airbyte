@@ -106,11 +106,12 @@ func (r *SourcePaddleResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`eb34e66a-c9b5-41ca-974f-2b82c26ae71a`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "eb34e66a-c9b5-41ca-974f-2b82c26ae71a"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

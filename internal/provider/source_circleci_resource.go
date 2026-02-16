@@ -115,11 +115,12 @@ func (r *SourceCircleciResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`dd9a9d23-a64a-483c-b1ed-da1391d13f91`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "dd9a9d23-a64a-483c-b1ed-da1391d13f91"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

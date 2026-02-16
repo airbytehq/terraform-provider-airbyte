@@ -244,11 +244,12 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`b2e713cd-cc36-4c0a-b5bd-b47cb8a0561e`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "b2e713cd-cc36-4c0a-b5bd-b47cb8a0561e"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

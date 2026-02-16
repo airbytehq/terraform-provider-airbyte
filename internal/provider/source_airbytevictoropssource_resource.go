@@ -107,11 +107,12 @@ func (r *SourceAirbyteVictoropsSourceResource) Schema(ctx context.Context, req r
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`7e20ce3e-d820-4327-ad7a-88f3927fd97a`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "7e20ce3e-d820-4327-ad7a-88f3927fd97a"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

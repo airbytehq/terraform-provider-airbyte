@@ -125,11 +125,12 @@ func (r *SourceAlphaVantageResource) Schema(ctx context.Context, req resource.Sc
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`db385323-9333-4fec-bec3-9e0ca9326c90`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "db385323-9333-4fec-bec3-9e0ca9326c90"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

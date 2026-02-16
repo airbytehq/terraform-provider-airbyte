@@ -108,11 +108,12 @@ func (r *SourceAwinAdvertiserResource) Schema(ctx context.Context, req resource.
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`807cabe0-9c76-4132-8863-60f669dea534`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "807cabe0-9c76-4132-8863-60f669dea534"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

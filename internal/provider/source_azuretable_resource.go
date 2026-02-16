@@ -89,11 +89,12 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`798ae795-5189-42b6-b64e-3cb91db93338`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "798ae795-5189-42b6-b64e-3cb91db93338"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

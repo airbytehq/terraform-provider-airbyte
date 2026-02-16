@@ -96,11 +96,12 @@ func (r *SourceKyveResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`60a1efcc-c31c-4c63-b508-5b48b6a9f4a6`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "60a1efcc-c31c-4c63-b508-5b48b6a9f4a6"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

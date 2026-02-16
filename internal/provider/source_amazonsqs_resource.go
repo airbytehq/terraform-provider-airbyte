@@ -176,11 +176,12 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`983fd355-6bf3-4709-91b5-37afa391eeb6`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "983fd355-6bf3-4709-91b5-37afa391eeb6"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

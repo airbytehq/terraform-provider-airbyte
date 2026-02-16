@@ -95,11 +95,12 @@ func (r *SourceAvniResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`5d297ac7-355e-4a04-be75-a5e7e175fc4e`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "5d297ac7-355e-4a04-be75-a5e7e175fc4e"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -175,11 +175,12 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`ef69ef6e-aa7f-4af1-a01d-ef775033524e`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "ef69ef6e-aa7f-4af1-a01d-ef775033524e"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

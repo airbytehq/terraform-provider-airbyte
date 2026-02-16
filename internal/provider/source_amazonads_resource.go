@@ -139,11 +139,12 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`c6b0a29e-1da9-4512-9002-7bfd0cba2246`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "c6b0a29e-1da9-4512-9002-7bfd0cba2246"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

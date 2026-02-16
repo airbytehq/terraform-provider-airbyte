@@ -572,11 +572,12 @@ func (r *SourceSharepointEnterpriseResource) Schema(ctx context.Context, req res
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`c8e0fa7d-47a2-4f1f-b69b-03860f528263`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "c8e0fa7d-47a2-4f1f-b69b-03860f528263"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -318,11 +318,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`e55879a8-0ef8-4557-abcf-ab34c53ec460`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "e55879a8-0ef8-4557-abcf-ab34c53ec460"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -553,11 +553,12 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`fdaaba68-4875-4ed9-8fcd-4ae1e0a25093`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "fdaaba68-4875-4ed9-8fcd-4ae1e0a25093"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -118,11 +118,12 @@ func (r *SourceGocardlessResource) Schema(ctx context.Context, req resource.Sche
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`ba15ac82-5c6a-4fb2-bf24-925c23a1180c`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "ba15ac82-5c6a-4fb2-bf24-925c23a1180c"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,
