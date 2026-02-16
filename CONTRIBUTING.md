@@ -37,13 +37,13 @@ The Terraform provider is generated through a multi-step pipeline. Here is the e
 ┌──────────────────────────────────────────┐
 │  5. Speakeasy Code Generation            │
 │  (internal/sdk/, internal/provider/)     │
-└──────────────────┬───────────────────────┘
-                   │
-                   ▼
-┌──────────────────────────────────────────┐
-│  6. Docs Generation                      │
-│  (docs/)                                 │
-└──────────────────────────────────────────┘
+└──────────┬───────────────────┬───────────┘
+           │                   │
+           ▼                   ▼
+┌────────────────────┐ ┌───────────────────┐
+│ 6. Docs Generation │ │ 7. Binary Build   │
+│ (docs/)            │ │ (dist/)           │
+└────────────────────┘ └───────────────────┘
 ```
 
 ### Step-by-step details
@@ -62,6 +62,8 @@ The Terraform provider is generated through a multi-step pipeline. Here is the e
 5. **Generated Code** — Speakeasy consumes the spec + overlay and generates the Go SDK (`internal/sdk/`) and Terraform provider resources (`internal/provider/`). These files should never be edited by hand.
 
 6. **Docs Generation** — `go generate ./...` (via `poe docs-generate`) reads the generated Go source and produces Terraform registry documentation in `docs/`. This step depends on the generated code from step 5 and runs automatically as part of the [SDK generation workflow](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/.github/workflows/generate-command.yml).
+
+7. **Binary Build** — `poe bin-generate` compiles cross-platform provider binaries (`linux/amd64`, `darwin/arm64`) into `dist/`. Used in CI dry-run mode for validation and available as downloadable artifacts on PR workflows.
 
 > [!Tip]
 > If you need to change provider behavior, determine which layer is appropriate:
