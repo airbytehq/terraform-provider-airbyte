@@ -20,7 +20,7 @@ generation:
   schemas:
     allOfMergeStrategy: shallowMerge
   requestBodyFieldName: ""
-  versioningStrategy: automatic
+  versioningStrategy: manual
   persistentEdits: {}
   tests:
     generateTests: true
