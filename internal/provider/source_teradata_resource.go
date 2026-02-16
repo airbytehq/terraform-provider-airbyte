@@ -274,11 +274,12 @@ func (r *SourceTeradataResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`aa8ba6fd-4875-d94e-fc8d-4e1e09aa2503`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "aa8ba6fd-4875-d94e-fc8d-4e1e09aa2503"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

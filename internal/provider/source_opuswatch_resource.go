@@ -90,11 +90,12 @@ func (r *SourceOpuswatchResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`f916944f-cf43-421f-9058-dbfeb7baba2f`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "f916944f-cf43-421f-9058-dbfeb7baba2f"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

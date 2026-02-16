@@ -99,11 +99,12 @@ func (r *SourceSmartwaiverResource) Schema(ctx context.Context, req resource.Sch
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`878608e5-4086-4cd2-8b23-32d839616687`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "878608e5-4086-4cd2-8b23-32d839616687"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

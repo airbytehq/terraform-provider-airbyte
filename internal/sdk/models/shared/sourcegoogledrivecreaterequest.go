@@ -2,16 +2,31 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceGoogleDriveCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID *string `json:"definitionId,omitempty"`
+	DefinitionID *string `default:"9f8dda77-1048-4368-815b-269bf54ee9b8" json:"definitionId"`
 	WorkspaceID  string  `json:"workspaceId"`
 	// Used during spec; allows the developer to configure the cloud provider specific options that are needed when users configure a file-based source.
 	Configuration SourceGoogleDrive `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceGoogleDriveCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleDriveCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceGoogleDriveCreateRequest) GetName() string {

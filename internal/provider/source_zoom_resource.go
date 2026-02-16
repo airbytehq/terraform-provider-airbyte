@@ -99,11 +99,12 @@ func (r *SourceZoomResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`cbfd9856-1322-44fb-bcf1-0b39b7a8e92e`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "cbfd9856-1322-44fb-bcf1-0b39b7a8e92e"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

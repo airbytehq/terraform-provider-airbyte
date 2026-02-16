@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceAirbyteJenkinsSourceCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string                    `json:"definitionId,omitempty"`
+	DefinitionID  *string                    `default:"d6f73702-d7a0-4e95-9758-b0fb1af0bfba" json:"definitionId"`
 	WorkspaceID   string                     `json:"workspaceId"`
 	Configuration SourceAirbyteJenkinsSource `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceAirbyteJenkinsSourceCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAirbyteJenkinsSourceCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceAirbyteJenkinsSourceCreateRequest) GetName() string {

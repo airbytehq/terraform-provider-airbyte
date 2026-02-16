@@ -119,11 +119,12 @@ func (r *SourceZohoInventoryResource) Schema(ctx context.Context, req resource.S
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`757a3302-b2d5-4fb5-ae7f-b161fd619215`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "757a3302-b2d5-4fb5-ae7f-b161fd619215"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

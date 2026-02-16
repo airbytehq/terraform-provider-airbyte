@@ -706,11 +706,12 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`69589781-7828-43c5-9f63-8925b1c1ccc2`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "69589781-7828-43c5-9f63-8925b1c1ccc2"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

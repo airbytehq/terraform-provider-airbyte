@@ -563,11 +563,12 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`31e3242f-dee7-4cdc-a4b8-8e06c5458517`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "31e3242f-dee7-4cdc-a4b8-8e06c5458517"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

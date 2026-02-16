@@ -556,11 +556,12 @@ func (r *SourceOracleEnterpriseResource) Schema(ctx context.Context, req resourc
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`196a42fc-39f2-473f-88ff-d68b2ea702e9`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "196a42fc-39f2-473f-88ff-d68b2ea702e9"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

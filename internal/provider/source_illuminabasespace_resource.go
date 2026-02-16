@@ -95,11 +95,12 @@ func (r *SourceIlluminaBasespaceResource) Schema(ctx context.Context, req resour
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`62e9c4f2-a768-48f7-a8bf-d54bf1d96425`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "62e9c4f2-a768-48f7-a8bf-d54bf1d96425"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

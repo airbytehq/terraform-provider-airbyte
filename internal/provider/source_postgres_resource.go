@@ -495,11 +495,12 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`decd338e-5647-4c0b-adf4-da0e75f5a750`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "decd338e-5647-4c0b-adf4-da0e75f5a750"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -171,11 +171,12 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`4bfac00d-ce15-44ff-95b9-9e3c3e8fbd35`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "4bfac00d-ce15-44ff-95b9-9e3c3e8fbd35"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

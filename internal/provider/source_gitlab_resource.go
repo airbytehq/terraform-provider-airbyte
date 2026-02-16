@@ -171,11 +171,12 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`5e6175e5-68e1-4c17-bff9-56103bbb0d80`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "5e6175e5-68e1-4c17-bff9-56103bbb0d80"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

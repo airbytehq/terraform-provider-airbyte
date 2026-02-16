@@ -104,11 +104,12 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`5b9cb09e-1003-4f9c-983d-5779d1b2cd51`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "5b9cb09e-1003-4f9c-983d-5779d1b2cd51"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

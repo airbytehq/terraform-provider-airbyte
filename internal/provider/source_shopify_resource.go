@@ -183,11 +183,12 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`9da77001-af33-4bcd-be46-6252bf9342b9`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "9da77001-af33-4bcd-be46-6252bf9342b9"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

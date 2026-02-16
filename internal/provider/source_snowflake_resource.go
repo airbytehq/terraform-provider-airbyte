@@ -235,11 +235,12 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`e2d65910-8c8b-40a1-ae7d-ee2416b2bfa2`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "e2d65910-8c8b-40a1-ae7d-ee2416b2bfa2"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -107,11 +107,12 @@ func (r *SourceWordpressResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`c71d6f95-a912-432b-ad96-73ded4be7b9c`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "c71d6f95-a912-432b-ad96-73ded4be7b9c"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

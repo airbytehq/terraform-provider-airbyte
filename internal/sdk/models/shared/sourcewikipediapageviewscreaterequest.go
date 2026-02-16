@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceWikipediaPageviewsCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string                  `json:"definitionId,omitempty"`
+	DefinitionID  *string                  `default:"87c58f70-6f7a-4f70-aba5-bab1a458f5ba" json:"definitionId"`
 	WorkspaceID   string                   `json:"workspaceId"`
 	Configuration SourceWikipediaPageviews `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceWikipediaPageviewsCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWikipediaPageviewsCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceWikipediaPageviewsCreateRequest) GetName() string {

@@ -421,11 +421,12 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`b979cb59-34b3-4f8b-9bf7-ae82d6371e2a`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "b979cb59-34b3-4f8b-9bf7-ae82d6371e2a"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

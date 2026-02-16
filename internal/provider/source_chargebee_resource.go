@@ -122,11 +122,12 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`686473f1-76d9-4994-9cc7-9b13da46147c`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "686473f1-76d9-4994-9cc7-9b13da46147c"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

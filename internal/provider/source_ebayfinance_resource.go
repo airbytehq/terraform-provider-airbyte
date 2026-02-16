@@ -133,11 +133,12 @@ func (r *SourceEbayFinanceResource) Schema(ctx context.Context, req resource.Sch
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`177c8ac0-5b2e-497d-9526-c787fb333fc9`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "177c8ac0-5b2e-497d-9526-c787fb333fc9"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

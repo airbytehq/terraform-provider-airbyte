@@ -127,11 +127,12 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`919984ef-53a2-479b-8ffe-9c1ddb9fc3f3`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "919984ef-53a2-479b-8ffe-9c1ddb9fc3f3"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

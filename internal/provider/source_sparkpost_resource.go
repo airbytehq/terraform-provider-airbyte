@@ -105,11 +105,12 @@ func (r *SourceSparkpostResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`5f3256c6-4247-4b6d-a8e4-1df61dc9322c`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "5f3256c6-4247-4b6d-a8e4-1df61dc9322c"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -148,11 +148,12 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`3825db3e-c94b-42ac-bd53-b5a9507ace2b`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "3825db3e-c94b-42ac-bd53-b5a9507ace2b"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -86,11 +86,12 @@ func (r *SourceXkcdResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`80fddd16-17bd-4c0c-bf4a-80df7863fc9d`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "80fddd16-17bd-4c0c-bf4a-80df7863fc9d"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

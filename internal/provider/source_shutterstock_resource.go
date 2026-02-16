@@ -117,11 +117,12 @@ func (r *SourceShutterstockResource) Schema(ctx context.Context, req resource.Sc
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`998c12c8-09f9-4f57-9411-4efc498b7858`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "998c12c8-09f9-4f57-9411-4efc498b7858"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,
