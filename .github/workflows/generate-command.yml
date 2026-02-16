@@ -169,9 +169,6 @@ jobs:
               run: |
                   go build ./...
 
-            - name: Regenerate docs
-              run: uvx --from=poethepoet poe docs-generate
-
             - name: Upload generated provider code as artifact
               if: ${{ inputs.dry_run }}
               uses: actions/upload-artifact@v4
@@ -180,6 +177,17 @@ jobs:
                   path: |
                       internal/provider/
                       internal/sdk/
+                  retention-days: 7
+
+            - name: Regenerate docs
+              run: uvx --from=poethepoet poe docs-generate
+
+            - name: Upload generated docs as artifact
+              if: ${{ inputs.dry_run }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: generated_docs
+                  path: docs/
                   retention-days: 7
 
             - name: Build provider binaries for testing
