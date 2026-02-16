@@ -14,8 +14,9 @@
 # 2. Generate api_terraform.yaml with connector-specific schemas (using scripts/generate_terraform_spec.py)
 # 3. Upload the generated spec as a GitHub artifact for documentation/debugging
 # 4. Run Speakeasy to generate the Terraform provider code
-# 5. (If not dry_run) Create a PR with the regenerated code (only if there are changes)
-# 6. (If dry_run) Build and verify the generated code compiles
+# 5. Regenerate Terraform registry docs (`go generate ./...` via poe docs-generate)
+# 6. (If not dry_run) Create a PR with the regenerated code and docs (only if there are changes)
+# 7. (If dry_run) Build and verify the generated code compiles
 #
 # How to use:
 # - Go to Actions > Generate > Run workflow
@@ -167,6 +168,9 @@ jobs:
             - name: Build generated code
               run: |
                   go build ./...
+
+            - name: Regenerate docs
+              run: uvx --from=poethepoet poe docs-generate
 
             - name: Upload generated provider code as artifact
               if: ${{ inputs.dry_run }}
