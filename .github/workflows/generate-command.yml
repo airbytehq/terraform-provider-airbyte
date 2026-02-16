@@ -202,6 +202,10 @@ jobs:
                   path: dist/
                   retention-days: 7
 
+            - name: Post-process README with collapsible sections
+              run: |
+                  python3 scripts/postprocess_readme.py --readme README.md
+
             - name: Generation Summary
               run: |
                   echo "=== Generation Summary ==="
