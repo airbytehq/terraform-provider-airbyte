@@ -483,11 +483,12 @@ func (r *SourceSapHanaEnterpriseResource) Schema(ctx context.Context, req resour
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`b6935898-aadb-46ae-99ca-d697207994c1`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "b6935898-aadb-46ae-99ca-d697207994c1"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

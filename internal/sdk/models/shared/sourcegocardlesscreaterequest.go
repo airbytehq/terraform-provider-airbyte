@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceGocardlessCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string          `json:"definitionId,omitempty"`
+	DefinitionID  *string          `default:"ba15ac82-5c6a-4fb2-bf24-925c23a1180c" json:"definitionId"`
 	WorkspaceID   string           `json:"workspaceId"`
 	Configuration SourceGocardless `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceGocardlessCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGocardlessCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceGocardlessCreateRequest) GetName() string {

@@ -221,11 +221,12 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`eb4c9e00-db83-4d63-a386-39cfa91012a8`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "eb4c9e00-db83-4d63-a386-39cfa91012a8"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

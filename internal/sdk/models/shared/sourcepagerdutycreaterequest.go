@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourcePagerdutyCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string         `json:"definitionId,omitempty"`
+	DefinitionID  *string         `default:"2544ac39-02be-4bf5-82ad-f52bbb833bf5" json:"definitionId"`
 	WorkspaceID   string          `json:"workspaceId"`
 	Configuration SourcePagerduty `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourcePagerdutyCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePagerdutyCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourcePagerdutyCreateRequest) GetName() string {

@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceZohoCampaignCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string            `json:"definitionId,omitempty"`
+	DefinitionID  *string            `default:"1d0d5605-604b-401a-8a69-92f841a95a90" json:"definitionId"`
 	WorkspaceID   string             `json:"workspaceId"`
 	Configuration SourceZohoCampaign `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceZohoCampaignCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZohoCampaignCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceZohoCampaignCreateRequest) GetName() string {

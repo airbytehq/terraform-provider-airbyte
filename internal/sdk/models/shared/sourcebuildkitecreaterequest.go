@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceBuildkiteCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string         `json:"definitionId,omitempty"`
+	DefinitionID  *string         `default:"9b0d6e72-5c85-40a3-af88-3a8f7c65746f" json:"definitionId"`
 	WorkspaceID   string          `json:"workspaceId"`
 	Configuration SourceBuildkite `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceBuildkiteCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBuildkiteCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceBuildkiteCreateRequest) GetName() string {

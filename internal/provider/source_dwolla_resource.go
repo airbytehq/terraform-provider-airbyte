@@ -109,11 +109,12 @@ func (r *SourceDwollaResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`775602d3-844c-4b5c-9931-3f0a923c12f2`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "775602d3-844c-4b5c-9931-3f0a923c12f2"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

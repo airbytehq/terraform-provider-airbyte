@@ -129,11 +129,12 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`badc5925-0485-42be-8caa-b34096cb71b5`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "badc5925-0485-42be-8caa-b34096cb71b5"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

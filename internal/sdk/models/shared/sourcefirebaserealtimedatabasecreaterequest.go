@@ -2,15 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceFirebaseRealtimeDatabaseCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID  *string                        `json:"definitionId,omitempty"`
+	DefinitionID  *string                        `default:"acb5f973-a565-441e-992f-4946f3e65662" json:"definitionId"`
 	WorkspaceID   string                         `json:"workspaceId"`
 	Configuration SourceFirebaseRealtimeDatabase `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceFirebaseRealtimeDatabaseCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFirebaseRealtimeDatabaseCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceFirebaseRealtimeDatabaseCreateRequest) GetName() string {

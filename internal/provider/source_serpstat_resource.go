@@ -137,11 +137,12 @@ func (r *SourceSerpstatResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`3b2e8fb2-9137-41ff-a1e1-83ecb39e26c8`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "3b2e8fb2-9137-41ff-a1e1-83ecb39e26c8"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

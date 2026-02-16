@@ -68,7 +68,7 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "59353119-f0f2-4e5a-a8ba-15d887bc34f6"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

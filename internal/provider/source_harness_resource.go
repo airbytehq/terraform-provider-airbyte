@@ -94,11 +94,12 @@ func (r *SourceHarnessResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`b0e46f61-e143-47cc-a595-4bb73bfa8a15`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "b0e46f61-e143-47cc-a595-4bb73bfa8a15"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

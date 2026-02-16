@@ -135,11 +135,12 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`6c504e48-14aa-4221-9a72-19cf5ff1ae78`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "6c504e48-14aa-4221-9a72-19cf5ff1ae78"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

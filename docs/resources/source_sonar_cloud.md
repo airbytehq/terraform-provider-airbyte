@@ -42,7 +42,7 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "3ab1d7d0-1577-4ab9-bcc4-1ff6a4c2c9f2"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

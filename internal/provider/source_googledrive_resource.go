@@ -526,11 +526,12 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`9f8dda77-1048-4368-815b-269bf54ee9b8`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "9f8dda77-1048-4368-815b-269bf54ee9b8"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -121,11 +121,12 @@ func (r *SourcePardotResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`ad15c7ba-72a7-440b-af15-b9a963dc1a8a`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "ad15c7ba-72a7-440b-af15-b9a963dc1a8a"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

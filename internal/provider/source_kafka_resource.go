@@ -339,11 +339,12 @@ func (r *SourceKafkaResource) Schema(ctx context.Context, req resource.SchemaReq
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`d917a47b-8537-4d0d-8c10-36a9928d4265`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "d917a47b-8537-4d0d-8c10-36a9928d4265"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

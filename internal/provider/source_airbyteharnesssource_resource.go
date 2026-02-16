@@ -106,11 +106,12 @@ func (r *SourceAirbyteHarnessSourceResource) Schema(ctx context.Context, req res
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`6fe89830-d04d-401b-aad6-6552ffa5c4af`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "6fe89830-d04d-401b-aad6-6552ffa5c4af"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

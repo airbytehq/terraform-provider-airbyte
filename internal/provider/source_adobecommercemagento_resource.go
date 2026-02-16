@@ -102,11 +102,12 @@ func (r *SourceAdobeCommerceMagentoResource) Schema(ctx context.Context, req res
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`2a97bcea-a59e-4fe1-89e0-1663f11ec646`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "2a97bcea-a59e-4fe1-89e0-1663f11ec646"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

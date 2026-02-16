@@ -145,11 +145,12 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`4942d392-c7b5-4271-91f9-3b4f4e51eb3e`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "4942d392-c7b5-4271-91f9-3b4f4e51eb3e"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

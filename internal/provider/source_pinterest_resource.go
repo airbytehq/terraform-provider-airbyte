@@ -265,11 +265,12 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`5cb7e5fe-38c2-11ec-8d3d-0242ac130003`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "5cb7e5fe-38c2-11ec-8d3d-0242ac130003"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

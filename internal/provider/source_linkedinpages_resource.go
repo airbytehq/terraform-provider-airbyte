@@ -155,11 +155,12 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`af54297c-e8f8-4d63-a00d-a94695acc9d3`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "af54297c-e8f8-4d63-a00d-a94695acc9d3"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

@@ -333,11 +333,12 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`e7778cfc-e97c-4458-9ecb-b4f2bba8946c`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "e7778cfc-e97c-4458-9ecb-b4f2bba8946c"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

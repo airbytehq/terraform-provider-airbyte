@@ -96,11 +96,12 @@ func (r *SourceImaggaResource) Schema(ctx context.Context, req resource.SchemaRe
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`3d4a824d-13a1-441a-ae9d-610b10013b49`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "3d4a824d-13a1-441a-ae9d-610b10013b49"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

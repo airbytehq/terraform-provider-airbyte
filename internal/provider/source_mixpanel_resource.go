@@ -199,11 +199,12 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`12928b32-bf0a-4f1e-964f-07e12e37153a`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "12928b32-bf0a-4f1e-964f-07e12e37153a"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

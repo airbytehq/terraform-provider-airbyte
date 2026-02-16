@@ -40,7 +40,7 @@ resource "airbyte_source_zoho_analytics_metadata_api" "my_source_zohoanalyticsme
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "63114ebf-1c0e-4e6e-bb93-28ae03332b14"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

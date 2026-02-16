@@ -2,16 +2,31 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
 type SourceAzureBlobStorageCreateRequest struct {
 	// Name of the source e.g. dev-mysql-instance.
 	Name string `json:"name"`
 	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-	DefinitionID *string `json:"definitionId,omitempty"`
+	DefinitionID *string `default:"fdaaba68-4875-4ed9-8fcd-4ae1e0a25093" json:"definitionId"`
 	WorkspaceID  string  `json:"workspaceId"`
 	// NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes because it is responsible for converting legacy Azure Blob Storage v0 configs into v1 configs using the File-Based CDK.
 	Configuration SourceAzureBlobStorage `json:"configuration"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
+}
+
+func (s SourceAzureBlobStorageCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAzureBlobStorageCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SourceAzureBlobStorageCreateRequest) GetName() string {

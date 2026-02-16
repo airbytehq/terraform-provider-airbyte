@@ -122,11 +122,12 @@ func (r *SourceNexusDatasetsResource) Schema(ctx context.Context, req resource.S
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`9e1fe63c-80ad-44fe-8927-10e66c9e209b`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "9e1fe63c-80ad-44fe-8927-10e66c9e209b"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

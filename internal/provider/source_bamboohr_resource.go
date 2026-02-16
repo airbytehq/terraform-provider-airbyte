@@ -114,11 +114,12 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`90916976-a132-4ce9-8bce-82a03dd58788`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "90916976-a132-4ce9-8bce-82a03dd58788"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

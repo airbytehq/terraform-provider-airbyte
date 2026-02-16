@@ -67,7 +67,7 @@ resource "airbyte_source_netsuite_enterprise" "my_source_netsuiteenterprise" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "b979cb59-34b3-4f8b-9bf7-ae82d6371e2a"; Requires replacement if changed.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only

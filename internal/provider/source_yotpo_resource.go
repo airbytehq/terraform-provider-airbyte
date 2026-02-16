@@ -104,11 +104,12 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`18139f00-b1ba-4971-8f80-8387b617cfd8`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "18139f00-b1ba-4971-8f80-8387b617cfd8"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

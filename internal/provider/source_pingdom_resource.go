@@ -109,11 +109,12 @@ func (r *SourcePingdomResource) Schema(ctx context.Context, req resource.SchemaR
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`14fb7a17-a371-4ebc-a072-b339c4daa4c1`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "14fb7a17-a371-4ebc-a072-b339c4daa4c1"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,

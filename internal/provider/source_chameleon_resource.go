@@ -119,11 +119,12 @@ func (r *SourceChameleonResource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(`64a0240a-81a4-4e40-8002-e063b17cfbbe`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "64a0240a-81a4-4e40-8002-e063b17cfbbe"; Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
 				Required: true,
