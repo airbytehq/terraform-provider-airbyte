@@ -1,8 +1,9 @@
 # 1.0 Example Project
-# This example demonstrates three approaches to creating connectors:
+# This example demonstrates four approaches to creating connectors:
 # 1. Typed resources (airbyte_source_faker, airbyte_destination_dev_null)
 # 2. Generic resources with the airbyte_connector_configuration data source
 # 3. Generic resources with inline JSON configuration (no data source)
+# 4. Write-only attributes with ephemeral variables (Terraform >= 1.11)
 
 terraform {
   required_providers {
@@ -163,4 +164,41 @@ output "faker_generic_ds_source_id" {
 output "faker_inline_source_id" {
   value       = airbyte_source.faker_inline.source_id
   description = "The ID of the generic faker source (inline config)"
+}
+
+# ---------------------------------------------------------------------------
+# Approach 4: Write-only attributes with ephemeral variables
+# ---------------------------------------------------------------------------
+# Typed connector resources mark secret fields as write-only (Terraform >= 1.11).
+# Write-only attributes are never persisted to plan or state files.
+#
+# Ephemeral variables (ephemeral = true) ensure the secret value is also never
+# written to disk on the practitioner side. Combining ephemeral variables with
+# write-only attributes provides end-to-end secret protection.
+#
+# Note: Non-ephemeral sensitive variables also work with write-only attributes.
+# The write-only flag on the provider side prevents state storage regardless.
+
+variable "notion_token" {
+  description = "Notion API token (ephemeral — never written to disk or state)."
+  type        = string
+  ephemeral   = true
+  default     = "ntn_test_token_for_validation"
+}
+
+resource "airbyte_source_notion" "ephemeral_example" {
+  name         = "source-notion-ephemeral-test"
+  workspace_id = var.workspace_id
+  configuration = {
+    credentials = {
+      access_token = {
+        token = var.notion_token
+      }
+    }
+  }
+}
+
+output "notion_ephemeral_source_id" {
+  value       = airbyte_source_notion.ephemeral_example.source_id
+  description = "The ID of the Notion source (ephemeral write-only test)"
 }
