@@ -72,6 +72,31 @@ actions:
       x-speakeasy-param-sensitive: true
 
   # =============================================================================
+  # Write-Only Attributes for Secret Fields
+  # =============================================================================
+  # In addition to Sensitive, we mark airbyte_secret fields as write-only using
+  # `x-speakeasy-terraform-write-only: true`. This generates `WriteOnly: true`
+  # in the Terraform schema, which prevents secrets from being persisted to
+  # Terraform plan or state artifacts entirely.
+  #
+  # Write-only attributes require Terraform >= 1.11 or OpenTofu >= 1.11.
+  # Practitioners can pass ephemeral values (e.g. from ephemeral resources or
+  # variables marked `ephemeral = true`) directly into these fields.
+  #
+  # Since Airbyte secrets are sent to the API and not returned in Read responses,
+  # write-only is the ideal semantic: the provider is the terminal point for
+  # the secret value, which is forwarded to the Airbyte API and never stored.
+  #
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/328
+  # See: https://developer.hashicorp.com/terraform/plugin/framework/resources/write-only-arguments
+  # See: https://developer.hashicorp.com/terraform/language/values/ephemeral
+
+  - target: "$.components.schemas..properties.*[?(@.airbyte_secret == true)]"
+    description: "Mark airbyte_secret fields as write-only for Terraform (secrets not stored in state)"
+    update:
+      x-speakeasy-terraform-write-only: true
+
+  # =============================================================================
   # Generic Source/Destination Configuration
   # =============================================================================
   # SourceConfiguration and DestinationConfiguration are defined in the upstream
