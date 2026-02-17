@@ -28,7 +28,7 @@ generation:
     skipResponseBodyAssertions: false
   telemetryEnabled: true
 terraform:
-  version: 1.0.0-rc6
+  version: 1.0.0
   additionalActions: []
   additionalDataSources: []
   additionalDependencies: {}
@@ -37,6 +37,7 @@ terraform:
   additionalListResources: []
   additionalProviderAttributes:
     httpHeaders: ""
+    tlsSkipVerify: ""
   additionalResources: []
   allowUnknownFieldsInWeakUnions: false
   author: airbytehq
