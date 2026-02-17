@@ -1425,6 +1425,7 @@ Available configuration:
 * [airbyte_source_zoom](docs/data-sources/source_zoom.md)
 * [airbyte_source_definition](docs/data-sources/source_definition.md)
 * [airbyte_workspace](docs/data-sources/workspace.md)
+* [airbyte_workspace_ids](docs/data-sources/workspace_ids.md)
 <!-- End Available Resources and Data Sources [operations] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
