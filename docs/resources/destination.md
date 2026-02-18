@@ -5,7 +5,7 @@ description: |-
   Manages an Airbyte destination connector. This is the generic resource for all destination types.
 ---
 
-# airbyte_destination
+# airbyte_destination (Resource)
 
 Manages an Airbyte destination connector.
 
@@ -15,8 +15,11 @@ This is the **generic destination resource** that works with any Airbyte destina
 
 ## Example Usage
 
+### Using the `airbyte_connector_configuration` data source (recommended)
+
+Use the [`airbyte_connector_configuration`](../data-sources/connector_configuration.md) data source to resolve the connector's `definition_id` automatically, validate configuration at plan time, and separate sensitive from non-sensitive values for clean diffs:
+
 ```terraform
-# Using the connector_configuration data source (recommended)
 data "airbyte_connector_configuration" "bigquery" {
   connector_name    = "destination-bigquery"
   connector_version = "2.9.4"
@@ -26,7 +29,7 @@ data "airbyte_connector_configuration" "bigquery" {
     dataset_id       = "my_dataset"
     dataset_location = "US"
     loading_method = {
-      method = "GCS Staging"
+      method          = "GCS Staging"
       gcs_bucket_name = "my-staging-bucket"
       gcs_bucket_path = "airbyte-staging"
     }
@@ -43,26 +46,36 @@ resource "airbyte_destination" "bigquery" {
   definition_id = data.airbyte_connector_configuration.bigquery.definition_id
   configuration = data.airbyte_connector_configuration.bigquery.configuration_json
 }
+```
 
-# Using inline JSON configuration
+### Using inline JSON configuration
+
+For simpler cases where you don't need the data source, pass JSON configuration directly. The entire `configuration` attribute is sensitive, so all values are hidden in plan output:
+
+```terraform
 resource "airbyte_destination" "s3" {
   name          = "S3 Data Lake"
   workspace_id  = var.workspace_id
   definition_id = "4816b78f-1489-44c1-9060-4b19d5fa9571"
 
   configuration = jsonencode({
-    s3_bucket_name   = "my-data-lake"
-    s3_bucket_path   = "airbyte"
-    s3_bucket_region = "us-east-1"
-    access_key_id    = var.aws_access_key
+    s3_bucket_name    = "my-data-lake"
+    s3_bucket_path    = "airbyte"
+    s3_bucket_region  = "us-east-1"
+    access_key_id     = var.aws_access_key
     secret_access_key = var.aws_secret_key
     format = {
       format_type = "Parquet"
     }
   })
 }
+```
 
-# Migrating from a typed resource using 'moved' (Terraform >= 1.8)
+### Migrating from a typed resource
+
+Typed destination resources (`airbyte_destination_bigquery`, `airbyte_destination_snowflake`, etc.) are replaced by this generic `airbyte_destination` resource in provider 1.0+. Use a [`moved` block](https://developer.hashicorp.com/terraform/language/moved) (Terraform >= 1.8) for a zero-downtime migration:
+
+```terraform
 moved {
   from = airbyte_destination_bigquery.my_dest
   to   = airbyte_destination.my_dest
@@ -79,17 +92,6 @@ resource "airbyte_destination" "my_dest" {
     dataset_location = "US"
     credentials_json = var.bigquery_credentials
   })
-}
-```
-
-## Migrating from typed resources
-
-Typed destination resources (`airbyte_destination_bigquery`, `airbyte_destination_snowflake`, etc.) are replaced by this generic `airbyte_destination` resource in provider 1.0+. Use a [`moved` block](https://developer.hashicorp.com/terraform/language/moved) (Terraform >= 1.8) for a zero-downtime migration:
-
-```terraform
-moved {
-  from = airbyte_destination_bigquery.my_dest
-  to   = airbyte_destination.my_dest
 }
 ```
 
