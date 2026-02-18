@@ -8,26 +8,26 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type SourceAhaSourceType string
+type SourceType string
 
 const (
-	SourceAhaSourceTypeAha SourceAhaSourceType = "aha"
+	SourceTypeAha SourceType = "aha"
 )
 
-func (e SourceAhaSourceType) ToPointer() *SourceAhaSourceType {
+func (e SourceType) ToPointer() *SourceType {
 	return &e
 }
-func (e *SourceAhaSourceType) UnmarshalJSON(data []byte) error {
+func (e *SourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "aha":
-		*e = SourceAhaSourceType(v)
+		*e = SourceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAhaSourceType: %v", v)
+		return fmt.Errorf("invalid value for SourceType: %v", v)
 	}
 }
 
@@ -35,9 +35,9 @@ type SourceAha struct {
 	// API Key
 	APIKey string `json:"api_key"`
 	// URL
-	URL                  string               `json:"url"`
-	sourceType           *SourceAhaSourceType `const:"aha" json:"sourceType"`
-	AdditionalProperties any                  `additionalProperties:"true" json:"-"`
+	URL                  string      `json:"url"`
+	sourceType           *SourceType `const:"aha" json:"sourceType"`
+	AdditionalProperties any         `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceAha) MarshalJSON() ([]byte, error) {
@@ -65,8 +65,8 @@ func (s *SourceAha) GetURL() string {
 	return s.URL
 }
 
-func (s *SourceAha) GetSourceType() *SourceAhaSourceType {
-	return SourceAhaSourceTypeAha.ToPointer()
+func (s *SourceAha) GetSourceType() *SourceType {
+	return SourceTypeAha.ToPointer()
 }
 
 func (s *SourceAha) GetAdditionalProperties() any {

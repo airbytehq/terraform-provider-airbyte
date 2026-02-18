@@ -3,11 +3,9 @@
 package types
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type Gzip struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	CompressionType      types.String         `tfsdk:"compression_type"`
+	CompressionType types.String `tfsdk:"compression_type"`
 }

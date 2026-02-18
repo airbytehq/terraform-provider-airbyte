@@ -10,31 +10,31 @@ import (
 	"time"
 )
 
-type SourceMailchimpAPIKey struct {
+type APIKey struct {
 	// Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
 	Apikey   string `json:"apikey"`
 	authType string `const:"apikey" json:"auth_type"`
 }
 
-func (s SourceMailchimpAPIKey) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
+func (a APIKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
 }
 
-func (s *SourceMailchimpAPIKey) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+func (a *APIKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *SourceMailchimpAPIKey) GetApikey() string {
-	if s == nil {
+func (a *APIKey) GetApikey() string {
+	if a == nil {
 		return ""
 	}
-	return s.Apikey
+	return a.Apikey
 }
 
-func (s *SourceMailchimpAPIKey) GetAuthType() string {
+func (a *APIKey) GetAuthType() string {
 	return "apikey"
 }
 
@@ -88,12 +88,12 @@ type SourceMailchimpAuthenticationType string
 
 const (
 	SourceMailchimpAuthenticationTypeSourceMailchimpOAuth20 SourceMailchimpAuthenticationType = "source-mailchimp_OAuth2.0"
-	SourceMailchimpAuthenticationTypeSourceMailchimpAPIKey  SourceMailchimpAuthenticationType = "source-mailchimp_API Key"
+	SourceMailchimpAuthenticationTypeAPIKey                 SourceMailchimpAuthenticationType = "API Key"
 )
 
 type SourceMailchimpAuthentication struct {
 	SourceMailchimpOAuth20 *SourceMailchimpOAuth20 `queryParam:"inline" union:"member"`
-	SourceMailchimpAPIKey  *SourceMailchimpAPIKey  `queryParam:"inline" union:"member"`
+	APIKey                 *APIKey                 `queryParam:"inline" union:"member"`
 
 	Type SourceMailchimpAuthenticationType
 }
@@ -107,12 +107,12 @@ func CreateSourceMailchimpAuthenticationSourceMailchimpOAuth20(sourceMailchimpOA
 	}
 }
 
-func CreateSourceMailchimpAuthenticationSourceMailchimpAPIKey(sourceMailchimpAPIKey SourceMailchimpAPIKey) SourceMailchimpAuthentication {
-	typ := SourceMailchimpAuthenticationTypeSourceMailchimpAPIKey
+func CreateSourceMailchimpAuthenticationAPIKey(apiKey APIKey) SourceMailchimpAuthentication {
+	typ := SourceMailchimpAuthenticationTypeAPIKey
 
 	return SourceMailchimpAuthentication{
-		SourceMailchimpAPIKey: &sourceMailchimpAPIKey,
-		Type:                  typ,
+		APIKey: &apiKey,
+		Type:   typ,
 	}
 }
 
@@ -129,11 +129,11 @@ func (u *SourceMailchimpAuthentication) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var sourceMailchimpAPIKey SourceMailchimpAPIKey = SourceMailchimpAPIKey{}
-	if err := utils.UnmarshalJSON(data, &sourceMailchimpAPIKey, "", true, nil); err == nil {
+	var apiKey APIKey = APIKey{}
+	if err := utils.UnmarshalJSON(data, &apiKey, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceMailchimpAuthenticationTypeSourceMailchimpAPIKey,
-			Value: &sourceMailchimpAPIKey,
+			Type:  SourceMailchimpAuthenticationTypeAPIKey,
+			Value: &apiKey,
 		})
 	}
 
@@ -153,8 +153,8 @@ func (u *SourceMailchimpAuthentication) UnmarshalJSON(data []byte) error {
 	case SourceMailchimpAuthenticationTypeSourceMailchimpOAuth20:
 		u.SourceMailchimpOAuth20 = best.Value.(*SourceMailchimpOAuth20)
 		return nil
-	case SourceMailchimpAuthenticationTypeSourceMailchimpAPIKey:
-		u.SourceMailchimpAPIKey = best.Value.(*SourceMailchimpAPIKey)
+	case SourceMailchimpAuthenticationTypeAPIKey:
+		u.APIKey = best.Value.(*APIKey)
 		return nil
 	}
 
@@ -166,8 +166,8 @@ func (u SourceMailchimpAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMailchimpOAuth20, "", true)
 	}
 
-	if u.SourceMailchimpAPIKey != nil {
-		return utils.MarshalJSON(u.SourceMailchimpAPIKey, "", true)
+	if u.APIKey != nil {
+		return utils.MarshalJSON(u.APIKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceMailchimpAuthentication: all fields are null")

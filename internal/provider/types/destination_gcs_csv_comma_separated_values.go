@@ -7,7 +7,7 @@ import (
 )
 
 type DestinationGcsCSVCommaSeparatedValues struct {
-	Compression *DestinationGcsCompression `tfsdk:"compression"`
-	Flattening  types.String               `tfsdk:"flattening"`
-	FormatType  types.String               `tfsdk:"format_type"`
+	Compression *Compression `tfsdk:"compression"`
+	Flattening  types.String `tfsdk:"flattening"`
+	FormatType  types.String `tfsdk:"format_type"`
 }

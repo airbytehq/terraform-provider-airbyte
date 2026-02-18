@@ -1,1 +1,0 @@
-terraform import airbyte_source_ding_connect.my_airbyte_source_ding_connect "..."

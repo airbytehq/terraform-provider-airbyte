@@ -3,6 +3,6 @@
 package types
 
 type SourceMailchimpAuthentication struct {
-	APIKey  *SourceMailchimpAPIKey  `queryParam:"inline" tfsdk:"api_key"`
+	APIKey  *APIKey                 `queryParam:"inline" tfsdk:"api_key"`
 	OAuth20 *SourceMailchimpOAuth20 `queryParam:"inline" tfsdk:"o_auth20"`
 }

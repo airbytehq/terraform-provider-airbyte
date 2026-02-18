@@ -34,8 +34,9 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     customer_status_filter = [
       "SUSPENDED"
     ]
-    end_date   = "2017-01-30"
-    start_date = "2017-01-25"
+    end_date    = "2017-01-30"
+    num_workers = 2
+    start_date  = "2017-01-25"
   }
   definition_id = "340bf2e2-1dfb-458f-b22d-521448c56250"
   name          = "...my_name..."
@@ -80,6 +81,7 @@ Optional:
 - `customer_id` (String) Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 - `customer_status_filter` (List of String) A list of customer statuses to filter on. For detailed info about what each status mean refer to Google Ads <a href="https://developers.google.com/google-ads/api/reference/rpc/v15/CustomerStatusEnum.CustomerStatus">documentation</a>. Default: []
 - `end_date` (String) UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)
+- `num_workers` (Number) The number of concurrent workers to use for syncing. Increasing this value may speed up syncs for accounts with many customers or streams. Adjust based on your API usage and rate limits. Default: 3
 - `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
 
 <a id="nestedatt--configuration--credentials"></a>

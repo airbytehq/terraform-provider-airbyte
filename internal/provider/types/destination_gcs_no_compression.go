@@ -7,5 +7,5 @@ import (
 )
 
 type DestinationGcsNoCompression struct {
-	Codec types.String `tfsdk:"codec"`
+	CompressionType types.String `tfsdk:"compression_type"`
 }

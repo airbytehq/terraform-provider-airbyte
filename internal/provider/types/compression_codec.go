@@ -3,10 +3,10 @@
 package types
 
 type CompressionCodec struct {
-	Bzip2         *Bzip2                       `queryParam:"inline" tfsdk:"bzip2"`
-	Deflate       *Deflate                     `queryParam:"inline" tfsdk:"deflate"`
-	NoCompression *DestinationGcsNoCompression `queryParam:"inline" tfsdk:"no_compression"`
-	Snappy        *Snappy                      `queryParam:"inline" tfsdk:"snappy"`
-	Xz            *Xz                          `queryParam:"inline" tfsdk:"xz"`
-	Zstandard     *Zstandard                   `queryParam:"inline" tfsdk:"zstandard"`
+	Bzip2         *Bzip2         `queryParam:"inline" tfsdk:"bzip2"`
+	Deflate       *Deflate       `queryParam:"inline" tfsdk:"deflate"`
+	NoCompression *NoCompression `queryParam:"inline" tfsdk:"no_compression"`
+	Snappy        *Snappy        `queryParam:"inline" tfsdk:"snappy"`
+	Xz            *Xz            `queryParam:"inline" tfsdk:"xz"`
+	Zstandard     *Zstandard     `queryParam:"inline" tfsdk:"zstandard"`
 }

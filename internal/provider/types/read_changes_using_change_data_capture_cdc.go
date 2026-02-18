@@ -8,7 +8,10 @@ import (
 )
 
 type ReadChangesUsingChangeDataCaptureCDC struct {
-	AdditionalProperties    jsontypes.Normalized `tfsdk:"additional_properties"`
-	CursorMethod            types.String         `tfsdk:"cursor_method"`
-	InitialLoadTimeoutHours types.Int64          `tfsdk:"initial_load_timeout_hours"`
+	AdditionalProperties             jsontypes.Normalized `tfsdk:"additional_properties"`
+	InitialLoadTimeoutHours          types.Int64          `tfsdk:"initial_load_timeout_hours"`
+	InitialWaitingSeconds            types.Int64          `tfsdk:"initial_waiting_seconds"`
+	InvalidCdcCursorPositionBehavior types.String         `tfsdk:"invalid_cdc_cursor_position_behavior"`
+	Method                           types.String         `tfsdk:"method"`
+	PollIntervalMs                   types.Int64          `tfsdk:"poll_interval_ms"`
 }

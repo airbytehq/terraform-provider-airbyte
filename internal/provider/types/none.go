@@ -2,10 +2,5 @@
 
 package types
 
-import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
-)
-
 type None struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 }

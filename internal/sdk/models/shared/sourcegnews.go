@@ -8,46 +8,46 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// SourceGnewsCountry - This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
-type SourceGnewsCountry string
+// Country - This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
+type Country string
 
 const (
-	SourceGnewsCountryAu SourceGnewsCountry = "au"
-	SourceGnewsCountryBr SourceGnewsCountry = "br"
-	SourceGnewsCountryCa SourceGnewsCountry = "ca"
-	SourceGnewsCountryCn SourceGnewsCountry = "cn"
-	SourceGnewsCountryEg SourceGnewsCountry = "eg"
-	SourceGnewsCountryFr SourceGnewsCountry = "fr"
-	SourceGnewsCountryDe SourceGnewsCountry = "de"
-	SourceGnewsCountryGr SourceGnewsCountry = "gr"
-	SourceGnewsCountryHk SourceGnewsCountry = "hk"
-	SourceGnewsCountryIn SourceGnewsCountry = "in"
-	SourceGnewsCountryIe SourceGnewsCountry = "ie"
-	SourceGnewsCountryIl SourceGnewsCountry = "il"
-	SourceGnewsCountryIt SourceGnewsCountry = "it"
-	SourceGnewsCountryJp SourceGnewsCountry = "jp"
-	SourceGnewsCountryNl SourceGnewsCountry = "nl"
-	SourceGnewsCountryNo SourceGnewsCountry = "no"
-	SourceGnewsCountryPk SourceGnewsCountry = "pk"
-	SourceGnewsCountryPe SourceGnewsCountry = "pe"
-	SourceGnewsCountryPh SourceGnewsCountry = "ph"
-	SourceGnewsCountryPt SourceGnewsCountry = "pt"
-	SourceGnewsCountryRo SourceGnewsCountry = "ro"
-	SourceGnewsCountryRu SourceGnewsCountry = "ru"
-	SourceGnewsCountrySg SourceGnewsCountry = "sg"
-	SourceGnewsCountryEs SourceGnewsCountry = "es"
-	SourceGnewsCountrySe SourceGnewsCountry = "se"
-	SourceGnewsCountryCh SourceGnewsCountry = "ch"
-	SourceGnewsCountryTw SourceGnewsCountry = "tw"
-	SourceGnewsCountryUa SourceGnewsCountry = "ua"
-	SourceGnewsCountryGb SourceGnewsCountry = "gb"
-	SourceGnewsCountryUs SourceGnewsCountry = "us"
+	CountryAu Country = "au"
+	CountryBr Country = "br"
+	CountryCa Country = "ca"
+	CountryCn Country = "cn"
+	CountryEg Country = "eg"
+	CountryFr Country = "fr"
+	CountryDe Country = "de"
+	CountryGr Country = "gr"
+	CountryHk Country = "hk"
+	CountryIn Country = "in"
+	CountryIe Country = "ie"
+	CountryIl Country = "il"
+	CountryIt Country = "it"
+	CountryJp Country = "jp"
+	CountryNl Country = "nl"
+	CountryNo Country = "no"
+	CountryPk Country = "pk"
+	CountryPe Country = "pe"
+	CountryPh Country = "ph"
+	CountryPt Country = "pt"
+	CountryRo Country = "ro"
+	CountryRu Country = "ru"
+	CountrySg Country = "sg"
+	CountryEs Country = "es"
+	CountrySe Country = "se"
+	CountryCh Country = "ch"
+	CountryTw Country = "tw"
+	CountryUa Country = "ua"
+	CountryGb Country = "gb"
+	CountryUs Country = "us"
 )
 
-func (e SourceGnewsCountry) ToPointer() *SourceGnewsCountry {
+func (e Country) ToPointer() *Country {
 	return &e
 }
-func (e *SourceGnewsCountry) UnmarshalJSON(data []byte) error {
+func (e *Country) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -112,10 +112,10 @@ func (e *SourceGnewsCountry) UnmarshalJSON(data []byte) error {
 	case "gb":
 		fallthrough
 	case "us":
-		*e = SourceGnewsCountry(v)
+		*e = Country(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsCountry: %v", v)
+		return fmt.Errorf("invalid value for Country: %v", v)
 	}
 }
 
@@ -148,37 +148,37 @@ func (e *In) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceGnewsLanguage string
+type Language string
 
 const (
-	SourceGnewsLanguageAr SourceGnewsLanguage = "ar"
-	SourceGnewsLanguageZh SourceGnewsLanguage = "zh"
-	SourceGnewsLanguageNl SourceGnewsLanguage = "nl"
-	SourceGnewsLanguageEn SourceGnewsLanguage = "en"
-	SourceGnewsLanguageFr SourceGnewsLanguage = "fr"
-	SourceGnewsLanguageDe SourceGnewsLanguage = "de"
-	SourceGnewsLanguageEl SourceGnewsLanguage = "el"
-	SourceGnewsLanguageHe SourceGnewsLanguage = "he"
-	SourceGnewsLanguageHi SourceGnewsLanguage = "hi"
-	SourceGnewsLanguageIt SourceGnewsLanguage = "it"
-	SourceGnewsLanguageJa SourceGnewsLanguage = "ja"
-	SourceGnewsLanguageMl SourceGnewsLanguage = "ml"
-	SourceGnewsLanguageMr SourceGnewsLanguage = "mr"
-	SourceGnewsLanguageNo SourceGnewsLanguage = "no"
-	SourceGnewsLanguagePt SourceGnewsLanguage = "pt"
-	SourceGnewsLanguageRo SourceGnewsLanguage = "ro"
-	SourceGnewsLanguageRu SourceGnewsLanguage = "ru"
-	SourceGnewsLanguageEs SourceGnewsLanguage = "es"
-	SourceGnewsLanguageSv SourceGnewsLanguage = "sv"
-	SourceGnewsLanguageTa SourceGnewsLanguage = "ta"
-	SourceGnewsLanguageTe SourceGnewsLanguage = "te"
-	SourceGnewsLanguageUk SourceGnewsLanguage = "uk"
+	LanguageAr Language = "ar"
+	LanguageZh Language = "zh"
+	LanguageNl Language = "nl"
+	LanguageEn Language = "en"
+	LanguageFr Language = "fr"
+	LanguageDe Language = "de"
+	LanguageEl Language = "el"
+	LanguageHe Language = "he"
+	LanguageHi Language = "hi"
+	LanguageIt Language = "it"
+	LanguageJa Language = "ja"
+	LanguageMl Language = "ml"
+	LanguageMr Language = "mr"
+	LanguageNo Language = "no"
+	LanguagePt Language = "pt"
+	LanguageRo Language = "ro"
+	LanguageRu Language = "ru"
+	LanguageEs Language = "es"
+	LanguageSv Language = "sv"
+	LanguageTa Language = "ta"
+	LanguageTe Language = "te"
+	LanguageUk Language = "uk"
 )
 
-func (e SourceGnewsLanguage) ToPointer() *SourceGnewsLanguage {
+func (e Language) ToPointer() *Language {
 	return &e
 }
-func (e *SourceGnewsLanguage) UnmarshalJSON(data []byte) error {
+func (e *Language) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -227,10 +227,10 @@ func (e *SourceGnewsLanguage) UnmarshalJSON(data []byte) error {
 	case "te":
 		fallthrough
 	case "uk":
-		*e = SourceGnewsLanguage(v)
+		*e = Language(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsLanguage: %v", v)
+		return fmt.Errorf("invalid value for Language: %v", v)
 	}
 }
 
@@ -263,24 +263,24 @@ func (e *Nullable) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGnewsSortBy - This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
+// SortBy - This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
 //   - publishedAt = sort by publication date, the articles with the most recent
 //
 // publication date are returned first
 //   - relevance = sort by best match to keywords, the articles with the best
 //
 // match are returned first
-type SourceGnewsSortBy string
+type SortBy string
 
 const (
-	SourceGnewsSortByPublishedAt SourceGnewsSortBy = "publishedAt"
-	SourceGnewsSortByRelevance   SourceGnewsSortBy = "relevance"
+	SortByPublishedAt SortBy = "publishedAt"
+	SortByRelevance   SortBy = "relevance"
 )
 
-func (e SourceGnewsSortBy) ToPointer() *SourceGnewsSortBy {
+func (e SortBy) ToPointer() *SortBy {
 	return &e
 }
-func (e *SourceGnewsSortBy) UnmarshalJSON(data []byte) error {
+func (e *SortBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -289,10 +289,10 @@ func (e *SourceGnewsSortBy) UnmarshalJSON(data []byte) error {
 	case "publishedAt":
 		fallthrough
 	case "relevance":
-		*e = SourceGnewsSortBy(v)
+		*e = SortBy(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsSortBy: %v", v)
+		return fmt.Errorf("invalid value for SortBy: %v", v)
 	}
 }
 
@@ -371,12 +371,12 @@ type SourceGnews struct {
 	// API Key
 	APIKey string `json:"api_key"`
 	// This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
-	Country *SourceGnewsCountry `json:"country,omitempty"`
+	Country *Country `json:"country,omitempty"`
 	// This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 	EndDate *string `json:"end_date,omitempty"`
 	// This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.
-	In       []In                 `json:"in,omitempty"`
-	Language *SourceGnewsLanguage `json:"language,omitempty"`
+	In       []In      `json:"in,omitempty"`
+	Language *Language `json:"language,omitempty"`
 	// This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
 	Nullable []Nullable `json:"nullable,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
@@ -405,7 +405,7 @@ type SourceGnews struct {
 	// publication date are returned first
 	//   - relevance = sort by best match to keywords, the articles with the best
 	// match are returned first
-	Sortby *SourceGnewsSortBy `json:"sortby,omitempty"`
+	Sortby *SortBy `json:"sortby,omitempty"`
 	// This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 	StartDate *string `json:"start_date,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
@@ -453,7 +453,7 @@ func (s *SourceGnews) GetAPIKey() string {
 	return s.APIKey
 }
 
-func (s *SourceGnews) GetCountry() *SourceGnewsCountry {
+func (s *SourceGnews) GetCountry() *Country {
 	if s == nil {
 		return nil
 	}
@@ -474,7 +474,7 @@ func (s *SourceGnews) GetIn() []In {
 	return s.In
 }
 
-func (s *SourceGnews) GetLanguage() *SourceGnewsLanguage {
+func (s *SourceGnews) GetLanguage() *Language {
 	if s == nil {
 		return nil
 	}
@@ -495,7 +495,7 @@ func (s *SourceGnews) GetQuery() string {
 	return s.Query
 }
 
-func (s *SourceGnews) GetSortby() *SourceGnewsSortBy {
+func (s *SourceGnews) GetSortby() *SortBy {
 	if s == nil {
 		return nil
 	}
