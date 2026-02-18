@@ -171,7 +171,7 @@ resource "airbyte_source" "my_source" {
 }
 ```
 
-The entire `configuration` attribute is marked as sensitive, so all values are hidden in plan output. Use this approach when you don't need per-field diff visibility.
+The entire `configuration` attribute is marked as sensitive, so all values are hidden in plan output. Use this approach only if you don't need per-field diff visibility.
 
 ### Finding the definition_id
 
