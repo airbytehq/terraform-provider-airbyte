@@ -411,9 +411,9 @@ FORBIDDEN_RESPONSE_STUB = """    ForbiddenResponse:
 # airbyte_destination resources and the airbyte_connector_configuration data
 # source.
 #
-# The allowlist uses UpperCamelCase names (the output of
-# lower_hyphen_to_upper_camel) so that the check is a simple set-membership
-# test during generation.
+# The allowlist uses UpperCamelCase names for readability. Comparisons are
+# performed case-insensitively so that minor casing differences (e.g.,
+# "API" vs "Api") do not cause silent omissions.
 
 TYPED_SOURCE_ALLOWLIST: set[str] = {
     "Aha",
@@ -1054,13 +1054,15 @@ def main() -> None:
     # All connectors remain available via the generic airbyte_source /
     # airbyte_destination resources; the typed resources are kept solely for
     # backward compatibility and will be removed in 1.1.
+    _source_allowlist_lower = {s.lower() for s in TYPED_SOURCE_ALLOWLIST}
+    _dest_allowlist_lower = {d.lower() for d in TYPED_DESTINATION_ALLOWLIST}
     source_names_for_terraform = [
         n for n in source_names
-        if lower_hyphen_to_upper_camel(n) in TYPED_SOURCE_ALLOWLIST
+        if lower_hyphen_to_upper_camel(n).lower() in _source_allowlist_lower
     ]
     destination_names_for_terraform = [
         n for n in destination_names
-        if lower_hyphen_to_upper_camel(n) in TYPED_DESTINATION_ALLOWLIST
+        if lower_hyphen_to_upper_camel(n).lower() in _dest_allowlist_lower
     ]
     skipped_sources = len(source_names) - len(source_names_for_terraform)
     skipped_dests = len(destination_names) - len(destination_names_for_terraform)
