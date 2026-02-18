@@ -27,7 +27,7 @@ airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
   * [Authentication](#authentication)
   * [Installation](#installation)
   * [Testing the provider locally](#testing-the-provider-locally)
-  * [Migrating from Typed to Generic Resources](#migrating-from-typed-to-generic-resources)
+  * [Migrating to 1.0](#migrating-to-10)
   * [Authentication](#authentication-1)
   * [Available Resources and Data Sources](#available-resources-and-data-sources)
 
@@ -96,9 +96,11 @@ provider_installation {
 ```
 <!-- End Testing the provider locally [usage] -->
 
-## Migrating from Typed to Generic Resources
+## Migrating to 1.0
 
-If you are using typed resources (e.g., `airbyte_source_pardot`) and need to migrate to the generic `airbyte_source` or `airbyte_destination` resource, see the [Migration Guide](docs/MIGRATION_GUIDE.md).
+> **Deprecation Notice:** Typed connector-specific resources (e.g., `airbyte_source_postgres`) are deprecated in 1.0 and targeted for removal in 1.1.
+
+If you are using typed resources, see the [Migrating to 1.0](docs/guides/v1_migration_guide.md) guide to move to the generic `airbyte_source` / `airbyte_destination` resources with the `airbyte_connector_configuration` data source for type-validated configuration.
 
 <!-- Start Authentication [security] -->
 ## Authentication

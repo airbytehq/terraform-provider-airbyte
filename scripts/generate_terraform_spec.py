@@ -398,6 +398,300 @@ FORBIDDEN_RESPONSE_STUB = """    ForbiddenResponse:
 # to schemas marked with x-airbyte-circular-ref: true.
 # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
 
+# =============================================================================
+# Typed Resource Allowlist (Deprecated)
+# =============================================================================
+# Typed connector-specific resources (e.g., airbyte_source_postgres) are
+# officially deprecated as of 1.0. They are retained in 1.0 for backward
+# compatibility but are targeted for removal in 1.1.
+#
+# This allowlist freezes the set of typed resources to those that existed in the
+# last stable pre-1.0 release (v0.6.5). New connectors added to the registry
+# after that release will only be available via the generic airbyte_source /
+# airbyte_destination resources and the airbyte_connector_configuration data
+# source.
+#
+# The allowlist uses UpperCamelCase names for readability. Comparisons are
+# performed case-insensitively so that minor casing differences (e.g.,
+# "API" vs "Api") do not cause silent omissions.
+
+TYPED_SOURCE_ALLOWLIST: set[str] = {
+    "Aha",
+    "Airbyte",
+    "Aircall",
+    "Airtable",
+    "AmazonAds",
+    "AmazonSellerPartner",
+    "AmazonSqs",
+    "Amplitude",
+    "ApifyDataset",
+    "Appcues",
+    "Appfigures",
+    "Appfollow",
+    "Asana",
+    "Auth0",
+    "AwsCloudtrail",
+    "AzureBlobStorage",
+    "AzureTable",
+    "BambooHr",
+    "Basecamp",
+    "Bigquery",
+    "BingAds",
+    "Bitly",
+    "Braintree",
+    "Braze",
+    "BreezyHr",
+    "Brevo",
+    "Buildkite",
+    "Buzzsprout",
+    "Calendly",
+    "Canny",
+    "Cart",
+    "Chameleon",
+    "Chargebee",
+    "Chartmogul",
+    "Cimis",
+    "Clazar",
+    "Clickhouse",
+    "ClickupApi",
+    "Clockify",
+    "CloseCom",
+    "Coda",
+    "CoinApi",
+    "Coinmarketcap",
+    "Configcat",
+    "Confluence",
+    "Convex",
+    "Datadog",
+    "Datascope",
+    "Dbt",
+    "Delighted",
+    "Dixa",
+    "Dockerhub",
+    "Dremio",
+    "Dynamodb",
+    "Emailoctopus",
+    "ExchangeRates",
+    "Ezofficeinventory",
+    "FacebookMarketing",
+    "Faker",
+    "Fauna",
+    "File",
+    "Firebolt",
+    "Fleetio",
+    "Freshcaller",
+    "Freshdesk",
+    "Freshsales",
+    "Front",
+    "GainsightPx",
+    "Gcs",
+    "Getlago",
+    "Github",
+    "Gitlab",
+    "Glassfrog",
+    "Gnews",
+    "Goldcast",
+    "GoogleAds",
+    "GoogleAnalyticsDataApi",
+    "GoogleDirectory",
+    "GoogleDrive",
+    "GooglePagespeedInsights",
+    "GoogleSearchConsole",
+    "GoogleSheets",
+    "GoogleTasks",
+    "GoogleWebfonts",
+    "Greenhouse",
+    "Gridly",
+    "Guru",
+    "HardcodedRecords",
+    "Harvest",
+    "Height",
+    "Hibob",
+    "HighLevel",
+    "Hubplanner",
+    "Hubspot",
+    "Insightly",
+    "Instagram",
+    "Instatus",
+    "Intercom",
+    "Ip2whois",
+    "Iterable",
+    "Jira",
+    "Jotform",
+    "K6Cloud",
+    "Klarna",
+    "Klaviyo",
+    "Kyve",
+    "Launchdarkly",
+    "Leadfeeder",
+    "Lemlist",
+    "LeverHiring",
+    "LinkedinAds",
+    "LinkedinPages",
+    "Linnworks",
+    "Lokalise",
+    "Looker",
+    "Luma",
+    "Mailchimp",
+    "Mailgun",
+    "MailjetSms",
+    "Marketo",
+    "Metabase",
+    "MicrosoftOnedrive",
+    "MicrosoftSharepoint",
+    "MicrosoftTeams",
+    "Mixpanel",
+    "Monday",
+    "MongodbV2",
+    "Mssql",
+    "MyHours",
+    "Mysql",
+    "Netsuite",
+    "NorthpassLms",
+    "Notion",
+    "Nylas",
+    "Nytimes",
+    "Okta",
+    "Omnisend",
+    "Onesignal",
+    "Oracle",
+    "Orb",
+    "Orbit",
+    "OutbrainAmplify",
+    "Outreach",
+    "PaypalTransaction",
+    "Paystack",
+    "Pendo",
+    "Pennylane",
+    "Persistiq",
+    "PexelsApi",
+    "Picqer",
+    "Pinterest",
+    "Pipedrive",
+    "Piwik",
+    "Planhat",
+    "Pocket",
+    "Pokeapi",
+    "PolygonStockApi",
+    "Postgres",
+    "Posthog",
+    "Postmarkapp",
+    "Prestashop",
+    "Productboard",
+    "Productive",
+    "Pypi",
+    "Qualaroo",
+    "Railz",
+    "Recharge",
+    "Recreation",
+    "Recruitee",
+    "Recurly",
+    "Reddit",
+    "Redshift",
+    "Retently",
+    "RkiCovid",
+    "Rss",
+    "S3",
+    "Salesforce",
+    "Salesloft",
+    "SapFieldglass",
+    "Savvycal",
+    "Scryfall",
+    "Secoda",
+    "Sendgrid",
+    "Sendinblue",
+    "Senseforce",
+    "Sentry",
+    "Sftp",
+    "SftpBulk",
+    "Shopify",
+    "Shortcut",
+    "Shortio",
+    "Slack",
+    "Smaily",
+    "Smartengage",
+    "Smartsheets",
+    "SnapchatMarketing",
+    "Snowflake",
+    "SonarCloud",
+    "SpacexApi",
+    "Square",
+    "Strava",
+    "Stripe",
+    "SurveySparrow",
+    "Surveymonkey",
+    "Survicate",
+    "Teamwork",
+    "Tempo",
+    "TheGuardianApi",
+    "TiktokMarketing",
+    "Trello",
+    "Trustpilot",
+    "TvmazeSchedule",
+    "Twilio",
+    "TwilioTaskrouter",
+    "Twitter",
+    "Typeform",
+    "UsCensus",
+    "Vantage",
+    "Webflow",
+    "WhenIWork",
+    "WhiskyHunter",
+    "WikipediaPageviews",
+    "Woocommerce",
+    "Xkcd",
+    "YandexMetrica",
+    "Yotpo",
+    "YoutubeAnalytics",
+    "ZendeskChat",
+    "ZendeskSunshine",
+    "ZendeskSupport",
+    "ZendeskTalk",
+    "Zenloop",
+    "ZohoCrm",
+    "Zoom",
+}
+
+TYPED_DESTINATION_ALLOWLIST: set[str] = {
+    "Astra",
+    "AwsDatalake",
+    "AzureBlobStorage",
+    "Bigquery",
+    "Clickhouse",
+    "Convex",
+    "Databricks",
+    "Duckdb",
+    "Dynamodb",
+    "Elasticsearch",
+    "Firebolt",
+    "Firestore",
+    "Gcs",
+    "GoogleSheets",
+    "Milvus",
+    "Mongodb",
+    "Mssql",
+    "Mysql",
+    "Oracle",
+    "Pgvector",
+    "Pinecone",
+    "Postgres",
+    "Pubsub",
+    "Qdrant",
+    "Redis",
+    "Redshift",
+    "S3",
+    "S3Glue",
+    "SftpJson",
+    "Snowflake",
+    "SnowflakeCortex",
+    "Teradata",
+    "Timeplus",
+    "Typesense",
+    "Vectara",
+    "Weaviate",
+    "Yellowbrick",
+}
+
 # Security schemes for the API
 # NOTE: The two leading spaces before `securitySchemes:` are intentional.
 # This snippet is inserted into an existing YAML structure where this
@@ -755,8 +1049,45 @@ def main() -> None:
     # Note: Custom connectors were removed in the 1.0 refactor (PR #232)
     # so we no longer add them to the terraform spec.
     # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
-    source_names_for_terraform = source_names
-    destination_names_for_terraform = destination_names
+
+    # Filter typed resources to the frozen allowlist (deprecated connectors only).
+    # All connectors remain available via the generic airbyte_source /
+    # airbyte_destination resources; the typed resources are kept solely for
+    # backward compatibility and will be removed in 1.1.
+    _source_allowlist_lower = {s.lower() for s in TYPED_SOURCE_ALLOWLIST}
+    _dest_allowlist_lower = {d.lower() for d in TYPED_DESTINATION_ALLOWLIST}
+    source_names_for_terraform = [
+        n for n in source_names
+        if lower_hyphen_to_upper_camel(n).lower() in _source_allowlist_lower
+    ]
+    destination_names_for_terraform = [
+        n for n in destination_names
+        if lower_hyphen_to_upper_camel(n).lower() in _dest_allowlist_lower
+    ]
+    _allowed_source_hyphen = set(source_names_for_terraform)
+    _allowed_dest_hyphen = set(destination_names_for_terraform)
+    source_specs = [
+        (schema_name, spec) for schema_name, spec in source_specs
+        if any(
+            schema_name == f"source-{n}" or schema_name == f"source-{n}-update"
+            for n in _allowed_source_hyphen
+        )
+    ]
+    destination_specs = [
+        (schema_name, spec) for schema_name, spec in destination_specs
+        if any(
+            schema_name == f"destination-{n}" or schema_name == f"destination-{n}-update"
+            for n in _allowed_dest_hyphen
+        )
+    ]
+    skipped_sources = len(source_names) - len(source_names_for_terraform)
+    skipped_dests = len(destination_names) - len(destination_names_for_terraform)
+    if skipped_sources or skipped_dests:
+        print(
+            f"  Typed resource allowlist: {len(source_names_for_terraform)} sources, "
+            f"{len(destination_names_for_terraform)} destinations "
+            f"(skipped {skipped_sources} sources, {skipped_dests} destinations not in allowlist)"
+        )
 
     print("Generating OpenAPI spec...")
 
