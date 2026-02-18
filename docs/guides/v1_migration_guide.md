@@ -183,4 +183,4 @@ The generic resource requires a `definition_id` to identify the connector type. 
 
 ## Alternative methods (Terraform < 1.8)
 
-If you cannot use Terraform 1.8+ and the `moved` block, see the Terraform documentation on [state management](https://developer.hashicorp.com/terraform/cli/state) for alternative approaches such as `terraform state rm` + `terraform import`.
+If you cannot use Terraform 1.8+ and the `moved` block, see the Terraform documentation on [moving resources](https://developer.hashicorp.com/terraform/cli/state/move) and [state management](https://developer.hashicorp.com/terraform/cli/state) for alternative approaches such as `terraform state rm` + `terraform import`.
