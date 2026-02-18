@@ -1064,6 +1064,22 @@ def main() -> None:
         n for n in destination_names
         if lower_hyphen_to_upper_camel(n).lower() in _dest_allowlist_lower
     ]
+    _allowed_source_hyphen = set(source_names_for_terraform)
+    _allowed_dest_hyphen = set(destination_names_for_terraform)
+    source_specs = [
+        (schema_name, spec) for schema_name, spec in source_specs
+        if any(
+            schema_name == f"source-{n}" or schema_name == f"source-{n}-update"
+            for n in _allowed_source_hyphen
+        )
+    ]
+    destination_specs = [
+        (schema_name, spec) for schema_name, spec in destination_specs
+        if any(
+            schema_name == f"destination-{n}" or schema_name == f"destination-{n}-update"
+            for n in _allowed_dest_hyphen
+        )
+    ]
     skipped_sources = len(source_names) - len(source_names_for_terraform)
     skipped_dests = len(destination_names) - len(destination_names_for_terraform)
     if skipped_sources or skipped_dests:
