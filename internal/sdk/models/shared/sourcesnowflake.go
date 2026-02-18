@@ -249,33 +249,33 @@ func (u SourceSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceSnowflakeAuthorizationMethod: all fields are null")
 }
 
-type SourceSnowflakeCursorMethod string
+type CursorMethod string
 
 const (
-	SourceSnowflakeCursorMethodUserDefined SourceSnowflakeCursorMethod = "user_defined"
+	CursorMethodUserDefined CursorMethod = "user_defined"
 )
 
-func (e SourceSnowflakeCursorMethod) ToPointer() *SourceSnowflakeCursorMethod {
+func (e CursorMethod) ToPointer() *CursorMethod {
 	return &e
 }
-func (e *SourceSnowflakeCursorMethod) UnmarshalJSON(data []byte) error {
+func (e *CursorMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "user_defined":
-		*e = SourceSnowflakeCursorMethod(v)
+		*e = CursorMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeCursorMethod: %v", v)
+		return fmt.Errorf("invalid value for CursorMethod: %v", v)
 	}
 }
 
 // SourceSnowflakeScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
 type SourceSnowflakeScanChangesWithUserDefinedCursor struct {
-	CursorMethod         *SourceSnowflakeCursorMethod `default:"user_defined" json:"cursor_method"`
-	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
+	CursorMethod         *CursorMethod `default:"user_defined" json:"cursor_method"`
+	AdditionalProperties any           `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceSnowflakeScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
@@ -289,7 +289,7 @@ func (s *SourceSnowflakeScanChangesWithUserDefinedCursor) UnmarshalJSON(data []b
 	return nil
 }
 
-func (s *SourceSnowflakeScanChangesWithUserDefinedCursor) GetCursorMethod() *SourceSnowflakeCursorMethod {
+func (s *SourceSnowflakeScanChangesWithUserDefinedCursor) GetCursorMethod() *CursorMethod {
 	if s == nil {
 		return nil
 	}

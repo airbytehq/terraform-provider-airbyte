@@ -182,18 +182,18 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest(ctx contex
 			NativeNetworkEncryptionNNE: nativeNetworkEncryptionNNE,
 		}
 	}
-	var sourceOracleTLSEncryptedVerifyCertificate *shared.SourceOracleTLSEncryptedVerifyCertificate
+	var tlsEncryptedVerifyCertificate *shared.TLSEncryptedVerifyCertificate
 	if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
 		var sslCertificate string
 		sslCertificate = r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
 
-		sourceOracleTLSEncryptedVerifyCertificate = &shared.SourceOracleTLSEncryptedVerifyCertificate{
+		tlsEncryptedVerifyCertificate = &shared.TLSEncryptedVerifyCertificate{
 			SslCertificate: sslCertificate,
 		}
 	}
-	if sourceOracleTLSEncryptedVerifyCertificate != nil {
+	if tlsEncryptedVerifyCertificate != nil {
 		encryption = shared.SourceOracleEncryption{
-			SourceOracleTLSEncryptedVerifyCertificate: sourceOracleTLSEncryptedVerifyCertificate,
+			TLSEncryptedVerifyCertificate: tlsEncryptedVerifyCertificate,
 		}
 	}
 	var host string

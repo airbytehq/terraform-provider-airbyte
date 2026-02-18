@@ -188,7 +188,7 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 			DestinationWeaviateCohere: destinationWeaviateCohere,
 		}
 	}
-	var destinationWeaviateFromField *shared.DestinationWeaviateFromField
+	var fromField *shared.FromField
 	if r.Configuration.Embedding.FromField != nil {
 		var dimensions int64
 		dimensions = r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
@@ -196,14 +196,14 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 		var fieldName string
 		fieldName = r.Configuration.Embedding.FromField.FieldName.ValueString()
 
-		destinationWeaviateFromField = &shared.DestinationWeaviateFromField{
+		fromField = &shared.FromField{
 			Dimensions: dimensions,
 			FieldName:  fieldName,
 		}
 	}
-	if destinationWeaviateFromField != nil {
+	if fromField != nil {
 		embedding = shared.DestinationWeaviateEmbedding{
-			DestinationWeaviateFromField: destinationWeaviateFromField,
+			FromField: fromField,
 		}
 	}
 	var destinationWeaviateFake *shared.DestinationWeaviateFake
@@ -355,14 +355,14 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 
 	fieldNameMappings := make([]shared.DestinationWeaviateFieldNameMappingConfigModel, 0, len(r.Configuration.Processing.FieldNameMappings))
 	for fieldNameMappingsIndex := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = r.Configuration.Processing.FieldNameMappings[fieldNameMappingsIndex].FromField.ValueString()
+		var fromField1 string
+		fromField1 = r.Configuration.Processing.FieldNameMappings[fieldNameMappingsIndex].FromField.ValueString()
 
 		var toField string
 		toField = r.Configuration.Processing.FieldNameMappings[fieldNameMappingsIndex].ToField.ValueString()
 
 		fieldNameMappings = append(fieldNameMappings, shared.DestinationWeaviateFieldNameMappingConfigModel{
-			FromField: fromField,
+			FromField: fromField1,
 			ToField:   toField,
 		})
 	}

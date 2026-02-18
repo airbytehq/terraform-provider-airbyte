@@ -130,22 +130,22 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 
 	var authenticationMethod *shared.DestinationElasticsearchAuthenticationMethod
 	if r.Configuration.AuthenticationMethod != nil {
-		var destinationElasticsearchAPIKeySecret *shared.DestinationElasticsearchAPIKeySecret
+		var apiKeySecret *shared.APIKeySecret
 		if r.Configuration.AuthenticationMethod.APIKeySecret != nil {
 			var apiKeyID string
 			apiKeyID = r.Configuration.AuthenticationMethod.APIKeySecret.APIKeyID.ValueString()
 
-			var apiKeySecret string
-			apiKeySecret = r.Configuration.AuthenticationMethod.APIKeySecret.APIKeySecret.ValueString()
+			var apiKeySecret1 string
+			apiKeySecret1 = r.Configuration.AuthenticationMethod.APIKeySecret.APIKeySecret.ValueString()
 
-			destinationElasticsearchAPIKeySecret = &shared.DestinationElasticsearchAPIKeySecret{
+			apiKeySecret = &shared.APIKeySecret{
 				APIKeyID:     apiKeyID,
-				APIKeySecret: apiKeySecret,
+				APIKeySecret: apiKeySecret1,
 			}
 		}
-		if destinationElasticsearchAPIKeySecret != nil {
+		if apiKeySecret != nil {
 			authenticationMethod = &shared.DestinationElasticsearchAuthenticationMethod{
-				DestinationElasticsearchAPIKeySecret: destinationElasticsearchAPIKeySecret,
+				APIKeySecret: apiKeySecret,
 			}
 		}
 		var destinationElasticsearchUsernamePassword *shared.DestinationElasticsearchUsernamePassword

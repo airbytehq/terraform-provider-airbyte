@@ -3,12 +3,10 @@
 package types
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type UsernamePassword struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	Password             types.String         `tfsdk:"password"`
-	Username             types.String         `tfsdk:"username"`
+	Password types.String `tfsdk:"password"`
+	Username types.String `tfsdk:"username"`
 }

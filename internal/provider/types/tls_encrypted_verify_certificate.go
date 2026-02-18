@@ -7,6 +7,5 @@ import (
 )
 
 type TLSEncryptedVerifyCertificate struct {
-	KeyStorePassword types.String `tfsdk:"key_store_password"`
-	SslCertificate   types.String `tfsdk:"ssl_certificate"`
+	SslCertificate types.String `tfsdk:"ssl_certificate"`
 }

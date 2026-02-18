@@ -148,6 +148,8 @@ type SourceGoogleAds struct {
 	CustomerStatusFilter []CustomerStatus `json:"customer_status_filter,omitempty"`
 	// UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)
 	EndDate *types.Date `json:"end_date,omitempty"`
+	// The number of concurrent workers to use for syncing. Increasing this value may speed up syncs for accounts with many customers or streams. Adjust based on your API usage and rate limits.
+	NumWorkers *int64 `default:"3" json:"num_workers"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
 	StartDate            *types.Date                `json:"start_date,omitempty"`
 	sourceType           *SourceGoogleAdsSourceType `const:"google-ads" json:"sourceType"`
@@ -205,6 +207,13 @@ func (s *SourceGoogleAds) GetEndDate() *types.Date {
 		return nil
 	}
 	return s.EndDate
+}
+
+func (s *SourceGoogleAds) GetNumWorkers() *int64 {
+	if s == nil {
+		return nil
+	}
+	return s.NumWorkers
 }
 
 func (s *SourceGoogleAds) GetStartDate() *types.Date {

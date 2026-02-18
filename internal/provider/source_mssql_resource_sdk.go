@@ -189,8 +189,8 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 	} else {
 		port = nil
 	}
-	var replicationMethod shared.SourceMssqlUpdateMethod
-	var sourceMssqlScanChangesWithUserDefinedCursor *shared.SourceMssqlScanChangesWithUserDefinedCursor
+	var replicationMethod shared.UpdateMethod
+	var scanChangesWithUserDefinedCursor *shared.ScanChangesWithUserDefinedCursor
 	if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
 		excludeTodaysData := new(bool)
 		if !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.ExcludeTodaysData.IsUnknown() && !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.ExcludeTodaysData.IsNull() {
@@ -208,18 +208,18 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 		if !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
-		sourceMssqlScanChangesWithUserDefinedCursor = &shared.SourceMssqlScanChangesWithUserDefinedCursor{
+		scanChangesWithUserDefinedCursor = &shared.ScanChangesWithUserDefinedCursor{
 			ExcludeTodaysData:    excludeTodaysData,
 			Method:               method,
 			AdditionalProperties: additionalProperties1,
 		}
 	}
-	if sourceMssqlScanChangesWithUserDefinedCursor != nil {
-		replicationMethod = shared.SourceMssqlUpdateMethod{
-			SourceMssqlScanChangesWithUserDefinedCursor: sourceMssqlScanChangesWithUserDefinedCursor,
+	if scanChangesWithUserDefinedCursor != nil {
+		replicationMethod = shared.UpdateMethod{
+			ScanChangesWithUserDefinedCursor: scanChangesWithUserDefinedCursor,
 		}
 	}
-	var sourceMssqlReadChangesUsingChangeDataCaptureCDC *shared.SourceMssqlReadChangesUsingChangeDataCaptureCDC
+	var readChangesUsingChangeDataCaptureCDC *shared.ReadChangesUsingChangeDataCaptureCDC
 	if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
 		initialLoadTimeoutHours := new(int64)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
@@ -255,7 +255,7 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.AdditionalProperties.ValueString()), &additionalProperties2)
 		}
-		sourceMssqlReadChangesUsingChangeDataCaptureCDC = &shared.SourceMssqlReadChangesUsingChangeDataCaptureCDC{
+		readChangesUsingChangeDataCaptureCDC = &shared.ReadChangesUsingChangeDataCaptureCDC{
 			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 			InitialWaitingSeconds:            initialWaitingSeconds,
 			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
@@ -264,9 +264,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 			AdditionalProperties:             additionalProperties2,
 		}
 	}
-	if sourceMssqlReadChangesUsingChangeDataCaptureCDC != nil {
-		replicationMethod = shared.SourceMssqlUpdateMethod{
-			SourceMssqlReadChangesUsingChangeDataCaptureCDC: sourceMssqlReadChangesUsingChangeDataCaptureCDC,
+	if readChangesUsingChangeDataCaptureCDC != nil {
+		replicationMethod = shared.UpdateMethod{
+			ReadChangesUsingChangeDataCaptureCDC: readChangesUsingChangeDataCaptureCDC,
 		}
 	}
 	schemas := make([]string, 0, len(r.Configuration.Schemas))
@@ -275,7 +275,7 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 	}
 	var sslMode *shared.SourceMssqlEncryption
 	if r.Configuration.SslMode != nil {
-		var sourceMssqlUnencrypted *shared.SourceMssqlUnencrypted
+		var unencrypted *shared.Unencrypted
 		if r.Configuration.SslMode.Unencrypted != nil {
 			mode := new(shared.SourceMssqlMode)
 			if !r.Configuration.SslMode.Unencrypted.Mode.IsUnknown() && !r.Configuration.SslMode.Unencrypted.Mode.IsNull() {
@@ -287,14 +287,14 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 			if !r.Configuration.SslMode.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Unencrypted.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties3)
 			}
-			sourceMssqlUnencrypted = &shared.SourceMssqlUnencrypted{
+			unencrypted = &shared.Unencrypted{
 				Mode:                 mode,
 				AdditionalProperties: additionalProperties3,
 			}
 		}
-		if sourceMssqlUnencrypted != nil {
+		if unencrypted != nil {
 			sslMode = &shared.SourceMssqlEncryption{
-				SourceMssqlUnencrypted: sourceMssqlUnencrypted,
+				Unencrypted: unencrypted,
 			}
 		}
 		var encryptedTrustServerCertificate *shared.EncryptedTrustServerCertificate
@@ -360,9 +360,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 	if r.Configuration.TunnelMethod != nil {
 		var sourceMssqlNoTunnel *shared.SourceMssqlNoTunnel
 		if r.Configuration.TunnelMethod.NoTunnel != nil {
-			tunnelMethod1 := new(shared.SourceMssqlTunnelMethod)
+			tunnelMethod1 := new(shared.TunnelMethod)
 			if !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsNull() {
-				*tunnelMethod1 = shared.SourceMssqlTunnelMethod(r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.ValueString())
+				*tunnelMethod1 = shared.TunnelMethod(r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.ValueString())
 			} else {
 				tunnelMethod1 = nil
 			}
@@ -388,9 +388,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
-			tunnelMethod2 := new(shared.SourceMssqlSchemasTunnelMethod)
+			tunnelMethod2 := new(shared.SourceMssqlTunnelMethod)
 			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
-				*tunnelMethod2 = shared.SourceMssqlSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
+				*tunnelMethod2 = shared.SourceMssqlTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
 			} else {
 				tunnelMethod2 = nil
 			}
@@ -426,9 +426,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 			var tunnelHost1 string
 			tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
 
-			tunnelMethod3 := new(shared.SourceMssqlSchemasTunnelMethodTunnelMethod)
+			tunnelMethod3 := new(shared.SourceMssqlSchemasTunnelMethod)
 			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
-				*tunnelMethod3 = shared.SourceMssqlSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
+				*tunnelMethod3 = shared.SourceMssqlSchemasTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
 			} else {
 				tunnelMethod3 = nil
 			}
@@ -580,9 +580,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest(ctx context.Con
 		} else {
 			excludeTodaysData = nil
 		}
-		method := new(shared.SourceMssqlUpdateSchemasMethod)
+		method := new(shared.SourceMssqlUpdateMethod)
 		if !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.IsUnknown() && !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.IsNull() {
-			*method = shared.SourceMssqlUpdateSchemasMethod(r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.ValueString())
+			*method = shared.SourceMssqlUpdateMethod(r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.ValueString())
 		} else {
 			method = nil
 		}
@@ -621,9 +621,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest(ctx context.Con
 		} else {
 			invalidCdcCursorPositionBehavior = nil
 		}
-		method1 := new(shared.SourceMssqlUpdateSchemasReplicationMethodMethod)
+		method1 := new(shared.SourceMssqlUpdateSchemasMethod)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsNull() {
-			*method1 = shared.SourceMssqlUpdateSchemasReplicationMethodMethod(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
+			*method1 = shared.SourceMssqlUpdateSchemasMethod(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
 		} else {
 			method1 = nil
 		}

@@ -5,5 +5,5 @@ package types
 type SourceMssqlEncryption struct {
 	EncryptedTrustServerCertificate *EncryptedTrustServerCertificate `queryParam:"inline" tfsdk:"encrypted_trust_server_certificate"`
 	EncryptedVerifyCertificate      *EncryptedVerifyCertificate      `queryParam:"inline" tfsdk:"encrypted_verify_certificate"`
-	Unencrypted                     *SourceMssqlUnencrypted          `queryParam:"inline" tfsdk:"unencrypted"`
+	Unencrypted                     *Unencrypted                     `queryParam:"inline" tfsdk:"unencrypted"`
 }

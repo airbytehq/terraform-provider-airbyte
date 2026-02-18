@@ -3,11 +3,9 @@
 package types
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type NoCompression struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	CompressionType      types.String         `tfsdk:"compression_type"`
+	Codec types.String `tfsdk:"codec"`
 }

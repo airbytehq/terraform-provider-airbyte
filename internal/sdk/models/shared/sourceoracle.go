@@ -156,33 +156,33 @@ func (u ConnectBy) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ConnectBy: all fields are null")
 }
 
-// SourceOracleTLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
-type SourceOracleTLSEncryptedVerifyCertificate struct {
+// TLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
+type TLSEncryptedVerifyCertificate struct {
 	encryptionMethod string `const:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate string `json:"ssl_certificate"`
 }
 
-func (s SourceOracleTLSEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
+func (t TLSEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
 }
 
-func (s *SourceOracleTLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+func (t *TLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *SourceOracleTLSEncryptedVerifyCertificate) GetEncryptionMethod() string {
+func (t *TLSEncryptedVerifyCertificate) GetEncryptionMethod() string {
 	return "encrypted_verify_certificate"
 }
 
-func (s *SourceOracleTLSEncryptedVerifyCertificate) GetSslCertificate() string {
-	if s == nil {
+func (t *TLSEncryptedVerifyCertificate) GetSslCertificate() string {
+	if t == nil {
 		return ""
 	}
-	return s.SslCertificate
+	return t.SslCertificate
 }
 
 // EncryptionAlgorithm - This parameter defines what encryption algorithm is used.
@@ -247,14 +247,14 @@ func (n *NativeNetworkEncryptionNNE) GetEncryptionMethod() string {
 type SourceOracleEncryptionType string
 
 const (
-	SourceOracleEncryptionTypeNativeNetworkEncryptionNNE                SourceOracleEncryptionType = "Native Network Encryption (NNE)"
-	SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate SourceOracleEncryptionType = "source-oracle_TLS Encrypted (verify certificate)"
+	SourceOracleEncryptionTypeNativeNetworkEncryptionNNE    SourceOracleEncryptionType = "Native Network Encryption (NNE)"
+	SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate SourceOracleEncryptionType = "TLS Encrypted (verify certificate)"
 )
 
 // SourceOracleEncryption - The encryption method with is used when communicating with the database.
 type SourceOracleEncryption struct {
-	NativeNetworkEncryptionNNE                *NativeNetworkEncryptionNNE                `queryParam:"inline" union:"member"`
-	SourceOracleTLSEncryptedVerifyCertificate *SourceOracleTLSEncryptedVerifyCertificate `queryParam:"inline" union:"member"`
+	NativeNetworkEncryptionNNE    *NativeNetworkEncryptionNNE    `queryParam:"inline" union:"member"`
+	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate `queryParam:"inline" union:"member"`
 
 	Type SourceOracleEncryptionType
 }
@@ -268,12 +268,12 @@ func CreateSourceOracleEncryptionNativeNetworkEncryptionNNE(nativeNetworkEncrypt
 	}
 }
 
-func CreateSourceOracleEncryptionSourceOracleTLSEncryptedVerifyCertificate(sourceOracleTLSEncryptedVerifyCertificate SourceOracleTLSEncryptedVerifyCertificate) SourceOracleEncryption {
-	typ := SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate
+func CreateSourceOracleEncryptionTLSEncryptedVerifyCertificate(tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate) SourceOracleEncryption {
+	typ := SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate
 
 	return SourceOracleEncryption{
-		SourceOracleTLSEncryptedVerifyCertificate: &sourceOracleTLSEncryptedVerifyCertificate,
-		Type: typ,
+		TLSEncryptedVerifyCertificate: &tlsEncryptedVerifyCertificate,
+		Type:                          typ,
 	}
 }
 
@@ -290,11 +290,11 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var sourceOracleTLSEncryptedVerifyCertificate SourceOracleTLSEncryptedVerifyCertificate = SourceOracleTLSEncryptedVerifyCertificate{}
-	if err := utils.UnmarshalJSON(data, &sourceOracleTLSEncryptedVerifyCertificate, "", true, nil); err == nil {
+	var tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate = TLSEncryptedVerifyCertificate{}
+	if err := utils.UnmarshalJSON(data, &tlsEncryptedVerifyCertificate, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate,
-			Value: &sourceOracleTLSEncryptedVerifyCertificate,
+			Type:  SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate,
+			Value: &tlsEncryptedVerifyCertificate,
 		})
 	}
 
@@ -314,8 +314,8 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 	case SourceOracleEncryptionTypeNativeNetworkEncryptionNNE:
 		u.NativeNetworkEncryptionNNE = best.Value.(*NativeNetworkEncryptionNNE)
 		return nil
-	case SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate:
-		u.SourceOracleTLSEncryptedVerifyCertificate = best.Value.(*SourceOracleTLSEncryptedVerifyCertificate)
+	case SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate:
+		u.TLSEncryptedVerifyCertificate = best.Value.(*TLSEncryptedVerifyCertificate)
 		return nil
 	}
 
@@ -327,8 +327,8 @@ func (u SourceOracleEncryption) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.NativeNetworkEncryptionNNE, "", true)
 	}
 
-	if u.SourceOracleTLSEncryptedVerifyCertificate != nil {
-		return utils.MarshalJSON(u.SourceOracleTLSEncryptedVerifyCertificate, "", true)
+	if u.TLSEncryptedVerifyCertificate != nil {
+		return utils.MarshalJSON(u.TLSEncryptedVerifyCertificate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceOracleEncryption: all fields are null")

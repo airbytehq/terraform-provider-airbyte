@@ -7,6 +7,6 @@ import (
 )
 
 type DestinationGcsJSONLinesNewlineDelimitedJSON struct {
-	Compression *DestinationGcsSchemasCompression `tfsdk:"compression"`
-	FormatType  types.String                      `tfsdk:"format_type"`
+	Compression *DestinationGcsCompression `tfsdk:"compression"`
+	FormatType  types.String               `tfsdk:"format_type"`
 }

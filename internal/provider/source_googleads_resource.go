@@ -150,6 +150,15 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 							validators.IsValidDate(),
 						},
 					},
+					"num_workers": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(3),
+						Description: `The number of concurrent workers to use for syncing. Increasing this value may speed up syncs for accounts with many customers or streams. Adjust based on your API usage and rate limits. Default: 3`,
+						Validators: []validator.Int64{
+							int64validator.Between(2, 25),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)`,
