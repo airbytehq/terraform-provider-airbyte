@@ -103,11 +103,11 @@ The same approach works for destinations:
 
 ```hcl
 moved {
-  from = airbyte_destination_bigquery.my_dest
-  to   = airbyte_destination.my_dest
+  from = airbyte_destination_bigquery.my_bigquery_dest
+  to   = airbyte_destination.my_bigquery_dest
 }
 
-data "airbyte_connector_configuration" "bigquery" {
+data "airbyte_connector_configuration" "my_bigquery_dest_config" {
   connector_name = "destination-bigquery"
   configuration = {
     project_id = "my-gcp-project"
@@ -118,11 +118,11 @@ data "airbyte_connector_configuration" "bigquery" {
   }
 }
 
-resource "airbyte_destination" "my_dest" {
+resource "airbyte_destination" "my_bigquery_dest" {
   name          = "BigQuery"
   workspace_id  = var.workspace_id
-  definition_id = data.airbyte_connector_configuration.bigquery.definition_id
-  configuration = data.airbyte_connector_configuration.bigquery.configuration_json
+  definition_id = data.airbyte_connector_configuration.my_bigquery_dest_config.definition_id
+  configuration = data.airbyte_connector_configuration.my_bigquery_dest_config.configuration_json
 }
 ```
 
