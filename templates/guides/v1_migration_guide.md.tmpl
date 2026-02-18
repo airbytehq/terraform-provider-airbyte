@@ -45,11 +45,6 @@ resource "airbyte_source_postgres" "my_pg_source" {
 **After (generic resource with validated configuration):**
 
 ```hcl
-moved {
-  from = airbyte_source_postgres.my_pg_source
-  to   = airbyte_source.my_pg_source
-}
-
 data "airbyte_connector_configuration" "my_pg_source_config" {
   connector_name = "source-postgres"
   configuration = {
@@ -68,6 +63,15 @@ resource "airbyte_source" "my_pg_source" {
   workspace_id  = var.workspace_id
   definition_id = data.airbyte_connector_configuration.my_pg_source_config.definition_id
   configuration = data.airbyte_connector_configuration.my_pg_source_config.configuration_json
+}
+
+// ℹ️ The `moved` block informs terraform to not
+// delete and/or recreate your resources.
+// This block may be deleted once your migration
+// to the 1.0 provider is fully complete.
+moved {
+  from = airbyte_source_postgres.my_pg_source
+  to   = airbyte_source.my_pg_source
 }
 ```
 
