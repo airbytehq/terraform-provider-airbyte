@@ -95,7 +95,7 @@ Run `terraform plan` and confirm:
 
 ### Step 4 — Apply and clean up
 
-Run `terraform apply` to complete the migration. After a successful apply, remove the `moved` block — it is a one-time migration directive.
+Run `terraform apply` to complete the migration. After a successful apply, you may optionally remove the `moved` block — it is only required during the initial migration.
 
 ### Migrating destinations
 
