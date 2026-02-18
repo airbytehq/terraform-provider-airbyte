@@ -28,7 +28,7 @@ Remove the typed resource and add a `moved` block pointing from the old address 
 **Before (typed resource):**
 
 ```hcl
-resource "airbyte_source_postgres" "my_source" {
+resource "airbyte_source_postgres" "my_pg_source" {
   name         = "Production Postgres"
   workspace_id = var.workspace_id
 
@@ -46,11 +46,11 @@ resource "airbyte_source_postgres" "my_source" {
 
 ```hcl
 moved {
-  from = airbyte_source_postgres.my_source
-  to   = airbyte_source.my_source
+  from = airbyte_source_postgres.my_pg_source
+  to   = airbyte_source.my_pg_source
 }
 
-data "airbyte_connector_configuration" "postgres" {
+data "airbyte_connector_configuration" "my_pg_source_config" {
   connector_name = "source-postgres"
   configuration = {
     host     = "db.example.com"
@@ -63,11 +63,11 @@ data "airbyte_connector_configuration" "postgres" {
   }
 }
 
-resource "airbyte_source" "my_source" {
+resource "airbyte_source" "my_pg_source" {
   name          = "Production Postgres"
   workspace_id  = var.workspace_id
-  definition_id = data.airbyte_connector_configuration.postgres.definition_id
-  configuration = data.airbyte_connector_configuration.postgres.configuration_json
+  definition_id = data.airbyte_connector_configuration.my_pg_source_config.definition_id
+  configuration = data.airbyte_connector_configuration.my_pg_source_config.configuration_json
 }
 ```
 
@@ -79,10 +79,10 @@ Update any resources that reference the old typed resource:
 
 ```hcl
 # Before:
-source_id = airbyte_source_postgres.my_source.source_id
+source_id = airbyte_source_postgres.my_pg_source.source_id
 
 # After:
-source_id = airbyte_source.my_source.source_id
+source_id = airbyte_source.my_pg_source.source_id
 ```
 
 ### Step 3 — Plan and verify
