@@ -2,7 +2,6 @@ package provider
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 )
@@ -71,7 +70,7 @@ func (w *deprecatedResourceWrapper) ImportState(ctx context.Context, req resourc
 	} else {
 		resp.Diagnostics.AddError(
 			"Import Not Supported",
-			fmt.Sprintf("This resource does not support import."),
+			"This resource does not support import.",
 		)
 	}
 }
