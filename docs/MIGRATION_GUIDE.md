@@ -17,6 +17,71 @@ For example, if `airbyte_source_pardot` fails because the connector renamed `pag
 
 This provider supports cross-resource-type state migration using Terraform's `moved` block. This is the safest approach because it is declarative, auditable in version control, and prevents accidental resource deletion.
 
+### Migrating from `_custom` resources
+
+If you are using `airbyte_source_custom` or `airbyte_destination_custom` from a pre-1.0 provider version, these resources have been replaced by the generic `airbyte_source` and `airbyte_destination` resources. The generic resources have the same contract as the old `_custom` resources (JSON configuration, `definition_id`, etc.), so migrating is straightforward.
+
+**Before (pre-1.0):**
+
+```hcl
+resource "airbyte_source_custom" "my_source" {
+  name          = "My Custom Source"
+  workspace_id  = var.workspace_id
+  definition_id = "ab5e6175-68e1-4c17-bff9-56103bbb0d80"
+
+  configuration = jsonencode({
+    api_key = var.api_key
+    host    = "api.example.com"
+  })
+}
+```
+
+**After (1.0):**
+
+```hcl
+moved {
+  from = airbyte_source_custom.my_source
+  to   = airbyte_source.my_source
+}
+
+resource "airbyte_source" "my_source" {
+  name          = "My Custom Source"
+  workspace_id  = var.workspace_id
+  definition_id = "ab5e6175-68e1-4c17-bff9-56103bbb0d80"
+
+  configuration = jsonencode({
+    api_key = var.api_key
+    host    = "api.example.com"
+  })
+}
+```
+
+The same applies for destinations:
+
+```hcl
+moved {
+  from = airbyte_destination_custom.my_dest
+  to   = airbyte_destination.my_dest
+}
+
+resource "airbyte_destination" "my_dest" {
+  name          = "My Custom Destination"
+  workspace_id  = var.workspace_id
+  definition_id = "<DEFINITION_ID>"
+
+  configuration = jsonencode({
+    # Your destination configuration here
+  })
+}
+```
+
+> **Note**
+> The `_custom` resources already used JSON configuration, so your `configuration` block can remain unchanged. Only the resource type name changes.
+
+### Migrating from typed resources
+
+For typed resources like `airbyte_source_pardot`, `airbyte_source_postgres`, etc., follow the steps below. The key difference from `_custom` migration is that typed resources used structured `configuration` blocks which must be converted to `jsonencode()`.
+
 ### Step 1: Replace the typed resource with a `moved` block and generic resource
 
 Remove the old typed resource block and add a `moved` block pointing from the old address to the new one. Then define the new generic resource.
