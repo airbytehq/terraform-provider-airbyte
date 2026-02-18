@@ -277,55 +277,10 @@ func (d *DestinationGcsParquetColumnarStorage) GetPageSizeKb() *int64 {
 	return d.PageSizeKb
 }
 
-type DestinationGcsSchemasFormatOutputFormatCompressionType string
-
-const (
-	DestinationGcsSchemasFormatOutputFormatCompressionTypeGzip DestinationGcsSchemasFormatOutputFormatCompressionType = "GZIP"
-)
-
-func (e DestinationGcsSchemasFormatOutputFormatCompressionType) ToPointer() *DestinationGcsSchemasFormatOutputFormatCompressionType {
-	return &e
-}
-func (e *DestinationGcsSchemasFormatOutputFormatCompressionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GZIP":
-		*e = DestinationGcsSchemasFormatOutputFormatCompressionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsSchemasFormatOutputFormatCompressionType: %v", v)
-	}
-}
-
-type DestinationGcsSchemasGZIP struct {
-	CompressionType *DestinationGcsSchemasFormatOutputFormatCompressionType `default:"GZIP" json:"compression_type"`
-}
-
-func (d DestinationGcsSchemasGZIP) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationGcsSchemasGZIP) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationGcsSchemasGZIP) GetCompressionType() *DestinationGcsSchemasFormatOutputFormatCompressionType {
-	if d == nil {
-		return nil
-	}
-	return d.CompressionType
-}
-
 type DestinationGcsSchemasFormatCompressionType string
 
 const (
-	DestinationGcsSchemasFormatCompressionTypeNoCompression DestinationGcsSchemasFormatCompressionType = "No Compression"
+	DestinationGcsSchemasFormatCompressionTypeGzip DestinationGcsSchemasFormatCompressionType = "GZIP"
 )
 
 func (e DestinationGcsSchemasFormatCompressionType) ToPointer() *DestinationGcsSchemasFormatCompressionType {
@@ -337,7 +292,7 @@ func (e *DestinationGcsSchemasFormatCompressionType) UnmarshalJSON(data []byte) 
 		return err
 	}
 	switch v {
-	case "No Compression":
+	case "GZIP":
 		*e = DestinationGcsSchemasFormatCompressionType(v)
 		return nil
 	default:
@@ -345,197 +300,8 @@ func (e *DestinationGcsSchemasFormatCompressionType) UnmarshalJSON(data []byte) 
 	}
 }
 
-type DestinationGcsSchemasFormatNoCompression struct {
-	CompressionType *DestinationGcsSchemasFormatCompressionType `default:"No Compression" json:"compression_type"`
-}
-
-func (d DestinationGcsSchemasFormatNoCompression) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationGcsSchemasFormatNoCompression) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationGcsSchemasFormatNoCompression) GetCompressionType() *DestinationGcsSchemasFormatCompressionType {
-	if d == nil {
-		return nil
-	}
-	return d.CompressionType
-}
-
-type DestinationGcsSchemasCompressionUnionType string
-
-const (
-	DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasFormatNoCompression DestinationGcsSchemasCompressionUnionType = "destination-gcs_Schemas_format_No Compression"
-	DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasGZIP                DestinationGcsSchemasCompressionUnionType = "destination-gcs_Schemas_GZIP"
-)
-
-// DestinationGcsSchemasCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-type DestinationGcsSchemasCompression struct {
-	DestinationGcsSchemasFormatNoCompression *DestinationGcsSchemasFormatNoCompression `queryParam:"inline" union:"member"`
-	DestinationGcsSchemasGZIP                *DestinationGcsSchemasGZIP                `queryParam:"inline" union:"member"`
-
-	Type DestinationGcsSchemasCompressionUnionType
-}
-
-func CreateDestinationGcsSchemasCompressionDestinationGcsSchemasFormatNoCompression(destinationGcsSchemasFormatNoCompression DestinationGcsSchemasFormatNoCompression) DestinationGcsSchemasCompression {
-	typ := DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasFormatNoCompression
-
-	return DestinationGcsSchemasCompression{
-		DestinationGcsSchemasFormatNoCompression: &destinationGcsSchemasFormatNoCompression,
-		Type:                                     typ,
-	}
-}
-
-func CreateDestinationGcsSchemasCompressionDestinationGcsSchemasGZIP(destinationGcsSchemasGZIP DestinationGcsSchemasGZIP) DestinationGcsSchemasCompression {
-	typ := DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasGZIP
-
-	return DestinationGcsSchemasCompression{
-		DestinationGcsSchemasGZIP: &destinationGcsSchemasGZIP,
-		Type:                      typ,
-	}
-}
-
-func (u *DestinationGcsSchemasCompression) UnmarshalJSON(data []byte) error {
-
-	var candidates []utils.UnionCandidate
-
-	// Collect all valid candidates
-	var destinationGcsSchemasFormatNoCompression DestinationGcsSchemasFormatNoCompression = DestinationGcsSchemasFormatNoCompression{}
-	if err := utils.UnmarshalJSON(data, &destinationGcsSchemasFormatNoCompression, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasFormatNoCompression,
-			Value: &destinationGcsSchemasFormatNoCompression,
-		})
-	}
-
-	var destinationGcsSchemasGZIP DestinationGcsSchemasGZIP = DestinationGcsSchemasGZIP{}
-	if err := utils.UnmarshalJSON(data, &destinationGcsSchemasGZIP, "", true, nil); err == nil {
-		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasGZIP,
-			Value: &destinationGcsSchemasGZIP,
-		})
-	}
-
-	if len(candidates) == 0 {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsSchemasCompression", string(data))
-	}
-
-	// Pick the best candidate using multi-stage filtering
-	best := utils.PickBestUnionCandidate(candidates, data)
-	if best == nil {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsSchemasCompression", string(data))
-	}
-
-	// Set the union type and value based on the best candidate
-	u.Type = best.Type.(DestinationGcsSchemasCompressionUnionType)
-	switch best.Type {
-	case DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasFormatNoCompression:
-		u.DestinationGcsSchemasFormatNoCompression = best.Value.(*DestinationGcsSchemasFormatNoCompression)
-		return nil
-	case DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasGZIP:
-		u.DestinationGcsSchemasGZIP = best.Value.(*DestinationGcsSchemasGZIP)
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsSchemasCompression", string(data))
-}
-
-func (u DestinationGcsSchemasCompression) MarshalJSON() ([]byte, error) {
-	if u.DestinationGcsSchemasFormatNoCompression != nil {
-		return utils.MarshalJSON(u.DestinationGcsSchemasFormatNoCompression, "", true)
-	}
-
-	if u.DestinationGcsSchemasGZIP != nil {
-		return utils.MarshalJSON(u.DestinationGcsSchemasGZIP, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationGcsSchemasCompression: all fields are null")
-}
-
-type DestinationGcsSchemasFormatFormatType string
-
-const (
-	DestinationGcsSchemasFormatFormatTypeJsonl DestinationGcsSchemasFormatFormatType = "JSONL"
-)
-
-func (e DestinationGcsSchemasFormatFormatType) ToPointer() *DestinationGcsSchemasFormatFormatType {
-	return &e
-}
-func (e *DestinationGcsSchemasFormatFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "JSONL":
-		*e = DestinationGcsSchemasFormatFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsSchemasFormatFormatType: %v", v)
-	}
-}
-
-type DestinationGcsJSONLinesNewlineDelimitedJSON struct {
-	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-	Compression *DestinationGcsSchemasCompression      `json:"compression,omitempty"`
-	FormatType  *DestinationGcsSchemasFormatFormatType `default:"JSONL" json:"format_type"`
-}
-
-func (d DestinationGcsJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationGcsJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (d *DestinationGcsJSONLinesNewlineDelimitedJSON) GetCompression() *DestinationGcsSchemasCompression {
-	if d == nil {
-		return nil
-	}
-	return d.Compression
-}
-
-func (d *DestinationGcsJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationGcsSchemasFormatFormatType {
-	if d == nil {
-		return nil
-	}
-	return d.FormatType
-}
-
-type DestinationGcsSchemasCompressionType string
-
-const (
-	DestinationGcsSchemasCompressionTypeGzip DestinationGcsSchemasCompressionType = "GZIP"
-)
-
-func (e DestinationGcsSchemasCompressionType) ToPointer() *DestinationGcsSchemasCompressionType {
-	return &e
-}
-func (e *DestinationGcsSchemasCompressionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GZIP":
-		*e = DestinationGcsSchemasCompressionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationGcsSchemasCompressionType: %v", v)
-	}
-}
-
 type DestinationGcsGZIP struct {
-	CompressionType *DestinationGcsSchemasCompressionType `default:"GZIP" json:"compression_type"`
+	CompressionType *DestinationGcsSchemasFormatCompressionType `default:"GZIP" json:"compression_type"`
 }
 
 func (d DestinationGcsGZIP) MarshalJSON() ([]byte, error) {
@@ -549,38 +315,38 @@ func (d *DestinationGcsGZIP) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (d *DestinationGcsGZIP) GetCompressionType() *DestinationGcsSchemasCompressionType {
+func (d *DestinationGcsGZIP) GetCompressionType() *DestinationGcsSchemasFormatCompressionType {
 	if d == nil {
 		return nil
 	}
 	return d.CompressionType
 }
 
-type DestinationGcsCompressionType string
+type DestinationGcsSchemasCompressionType string
 
 const (
-	DestinationGcsCompressionTypeNoCompression DestinationGcsCompressionType = "No Compression"
+	DestinationGcsSchemasCompressionTypeNoCompression DestinationGcsSchemasCompressionType = "No Compression"
 )
 
-func (e DestinationGcsCompressionType) ToPointer() *DestinationGcsCompressionType {
+func (e DestinationGcsSchemasCompressionType) ToPointer() *DestinationGcsSchemasCompressionType {
 	return &e
 }
-func (e *DestinationGcsCompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsSchemasCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = DestinationGcsCompressionType(v)
+		*e = DestinationGcsSchemasCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsCompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsSchemasCompressionType: %v", v)
 	}
 }
 
 type DestinationGcsSchemasNoCompression struct {
-	CompressionType *DestinationGcsCompressionType `default:"No Compression" json:"compression_type"`
+	CompressionType *DestinationGcsSchemasCompressionType `default:"No Compression" json:"compression_type"`
 }
 
 func (d DestinationGcsSchemasNoCompression) MarshalJSON() ([]byte, error) {
@@ -594,7 +360,7 @@ func (d *DestinationGcsSchemasNoCompression) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (d *DestinationGcsSchemasNoCompression) GetCompressionType() *DestinationGcsCompressionType {
+func (d *DestinationGcsSchemasNoCompression) GetCompressionType() *DestinationGcsSchemasCompressionType {
 	if d == nil {
 		return nil
 	}
@@ -608,7 +374,7 @@ const (
 	DestinationGcsCompressionUnionTypeDestinationGcsGZIP                 DestinationGcsCompressionUnionType = "destination-gcs_GZIP"
 )
 
-// DestinationGcsCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
+// DestinationGcsCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsCompression struct {
 	DestinationGcsSchemasNoCompression *DestinationGcsSchemasNoCompression `queryParam:"inline" union:"member"`
 	DestinationGcsGZIP                 *DestinationGcsGZIP                 `queryParam:"inline" union:"member"`
@@ -691,6 +457,240 @@ func (u DestinationGcsCompression) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationGcsCompression: all fields are null")
 }
 
+type DestinationGcsSchemasFormatFormatType string
+
+const (
+	DestinationGcsSchemasFormatFormatTypeJsonl DestinationGcsSchemasFormatFormatType = "JSONL"
+)
+
+func (e DestinationGcsSchemasFormatFormatType) ToPointer() *DestinationGcsSchemasFormatFormatType {
+	return &e
+}
+func (e *DestinationGcsSchemasFormatFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "JSONL":
+		*e = DestinationGcsSchemasFormatFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGcsSchemasFormatFormatType: %v", v)
+	}
+}
+
+type DestinationGcsJSONLinesNewlineDelimitedJSON struct {
+	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
+	Compression *DestinationGcsCompression             `json:"compression,omitempty"`
+	FormatType  *DestinationGcsSchemasFormatFormatType `default:"JSONL" json:"format_type"`
+}
+
+func (d DestinationGcsJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (d *DestinationGcsJSONLinesNewlineDelimitedJSON) GetCompression() *DestinationGcsCompression {
+	if d == nil {
+		return nil
+	}
+	return d.Compression
+}
+
+func (d *DestinationGcsJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationGcsSchemasFormatFormatType {
+	if d == nil {
+		return nil
+	}
+	return d.FormatType
+}
+
+type DestinationGcsCompressionType string
+
+const (
+	DestinationGcsCompressionTypeGzip DestinationGcsCompressionType = "GZIP"
+)
+
+func (e DestinationGcsCompressionType) ToPointer() *DestinationGcsCompressionType {
+	return &e
+}
+func (e *DestinationGcsCompressionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "GZIP":
+		*e = DestinationGcsCompressionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGcsCompressionType: %v", v)
+	}
+}
+
+type Gzip struct {
+	CompressionType *DestinationGcsCompressionType `default:"GZIP" json:"compression_type"`
+}
+
+func (g Gzip) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *Gzip) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (g *Gzip) GetCompressionType() *DestinationGcsCompressionType {
+	if g == nil {
+		return nil
+	}
+	return g.CompressionType
+}
+
+type CompressionType string
+
+const (
+	CompressionTypeNoCompression CompressionType = "No Compression"
+)
+
+func (e CompressionType) ToPointer() *CompressionType {
+	return &e
+}
+func (e *CompressionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "No Compression":
+		*e = CompressionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CompressionType: %v", v)
+	}
+}
+
+type DestinationGcsNoCompression struct {
+	CompressionType *CompressionType `default:"No Compression" json:"compression_type"`
+}
+
+func (d DestinationGcsNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (d *DestinationGcsNoCompression) GetCompressionType() *CompressionType {
+	if d == nil {
+		return nil
+	}
+	return d.CompressionType
+}
+
+type CompressionUnionType string
+
+const (
+	CompressionUnionTypeDestinationGcsNoCompression CompressionUnionType = "destination-gcs_No Compression"
+	CompressionUnionTypeGzip                        CompressionUnionType = "GZIP"
+)
+
+// Compression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
+type Compression struct {
+	DestinationGcsNoCompression *DestinationGcsNoCompression `queryParam:"inline" union:"member"`
+	Gzip                        *Gzip                        `queryParam:"inline" union:"member"`
+
+	Type CompressionUnionType
+}
+
+func CreateCompressionDestinationGcsNoCompression(destinationGcsNoCompression DestinationGcsNoCompression) Compression {
+	typ := CompressionUnionTypeDestinationGcsNoCompression
+
+	return Compression{
+		DestinationGcsNoCompression: &destinationGcsNoCompression,
+		Type:                        typ,
+	}
+}
+
+func CreateCompressionGzip(gzip Gzip) Compression {
+	typ := CompressionUnionTypeGzip
+
+	return Compression{
+		Gzip: &gzip,
+		Type: typ,
+	}
+}
+
+func (u *Compression) UnmarshalJSON(data []byte) error {
+
+	var candidates []utils.UnionCandidate
+
+	// Collect all valid candidates
+	var destinationGcsNoCompression DestinationGcsNoCompression = DestinationGcsNoCompression{}
+	if err := utils.UnmarshalJSON(data, &destinationGcsNoCompression, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  CompressionUnionTypeDestinationGcsNoCompression,
+			Value: &destinationGcsNoCompression,
+		})
+	}
+
+	var gzip Gzip = Gzip{}
+	if err := utils.UnmarshalJSON(data, &gzip, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  CompressionUnionTypeGzip,
+			Value: &gzip,
+		})
+	}
+
+	if len(candidates) == 0 {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for Compression", string(data))
+	}
+
+	// Pick the best candidate using multi-stage filtering
+	best := utils.PickBestUnionCandidate(candidates, data)
+	if best == nil {
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for Compression", string(data))
+	}
+
+	// Set the union type and value based on the best candidate
+	u.Type = best.Type.(CompressionUnionType)
+	switch best.Type {
+	case CompressionUnionTypeDestinationGcsNoCompression:
+		u.DestinationGcsNoCompression = best.Value.(*DestinationGcsNoCompression)
+		return nil
+	case CompressionUnionTypeGzip:
+		u.Gzip = best.Value.(*Gzip)
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Compression", string(data))
+}
+
+func (u Compression) MarshalJSON() ([]byte, error) {
+	if u.DestinationGcsNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationGcsNoCompression, "", true)
+	}
+
+	if u.Gzip != nil {
+		return utils.MarshalJSON(u.Gzip, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Compression: all fields are null")
+}
+
 // Normalization - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 type Normalization string
 
@@ -743,7 +743,7 @@ func (e *DestinationGcsSchemasFormatType) UnmarshalJSON(data []byte) error {
 
 type DestinationGcsCSVCommaSeparatedValues struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
-	Compression *DestinationGcsCompression `json:"compression,omitempty"`
+	Compression *Compression `json:"compression,omitempty"`
 	// Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 	Flattening *Normalization                   `default:"No flattening" json:"flattening"`
 	FormatType *DestinationGcsSchemasFormatType `default:"CSV" json:"format_type"`
@@ -760,7 +760,7 @@ func (d *DestinationGcsCSVCommaSeparatedValues) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (d *DestinationGcsCSVCommaSeparatedValues) GetCompression() *DestinationGcsCompression {
+func (d *DestinationGcsCSVCommaSeparatedValues) GetCompression() *Compression {
 	if d == nil {
 		return nil
 	}
@@ -1065,57 +1065,57 @@ func (e *Codec) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationGcsNoCompression struct {
+type NoCompression struct {
 	Codec *Codec `default:"no compression" json:"codec"`
 }
 
-func (d DestinationGcsNoCompression) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
+func (n NoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(n, "", false)
 }
 
-func (d *DestinationGcsNoCompression) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+func (n *NoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &n, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (d *DestinationGcsNoCompression) GetCodec() *Codec {
-	if d == nil {
+func (n *NoCompression) GetCodec() *Codec {
+	if n == nil {
 		return nil
 	}
-	return d.Codec
+	return n.Codec
 }
 
 type CompressionCodecType string
 
 const (
-	CompressionCodecTypeDestinationGcsNoCompression CompressionCodecType = "destination-gcs_No Compression"
-	CompressionCodecTypeDeflate                     CompressionCodecType = "Deflate"
-	CompressionCodecTypeBzip2                       CompressionCodecType = "bzip2"
-	CompressionCodecTypeXz                          CompressionCodecType = "xz"
-	CompressionCodecTypeZstandard                   CompressionCodecType = "zstandard"
-	CompressionCodecTypeSnappy                      CompressionCodecType = "snappy"
+	CompressionCodecTypeNoCompression CompressionCodecType = "No Compression"
+	CompressionCodecTypeDeflate       CompressionCodecType = "Deflate"
+	CompressionCodecTypeBzip2         CompressionCodecType = "bzip2"
+	CompressionCodecTypeXz            CompressionCodecType = "xz"
+	CompressionCodecTypeZstandard     CompressionCodecType = "zstandard"
+	CompressionCodecTypeSnappy        CompressionCodecType = "snappy"
 )
 
 // CompressionCodec - The compression algorithm used to compress data. Default to no compression.
 type CompressionCodec struct {
-	DestinationGcsNoCompression *DestinationGcsNoCompression `queryParam:"inline" union:"member"`
-	Deflate                     *Deflate                     `queryParam:"inline" union:"member"`
-	Bzip2                       *Bzip2                       `queryParam:"inline" union:"member"`
-	Xz                          *Xz                          `queryParam:"inline" union:"member"`
-	Zstandard                   *Zstandard                   `queryParam:"inline" union:"member"`
-	Snappy                      *Snappy                      `queryParam:"inline" union:"member"`
+	NoCompression *NoCompression `queryParam:"inline" union:"member"`
+	Deflate       *Deflate       `queryParam:"inline" union:"member"`
+	Bzip2         *Bzip2         `queryParam:"inline" union:"member"`
+	Xz            *Xz            `queryParam:"inline" union:"member"`
+	Zstandard     *Zstandard     `queryParam:"inline" union:"member"`
+	Snappy        *Snappy        `queryParam:"inline" union:"member"`
 
 	Type CompressionCodecType
 }
 
-func CreateCompressionCodecDestinationGcsNoCompression(destinationGcsNoCompression DestinationGcsNoCompression) CompressionCodec {
-	typ := CompressionCodecTypeDestinationGcsNoCompression
+func CreateCompressionCodecNoCompression(noCompression NoCompression) CompressionCodec {
+	typ := CompressionCodecTypeNoCompression
 
 	return CompressionCodec{
-		DestinationGcsNoCompression: &destinationGcsNoCompression,
-		Type:                        typ,
+		NoCompression: &noCompression,
+		Type:          typ,
 	}
 }
 
@@ -1169,11 +1169,11 @@ func (u *CompressionCodec) UnmarshalJSON(data []byte) error {
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var destinationGcsNoCompression DestinationGcsNoCompression = DestinationGcsNoCompression{}
-	if err := utils.UnmarshalJSON(data, &destinationGcsNoCompression, "", true, nil); err == nil {
+	var noCompression NoCompression = NoCompression{}
+	if err := utils.UnmarshalJSON(data, &noCompression, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  CompressionCodecTypeDestinationGcsNoCompression,
-			Value: &destinationGcsNoCompression,
+			Type:  CompressionCodecTypeNoCompression,
+			Value: &noCompression,
 		})
 	}
 
@@ -1230,8 +1230,8 @@ func (u *CompressionCodec) UnmarshalJSON(data []byte) error {
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(CompressionCodecType)
 	switch best.Type {
-	case CompressionCodecTypeDestinationGcsNoCompression:
-		u.DestinationGcsNoCompression = best.Value.(*DestinationGcsNoCompression)
+	case CompressionCodecTypeNoCompression:
+		u.NoCompression = best.Value.(*NoCompression)
 		return nil
 	case CompressionCodecTypeDeflate:
 		u.Deflate = best.Value.(*Deflate)
@@ -1254,8 +1254,8 @@ func (u *CompressionCodec) UnmarshalJSON(data []byte) error {
 }
 
 func (u CompressionCodec) MarshalJSON() ([]byte, error) {
-	if u.DestinationGcsNoCompression != nil {
-		return utils.MarshalJSON(u.DestinationGcsNoCompression, "", true)
+	if u.NoCompression != nil {
+		return utils.MarshalJSON(u.NoCompression, "", true)
 	}
 
 	if u.Deflate != nil {

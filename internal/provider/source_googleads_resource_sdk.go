@@ -27,6 +27,7 @@ func (r *SourceGoogleAdsResourceModel) RefreshFromSharedSourceResponse(ctx conte
 			r.Configuration.CustomerID = configurationPriorData.CustomerID
 			r.Configuration.CustomerStatusFilter = configurationPriorData.CustomerStatusFilter
 			r.Configuration.EndDate = configurationPriorData.EndDate
+			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
 			r.Configuration.StartDate = configurationPriorData.StartDate
 		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
@@ -194,6 +195,12 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest(ctx 
 	} else {
 		endDate = nil
 	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -211,6 +218,7 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest(ctx 
 		CustomerID:           customerID,
 		CustomerStatusFilter: customerStatusFilter,
 		EndDate:              endDate,
+		NumWorkers:           numWorkers,
 		StartDate:            startDate,
 		AdditionalProperties: additionalProperties,
 	}
@@ -319,6 +327,12 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest(ctx con
 	} else {
 		endDate = nil
 	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -336,6 +350,7 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest(ctx con
 		CustomerID:           customerID,
 		CustomerStatusFilter: customerStatusFilter,
 		EndDate:              endDate,
+		NumWorkers:           numWorkers,
 		StartDate:            startDate,
 		AdditionalProperties: additionalProperties,
 	}

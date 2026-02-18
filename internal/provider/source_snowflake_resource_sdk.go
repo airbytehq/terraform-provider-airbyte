@@ -229,9 +229,9 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest(ctx 
 	if r.Configuration.Cursor != nil {
 		var sourceSnowflakeScanChangesWithUserDefinedCursor *shared.SourceSnowflakeScanChangesWithUserDefinedCursor
 		if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
-			cursorMethod := new(shared.SourceSnowflakeCursorMethod)
+			cursorMethod := new(shared.CursorMethod)
 			if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
-				*cursorMethod = shared.SourceSnowflakeCursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
+				*cursorMethod = shared.CursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
 			} else {
 				cursorMethod = nil
 			}

@@ -47,8 +47,8 @@ func (d *DestinationElasticsearchUsernamePassword) GetUsername() string {
 	return d.Username
 }
 
-// DestinationElasticsearchAPIKeySecret - Use a api key and secret combination to authenticate
-type DestinationElasticsearchAPIKeySecret struct {
+// APIKeySecret - Use a api key and secret combination to authenticate
+type APIKeySecret struct {
 	// The Key ID to used when accessing an enterprise Elasticsearch instance.
 	APIKeyID string `json:"apiKeyId"`
 	// The secret associated with the API Key ID.
@@ -56,56 +56,56 @@ type DestinationElasticsearchAPIKeySecret struct {
 	method       string `const:"secret" json:"method"`
 }
 
-func (d DestinationElasticsearchAPIKeySecret) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
+func (a APIKeySecret) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
 }
 
-func (d *DestinationElasticsearchAPIKeySecret) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+func (a *APIKeySecret) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (d *DestinationElasticsearchAPIKeySecret) GetAPIKeyID() string {
-	if d == nil {
+func (a *APIKeySecret) GetAPIKeyID() string {
+	if a == nil {
 		return ""
 	}
-	return d.APIKeyID
+	return a.APIKeyID
 }
 
-func (d *DestinationElasticsearchAPIKeySecret) GetAPIKeySecret() string {
-	if d == nil {
+func (a *APIKeySecret) GetAPIKeySecret() string {
+	if a == nil {
 		return ""
 	}
-	return d.APIKeySecret
+	return a.APIKeySecret
 }
 
-func (d *DestinationElasticsearchAPIKeySecret) GetMethod() string {
+func (a *APIKeySecret) GetMethod() string {
 	return "secret"
 }
 
 type DestinationElasticsearchAuthenticationMethodType string
 
 const (
-	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret     DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_Api Key/Secret"
+	DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret                             DestinationElasticsearchAuthenticationMethodType = "Api Key/Secret"
 	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchUsernamePassword DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_Username/Password"
 )
 
 // DestinationElasticsearchAuthenticationMethod - The type of authentication to be used
 type DestinationElasticsearchAuthenticationMethod struct {
-	DestinationElasticsearchAPIKeySecret     *DestinationElasticsearchAPIKeySecret     `queryParam:"inline" union:"member"`
+	APIKeySecret                             *APIKeySecret                             `queryParam:"inline" union:"member"`
 	DestinationElasticsearchUsernamePassword *DestinationElasticsearchUsernamePassword `queryParam:"inline" union:"member"`
 
 	Type DestinationElasticsearchAuthenticationMethodType
 }
 
-func CreateDestinationElasticsearchAuthenticationMethodDestinationElasticsearchAPIKeySecret(destinationElasticsearchAPIKeySecret DestinationElasticsearchAPIKeySecret) DestinationElasticsearchAuthenticationMethod {
-	typ := DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret
+func CreateDestinationElasticsearchAuthenticationMethodAPIKeySecret(apiKeySecret APIKeySecret) DestinationElasticsearchAuthenticationMethod {
+	typ := DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret
 
 	return DestinationElasticsearchAuthenticationMethod{
-		DestinationElasticsearchAPIKeySecret: &destinationElasticsearchAPIKeySecret,
-		Type:                                 typ,
+		APIKeySecret: &apiKeySecret,
+		Type:         typ,
 	}
 }
 
@@ -123,11 +123,11 @@ func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var destinationElasticsearchAPIKeySecret DestinationElasticsearchAPIKeySecret = DestinationElasticsearchAPIKeySecret{}
-	if err := utils.UnmarshalJSON(data, &destinationElasticsearchAPIKeySecret, "", true, nil); err == nil {
+	var apiKeySecret APIKeySecret = APIKeySecret{}
+	if err := utils.UnmarshalJSON(data, &apiKeySecret, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret,
-			Value: &destinationElasticsearchAPIKeySecret,
+			Type:  DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret,
+			Value: &apiKeySecret,
 		})
 	}
 
@@ -152,8 +152,8 @@ func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(DestinationElasticsearchAuthenticationMethodType)
 	switch best.Type {
-	case DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret:
-		u.DestinationElasticsearchAPIKeySecret = best.Value.(*DestinationElasticsearchAPIKeySecret)
+	case DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret:
+		u.APIKeySecret = best.Value.(*APIKeySecret)
 		return nil
 	case DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchUsernamePassword:
 		u.DestinationElasticsearchUsernamePassword = best.Value.(*DestinationElasticsearchUsernamePassword)
@@ -164,8 +164,8 @@ func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte
 }
 
 func (u DestinationElasticsearchAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationElasticsearchAPIKeySecret != nil {
-		return utils.MarshalJSON(u.DestinationElasticsearchAPIKeySecret, "", true)
+	if u.APIKeySecret != nil {
+		return utils.MarshalJSON(u.APIKeySecret, "", true)
 	}
 
 	if u.DestinationElasticsearchUsernamePassword != nil {

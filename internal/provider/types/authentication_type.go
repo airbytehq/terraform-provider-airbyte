@@ -3,6 +3,6 @@
 package types
 
 type AuthenticationType struct {
-	APIKey  *APIKey                  `queryParam:"inline" tfsdk:"api_key"`
-	OAuth20 *SourceConvertkitOAuth20 `queryParam:"inline" tfsdk:"o_auth20"`
+	OAuth                           *SourceGoogleSearchConsoleOAuth                           `queryParam:"inline" tfsdk:"o_auth"`
+	ServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication `queryParam:"inline" tfsdk:"service_account_key_authentication"`
 }

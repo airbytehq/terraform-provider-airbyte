@@ -36,7 +36,7 @@ func (e *DefinitionOfConversionCountInReports) UnmarshalJSON(data []byte) error 
 	}
 }
 
-type SourceOutbrainAmplifyUsernamePassword struct {
+type UsernamePassword struct {
 	// Add Password for authentication.
 	Password string `json:"password"`
 	type_    string `const:"username_password" json:"type"`
@@ -44,33 +44,33 @@ type SourceOutbrainAmplifyUsernamePassword struct {
 	Username string `json:"username"`
 }
 
-func (s SourceOutbrainAmplifyUsernamePassword) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
+func (u UsernamePassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
 }
 
-func (s *SourceOutbrainAmplifyUsernamePassword) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+func (u *UsernamePassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *SourceOutbrainAmplifyUsernamePassword) GetPassword() string {
-	if s == nil {
+func (u *UsernamePassword) GetPassword() string {
+	if u == nil {
 		return ""
 	}
-	return s.Password
+	return u.Password
 }
 
-func (s *SourceOutbrainAmplifyUsernamePassword) GetType() string {
+func (u *UsernamePassword) GetType() string {
 	return "username_password"
 }
 
-func (s *SourceOutbrainAmplifyUsernamePassword) GetUsername() string {
-	if s == nil {
+func (u *UsernamePassword) GetUsername() string {
+	if u == nil {
 		return ""
 	}
-	return s.Username
+	return u.Username
 }
 
 type SourceOutbrainAmplifyAccessToken struct {
@@ -104,14 +104,14 @@ func (s *SourceOutbrainAmplifyAccessToken) GetType() string {
 type SourceOutbrainAmplifyAuthenticationMethodType string
 
 const (
-	SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyAccessToken      SourceOutbrainAmplifyAuthenticationMethodType = "source-outbrain-amplify_Access token"
-	SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword SourceOutbrainAmplifyAuthenticationMethodType = "source-outbrain-amplify_Username Password"
+	SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyAccessToken SourceOutbrainAmplifyAuthenticationMethodType = "source-outbrain-amplify_Access token"
+	SourceOutbrainAmplifyAuthenticationMethodTypeUsernamePassword                 SourceOutbrainAmplifyAuthenticationMethodType = "Username Password"
 )
 
 // SourceOutbrainAmplifyAuthenticationMethod - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyAuthenticationMethod struct {
-	SourceOutbrainAmplifyAccessToken      *SourceOutbrainAmplifyAccessToken      `queryParam:"inline" union:"member"`
-	SourceOutbrainAmplifyUsernamePassword *SourceOutbrainAmplifyUsernamePassword `queryParam:"inline" union:"member"`
+	SourceOutbrainAmplifyAccessToken *SourceOutbrainAmplifyAccessToken `queryParam:"inline" union:"member"`
+	UsernamePassword                 *UsernamePassword                 `queryParam:"inline" union:"member"`
 
 	Type SourceOutbrainAmplifyAuthenticationMethodType
 }
@@ -125,12 +125,12 @@ func CreateSourceOutbrainAmplifyAuthenticationMethodSourceOutbrainAmplifyAccessT
 	}
 }
 
-func CreateSourceOutbrainAmplifyAuthenticationMethodSourceOutbrainAmplifyUsernamePassword(sourceOutbrainAmplifyUsernamePassword SourceOutbrainAmplifyUsernamePassword) SourceOutbrainAmplifyAuthenticationMethod {
-	typ := SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword
+func CreateSourceOutbrainAmplifyAuthenticationMethodUsernamePassword(usernamePassword UsernamePassword) SourceOutbrainAmplifyAuthenticationMethod {
+	typ := SourceOutbrainAmplifyAuthenticationMethodTypeUsernamePassword
 
 	return SourceOutbrainAmplifyAuthenticationMethod{
-		SourceOutbrainAmplifyUsernamePassword: &sourceOutbrainAmplifyUsernamePassword,
-		Type:                                  typ,
+		UsernamePassword: &usernamePassword,
+		Type:             typ,
 	}
 }
 
@@ -147,11 +147,11 @@ func (u *SourceOutbrainAmplifyAuthenticationMethod) UnmarshalJSON(data []byte) e
 		})
 	}
 
-	var sourceOutbrainAmplifyUsernamePassword SourceOutbrainAmplifyUsernamePassword = SourceOutbrainAmplifyUsernamePassword{}
-	if err := utils.UnmarshalJSON(data, &sourceOutbrainAmplifyUsernamePassword, "", true, nil); err == nil {
+	var usernamePassword UsernamePassword = UsernamePassword{}
+	if err := utils.UnmarshalJSON(data, &usernamePassword, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword,
-			Value: &sourceOutbrainAmplifyUsernamePassword,
+			Type:  SourceOutbrainAmplifyAuthenticationMethodTypeUsernamePassword,
+			Value: &usernamePassword,
 		})
 	}
 
@@ -171,8 +171,8 @@ func (u *SourceOutbrainAmplifyAuthenticationMethod) UnmarshalJSON(data []byte) e
 	case SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyAccessToken:
 		u.SourceOutbrainAmplifyAccessToken = best.Value.(*SourceOutbrainAmplifyAccessToken)
 		return nil
-	case SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword:
-		u.SourceOutbrainAmplifyUsernamePassword = best.Value.(*SourceOutbrainAmplifyUsernamePassword)
+	case SourceOutbrainAmplifyAuthenticationMethodTypeUsernamePassword:
+		u.UsernamePassword = best.Value.(*UsernamePassword)
 		return nil
 	}
 
@@ -184,8 +184,8 @@ func (u SourceOutbrainAmplifyAuthenticationMethod) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceOutbrainAmplifyAccessToken, "", true)
 	}
 
-	if u.SourceOutbrainAmplifyUsernamePassword != nil {
-		return utils.MarshalJSON(u.SourceOutbrainAmplifyUsernamePassword, "", true)
+	if u.UsernamePassword != nil {
+		return utils.MarshalJSON(u.UsernamePassword, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceOutbrainAmplifyAuthenticationMethod: all fields are null")

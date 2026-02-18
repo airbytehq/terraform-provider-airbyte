@@ -151,7 +151,7 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyCreate
 			SourceOutbrainAmplifyAccessToken: sourceOutbrainAmplifyAccessToken,
 		}
 	}
-	var sourceOutbrainAmplifyUsernamePassword *shared.SourceOutbrainAmplifyUsernamePassword
+	var usernamePassword *shared.UsernamePassword
 	if r.Configuration.Credentials.UsernamePassword != nil {
 		var password string
 		password = r.Configuration.Credentials.UsernamePassword.Password.ValueString()
@@ -159,14 +159,14 @@ func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyCreate
 		var username string
 		username = r.Configuration.Credentials.UsernamePassword.Username.ValueString()
 
-		sourceOutbrainAmplifyUsernamePassword = &shared.SourceOutbrainAmplifyUsernamePassword{
+		usernamePassword = &shared.UsernamePassword{
 			Password: password,
 			Username: username,
 		}
 	}
-	if sourceOutbrainAmplifyUsernamePassword != nil {
+	if usernamePassword != nil {
 		credentials = shared.SourceOutbrainAmplifyAuthenticationMethod{
-			SourceOutbrainAmplifyUsernamePassword: sourceOutbrainAmplifyUsernamePassword,
+			UsernamePassword: usernamePassword,
 		}
 	}
 	endDate := new(string)

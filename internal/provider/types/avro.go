@@ -2,13 +2,5 @@
 
 package types
 
-import (
-	"github.com/hashicorp/terraform-plugin-framework/types"
-)
-
 type Avro struct {
-	DeserializationStrategy types.String `tfsdk:"deserialization_strategy"`
-	SchemaRegistryPassword  types.String `tfsdk:"schema_registry_password"`
-	SchemaRegistryURL       types.String `tfsdk:"schema_registry_url"`
-	SchemaRegistryUsername  types.String `tfsdk:"schema_registry_username"`
 }

@@ -174,18 +174,18 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsCreateRequest(
 				SourceLinkedinAdsOAuth20: sourceLinkedinAdsOAuth20,
 			}
 		}
-		var sourceLinkedinAdsAccessToken *shared.SourceLinkedinAdsAccessToken
+		var accessToken *shared.AccessToken
 		if r.Configuration.Credentials.AccessToken != nil {
-			var accessToken string
-			accessToken = r.Configuration.Credentials.AccessToken.AccessToken.ValueString()
+			var accessToken1 string
+			accessToken1 = r.Configuration.Credentials.AccessToken.AccessToken.ValueString()
 
-			sourceLinkedinAdsAccessToken = &shared.SourceLinkedinAdsAccessToken{
-				AccessToken: accessToken,
+			accessToken = &shared.AccessToken{
+				AccessToken: accessToken1,
 			}
 		}
-		if sourceLinkedinAdsAccessToken != nil {
+		if accessToken != nil {
 			credentials = &shared.SourceLinkedinAdsAuthentication{
-				SourceLinkedinAdsAccessToken: sourceLinkedinAdsAccessToken,
+				AccessToken: accessToken,
 			}
 		}
 	}

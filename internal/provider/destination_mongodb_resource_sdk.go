@@ -129,13 +129,13 @@ func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbCreateReques
 	workspaceID = r.WorkspaceID.ValueString()
 
 	var authType shared.AuthorizationType
-	var destinationMongodbNone *shared.DestinationMongodbNone
+	var none *shared.None
 	if r.Configuration.AuthType.None != nil {
-		destinationMongodbNone = &shared.DestinationMongodbNone{}
+		none = &shared.None{}
 	}
-	if destinationMongodbNone != nil {
+	if none != nil {
 		authType = shared.AuthorizationType{
-			DestinationMongodbNone: destinationMongodbNone,
+			None: none,
 		}
 	}
 	var loginPassword *shared.LoginPassword

@@ -19,8 +19,9 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     customer_status_filter = [
       "SUSPENDED"
     ]
-    end_date   = "2017-01-30"
-    start_date = "2017-01-25"
+    end_date    = "2017-01-30"
+    num_workers = 2
+    start_date  = "2017-01-25"
   }
   definition_id = "340bf2e2-1dfb-458f-b22d-521448c56250"
   name          = "...my_name..."

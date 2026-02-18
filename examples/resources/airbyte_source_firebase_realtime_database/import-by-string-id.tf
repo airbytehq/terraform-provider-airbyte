@@ -1,4 +1,0 @@
-import {
-  to = airbyte_source_firebase_realtime_database.my_airbyte_source_firebase_realtime_database
-  id = "..."
-}

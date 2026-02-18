@@ -1,1 +1,0 @@
-terraform import airbyte_source_gorgias.my_airbyte_source_gorgias "..."

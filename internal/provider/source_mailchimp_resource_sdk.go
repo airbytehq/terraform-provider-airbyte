@@ -160,18 +160,18 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpCreateRequest(ctx 
 				SourceMailchimpOAuth20: sourceMailchimpOAuth20,
 			}
 		}
-		var sourceMailchimpAPIKey *shared.SourceMailchimpAPIKey
+		var apiKey *shared.APIKey
 		if r.Configuration.Credentials.APIKey != nil {
 			var apikey string
 			apikey = r.Configuration.Credentials.APIKey.Apikey.ValueString()
 
-			sourceMailchimpAPIKey = &shared.SourceMailchimpAPIKey{
+			apiKey = &shared.APIKey{
 				Apikey: apikey,
 			}
 		}
-		if sourceMailchimpAPIKey != nil {
+		if apiKey != nil {
 			credentials = &shared.SourceMailchimpAuthentication{
-				SourceMailchimpAPIKey: sourceMailchimpAPIKey,
+				APIKey: apiKey,
 			}
 		}
 	}

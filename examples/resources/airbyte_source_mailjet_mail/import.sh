@@ -1,1 +1,0 @@
-terraform import airbyte_source_mailjet_mail.my_airbyte_source_mailjet_mail "..."

@@ -7,5 +7,5 @@ import (
 )
 
 type APIKey struct {
-	APIKey types.String `tfsdk:"api_key"`
+	Apikey types.String `tfsdk:"apikey"`
 }
