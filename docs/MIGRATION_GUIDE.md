@@ -149,7 +149,8 @@ resource "airbyte_source" "my_source" {
 ```
 
 > **Note**
-> The `_custom` resources already used JSON configuration, so your `configuration` block can remain unchanged. Only the resource type name changes.
+> - The `_custom` resources already used JSON configuration, so your `configuration` block can remain unchanged. Only the resource type name changes.
+> - Optionally, you can leverage the `airbyte_connector_configuration` data source for pre-validation of data types and auto-discovery of the internal definition ID. See above example for more information.
 
 ## Inline JSON configuration (without the data source)
 
