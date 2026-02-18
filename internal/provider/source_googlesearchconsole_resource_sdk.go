@@ -141,7 +141,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	} else {
 		alwaysUseAggregationTypeAuto = nil
 	}
-	var authorization shared.SourceGoogleSearchConsoleAuthenticationType
+	var authorization shared.AuthenticationType
 	var sourceGoogleSearchConsoleOAuth *shared.SourceGoogleSearchConsoleOAuth
 	if r.Configuration.Authorization.OAuth != nil {
 		accessToken := new(string)
@@ -167,7 +167,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 		}
 	}
 	if sourceGoogleSearchConsoleOAuth != nil {
-		authorization = shared.SourceGoogleSearchConsoleAuthenticationType{
+		authorization = shared.AuthenticationType{
 			SourceGoogleSearchConsoleOAuth: sourceGoogleSearchConsoleOAuth,
 		}
 	}
@@ -185,7 +185,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 		}
 	}
 	if sourceGoogleSearchConsoleServiceAccountKeyAuthentication != nil {
-		authorization = shared.SourceGoogleSearchConsoleAuthenticationType{
+		authorization = shared.AuthenticationType{
 			SourceGoogleSearchConsoleServiceAccountKeyAuthentication: sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
 		}
 	}

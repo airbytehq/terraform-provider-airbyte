@@ -102,39 +102,39 @@ func (s *SourceGoogleSearchConsoleOAuth) GetRefreshToken() string {
 	return s.RefreshToken
 }
 
-type SourceGoogleSearchConsoleAuthenticationTypeType string
+type AuthenticationTypeType string
 
 const (
-	SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth                           SourceGoogleSearchConsoleAuthenticationTypeType = "source-google-search-console_OAuth"
-	SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleAuthenticationTypeType = "source-google-search-console_Service Account Key Authentication"
+	AuthenticationTypeTypeSourceGoogleSearchConsoleOAuth                           AuthenticationTypeType = "source-google-search-console_OAuth"
+	AuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication AuthenticationTypeType = "source-google-search-console_Service Account Key Authentication"
 )
 
-type SourceGoogleSearchConsoleAuthenticationType struct {
+type AuthenticationType struct {
 	SourceGoogleSearchConsoleOAuth                           *SourceGoogleSearchConsoleOAuth                           `queryParam:"inline" union:"member"`
 	SourceGoogleSearchConsoleServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication `queryParam:"inline" union:"member"`
 
-	Type SourceGoogleSearchConsoleAuthenticationTypeType
+	Type AuthenticationTypeType
 }
 
-func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleOAuth(sourceGoogleSearchConsoleOAuth SourceGoogleSearchConsoleOAuth) SourceGoogleSearchConsoleAuthenticationType {
-	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
+func CreateAuthenticationTypeSourceGoogleSearchConsoleOAuth(sourceGoogleSearchConsoleOAuth SourceGoogleSearchConsoleOAuth) AuthenticationType {
+	typ := AuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
 
-	return SourceGoogleSearchConsoleAuthenticationType{
+	return AuthenticationType{
 		SourceGoogleSearchConsoleOAuth: &sourceGoogleSearchConsoleOAuth,
 		Type:                           typ,
 	}
 }
 
-func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication(sourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication) SourceGoogleSearchConsoleAuthenticationType {
-	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
+func CreateAuthenticationTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication(sourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication) AuthenticationType {
+	typ := AuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
 
-	return SourceGoogleSearchConsoleAuthenticationType{
+	return AuthenticationType{
 		SourceGoogleSearchConsoleServiceAccountKeyAuthentication: &sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
 		Type: typ,
 	}
 }
 
-func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte) error {
+func (u *AuthenticationType) UnmarshalJSON(data []byte) error {
 
 	var candidates []utils.UnionCandidate
 
@@ -142,7 +142,7 @@ func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte)
 	var sourceGoogleSearchConsoleOAuth SourceGoogleSearchConsoleOAuth = SourceGoogleSearchConsoleOAuth{}
 	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleOAuth, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth,
+			Type:  AuthenticationTypeTypeSourceGoogleSearchConsoleOAuth,
 			Value: &sourceGoogleSearchConsoleOAuth,
 		})
 	}
@@ -150,36 +150,36 @@ func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte)
 	var sourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication = SourceGoogleSearchConsoleServiceAccountKeyAuthentication{}
 	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleServiceAccountKeyAuthentication, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication,
+			Type:  AuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication,
 			Value: &sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
 		})
 	}
 
 	if len(candidates) == 0 {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleSearchConsoleAuthenticationType", string(data))
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for AuthenticationType", string(data))
 	}
 
 	// Pick the best candidate using multi-stage filtering
 	best := utils.PickBestUnionCandidate(candidates, data)
 	if best == nil {
-		return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleSearchConsoleAuthenticationType", string(data))
+		return fmt.Errorf("could not unmarshal `%s` into any supported union types for AuthenticationType", string(data))
 	}
 
 	// Set the union type and value based on the best candidate
-	u.Type = best.Type.(SourceGoogleSearchConsoleAuthenticationTypeType)
+	u.Type = best.Type.(AuthenticationTypeType)
 	switch best.Type {
-	case SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth:
+	case AuthenticationTypeTypeSourceGoogleSearchConsoleOAuth:
 		u.SourceGoogleSearchConsoleOAuth = best.Value.(*SourceGoogleSearchConsoleOAuth)
 		return nil
-	case SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication:
+	case AuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication:
 		u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication = best.Value.(*SourceGoogleSearchConsoleServiceAccountKeyAuthentication)
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleSearchConsoleAuthenticationType", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AuthenticationType", string(data))
 }
 
-func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, error) {
+func (u AuthenticationType) MarshalJSON() ([]byte, error) {
 	if u.SourceGoogleSearchConsoleOAuth != nil {
 		return utils.MarshalJSON(u.SourceGoogleSearchConsoleOAuth, "", true)
 	}
@@ -188,7 +188,7 @@ func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, erro
 		return utils.MarshalJSON(u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type SourceGoogleSearchConsoleAuthenticationType: all fields are null")
+	return nil, errors.New("could not marshal union type AuthenticationType: all fields are null")
 }
 
 // SourceGoogleSearchConsoleValidEnums - An enumeration of dimensions.
@@ -300,8 +300,8 @@ func (e *SourceGoogleSearchConsoleSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceGoogleSearchConsole struct {
 	// Some search analytics streams fail with a 400 error if the specified `aggregationType` is not supported. This is customer implementation dependent and if this error is encountered, enable this setting which will override the existing `aggregationType` to use `auto` which should resolve the stream errors.
-	AlwaysUseAggregationTypeAuto *bool                                       `default:"false" json:"always_use_aggregation_type_auto"`
-	Authorization                SourceGoogleSearchConsoleAuthenticationType `json:"authorization"`
+	AlwaysUseAggregationTypeAuto *bool              `default:"false" json:"always_use_aggregation_type_auto"`
+	Authorization                AuthenticationType `json:"authorization"`
 	// (DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.
 	CustomReports *string `json:"custom_reports,omitempty"`
 	// You can add your Custom Analytics report by creating one.
@@ -339,9 +339,9 @@ func (s *SourceGoogleSearchConsole) GetAlwaysUseAggregationTypeAuto() *bool {
 	return s.AlwaysUseAggregationTypeAuto
 }
 
-func (s *SourceGoogleSearchConsole) GetAuthorization() SourceGoogleSearchConsoleAuthenticationType {
+func (s *SourceGoogleSearchConsole) GetAuthorization() AuthenticationType {
 	if s == nil {
-		return SourceGoogleSearchConsoleAuthenticationType{}
+		return AuthenticationType{}
 	}
 	return s.Authorization
 }

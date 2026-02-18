@@ -9,18 +9,18 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// DestinationClickhouseProtocol - Protocol for the database connection string.
-type DestinationClickhouseProtocol string
+// Protocol for the database connection string.
+type Protocol string
 
 const (
-	DestinationClickhouseProtocolHTTP  DestinationClickhouseProtocol = "http"
-	DestinationClickhouseProtocolHTTPS DestinationClickhouseProtocol = "https"
+	ProtocolHTTP  Protocol = "http"
+	ProtocolHTTPS Protocol = "https"
 )
 
-func (e DestinationClickhouseProtocol) ToPointer() *DestinationClickhouseProtocol {
+func (e Protocol) ToPointer() *Protocol {
 	return &e
 }
-func (e *DestinationClickhouseProtocol) UnmarshalJSON(data []byte) error {
+func (e *Protocol) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,10 +29,10 @@ func (e *DestinationClickhouseProtocol) UnmarshalJSON(data []byte) error {
 	case "http":
 		fallthrough
 	case "https":
-		*e = DestinationClickhouseProtocol(v)
+		*e = Protocol(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationClickhouseProtocol: %v", v)
+		return fmt.Errorf("invalid value for Protocol: %v", v)
 	}
 }
 
@@ -421,7 +421,7 @@ type DestinationClickhouse struct {
 	// HTTP port of the database. Default(s) HTTP: 8123 — HTTPS: 8443
 	Port *string `default:"8443" json:"port"`
 	// Protocol for the database connection string.
-	Protocol DestinationClickhouseProtocol `json:"protocol"`
+	Protocol Protocol `json:"protocol"`
 	// Warning: Tuning this parameter can impact the performances. The maximum number of records that should be written to a batch. The batch size limit is still limited to 70 Mb
 	RecordWindowSize *int64 `json:"record_window_size,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
@@ -478,9 +478,9 @@ func (d *DestinationClickhouse) GetPort() *string {
 	return d.Port
 }
 
-func (d *DestinationClickhouse) GetProtocol() DestinationClickhouseProtocol {
+func (d *DestinationClickhouse) GetProtocol() Protocol {
 	if d == nil {
-		return DestinationClickhouseProtocol("")
+		return Protocol("")
 	}
 	return d.Protocol
 }

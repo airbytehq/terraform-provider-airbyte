@@ -36,26 +36,26 @@ func (e *SourceMssqlUpdateInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data
 	}
 }
 
-type SourceMssqlUpdateSchemasReplicationMethodMethod string
+type SourceMssqlUpdateSchemasMethod string
 
 const (
-	SourceMssqlUpdateSchemasReplicationMethodMethodCdc SourceMssqlUpdateSchemasReplicationMethodMethod = "CDC"
+	SourceMssqlUpdateSchemasMethodCdc SourceMssqlUpdateSchemasMethod = "CDC"
 )
 
-func (e SourceMssqlUpdateSchemasReplicationMethodMethod) ToPointer() *SourceMssqlUpdateSchemasReplicationMethodMethod {
+func (e SourceMssqlUpdateSchemasMethod) ToPointer() *SourceMssqlUpdateSchemasMethod {
 	return &e
 }
-func (e *SourceMssqlUpdateSchemasReplicationMethodMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourceMssqlUpdateSchemasReplicationMethodMethod(v)
+		*e = SourceMssqlUpdateSchemasMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlUpdateSchemasReplicationMethodMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlUpdateSchemasMethod: %v", v)
 	}
 }
 
@@ -67,7 +67,7 @@ type SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC struct {
 	InitialWaitingSeconds *int64 `json:"initial_waiting_seconds,omitempty"`
 	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
 	InvalidCdcCursorPositionBehavior *SourceMssqlUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	Method                           *SourceMssqlUpdateSchemasReplicationMethodMethod     `default:"CDC" json:"method"`
+	Method                           *SourceMssqlUpdateSchemasMethod                      `default:"CDC" json:"method"`
 	// How often (in milliseconds) Debezium should poll for new data. Must be smaller than heartbeat interval (15000ms). Lower values provide more responsive data capture but may increase database load.
 	PollIntervalMs       *int64 `default:"500" json:"poll_interval_ms"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
@@ -105,7 +105,7 @@ func (s *SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCur
 	return s.InvalidCdcCursorPositionBehavior
 }
 
-func (s *SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC) GetMethod() *SourceMssqlUpdateSchemasReplicationMethodMethod {
+func (s *SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC) GetMethod() *SourceMssqlUpdateSchemasMethod {
 	if s == nil {
 		return nil
 	}
@@ -126,35 +126,35 @@ func (s *SourceMssqlUpdateReadChangesUsingChangeDataCaptureCDC) GetAdditionalPro
 	return s.AdditionalProperties
 }
 
-type SourceMssqlUpdateSchemasMethod string
+type SourceMssqlUpdateMethod string
 
 const (
-	SourceMssqlUpdateSchemasMethodStandard SourceMssqlUpdateSchemasMethod = "STANDARD"
+	SourceMssqlUpdateMethodStandard SourceMssqlUpdateMethod = "STANDARD"
 )
 
-func (e SourceMssqlUpdateSchemasMethod) ToPointer() *SourceMssqlUpdateSchemasMethod {
+func (e SourceMssqlUpdateMethod) ToPointer() *SourceMssqlUpdateMethod {
 	return &e
 }
-func (e *SourceMssqlUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlUpdateMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "STANDARD":
-		*e = SourceMssqlUpdateSchemasMethod(v)
+		*e = SourceMssqlUpdateMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlUpdateSchemasMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlUpdateMethod: %v", v)
 	}
 }
 
 // SourceMssqlUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
 type SourceMssqlUpdateScanChangesWithUserDefinedCursor struct {
 	// When enabled incremental syncs using a cursor of a temporal type (date or datetime) will include cursor values only up until the previous midnight UTC
-	ExcludeTodaysData    *bool                           `default:"false" json:"exclude_todays_data"`
-	Method               *SourceMssqlUpdateSchemasMethod `default:"STANDARD" json:"method"`
-	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
+	ExcludeTodaysData    *bool                    `default:"false" json:"exclude_todays_data"`
+	Method               *SourceMssqlUpdateMethod `default:"STANDARD" json:"method"`
+	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMssqlUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
@@ -175,7 +175,7 @@ func (s *SourceMssqlUpdateScanChangesWithUserDefinedCursor) GetExcludeTodaysData
 	return s.ExcludeTodaysData
 }
 
-func (s *SourceMssqlUpdateScanChangesWithUserDefinedCursor) GetMethod() *SourceMssqlUpdateSchemasMethod {
+func (s *SourceMssqlUpdateScanChangesWithUserDefinedCursor) GetMethod() *SourceMssqlUpdateMethod {
 	if s == nil {
 		return nil
 	}

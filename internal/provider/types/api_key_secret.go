@@ -3,12 +3,10 @@
 package types
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type APIKeySecret struct {
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	APIKeyID             types.String         `tfsdk:"api_key_id"`
-	APIKeySecret         types.String         `tfsdk:"api_key_secret"`
+	APIKeyID     types.String `tfsdk:"api_key_id"`
+	APIKeySecret types.String `tfsdk:"api_key_secret"`
 }

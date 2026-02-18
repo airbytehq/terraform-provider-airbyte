@@ -158,31 +158,31 @@ func (a *AdAnalyticsReportConfiguration) GetTimeGranularity() TimeGranularity {
 	return a.TimeGranularity
 }
 
-type SourceLinkedinAdsAccessToken struct {
+type AccessToken struct {
 	// The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	AccessToken string  `json:"access_token"`
 	authMethod  *string `const:"access_token" json:"auth_method,omitempty"`
 }
 
-func (s SourceLinkedinAdsAccessToken) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
+func (a AccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
 }
 
-func (s *SourceLinkedinAdsAccessToken) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+func (a *AccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *SourceLinkedinAdsAccessToken) GetAccessToken() string {
-	if s == nil {
+func (a *AccessToken) GetAccessToken() string {
+	if a == nil {
 		return ""
 	}
-	return s.AccessToken
+	return a.AccessToken
 }
 
-func (s *SourceLinkedinAdsAccessToken) GetAuthMethod() *string {
+func (a *AccessToken) GetAuthMethod() *string {
 	return types.Pointer("access_token")
 }
 
@@ -235,13 +235,13 @@ func (s *SourceLinkedinAdsOAuth20) GetRefreshToken() string {
 type SourceLinkedinAdsAuthenticationType string
 
 const (
-	SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsOAuth20     SourceLinkedinAdsAuthenticationType = "source-linkedin-ads_OAuth2.0"
-	SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAccessToken SourceLinkedinAdsAuthenticationType = "source-linkedin-ads_Access Token"
+	SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsOAuth20 SourceLinkedinAdsAuthenticationType = "source-linkedin-ads_OAuth2.0"
+	SourceLinkedinAdsAuthenticationTypeAccessToken              SourceLinkedinAdsAuthenticationType = "Access Token"
 )
 
 type SourceLinkedinAdsAuthentication struct {
-	SourceLinkedinAdsOAuth20     *SourceLinkedinAdsOAuth20     `queryParam:"inline" union:"member"`
-	SourceLinkedinAdsAccessToken *SourceLinkedinAdsAccessToken `queryParam:"inline" union:"member"`
+	SourceLinkedinAdsOAuth20 *SourceLinkedinAdsOAuth20 `queryParam:"inline" union:"member"`
+	AccessToken              *AccessToken              `queryParam:"inline" union:"member"`
 
 	Type SourceLinkedinAdsAuthenticationType
 }
@@ -255,12 +255,12 @@ func CreateSourceLinkedinAdsAuthenticationSourceLinkedinAdsOAuth20(sourceLinkedi
 	}
 }
 
-func CreateSourceLinkedinAdsAuthenticationSourceLinkedinAdsAccessToken(sourceLinkedinAdsAccessToken SourceLinkedinAdsAccessToken) SourceLinkedinAdsAuthentication {
-	typ := SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAccessToken
+func CreateSourceLinkedinAdsAuthenticationAccessToken(accessToken AccessToken) SourceLinkedinAdsAuthentication {
+	typ := SourceLinkedinAdsAuthenticationTypeAccessToken
 
 	return SourceLinkedinAdsAuthentication{
-		SourceLinkedinAdsAccessToken: &sourceLinkedinAdsAccessToken,
-		Type:                         typ,
+		AccessToken: &accessToken,
+		Type:        typ,
 	}
 }
 
@@ -277,11 +277,11 @@ func (u *SourceLinkedinAdsAuthentication) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var sourceLinkedinAdsAccessToken SourceLinkedinAdsAccessToken = SourceLinkedinAdsAccessToken{}
-	if err := utils.UnmarshalJSON(data, &sourceLinkedinAdsAccessToken, "", true, nil); err == nil {
+	var accessToken AccessToken = AccessToken{}
+	if err := utils.UnmarshalJSON(data, &accessToken, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAccessToken,
-			Value: &sourceLinkedinAdsAccessToken,
+			Type:  SourceLinkedinAdsAuthenticationTypeAccessToken,
+			Value: &accessToken,
 		})
 	}
 
@@ -301,8 +301,8 @@ func (u *SourceLinkedinAdsAuthentication) UnmarshalJSON(data []byte) error {
 	case SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsOAuth20:
 		u.SourceLinkedinAdsOAuth20 = best.Value.(*SourceLinkedinAdsOAuth20)
 		return nil
-	case SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAccessToken:
-		u.SourceLinkedinAdsAccessToken = best.Value.(*SourceLinkedinAdsAccessToken)
+	case SourceLinkedinAdsAuthenticationTypeAccessToken:
+		u.AccessToken = best.Value.(*AccessToken)
 		return nil
 	}
 
@@ -314,8 +314,8 @@ func (u SourceLinkedinAdsAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceLinkedinAdsOAuth20, "", true)
 	}
 
-	if u.SourceLinkedinAdsAccessToken != nil {
-		return utils.MarshalJSON(u.SourceLinkedinAdsAccessToken, "", true)
+	if u.AccessToken != nil {
+		return utils.MarshalJSON(u.AccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceLinkedinAdsAuthentication: all fields are null")

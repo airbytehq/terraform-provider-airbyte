@@ -159,7 +159,7 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 	} else {
 		port = nil
 	}
-	protocol := shared.DestinationClickhouseProtocol(r.Configuration.Protocol.ValueString())
+	protocol := shared.Protocol(r.Configuration.Protocol.ValueString())
 	recordWindowSize := new(int64)
 	if !r.Configuration.RecordWindowSize.IsUnknown() && !r.Configuration.RecordWindowSize.IsNull() {
 		*recordWindowSize = r.Configuration.RecordWindowSize.ValueInt64()

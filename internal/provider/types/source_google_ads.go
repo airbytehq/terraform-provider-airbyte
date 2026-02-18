@@ -15,5 +15,6 @@ type SourceGoogleAds struct {
 	CustomerID           types.String         `tfsdk:"customer_id"`
 	CustomerStatusFilter []types.String       `tfsdk:"customer_status_filter"`
 	EndDate              types.String         `tfsdk:"end_date"`
+	NumWorkers           types.Int64          `tfsdk:"num_workers"`
 	StartDate            types.String         `tfsdk:"start_date"`
 }

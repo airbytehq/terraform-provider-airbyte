@@ -8,7 +8,7 @@ import (
 
 type SourceGoogleSearchConsole struct {
 	AlwaysUseAggregationTypeAuto types.Bool                                    `tfsdk:"always_use_aggregation_type_auto"`
-	Authorization                *SourceGoogleSearchConsoleAuthenticationType  `tfsdk:"authorization"`
+	Authorization                *AuthenticationType                           `tfsdk:"authorization"`
 	CustomReports                types.String                                  `tfsdk:"custom_reports"`
 	CustomReportsArray           []SourceGoogleSearchConsoleCustomReportConfig `tfsdk:"custom_reports_array"`
 	DataState                    types.String                                  `tfsdk:"data_state"`

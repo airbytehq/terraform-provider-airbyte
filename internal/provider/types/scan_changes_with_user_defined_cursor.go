@@ -9,5 +9,6 @@ import (
 
 type ScanChangesWithUserDefinedCursor struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
-	CursorMethod         types.String         `tfsdk:"cursor_method"`
+	ExcludeTodaysData    types.Bool           `tfsdk:"exclude_todays_data"`
+	Method               types.String         `tfsdk:"method"`
 }

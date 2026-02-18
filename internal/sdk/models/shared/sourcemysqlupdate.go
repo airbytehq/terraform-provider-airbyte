@@ -36,26 +36,26 @@ func (e *SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data
 	}
 }
 
-type SourceMysqlUpdateSchemasReplicationMethodMethod string
+type SourceMysqlUpdateSchemasMethod string
 
 const (
-	SourceMysqlUpdateSchemasReplicationMethodMethodCdc SourceMysqlUpdateSchemasReplicationMethodMethod = "CDC"
+	SourceMysqlUpdateSchemasMethodCdc SourceMysqlUpdateSchemasMethod = "CDC"
 )
 
-func (e SourceMysqlUpdateSchemasReplicationMethodMethod) ToPointer() *SourceMysqlUpdateSchemasReplicationMethodMethod {
+func (e SourceMysqlUpdateSchemasMethod) ToPointer() *SourceMysqlUpdateSchemasMethod {
 	return &e
 }
-func (e *SourceMysqlUpdateSchemasReplicationMethodMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourceMysqlUpdateSchemasReplicationMethodMethod(v)
+		*e = SourceMysqlUpdateSchemasMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlUpdateSchemasReplicationMethodMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlUpdateSchemasMethod: %v", v)
 	}
 }
 
@@ -65,7 +65,7 @@ type SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC struct {
 	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
 	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
 	InvalidCdcCursorPositionBehavior *SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	Method                           *SourceMysqlUpdateSchemasReplicationMethodMethod     `default:"CDC" json:"method"`
+	Method                           *SourceMysqlUpdateSchemasMethod                      `default:"CDC" json:"method"`
 	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
 	ServerTimezone       *string `json:"server_timezone,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
@@ -96,7 +96,7 @@ func (s *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCur
 	return s.InvalidCdcCursorPositionBehavior
 }
 
-func (s *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetMethod() *SourceMysqlUpdateSchemasReplicationMethodMethod {
+func (s *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetMethod() *SourceMysqlUpdateSchemasMethod {
 	if s == nil {
 		return nil
 	}
@@ -117,33 +117,33 @@ func (s *SourceMysqlUpdateReadChangesUsingChangeDataCaptureCDC) GetAdditionalPro
 	return s.AdditionalProperties
 }
 
-type SourceMysqlUpdateSchemasMethod string
+type SourceMysqlUpdateSchemasReplicationMethodMethod string
 
 const (
-	SourceMysqlUpdateSchemasMethodStandard SourceMysqlUpdateSchemasMethod = "STANDARD"
+	SourceMysqlUpdateSchemasReplicationMethodMethodStandard SourceMysqlUpdateSchemasReplicationMethodMethod = "STANDARD"
 )
 
-func (e SourceMysqlUpdateSchemasMethod) ToPointer() *SourceMysqlUpdateSchemasMethod {
+func (e SourceMysqlUpdateSchemasReplicationMethodMethod) ToPointer() *SourceMysqlUpdateSchemasReplicationMethodMethod {
 	return &e
 }
-func (e *SourceMysqlUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlUpdateSchemasReplicationMethodMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "STANDARD":
-		*e = SourceMysqlUpdateSchemasMethod(v)
+		*e = SourceMysqlUpdateSchemasReplicationMethodMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlUpdateSchemasMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlUpdateSchemasReplicationMethodMethod: %v", v)
 	}
 }
 
 // SourceMysqlUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
 type SourceMysqlUpdateScanChangesWithUserDefinedCursor struct {
-	Method               *SourceMysqlUpdateSchemasMethod `default:"STANDARD" json:"method"`
-	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
+	Method               *SourceMysqlUpdateSchemasReplicationMethodMethod `default:"STANDARD" json:"method"`
+	AdditionalProperties any                                              `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMysqlUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
@@ -157,7 +157,7 @@ func (s *SourceMysqlUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data [
 	return nil
 }
 
-func (s *SourceMysqlUpdateScanChangesWithUserDefinedCursor) GetMethod() *SourceMysqlUpdateSchemasMethod {
+func (s *SourceMysqlUpdateScanChangesWithUserDefinedCursor) GetMethod() *SourceMysqlUpdateSchemasReplicationMethodMethod {
 	if s == nil {
 		return nil
 	}

@@ -628,9 +628,9 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest(ctx context.Con
 	var replicationMethod *shared.SourceMysqlUpdateUpdateMethod
 	var sourceMysqlUpdateScanChangesWithUserDefinedCursor *shared.SourceMysqlUpdateScanChangesWithUserDefinedCursor
 	if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
-		method := new(shared.SourceMysqlUpdateSchemasMethod)
+		method := new(shared.SourceMysqlUpdateSchemasReplicationMethodMethod)
 		if !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.IsUnknown() && !r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.IsNull() {
-			*method = shared.SourceMysqlUpdateSchemasMethod(r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.ValueString())
+			*method = shared.SourceMysqlUpdateSchemasReplicationMethodMethod(r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor.Method.ValueString())
 		} else {
 			method = nil
 		}
@@ -662,9 +662,9 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest(ctx context.Con
 		} else {
 			invalidCdcCursorPositionBehavior = nil
 		}
-		method1 := new(shared.SourceMysqlUpdateSchemasReplicationMethodMethod)
+		method1 := new(shared.SourceMysqlUpdateSchemasMethod)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.IsNull() {
-			*method1 = shared.SourceMysqlUpdateSchemasReplicationMethodMethod(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
+			*method1 = shared.SourceMysqlUpdateSchemasMethod(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
 		} else {
 			method1 = nil
 		}

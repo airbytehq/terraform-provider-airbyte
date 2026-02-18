@@ -6,7 +6,7 @@ type DestinationWeaviateEmbedding struct {
 	AzureOpenAI         *DestinationWeaviateAzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai"`
 	Cohere              *DestinationWeaviateCohere           `queryParam:"inline" tfsdk:"cohere"`
 	Fake                *DestinationWeaviateFake             `queryParam:"inline" tfsdk:"fake"`
-	FromField           *DestinationWeaviateFromField        `queryParam:"inline" tfsdk:"from_field"`
+	FromField           *FromField                           `queryParam:"inline" tfsdk:"from_field"`
 	NoExternalEmbedding *NoExternalEmbedding                 `queryParam:"inline" tfsdk:"no_external_embedding"`
 	OpenAI              *DestinationWeaviateOpenAI           `queryParam:"inline" tfsdk:"open_ai"`
 	OpenAICompatible    *DestinationWeaviateOpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible"`

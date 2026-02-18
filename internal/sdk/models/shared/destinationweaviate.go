@@ -153,8 +153,8 @@ func (e *DestinationWeaviateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data [
 	}
 }
 
-// DestinationWeaviateFromField - Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.
-type DestinationWeaviateFromField struct {
+// FromField - Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.
+type FromField struct {
 	// The number of dimensions the embedding model is generating
 	Dimensions int64 `json:"dimensions"`
 	// Name of the field in the record that contains the embedding
@@ -162,32 +162,32 @@ type DestinationWeaviateFromField struct {
 	mode      *DestinationWeaviateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
 }
 
-func (d DestinationWeaviateFromField) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
+func (f FromField) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
 }
 
-func (d *DestinationWeaviateFromField) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
+func (f *FromField) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (d *DestinationWeaviateFromField) GetDimensions() int64 {
-	if d == nil {
+func (f *FromField) GetDimensions() int64 {
+	if f == nil {
 		return 0
 	}
-	return d.Dimensions
+	return f.Dimensions
 }
 
-func (d *DestinationWeaviateFromField) GetFieldName() string {
-	if d == nil {
+func (f *FromField) GetFieldName() string {
+	if f == nil {
 		return ""
 	}
-	return d.FieldName
+	return f.FieldName
 }
 
-func (d *DestinationWeaviateFromField) GetMode() *DestinationWeaviateSchemasEmbeddingEmbedding5Mode {
+func (f *FromField) GetMode() *DestinationWeaviateSchemasEmbeddingEmbedding5Mode {
 	return DestinationWeaviateSchemasEmbeddingEmbedding5ModeFromField.ToPointer()
 }
 
@@ -413,7 +413,7 @@ const (
 	DestinationWeaviateEmbeddingTypeDestinationWeaviateAzureOpenAI      DestinationWeaviateEmbeddingType = "destination-weaviate_Azure OpenAI"
 	DestinationWeaviateEmbeddingTypeDestinationWeaviateOpenAI           DestinationWeaviateEmbeddingType = "destination-weaviate_OpenAI"
 	DestinationWeaviateEmbeddingTypeDestinationWeaviateCohere           DestinationWeaviateEmbeddingType = "destination-weaviate_Cohere"
-	DestinationWeaviateEmbeddingTypeDestinationWeaviateFromField        DestinationWeaviateEmbeddingType = "destination-weaviate_From Field"
+	DestinationWeaviateEmbeddingTypeFromField                           DestinationWeaviateEmbeddingType = "From Field"
 	DestinationWeaviateEmbeddingTypeDestinationWeaviateFake             DestinationWeaviateEmbeddingType = "destination-weaviate_Fake"
 	DestinationWeaviateEmbeddingTypeDestinationWeaviateOpenAICompatible DestinationWeaviateEmbeddingType = "destination-weaviate_OpenAI-compatible"
 )
@@ -424,7 +424,7 @@ type DestinationWeaviateEmbedding struct {
 	DestinationWeaviateAzureOpenAI      *DestinationWeaviateAzureOpenAI      `queryParam:"inline" union:"member"`
 	DestinationWeaviateOpenAI           *DestinationWeaviateOpenAI           `queryParam:"inline" union:"member"`
 	DestinationWeaviateCohere           *DestinationWeaviateCohere           `queryParam:"inline" union:"member"`
-	DestinationWeaviateFromField        *DestinationWeaviateFromField        `queryParam:"inline" union:"member"`
+	FromField                           *FromField                           `queryParam:"inline" union:"member"`
 	DestinationWeaviateFake             *DestinationWeaviateFake             `queryParam:"inline" union:"member"`
 	DestinationWeaviateOpenAICompatible *DestinationWeaviateOpenAICompatible `queryParam:"inline" union:"member"`
 
@@ -467,12 +467,12 @@ func CreateDestinationWeaviateEmbeddingDestinationWeaviateCohere(destinationWeav
 	}
 }
 
-func CreateDestinationWeaviateEmbeddingDestinationWeaviateFromField(destinationWeaviateFromField DestinationWeaviateFromField) DestinationWeaviateEmbedding {
-	typ := DestinationWeaviateEmbeddingTypeDestinationWeaviateFromField
+func CreateDestinationWeaviateEmbeddingFromField(fromField FromField) DestinationWeaviateEmbedding {
+	typ := DestinationWeaviateEmbeddingTypeFromField
 
 	return DestinationWeaviateEmbedding{
-		DestinationWeaviateFromField: &destinationWeaviateFromField,
-		Type:                         typ,
+		FromField: &fromField,
+		Type:      typ,
 	}
 }
 
@@ -531,11 +531,11 @@ func (u *DestinationWeaviateEmbedding) UnmarshalJSON(data []byte) error {
 		})
 	}
 
-	var destinationWeaviateFromField DestinationWeaviateFromField = DestinationWeaviateFromField{}
-	if err := utils.UnmarshalJSON(data, &destinationWeaviateFromField, "", true, nil); err == nil {
+	var fromField FromField = FromField{}
+	if err := utils.UnmarshalJSON(data, &fromField, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  DestinationWeaviateEmbeddingTypeDestinationWeaviateFromField,
-			Value: &destinationWeaviateFromField,
+			Type:  DestinationWeaviateEmbeddingTypeFromField,
+			Value: &fromField,
 		})
 	}
 
@@ -580,8 +580,8 @@ func (u *DestinationWeaviateEmbedding) UnmarshalJSON(data []byte) error {
 	case DestinationWeaviateEmbeddingTypeDestinationWeaviateCohere:
 		u.DestinationWeaviateCohere = best.Value.(*DestinationWeaviateCohere)
 		return nil
-	case DestinationWeaviateEmbeddingTypeDestinationWeaviateFromField:
-		u.DestinationWeaviateFromField = best.Value.(*DestinationWeaviateFromField)
+	case DestinationWeaviateEmbeddingTypeFromField:
+		u.FromField = best.Value.(*FromField)
 		return nil
 	case DestinationWeaviateEmbeddingTypeDestinationWeaviateFake:
 		u.DestinationWeaviateFake = best.Value.(*DestinationWeaviateFake)
@@ -611,8 +611,8 @@ func (u DestinationWeaviateEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationWeaviateCohere, "", true)
 	}
 
-	if u.DestinationWeaviateFromField != nil {
-		return utils.MarshalJSON(u.DestinationWeaviateFromField, "", true)
+	if u.FromField != nil {
+		return utils.MarshalJSON(u.FromField, "", true)
 	}
 
 	if u.DestinationWeaviateFake != nil {

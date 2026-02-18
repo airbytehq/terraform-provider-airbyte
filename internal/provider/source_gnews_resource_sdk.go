@@ -140,9 +140,9 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest(ctx context.
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	country := new(shared.SourceGnewsCountry)
+	country := new(shared.Country)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
-		*country = shared.SourceGnewsCountry(r.Configuration.Country.ValueString())
+		*country = shared.Country(r.Configuration.Country.ValueString())
 	} else {
 		country = nil
 	}
@@ -156,9 +156,9 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest(ctx context.
 	for _, inItem := range r.Configuration.In {
 		in = append(in, shared.In(inItem.ValueString()))
 	}
-	language := new(shared.SourceGnewsLanguage)
+	language := new(shared.Language)
 	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
-		*language = shared.SourceGnewsLanguage(r.Configuration.Language.ValueString())
+		*language = shared.Language(r.Configuration.Language.ValueString())
 	} else {
 		language = nil
 	}
@@ -169,9 +169,9 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest(ctx context.
 	var query string
 	query = r.Configuration.Query.ValueString()
 
-	sortby := new(shared.SourceGnewsSortBy)
+	sortby := new(shared.SortBy)
 	if !r.Configuration.Sortby.IsUnknown() && !r.Configuration.Sortby.IsNull() {
-		*sortby = shared.SourceGnewsSortBy(r.Configuration.Sortby.ValueString())
+		*sortby = shared.SortBy(r.Configuration.Sortby.ValueString())
 	} else {
 		sortby = nil
 	}
