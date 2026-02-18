@@ -4,21 +4,18 @@ page_title: "airbyte_connector_configuration Data Source - terraform-provider-ai
 subcategory: ""
 description: |-
   Resolves and merges connector configuration for use with airbyte_source or airbyte_destination resources.
-  This data source resolves a connector name to its definition ID and merges non-sensitive and sensitive
+  This data source resolves a connector name (and optional version) to its definition ID, fetches the
+  connector's JSONSchema spec, validates configuration against it, and merges non-sensitive and sensitive
   configuration into a single JSON blob suitable for passing to a resource.
-  Use this data source to get clean Terraform diffs on non-sensitive configuration values while keeping
-  secrets hidden in state and plan output.
 ---
 
 # airbyte_connector_configuration (Data Source)
 
 Resolves and merges connector configuration for use with airbyte_source or airbyte_destination resources.
 
-This data source resolves a connector name to its definition ID and merges non-sensitive and sensitive
+This data source resolves a connector name (and optional version) to its definition ID, fetches the
+connector's JSONSchema spec, validates configuration against it, and merges non-sensitive and sensitive
 configuration into a single JSON blob suitable for passing to a resource.
-
-Use this data source to get clean Terraform diffs on non-sensitive configuration values while keeping
-secrets hidden in state and plan output.
 
 
 
@@ -33,10 +30,12 @@ secrets hidden in state and plan output.
 ### Optional
 
 - `configuration_secrets` (Dynamic, Sensitive) Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are deep-merged with (and override) keys in `configuration`.
-- `connector_version` (String) The version of the connector. If not specified, the latest version from the registry is used. Currently unused; reserved for future JSONSchema validation.
-- `ignore_errors` (Boolean) If true, validation errors are reported as warnings instead of errors. Defaults to false.
+- `connector_version` (String) The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.
+- `ignore_errors` (Boolean) If true, validation errors (including JSONSchema validation) are reported as warnings instead of errors. Defaults to false.
 
 ### Read-Only
 
 - `configuration_json` (String, Sensitive) The merged JSON configuration (non-sensitive + sensitive) for passing to an airbyte_source or airbyte_destination resource's `configuration` attribute.
+- `connector_spec_json` (String) The connector's `connectionSpecification` JSONSchema, as a JSON string. Useful for debugging or downstream tooling.
 - `definition_id` (String) The UUID of the connector definition, resolved from `connector_name`.
+- `docker_image_tag` (String) The resolved Docker image tag (version) of the connector.
