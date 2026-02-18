@@ -157,6 +157,12 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 
 	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version)
 	if err != nil {
+		if version != "" {
+			resp.Diagnostics.AddWarning(
+				"Could not fetch versioned connector metadata",
+				fmt.Sprintf("Failed to fetch spec for %s version %q: %v. Falling back to registry lookup without version pinning or JSONSchema validation.", connectorName, version, err),
+			)
+		}
 		definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName)
 		if fallbackErr != nil {
 			addDiagnostic(resp, ignoreErrors, "Failed to resolve connector", fmt.Sprintf(
