@@ -15,6 +15,7 @@ data "airbyte_connector_configuration" "github" {
 # Use the latest version (default) with separate secrets
 data "airbyte_connector_configuration" "postgres" {
   connector_name = "source-postgres"
+  # connector_version = "3.6.28"  # optional: pin to a specific version
 
   configuration = {
     host     = "db.example.com"

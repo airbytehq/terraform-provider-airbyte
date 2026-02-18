@@ -11,7 +11,8 @@ The generic resources accept freeform JSON configuration via `jsonencode()`, whi
 
 The recommended way to use the generic resources is with the [`airbyte_connector_configuration`](../data-sources/connector_configuration.md) data source, which provides:
 - Automatic `definition_id` resolution from connector name
-- Type-validated configuration (catches errors at `terraform plan` time)
+- Optional version pinning via `connector_version` (e.g. `"3.6.28"`)
+- Type-validated configuration against the connector's JSONSchema spec (catches errors at `terraform plan` time)
 - Separation of sensitive and non-sensitive values for clean diffs
 
 ## Migration walkthrough
@@ -47,6 +48,7 @@ resource "airbyte_source_postgres" "my_pg_source" {
 ```hcl
 data "airbyte_connector_configuration" "my_pg_source_config" {
   connector_name = "source-postgres"
+  # connector_version = "3.6.28"  # optional: pin to a specific version
   configuration = {
     host     = "db.example.com"
     port     = 5432
@@ -108,6 +110,7 @@ The same approach works for destinations:
 ```hcl
 data "airbyte_connector_configuration" "my_bigquery_dest_config" {
   connector_name = "destination-bigquery"
+  # connector_version = "2.9.4"  # optional: pin to a specific version
   configuration = {
     project_id = "my-gcp-project"
     dataset_id = "my_dataset"
