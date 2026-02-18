@@ -9,6 +9,8 @@ description: |-
 
 airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 
+-> **Upgrading to 1.0?** Typed connector-specific resources (e.g., `airbyte_source_postgres`) are deprecated in 1.0 and targeted for removal in 1.1. See the [Migrating to 1.0](MIGRATION_GUIDE.md) guide to move to the generic `airbyte_source` / `airbyte_destination` resources with the [`airbyte_connector_configuration`](data-sources/connector_configuration.md) data source for type-validated configuration.
+
 ## Example Usage
 
 ```terraform
