@@ -45,11 +45,6 @@ resource "airbyte_source_postgres" "my_pg_source" {
 **After (generic resource with validated configuration):**
 
 ```hcl
-moved {
-  from = airbyte_source_postgres.my_pg_source
-  to   = airbyte_source.my_pg_source
-}
-
 data "airbyte_connector_configuration" "my_pg_source_config" {
   connector_name = "source-postgres"
   configuration = {
@@ -68,6 +63,15 @@ resource "airbyte_source" "my_pg_source" {
   workspace_id  = var.workspace_id
   definition_id = data.airbyte_connector_configuration.my_pg_source_config.definition_id
   configuration = data.airbyte_connector_configuration.my_pg_source_config.configuration_json
+}
+
+// ℹ️ The `moved` block informs terraform to not
+// delete and/or recreate your resources.
+// This block may be deleted once your migration
+// to the 1.0 provider is fully complete.
+moved {
+  from = airbyte_source_postgres.my_pg_source
+  to   = airbyte_source.my_pg_source
 }
 ```
 
@@ -102,11 +106,6 @@ Run `terraform apply` to complete the migration. After a successful apply, you m
 The same approach works for destinations:
 
 ```hcl
-moved {
-  from = airbyte_destination_bigquery.my_bigquery_dest
-  to   = airbyte_destination.my_bigquery_dest
-}
-
 data "airbyte_connector_configuration" "my_bigquery_dest_config" {
   connector_name = "destination-bigquery"
   configuration = {
@@ -124,6 +123,15 @@ resource "airbyte_destination" "my_bigquery_dest" {
   definition_id = data.airbyte_connector_configuration.my_bigquery_dest_config.definition_id
   configuration = data.airbyte_connector_configuration.my_bigquery_dest_config.configuration_json
 }
+
+// ℹ️ The `moved` block informs terraform to not
+// delete and/or recreate your resources.
+// This block may be deleted once your migration
+// to the 1.0 provider is fully complete.
+moved {
+  from = airbyte_destination_bigquery.my_bigquery_dest
+  to   = airbyte_destination.my_bigquery_dest
+}
 ```
 
 ### Migrating from `_custom` resources
@@ -131,11 +139,6 @@ resource "airbyte_destination" "my_bigquery_dest" {
 If you are using `airbyte_source_custom` or `airbyte_destination_custom` from a pre-1.0 provider version, these have been replaced by the generic `airbyte_source` and `airbyte_destination` resources. The generic resources have the same contract (JSON configuration, `definition_id`, etc.), so migrating is straightforward:
 
 ```hcl
-moved {
-  from = airbyte_source_custom.my_source
-  to   = airbyte_source.my_source
-}
-
 resource "airbyte_source" "my_source" {
   name          = "My Custom Source"
   workspace_id  = var.workspace_id
@@ -145,6 +148,15 @@ resource "airbyte_source" "my_source" {
     api_key = var.api_key
     host    = "api.example.com"
   })
+}
+
+// ℹ️ The `moved` block informs terraform to not
+// delete and/or recreate your resources.
+// This block may be deleted once your migration
+// to the 1.0 provider is fully complete.
+moved {
+  from = airbyte_source_custom.my_source
+  to   = airbyte_source.my_source
 }
 ```
 
