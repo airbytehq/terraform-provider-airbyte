@@ -251,7 +251,7 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 		version = "latest"
 	}
 
-	url := fmt.Sprintf("%s/%s/%s/oss.json", connectorCDNBase, connectorName, version)
+	url := fmt.Sprintf("%s/%s/%s/cloud.json", connectorCDNBase, connectorName, version)
 
 	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {

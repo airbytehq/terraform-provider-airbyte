@@ -72,7 +72,7 @@ func TestValidateJSONSchema_InvalidInstance(t *testing.T) {
 
 func TestFetchVersionedMetadata_Success(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/files/metadata/airbyte/source-github/2.0.0/oss.json", r.URL.Path)
+		assert.Equal(t, "/files/metadata/airbyte/source-github/2.0.0/cloud.json", r.URL.Path)
 		resp := map[string]interface{}{
 			"sourceDefinitionId": "test-def-id-123",
 			"dockerRepository":   "airbyte/source-github",
@@ -98,7 +98,7 @@ func TestFetchVersionedMetadata_Success(t *testing.T) {
 	// We can't reassign the const, so we test via the full server mock
 	// Instead, test the HTTP call directly
 	ctx := context.Background()
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, server.URL+"/files/metadata/airbyte/source-github/2.0.0/oss.json", nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, server.URL+"/files/metadata/airbyte/source-github/2.0.0/cloud.json", nil)
 	require.NoError(t, err)
 
 	resp, err := ds.httpClient.Do(req)
@@ -118,7 +118,7 @@ func TestFetchVersionedMetadata_Success(t *testing.T) {
 
 func TestFetchVersionedMetadata_LatestDefault(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/files/metadata/airbyte/source-postgres/latest/oss.json", r.URL.Path)
+		assert.Equal(t, "/files/metadata/airbyte/source-postgres/latest/cloud.json", r.URL.Path)
 		resp := map[string]interface{}{
 			"sourceDefinitionId": "postgres-def-id",
 			"dockerRepository":   "airbyte/source-postgres",
@@ -131,7 +131,7 @@ func TestFetchVersionedMetadata_LatestDefault(t *testing.T) {
 	defer server.Close()
 
 	ctx := context.Background()
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, server.URL+"/files/metadata/airbyte/source-postgres/latest/oss.json", nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, server.URL+"/files/metadata/airbyte/source-postgres/latest/cloud.json", nil)
 	require.NoError(t, err)
 
 	client := server.Client()
@@ -157,7 +157,7 @@ func TestFetchVersionedMetadata_HTTPError(t *testing.T) {
 	}
 
 	ctx := context.Background()
-	url := fmt.Sprintf("%s/files/metadata/airbyte/source-nonexistent/1.0.0/oss.json", server.URL)
+	url := fmt.Sprintf("%s/files/metadata/airbyte/source-nonexistent/1.0.0/cloud.json", server.URL)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	require.NoError(t, err)
 
