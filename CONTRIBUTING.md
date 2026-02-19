@@ -164,9 +164,79 @@ gh run download <RUN_ID> --name provider_binaries --dir ./provider-bin
 
 For the sample project testing guide (configuring dev overrides, authentication, running Terraform with CI-built binaries), see [`test-projects/README.md`](test-projects/README.md).
 
+## Documentation
+
+### How docs generation works
+
+Provider documentation lives on the [Terraform Registry](https://registry.terraform.io/providers/airbytehq/airbyte/latest/docs) and is the source of truth for all Terraform provider docs. The registry renders Markdown files from the `docs/` directory.
+
+**`docs/` is generated — do not edit it directly.** The generation pipeline reads Go source code and Markdown templates to produce the final `docs/` tree:
+
+```
+templates/              ← you edit these
+  index.md.tmpl
+  guides/
+    getting_started.md.tmpl
+    v1_migration_guide.md.tmpl
+  resources/             (auto-generated from Go source)
+  data-sources/          (auto-generated from Go source)
+        │
+        ▼  go generate ./...  (or: uvx --from=poethepoet poe docs-generate)
+        │
+docs/                   ← generated output (committed, but never hand-edited)
+  index.md
+  guides/
+    getting_started.md
+    v1_migration_guide.md
+  resources/
+  data-sources/
+```
+
+CI runs `go generate ./...` and then `git diff --exit-code` to verify that `docs/` matches the templates. If you edit `docs/` directly without updating the corresponding template, CI will fail with:
+
+> Generated files are out of date. Run 'uvx --from=poethepoet poe docs-generate' and commit the result.
+
+### What goes where
+
+| Content type | Location | Notes |
+|---|---|---|
+| **Per-resource / data-source reference** | `templates/resources/*.md.tmpl`, `templates/data-sources/*.md.tmpl` | Auto-generated from Go source via `tfplugindocs`. Do not edit by hand — change the Go schema descriptions instead. |
+| **Provider index page** | `templates/index.md.tmpl` | Uses Go template syntax (`{{.Description}}`, `{{tffile ...}}`). Hand-editable for narrative content. |
+| **Guides and tutorials** | `templates/guides/*.md.tmpl` | Plain Markdown (no Go template directives needed). Add new `.md.tmpl` files here for new guides. |
+
+### Adding or editing a guide
+
+1. Create or edit a `.md.tmpl` file in `templates/guides/` (e.g., `templates/guides/my_guide.md.tmpl`).
+2. Regenerate docs:
+   ```bash
+   uvx --from=poethepoet poe docs-generate
+   ```
+   This runs `go generate ./...` and produces the corresponding file in `docs/guides/`.
+3. Commit **both** the template and the generated output:
+   ```bash
+   git add templates/guides/my_guide.md.tmpl docs/guides/my_guide.md
+   git commit -m "docs: add my_guide"
+   ```
+4. Optionally link to the new guide from `templates/index.md.tmpl` using Terraform's admonition syntax:
+   ```markdown
+   -> Check out the [My Guide](guides/my_guide) for details.
+   ```
+   Then regenerate and commit again.
+
+### Duplicate content: registry vs docs.airbyte.com
+
+The Terraform Registry is the canonical home for all provider documentation — getting started guides, resource/data-source reference, and migration guides all live here.
+
+The [docs.airbyte.com Terraform page](https://docs.airbyte.com/developers/terraform-documentation) is a lightweight landing page that links to the registry. It does **not** duplicate tutorial or reference content. If you need to add Terraform documentation:
+
+- **Tutorial / how-to / reference** → add it to `templates/guides/` in this repo (appears on the registry)
+- **Landing page / cross-linking** → edit `docs/developers/terraform-documentation.md` in the [airbyte repo](https://github.com/airbytehq/airbyte)
+
+This avoids maintaining the same content in two places and ensures Terraform users find everything on the registry where they expect it.
+
 ## Releasing
 
-After each merge to main, a draft release is created/updated automatically. You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
+After each merge to main, a draft release is created/updated automatically.You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
 
 Terraform receives webhook notifications from GitHub, see below.
 
