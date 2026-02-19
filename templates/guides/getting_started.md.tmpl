@@ -142,7 +142,7 @@ resource "airbyte_connection" "postgres_to_bigquery" {
 }
 ```
 
-This connection will not begin automatically enabled and scheduled by default. See the [`airbyte_connection` resource documentation](../resources/connection) for scheduling and other configuration options.
+This connection will not run by default. See the [`airbyte_connection` resource documentation](../resources/connection) for scheduling and other configuration options.
 
 Run `terraform apply` to create the connection.
 
