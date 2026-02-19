@@ -223,6 +223,16 @@ CI runs `go generate ./...` and then `git diff --exit-code` to verify that `docs
    ```
    Then regenerate and commit again.
 
+### When docs are published
+
+Documentation in `docs/` is committed to the repository and included in every GitHub release. The Terraform Registry reads docs from the **tagged release**, not from `main` directly. This means:
+
+- Docs changes merged to `main` are **not visible on the registry** until a new provider version is released.
+- To publish updated docs, merge your changes, then follow the [release process](#releasing) to create and publish a new release.
+- The registry syncs within minutes of a GitHub release being published.
+
+If you need docs changes to be visible immediately (e.g., a critical correction), you can publish a patch release.
+
 ### Duplicate content: registry vs docs.airbyte.com
 
 The Terraform Registry is the canonical home for all provider documentation — getting started guides, resource/data-source reference, and migration guides all live here.
@@ -236,7 +246,7 @@ This avoids maintaining the same content in two places and ensures Terraform use
 
 ## Releasing
 
-After each merge to main, a draft release is created/updated automatically.You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
+After each merge to main, a draft release is created/updated automatically. You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
 
 Terraform receives webhook notifications from GitHub, see below.
 
