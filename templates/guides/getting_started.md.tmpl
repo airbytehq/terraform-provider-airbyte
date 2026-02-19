@@ -53,6 +53,16 @@ variable "client_secret" {
 variable "workspace_id" {
   type = string
 }
+
+variable "db_password" {
+  type      = string
+  sensitive = true
+}
+
+variable "gcp_credentials" {
+  type      = string
+  sensitive = true
+}
 ```
 
 -> Populate these variables using a `terraform.tfvars` file, environment variables (`TF_VAR_client_id`, etc.), or your preferred method. See the [Terraform variables documentation](https://developer.hashicorp.com/terraform/language/values/variables) for details.
