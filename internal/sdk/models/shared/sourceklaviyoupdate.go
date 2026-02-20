@@ -39,6 +39,8 @@ type SourceKlaviyoUpdate struct {
 	DisableFetchingPredictiveAnalytics *bool `json:"disable_fetching_predictive_analytics,omitempty"`
 	// The number of days to look back when syncing data in incremental mode. This helps capture any late-arriving data. Only applies to the events_detailed stream.
 	LookbackWindow *int64 `default:"0" json:"lookback_window"`
+	// OPTIONAL: Comma-separated list of specific metric IDs to use for flow_series_reports and campaign_values_reports streams. If left empty, the connector will automatically fetch reports for ALL available metrics in your account. Due to Klaviyo's strict API rate limits - see [Klaviyo's API docs](https://developers.klaviyo.com/en/reference/query_campaign_values), syncing all metrics can be extremely slow and may take hours to complete. RECOMMENDED: Specify only the conversion metrics you need (e.g., "RESQ6t" for Placed Order) to avoid slow syncs. Find metric IDs in your Klaviyo account under Analytics > Metrics, or use the metrics stream to list all available metrics and their IDs.
+	MetricIds *string `json:"metric_ids,omitempty"`
 	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Klaviyo plan. More info about the rate limit plan tiers can be found on Klaviyo's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>.
 	NumWorkers *int64 `default:"10" json:"num_workers"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.
@@ -77,6 +79,13 @@ func (s *SourceKlaviyoUpdate) GetLookbackWindow() *int64 {
 		return nil
 	}
 	return s.LookbackWindow
+}
+
+func (s *SourceKlaviyoUpdate) GetMetricIds() *string {
+	if s == nil {
+		return nil
+	}
+	return s.MetricIds
 }
 
 func (s *SourceKlaviyoUpdate) GetNumWorkers() *int64 {

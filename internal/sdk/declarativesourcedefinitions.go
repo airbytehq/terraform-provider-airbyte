@@ -149,6 +149,7 @@ func (s *DeclarativeSourceDefinitions) ListDeclarativeSourceDefinitions(ctx cont
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -417,6 +418,7 @@ func (s *DeclarativeSourceDefinitions) GetDeclarativeSourceDefinition(ctx contex
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -556,6 +558,7 @@ func (s *DeclarativeSourceDefinitions) UpdateDeclarativeSourceDefinition(ctx con
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -688,6 +691,7 @@ func (s *DeclarativeSourceDefinitions) DeleteDeclarativeSourceDefinition(ctx con
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

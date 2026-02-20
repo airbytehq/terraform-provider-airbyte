@@ -126,6 +126,7 @@ func (s *OAuth) OauthCallback(ctx context.Context, request operations.OauthCallb
 
 	switch {
 	case httpRes.StatusCode == 302:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
