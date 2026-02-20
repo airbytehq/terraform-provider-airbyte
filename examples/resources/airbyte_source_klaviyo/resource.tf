@@ -4,6 +4,7 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
     api_key                               = "...my_api_key..."
     disable_fetching_predictive_analytics = true
     lookback_window                       = 0
+    metric_ids                            = "RESQ6t"
     num_workers                           = 1
     start_date                            = "2017-01-25T00:00:00Z"
   }

@@ -24,6 +24,7 @@ func (r *SourceKlaviyoResourceModel) RefreshFromSharedSourceResponse(ctx context
 			r.Configuration.APIKey = configurationPriorData.APIKey
 			r.Configuration.DisableFetchingPredictiveAnalytics = configurationPriorData.DisableFetchingPredictiveAnalytics
 			r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
+			r.Configuration.MetricIds = configurationPriorData.MetricIds
 			r.Configuration.NumWorkers = configurationPriorData.NumWorkers
 			r.Configuration.StartDate = configurationPriorData.StartDate
 		}
@@ -147,6 +148,12 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoCreateRequest(ctx cont
 	} else {
 		lookbackWindow = nil
 	}
+	metricIds := new(string)
+	if !r.Configuration.MetricIds.IsUnknown() && !r.Configuration.MetricIds.IsNull() {
+		*metricIds = r.Configuration.MetricIds.ValueString()
+	} else {
+		metricIds = nil
+	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
@@ -167,6 +174,7 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoCreateRequest(ctx cont
 		APIKey:                             apiKey,
 		DisableFetchingPredictiveAnalytics: disableFetchingPredictiveAnalytics,
 		LookbackWindow:                     lookbackWindow,
+		MetricIds:                          metricIds,
 		NumWorkers:                         numWorkers,
 		StartDate:                          startDate,
 		AdditionalProperties:               additionalProperties,
@@ -215,6 +223,12 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoPutRequest(ctx context
 	} else {
 		lookbackWindow = nil
 	}
+	metricIds := new(string)
+	if !r.Configuration.MetricIds.IsUnknown() && !r.Configuration.MetricIds.IsNull() {
+		*metricIds = r.Configuration.MetricIds.ValueString()
+	} else {
+		metricIds = nil
+	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
@@ -235,6 +249,7 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoPutRequest(ctx context
 		APIKey:                             apiKey,
 		DisableFetchingPredictiveAnalytics: disableFetchingPredictiveAnalytics,
 		LookbackWindow:                     lookbackWindow,
+		MetricIds:                          metricIds,
 		NumWorkers:                         numWorkers,
 		StartDate:                          startDate,
 		AdditionalProperties:               additionalProperties,

@@ -19,6 +19,7 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
     api_key                               = "...my_api_key..."
     disable_fetching_predictive_analytics = true
     lookback_window                       = 0
+    metric_ids                            = "RESQ6t"
     num_workers                           = 1
     start_date                            = "2017-01-25T00:00:00Z"
   }
@@ -62,6 +63,7 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `disable_fetching_predictive_analytics` (Boolean) Certain streams like the profiles stream can retrieve predictive analytics data from Klaviyo's API. However, at high volume, this can lead to service availability issues on the API which can be improved by not fetching this field. WARNING: Enabling this setting will stop the  "predictive_analytics" column from being populated in your downstream destination.
 - `lookback_window` (Number) The number of days to look back when syncing data in incremental mode. This helps capture any late-arriving data. Only applies to the events_detailed stream. Default: 0
+- `metric_ids` (String) OPTIONAL: Comma-separated list of specific metric IDs to use for flow_series_reports and campaign_values_reports streams. If left empty, the connector will automatically fetch reports for ALL available metrics in your account. Due to Klaviyo's strict API rate limits - see [Klaviyo's API docs](https://developers.klaviyo.com/en/reference/query_campaign_values), syncing all metrics can be extremely slow and may take hours to complete. RECOMMENDED: Specify only the conversion metrics you need (e.g., "RESQ6t" for Placed Order) to avoid slow syncs. Find metric IDs in your Klaviyo account under Analytics > Metrics, or use the metrics stream to list all available metrics and their IDs.
 - `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Klaviyo plan. More info about the rate limit plan tiers can be found on Klaviyo's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>. Default: 10
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.
 

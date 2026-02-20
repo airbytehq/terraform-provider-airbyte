@@ -12,6 +12,7 @@ type SourceKlaviyo struct {
 	APIKey                             types.String         `tfsdk:"api_key"`
 	DisableFetchingPredictiveAnalytics types.Bool           `tfsdk:"disable_fetching_predictive_analytics"`
 	LookbackWindow                     types.Int64          `tfsdk:"lookback_window"`
+	MetricIds                          types.String         `tfsdk:"metric_ids"`
 	NumWorkers                         types.Int64          `tfsdk:"num_workers"`
 	StartDate                          types.String         `tfsdk:"start_date"`
 }

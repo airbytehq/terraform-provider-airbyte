@@ -121,6 +121,7 @@ func (s *Public) GetDocumentation(ctx context.Context, opts ...operations.Option
 
 	switch {
 	case httpRes.StatusCode == 200:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
