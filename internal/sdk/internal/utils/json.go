@@ -72,6 +72,10 @@ func MarshalJSON(v interface{}, tag reflect.StructTag, topLevel bool) ([]byte, e
 					continue
 				}
 
+				if omitEmpty && isEmptyContainer(field.Type, fieldVal) {
+					continue
+				}
+
 				if omitZero && fieldVal.IsZero() {
 					continue
 				}
