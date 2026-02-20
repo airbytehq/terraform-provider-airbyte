@@ -246,7 +246,11 @@ This avoids maintaining the same content in two places and ensures Terraform use
 
 ## Releasing
 
-After each merge to main, a draft release is created/updated automatically. You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
+This project uses [`semantic-pr-release-drafter`](https://github.com/aaronsteers/semantic-pr-release-drafter) for automated release management. To release, simply click "`Edit`" on the latest release draft from the [releases page](https://github.com/airbytehq/terraform-provider-airbyte/releases), and then click "`Publish release`". This publish operation will trigger all necessary downstream publish operations.
+
+ℹ️ For more detailed instructions, please see the [Releasing Guide](https://github.com/aaronsteers/semantic-pr-release-drafter/blob/main/docs/releasing.md).
+
+After each merge to main, a draft release is created/updated automatically. Once published, the release is synced to the Terraform Registry within minutes.
 
 Terraform receives webhook notifications from GitHub, see below.
 
