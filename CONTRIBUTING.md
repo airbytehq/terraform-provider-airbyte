@@ -246,6 +246,8 @@ This avoids maintaining the same content in two places and ensures Terraform use
 
 ## Releasing
 
+This project uses [`semantic-pr-release-drafter`](https://github.com/aaronsteers/semantic-pr-release-drafter) for automated release management. For the general release workflow, see the [Releasing Guide](https://github.com/aaronsteers/semantic-pr-release-drafter/blob/main/docs/releasing.md).
+
 After each merge to main, a draft release is created/updated automatically. You can click "Edit" and the "Publish release" button to finalize it. Once published, the release is synced to the Terraform Registry within minutes.
 
 Terraform receives webhook notifications from GitHub, see below.
