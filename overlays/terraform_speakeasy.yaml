@@ -130,3 +130,19 @@ actions:
     description: "Mark generic destination configuration as sensitive (patch)"
     update:
       x-speakeasy-param-sensitive: true
+
+  # =============================================================================
+  # DeclarativeSourceDefinition ID Stability
+  # =============================================================================
+  # The `id` attribute on DeclarativeSourceDefinitionResponse is Computed-only,
+  # but Speakeasy does not automatically add a plan modifier to preserve the
+  # state value during in-place updates. This causes the id to show as
+  # "(known after apply)" on every update, which cascades to downstream
+  # resources that reference the id (e.g., airbyte_source definition_id)
+  # and forces unnecessary replacements.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/224
+
+  - target: "$.components.schemas.DeclarativeSourceDefinitionResponse.properties.id"
+    description: "Preserve id in plan during in-place updates to avoid unnecessary downstream replacements"
+    update:
+      x-speakeasy-plan-modifiers: UseStateForUnknown
