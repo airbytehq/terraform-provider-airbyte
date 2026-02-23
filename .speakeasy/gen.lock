@@ -3,28 +3,28 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: 496a8c936a5f59dd2681f8b4bf9f46c3
   docVersion: 1.0.0
-  speakeasyVersion: 1.723.0
-  generationVersion: 2.835.2
-  releaseVersion: 1.0.0
-  configChecksum: c9736a8113f1d529f85c245c42c9e857
+  speakeasyVersion: 1.725.0
+  generationVersion: 2.836.5
+  releaseVersion: 1.0.0-rc8
+  configChecksum: 80ee73731af58fc7ac00ec7f49a9e3aa
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: e225d2ca-de01-47c8-afcb-7c4045679dd8
-  pristine_commit_hash: ca4c25261a8fa951b59ff1cd287240511cdcfab9
-  pristine_tree_hash: 1f0856d317402966f58840da6fedcf2d47c8b23e
+  generation_id: 75b04062-b430-4a7f-997f-fcf32425e759
+  pristine_commit_hash: 9d10e9b4caa3b151b1053338b75b2197238e3739
+  pristine_tree_hash: a4822e827c16258e5705927a9dac4f6126e92a92
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.4
     constsAndDefaults: 0.3.1
-    core: 3.46.40
+    core: 3.46.41
     deprecations: 2.82.0
     globalSecurity: 2.82.2
     globalServerURLs: 2.83.1
     groups: 2.81.3
     nameOverrides: 2.81.5
     nullables: 0.0.0
-    oauth2ClientCredentials: 0.3.1
+    oauth2ClientCredentials: 0.3.2
     sets: 0.1.2
     typeOverrides: 2.81.1
     unions: 2.82.12
@@ -1151,8 +1151,8 @@ trackedFiles:
     pristine_git_object: 8f46fa23e9ff318c727d03f0dcf5a8a677b6e617
   examples/provider/provider.tf:
     id: 954e955c0240
-    last_write_checksum: sha1:38779e89221be55d6565214df21e703e3d9850c7
-    pristine_git_object: 0c2f2590f37d3fd8e8bab0ed65f75308bfbb41ae
+    last_write_checksum: sha1:b4f6675bc67dde6b163897c84b874dc4568cd68d
+    pristine_git_object: 87a982250035f4606de7c9c9efe04c6a9c31a765
   examples/resources/airbyte_connection/import-by-string-id.tf:
     id: 8c04ff01f5ae
     last_write_checksum: sha1:d0e6ff899bd5da0e7018c9420f4face02263ff4c
@@ -13415,8 +13415,8 @@ trackedFiles:
     pristine_git_object: 7cdc09a869cb0f3d12658efa69707ce48e6d73a4
   internal/sdk/internal/utils/json.go:
     id: 2231afac3add
-    last_write_checksum: sha1:fd78306a2391334bb32f89e7a371916732c011d9
-    pristine_git_object: dc777404093879073eddd601a1da6ef46bbf68ac
+    last_write_checksum: sha1:637001e0ef71f48eb8716bc0522b767e31db566a
+    pristine_git_object: 4326a627785e3ad3e46fe35763789c51d9934638
   internal/sdk/internal/utils/oauth2_credentials.go:
     id: 79f015ecdb31
     last_write_checksum: sha1:f9218b6b3dbd11494cc353bf22eb37f0ca654a7d
@@ -23039,8 +23039,8 @@ trackedFiles:
     pristine_git_object: aa809fccb3445b1e2530a979dad620512f50e70f
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:6f6acd207e707ca2e5ee7fbcc9380d4d82173f73
-    pristine_git_object: 2eab3ca8ca0f9da963a4e303b5ea81ec77bb27ea
+    last_write_checksum: sha1:c420ffb08d8ce30f9e9f15f64872d0004747c2d9
+    pristine_git_object: 578a36f8541a390ffe59956c0c21efee0795e67d
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
