@@ -4,9 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"math/big"
 
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -70,99 +68,4 @@ func computeSensitiveConfigHash(sensitiveConfig types.Dynamic) (string, error) {
 
 	h := sha256.Sum256(normalized)
 	return fmt.Sprintf("%x", h), nil
-}
-
-// apiConfigToDynamic converts an API response Configuration (any) into a
-// types.Dynamic value suitable for storing in Terraform state as `config`.
-//
-// The API returns configuration as a JSON object; this function converts it
-// into a types.Dynamic wrapping a types.Object so that Terraform can store it.
-func apiConfigToDynamic(apiConfig any) (types.Dynamic, error) {
-	if apiConfig == nil {
-		return types.DynamicNull(), nil
-	}
-	b, err := json.Marshal(apiConfig)
-	if err != nil {
-		return types.DynamicNull(), fmt.Errorf("failed to marshal API config: %w", err)
-	}
-	var raw map[string]any
-	if err := json.Unmarshal(b, &raw); err != nil {
-		return types.DynamicNull(), fmt.Errorf("API configuration is not a JSON object: %w", err)
-	}
-	obj, err := goMapToTerraformObject(raw)
-	if err != nil {
-		return types.DynamicNull(), err
-	}
-	return types.DynamicValue(obj), nil
-}
-
-// goMapToTerraformObject recursively converts a Go map[string]any into a
-// types.Object for use as a Dynamic attribute's underlying value.
-func goMapToTerraformObject(m map[string]any) (types.Object, error) {
-	if m == nil {
-		return types.ObjectNull(nil), nil
-	}
-
-	attrValues := make(map[string]attr.Value, len(m))
-	attrTypesMap := make(map[string]attr.Type, len(m))
-
-	for k, v := range m {
-		av, err := goValueToAttrValue(v)
-		if err != nil {
-			return types.ObjectNull(nil), fmt.Errorf("key %q: %w", k, err)
-		}
-		attrValues[k] = av
-		attrTypesMap[k] = av.Type(nil)
-	}
-
-	obj, diags := types.ObjectValue(attrTypesMap, attrValues)
-	if diags.HasError() {
-		return types.ObjectNull(nil), fmt.Errorf("failed to create object value: %s", diags.Errors())
-	}
-	return obj, nil
-}
-
-// goValueToAttrValue converts a Go value (from json.Unmarshal with any) into
-// the corresponding Terraform attr.Value.
-func goValueToAttrValue(v any) (attr.Value, error) {
-	if v == nil {
-		// Use a typed null for strings as a reasonable default for null values.
-		return types.StringNull(), nil
-	}
-	switch val := v.(type) {
-	case string:
-		return types.StringValue(val), nil
-	case bool:
-		return types.BoolValue(val), nil
-	case float64:
-		// json.Unmarshal decodes all numbers as float64.
-		return types.NumberValue(big.NewFloat(val)), nil
-	case map[string]any:
-		obj, err := goMapToTerraformObject(val)
-		if err != nil {
-			return nil, err
-		}
-		return obj, nil
-	case []any:
-		if len(val) == 0 {
-			return types.TupleNull(nil), nil
-		}
-		elements := make([]attr.Value, len(val))
-		elemTypes := make([]attr.Type, len(val))
-		for i, elem := range val {
-			av, err := goValueToAttrValue(elem)
-			if err != nil {
-				return nil, fmt.Errorf("index %d: %w", i, err)
-			}
-			elements[i] = av
-			elemTypes[i] = av.Type(nil)
-		}
-		tuple, diags := types.TupleValue(elemTypes, elements)
-		if diags.HasError() {
-			return nil, fmt.Errorf("failed to create tuple: %s", diags.Errors())
-		}
-		return tuple, nil
-	default:
-		return nil, fmt.Errorf("unsupported Go type %T", v)
-	}
 }

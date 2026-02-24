@@ -586,18 +586,15 @@ func (r *GenericSourceResource) refreshState(ctx context.Context, state *Generic
 	state.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	state.CreatedAt = types.Int64Value(resp.CreatedAt)
 
-	// Convert API configuration to Dynamic for state. On Read, the API may
-	// return redacted secrets ("***"). We store whatever the API returns as
-	// the config in state. Since config is the non-sensitive portion, the user
-	// controls what goes in it and Terraform will detect drift in non-secret
-	// fields. Secret fields live in sensitive_config (write-only, never in state).
-	apiConfig, err := apiConfigToDynamic(resp.Configuration)
-	if err != nil {
-		diags.AddWarning("Could not parse API configuration", err.Error())
-		// On error, preserve existing config from state.
-	} else {
-		state.Config = apiConfig
-	}
+	// Preserve config from state during Read. The API response includes the full
+	// merged configuration (including redacted secrets as "***"), but the user's
+	// `config` attribute only contains non-sensitive fields. Overwriting state.Config
+	// with the API response would cause spurious diffs on next plan because:
+	// 1. The API response includes keys the user put in sensitive_config
+	// 2. Secret values are redacted to "***"
+	// Instead, we keep whatever the user originally provided in their `config` block.
+	// This is the standard Terraform pattern for resources with write-only secrets.
+	// Note: state.Config is already populated from the prior state (or from Create).
 
 	// Resource allocation.
 	if resp.ResourceAllocation == nil {

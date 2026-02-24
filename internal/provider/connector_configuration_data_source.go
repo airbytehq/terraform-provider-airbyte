@@ -99,9 +99,9 @@ configuration into a single JSON blob suitable for passing to a resource.`,
 				Optional:            true,
 				MarkdownDescription: "The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.",
 			},
-			// TK-TODO: Consider renaming to `config` and `sensitive_config` to align
-				// with the airbyte_source and airbyte_destination resource attributes.
-				// See: source_resource_generic.go, destination_resource_generic.go
+						// TK-TODO: Consider renaming to `config` and `sensitive_config` to align  IGNORE:TK
+						// with the airbyte_source and airbyte_destination resource attributes.
+						// See: source_resource_generic.go, destination_resource_generic.go
 				"configuration": schema.DynamicAttribute{
 					Required:            true,
 					MarkdownDescription: "Non-sensitive configuration values as an HCL object. These will be visible in Terraform plan output.",
