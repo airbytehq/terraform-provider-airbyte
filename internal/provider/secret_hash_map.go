@@ -80,12 +80,29 @@ func walkAndBuildMap(plaintext, coordinate interface{}, result secretHashMap) {
 			walkAndBuildMap(pt[i], ct[i], result)
 		}
 	default:
-		// Leaf value comparison
-		ptStr := fmt.Sprintf("%v", plaintext)
-		ctStr := fmt.Sprintf("%v", coordinate)
+		// Leaf value comparison — use leafToString for consistency with the
+		// plan modifier's secretTreeMatches (suppress_secret_diff.go).
+		ptStr := leafToString(plaintext)
+		ctStr := leafToString(coordinate)
 		if ptStr != ctStr && (isSecretCoordinate(ctStr) || isRedactedSecret(ctStr)) {
 			result[hashValue(ptStr)] = ctStr
 		}
+	}
+}
+
+// leafToString converts a JSON leaf value to its string representation for
+// hashing. This MUST match the leafToString function in the plan modifier
+// (internal/planmodifiers/stringplanmodifier/suppress_secret_diff.go) so that
+// hashes built during Create/Update match those checked at plan time.
+func leafToString(v interface{}) string {
+	switch val := v.(type) {
+	case string:
+		return val
+	case nil:
+		return ""
+	default:
+		b, _ := json.Marshal(val)
+		return string(b)
 	}
 }
 
