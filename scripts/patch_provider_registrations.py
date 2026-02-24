@@ -24,15 +24,23 @@ CUSTOM_RESOURCES: list[str] = [
     "NewDestinationCustomResource",
 ]
 
+# Mapping of generated resource constructors to hand-written replacements.
+# After Speakeasy generates provider.go, these generated constructors are
+# replaced with hand-written versions that accept structured config inputs.
+RESOURCE_SWAPS: dict[str, str] = {
+    "NewSourceResource": "NewGenericSourceResource",
+    "NewDestinationResource": "NewGenericDestinationResource",
+}
+
 DATA_SOURCES_MARKER = "func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.DataSource {"
 
 SKIP_DEPRECATION_WRAP = {
     "NewConnectionResource",
     "NewDeclarativeSourceDefinitionResource",
-    "NewDestinationResource",
+    "NewGenericDestinationResource",
     "NewDestinationDefinitionResource",
     "NewPermissionResource",
-    "NewSourceResource",
+    "NewGenericSourceResource",
     "NewSourceDefinitionResource",
     "NewWorkspaceResource",
     "NewSourceCustomResource",
@@ -156,6 +164,14 @@ def main() -> None:
     if missing_resources:
         print("Patching custom resource registrations...")
         content = patch_registrations(content, RESOURCES_MARKER, missing_resources)
+
+    # Swap generated resource constructors with hand-written generic versions.
+    for old_name, new_name in RESOURCE_SWAPS.items():
+        # Match the registration line (e.g., "\t\tNewSourceResource,")
+        old_pattern = re.compile(rf"(\t+){re.escape(old_name)},")
+        if old_pattern.search(content):
+            content = old_pattern.sub(rf"\g<1>{new_name},", content)
+            print(f"  Swapped {old_name} -> {new_name}")
 
     needs_wrap = "wrapDeprecatedSource(" not in content
     if needs_wrap:
