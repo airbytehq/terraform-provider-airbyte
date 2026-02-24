@@ -393,6 +393,10 @@ func (r *SourceResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
+	// HAND-EDITED: Capture the coordinate config BEFORE refreshPlan overwrites
+	// data.Configuration with the plan's plaintext value.
+	coordinateConfigJSON := data.Configuration.ValueString()
+
 	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
 
 	if resp.Diagnostics.HasError() {
@@ -400,10 +404,8 @@ func (r *SourceResource) Create(ctx context.Context, req resource.CreateRequest,
 	}
 
 	// HAND-EDITED: Build and store the secret hash map in private state.
-	// The state now contains the secret-coordinate version of the config (from the
-	// GetSource call with includeSecretCoordinates=true above).
-	// We compare it with the user's plaintext config to build the mapping.
-	coordinateConfigJSON := data.Configuration.ValueString()
+	// We compare the user's plaintext config with the API's secret-coordinate
+	// version (captured above before refreshPlan) to build the mapping.
 	resp.Diagnostics.Append(buildAndStoreSecretHashMap(
 		ctx, plaintextConfigJSON, coordinateConfigJSON, resp.Private,
 	)...)
@@ -487,10 +489,18 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
-	// HAND-EDITED: Save the user's plaintext configuration before API calls
-	// so we can rebuild the secret hash map after the update.
+	// HAND-EDITED: Read the user's plaintext configuration directly from the
+	// Terraform config (HCL), NOT from the merged plan data. When the
+	// SuppressSecretConfigDiff plan modifier suppresses the config diff, the
+	// plan value is set to the state value (secret coordinates), so reading
+	// from merged data would give us coordinates instead of plaintext.
 	// See: https://github.com/airbytehq/terraform-provider-airbyte/issues/349
-	plaintextConfigJSON := data.Configuration.ValueString()
+	var sourceConfig SourceResourceModel
+	resp.Diagnostics.Append(req.Config.Get(ctx, &sourceConfig)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	plaintextConfigJSON := sourceConfig.Configuration.ValueString()
 
 	request, requestDiags := data.ToOperationsPutSourceRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -564,6 +574,10 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
+	// HAND-EDITED: Capture the coordinate config BEFORE refreshPlan overwrites
+	// data.Configuration with the plan value.
+	coordinateConfigJSON2 := data.Configuration.ValueString()
+
 	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
 
 	if resp.Diagnostics.HasError() {
@@ -571,7 +585,6 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 	}
 
 	// HAND-EDITED: Build and store the secret hash map in private state.
-	coordinateConfigJSON2 := data.Configuration.ValueString()
 	resp.Diagnostics.Append(buildAndStoreSecretHashMap(
 		ctx, plaintextConfigJSON, coordinateConfigJSON2, resp.Private,
 	)...)
