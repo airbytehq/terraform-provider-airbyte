@@ -1,11 +1,11 @@
 [tasks]
 
 [tasks.clean-generated]
-help = "Delete generated files, preserving hand-written movestate/helpers/custom wrappers."
+help = "Delete generated files, preserving hand-written movestate/helpers/custom/generic wrappers."
 shell = """
 rm -rf internal/sdk
-find internal/provider/ -name 'destination_*.go' ! -name '*movestate*' ! -name '*helpers*' ! -name '*_custom_*' -delete 2>/dev/null || true
-find internal/provider/ -name 'source_*.go' ! -name '*movestate*' ! -name '*helpers*' ! -name '*_custom_*' -delete 2>/dev/null || true
+find internal/provider/ -name 'destination_*.go' ! -name '*movestate*' ! -name '*helpers*' ! -name '*_custom_*' ! -name '*_generic*' -delete 2>/dev/null || true
+find internal/provider/ -name 'source_*.go' ! -name '*movestate*' ! -name '*helpers*' ! -name '*_custom_*' ! -name '*_generic*' -delete 2>/dev/null || true
 rm -rf internal/provider/types/
 """
 
