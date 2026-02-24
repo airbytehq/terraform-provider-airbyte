@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dlclark/regexp2"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -352,6 +353,28 @@ func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, r
 	return "", nil
 }
 
+// regexp2Regexp wraps a dlclark/regexp2.Regexp to implement the
+// jsonschema.Regexp interface, giving the JSON Schema compiler
+// a PCRE-compatible regex engine that supports lookahead/lookbehind.
+type regexp2Regexp regexp2.Regexp
+
+func (re *regexp2Regexp) MatchString(s string) bool {
+	matched, err := (*regexp2.Regexp)(re).MatchString(s)
+	return err == nil && matched
+}
+
+func (re *regexp2Regexp) String() string {
+	return (*regexp2.Regexp)(re).String()
+}
+
+func compileRegexp2(s string) (jsonschema.Regexp, error) {
+	re, err := regexp2.Compile(s, regexp2.ECMAScript)
+	if err != nil {
+		return nil, err
+	}
+	return (*regexp2Regexp)(re), nil
+}
+
 func validateJSONSchema(schemaBytes json.RawMessage, instanceJSON string) []string {
 	var schemaObj interface{}
 	if err := json.Unmarshal(schemaBytes, &schemaObj); err != nil {
@@ -364,6 +387,7 @@ func validateJSONSchema(schemaBytes json.RawMessage, instanceJSON string) []stri
 	}
 
 	compiler := jsonschema.NewCompiler()
+	compiler.UseRegexpEngine(compileRegexp2)
 	if err := compiler.AddResource("schema.json", schemaObj); err != nil {
 		return []string{fmt.Sprintf("Failed to load connector spec as JSONSchema resource: %v", err)}
 	}

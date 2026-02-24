@@ -182,6 +182,48 @@ func TestCollectValidationErrors(t *testing.T) {
 	assert.NotEmpty(t, errors, "expected validation errors for missing required fields and wrong type")
 }
 
+func TestValidateJSONSchema_PCRELookbehind(t *testing.T) {
+	// This schema uses a negative lookbehind assertion (?<!...) which is valid
+	// in PCRE/ECMAScript but not in Go's RE2-based regexp package. The custom
+	// regexp2 engine should handle this without error.
+	schema := json.RawMessage(`{
+		"type": "object",
+		"properties": {
+			"repository": {
+				"type": "string",
+				"pattern": "^[\\w.-]+/([\\w.-]*\\*|[\\w.-]+(?<!\\.git))$"
+			}
+		}
+	}`)
+
+	// Valid input that matches the pattern.
+	errors := validateJSONSchema(schema, `{"repository": "airbytehq/airbyte"}`)
+	assert.Empty(t, errors, "expected no validation errors for valid repo name with PCRE lookbehind pattern")
+
+	// Invalid input ending in .git should fail the lookbehind.
+	errors = validateJSONSchema(schema, `{"repository": "airbytehq/airbyte.git"}`)
+	assert.NotEmpty(t, errors, "expected validation error for repo name ending in .git")
+}
+
+func TestValidateJSONSchema_PCRELookahead(t *testing.T) {
+	// Negative lookahead (?!...) is also PCRE-only and unsupported by RE2.
+	schema := json.RawMessage(`{
+		"type": "object",
+		"properties": {
+			"name": {
+				"type": "string",
+				"pattern": "^(?!admin).*$"
+			}
+		}
+	}`)
+
+	errors := validateJSONSchema(schema, `{"name": "user123"}`)
+	assert.Empty(t, errors, "expected no errors for name that doesn't start with 'admin'")
+
+	errors = validateJSONSchema(schema, `{"name": "admin_user"}`)
+	assert.NotEmpty(t, errors, "expected validation error for name starting with 'admin'")
+}
+
 func TestDeepMergeJSON_WithSecrets(t *testing.T) {
 	base := `{"host": "localhost", "port": 5432}`
 	overlay := `{"password": "secret123"}`
