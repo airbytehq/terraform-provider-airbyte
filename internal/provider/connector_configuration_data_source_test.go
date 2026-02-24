@@ -206,7 +206,7 @@ func TestValidateJSONSchema_PCRELookbehind(t *testing.T) {
 }
 
 func TestValidateJSONSchema_PCRELookahead(t *testing.T) {
-	// Negative lookahead (?!...) is also PCRE-only and unsupported by RE2.
+	// Negative lookahead (?!...) is unsupported by Go's regexp/RE2 engine.
 	schema := json.RawMessage(`{
 		"type": "object",
 		"properties": {

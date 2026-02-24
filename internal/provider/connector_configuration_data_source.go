@@ -355,7 +355,7 @@ func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, r
 
 // regexp2Regexp wraps a dlclark/regexp2.Regexp to implement the
 // jsonschema.Regexp interface, giving the JSON Schema compiler
-// a PCRE-compatible regex engine that supports lookahead/lookbehind.
+// an ECMAScript/ECMA-262 (JavaScript) regex engine that supports lookahead/lookbehind.
 type regexp2Regexp regexp2.Regexp
 
 func (re *regexp2Regexp) MatchString(s string) bool {
@@ -372,6 +372,8 @@ func compileRegexp2(s string) (jsonschema.Regexp, error) {
 	if err != nil {
 		return nil, err
 	}
+	// Set a finite match timeout to avoid unbounded backtracking (ReDoS).
+	re.MatchTimeout = 5 * time.Second
 	return (*regexp2Regexp)(re), nil
 }
 
