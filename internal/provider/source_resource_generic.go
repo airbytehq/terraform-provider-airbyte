@@ -23,6 +23,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -311,51 +312,54 @@ func (r *GenericSourceResource) ModifyPlan(ctx context.Context, req resource.Mod
 		return
 	}
 
-	var plan GenericSourceResourceModel
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	// Read sensitive_config from the user's configuration (write-only values
+	// are available in req.Config during plan). We use GetAttribute instead
+	// of Get on the full model to avoid deserialization errors with computed
+	// optional nested objects (e.g. resource_allocation) that are unknown
+	// during plan.
+	var sensitiveConfig types.Dynamic
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sensitive_config"), &sensitiveConfig)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	// Compute hash of sensitive_config from the user's configuration.
-	// Write-only values are available in req.Config during plan.
-	var configModel GenericSourceResourceModel
-	resp.Diagnostics.Append(req.Config.Get(ctx, &configModel)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	hash, err := computeSensitiveConfigHash(configModel.SensitiveConfig)
+	hash, err := computeSensitiveConfigHash(sensitiveConfig)
 	if err != nil {
 		resp.Diagnostics.AddError("Failed to compute sensitive_config_hash", err.Error())
 		return
 	}
 
 	if hash != "" {
-		plan.SensitiveConfigHash = types.StringValue(hash)
+		resp.Diagnostics.Append(resp.Plan.SetAttribute(ctx, path.Root("sensitive_config_hash"), types.StringValue(hash))...)
 	} else {
-		plan.SensitiveConfigHash = types.StringValue("")
+		resp.Diagnostics.Append(resp.Plan.SetAttribute(ctx, path.Root("sensitive_config_hash"), types.StringValue(""))...)
 	}
-
-	resp.Diagnostics.Append(resp.Plan.Set(ctx, &plan)...)
 }
 
 func (r *GenericSourceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan GenericSourceResourceModel
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	var planObj types.Object
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &planObj)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	resp.Diagnostics.Append(planObj.As(ctx, &plan, basetypes.ObjectAsOptions{
+		UnhandledNullAsEmpty:    true,
+		UnhandledUnknownAsEmpty: true,
+	})...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	// Read sensitive_config from the config (write-only values available here).
-	var configModel GenericSourceResourceModel
-	resp.Diagnostics.Append(req.Config.Get(ctx, &configModel)...)
+	var sensitiveConfig types.Dynamic
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sensitive_config"), &sensitiveConfig)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	// Merge config + sensitive_config into a single configuration object for the API.
-	mergedConfig, err := mergeConfigAndSensitiveConfig(plan.Config, configModel.SensitiveConfig)
+	mergedConfig, err := mergeConfigAndSensitiveConfig(plan.Config, sensitiveConfig)
 	if err != nil {
 		resp.Diagnostics.AddError("Failed to merge configuration", err.Error())
 		return
@@ -406,7 +410,7 @@ func (r *GenericSourceResource) Create(ctx context.Context, req resource.CreateR
 	}
 
 	// Compute and store the sensitive_config_hash.
-	hash, err := computeSensitiveConfigHash(configModel.SensitiveConfig)
+	hash, err := computeSensitiveConfigHash(sensitiveConfig)
 	if err != nil {
 		resp.Diagnostics.AddError("Failed to compute sensitive_config_hash", err.Error())
 		return
@@ -418,7 +422,15 @@ func (r *GenericSourceResource) Create(ctx context.Context, req resource.CreateR
 
 func (r *GenericSourceResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state GenericSourceResourceModel
-	resp.Diagnostics.Append(req.State.Get(ctx, &state)...)
+	var stateObj types.Object
+	resp.Diagnostics.Append(req.State.Get(ctx, &stateObj)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	resp.Diagnostics.Append(stateObj.As(ctx, &state, basetypes.ObjectAsOptions{
+		UnhandledNullAsEmpty:    true,
+		UnhandledUnknownAsEmpty: true,
+	})...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -466,20 +478,28 @@ func (r *GenericSourceResource) Read(ctx context.Context, req resource.ReadReque
 
 func (r *GenericSourceResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan GenericSourceResourceModel
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	var planObj types.Object
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &planObj)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	resp.Diagnostics.Append(planObj.As(ctx, &plan, basetypes.ObjectAsOptions{
+		UnhandledNullAsEmpty:    true,
+		UnhandledUnknownAsEmpty: true,
+	})...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	// Read sensitive_config from the config (write-only values available here).
-	var configModel GenericSourceResourceModel
-	resp.Diagnostics.Append(req.Config.Get(ctx, &configModel)...)
+	var sensitiveConfig types.Dynamic
+	resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("sensitive_config"), &sensitiveConfig)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	// Merge config + sensitive_config.
-	mergedConfig, err := mergeConfigAndSensitiveConfig(plan.Config, configModel.SensitiveConfig)
+	mergedConfig, err := mergeConfigAndSensitiveConfig(plan.Config, sensitiveConfig)
 	if err != nil {
 		resp.Diagnostics.AddError("Failed to merge configuration", err.Error())
 		return
@@ -523,7 +543,7 @@ func (r *GenericSourceResource) Update(ctx context.Context, req resource.UpdateR
 	}
 
 	// Compute and store the sensitive_config_hash.
-	hash, err := computeSensitiveConfigHash(configModel.SensitiveConfig)
+	hash, err := computeSensitiveConfigHash(sensitiveConfig)
 	if err != nil {
 		resp.Diagnostics.AddError("Failed to compute sensitive_config_hash", err.Error())
 		return
@@ -535,7 +555,15 @@ func (r *GenericSourceResource) Update(ctx context.Context, req resource.UpdateR
 
 func (r *GenericSourceResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state GenericSourceResourceModel
-	resp.Diagnostics.Append(req.State.Get(ctx, &state)...)
+	var stateObj types.Object
+	resp.Diagnostics.Append(req.State.Get(ctx, &stateObj)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	resp.Diagnostics.Append(stateObj.As(ctx, &state, basetypes.ObjectAsOptions{
+		UnhandledNullAsEmpty:    true,
+		UnhandledUnknownAsEmpty: true,
+	})...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
