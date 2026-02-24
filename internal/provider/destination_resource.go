@@ -392,8 +392,9 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 	}
 
 	// HAND-EDITED: Build and store the secret hash map in private state.
-	resp.Diagnostics.Append(buildAndStoreDestinationSecretHashMap(
-		ctx, r, data.DestinationID.ValueString(), plaintextConfigJSON, resp.Private,
+	coordinateConfigJSON := data.Configuration.ValueString()
+	resp.Diagnostics.Append(buildAndStoreSecretHashMap(
+		ctx, plaintextConfigJSON, coordinateConfigJSON, resp.Private,
 	)...)
 
 	// Save updated data into Terraform state
@@ -559,8 +560,9 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 	}
 
 	// HAND-EDITED: Build and store the secret hash map in private state.
-	resp.Diagnostics.Append(buildAndStoreDestinationSecretHashMap(
-		ctx, r, data.DestinationID.ValueString(), plaintextConfigJSON, resp.Private,
+	coordinateConfigJSON2 := data.Configuration.ValueString()
+	resp.Diagnostics.Append(buildAndStoreSecretHashMap(
+		ctx, plaintextConfigJSON, coordinateConfigJSON2, resp.Private,
 	)...)
 
 	// Save updated data into Terraform state

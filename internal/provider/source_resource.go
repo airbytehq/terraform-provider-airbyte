@@ -400,10 +400,12 @@ func (r *SourceResource) Create(ctx context.Context, req resource.CreateRequest,
 	}
 
 	// HAND-EDITED: Build and store the secret hash map in private state.
-	// The state now contains the secret-coordinate version of the config.
+	// The state now contains the secret-coordinate version of the config (from the
+	// GetSource call with includeSecretCoordinates=true above).
 	// We compare it with the user's plaintext config to build the mapping.
-	resp.Diagnostics.Append(buildAndStoreSourceSecretHashMap(
-		ctx, r, data.SourceID.ValueString(), plaintextConfigJSON, resp.Private,
+	coordinateConfigJSON := data.Configuration.ValueString()
+	resp.Diagnostics.Append(buildAndStoreSecretHashMap(
+		ctx, plaintextConfigJSON, coordinateConfigJSON, resp.Private,
 	)...)
 
 	// Save updated data into Terraform state
@@ -569,8 +571,9 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 	}
 
 	// HAND-EDITED: Build and store the secret hash map in private state.
-	resp.Diagnostics.Append(buildAndStoreSourceSecretHashMap(
-		ctx, r, data.SourceID.ValueString(), plaintextConfigJSON, resp.Private,
+	coordinateConfigJSON2 := data.Configuration.ValueString()
+	resp.Diagnostics.Append(buildAndStoreSecretHashMap(
+		ctx, plaintextConfigJSON, coordinateConfigJSON2, resp.Private,
 	)...)
 
 	// Save updated data into Terraform state

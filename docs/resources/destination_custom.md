@@ -17,7 +17,7 @@ DestinationCustom Resource
 
 ### Required
 
-- `configuration` (String) The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. Parsed as JSON.
+- `configuration` (String, Sensitive) The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. Parsed as JSON.
 - `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String) Requires replacement if changed.
 
