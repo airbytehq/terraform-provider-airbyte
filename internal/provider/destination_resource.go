@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
@@ -62,8 +63,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 			"configuration": schema.StringAttribute{
 				CustomType: jsontypes.NormalizedType{},
 				Required:   true,
+				Sensitive:  true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+					speakeasy_stringplanmodifier.SuppressSecretConfigDiff(),
 				},
 				Description: `The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. Parsed as JSON.`,
 			},
@@ -305,6 +308,11 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
+	// HAND-EDITED: Save the user's plaintext configuration before API calls
+	// so we can build the secret hash map after creation.
+	// See: https://github.com/airbytehq/terraform-provider-airbyte/issues/349
+	plaintextConfigJSON := data.Configuration.ValueString()
+
 	request, requestDiags := data.ToSharedDestinationCreateRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
@@ -342,12 +350,15 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
 
-	if resp.Diagnostics.HasError() {
-		return
+	// HAND-EDITED: Use includeSecretCoordinates=true on the follow-up GetDestination call
+	// to get deterministic secret references instead of "***".
+	includeSecrets := true
+	request1 := &operations.GetDestinationRequest{
+		DestinationID:            data.DestinationID.ValueString(),
+		IncludeSecretCoordinates: &includeSecrets,
 	}
+
 	res1, err := r.client.Destinations.GetDestination(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -380,6 +391,11 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
+	// HAND-EDITED: Build and store the secret hash map in private state.
+	resp.Diagnostics.Append(buildAndStoreDestinationSecretHashMap(
+		ctx, r, data.DestinationID.ValueString(), plaintextConfigJSON, resp.Private,
+	)...)
+
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -402,12 +418,15 @@ func (r *DestinationResource) Read(ctx context.Context, req resource.ReadRequest
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDestinationRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	// HAND-EDITED: Use includeSecretCoordinates=true to get deterministic
+	// secret references instead of "***" in the API response.
+	// See: https://github.com/airbytehq/terraform-provider-airbyte/issues/349
+	includeSecrets := true
+	request := &operations.GetDestinationRequest{
+		DestinationID:            data.DestinationID.ValueString(),
+		IncludeSecretCoordinates: &includeSecrets,
 	}
+
 	res, err := r.client.Destinations.GetDestination(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -456,6 +475,11 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
+	// HAND-EDITED: Save the user's plaintext configuration before API calls
+	// so we can rebuild the secret hash map after the update.
+	// See: https://github.com/airbytehq/terraform-provider-airbyte/issues/349
+	plaintextConfigJSON := data.Configuration.ValueString()
+
 	request, requestDiags := data.ToOperationsPutDestinationRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
@@ -493,12 +517,15 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
 
-	if resp.Diagnostics.HasError() {
-		return
+	// HAND-EDITED: Use includeSecretCoordinates=true on the follow-up GetDestination call
+	// to get deterministic secret references instead of "***".
+	includeSecrets := true
+	request1 := &operations.GetDestinationRequest{
+		DestinationID:            data.DestinationID.ValueString(),
+		IncludeSecretCoordinates: &includeSecrets,
 	}
+
 	res1, err := r.client.Destinations.GetDestination(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -530,6 +557,11 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// HAND-EDITED: Build and store the secret hash map in private state.
+	resp.Diagnostics.Append(buildAndStoreDestinationSecretHashMap(
+		ctx, r, data.DestinationID.ValueString(), plaintextConfigJSON, resp.Private,
+	)...)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
