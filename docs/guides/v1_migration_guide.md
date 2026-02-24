@@ -7,8 +7,6 @@ Version 1.0 of the Airbyte Terraform provider introduces **generic connector res
 > **Deprecation Notice**
 > Typed connector-specific resources are **officially deprecated** as of 1.0. They remain available in 1.0 for backward compatibility but are **targeted for removal in 1.1**. Migrate to the generic resources at your earliest convenience.
 
-The generic resources accept freeform JSON configuration via `jsonencode()`, which means they are immune to upstream schema changes that previously caused `422 Unprocessable Entity` errors with typed resources.
-
 The recommended way to use the generic resources is with the [`airbyte_connector_configuration`](../data-sources/connector_configuration.md) data source, which provides:
 - Automatic `definition_id` resolution from connector name
 - Optional version pinning via `connector_version` (e.g. `"3.6.28"`)
