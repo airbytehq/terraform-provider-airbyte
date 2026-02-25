@@ -8,8 +8,8 @@ import (
 )
 
 type SourceFirebolt struct {
-	Account              types.String         `tfsdk:"account"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	Account              types.String         `tfsdk:"account"`
 	ClientID             types.String         `tfsdk:"client_id"`
 	ClientSecret         types.String         `tfsdk:"client_secret"`
 	Database             types.String         `tfsdk:"database"`

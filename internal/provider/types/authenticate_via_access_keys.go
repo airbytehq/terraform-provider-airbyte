@@ -8,7 +8,7 @@ import (
 )
 
 type AuthenticateViaAccessKeys struct {
-	AccessKeyID          types.String         `tfsdk:"access_key_id"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessKeyID          types.String         `tfsdk:"access_key_id"`
 	SecretAccessKey      types.String         `tfsdk:"secret_access_key"`
 }

@@ -8,8 +8,8 @@ import (
 )
 
 type SourceSenseforce struct {
-	AccessToken          types.String         `tfsdk:"access_token"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessToken          types.String         `tfsdk:"access_token"`
 	BackendURL           types.String         `tfsdk:"backend_url"`
 	DatasetID            types.String         `tfsdk:"dataset_id"`
 	SliceRange           types.Int64          `tfsdk:"slice_range"`

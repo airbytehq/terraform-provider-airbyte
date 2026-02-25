@@ -94,7 +94,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `None.`,
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("login_password"),
+										path.MatchRelative().AtParent().AtName("login").AtName("password"),
 									}...),
 								},
 							},
@@ -184,7 +184,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Default:     int64default.StaticInt64(27017),
 										Description: `The Port of a Mongo database to be replicated. Default: 27017`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 								},
@@ -223,7 +223,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{
@@ -261,7 +261,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{

@@ -8,8 +8,8 @@ import (
 )
 
 type SourceHarvest struct {
-	AccountID            types.String                          `tfsdk:"account_id"`
 	AdditionalProperties jsontypes.Normalized                  `tfsdk:"additional_properties"`
+	AccountID            types.String                          `tfsdk:"account_id"`
 	Credentials          *SourceHarvestAuthenticationMechanism `tfsdk:"credentials"`
 	ReplicationEndDate   types.String                          `tfsdk:"replication_end_date"`
 	ReplicationStartDate types.String                          `tfsdk:"replication_start_date"`

@@ -94,8 +94,8 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("o_auth20"),
-										path.MatchRelative().AtParent().AtName("o_auth20_legacy"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_legacy"),
 									}...),
 								},
 							},
@@ -138,7 +138,7 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
-										path.MatchRelative().AtParent().AtName("o_auth20_legacy"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_legacy"),
 									}...),
 								},
 							},
@@ -169,7 +169,7 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
-										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
 									}...),
 								},
 							},

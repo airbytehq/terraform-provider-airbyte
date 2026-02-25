@@ -8,9 +8,9 @@ import (
 )
 
 type SourceSnapchatMarketing struct {
+	AdditionalProperties     jsontypes.Normalized   `tfsdk:"additional_properties"`
 	ActionReportTime         types.String           `tfsdk:"action_report_time"`
 	AdAccountIds             []jsontypes.Normalized `tfsdk:"ad_account_ids"`
-	AdditionalProperties     jsontypes.Normalized   `tfsdk:"additional_properties"`
 	ClientID                 types.String           `tfsdk:"client_id"`
 	ClientSecret             types.String           `tfsdk:"client_secret"`
 	EndDate                  types.String           `tfsdk:"end_date"`

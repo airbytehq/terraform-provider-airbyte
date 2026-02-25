@@ -187,7 +187,7 @@ type CustomReportConfig struct {
 	// The name of the custom report, this name would be used as stream name
 	Name string `json:"name"`
 	// A list of available aggregations.
-	ReportAggregation *string `default:"Hourly" json:"report_aggregation"`
+	ReportAggregation string `json:"report_aggregation"`
 	// A list of available report object columns. You can find it in description of reporting object that you want to add to custom report.
 	ReportColumns []string `json:"report_columns"`
 	// The name of the the object derives from the ReportRequest object. You can find it in Bing Ads Api docs - Reporting API - Reporting Data Objects.
@@ -219,9 +219,9 @@ func (c *CustomReportConfig) GetName() string {
 	return c.Name
 }
 
-func (c *CustomReportConfig) GetReportAggregation() *string {
+func (c *CustomReportConfig) GetReportAggregation() string {
 	if c == nil {
-		return nil
+		return ""
 	}
 	return c.ReportAggregation
 }

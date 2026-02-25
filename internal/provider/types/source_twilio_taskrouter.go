@@ -8,7 +8,7 @@ import (
 )
 
 type SourceTwilioTaskrouter struct {
-	AccountSid           types.String         `tfsdk:"account_sid"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountSid           types.String         `tfsdk:"account_sid"`
 	AuthToken            types.String         `tfsdk:"auth_token"`
 }

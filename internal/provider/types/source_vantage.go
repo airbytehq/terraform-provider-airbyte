@@ -8,6 +8,6 @@ import (
 )
 
 type SourceVantage struct {
-	AccessToken          types.String         `tfsdk:"access_token"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessToken          types.String         `tfsdk:"access_token"`
 }

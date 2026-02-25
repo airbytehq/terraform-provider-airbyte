@@ -18,6 +18,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/float64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -87,8 +88,10 @@ func (r *SourceRedditResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Includes mature content. Default: false`,
 					},
 					"limit": schema.Float64Attribute{
+						Computed:    true,
 						Optional:    true,
-						Description: `Max records per page limit`,
+						Default:     float64default.StaticFloat64(1000),
+						Description: `Max records per page limit. Default: 1000`,
 					},
 					"query": schema.StringAttribute{
 						Computed:    true,

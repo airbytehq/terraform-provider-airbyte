@@ -27,7 +27,10 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     schemas = [
     ]
     ssl_mode = {
-      # ...
+      unencrypted = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        mode                  = "unencrypted"
+      }
     }
     tunnel_method = {
       no_tunnel = {

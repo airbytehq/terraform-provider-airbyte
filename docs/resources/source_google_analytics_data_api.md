@@ -83,25 +83,6 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
               }
             ]
           }
-          or_group = {
-            expressions = [
-              {
-                field_name = "...my_field_name..."
-                filter = {
-                  numeric_filter = {
-                    operation = [
-                      "GREATER_THAN_OR_EQUAL"
-                    ]
-                    value = {
-                      double_value = {
-                        value = 0.63
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
         }
         metrics = [
           "..."

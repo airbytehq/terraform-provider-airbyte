@@ -20,7 +20,9 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
     domain                  = "myaccount.freshdesk.com"
     lookback_window_in_days = 7
     rate_limit_plan = {
-      # ...
+      pro_plan = {
+        # ...
+      }
     }
     requests_per_minute = 0
     start_date          = "2020-12-01T00:00:00Z"

@@ -8,8 +8,8 @@ import (
 )
 
 type SourceAirtable struct {
-	AddBaseIDToStreamName types.Bool           `tfsdk:"add_base_id_to_stream_name"`
 	AdditionalProperties  jsontypes.Normalized `tfsdk:"additional_properties"`
+	AddBaseIDToStreamName types.Bool           `tfsdk:"add_base_id_to_stream_name"`
 	Credentials           *Authentication      `tfsdk:"credentials"`
 	NumWorkers            types.Int64          `tfsdk:"num_workers"`
 }

@@ -8,8 +8,8 @@ import (
 )
 
 type SourceAmazonSellerPartner struct {
-	AccountType                      types.String         `tfsdk:"account_type"`
 	AdditionalProperties             jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountType                      types.String         `tfsdk:"account_type"`
 	AppID                            types.String         `tfsdk:"app_id"`
 	AwsEnvironment                   types.String         `tfsdk:"aws_environment"`
 	FinancialEventsMaxResultsPerPage types.Int64          `tfsdk:"financial_events_max_results_per_page"`

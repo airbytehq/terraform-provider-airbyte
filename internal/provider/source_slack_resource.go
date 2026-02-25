@@ -155,7 +155,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 						Default:     int64default.StaticInt64(0),
 						Description: `How far into the past to look for messages in threads, default is 0 days. Default: 0`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(365),
+							int64validator.Between(0, 365),
 						},
 					},
 					"num_workers": schema.Int64Attribute{

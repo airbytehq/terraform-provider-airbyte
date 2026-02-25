@@ -167,12 +167,9 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest(ctx cont
 		var name2 string
 		name2 = r.Configuration.CustomReports[customReportsIndex].Name.ValueString()
 
-		reportAggregation := new(string)
-		if !r.Configuration.CustomReports[customReportsIndex].ReportAggregation.IsUnknown() && !r.Configuration.CustomReports[customReportsIndex].ReportAggregation.IsNull() {
-			*reportAggregation = r.Configuration.CustomReports[customReportsIndex].ReportAggregation.ValueString()
-		} else {
-			reportAggregation = nil
-		}
+		var reportAggregation string
+		reportAggregation = r.Configuration.CustomReports[customReportsIndex].ReportAggregation.ValueString()
+
 		reportColumns := make([]string, 0, len(r.Configuration.CustomReports[customReportsIndex].ReportColumns))
 		for reportColumnsIndex := range r.Configuration.CustomReports[customReportsIndex].ReportColumns {
 			reportColumns = append(reportColumns, r.Configuration.CustomReports[customReportsIndex].ReportColumns[reportColumnsIndex].ValueString())

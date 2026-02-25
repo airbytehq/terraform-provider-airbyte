@@ -8,8 +8,8 @@ import (
 )
 
 type SourceAppcues struct {
-	AccountID            types.String         `tfsdk:"account_id"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountID            types.String         `tfsdk:"account_id"`
 	Password             types.String         `tfsdk:"password"`
 	StartDate            types.String         `tfsdk:"start_date"`
 	Username             types.String         `tfsdk:"username"`

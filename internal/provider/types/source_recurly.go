@@ -8,8 +8,8 @@ import (
 )
 
 type SourceRecurly struct {
-	AccountsStepDays     types.Int64          `tfsdk:"accounts_step_days"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountsStepDays     types.Int64          `tfsdk:"accounts_step_days"`
 	APIKey               types.String         `tfsdk:"api_key"`
 	BeginTime            types.String         `tfsdk:"begin_time"`
 	EndTime              types.String         `tfsdk:"end_time"`

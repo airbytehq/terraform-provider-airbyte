@@ -8,8 +8,8 @@ import (
 )
 
 type SourcePocket struct {
-	AccessToken          types.String         `tfsdk:"access_token"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessToken          types.String         `tfsdk:"access_token"`
 	ConsumerKey          types.String         `tfsdk:"consumer_key"`
 	ContentType          types.String         `tfsdk:"content_type"`
 	DetailType           types.String         `tfsdk:"detail_type"`

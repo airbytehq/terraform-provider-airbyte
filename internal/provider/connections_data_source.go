@@ -319,6 +319,9 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 			"offset": schema.Int32Attribute{
 				Optional:    true,
 				Description: `Set the offset to start at when returning Connections. The default is 0`,
+				Validators: []validator.Int32{
+					int32validator.AtLeast(0),
+				},
 			},
 			"previous": schema.StringAttribute{
 				Computed: true,

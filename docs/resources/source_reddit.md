@@ -67,7 +67,7 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `exact` (Boolean) Specifies exact keyword and reduces distractions
 - `include_over_18` (Boolean) Includes mature content. Default: false
-- `limit` (Number) Max records per page limit
+- `limit` (Number) Max records per page limit. Default: 1000
 - `query` (String) Specifies the query for searching in reddits and subreddits. Default: "airbyte"
 - `subreddits` (List of String) Subreddits for exploration
 

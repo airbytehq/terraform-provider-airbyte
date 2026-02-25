@@ -84,6 +84,9 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 						Optional:    true,
 						Default:     int64default.StaticInt64(0),
 						Description: `When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. The Lookback Window only applies to streams that do not support event-based incremental syncs: Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks, Refunds. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>. Default: 0`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"num_workers": schema.Int64Attribute{
 						Computed:    true,

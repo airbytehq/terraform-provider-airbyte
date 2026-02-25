@@ -8,9 +8,9 @@ import (
 )
 
 type SourceIntercom struct {
+	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 	AccessToken          types.String         `tfsdk:"access_token"`
 	ActivityLogsTimeStep types.Int64          `tfsdk:"activity_logs_time_step"`
-	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 	ClientID             types.String         `tfsdk:"client_id"`
 	ClientSecret         types.String         `tfsdk:"client_secret"`
 	LookbackWindow       types.Int64          `tfsdk:"lookback_window"`

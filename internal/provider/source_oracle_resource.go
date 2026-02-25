@@ -81,7 +81,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Use service name`,
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("system_idsid"),
+										path.MatchRelative().AtParent().AtName("system_id_sid"),
 									}...),
 								},
 							},
@@ -171,7 +171,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 							`2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL` + "\n" +
 							`Default: 1521`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(65536),
+							int64validator.Between(0, 65536),
 						},
 					},
 					"schemas": schema.ListAttribute{
@@ -208,7 +208,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{
@@ -246,7 +246,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{

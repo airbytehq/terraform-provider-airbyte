@@ -8,7 +8,7 @@ import (
 )
 
 type SourceFleetio struct {
-	AccountToken         types.String         `tfsdk:"account_token"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountToken         types.String         `tfsdk:"account_token"`
 	APIKey               types.String         `tfsdk:"api_key"`
 }

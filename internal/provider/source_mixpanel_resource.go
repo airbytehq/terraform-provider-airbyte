@@ -140,6 +140,9 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Optional:    true,
 						Default:     int64default.StaticInt64(0),
 						Description: `The number of seconds to look back from the last synced timestamp during incremental syncs of the Export stream. This ensures no data is missed due to delays in event recording. Default is 0 seconds. Must be a non-negative integer. Default: 0`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"num_workers": schema.Int64Attribute{
 						Computed:    true,

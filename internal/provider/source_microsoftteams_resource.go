@@ -93,7 +93,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("authenticate_via_microsoft_o_auth20"),
+										path.MatchRelative().AtParent().AtName("authenticate_via_microsoft_o_auth2_0"),
 									}...),
 								},
 							},

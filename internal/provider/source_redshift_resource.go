@@ -89,7 +89,7 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 						Default:     int64default.StaticInt64(5439),
 						Description: `Port of the database. Default: 5439`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(65536),
+							int64validator.Between(0, 65536),
 						},
 					},
 					"schemas": schema.ListAttribute{

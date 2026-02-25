@@ -147,14 +147,14 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Default:     int64default.StaticInt64(0),
 														Description: `0: no compression & fastest, 9: best compression & slowest. Default: 0`,
 														Validators: []validator.Int64{
-															int64validator.AtMost(9),
+															int64validator.Between(0, 9),
 														},
 													},
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("snappy"),
 														path.MatchRelative().AtParent().AtName("xz"),
 														path.MatchRelative().AtParent().AtName("zstandard"),
@@ -178,8 +178,8 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("snappy"),
 														path.MatchRelative().AtParent().AtName("xz"),
 														path.MatchRelative().AtParent().AtName("zstandard"),
@@ -201,9 +201,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
 														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("xz"),
 														path.MatchRelative().AtParent().AtName("zstandard"),
 													}...),
@@ -227,15 +227,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Default:     int64default.StaticInt64(6),
 														Description: `The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details. Default: 6`,
 														Validators: []validator.Int64{
-															int64validator.AtMost(9),
+															int64validator.Between(0, 9),
 														},
 													},
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
 														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("snappy"),
 														path.MatchRelative().AtParent().AtName("zstandard"),
 													}...),
@@ -261,7 +261,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Default:     int64default.StaticInt64(3),
 														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory. Default: 3`,
 														Validators: []validator.Int64{
-															int64validator.AtMost(22),
+															int64validator.Between(-5, 22),
 														},
 													},
 													"include_checksum": schema.BoolAttribute{
@@ -273,9 +273,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
 														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("snappy"),
 														path.MatchRelative().AtParent().AtName("xz"),
 													}...),

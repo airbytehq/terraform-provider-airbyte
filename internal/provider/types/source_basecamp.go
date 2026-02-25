@@ -8,8 +8,8 @@ import (
 )
 
 type SourceBasecamp struct {
-	AccountID            types.Float64        `tfsdk:"account_id"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountID            types.Float64        `tfsdk:"account_id"`
 	ClientID             types.String         `tfsdk:"client_id"`
 	ClientRefreshToken2  types.String         `tfsdk:"client_refresh_token_2"`
 	ClientSecret         types.String         `tfsdk:"client_secret"`

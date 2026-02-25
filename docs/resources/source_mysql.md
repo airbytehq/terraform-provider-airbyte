@@ -35,7 +35,10 @@ resource "airbyte_source_mysql" "my_source_mysql" {
       }
     }
     ssl_mode = {
-      # ...
+      required = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        mode                  = "required"
+      }
     }
     table_filters = [
       {

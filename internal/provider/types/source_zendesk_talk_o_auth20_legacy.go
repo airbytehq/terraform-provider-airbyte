@@ -8,8 +8,8 @@ import (
 )
 
 type SourceZendeskTalkOAuth20Legacy struct {
-	AccessToken          types.String         `tfsdk:"access_token"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessToken          types.String         `tfsdk:"access_token"`
 	ClientID             types.String         `tfsdk:"client_id"`
 	ClientSecret         types.String         `tfsdk:"client_secret"`
 }

@@ -82,7 +82,7 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						Default:     int64default.StaticInt64(14),
 						Description: `A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>. Default: 14`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(1095),
+							int64validator.Between(0, 1095),
 						},
 					},
 					"credentials": schema.SingleNestedAttribute{

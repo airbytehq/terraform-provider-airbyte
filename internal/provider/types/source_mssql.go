@@ -8,8 +8,8 @@ import (
 )
 
 type SourceMssql struct {
-	AdditionalProperties            map[string]map[string]jsontypes.Normalized `tfsdk:"additional_properties"`
 	AdditionalProperties1           jsontypes.Normalized                       `tfsdk:"additional_properties1"`
+	AdditionalProperties            map[string]map[string]jsontypes.Normalized `tfsdk:"additional_properties"`
 	CheckPrivileges                 types.Bool                                 `tfsdk:"check_privileges"`
 	CheckpointTargetIntervalSeconds types.Int64                                `tfsdk:"checkpoint_target_interval_seconds"`
 	Concurrency                     types.Int64                                `tfsdk:"concurrency"`

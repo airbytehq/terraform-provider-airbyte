@@ -131,7 +131,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 						Default:     int64default.StaticInt64(0),
 						Description: `How far back (in minutes) to re-fetch records during incremental syncs.  Set this if you notice missing records in CRMSearch streams to recover data  that may be delayed by the HubSpot API. Default: 0`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(576000),
+							int64validator.Between(0, 576000),
 						},
 					},
 					"num_worker": schema.Int64Attribute{

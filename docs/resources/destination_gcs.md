@@ -25,7 +25,9 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     format = {
       json_lines_newline_delimited_json = {
         compression = {
-          # ...
+          no_compression = {
+            compression_type = "No Compression"
+          }
         }
         format_type = "JSONL"
       }

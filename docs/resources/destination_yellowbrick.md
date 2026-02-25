@@ -24,7 +24,9 @@ resource "airbyte_destination_yellowbrick" "my_destination_yellowbrick" {
     schema                = "public"
     ssl                   = true
     ssl_mode = {
-      # ...
+      require = {
+        # ...
+      }
     }
     tunnel_method = {
       no_tunnel = {

@@ -174,7 +174,7 @@ func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{
@@ -229,7 +229,7 @@ func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{

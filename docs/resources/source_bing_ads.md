@@ -103,13 +103,13 @@ Required:
 Required:
 
 - `name` (String) The name of the custom report, this name would be used as stream name
+- `report_aggregation` (String) A list of available aggregations.
 - `report_columns` (List of String) A list of available report object columns. You can find it in description of reporting object that you want to add to custom report.
 - `reporting_object` (String) The name of the the object derives from the ReportRequest object. You can find it in Bing Ads Api docs - Reporting API - Reporting Data Objects. must be one of ["AccountPerformanceReportRequest", "AdDynamicTextPerformanceReportRequest", "AdExtensionByAdReportRequest", "AdExtensionByKeywordReportRequest", "AdExtensionDetailReportRequest", "AdGroupPerformanceReportRequest", "AdPerformanceReportRequest", "AgeGenderAudienceReportRequest", "AudiencePerformanceReportRequest", "CallDetailReportRequest", "CampaignPerformanceReportRequest", "ConversionPerformanceReportRequest", "DestinationUrlPerformanceReportRequest", "DSAAutoTargetPerformanceReportRequest", "DSACategoryPerformanceReportRequest", "DSASearchQueryPerformanceReportRequest", "GeographicPerformanceReportRequest", "GoalsAndFunnelsReportRequest", "HotelDimensionPerformanceReportRequest", "HotelGroupPerformanceReportRequest", "KeywordPerformanceReportRequest", "NegativeKeywordConflictReportRequest", "ProductDimensionPerformanceReportRequest", "ProductMatchCountReportRequest", "ProductNegativeKeywordConflictReportRequest", "ProductPartitionPerformanceReportRequest", "ProductPartitionUnitPerformanceReportRequest", "ProductSearchQueryPerformanceReportRequest", "ProfessionalDemographicsAudienceReportRequest", "PublisherUsagePerformanceReportRequest", "SearchCampaignChangeHistoryReportRequest", "SearchQueryPerformanceReportRequest", "ShareOfVoiceReportRequest", "UserLocationPerformanceReportRequest"]
 
 Optional:
 
 - `disable_custom_report_names_camel_to_snake_conversion` (Boolean) When enabled, disables the automatic conversion of custom report names from camelCase to snake_case. By default, custom report names are automatically converted (e.g., 'MyCustomReport' becomes 'my_custom_report'). Enable this option if you want to use the exact report names you specify. Default: false
-- `report_aggregation` (String) A list of available aggregations.
 
 
 

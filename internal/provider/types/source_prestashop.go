@@ -8,8 +8,8 @@ import (
 )
 
 type SourcePrestashop struct {
-	AccessKey            types.String         `tfsdk:"access_key"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessKey            types.String         `tfsdk:"access_key"`
 	StartDate            types.String         `tfsdk:"start_date"`
 	URL                  types.String         `tfsdk:"url"`
 }

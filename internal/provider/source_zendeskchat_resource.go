@@ -85,7 +85,7 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
 									}...),
 								},
 							},

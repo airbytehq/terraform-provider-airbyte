@@ -21,9 +21,6 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       eu_based_account = {
         # ...
       }
-      global_account = {
-        # ...
-      }
     }
     survey_id = [
       "{ \"see\": \"documentation\" }"

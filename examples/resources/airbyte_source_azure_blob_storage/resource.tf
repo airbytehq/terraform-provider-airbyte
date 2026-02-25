@@ -21,9 +21,6 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
           excel_format = {
             # ...
           }
-          jsonl_format = {
-            # ...
-          }
         }
         globs = [
           "..."

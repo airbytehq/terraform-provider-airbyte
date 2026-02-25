@@ -82,7 +82,7 @@ func (r *SourceTwilioResource) Schema(ctx context.Context, req resource.SchemaRe
 						Default:     int64default.StaticInt64(0),
 						Description: `How far into the past to look for records. (in minutes). Default: 0`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(576000),
+							int64validator.Between(0, 576000),
 						},
 					},
 					"num_worker": schema.Int64Attribute{

@@ -3,8 +3,8 @@
 package types
 
 type DestinationS3CompressionCodec struct {
-	Bzip2         *DestinationS3Bzip2                      `queryParam:"inline" tfsdk:"bzip2"`
 	Deflate       *DestinationS3Deflate                    `queryParam:"inline" tfsdk:"deflate"`
+	Bzip2         *DestinationS3Bzip2                      `queryParam:"inline" tfsdk:"bzip2"`
 	NoCompression *DestinationS3SchemasFormatNoCompression `queryParam:"inline" tfsdk:"no_compression"`
 	Snappy        *DestinationS3Snappy                     `queryParam:"inline" tfsdk:"snappy"`
 	Xz            *DestinationS3Xz                         `queryParam:"inline" tfsdk:"xz"`

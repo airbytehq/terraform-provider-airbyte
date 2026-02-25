@@ -10,7 +10,11 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_client_secret                     = "your-client-secret"
     azure_tenant_id                         = "12345678-1234-1234-1234-123456789012"
     format = {
-      # ...
+      json_lines_newline_delimited_json = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        flattening            = "Root level flattening"
+        format_type           = "JSONL"
+      }
     }
     shared_access_signature = "sv=2021-08-06&st=2025-04-11T00%3A00%3A00Z&se=2025-04-12T00%3A00%3A00Z&sr=b&sp=rw&sig=abcdefghijklmnopqrstuvwxyz1234567890%2Fabcdefg%3D"
   }

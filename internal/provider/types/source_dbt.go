@@ -8,7 +8,7 @@ import (
 )
 
 type SourceDbt struct {
-	AccountID            types.String         `tfsdk:"account_id"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountID            types.String         `tfsdk:"account_id"`
 	APIKey2              types.String         `tfsdk:"api_key_2"`
 }
