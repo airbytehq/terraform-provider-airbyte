@@ -8,8 +8,8 @@ import (
 )
 
 type SourceAmazonSqs struct {
-	AccessKey            types.String         `tfsdk:"access_key"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessKey            types.String         `tfsdk:"access_key"`
 	AttributesToReturn   types.String         `tfsdk:"attributes_to_return"`
 	MaxBatchSize         types.Int64          `tfsdk:"max_batch_size"`
 	MaxWaitTime          types.Int64          `tfsdk:"max_wait_time"`

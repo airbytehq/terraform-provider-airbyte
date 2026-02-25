@@ -267,7 +267,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 										Validators: []validator.Object{
 											objectvalidator.ConflictsWith(path.Expressions{
 												path.MatchRelative().AtParent().AtName("no_authentication"),
-												path.MatchRelative().AtParent().AtName("username_password"),
+												path.MatchRelative().AtParent().AtName("username").AtName("password"),
 											}...),
 										},
 									},
@@ -277,7 +277,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 										Validators: []validator.Object{
 											objectvalidator.ConflictsWith(path.Expressions{
 												path.MatchRelative().AtParent().AtName("api_token"),
-												path.MatchRelative().AtParent().AtName("username_password"),
+												path.MatchRelative().AtParent().AtName("username").AtName("password"),
 											}...),
 										},
 									},

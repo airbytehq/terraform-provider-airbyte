@@ -8,9 +8,9 @@ import (
 )
 
 type SourceLinkedinAds struct {
+	AdditionalProperties jsontypes.Normalized             `tfsdk:"additional_properties"`
 	AccountIds           []types.Int64                    `tfsdk:"account_ids"`
 	AdAnalyticsReports   []AdAnalyticsReportConfiguration `tfsdk:"ad_analytics_reports"`
-	AdditionalProperties jsontypes.Normalized             `tfsdk:"additional_properties"`
 	Credentials          *SourceLinkedinAdsAuthentication `tfsdk:"credentials"`
 	LookbackWindow       types.Int64                      `tfsdk:"lookback_window"`
 	NumWorkers           types.Int64                      `tfsdk:"num_workers"`

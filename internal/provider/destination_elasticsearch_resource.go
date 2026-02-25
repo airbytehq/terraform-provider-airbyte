@@ -83,7 +83,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								Description: `Use a api key and secret combination to authenticate`,
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("username_password"),
+										path.MatchRelative().AtParent().AtName("username").AtName("password"),
 									}...),
 								},
 							},
@@ -103,7 +103,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								Description: `Basic auth header with a username and password`,
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("api_key_secret"),
+										path.MatchRelative().AtParent().AtName("api_key").AtName("secret"),
 									}...),
 								},
 							},

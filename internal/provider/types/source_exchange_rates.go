@@ -8,8 +8,8 @@ import (
 )
 
 type SourceExchangeRates struct {
-	AccessKey            types.String         `tfsdk:"access_key"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessKey            types.String         `tfsdk:"access_key"`
 	Base                 types.String         `tfsdk:"base"`
 	IgnoreWeekends       types.Bool           `tfsdk:"ignore_weekends"`
 	StartDate            types.String         `tfsdk:"start_date"`

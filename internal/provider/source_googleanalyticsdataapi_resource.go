@@ -203,6 +203,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 														"end_offset": schema.Int64Attribute{
 															Required:    true,
 															Description: `Specifies the end date of the extended reporting date range for a cohort report.`,
+															Validators: []validator.Int64{
+																int64validator.AtLeast(0),
+															},
 														},
 														"granularity": schema.StringAttribute{
 															Required:    true,
@@ -219,6 +222,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 														"start_offset": schema.Int64Attribute{
 															Optional:    true,
 															Description: `Specifies the start date of the extended reporting date range for a cohort report.`,
+															Validators: []validator.Int64{
+																int64validator.AtLeast(0),
+															},
 														},
 													},
 												},

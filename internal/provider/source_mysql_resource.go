@@ -118,7 +118,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Default:     int64default.StaticInt64(3306),
 						Description: `Port of the database. Default: 3306`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(65536),
+							int64validator.Between(0, 65536),
 						},
 					},
 					"replication_method": schema.SingleNestedAttribute{
@@ -444,7 +444,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{
@@ -499,7 +499,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Default:     int64default.StaticInt64(22),
 										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 										Validators: []validator.Int64{
-											int64validator.AtMost(65536),
+											int64validator.Between(0, 65536),
 										},
 									},
 									"tunnel_user": schema.StringAttribute{

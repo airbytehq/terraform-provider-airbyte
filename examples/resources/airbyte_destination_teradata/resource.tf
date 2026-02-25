@@ -10,17 +10,15 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
         password = "...my_password..."
         username = "...my_username..."
       }
-      td2 = {
-        password = "...my_password..."
-        username = "...my_username..."
-      }
     }
     query_band      = "...my_query_band..."
     raw_data_schema = "...my_raw_data_schema..."
     schema          = "airbyte_td"
     ssl             = false
     ssl_mode = {
-      # ...
+      verify_full = {
+        ssl_ca_certificate = "...my_ssl_ca_certificate..."
+      }
     }
   }
   definition_id = "d113370e-613a-4d8a-8685-e4d05d32dcea"

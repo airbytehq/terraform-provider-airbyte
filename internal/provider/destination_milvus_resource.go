@@ -204,7 +204,7 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Validators: []validator.Object{
 											objectvalidator.ConflictsWith(path.Expressions{
 												path.MatchRelative().AtParent().AtName("no_auth"),
-												path.MatchRelative().AtParent().AtName("username_password"),
+												path.MatchRelative().AtParent().AtName("username").AtName("password"),
 											}...),
 										},
 									},
@@ -214,7 +214,7 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Validators: []validator.Object{
 											objectvalidator.ConflictsWith(path.Expressions{
 												path.MatchRelative().AtParent().AtName("api_token"),
-												path.MatchRelative().AtParent().AtName("username_password"),
+												path.MatchRelative().AtParent().AtName("username").AtName("password"),
 											}...),
 										},
 									},

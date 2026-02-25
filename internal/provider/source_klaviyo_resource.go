@@ -86,6 +86,9 @@ func (r *SourceKlaviyoResource) Schema(ctx context.Context, req resource.SchemaR
 						Optional:    true,
 						Default:     int64default.StaticInt64(0),
 						Description: `The number of days to look back when syncing data in incremental mode. This helps capture any late-arriving data. Only applies to the events_detailed stream. Default: 0`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"metric_ids": schema.StringAttribute{
 						Optional:    true,

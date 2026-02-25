@@ -131,7 +131,7 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
 									}...),
 								},
 							},

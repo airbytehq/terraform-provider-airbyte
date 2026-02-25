@@ -8,8 +8,8 @@ import (
 )
 
 type DestinationS3 struct {
-	AccessKeyID          types.String               `tfsdk:"access_key_id"`
 	AdditionalProperties jsontypes.Normalized       `tfsdk:"additional_properties"`
+	AccessKeyID          types.String               `tfsdk:"access_key_id"`
 	FileNamePattern      types.String               `tfsdk:"file_name_pattern"`
 	Format               *DestinationS3OutputFormat `tfsdk:"format"`
 	RoleArn              types.String               `tfsdk:"role_arn"`

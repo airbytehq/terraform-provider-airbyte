@@ -7,17 +7,10 @@ resource "airbyte_destination_s3" "my_destination_s3" {
       avro_apache_avro = {
         additional_properties = "{ \"see\": \"documentation\" }"
         compression_codec = {
-          bzip2 = {
+          deflate = {
             additional_properties = "{ \"see\": \"documentation\" }"
-            codec                 = "bzip2"
-          }
-          no_compression = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            codec                 = "no compression"
-          }
-          snappy = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            codec                 = "snappy"
+            codec                 = "Deflate"
+            compression_level     = 3
           }
         }
         format_type = "Avro"

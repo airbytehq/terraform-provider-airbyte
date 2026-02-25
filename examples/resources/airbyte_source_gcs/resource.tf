@@ -19,9 +19,6 @@ resource "airbyte_source_gcs" "my_source_gcs" {
           excel_format = {
             # ...
           }
-          jsonl_format = {
-            # ...
-          }
         }
         globs = [
           "..."

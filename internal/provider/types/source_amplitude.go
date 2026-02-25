@@ -8,8 +8,8 @@ import (
 )
 
 type SourceAmplitude struct {
-	ActiveUsersGroupByCountry types.Bool           `tfsdk:"active_users_group_by_country"`
 	AdditionalProperties      jsontypes.Normalized `tfsdk:"additional_properties"`
+	ActiveUsersGroupByCountry types.Bool           `tfsdk:"active_users_group_by_country"`
 	APIKey                    types.String         `tfsdk:"api_key"`
 	DataRegion                types.String         `tfsdk:"data_region"`
 	RequestTimeRange          types.Int64          `tfsdk:"request_time_range"`

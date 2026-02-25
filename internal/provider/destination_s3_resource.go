@@ -175,8 +175,8 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("snappy"),
 														path.MatchRelative().AtParent().AtName("xz"),
 														path.MatchRelative().AtParent().AtName("zstandard"),
@@ -203,8 +203,8 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("no_compression"),
 														path.MatchRelative().AtParent().AtName("xz"),
 														path.MatchRelative().AtParent().AtName("zstandard"),
@@ -234,8 +234,8 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("no_compression"),
 														path.MatchRelative().AtParent().AtName("snappy"),
 														path.MatchRelative().AtParent().AtName("zstandard"),
@@ -270,8 +270,8 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												},
 												Validators: []validator.Object{
 													objectvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("bzip2"),
 														path.MatchRelative().AtParent().AtName("no_compression"),
 														path.MatchRelative().AtParent().AtName("snappy"),
 														path.MatchRelative().AtParent().AtName("xz"),

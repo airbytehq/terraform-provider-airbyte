@@ -18,7 +18,9 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
       {
         days_to_sync_if_history_is_full = 5
         format = {
-          # ...
+          jsonl_format = {
+            # ...
+          }
         }
         globs = [
           "..."

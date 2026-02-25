@@ -8,8 +8,8 @@ import (
 )
 
 type SourceZoom struct {
-	AccountID             types.String         `tfsdk:"account_id"`
 	AdditionalProperties  jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountID             types.String         `tfsdk:"account_id"`
 	AuthorizationEndpoint types.String         `tfsdk:"authorization_endpoint"`
 	ClientID              types.String         `tfsdk:"client_id"`
 	ClientSecret          types.String         `tfsdk:"client_secret"`

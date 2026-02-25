@@ -124,7 +124,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 									Description: `The name of the custom report, this name would be used as stream name`,
 								},
 								"report_aggregation": schema.StringAttribute{
-									Optional:    true,
+									Required:    true,
 									Description: `A list of available aggregations.`,
 								},
 								"report_columns": schema.ListAttribute{
@@ -192,7 +192,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						Default:     int64default.StaticInt64(0),
 						Description: `Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode without specified Reports Start Date. Default: 0`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(90),
+							int64validator.Between(0, 90),
 						},
 					},
 					"refresh_token": schema.StringAttribute{

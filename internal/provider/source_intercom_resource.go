@@ -101,6 +101,9 @@ func (r *SourceIntercomResource) Schema(ctx context.Context, req resource.Schema
 						Optional:    true,
 						Default:     int64default.StaticInt64(0),
 						Description: `The number of days to shift the state value backward for record sync. Default: 0`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

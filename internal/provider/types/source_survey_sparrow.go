@@ -8,8 +8,8 @@ import (
 )
 
 type SourceSurveySparrow struct {
-	AccessToken          types.String           `tfsdk:"access_token"`
 	AdditionalProperties jsontypes.Normalized   `tfsdk:"additional_properties"`
+	AccessToken          types.String           `tfsdk:"access_token"`
 	Region               *BaseURL               `tfsdk:"region"`
 	SurveyID             []jsontypes.Normalized `tfsdk:"survey_id"`
 }

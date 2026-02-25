@@ -80,7 +80,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						Default:     int64default.StaticInt64(3),
 						Description: `The attribution window in days. Default: 3`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(364),
+							int64validator.Between(0, 364),
 						},
 					},
 					"credentials": schema.SingleNestedAttribute{
@@ -130,7 +130,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
 									}...),
 								},
 							},

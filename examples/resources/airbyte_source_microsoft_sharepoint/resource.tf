@@ -21,7 +21,9 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
       {
         days_to_sync_if_history_is_full = 0
         format = {
-          # ...
+          jsonl_format = {
+            # ...
+          }
         }
         globs = [
           "..."

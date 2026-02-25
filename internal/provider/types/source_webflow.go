@@ -8,8 +8,8 @@ import (
 )
 
 type SourceWebflow struct {
-	AcceptVersion        types.String         `tfsdk:"accept_version"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AcceptVersion        types.String         `tfsdk:"accept_version"`
 	APIKey               types.String         `tfsdk:"api_key"`
 	SiteID               types.String         `tfsdk:"site_id"`
 }

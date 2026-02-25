@@ -8,8 +8,8 @@ import (
 )
 
 type SourcePinterest struct {
-	AccountID            types.String         `tfsdk:"account_id"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountID            types.String         `tfsdk:"account_id"`
 	Credentials          *OAuth20             `tfsdk:"credentials"`
 	CustomReports        []ReportConfig       `tfsdk:"custom_reports"`
 	NumThreads           types.Int64          `tfsdk:"num_threads"`

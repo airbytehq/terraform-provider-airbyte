@@ -13,10 +13,6 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
         compression_codec = "UNCOMPRESSED"
         format_type       = "JSONL"
       }
-      parquet_columnar_storage = {
-        compression_codec = "GZIP"
-        format_type       = "Parquet"
-      }
     }
     glue_catalog_float_as_decimal             = true
     lakeformation_database_default_tag_key    = "pii_level"

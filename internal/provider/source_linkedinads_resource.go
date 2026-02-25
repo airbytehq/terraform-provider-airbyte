@@ -149,7 +149,7 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
 									}...),
 								},
 							},
@@ -185,6 +185,9 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 						Optional:    true,
 						Default:     int64default.StaticInt64(0),
 						Description: `How far into the past to look for records. (in days). Default: 0`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"num_workers": schema.Int64Attribute{
 						Computed:    true,

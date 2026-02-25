@@ -13,6 +13,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -78,6 +79,9 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 						Optional:    true,
 						Default:     int64default.StaticInt64(0),
 						Description: `When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation. Default: 0`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,

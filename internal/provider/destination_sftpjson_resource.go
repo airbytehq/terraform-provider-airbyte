@@ -83,7 +83,7 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 						Default:     int64default.StaticInt64(22),
 						Description: `Port of the SFTP server. Default: 22`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(65536),
+							int64validator.Between(0, 65536),
 						},
 					},
 					"username": schema.StringAttribute{

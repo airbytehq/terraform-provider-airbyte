@@ -85,8 +85,8 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("o_auth20_with_private_key"),
-										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_with_private_key"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
 									}...),
 								},
 							},
@@ -112,7 +112,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
-										path.MatchRelative().AtParent().AtName("o_auth20_with_private_key"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_with_private_key"),
 									}...),
 								},
 							},
@@ -142,7 +142,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
-										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0"),
 									}...),
 								},
 							},

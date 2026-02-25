@@ -8,7 +8,7 @@ import (
 )
 
 type SourceConvex struct {
-	AccessKey            types.String         `tfsdk:"access_key"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessKey            types.String         `tfsdk:"access_key"`
 	DeploymentURL        types.String         `tfsdk:"deployment_url"`
 }

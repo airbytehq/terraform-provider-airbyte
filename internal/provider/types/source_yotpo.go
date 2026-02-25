@@ -8,8 +8,8 @@ import (
 )
 
 type SourceYotpo struct {
-	AccessToken          types.String         `tfsdk:"access_token"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccessToken          types.String         `tfsdk:"access_token"`
 	AppKey               types.String         `tfsdk:"app_key"`
 	Email                types.String         `tfsdk:"email"`
 	StartDate            types.String         `tfsdk:"start_date"`

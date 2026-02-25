@@ -96,8 +96,8 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("o_auth20_legacy"),
-										path.MatchRelative().AtParent().AtName("o_auth20_with_refresh_token"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_legacy"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_with_refresh_token"),
 									}...),
 								},
 							},
@@ -128,7 +128,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
-										path.MatchRelative().AtParent().AtName("o_auth20_with_refresh_token"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_with_refresh_token"),
 									}...),
 								},
 							},
@@ -171,7 +171,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
-										path.MatchRelative().AtParent().AtName("o_auth20_legacy"),
+										path.MatchRelative().AtParent().AtName("o_auth2_0_legacy"),
 									}...),
 								},
 							},

@@ -13,6 +13,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -90,6 +91,9 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						Optional:    true,
 						Default:     int64default.StaticInt64(0),
 						Description: `When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced. Default: 0`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"numeric_event_properties_keys": schema.ListAttribute{
 						Optional:    true,

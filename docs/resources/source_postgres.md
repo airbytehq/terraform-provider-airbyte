@@ -24,12 +24,16 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     password                     = "...my_password..."
     port                         = 5432
     replication_method = {
-      # ...
+      scan_changes_with_user_defined_cursor = {
+        # ...
+      }
     }
     schemas = [
     ]
     ssl_mode = {
-      # ...
+      require = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+      }
     }
     tunnel_method = {
       password_authentication = {

@@ -8,8 +8,8 @@ import (
 )
 
 type SourceWikipediaPageviews struct {
-	Access               types.String         `tfsdk:"access"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	Access               types.String         `tfsdk:"access"`
 	Agent                types.String         `tfsdk:"agent"`
 	Article              types.String         `tfsdk:"article"`
 	Country              types.String         `tfsdk:"country"`

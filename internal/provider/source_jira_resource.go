@@ -104,7 +104,7 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Default:     int64default.StaticInt64(0),
 						Description: `When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced. Default: 0`,
 						Validators: []validator.Int64{
-							int64validator.AtMost(576000),
+							int64validator.Between(0, 576000),
 						},
 					},
 					"num_workers": schema.Int64Attribute{

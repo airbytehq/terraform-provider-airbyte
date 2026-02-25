@@ -8,8 +8,8 @@ import (
 )
 
 type SourceBingAds struct {
-	AccountNames         []AccountNames       `tfsdk:"account_names"`
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
+	AccountNames         []AccountNames       `tfsdk:"account_names"`
 	ClientID             types.String         `tfsdk:"client_id"`
 	ClientSecret         types.String         `tfsdk:"client_secret"`
 	CustomReports        []CustomReportConfig `tfsdk:"custom_reports"`

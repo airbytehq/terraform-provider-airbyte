@@ -41,9 +41,6 @@ resource "airbyte_source_s3" "my_source_s3" {
           excel_format = {
             # ...
           }
-          jsonl_format = {
-            # ...
-          }
         }
         globs = [
           "..."
