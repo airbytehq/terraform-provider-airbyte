@@ -76,10 +76,12 @@ func TestTokenURLResolution(t *testing.T) {
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				receivedPath = r.URL.Path
 				w.Header().Set("Content-Type", "application/json")
-				json.NewEncoder(w).Encode(tokenResponse{
+				if err := json.NewEncoder(w).Encode(tokenResponse{
 					AccessToken: "test-token",
 					TokenType:   "Bearer",
-				})
+				}); err != nil {
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+				}
 			}))
 			defer ts.Close()
 
