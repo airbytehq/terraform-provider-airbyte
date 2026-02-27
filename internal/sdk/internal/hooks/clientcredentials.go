@@ -146,10 +146,12 @@ func (c *clientCredentialsHook) doTokenRequest(ctx HookContext, credentials *cre
 		return nil, fmt.Errorf("failed to parse token URL: %w", err)
 	}
 	if !u.IsAbs() {
-		tokenURL, err = url.JoinPath(ctx.BaseURL, tokenURL)
+		base, err := url.Parse(ctx.BaseURL)
 		if err != nil {
-			return nil, fmt.Errorf("failed to construct token URL: %w", err)
+			return nil, fmt.Errorf("failed to parse base URL: %w", err)
 		}
+		u = base.ResolveReference(u)
+		tokenURL = u.String()
 	}
 
 	req, err := http.NewRequestWithContext(ctx.Context, http.MethodPost, tokenURL, bytes.NewBufferString(values.Encode()))
@@ -172,7 +174,7 @@ func (c *clientCredentialsHook) doTokenRequest(ctx HookContext, credentials *cre
 
 	var tokenRes tokenResponse
 	if err := json.NewDecoder(res.Body).Decode(&tokenRes); err != nil {
-		return nil, fmt.Errorf("failed to decode token response from %s: %w", tokenURL, err)
+		return nil, fmt.Errorf("failed to decode token response: %w", err)
 	}
 
 	if strings.ToLower(tokenRes.TokenType) != "bearer" {
