@@ -10,15 +10,6 @@ info:
 
 actions:
   # =============================================================================
-  # Circular Reference Handling
-  # =============================================================================
-  # The upstream api.yaml uses `x-airbyte-circular-ref: true` to mark schemas with
-  # circular references. Speakeasy doesn't understand this marker and will hang
-  # trying to resolve the circular reference. We add `x-speakeasy-type-override: any`
-  # to tell Speakeasy to treat these schemas as arbitrary JSON blobs.
-  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
-
-  # =============================================================================
   # Missing Entity Operation Annotations
   # =============================================================================
   # The upstream api.yaml is missing `x-speakeasy-entity-operation: Source#delete`
@@ -35,11 +26,22 @@ actions:
   #   https://github.com/airbytehq/airbyte-platform/blob/main/airbyte-api/server-api/src/main/openapi/api.yaml
   #   (DELETE /sources/{sourceId} — has operationId: deleteSource but missing
   #    x-speakeasy-entity-operation: Source#delete)
+  #
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/361
 
   - target: "$.paths['/sources/{sourceId}'].delete"
     description: "Add missing Source#delete entity operation for generic airbyte_source resource"
     update:
       x-speakeasy-entity-operation: "Source#delete"
+
+  # =============================================================================
+  # Circular Reference Handling
+  # =============================================================================
+  # The upstream api.yaml uses `x-airbyte-circular-ref: true` to mark schemas with
+  # circular references. Speakeasy doesn't understand this marker and will hang
+  # trying to resolve the circular reference. We add `x-speakeasy-type-override: any`
+  # to tell Speakeasy to treat these schemas as arbitrary JSON blobs.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
 
   - target: "$.components.schemas.RowFilteringOperation"
     description: "Add Speakeasy type override for circular reference in RowFilteringOperation"
