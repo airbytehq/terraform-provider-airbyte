@@ -18,6 +18,29 @@ actions:
   # to tell Speakeasy to treat these schemas as arbitrary JSON blobs.
   # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
 
+  # =============================================================================
+  # Missing Entity Operation Annotations
+  # =============================================================================
+  # The upstream api.yaml is missing `x-speakeasy-entity-operation: Source#delete`
+  # on the DELETE /sources/{sourceId} operation. Without this annotation, Speakeasy
+  # generates a no-op Delete method for the generic `airbyte_source` resource,
+  # causing `terraform destroy` to report success without actually deleting the
+  # source in Airbyte.
+  #
+  # The destination delete already has the correct annotation in the upstream spec.
+  # The per-connector typed source resources are unaffected because the generation
+  # script (generate_terraform_spec.py) adds the annotation independently.
+  #
+  # Upstream location:
+  #   https://github.com/airbytehq/airbyte-platform/blob/main/airbyte-api/server-api/src/main/openapi/api.yaml
+  #   (DELETE /sources/{sourceId} — has operationId: deleteSource but missing
+  #    x-speakeasy-entity-operation: Source#delete)
+
+  - target: "$.paths['/sources/{sourceId}'].delete"
+    description: "Add missing Source#delete entity operation for generic airbyte_source resource"
+    update:
+      x-speakeasy-entity-operation: "Source#delete"
+
   - target: "$.components.schemas.RowFilteringOperation"
     description: "Add Speakeasy type override for circular reference in RowFilteringOperation"
     update:
