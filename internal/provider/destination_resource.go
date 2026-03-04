@@ -305,6 +305,10 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
+	// HAND-EDITED: Preserve the user's plaintext configuration from the plan
+	// before API calls overwrite it with redacted secrets.
+	preservedConfig := data.Configuration
+
 	request, requestDiags := data.ToSharedDestinationCreateRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
@@ -380,6 +384,11 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
+	// HAND-EDITED: Restore the user's original configuration to prevent phantom diffs.
+	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
+		data.Configuration = preservedConfig
+	}
+
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -401,6 +410,11 @@ func (r *DestinationResource) Read(ctx context.Context, req resource.ReadRequest
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// HAND-EDITED: Preserve the user's configuration from state before the API
+	// overwrites it with redacted secrets ("**********") or secret coordinates.
+	// This prevents phantom diffs on every plan cycle.
+	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsGetDestinationRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -438,6 +452,13 @@ func (r *DestinationResource) Read(ctx context.Context, req resource.ReadRequest
 		return
 	}
 
+	// HAND-EDITED: Restore the user's original configuration to prevent phantom diffs.
+	// The API returns redacted secrets, but we want to keep the user's plaintext in state
+	// so that Terraform doesn't see a diff on every plan.
+	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
+		data.Configuration = preservedConfig
+	}
+
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -455,6 +476,10 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// HAND-EDITED: Preserve the user's plaintext configuration from the plan
+	// before API calls overwrite it with redacted secrets.
+	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsPutDestinationRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -529,6 +554,11 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// HAND-EDITED: Restore the user's original configuration to prevent phantom diffs.
+	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
+		data.Configuration = preservedConfig
 	}
 
 	// Save updated data into Terraform state
