@@ -9,9 +9,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-var _ resource.ResourceWithMoveState = &DestinationResource{}
+var _ resource.ResourceWithMoveState = &GenericDestinationResource{}
 
-func (r *DestinationResource) MoveState(ctx context.Context) []resource.StateMover {
+func (r *GenericDestinationResource) MoveState(ctx context.Context) []resource.StateMover {
 	return []resource.StateMover{
 		{
 			StateMover: func(ctx context.Context, req resource.MoveStateRequest, resp *resource.MoveStateResponse) {
@@ -43,7 +43,7 @@ func (r *DestinationResource) MoveState(ctx context.Context) []resource.StateMov
 					return
 				}
 
-				targetState := DestinationResourceModel{
+				targetState := GenericDestinationResourceModel{
 					DestinationID:   types.StringValue(destinationID),
 					Name:            extractJSONTypesString(rawState, "name"),
 					WorkspaceID:     extractJSONTypesString(rawState, "workspace_id"),

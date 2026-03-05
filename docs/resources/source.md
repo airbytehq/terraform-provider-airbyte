@@ -97,19 +97,23 @@ For full details including alternative methods for older Terraform versions, see
 
 ### Required
 
-- `configuration` (String) The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source. Parsed as JSON.
+- `config` (Dynamic) Non-sensitive configuration values for the source as an HCL object. These values are visible in Terraform plan output. Keys here are deep-merged with `sensitive_config` before being sent to the API.
 - `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String) Requires replacement if changed.
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
 - `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
-- `secret_id` (String) Optional secretID obtained through the  OAuth redirect flow. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the OAuth redirect flow. Requires replacement if changed.
+- `sensitive_config` (Dynamic, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These values are write-only and never stored in Terraform state. Keys here are deep-merged with (and override) keys in `config`.
 
 ### Read-Only
 
 - `created_at` (Number)
+- `sensitive_config_hash` (String) SHA-256 hash of the `sensitive_config` attribute. Used to detect secret rotation: when secrets change, this hash changes, triggering an update.
 - `source_id` (String)
 - `source_type` (String)
 

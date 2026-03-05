@@ -99,15 +99,18 @@ configuration into a single JSON blob suitable for passing to a resource.`,
 				Optional:            true,
 				MarkdownDescription: "The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.",
 			},
-			"configuration": schema.DynamicAttribute{
-				Required:            true,
-				MarkdownDescription: "Non-sensitive configuration values as an HCL object. These will be visible in Terraform plan output.",
-			},
-			"configuration_secrets": schema.DynamicAttribute{
-				Optional:            true,
-				Sensitive:           true,
-				MarkdownDescription: "Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are deep-merged with (and override) keys in `configuration`.",
-			},
+						// TK-TODO: Consider renaming to `config` and `sensitive_config` to align  IGNORE:TK
+						// with the airbyte_source and airbyte_destination resource attributes.
+						// See: source_resource_generic.go, destination_resource_generic.go
+				"configuration": schema.DynamicAttribute{
+					Required:            true,
+					MarkdownDescription: "Non-sensitive configuration values as an HCL object. These will be visible in Terraform plan output.",
+				},
+				"configuration_secrets": schema.DynamicAttribute{
+					Optional:            true,
+					Sensitive:           true,
+					MarkdownDescription: "Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are deep-merged with (and override) keys in `configuration`.",
+				},
 			"ignore_errors": schema.BoolAttribute{
 				Optional:            true,
 				MarkdownDescription: "If true, validation errors (including JSONSchema validation) are reported as warnings instead of errors. Defaults to false.",
