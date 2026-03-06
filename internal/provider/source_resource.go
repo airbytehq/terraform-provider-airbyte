@@ -313,10 +313,6 @@ func (r *SourceResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	// HAND-EDITED: Preserve the user's plaintext configuration from the plan
-	// before API calls overwrite it with redacted secrets.
-	preservedConfig := data.Configuration
-
 	request, requestDiags := data.ToSharedSourceCreateRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
@@ -392,14 +388,6 @@ func (r *SourceResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	// HAND-EDITED:
-	// Restore the user's original configuration (when present in plan) instead of the API's
-	// redacted configuration to prevent phantom diffs on sensitive fields whose values are
-	// never returned by the API.
-	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
-		data.Configuration = preservedConfig
-	}
-
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -421,11 +409,6 @@ func (r *SourceResource) Read(ctx context.Context, req resource.ReadRequest, res
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	// HAND-EDITED: Preserve the user's configuration from state before the API
-	// overwrites it with redacted secrets ("**********") or secret coordinates.
-	// This prevents phantom diffs on every plan cycle.
-	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsGetSourceRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -463,18 +446,6 @@ func (r *SourceResource) Read(ctx context.Context, req resource.ReadRequest, res
 		return
 	}
 
-	// HAND-EDITED:
-	// Restore the user's original configuration from state to prevent phantom diffs.
-	// The API returns redacted secrets (e.g., "**********") or secret coordinates, but we
-	// want to keep the user's plaintext (or a null/unknown value) in state so that:
-	//   - Terraform doesn't see a diff on every plan, and
-	//   - we never persist redacted secret strings returned by the API into state.
-	//
-	// Always restore the preserved configuration from state, even when it is null
-	// (such as immediately after `terraform import` before a config block is defined)
-	// or unknown, to avoid storing API redactions in state.
-	data.Configuration = preservedConfig
-
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -492,12 +463,6 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	// HAND-EDITED: Preserve the user's plaintext configuration from the plan
-	// before API calls overwrite it with redacted secrets.
-	// Note: all error paths between here and the restore point return early without
-	// saving state, so preservedConfig is only restored on the success path.
-	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsPutSourceRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -574,14 +539,6 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
-	// HAND-EDITED:
-	// Restore the user's original configuration (when present in plan) instead of the API's
-	// redacted configuration to prevent phantom diffs on sensitive fields whose values are
-	// never returned by the API.
-	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
-		data.Configuration = preservedConfig
-	}
-
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -604,7 +561,32 @@ func (r *SourceResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	// Not Implemented; entity does not have a configured DELETE operation
+	request, requestDiags := data.ToOperationsDeleteSourceRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res, err := r.client.Sources.DeleteSource(ctx, *request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	switch res.StatusCode {
+	case 204, 404:
+		break
+	default:
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+
 }
 
 func (r *SourceResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

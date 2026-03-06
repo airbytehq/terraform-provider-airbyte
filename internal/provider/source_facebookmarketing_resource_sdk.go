@@ -32,6 +32,7 @@ func (r *SourceFacebookMarketingResourceModel) RefreshFromSharedSourceResponse(c
 			r.Configuration.DefaultAdsInsightsActionBreakdowns = configurationPriorData.DefaultAdsInsightsActionBreakdowns
 			r.Configuration.EndDate = configurationPriorData.EndDate
 			r.Configuration.FetchThumbnailImages = configurationPriorData.FetchThumbnailImages
+			r.Configuration.IncludeIncrementality = configurationPriorData.IncludeIncrementality
 			r.Configuration.InsightsJobTimeout = configurationPriorData.InsightsJobTimeout
 			r.Configuration.InsightsLookbackWindow = configurationPriorData.InsightsLookbackWindow
 			r.Configuration.PageSize = configurationPriorData.PageSize
@@ -248,6 +249,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 		for _, fieldsItem := range r.Configuration.CustomInsights[customInsightsIndex].Fields {
 			fields = append(fields, shared.SourceFacebookMarketingValidEnums(fieldsItem.ValueString()))
 		}
+		includeIncrementality := new(bool)
+		if !r.Configuration.CustomInsights[customInsightsIndex].IncludeIncrementality.IsUnknown() && !r.Configuration.CustomInsights[customInsightsIndex].IncludeIncrementality.IsNull() {
+			*includeIncrementality = r.Configuration.CustomInsights[customInsightsIndex].IncludeIncrementality.ValueBool()
+		} else {
+			includeIncrementality = nil
+		}
 		insightsJobTimeout := new(int64)
 		if !r.Configuration.CustomInsights[customInsightsIndex].InsightsJobTimeout.IsUnknown() && !r.Configuration.CustomInsights[customInsightsIndex].InsightsJobTimeout.IsNull() {
 			*insightsJobTimeout = r.Configuration.CustomInsights[customInsightsIndex].InsightsJobTimeout.ValueInt64()
@@ -287,6 +294,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 			Breakdowns:             breakdowns,
 			EndDate:                endDate,
 			Fields:                 fields,
+			IncludeIncrementality:  includeIncrementality,
 			InsightsJobTimeout:     insightsJobTimeout,
 			InsightsLookbackWindow: insightsLookbackWindow,
 			Level:                  level,
@@ -310,6 +318,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 		*fetchThumbnailImages = r.Configuration.FetchThumbnailImages.ValueBool()
 	} else {
 		fetchThumbnailImages = nil
+	}
+	includeIncrementality1 := new(bool)
+	if !r.Configuration.IncludeIncrementality.IsUnknown() && !r.Configuration.IncludeIncrementality.IsNull() {
+		*includeIncrementality1 = r.Configuration.IncludeIncrementality.ValueBool()
+	} else {
+		includeIncrementality1 = nil
 	}
 	insightsJobTimeout1 := new(int64)
 	if !r.Configuration.InsightsJobTimeout.IsUnknown() && !r.Configuration.InsightsJobTimeout.IsNull() {
@@ -349,6 +363,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 		DefaultAdsInsightsActionBreakdowns: defaultAdsInsightsActionBreakdowns,
 		EndDate:                            endDate1,
 		FetchThumbnailImages:               fetchThumbnailImages,
+		IncludeIncrementality:              includeIncrementality1,
 		InsightsJobTimeout:                 insightsJobTimeout1,
 		InsightsLookbackWindow:             insightsLookbackWindow1,
 		PageSize:                           pageSize,
@@ -495,6 +510,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		for _, fieldsItem := range r.Configuration.CustomInsights[customInsightsIndex].Fields {
 			fields = append(fields, shared.SourceFacebookMarketingUpdateValidEnums(fieldsItem.ValueString()))
 		}
+		includeIncrementality := new(bool)
+		if !r.Configuration.CustomInsights[customInsightsIndex].IncludeIncrementality.IsUnknown() && !r.Configuration.CustomInsights[customInsightsIndex].IncludeIncrementality.IsNull() {
+			*includeIncrementality = r.Configuration.CustomInsights[customInsightsIndex].IncludeIncrementality.ValueBool()
+		} else {
+			includeIncrementality = nil
+		}
 		insightsJobTimeout := new(int64)
 		if !r.Configuration.CustomInsights[customInsightsIndex].InsightsJobTimeout.IsUnknown() && !r.Configuration.CustomInsights[customInsightsIndex].InsightsJobTimeout.IsNull() {
 			*insightsJobTimeout = r.Configuration.CustomInsights[customInsightsIndex].InsightsJobTimeout.ValueInt64()
@@ -537,6 +558,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 			Breakdowns:             breakdowns,
 			EndDate:                endDate,
 			Fields:                 fields,
+			IncludeIncrementality:  includeIncrementality,
 			InsightsJobTimeout:     insightsJobTimeout,
 			InsightsLookbackWindow: insightsLookbackWindow,
 			Level:                  level,
@@ -560,6 +582,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		*fetchThumbnailImages = r.Configuration.FetchThumbnailImages.ValueBool()
 	} else {
 		fetchThumbnailImages = nil
+	}
+	includeIncrementality1 := new(bool)
+	if !r.Configuration.IncludeIncrementality.IsUnknown() && !r.Configuration.IncludeIncrementality.IsNull() {
+		*includeIncrementality1 = r.Configuration.IncludeIncrementality.ValueBool()
+	} else {
+		includeIncrementality1 = nil
 	}
 	insightsJobTimeout1 := new(int64)
 	if !r.Configuration.InsightsJobTimeout.IsUnknown() && !r.Configuration.InsightsJobTimeout.IsNull() {
@@ -599,6 +627,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		DefaultAdsInsightsActionBreakdowns: defaultAdsInsightsActionBreakdowns,
 		EndDate:                            endDate1,
 		FetchThumbnailImages:               fetchThumbnailImages,
+		IncludeIncrementality:              includeIncrementality1,
 		InsightsJobTimeout:                 insightsJobTimeout1,
 		InsightsLookbackWindow:             insightsLookbackWindow1,
 		PageSize:                           pageSize,

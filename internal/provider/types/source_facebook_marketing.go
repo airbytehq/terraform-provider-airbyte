@@ -20,6 +20,7 @@ type SourceFacebookMarketing struct {
 	DefaultAdsInsightsActionBreakdowns []types.String                         `tfsdk:"default_ads_insights_action_breakdowns"`
 	EndDate                            types.String                           `tfsdk:"end_date"`
 	FetchThumbnailImages               types.Bool                             `tfsdk:"fetch_thumbnail_images"`
+	IncludeIncrementality              types.Bool                             `tfsdk:"include_incrementality"`
 	InsightsJobTimeout                 types.Int64                            `tfsdk:"insights_job_timeout"`
 	InsightsLookbackWindow             types.Int64                            `tfsdk:"insights_lookback_window"`
 	PageSize                           types.Int64                            `tfsdk:"page_size"`

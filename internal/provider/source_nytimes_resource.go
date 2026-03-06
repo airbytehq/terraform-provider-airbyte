@@ -86,7 +86,7 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"period": schema.Int64Attribute{
 						Required:    true,
-						Description: `Period of time (in days). must be one of ["1", "7", "30"]`,
+						Description: `Period of time (in days). must be one of [1, 7, 30]`,
 						Validators: []validator.Int64{
 							int64validator.OneOf(1, 7, 30),
 						},

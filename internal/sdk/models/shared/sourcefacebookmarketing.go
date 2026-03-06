@@ -1336,6 +1336,8 @@ type InsightConfig struct {
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// A list of chosen fields for fields parameter
 	Fields []SourceFacebookMarketingValidEnums `json:"fields,omitempty"`
+	// If enabled, the incrementality attribution window will be included in the action attribution windows for this custom insight. This allows you to retrieve incrementality data for action metrics.
+	IncludeIncrementality *bool `default:"false" json:"include_incrementality"`
 	// The insights job timeout
 	InsightsJobTimeout *int64 `default:"60" json:"insights_job_timeout"`
 	// The attribution window
@@ -1394,6 +1396,13 @@ func (i *InsightConfig) GetFields() []SourceFacebookMarketingValidEnums {
 		return nil
 	}
 	return i.Fields
+}
+
+func (i *InsightConfig) GetIncludeIncrementality() *bool {
+	if i == nil {
+		return nil
+	}
+	return i.IncludeIncrementality
 }
 
 func (i *InsightConfig) GetInsightsJobTimeout() *int64 {
@@ -1554,6 +1563,8 @@ type SourceFacebookMarketing struct {
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
 	FetchThumbnailImages *bool `default:"false" json:"fetch_thumbnail_images"`
+	// If enabled, the incrementality attribution window will be included in the action attribution windows for all built-in insight streams. This allows you to retrieve incrementality data for action metrics. See the Facebook Marketing API documentation for more details: https://developers.facebook.com/docs/marketing-api/reference/ads-action-stats/
+	IncludeIncrementality *bool `default:"false" json:"include_incrementality"`
 	// Insights Job Timeout establishes the maximum amount of time (in minutes) of waiting for the report job to complete. When timeout is reached the job is considered failed and we are trying to request smaller amount of data by breaking the job to few smaller ones. If you definitely know that 60 minutes is not enough for your report to be processed then you can decrease the timeout value, so we start breaking job to smaller parts faster.
 	InsightsJobTimeout *int64 `default:"60" json:"insights_job_timeout"`
 	// The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.
@@ -1665,6 +1676,13 @@ func (s *SourceFacebookMarketing) GetFetchThumbnailImages() *bool {
 		return nil
 	}
 	return s.FetchThumbnailImages
+}
+
+func (s *SourceFacebookMarketing) GetIncludeIncrementality() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.IncludeIncrementality
 }
 
 func (s *SourceFacebookMarketing) GetInsightsJobTimeout() *int64 {

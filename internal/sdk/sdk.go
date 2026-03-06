@@ -2,7 +2,7 @@
 
 package sdk
 
-// Generated from OpenAPI doc version 1.0.0 and generator version 2.845.1
+// Generated from OpenAPI doc version 1.0.0 and generator version 2.850.7
 
 import (
 	"context"
@@ -84,7 +84,7 @@ type SDK struct {
 
 type SDKOption func(*SDK)
 
-// WithServerURL allows the overriding of the default server URL
+// WithServerURL allows providing an alternative server URL
 func WithServerURL(serverURL string) SDKOption {
 	return func(sdk *SDK) {
 		sdk.sdkConfiguration.ServerURL = serverURL
@@ -152,9 +152,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
-		SDKVersion: "1.0.0",
+		SDKVersion: "1.0.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/terraform 1.0.0 2.845.1 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			UserAgent:  "speakeasy-sdk/terraform 1.0.1 2.850.7 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
