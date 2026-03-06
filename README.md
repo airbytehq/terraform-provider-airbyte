@@ -102,6 +102,45 @@ provider_installation {
 
 If you are using typed resources, see the [Migrating to 1.0](docs/guides/v1_migration_guide.md) guide to move to the generic `airbyte_source` / `airbyte_destination` resources with the `airbyte_connector_configuration` data source for type-validated configuration.
 
+## Write-Only Attributes and Ephemeral Values
+
+> **Requires:** Terraform >= 1.11 or OpenTofu >= 1.11
+
+Connector secret fields (API keys, tokens, passwords, etc.) are configured as **write-only attributes**. Write-only attributes are never persisted to Terraform plan or state files, providing stronger security than `sensitive` alone.
+
+Since Airbyte secrets are forwarded to the API and not returned in read responses, write-only is the natural fit: the provider is the terminal point for the secret value.
+
+### Using Ephemeral Variables
+
+With Terraform >= 1.11, you can use [ephemeral variables](https://developer.hashicorp.com/terraform/language/values/ephemeral) to pass secrets that are never written to disk:
+
+```hcl
+variable "api_token" {
+  type      = string
+  ephemeral = true
+}
+
+resource "airbyte_source_github" "example" {
+  name         = "github-source"
+  workspace_id = var.workspace_id
+  configuration = {
+    credentials = {
+      personal_access_token = {
+        token = var.api_token
+      }
+    }
+  }
+}
+```
+
+Ephemeral values can also be sourced from [ephemeral resources](https://developer.hashicorp.com/terraform/language/resources/ephemeral) such as vault lookups or cloud secret managers.
+
+### Related Resources
+
+- [Terraform Write-Only Arguments](https://developer.hashicorp.com/terraform/plugin/framework/resources/write-only-arguments)
+- [Terraform Ephemeral Values](https://developer.hashicorp.com/terraform/language/values/ephemeral)
+- [OpenTofu Ephemerality](https://opentofu.org/docs/v1.11/language/ephemerality/)
+
 <!-- Start Authentication [security] -->
 ## Authentication
 
