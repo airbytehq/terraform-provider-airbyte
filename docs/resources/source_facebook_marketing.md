@@ -51,6 +51,7 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         fields = [
           "cost_per_result"
         ]
+        include_incrementality   = false
         insights_job_timeout     = 50
         insights_lookback_window = 9
         level                    = "account"
@@ -64,6 +65,7 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
+    include_incrementality   = true
     insights_job_timeout     = 55
     insights_lookback_window = 9
     page_size                = 7
@@ -118,6 +120,7 @@ Optional:
 - `default_ads_insights_action_breakdowns` (List of String) Action breakdowns for the Built-in Ads Insights stream that will be used in the request. You can override default values or remove them to make it empty if needed. Default: ["action_type","action_target_id","action_destination"]
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fetch_thumbnail_images` (Boolean) Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative. Default: false
+- `include_incrementality` (Boolean) If enabled, the incrementality attribution window will be included in the action attribution windows for all built-in insight streams. This allows you to retrieve incrementality data for action metrics. See the Facebook Marketing API documentation for more details: https://developers.facebook.com/docs/marketing-api/reference/ads-action-stats/. Default: false
 - `insights_job_timeout` (Number) Insights Job Timeout establishes the maximum amount of time (in minutes) of waiting for the report job to complete. When timeout is reached the job is considered failed and we are trying to request smaller amount of data by breaking the job to few smaller ones. If you definitely know that 60 minutes is not enough for your report to be processed then you can decrease the timeout value, so we start breaking job to smaller parts faster. Default: 60
 - `insights_lookback_window` (Number) The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here. Default: 28
 - `page_size` (Number) Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases. Default: 100
@@ -167,6 +170,7 @@ Optional:
 - `breakdowns` (List of String) A list of chosen breakdowns for breakdowns. Default: []
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter. Default: []
+- `include_incrementality` (Boolean) If enabled, the incrementality attribution window will be included in the action attribution windows for this custom insight. This allows you to retrieve incrementality data for action metrics. Default: false
 - `insights_job_timeout` (Number) The insights job timeout. Default: 60
 - `insights_lookback_window` (Number) The attribution window. Default: 28
 - `level` (String) Chosen level for API. Default: "ad"; must be one of ["ad", "adset", "campaign", "account"]

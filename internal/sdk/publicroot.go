@@ -58,7 +58,7 @@ func (s *PublicRoot) GetDocumentation(ctx context.Context, opts ...operations.Op
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "getDocumentation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   nil,
 	}
 

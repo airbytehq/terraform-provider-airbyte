@@ -12,6 +12,7 @@ type InsightConfig struct {
 	Breakdowns             []types.String `tfsdk:"breakdowns"`
 	EndDate                types.String   `tfsdk:"end_date"`
 	Fields                 []types.String `tfsdk:"fields"`
+	IncludeIncrementality  types.Bool     `tfsdk:"include_incrementality"`
 	InsightsJobTimeout     types.Int64    `tfsdk:"insights_job_timeout"`
 	InsightsLookbackWindow types.Int64    `tfsdk:"insights_lookback_window"`
 	Level                  types.String   `tfsdk:"level"`

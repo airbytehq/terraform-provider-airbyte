@@ -597,7 +597,7 @@ func (s *Applications) CreateAccessToken(ctx context.Context, request shared.App
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "createAccessToken",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   nil,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)

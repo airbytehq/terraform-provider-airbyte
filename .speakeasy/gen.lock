@@ -1,30 +1,30 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 496a8c936a5f59dd2681f8b4bf9f46c3
+  docChecksum: 9d483921d1f3a4b1a8235a03ab46b3e2
   docVersion: 1.0.0
-  speakeasyVersion: 1.731.2
-  generationVersion: 2.845.1
-  releaseVersion: 1.0.0
-  configChecksum: c9736a8113f1d529f85c245c42c9e857
+  speakeasyVersion: 1.745.0
+  generationVersion: 2.850.7
+  releaseVersion: 1.0.1
+  configChecksum: 9a1885ef1b9ee42a2b12cbfa8182eb73
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 455a2e47-f500-4c23-8e13-2877b39fb52b
-  pristine_commit_hash: c7775261ff2076ca07200c79c6c7c605103da6d4
-  pristine_tree_hash: 8cd4151bf3973ebab2147a6dfd28cd0be6ae818c
+  generation_id: d9dec675-681f-4f35-9cc6-7eb3270d3410
+  pristine_commit_hash: 022b1785c1e246ea3350ef9103ecc491cb806860
+  pristine_tree_hash: 44387d1e67de5ad91be83cdff581863f352821b2
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.4
     constsAndDefaults: 0.3.2
-    core: 3.46.45
+    core: 3.46.50
     deprecations: 2.82.0
     globalSecurity: 2.82.2
-    globalServerURLs: 2.83.1
+    globalServerURLs: 2.83.2
     groups: 2.81.3
-    nameOverrides: 2.81.5
+    nameOverrides: 2.81.7
     nullables: 0.0.0
-    oauth2ClientCredentials: 0.3.2
+    oauth2ClientCredentials: 0.3.4
     sets: 0.1.2
     typeOverrides: 2.81.1
     unions: 2.82.12
@@ -1151,8 +1151,8 @@ trackedFiles:
     pristine_git_object: 8f46fa23e9ff318c727d03f0dcf5a8a677b6e617
   examples/provider/provider.tf:
     id: 954e955c0240
-    last_write_checksum: sha1:38779e89221be55d6565214df21e703e3d9850c7
-    pristine_git_object: 0c2f2590f37d3fd8e8bab0ed65f75308bfbb41ae
+    last_write_checksum: sha1:7b4d3234ac6e0b90d7ba36364dfd0f0a75d32613
+    pristine_git_object: e3389ba11d5398ff8543f4ed4043ba9aca18ed0f
   examples/resources/airbyte_connection/import-by-string-id.tf:
     id: 8c04ff01f5ae
     last_write_checksum: sha1:d0e6ff899bd5da0e7018c9420f4face02263ff4c
@@ -2363,8 +2363,8 @@ trackedFiles:
     pristine_git_object: bacec1693ad8e7532992827fa2ddf00f897da2e3
   examples/resources/airbyte_source_facebook_marketing/resource.tf:
     id: 0303c24749af
-    last_write_checksum: sha1:8303e5447abab91b59a8e62e4def1600b40377e0
-    pristine_git_object: b16c7f9cacf385a7bba47a18c064016d09bc3568
+    last_write_checksum: sha1:468fcdf9b95e73efed76b9b44226baf81e9b450d
+    pristine_git_object: 48fc8d529c7c8315c5ad27e47fe00c964b448c30
   examples/resources/airbyte_source_faker/import-by-string-id.tf:
     id: 57661ab75634
     last_write_checksum: sha1:c2486e7e72f63d0282df0e5f0a2b915fc69020ec
@@ -2495,8 +2495,8 @@ trackedFiles:
     pristine_git_object: 5dd7a8ba08ba7097f924d464dad4a8dad0b331cb
   examples/resources/airbyte_source_gcs/resource.tf:
     id: 19efced1f7f9
-    last_write_checksum: sha1:49f0033e446d9c73ce193c70e605487c6469b0ee
-    pristine_git_object: af2aeba198ff8c580ae4f34c20b56b014798ebae
+    last_write_checksum: sha1:000e9fec574c524abd57048458cd130214eda297
+    pristine_git_object: 70dcd8ecd30f547f3792d2b8444518fdd40e5af6
   examples/resources/airbyte_source_getlago/import-by-string-id.tf:
     id: 7c2a1078a5c4
     last_write_checksum: sha1:2f6fbfaa864adb6bcc854beb27a9f1618f230f70
@@ -5287,8 +5287,8 @@ trackedFiles:
     pristine_git_object: e5d71462c4b24e20ce01a5373465dea91a530810
   internal/provider/provider.go:
     id: 1e7e86841cf3
-    last_write_checksum: sha1:f0507fe13ee4f868c5239c3ace82f221fbb60b7f
-    pristine_git_object: 138fb9f5d84f2a661178e2349d7d74037ac4cea0
+    last_write_checksum: sha1:e810206d883bc377cfb316fc6e9ac3d08e643578
+    pristine_git_object: aeffb05d2a7367c1e543fae941873988ed20615a
   internal/provider/reflect/diags.go:
     id: 35b6b44972e2
     last_write_checksum: sha1:ace8bc53054bb1d8ee8689acf3e4323de75a6297
@@ -6275,12 +6275,12 @@ trackedFiles:
     pristine_git_object: c89b1c4c58cbba65763557bd4b57f17cddaf5b3e
   internal/provider/source_facebookmarketing_resource.go:
     id: f81a0412e64d
-    last_write_checksum: sha1:c34eecea245401e55d7aa2e85d01c3a7e045d44a
-    pristine_git_object: 4e9b538456ca9e29e1feaca2899e60066e97fedf
+    last_write_checksum: sha1:41fd51871006caad77511577cbdddb808985e354
+    pristine_git_object: ab305c128ab27bf507ba103c7fde71d438046e91
   internal/provider/source_facebookmarketing_resource_sdk.go:
     id: 47ef29fcb431
-    last_write_checksum: sha1:5cbb3b731c0cedd2bb68020303a2e6eee9a562d6
-    pristine_git_object: 6ba11a0b979a7bd19ba99aececc944fac0211f80
+    last_write_checksum: sha1:6857775d6df55f90c264bc6f988335f9304ba8b5
+    pristine_git_object: 79f9a46f1efda8fb5bd218ee717f192f887b59ab
   internal/provider/source_faker_data_source.go:
     id: 6e45988f1a87
     last_write_checksum: sha1:7c5e0d588e670d26dfb100ce773aa69369c01d10
@@ -7507,8 +7507,8 @@ trackedFiles:
     pristine_git_object: 618bf73949a29b645084b7caee76f25fec5ca489
   internal/provider/source_nytimes_resource.go:
     id: 7cf1a676e349
-    last_write_checksum: sha1:fbed874cab26342ed9ee50e7af7d6b3bd86a06cd
-    pristine_git_object: f793c30acf9863d0ae89845c141b3b69eec8d292
+    last_write_checksum: sha1:24cd70290f47c50d0ccd963add46113092ac3ab1
+    pristine_git_object: 3212dd1f292f63e163c43f84268d833d73cc40c7
   internal/provider/source_nytimes_resource_sdk.go:
     id: fa790123d369
     last_write_checksum: sha1:6a2f22a4c009fb4ff4a9f3ae63a513b7c09b7afa
@@ -7747,8 +7747,8 @@ trackedFiles:
     pristine_git_object: 51f46dfb7bf70e7d0a62f3ec503d5e201752489a
   internal/provider/source_pinterest_resource.go:
     id: 48ee0c6f989b
-    last_write_checksum: sha1:3acae153e287e41548e1390ff0ffbcfe5af23775
-    pristine_git_object: b811d91e7fa6f78d1990454510075157c02326aa
+    last_write_checksum: sha1:93411c35a1452495cd9c193e81727fabe9226de0
+    pristine_git_object: 8e97aa1fb8ab5a4495198654a2174e427bab68db
   internal/provider/source_pinterest_resource_sdk.go:
     id: 347cd603168b
     last_write_checksum: sha1:461c3639a3e5c33eca851cc7f45a2a0a236d1732
@@ -8091,12 +8091,12 @@ trackedFiles:
     pristine_git_object: d3244ca9f043b6fcdf822966058242eb1cc344ef
   internal/provider/source_resource.go:
     id: 02b66799e986
-    last_write_checksum: sha1:10c9170ed6fbf20afb7d7c451164a952e1f9b678
-    pristine_git_object: bd3b01c207298b1d996fd554512c1f26bc2c461f
+    last_write_checksum: sha1:6d50e60d9f381e214ec9d81b125668e9e7304d5d
+    pristine_git_object: c81ad9f9c9a8ecb2a5e648b389c1feccb07fa0f9
   internal/provider/source_resource_sdk.go:
     id: 2f9e6d29f8b9
-    last_write_checksum: sha1:0579dd21413f9055b71a812756c9b64cc62cd060
-    pristine_git_object: bd485b684f57dc204539e74ee549de2d1d49b812
+    last_write_checksum: sha1:3f0e8941a79284c007a7e8f0c52df1dd330c3dd8
+    pristine_git_object: fc744d7991384c74e9d639b10a30094b90180e33
   internal/provider/source_retently_data_source.go:
     id: 7fa22a9be31e
     last_write_checksum: sha1:791b18c563452e776c5c1a38db339fb8b44d3b4b
@@ -10555,8 +10555,8 @@ trackedFiles:
     pristine_git_object: 6c90d28c43b8a107e5b1aca38a4a033a0bed0bd7
   internal/provider/types/insight_config.go:
     id: 37d147b81c88
-    last_write_checksum: sha1:1b5992259d7d113896d1d9bc639116b578167b9a
-    pristine_git_object: b3d60b33476537144d749d448fcb8e6166bbba2c
+    last_write_checksum: sha1:72d29fa5acbcf653eb2ad2d2ccf66f4f8f12ef0a
+    pristine_git_object: 1b83c31c43178cb25ae4f86f8139d1b38892e1ec
   internal/provider/types/int64_value.go:
     id: 94ddbf051a24
     last_write_checksum: sha1:341cd8161b1a03a149b131bec0e8720e823c28cf
@@ -11159,8 +11159,8 @@ trackedFiles:
     pristine_git_object: 79ec6f5cfff359807cb99183dfecb99350bc593f
   internal/provider/types/source_facebook_marketing.go:
     id: bd9c7da27842
-    last_write_checksum: sha1:801e6834b42ac361dd9d5fab82635789a43bf0c4
-    pristine_git_object: 7d36e7461426f28a9b3338ded02e42c84b5dfb65
+    last_write_checksum: sha1:1371a5c777f80fcd5c45d12792ea05b5c5cb4c03
+    pristine_git_object: e374b83481136f06fcf9bd0a9ffca7897eb32b46
   internal/provider/types/source_facebook_marketing_authentication.go:
     id: 0c96ba0dfcc8
     last_write_checksum: sha1:5eb6efde84a8eaa01b07b4906f77ae94381ed796
@@ -13335,8 +13335,8 @@ trackedFiles:
     pristine_git_object: e6a994416d0f527912d2d272e2583458f4fc9bcb
   internal/sdk/applications.go:
     id: 5006ded62046
-    last_write_checksum: sha1:e48dffe7b8584d985ac5fdb5c01d51b505b6a772
-    pristine_git_object: c8c329905c547e48418956b770d597016d1eb8d0
+    last_write_checksum: sha1:7f5762d9fd15fa995d978ed040c3a3c57497e5a5
+    pristine_git_object: 6d43fda6b54e35e428b8b759bc957cecd6c53de0
   internal/sdk/configtemplates.go:
     id: 0dbe2df05a8b
     last_write_checksum: sha1:c305bb38c7500be7ab3cbd53807cc82f792c1524
@@ -13383,8 +13383,8 @@ trackedFiles:
     pristine_git_object: 2ac860d02e79ec96871d09cb4d1725cbcfe30c8b
   internal/sdk/health.go:
     id: 30613309aee4
-    last_write_checksum: sha1:171cd8fd88b52716faccc75f834474da71a9b16a
-    pristine_git_object: c9e7074a94cb3b3ac2db88bbba71561114be5c4d
+    last_write_checksum: sha1:b39aa38e534a7104b4e685d7715763ba9a501956
+    pristine_git_object: 15844e7cd0f1691f2ff0704408a5512c4f3e8e8f
   internal/sdk/internal/config/sdkconfiguration.go:
     id: 6af0bc8635d9
     last_write_checksum: sha1:3ddcc0bb7d673c4875acf160a674d64ffa38ba2e
@@ -13423,8 +13423,8 @@ trackedFiles:
     pristine_git_object: 85eb9933d806fe3f332fcfac00aef92380317244
   internal/sdk/internal/utils/oauth2_sessions.go:
     id: 8938ada5a7bd
-    last_write_checksum: sha1:f4d0f3fc02f9cab7278cde18b039ee79a124fa54
-    pristine_git_object: 4bde1b17cacddfedb1fbfefb60a5c916bcf43956
+    last_write_checksum: sha1:c4af99567451b6931fce12b06dca8300d07b79f1
+    pristine_git_object: 237b1a41eb4f38874f1d4dd64fcc3288d1edeb19
   internal/sdk/internal/utils/pathparams.go:
     id: e7fec2afe4a6
     last_write_checksum: sha1:a6337748d59957e8fa5b2a6c87a6da3a5f2760dc
@@ -20095,8 +20095,8 @@ trackedFiles:
     pristine_git_object: 364a7313243239015c62c9e6e4edc5640b390129
   internal/sdk/models/shared/sourcefacebookmarketing.go:
     id: 6d83a6830fef
-    last_write_checksum: sha1:43c8a036366f9bea08fb412b8a1c79b0e31357bb
-    pristine_git_object: 9d6643842478678f58b0ceca5252e6ca3bc38f01
+    last_write_checksum: sha1:480911d1a6e09e742cc04989c320b480643aa205
+    pristine_git_object: 7ee9480f68eadbdee9687fdd7a22d8ff5869d7ea
   internal/sdk/models/shared/sourcefacebookmarketingcreaterequest.go:
     id: 229437f8ad00
     last_write_checksum: sha1:841d1899851b0080a6c82e33fb05171d38251292
@@ -20107,8 +20107,8 @@ trackedFiles:
     pristine_git_object: 11ff29a6303e301f781d0ae8ae02fdea702ba2fb
   internal/sdk/models/shared/sourcefacebookmarketingupdate.go:
     id: 71a85465f673
-    last_write_checksum: sha1:855d274ffa35a25cd7c4ceb9a638f2f5fce23fe2
-    pristine_git_object: 1b4a8c59cb21bb36d233570096b086a1952467d1
+    last_write_checksum: sha1:a17ca8069d0d05edcdd0ad963f1c5cbe45de6348
+    pristine_git_object: 7a9481f8a63c949626d0483a39c5c64bb296b8d3
   internal/sdk/models/shared/sourcefaker.go:
     id: d8165dfcc2e8
     last_write_checksum: sha1:d9102ffe6735987540fec252fee8db7085b87be7
@@ -23003,8 +23003,8 @@ trackedFiles:
     pristine_git_object: 75d5f2c4fcffa44f2da68a85e60a89c74e90f181
   internal/sdk/oauth.go:
     id: 09b448915292
-    last_write_checksum: sha1:9120bca9c44c6d80defe1cc8f93e6b5836871ec1
-    pristine_git_object: ecdf3a6c0503087feacec44ceda7696cc8eefd71
+    last_write_checksum: sha1:f99bd8376a49d3a74c207f38cf649f2943e88427
+    pristine_git_object: f51e9c98873a9876ff53a6451180139a0784e25a
   internal/sdk/optionalnullable/optionalnullable.go:
     id: 4b83aa3f3df3
     last_write_checksum: sha1:d6aff1a420c31e025ea21d46cf056e305ae76fe8
@@ -23023,12 +23023,12 @@ trackedFiles:
     pristine_git_object: 8ca22043a524d763c167c2a3954b435445e6e9e1
   internal/sdk/public.go:
     id: 77166078add8
-    last_write_checksum: sha1:98db05b12b51e84f637adb805901ee05335b4576
-    pristine_git_object: 904f3dcdcb79191ec8edf395e3dd5fda8d71ae06
+    last_write_checksum: sha1:8700880b4e935af0aa2d89c0487e8f00d5714da5
+    pristine_git_object: b84c90821d9eda71f3aa88d8711793a0b5183f7d
   internal/sdk/publicroot.go:
     id: 78c98a7dd869
-    last_write_checksum: sha1:de9ed16f28b87601e2985fb9ccbf27bde5010f48
-    pristine_git_object: 4fc27b84d3c7cd2553bbeb613bc40312b1c30ee5
+    last_write_checksum: sha1:4e80d8e2b9cd65c36ed14b430e983e4e07a16659
+    pristine_git_object: 0c9de282136cef666743b4feffcd90c914a12656
   internal/sdk/regions.go:
     id: d3ff8964b13a
     last_write_checksum: sha1:f481f9cf0b2a6902893ea9d69304364d31b04e59
@@ -23039,8 +23039,8 @@ trackedFiles:
     pristine_git_object: aa809fccb3445b1e2530a979dad620512f50e70f
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:76a08decfb5e5e17b392bb17cf875be684206aef
-    pristine_git_object: bba472fef3d62eac001980d687410cdca8b3f6c5
+    last_write_checksum: sha1:7ea1fdb80fed9b7ec990f32efa8f0350a15d5751
+    pristine_git_object: e5231999135452e708f8fbbef724c22e7e69b3a9
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
@@ -28048,7 +28048,7 @@ examples:
   createSourceFacebookMarketing:
     speakeasy-default-create-source-facebook-marketing:
       requestBody:
-        application/json: {"name": "<value>", "definitionId": "e7778cfc-e97c-4458-9ecb-b4f2bba8946c", "workspaceId": "7785798f-29a8-4f8d-af06-1efcd7c30511", "configuration": {"account_ids": ["111111111111111"], "ad_statuses": [], "adset_statuses": [], "campaign_statuses": [], "credentials": {"access_token": "<value>", "auth_type": "Service"}, "custom_insights": [{"action_breakdowns": [], "action_report_time": "mixed", "breakdowns": [], "end_date": "2017-01-26T00:00:00Z", "fields": [], "insights_job_timeout": 60, "insights_lookback_window": 28, "level": "ad", "name": "<value>", "start_date": "2017-01-25T00:00:00Z", "time_increment": 1}], "default_ads_insights_action_breakdowns": ["action_type", "action_target_id", "action_destination"], "end_date": "2017-01-26T00:00:00Z", "fetch_thumbnail_images": false, "insights_job_timeout": 60, "insights_lookback_window": 28, "page_size": 100, "start_date": "2017-01-25T00:00:00Z", "sourceType": "facebook-marketing"}}
+        application/json: {"name": "<value>", "definitionId": "e7778cfc-e97c-4458-9ecb-b4f2bba8946c", "workspaceId": "7785798f-29a8-4f8d-af06-1efcd7c30511", "configuration": {"account_ids": ["111111111111111"], "ad_statuses": [], "adset_statuses": [], "campaign_statuses": [], "credentials": {"access_token": "<value>", "auth_type": "Service"}, "custom_insights": [{"action_breakdowns": [], "action_report_time": "mixed", "breakdowns": [], "end_date": "2017-01-26T00:00:00Z", "fields": [], "include_incrementality": false, "insights_job_timeout": 60, "insights_lookback_window": 28, "level": "ad", "name": "<value>", "start_date": "2017-01-25T00:00:00Z", "time_increment": 1}], "default_ads_insights_action_breakdowns": ["action_type", "action_target_id", "action_destination"], "end_date": "2017-01-26T00:00:00Z", "fetch_thumbnail_images": false, "include_incrementality": false, "insights_job_timeout": 60, "insights_lookback_window": 28, "page_size": 100, "start_date": "2017-01-25T00:00:00Z", "sourceType": "facebook-marketing"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 108500}
@@ -28066,7 +28066,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "e82ac889-8c5e-4c12-8993-e484e108bddc", "configuration": {"account_ids": ["111111111111111"], "ad_statuses": [], "adset_statuses": [], "campaign_statuses": [], "custom_insights": [{"action_breakdowns": [], "action_report_time": "mixed", "breakdowns": [], "end_date": "2017-01-26T00:00:00Z", "fields": [], "insights_job_timeout": 60, "insights_lookback_window": 28, "level": "ad", "start_date": "2017-01-25T00:00:00Z", "time_increment": 1}], "default_ads_insights_action_breakdowns": ["action_type", "action_target_id", "action_destination"], "end_date": "2017-01-26T00:00:00Z", "fetch_thumbnail_images": false, "insights_job_timeout": 60, "insights_lookback_window": 28, "page_size": 100, "start_date": "2017-01-25T00:00:00Z", "sourceType": "facebook-marketing"}}
+        application/json: {"name": "<value>", "workspaceId": "e82ac889-8c5e-4c12-8993-e484e108bddc", "configuration": {"account_ids": ["111111111111111"], "ad_statuses": [], "adset_statuses": [], "campaign_statuses": [], "custom_insights": [{"action_breakdowns": [], "action_report_time": "mixed", "breakdowns": [], "end_date": "2017-01-26T00:00:00Z", "fields": [], "include_incrementality": false, "insights_job_timeout": 60, "insights_lookback_window": 28, "level": "ad", "start_date": "2017-01-25T00:00:00Z", "time_increment": 1}], "default_ads_insights_action_breakdowns": ["action_type", "action_target_id", "action_destination"], "end_date": "2017-01-26T00:00:00Z", "fetch_thumbnail_images": false, "include_incrementality": false, "insights_job_timeout": 60, "insights_lookback_window": 28, "page_size": 100, "start_date": "2017-01-25T00:00:00Z", "sourceType": "facebook-marketing"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 926770}

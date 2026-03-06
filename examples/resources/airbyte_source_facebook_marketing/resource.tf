@@ -36,6 +36,7 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         fields = [
           "cost_per_result"
         ]
+        include_incrementality   = false
         insights_job_timeout     = 50
         insights_lookback_window = 9
         level                    = "account"
@@ -49,6 +50,7 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
+    include_incrementality   = true
     insights_job_timeout     = 55
     insights_lookback_window = 9
     page_size                = 7

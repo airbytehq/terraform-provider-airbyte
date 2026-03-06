@@ -210,6 +210,12 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									ElementType: types.StringType,
 									Description: `A list of chosen fields for fields parameter. Default: []`,
 								},
+								"include_incrementality": schema.BoolAttribute{
+									Computed:    true,
+									Optional:    true,
+									Default:     booldefault.StaticBool(false),
+									Description: `If enabled, the incrementality attribution window will be included in the action attribution windows for this custom insight. This allows you to retrieve incrementality data for action metrics. Default: false`,
+								},
 								"insights_job_timeout": schema.Int64Attribute{
 									Computed:    true,
 									Optional:    true,
@@ -289,6 +295,12 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
 						Description: `Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative. Default: false`,
+					},
+					"include_incrementality": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `If enabled, the incrementality attribution window will be included in the action attribution windows for all built-in insight streams. This allows you to retrieve incrementality data for action metrics. See the Facebook Marketing API documentation for more details: https://developers.facebook.com/docs/marketing-api/reference/ads-action-stats/. Default: false`,
 					},
 					"insights_job_timeout": schema.Int64Attribute{
 						Computed:    true,

@@ -305,10 +305,6 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	// HAND-EDITED: Preserve the user's plaintext configuration from the plan
-	// before API calls overwrite it with redacted secrets.
-	preservedConfig := data.Configuration
-
 	request, requestDiags := data.ToSharedDestinationCreateRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
@@ -384,14 +380,6 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	// HAND-EDITED:
-	// Restore the user's original configuration (when present in plan) instead of the API's
-	// redacted configuration to prevent phantom diffs on sensitive fields whose values are
-	// never returned by the API.
-	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
-		data.Configuration = preservedConfig
-	}
-
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -413,11 +401,6 @@ func (r *DestinationResource) Read(ctx context.Context, req resource.ReadRequest
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	// HAND-EDITED: Preserve the user's configuration from state before the API
-	// overwrites it with redacted secrets ("**********") or secret coordinates.
-	// This prevents phantom diffs on every plan cycle.
-	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsGetDestinationRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -455,18 +438,6 @@ func (r *DestinationResource) Read(ctx context.Context, req resource.ReadRequest
 		return
 	}
 
-	// HAND-EDITED:
-	// Restore the user's original configuration from state to prevent phantom diffs.
-	// The API returns redacted secrets (e.g., "**********") or secret coordinates, but we
-	// want to keep the user's plaintext (or a null/unknown value) in state so that:
-	//   - Terraform doesn't see a diff on every plan, and
-	//   - we never persist redacted secret strings returned by the API into state.
-	//
-	// Always restore the preserved configuration from state, even when it is null
-	// (such as immediately after `terraform import` before a config block is defined)
-	// or unknown, to avoid storing API redactions in state.
-	data.Configuration = preservedConfig
-
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -484,12 +455,6 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	// HAND-EDITED: Preserve the user's plaintext configuration from the plan
-	// before API calls overwrite it with redacted secrets.
-	// Note: all error paths between here and the restore point return early without
-	// saving state, so preservedConfig is only restored on the success path.
-	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsPutDestinationRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -564,14 +529,6 @@ func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateReq
 
 	if resp.Diagnostics.HasError() {
 		return
-	}
-
-	// HAND-EDITED:
-	// Restore the user's original configuration (when present in plan) instead of the API's
-	// redacted configuration to prevent phantom diffs on sensitive fields whose values are
-	// never returned by the API.
-	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
-		data.Configuration = preservedConfig
 	}
 
 	// Save updated data into Terraform state

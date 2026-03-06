@@ -43,7 +43,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "1.0.0"
+      version = "1.0.1"
     }
   }
 }
@@ -127,6 +127,7 @@ Available configuration:
 * [airbyte_connection](docs/resources/connection.md)
 * [airbyte_declarative_source_definition](docs/resources/declarative_source_definition.md)
 * [airbyte_destination](docs/resources/destination.md)
+* [airbyte_destination_definition](docs/resources/destination_definition.md)
 * [airbyte_destination_astra](docs/resources/destination_astra.md)
 * [airbyte_destination_aws_datalake](docs/resources/destination_aws_datalake.md)
 * [airbyte_destination_azure_blob_storage](docs/resources/destination_azure_blob_storage.md)
@@ -163,9 +164,9 @@ Available configuration:
 * [airbyte_destination_vectara](docs/resources/destination_vectara.md)
 * [airbyte_destination_weaviate](docs/resources/destination_weaviate.md)
 * [airbyte_destination_yellowbrick](docs/resources/destination_yellowbrick.md)
-* [airbyte_destination_definition](docs/resources/destination_definition.md)
 * [airbyte_permission](docs/resources/permission.md)
 * [airbyte_source](docs/resources/source.md)
+* [airbyte_source_definition](docs/resources/source_definition.md)
 * [airbyte_source_aha](docs/resources/source_aha.md)
 * [airbyte_source_airbyte](docs/resources/source_airbyte.md)
 * [airbyte_source_aircall](docs/resources/source_aircall.md)
@@ -367,8 +368,8 @@ Available configuration:
 * [airbyte_source_square](docs/resources/source_square.md)
 * [airbyte_source_strava](docs/resources/source_strava.md)
 * [airbyte_source_stripe](docs/resources/source_stripe.md)
-* [airbyte_source_surveymonkey](docs/resources/source_surveymonkey.md)
 * [airbyte_source_survey_sparrow](docs/resources/source_survey_sparrow.md)
+* [airbyte_source_surveymonkey](docs/resources/source_surveymonkey.md)
 * [airbyte_source_survicate](docs/resources/source_survicate.md)
 * [airbyte_source_teamwork](docs/resources/source_teamwork.md)
 * [airbyte_source_tempo](docs/resources/source_tempo.md)
@@ -399,7 +400,6 @@ Available configuration:
 * [airbyte_source_zenloop](docs/resources/source_zenloop.md)
 * [airbyte_source_zoho_crm](docs/resources/source_zoho_crm.md)
 * [airbyte_source_zoom](docs/resources/source_zoom.md)
-* [airbyte_source_definition](docs/resources/source_definition.md)
 * [airbyte_workspace](docs/resources/workspace.md)
 
 ### Data Sources
@@ -408,6 +408,7 @@ Available configuration:
 * [airbyte_connections](docs/data-sources/connections.md)
 * [airbyte_declarative_source_definition](docs/data-sources/declarative_source_definition.md)
 * [airbyte_destination](docs/data-sources/destination.md)
+* [airbyte_destination_definition](docs/data-sources/destination_definition.md)
 * [airbyte_destination_astra](docs/data-sources/destination_astra.md)
 * [airbyte_destination_aws_datalake](docs/data-sources/destination_aws_datalake.md)
 * [airbyte_destination_azure_blob_storage](docs/data-sources/destination_azure_blob_storage.md)
@@ -444,9 +445,9 @@ Available configuration:
 * [airbyte_destination_vectara](docs/data-sources/destination_vectara.md)
 * [airbyte_destination_weaviate](docs/data-sources/destination_weaviate.md)
 * [airbyte_destination_yellowbrick](docs/data-sources/destination_yellowbrick.md)
-* [airbyte_destination_definition](docs/data-sources/destination_definition.md)
 * [airbyte_permission](docs/data-sources/permission.md)
 * [airbyte_source](docs/data-sources/source.md)
+* [airbyte_source_definition](docs/data-sources/source_definition.md)
 * [airbyte_source_aha](docs/data-sources/source_aha.md)
 * [airbyte_source_airbyte](docs/data-sources/source_airbyte.md)
 * [airbyte_source_aircall](docs/data-sources/source_aircall.md)
@@ -648,8 +649,8 @@ Available configuration:
 * [airbyte_source_square](docs/data-sources/source_square.md)
 * [airbyte_source_strava](docs/data-sources/source_strava.md)
 * [airbyte_source_stripe](docs/data-sources/source_stripe.md)
-* [airbyte_source_surveymonkey](docs/data-sources/source_surveymonkey.md)
 * [airbyte_source_survey_sparrow](docs/data-sources/source_survey_sparrow.md)
+* [airbyte_source_surveymonkey](docs/data-sources/source_surveymonkey.md)
 * [airbyte_source_survicate](docs/data-sources/source_survicate.md)
 * [airbyte_source_teamwork](docs/data-sources/source_teamwork.md)
 * [airbyte_source_tempo](docs/data-sources/source_tempo.md)
@@ -680,7 +681,6 @@ Available configuration:
 * [airbyte_source_zenloop](docs/data-sources/source_zenloop.md)
 * [airbyte_source_zoho_crm](docs/data-sources/source_zoho_crm.md)
 * [airbyte_source_zoom](docs/data-sources/source_zoom.md)
-* [airbyte_source_definition](docs/data-sources/source_definition.md)
 * [airbyte_workspace](docs/data-sources/workspace.md)
 <!-- End Available Resources and Data Sources [operations] -->
 

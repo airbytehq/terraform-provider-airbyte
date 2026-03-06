@@ -11,7 +11,7 @@ resource "airbyte_source_gcs" "my_source_gcs" {
         preserve_directory_structure = false
       }
     }
-    start_date = "2021-01-01T00:00:00.000000Z"
+    start_date = "2021-01-01"
     streams = [
       {
         days_to_sync_if_history_is_full = 6
