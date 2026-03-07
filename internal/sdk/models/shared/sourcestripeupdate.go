@@ -9,6 +9,131 @@ import (
 	"time"
 )
 
+type SourceStripeUpdateAPIRetentionStreams string
+
+const (
+	SourceStripeUpdateAPIRetentionStreamsAccounts                    SourceStripeUpdateAPIRetentionStreams = "accounts"
+	SourceStripeUpdateAPIRetentionStreamsApplicationFees             SourceStripeUpdateAPIRetentionStreams = "application_fees"
+	SourceStripeUpdateAPIRetentionStreamsApplicationFeesRefunds      SourceStripeUpdateAPIRetentionStreams = "application_fees_refunds"
+	SourceStripeUpdateAPIRetentionStreamsAuthorizations              SourceStripeUpdateAPIRetentionStreams = "authorizations"
+	SourceStripeUpdateAPIRetentionStreamsBankAccounts                SourceStripeUpdateAPIRetentionStreams = "bank_accounts"
+	SourceStripeUpdateAPIRetentionStreamsCardholders                 SourceStripeUpdateAPIRetentionStreams = "cardholders"
+	SourceStripeUpdateAPIRetentionStreamsCharges                     SourceStripeUpdateAPIRetentionStreams = "charges"
+	SourceStripeUpdateAPIRetentionStreamsCheckoutSessions            SourceStripeUpdateAPIRetentionStreams = "checkout_sessions"
+	SourceStripeUpdateAPIRetentionStreamsCoupons                     SourceStripeUpdateAPIRetentionStreams = "coupons"
+	SourceStripeUpdateAPIRetentionStreamsCreditNotes                 SourceStripeUpdateAPIRetentionStreams = "credit_notes"
+	SourceStripeUpdateAPIRetentionStreamsCustomers                   SourceStripeUpdateAPIRetentionStreams = "customers"
+	SourceStripeUpdateAPIRetentionStreamsDisputes                    SourceStripeUpdateAPIRetentionStreams = "disputes"
+	SourceStripeUpdateAPIRetentionStreamsEarlyFraudWarnings          SourceStripeUpdateAPIRetentionStreams = "early_fraud_warnings"
+	SourceStripeUpdateAPIRetentionStreamsExternalAccountBankAccounts SourceStripeUpdateAPIRetentionStreams = "external_account_bank_accounts"
+	SourceStripeUpdateAPIRetentionStreamsExternalAccountCards        SourceStripeUpdateAPIRetentionStreams = "external_account_cards"
+	SourceStripeUpdateAPIRetentionStreamsInvoiceItems                SourceStripeUpdateAPIRetentionStreams = "invoice_items"
+	SourceStripeUpdateAPIRetentionStreamsInvoiceLineItems            SourceStripeUpdateAPIRetentionStreams = "invoice_line_items"
+	SourceStripeUpdateAPIRetentionStreamsInvoices                    SourceStripeUpdateAPIRetentionStreams = "invoices"
+	SourceStripeUpdateAPIRetentionStreamsPaymentIntents              SourceStripeUpdateAPIRetentionStreams = "payment_intents"
+	SourceStripeUpdateAPIRetentionStreamsPaymentMethods              SourceStripeUpdateAPIRetentionStreams = "payment_methods"
+	SourceStripeUpdateAPIRetentionStreamsPayouts                     SourceStripeUpdateAPIRetentionStreams = "payouts"
+	SourceStripeUpdateAPIRetentionStreamsPersons                     SourceStripeUpdateAPIRetentionStreams = "persons"
+	SourceStripeUpdateAPIRetentionStreamsPlans                       SourceStripeUpdateAPIRetentionStreams = "plans"
+	SourceStripeUpdateAPIRetentionStreamsPrices                      SourceStripeUpdateAPIRetentionStreams = "prices"
+	SourceStripeUpdateAPIRetentionStreamsProducts                    SourceStripeUpdateAPIRetentionStreams = "products"
+	SourceStripeUpdateAPIRetentionStreamsPromotionCodes              SourceStripeUpdateAPIRetentionStreams = "promotion_codes"
+	SourceStripeUpdateAPIRetentionStreamsRefunds                     SourceStripeUpdateAPIRetentionStreams = "refunds"
+	SourceStripeUpdateAPIRetentionStreamsReviews                     SourceStripeUpdateAPIRetentionStreams = "reviews"
+	SourceStripeUpdateAPIRetentionStreamsSetupIntents                SourceStripeUpdateAPIRetentionStreams = "setup_intents"
+	SourceStripeUpdateAPIRetentionStreamsSubscriptionItems           SourceStripeUpdateAPIRetentionStreams = "subscription_items"
+	SourceStripeUpdateAPIRetentionStreamsSubscriptionSchedule        SourceStripeUpdateAPIRetentionStreams = "subscription_schedule"
+	SourceStripeUpdateAPIRetentionStreamsSubscriptions               SourceStripeUpdateAPIRetentionStreams = "subscriptions"
+	SourceStripeUpdateAPIRetentionStreamsTopUps                      SourceStripeUpdateAPIRetentionStreams = "top_ups"
+	SourceStripeUpdateAPIRetentionStreamsTransactions                SourceStripeUpdateAPIRetentionStreams = "transactions"
+	SourceStripeUpdateAPIRetentionStreamsTransfers                   SourceStripeUpdateAPIRetentionStreams = "transfers"
+)
+
+func (e SourceStripeUpdateAPIRetentionStreams) ToPointer() *SourceStripeUpdateAPIRetentionStreams {
+	return &e
+}
+func (e *SourceStripeUpdateAPIRetentionStreams) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "accounts":
+		fallthrough
+	case "application_fees":
+		fallthrough
+	case "application_fees_refunds":
+		fallthrough
+	case "authorizations":
+		fallthrough
+	case "bank_accounts":
+		fallthrough
+	case "cardholders":
+		fallthrough
+	case "charges":
+		fallthrough
+	case "checkout_sessions":
+		fallthrough
+	case "coupons":
+		fallthrough
+	case "credit_notes":
+		fallthrough
+	case "customers":
+		fallthrough
+	case "disputes":
+		fallthrough
+	case "early_fraud_warnings":
+		fallthrough
+	case "external_account_bank_accounts":
+		fallthrough
+	case "external_account_cards":
+		fallthrough
+	case "invoice_items":
+		fallthrough
+	case "invoice_line_items":
+		fallthrough
+	case "invoices":
+		fallthrough
+	case "payment_intents":
+		fallthrough
+	case "payment_methods":
+		fallthrough
+	case "payouts":
+		fallthrough
+	case "persons":
+		fallthrough
+	case "plans":
+		fallthrough
+	case "prices":
+		fallthrough
+	case "products":
+		fallthrough
+	case "promotion_codes":
+		fallthrough
+	case "refunds":
+		fallthrough
+	case "reviews":
+		fallthrough
+	case "setup_intents":
+		fallthrough
+	case "subscription_items":
+		fallthrough
+	case "subscription_schedule":
+		fallthrough
+	case "subscriptions":
+		fallthrough
+	case "top_ups":
+		fallthrough
+	case "transactions":
+		fallthrough
+	case "transfers":
+		*e = SourceStripeUpdateAPIRetentionStreams(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceStripeUpdateAPIRetentionStreams: %v", v)
+	}
+}
+
 type SourceStripeUpdateSourceType string
 
 const (
@@ -35,6 +160,8 @@ func (e *SourceStripeUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceStripeUpdate struct {
 	// Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).
 	AccountID *string `json:"account_id,omitempty"`
+	// Select streams where cursor age is validated against the Stripe API 30-day event retention period. When a selected stream's cursor is older than 30 days, the connector performs a full refresh to avoid missing data. Streams not selected here will always use incremental sync regardless of cursor age.
+	APIRetentionStreams []SourceStripeUpdateAPIRetentionStreams `json:"api_retention_streams,omitempty"`
 	// The number of API calls per second that you allow connector to make. This value can not be bigger than real API call rate limit (https://stripe.com/docs/rate-limits). If not specified the default maximum is 25 calls per second for test/sandbox tokens and 100 for production tokens.
 	CallRateLimit *int64 `json:"call_rate_limit,omitempty"`
 	// Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).
@@ -42,9 +169,9 @@ type SourceStripeUpdate struct {
 	// When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. The Lookback Window only applies to streams that do not support event-based incremental syncs: Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks, Refunds. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>
 	LookbackWindowDays *int64 `default:"0" json:"lookback_window_days"`
 	// The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account.
-	NumWorkers *int64 `default:"25" json:"num_workers"`
+	NumWorkers *int64 `default:"10" json:"num_workers"`
 	// The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.
-	SliceRange *int64 `default:"30" json:"slice_range"`
+	SliceRange *int64 `default:"365" json:"slice_range"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
 	StartDate  *time.Time                    `default:"2017-01-25T00:00:00Z" json:"start_date"`
 	sourceType *SourceStripeUpdateSourceType `const:"stripe" json:"sourceType"`
@@ -66,6 +193,13 @@ func (s *SourceStripeUpdate) GetAccountID() *string {
 		return nil
 	}
 	return s.AccountID
+}
+
+func (s *SourceStripeUpdate) GetAPIRetentionStreams() []SourceStripeUpdateAPIRetentionStreams {
+	if s == nil {
+		return nil
+	}
+	return s.APIRetentionStreams
 }
 
 func (s *SourceStripeUpdate) GetCallRateLimit() *int64 {

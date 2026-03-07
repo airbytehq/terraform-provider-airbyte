@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 9d483921d1f3a4b1a8235a03ab46b3e2
+  docChecksum: e0a15e385f8587b9ac50b0a0bf6a3e98
   docVersion: 1.0.0
   speakeasyVersion: 1.748.0
   generationVersion: 2.852.1
@@ -9,9 +9,9 @@ management:
   configChecksum: 9a1885ef1b9ee42a2b12cbfa8182eb73
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 9d135884-92ca-46d6-ab27-7caea77c5d66
-  pristine_commit_hash: 8017b3680976b044869c5ac5f8158addaf532d78
-  pristine_tree_hash: aa90312087ff6dff3f8ef13bf924c3fd24eca401
+  generation_id: 8b863c99-064a-47d6-b097-a1179302e180
+  pristine_commit_hash: 026fccd1c6089ddb5fde5c720758bb8931360567
+  pristine_tree_hash: f682bec64df5bc8c81d9a43f97ae99904b03b31f
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -4079,8 +4079,8 @@ trackedFiles:
     pristine_git_object: 36f974fca7a8d5ce48d4e4e5f42ff82674e00e35
   examples/resources/airbyte_source_stripe/resource.tf:
     id: 1b0bc83bb87d
-    last_write_checksum: sha1:c72b33ea3a6db1ca1b0e097ac8c0e3b96d31ea32
-    pristine_git_object: e2f235fb90b5bbbcde147dc040ed57ac9d2c72bd
+    last_write_checksum: sha1:536f62533851a76d0708504804830f8db0b2cb04
+    pristine_git_object: edc765ecb6e141b59b0a60117292a1738293dcc2
   examples/resources/airbyte_source_survey_sparrow/import-by-string-id.tf:
     id: dc9ffebc7d94
     last_write_checksum: sha1:3feb97aa2de80f4d1889d8b7c6ad989cb91d5fe2
@@ -8571,12 +8571,12 @@ trackedFiles:
     pristine_git_object: 5bf2762365dca056818305def07c1e13cf2877b2
   internal/provider/source_stripe_resource.go:
     id: 4a97a3c6f9d0
-    last_write_checksum: sha1:497a71aeba7485e6364b3d9daa2ffc51fb0e2d66
-    pristine_git_object: 07fd0e5cd13af0c7709b0092059591e6ab0393f1
+    last_write_checksum: sha1:55b3fecf86adb8cfb3fad28e3c6dbbe9533297a7
+    pristine_git_object: 92742c6bec55e8c94d02a094c15ea33ae07c56b0
   internal/provider/source_stripe_resource_sdk.go:
     id: ce7e9865ef92
-    last_write_checksum: sha1:003f39639febc29af132006ddf0fe5cdf14e2355
-    pristine_git_object: 3a3f180813e4a93f228fb453009f7292cfc30761
+    last_write_checksum: sha1:0bc30a51d8befa962243158c19ab76014c2faf82
+    pristine_git_object: 6484f259aba0f018967335a63890b33ddc8a1e19
   internal/provider/source_surveymonkey_data_source.go:
     id: 3716a184cbd8
     last_write_checksum: sha1:b15f07988f76cd5d0bbdf7e18759ba0a9b2afafc
@@ -12951,8 +12951,8 @@ trackedFiles:
     pristine_git_object: 2d9320519bcb83547cb0779999456b28c72cecd2
   internal/provider/types/source_stripe.go:
     id: 0f458a53f391
-    last_write_checksum: sha1:e4419b7e24a52794ed10534296a15acfb11765a2
-    pristine_git_object: 0e27b202d15ef8e80e438d71049a38d649a11ee0
+    last_write_checksum: sha1:78f04a3eb2823fe6ad5efcc53344cf9fd7e35499
+    pristine_git_object: bdf7051e3cad75fff63f5fa71b457d0039fb123a
   internal/provider/types/source_survey_sparrow.go:
     id: fed843094ee8
     last_write_checksum: sha1:075db66193a48ef99d536daf1e170b37b7b249bd
@@ -22399,8 +22399,8 @@ trackedFiles:
     pristine_git_object: 2c3c8c6a0e7e7dfc19c5695661f80dad86ba7170
   internal/sdk/models/shared/sourcestripe.go:
     id: 3847730602c2
-    last_write_checksum: sha1:d12033b2173a5970db1d92871b08301e572dada1
-    pristine_git_object: 8a45ae67be27304426de66a2af870dd7c7fff6aa
+    last_write_checksum: sha1:c83af60e22f2b0ff425cc8481d3d3707ecf24780
+    pristine_git_object: e59bbdc25d443486aa49c0c18824fb7ddab03d2d
   internal/sdk/models/shared/sourcestripecreaterequest.go:
     id: 07b69ce035e8
     last_write_checksum: sha1:7ff53551e92a1bfc484c7fa4d7b356fc6bf38f6f
@@ -22411,8 +22411,8 @@ trackedFiles:
     pristine_git_object: 6bcf4ea055e0a1cada5c2238c958b9c3ee0241cd
   internal/sdk/models/shared/sourcestripeupdate.go:
     id: a5cec9f720b9
-    last_write_checksum: sha1:f3fcbe3978f52ed9cc54c034c946d1ce213dcf18
-    pristine_git_object: 572e8d2234cda9c2e74580de3bd2d3edf7d59b62
+    last_write_checksum: sha1:ae45809748af49bda8ac2df0a2df181e3476862e
+    pristine_git_object: 4c911800b0a62c2371490c71401b01caaccb9d39
   internal/sdk/models/shared/sourcesurveymonkey.go:
     id: cb21b95b8136
     last_write_checksum: sha1:68d76da183d9ff44f8a1b29d772d45912f8c128b
@@ -37798,7 +37798,7 @@ examples:
   createSourceStripe:
     speakeasy-default-create-source-stripe:
       requestBody:
-        application/json: {"name": "<value>", "definitionId": "e094cb9a-26de-4645-8761-65c0c425d1de", "workspaceId": "69c42830-48f0-4e22-b645-2a21ae6ebbb3", "configuration": {"account_id": "<id>", "call_rate_limit": 25, "client_secret": "<value>", "lookback_window_days": 0, "num_workers": 1, "slice_range": 1, "start_date": "2017-01-25T00:00:00Z", "sourceType": "stripe"}}
+        application/json: {"name": "<value>", "definitionId": "e094cb9a-26de-4645-8761-65c0c425d1de", "workspaceId": "69c42830-48f0-4e22-b645-2a21ae6ebbb3", "configuration": {"account_id": "<id>", "api_retention_streams": [], "call_rate_limit": 25, "client_secret": "<value>", "lookback_window_days": 0, "num_workers": 1, "slice_range": 1, "start_date": "2017-01-25T00:00:00Z", "sourceType": "stripe"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 655646}
@@ -37816,7 +37816,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "853fb4b6-dab9-4830-bf19-08d9094fcb59", "configuration": {"call_rate_limit": 25, "lookback_window_days": 0, "num_workers": 1, "slice_range": 1, "start_date": "2017-01-25T00:00:00Z", "sourceType": "stripe"}}
+        application/json: {"name": "<value>", "workspaceId": "853fb4b6-dab9-4830-bf19-08d9094fcb59", "configuration": {"api_retention_streams": [], "call_rate_limit": 25, "lookback_window_days": 0, "num_workers": 1, "slice_range": 1, "start_date": "2017-01-25T00:00:00Z", "sourceType": "stripe"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 554484}
