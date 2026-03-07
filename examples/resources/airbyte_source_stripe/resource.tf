@@ -1,6 +1,9 @@
 resource "airbyte_source_stripe" "my_source_stripe" {
   configuration = {
-    account_id           = "...my_account_id..."
+    account_id = "...my_account_id..."
+    api_retention_streams = [
+      "application_fees_refunds"
+    ]
     call_rate_limit      = 25
     client_secret        = "...my_client_secret..."
     lookback_window_days = 4

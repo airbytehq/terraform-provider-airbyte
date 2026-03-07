@@ -13,10 +13,13 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -70,6 +73,16 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required:    true,
 						Description: `Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).`,
 					},
+					"api_retention_streams": schema.ListAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{})),
+						ElementType: types.StringType,
+						Description: `Select streams where cursor age is validated against the Stripe API 30-day event retention period. When a selected stream's cursor is older than 30 days, the connector performs a full refresh to avoid missing data. Streams not selected here will always use incremental sync regardless of cursor age. Default: []`,
+						Validators: []validator.List{
+							listvalidator.UniqueValues(),
+						},
+					},
 					"call_rate_limit": schema.Int64Attribute{
 						Optional:    true,
 						Description: `The number of API calls per second that you allow connector to make. This value can not be bigger than real API call rate limit (https://stripe.com/docs/rate-limits). If not specified the default maximum is 25 calls per second for test/sandbox tokens and 100 for production tokens.`,
@@ -91,8 +104,8 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 					"num_workers": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     int64default.StaticInt64(25),
-						Description: `The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account. Default: 25`,
+						Default:     int64default.StaticInt64(10),
+						Description: `The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account. Default: 10`,
 						Validators: []validator.Int64{
 							int64validator.Between(2, 100),
 						},
@@ -100,8 +113,8 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 					"slice_range": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     int64default.StaticInt64(30),
-						Description: `The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted. Default: 30`,
+						Default:     int64default.StaticInt64(365),
+						Description: `The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted. Default: 365`,
 						Validators: []validator.Int64{
 							int64validator.AtLeast(1),
 						},

@@ -20,6 +20,7 @@ func (r *SourceStripeResourceModel) RefreshFromSharedSourceResponse(ctx context.
 		r.Configuration = &tfTypes.SourceStripe{}
 		if configurationPriorData != nil {
 			r.Configuration.AccountID = configurationPriorData.AccountID
+			r.Configuration.APIRetentionStreams = configurationPriorData.APIRetentionStreams
 			r.Configuration.CallRateLimit = configurationPriorData.CallRateLimit
 			r.Configuration.ClientSecret = configurationPriorData.ClientSecret
 			r.Configuration.LookbackWindowDays = configurationPriorData.LookbackWindowDays
@@ -135,6 +136,10 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripeCreateRequest(ctx contex
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	apiRetentionStreams := make([]shared.APIRetentionStreams, 0, len(r.Configuration.APIRetentionStreams))
+	for _, apiRetentionStreamsItem := range r.Configuration.APIRetentionStreams {
+		apiRetentionStreams = append(apiRetentionStreams, shared.APIRetentionStreams(apiRetentionStreamsItem.ValueString()))
+	}
 	callRateLimit := new(int64)
 	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
 		*callRateLimit = r.Configuration.CallRateLimit.ValueInt64()
@@ -169,13 +174,14 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripeCreateRequest(ctx contex
 		startDate = nil
 	}
 	configuration := shared.SourceStripe{
-		AccountID:          accountID,
-		CallRateLimit:      callRateLimit,
-		ClientSecret:       clientSecret,
-		LookbackWindowDays: lookbackWindowDays,
-		NumWorkers:         numWorkers,
-		SliceRange:         sliceRange,
-		StartDate:          startDate,
+		AccountID:           accountID,
+		APIRetentionStreams: apiRetentionStreams,
+		CallRateLimit:       callRateLimit,
+		ClientSecret:        clientSecret,
+		LookbackWindowDays:  lookbackWindowDays,
+		NumWorkers:          numWorkers,
+		SliceRange:          sliceRange,
+		StartDate:           startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -208,6 +214,10 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripePutRequest(ctx context.C
 		*accountID = r.Configuration.AccountID.ValueString()
 	} else {
 		accountID = nil
+	}
+	apiRetentionStreams := make([]shared.SourceStripeUpdateAPIRetentionStreams, 0, len(r.Configuration.APIRetentionStreams))
+	for _, apiRetentionStreamsItem := range r.Configuration.APIRetentionStreams {
+		apiRetentionStreams = append(apiRetentionStreams, shared.SourceStripeUpdateAPIRetentionStreams(apiRetentionStreamsItem.ValueString()))
 	}
 	callRateLimit := new(int64)
 	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
@@ -246,13 +256,14 @@ func (r *SourceStripeResourceModel) ToSharedSourceStripePutRequest(ctx context.C
 		startDate = nil
 	}
 	configuration := shared.SourceStripeUpdate{
-		AccountID:          accountID,
-		CallRateLimit:      callRateLimit,
-		ClientSecret:       clientSecret,
-		LookbackWindowDays: lookbackWindowDays,
-		NumWorkers:         numWorkers,
-		SliceRange:         sliceRange,
-		StartDate:          startDate,
+		AccountID:           accountID,
+		APIRetentionStreams: apiRetentionStreams,
+		CallRateLimit:       callRateLimit,
+		ClientSecret:        clientSecret,
+		LookbackWindowDays:  lookbackWindowDays,
+		NumWorkers:          numWorkers,
+		SliceRange:          sliceRange,
+		StartDate:           startDate,
 	}
 	out := shared.SourceStripePutRequest{
 		Name:          name,

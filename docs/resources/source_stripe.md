@@ -15,7 +15,10 @@ SourceStripe Resource
 ```terraform
 resource "airbyte_source_stripe" "my_source_stripe" {
   configuration = {
-    account_id           = "...my_account_id..."
+    account_id = "...my_account_id..."
+    api_retention_streams = [
+      "application_fees_refunds"
+    ]
     call_rate_limit      = 25
     client_secret        = "...my_client_secret..."
     lookback_window_days = 4
@@ -61,10 +64,11 @@ Required:
 
 Optional:
 
+- `api_retention_streams` (List of String) Select streams where cursor age is validated against the Stripe API 30-day event retention period. When a selected stream's cursor is older than 30 days, the connector performs a full refresh to avoid missing data. Streams not selected here will always use incremental sync regardless of cursor age. Default: []
 - `call_rate_limit` (Number) The number of API calls per second that you allow connector to make. This value can not be bigger than real API call rate limit (https://stripe.com/docs/rate-limits). If not specified the default maximum is 25 calls per second for test/sandbox tokens and 100 for production tokens.
 - `lookback_window_days` (Number) When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. The Lookback Window only applies to streams that do not support event-based incremental syncs: Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks, Refunds. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>. Default: 0
-- `num_workers` (Number) The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account. Default: 25
-- `slice_range` (Number) The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted. Default: 30
+- `num_workers` (Number) The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account. Default: 10
+- `slice_range` (Number) The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted. Default: 365
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated. Default: "2017-01-25T00:00:00Z"
 
 
