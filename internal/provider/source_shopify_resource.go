@@ -134,6 +134,12 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 						Default:     booldefault.StaticBool(false),
 						Description: `Defines which API type (REST/BULK) to use to fetch ` + "`" + `Transactions` + "`" + ` data. If you are a ` + "`" + `Shopify Plus` + "`" + ` user, leave the default value to speed up the fetch. Default: false`,
 					},
+					"fulfillment_orders_include_closed": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `If enabled, the ` + "`" + `Fulfillment Orders` + "`" + ` stream includes closed fulfillment orders. Shopify excludes closed orders by default. Default: false`,
+					},
 					"job_checkpoint_interval": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,

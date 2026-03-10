@@ -8,6 +8,7 @@ resource "airbyte_source_shopify" "my_source_shopify" {
       }
     }
     fetch_transactions_user_id               = true
+    fulfillment_orders_include_closed        = true
     job_checkpoint_interval                  = 484517
     job_product_variants_include_pres_prices = true
     job_termination_threshold                = 5282

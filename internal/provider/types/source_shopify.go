@@ -12,6 +12,7 @@ type SourceShopify struct {
 	BulkWindowInDays                    types.Int64                 `tfsdk:"bulk_window_in_days"`
 	Credentials                         *ShopifyAuthorizationMethod `tfsdk:"credentials"`
 	FetchTransactionsUserID             types.Bool                  `tfsdk:"fetch_transactions_user_id"`
+	FulfillmentOrdersIncludeClosed      types.Bool                  `tfsdk:"fulfillment_orders_include_closed"`
 	JobCheckpointInterval               types.Int64                 `tfsdk:"job_checkpoint_interval"`
 	JobProductVariantsIncludePresPrices types.Bool                  `tfsdk:"job_product_variants_include_pres_prices"`
 	JobTerminationThreshold             types.Int64                 `tfsdk:"job_termination_threshold"`

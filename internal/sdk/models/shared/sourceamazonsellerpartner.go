@@ -445,6 +445,8 @@ type SourceAmazonSellerPartner struct {
 	FinancialEventsMaxResultsPerPage *int64 `default:"100" json:"financial_events_max_results_per_page"`
 	// The time window size for fetching financial events data in chunks for the ListFinancialEvents and ListFinancialEventGroups streams. Options include hourly (1H, 6H, 12H) and daily (1D, 7D, 14D, 30D, 60D, 90D, 180D) granularity. - **Hourly step sizes (e.g., 1H, 6H)** are recommended for very high data volumes where daily windows cause pagination token expiration (TTL errors). They fetch smaller chunks per request, reducing the risk of timeouts. - **Daily step sizes (e.g., 1D, 7D)** are better for moderate data volumes. They balance sync speed with API efficiency. - **Larger step sizes (e.g., 30D, 180D)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls. Select a step size that matches your data volume to optimize syncing speed and API performance.
 	FinancialEventsStep *FinancialEventsStepSize `default:"180D" json:"financial_events_step"`
+	// When enabled, the connector requests a Restricted Data Token (RDT) to access PII fields such as BuyerInfo and ShippingAddress in the Orders and OrderItems streams. Your Amazon SP-API developer profile must have an approved Restricted Role (Direct-to-Consumer Shipping or Tax Invoicing). If the RDT request is denied (HTTP 403), the connector falls back to the standard token automatically and PII fields remain empty.
+	IncludePii *bool `default:"false" json:"include_pii"`
 	// Your Login with Amazon Client ID.
 	LwaAppID string `json:"lwa_app_id"`
 	// Your Login with Amazon Client Secret.
@@ -519,6 +521,13 @@ func (s *SourceAmazonSellerPartner) GetFinancialEventsStep() *FinancialEventsSte
 		return nil
 	}
 	return s.FinancialEventsStep
+}
+
+func (s *SourceAmazonSellerPartner) GetIncludePii() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.IncludePii
 }
 
 func (s *SourceAmazonSellerPartner) GetLwaAppID() string {

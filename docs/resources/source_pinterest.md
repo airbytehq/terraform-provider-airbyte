@@ -110,11 +110,11 @@ Optional:
 - `click_window_days` (Number) Number of days to use as the conversion attribution window for a pin click action. Default: 30; must be one of [0, 1, 7, 14, 30, 60]
 - `columns` (List of String) A list of chosen columns. Default: []
 - `conversion_report_time` (String) The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event.. Default: "TIME_OF_AD_ACTION"; must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]
-- `engagement_window_days` (Number) Number of days to use as the conversion attribution window for an engagement action. must be one of [0, 1, 7, 14, 30, 60]
+- `engagement_window_days` (Number) Number of days to use as the conversion attribution window for an engagement action. Default: 30; must be one of [0, 1, 7, 14, 30, 60]
 - `granularity` (String) Chosen granularity for API. Default: "TOTAL"; must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]
 - `level` (String) Chosen level for API. Default: "ADVERTISER"; must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]
 - `start_date` (String) A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by report api (913 days from today).
-- `view_window_days` (Number) Number of days to use as the conversion attribution window for a view action. must be one of [0, 1, 7, 14, 30, 60]
+- `view_window_days` (Number) Number of days to use as the conversion attribution window for a view action. Default: 30; must be one of [0, 1, 7, 14, 30, 60]
 
 
 

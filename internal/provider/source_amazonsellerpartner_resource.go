@@ -135,6 +135,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 							),
 						},
 					},
+					"include_pii": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `When enabled, the connector requests a Restricted Data Token (RDT) to access PII fields such as BuyerInfo and ShippingAddress in the Orders and OrderItems streams. Your Amazon SP-API developer profile must have an approved Restricted Role (Direct-to-Consumer Shipping or Tax Invoicing). If the RDT request is denied (HTTP 403), the connector falls back to the standard token automatically and PII fields remain empty. Default: false`,
+					},
 					"lwa_app_id": schema.StringAttribute{
 						Required:    true,
 						Sensitive:   true,

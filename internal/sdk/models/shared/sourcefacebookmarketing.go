@@ -1324,6 +1324,36 @@ func (e *Level) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// TimeIncrementPeriod - Calendar-aligned aggregation period for statistics. Use this instead of time_increment to produce consistently aligned time buckets regardless of start_date. 'daily' is equivalent to time_increment=1. 'weekly' aligns to Monday-through-Sunday calendar weeks. 'monthly' aligns to calendar month boundaries (1st to last day of each month) and is natively supported by the Facebook API. Cannot be used together with time_increment.
+type TimeIncrementPeriod string
+
+const (
+	TimeIncrementPeriodDaily   TimeIncrementPeriod = "daily"
+	TimeIncrementPeriodWeekly  TimeIncrementPeriod = "weekly"
+	TimeIncrementPeriodMonthly TimeIncrementPeriod = "monthly"
+)
+
+func (e TimeIncrementPeriod) ToPointer() *TimeIncrementPeriod {
+	return &e
+}
+func (e *TimeIncrementPeriod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "daily":
+		fallthrough
+	case "weekly":
+		fallthrough
+	case "monthly":
+		*e = TimeIncrementPeriod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TimeIncrementPeriod: %v", v)
+	}
+}
+
 // InsightConfig - Config for custom insights
 type InsightConfig struct {
 	// A list of chosen action_breakdowns for action_breakdowns
@@ -1348,8 +1378,10 @@ type InsightConfig struct {
 	Name string `json:"name"`
 	// The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate *time.Time `json:"start_date,omitempty"`
-	// Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89.
+	// Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89. Cannot be used together with time_increment_period.
 	TimeIncrement *int64 `default:"1" json:"time_increment"`
+	// Calendar-aligned aggregation period for statistics. Use this instead of time_increment to produce consistently aligned time buckets regardless of start_date. 'daily' is equivalent to time_increment=1. 'weekly' aligns to Monday-through-Sunday calendar weeks. 'monthly' aligns to calendar month boundaries (1st to last day of each month) and is natively supported by the Facebook API. Cannot be used together with time_increment.
+	TimeIncrementPeriod *TimeIncrementPeriod `json:"time_increment_period,omitempty"`
 }
 
 func (i InsightConfig) MarshalJSON() ([]byte, error) {
@@ -1445,6 +1477,13 @@ func (i *InsightConfig) GetTimeIncrement() *int64 {
 		return nil
 	}
 	return i.TimeIncrement
+}
+
+func (i *InsightConfig) GetTimeIncrementPeriod() *TimeIncrementPeriod {
+	if i == nil {
+		return nil
+	}
+	return i.TimeIncrementPeriod
 }
 
 // ValidActionBreakdowns - An enumeration.

@@ -43,6 +43,7 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         name                     = "...my_name..."
         start_date               = "2017-01-25T00:00:00Z"
         time_increment           = 33
+        time_increment_period    = "monthly"
       }
     ]
     default_ads_insights_action_breakdowns = [

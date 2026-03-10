@@ -150,8 +150,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								"engagement_window_days": schema.Int64Attribute{
+									Computed:    true,
 									Optional:    true,
-									Description: `Number of days to use as the conversion attribution window for an engagement action. must be one of [0, 1, 7, 14, 30, 60]`,
+									Default:     int64default.StaticInt64(30),
+									Description: `Number of days to use as the conversion attribution window for an engagement action. Default: 30; must be one of [0, 1, 7, 14, 30, 60]`,
 									Validators: []validator.Int64{
 										int64validator.OneOf(
 											0,
@@ -212,8 +214,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								"view_window_days": schema.Int64Attribute{
+									Computed:    true,
 									Optional:    true,
-									Description: `Number of days to use as the conversion attribution window for a view action. must be one of [0, 1, 7, 14, 30, 60]`,
+									Default:     int64default.StaticInt64(30),
+									Description: `Number of days to use as the conversion attribution window for a view action. Default: 30; must be one of [0, 1, 7, 14, 30, 60]`,
 									Validators: []validator.Int64{
 										int64validator.OneOf(
 											0,

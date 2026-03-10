@@ -1,17 +1,17 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: e0a15e385f8587b9ac50b0a0bf6a3e98
+  docChecksum: 6a712bc0d21de8538f3058094c58bd0e
   docVersion: 1.0.0
-  speakeasyVersion: 1.749.1
-  generationVersion: 2.855.2
+  speakeasyVersion: 1.750.0
+  generationVersion: 2.856.1
   releaseVersion: 1.0.1
   configChecksum: 9a1885ef1b9ee42a2b12cbfa8182eb73
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: f8633310-85a0-48a7-9310-fb90b0d8b2cb
-  pristine_commit_hash: c6d454d4d85adae70529e3e21009358e81725d3d
-  pristine_tree_hash: 4b8f3350edd82ce2e5bc7696dcca0cdb886c81b7
+  generation_id: d851fc34-d740-4fdf-9e8a-454811852c51
+  pristine_commit_hash: f2ff648d7506530e2f029aca08a94432ced0662d
+  pristine_tree_hash: 43b952adc4d8fac3d28850f65c48c7cbaeee5f73
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -1727,8 +1727,8 @@ trackedFiles:
     pristine_git_object: 595ab1d4762297b3c91013e98577641f935c04ab
   examples/resources/airbyte_source_amazon_seller_partner/resource.tf:
     id: b5f842cf1ace
-    last_write_checksum: sha1:8cfd9346946ac92da19dc28a969738a7e7ff9fbe
-    pristine_git_object: 4894ef5543258d96fb46ec1726ddc19098574f3e
+    last_write_checksum: sha1:c6279bc02a10bb84fcc0c77a0d502843ff51de59
+    pristine_git_object: f897131686eded88bb52b016996176a6e92a6bc9
   examples/resources/airbyte_source_amazon_sqs/import-by-string-id.tf:
     id: 75700fb82da4
     last_write_checksum: sha1:f6ed8f3e2c075c2e179fd941261c15ccff98a040
@@ -2363,8 +2363,8 @@ trackedFiles:
     pristine_git_object: bacec1693ad8e7532992827fa2ddf00f897da2e3
   examples/resources/airbyte_source_facebook_marketing/resource.tf:
     id: 0303c24749af
-    last_write_checksum: sha1:468fcdf9b95e73efed76b9b44226baf81e9b450d
-    pristine_git_object: 48fc8d529c7c8315c5ad27e47fe00c964b448c30
+    last_write_checksum: sha1:1c92cca6feab2ecee86a7a27bd515c3083eeca1c
+    pristine_git_object: 0d7035c07ff628478a106b74fd93debd54e3d571
   examples/resources/airbyte_source_faker/import-by-string-id.tf:
     id: 57661ab75634
     last_write_checksum: sha1:c2486e7e72f63d0282df0e5f0a2b915fc69020ec
@@ -3923,8 +3923,8 @@ trackedFiles:
     pristine_git_object: 5c00271955ffa8a1adecf5c9e7d7418f10ae7597
   examples/resources/airbyte_source_shopify/resource.tf:
     id: 4c52a2edba60
-    last_write_checksum: sha1:dc91fef308dfdd512087415a1fc53bb661ffe308
-    pristine_git_object: 41ca4de0b290e11506309d2db1743459c929ec3e
+    last_write_checksum: sha1:dd94e0f891e42a08a4a451329849ebe328e85f8d
+    pristine_git_object: 58050fae149c1fec90c687657baf5d7de98a1175
   examples/resources/airbyte_source_shortcut/import-by-string-id.tf:
     id: 121d22e9578c
     last_write_checksum: sha1:7b1b3dbb3a5b500090440f151f36f5d2059fb501
@@ -5435,12 +5435,12 @@ trackedFiles:
     pristine_git_object: 8032991307df40978d1cea78b8e2f83624f1a945
   internal/provider/source_amazonsellerpartner_resource.go:
     id: b9a1cabedf6d
-    last_write_checksum: sha1:e45bf40742c4645a6c38f51545e9ee2b65a85b2c
-    pristine_git_object: cae7a5fd3548166f377f2ae91077e22882847e78
+    last_write_checksum: sha1:951c4a35bdf41c889cdaaa4fd9679059a22332da
+    pristine_git_object: bd60aa1bc2135d0cb2019cd3244add17c542eeba
   internal/provider/source_amazonsellerpartner_resource_sdk.go:
     id: 26fbb3a921cc
-    last_write_checksum: sha1:594a290365b3776e6a67d0a0915daa3940b67a2d
-    pristine_git_object: 64a75f6322b27ad059a0ba2873a798278c562ed9
+    last_write_checksum: sha1:173701ea0432135d5e7d405d270344d7e2a70389
+    pristine_git_object: 5e05162a9643987265e3558d3253f6d86299c7e0
   internal/provider/source_amazonsqs_data_source.go:
     id: 4c2f79e43ab9
     last_write_checksum: sha1:b90092328b263735778431766f360f005965dca1
@@ -6275,12 +6275,12 @@ trackedFiles:
     pristine_git_object: c89b1c4c58cbba65763557bd4b57f17cddaf5b3e
   internal/provider/source_facebookmarketing_resource.go:
     id: f81a0412e64d
-    last_write_checksum: sha1:41fd51871006caad77511577cbdddb808985e354
-    pristine_git_object: ab305c128ab27bf507ba103c7fde71d438046e91
+    last_write_checksum: sha1:2ee651dc1f7209ac52667c04fb2c7cab08c91293
+    pristine_git_object: 48a2cd3b9c9271a97d94d3882633138adf29840a
   internal/provider/source_facebookmarketing_resource_sdk.go:
     id: 47ef29fcb431
-    last_write_checksum: sha1:6857775d6df55f90c264bc6f988335f9304ba8b5
-    pristine_git_object: 79f9a46f1efda8fb5bd218ee717f192f887b59ab
+    last_write_checksum: sha1:eb159dca7d119df34c44d81802a6cfd9b74a6c31
+    pristine_git_object: 9069a2f8c50931d7efdc84ba77b30a91634b050d
   internal/provider/source_faker_data_source.go:
     id: 6e45988f1a87
     last_write_checksum: sha1:7c5e0d588e670d26dfb100ce773aa69369c01d10
@@ -7747,8 +7747,8 @@ trackedFiles:
     pristine_git_object: 51f46dfb7bf70e7d0a62f3ec503d5e201752489a
   internal/provider/source_pinterest_resource.go:
     id: 48ee0c6f989b
-    last_write_checksum: sha1:93411c35a1452495cd9c193e81727fabe9226de0
-    pristine_git_object: 8e97aa1fb8ab5a4495198654a2174e427bab68db
+    last_write_checksum: sha1:495e5138afbb57e4a37d28adc8c07f105a6c4fed
+    pristine_git_object: 034a85b20ea8497e8a6ea2ad6758e567d1c5bbd1
   internal/provider/source_pinterest_resource_sdk.go:
     id: 347cd603168b
     last_write_checksum: sha1:461c3639a3e5c33eca851cc7f45a2a0a236d1732
@@ -8363,12 +8363,12 @@ trackedFiles:
     pristine_git_object: 230e3460be16de1c0549b6d0268e27dfe1768f98
   internal/provider/source_shopify_resource.go:
     id: 5b04c0504979
-    last_write_checksum: sha1:188a9cee90b53cadba4a84b8e27024c1d81785a4
-    pristine_git_object: 6d393d9377688dffcb6c95517482a03803039c61
+    last_write_checksum: sha1:5227ca1d572e9bd8dd0db54c6b5e1c957e235db9
+    pristine_git_object: 2e8f5e918c07b7b6d05f6987c370dcd5b5c91b6a
   internal/provider/source_shopify_resource_sdk.go:
     id: 05a1e3161081
-    last_write_checksum: sha1:805971eaf7d22e9d4f5867140731cf82da5bca5b
-    pristine_git_object: 90354673f7249b10e9c291eeeb2a53057641b328
+    last_write_checksum: sha1:e5d80e7cd262b25dfea9f227f2bd25ab5b188f9b
+    pristine_git_object: bb6e320b0e42436a8af74d8eedf53c2ceee9faa9
   internal/provider/source_shortcut_data_source.go:
     id: ef9f1dc873bc
     last_write_checksum: sha1:3fa050fd6d6562a7bb42bdca9514c40b6607244c
@@ -10555,8 +10555,8 @@ trackedFiles:
     pristine_git_object: 6c90d28c43b8a107e5b1aca38a4a033a0bed0bd7
   internal/provider/types/insight_config.go:
     id: 37d147b81c88
-    last_write_checksum: sha1:72d29fa5acbcf653eb2ad2d2ccf66f4f8f12ef0a
-    pristine_git_object: 1b83c31c43178cb25ae4f86f8139d1b38892e1ec
+    last_write_checksum: sha1:61d0c1e9f0a0fbafdd12216276708f6300779f33
+    pristine_git_object: d075855966649e7d88c3dbfe3c109cd333c05095
   internal/provider/types/int64_value.go:
     id: 94ddbf051a24
     last_write_checksum: sha1:341cd8161b1a03a149b131bec0e8720e823c28cf
@@ -10947,8 +10947,8 @@ trackedFiles:
     pristine_git_object: 89529b5de776604422f35b5b2f4d70694d197e15
   internal/provider/types/source_amazon_seller_partner.go:
     id: 41007cd805fc
-    last_write_checksum: sha1:047b7e5de26ec449999f327354364cd72e1bb84e
-    pristine_git_object: fe7f2297e3c51ccacefd62a17165047085975bf8
+    last_write_checksum: sha1:e08aeb93c0d17f1a8ee74bb4ea0e8e326287bd60
+    pristine_git_object: 0234284723d9e6ef2f09c376ca5e006c25faf01f
   internal/provider/types/source_amazon_sqs.go:
     id: b8d366d3e790
     last_write_checksum: sha1:763b8cb0506c04f53a709c2091ab2b21feb01a0a
@@ -12859,8 +12859,8 @@ trackedFiles:
     pristine_git_object: 4f43712fac9dcaafe675d1659d3270bea61abbbf
   internal/provider/types/source_shopify.go:
     id: 6cbda7242469
-    last_write_checksum: sha1:66decbc1268fc347ad0cba2442abda8936f9c4a3
-    pristine_git_object: 685cec7f4164d1d1e2d486ebbd72d77fb86cc576
+    last_write_checksum: sha1:fb0543fd20e36cf8f335c42b0c54db07e4fe67b6
+    pristine_git_object: 8b457210955e5989d87a41834ca077bf934ec007
   internal/provider/types/source_shopify_o_auth20.go:
     id: d43ee15d6a9b
     last_write_checksum: sha1:caff21531b9670b40418f4f2ca8a96696a257197
@@ -19255,8 +19255,8 @@ trackedFiles:
     pristine_git_object: 6a0c9debc49a55f175693bfd3f0ec9253c651bf6
   internal/sdk/models/shared/sourceamazonsellerpartner.go:
     id: a3c7811ef49a
-    last_write_checksum: sha1:cc38fbc0cfbb2fde6df2724eb8f559eea53f75ac
-    pristine_git_object: 9825ea31585068364dbe9b8537fe729ff5593ea4
+    last_write_checksum: sha1:44995690ee36045b3ac1b06e81492ac1c642f948
+    pristine_git_object: e3b648c92e8ff847576a90d9862c8d808531b86b
   internal/sdk/models/shared/sourceamazonsellerpartnercreaterequest.go:
     id: 262d5536b57a
     last_write_checksum: sha1:e5a261bae444eb4d45ec517aa8b99c4cf029e3b8
@@ -19267,8 +19267,8 @@ trackedFiles:
     pristine_git_object: f98395f32749a06bcb3529afa0ae6f50c294e11a
   internal/sdk/models/shared/sourceamazonsellerpartnerupdate.go:
     id: 1242f9bf4b96
-    last_write_checksum: sha1:f50bbc180f8eb02fa6a6515ab8c16d60fa3b7b82
-    pristine_git_object: 5c4f41da44ae48a43ffa37b7fbaecd68ab2d073f
+    last_write_checksum: sha1:9219b736df691b450fa7d977078c6e1c632830b8
+    pristine_git_object: ebe694ff45a65cfc8abdcb52dbec208dd16abcfe
   internal/sdk/models/shared/sourceamazonsqs.go:
     id: 08a29e17a4d3
     last_write_checksum: sha1:f3964e7406d0527172ac7a3ee2f603c337b29add
@@ -20095,8 +20095,8 @@ trackedFiles:
     pristine_git_object: 364a7313243239015c62c9e6e4edc5640b390129
   internal/sdk/models/shared/sourcefacebookmarketing.go:
     id: 6d83a6830fef
-    last_write_checksum: sha1:480911d1a6e09e742cc04989c320b480643aa205
-    pristine_git_object: 7ee9480f68eadbdee9687fdd7a22d8ff5869d7ea
+    last_write_checksum: sha1:0d2c6767f2ea3755799ff348d7193e99d1ea2017
+    pristine_git_object: 25a96f262b843f855d32c6127661159d0695c2fd
   internal/sdk/models/shared/sourcefacebookmarketingcreaterequest.go:
     id: 229437f8ad00
     last_write_checksum: sha1:841d1899851b0080a6c82e33fb05171d38251292
@@ -20107,8 +20107,8 @@ trackedFiles:
     pristine_git_object: 11ff29a6303e301f781d0ae8ae02fdea702ba2fb
   internal/sdk/models/shared/sourcefacebookmarketingupdate.go:
     id: 71a85465f673
-    last_write_checksum: sha1:a17ca8069d0d05edcdd0ad963f1c5cbe45de6348
-    pristine_git_object: 7a9481f8a63c949626d0483a39c5c64bb296b8d3
+    last_write_checksum: sha1:d7bf9e68fc8cbc19d4a5690eda2e1f92ccb5e516
+    pristine_git_object: 73fde4448fd11b89b1d4d0b6d315ccedd1376136
   internal/sdk/models/shared/sourcefaker.go:
     id: d8165dfcc2e8
     last_write_checksum: sha1:d9102ffe6735987540fec252fee8db7085b87be7
@@ -22187,8 +22187,8 @@ trackedFiles:
     pristine_git_object: 27d80c71bb3d62eeabb81232d6f8d68e6cd405fd
   internal/sdk/models/shared/sourceshopify.go:
     id: 8f4d811140da
-    last_write_checksum: sha1:1f0c8348d6175382e5505d1d7315b3a5c0463ca0
-    pristine_git_object: dc4c7ab788e7ee00a1d1e919ddb49219f4db55af
+    last_write_checksum: sha1:c6b35a806ab3f94f320279140deee3820ef42f19
+    pristine_git_object: a0c0f1d5c7f4338287c5ac1c23b46612284392fb
   internal/sdk/models/shared/sourceshopifycreaterequest.go:
     id: 3d3b12cd87a4
     last_write_checksum: sha1:cef29b270352d73a5bff268b116b7b365150b055
@@ -22199,8 +22199,8 @@ trackedFiles:
     pristine_git_object: 99434c64dac4dd9fd6272c47f013726d94495af7
   internal/sdk/models/shared/sourceshopifyupdate.go:
     id: 7202b4e3e3f5
-    last_write_checksum: sha1:7540c171eb13f595e1fdcce30a1ba102bc597f9e
-    pristine_git_object: c28f5fc14a33109dccc58bae99b8bf82eb64698b
+    last_write_checksum: sha1:0b0c02448fd93f31be91633b345e533c93a463df
+    pristine_git_object: 8e98a754120f6ec0ca4bb5ff4a10af6202373748
   internal/sdk/models/shared/sourceshortcut.go:
     id: 0f7c3a773518
     last_write_checksum: sha1:ec623fbb9c56a96982f36dcc8a01e41d6d98af52
@@ -23039,8 +23039,8 @@ trackedFiles:
     pristine_git_object: aa809fccb3445b1e2530a979dad620512f50e70f
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:3d00914d03c62f1dc660420e1f8f5c7ab0f78350
-    pristine_git_object: 28e52f6d9cf29610520fc29c7642eaa1d10b782e
+    last_write_checksum: sha1:27aa5bcfd0fd6950c0074986c6dc48d4cb8ed0b0
+    pristine_git_object: e65a6137c35be192b4e981336f0c42f2708a57fb
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
@@ -24358,7 +24358,7 @@ examples:
   createSourceAmazonSellerPartner:
     speakeasy-default-create-source-amazon-seller-partner:
       requestBody:
-        application/json: {"name": "<value>", "definitionId": "e55879a8-0ef8-4557-abcf-ab34c53ec460", "workspaceId": "6c466d7b-f6d4-4233-9331-b76247d56387", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "lwa_app_id": "<id>", "lwa_client_secret": "<value>", "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "refresh_token": "<value>", "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
+        application/json: {"name": "<value>", "definitionId": "e55879a8-0ef8-4557-abcf-ab34c53ec460", "workspaceId": "6c466d7b-f6d4-4233-9331-b76247d56387", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "include_pii": false, "lwa_app_id": "<id>", "lwa_client_secret": "<value>", "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "refresh_token": "<value>", "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 939408}
@@ -24376,7 +24376,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "2dfc7b9e-4c2b-46ac-8eaa-0381f2d0c614", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
+        application/json: {"name": "<value>", "workspaceId": "2dfc7b9e-4c2b-46ac-8eaa-0381f2d0c614", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "include_pii": false, "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 185865}
@@ -36838,7 +36838,7 @@ examples:
   createSourceShopify:
     speakeasy-default-create-source-shopify:
       requestBody:
-        application/json: {"name": "<value>", "definitionId": "9da77001-af33-4bcd-be46-6252bf9342b9", "workspaceId": "32c1e62d-ff2f-42f8-9de6-ad8762dad2a7", "configuration": {"bulk_window_in_days": 30, "fetch_transactions_user_id": false, "job_checkpoint_interval": 100000, "job_product_variants_include_pres_prices": true, "job_termination_threshold": 7200, "shop": "my-store", "start_date": "2020-01-01", "sourceType": "shopify"}}
+        application/json: {"name": "<value>", "definitionId": "9da77001-af33-4bcd-be46-6252bf9342b9", "workspaceId": "32c1e62d-ff2f-42f8-9de6-ad8762dad2a7", "configuration": {"bulk_window_in_days": 30, "fetch_transactions_user_id": false, "fulfillment_orders_include_closed": false, "job_checkpoint_interval": 100000, "job_product_variants_include_pres_prices": true, "job_termination_threshold": 7200, "shop": "my-store", "start_date": "2020-01-01", "sourceType": "shopify"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 828125}
@@ -36856,7 +36856,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "e44006c3-d22d-41c7-9ee2-90f873fd8d9d", "configuration": {"bulk_window_in_days": 30, "fetch_transactions_user_id": false, "job_checkpoint_interval": 100000, "job_product_variants_include_pres_prices": true, "job_termination_threshold": 7200, "shop": "my-store", "start_date": "2020-01-01", "sourceType": "shopify"}}
+        application/json: {"name": "<value>", "workspaceId": "e44006c3-d22d-41c7-9ee2-90f873fd8d9d", "configuration": {"bulk_window_in_days": 30, "fetch_transactions_user_id": false, "fulfillment_orders_include_closed": false, "job_checkpoint_interval": 100000, "job_product_variants_include_pres_prices": true, "job_termination_threshold": 7200, "shop": "my-store", "start_date": "2020-01-01", "sourceType": "shopify"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 897467}
