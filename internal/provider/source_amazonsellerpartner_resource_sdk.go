@@ -26,6 +26,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromSharedSourceResponse
 			r.Configuration.AwsEnvironment = configurationPriorData.AwsEnvironment
 			r.Configuration.FinancialEventsMaxResultsPerPage = configurationPriorData.FinancialEventsMaxResultsPerPage
 			r.Configuration.FinancialEventsStep = configurationPriorData.FinancialEventsStep
+			r.Configuration.IncludePii = configurationPriorData.IncludePii
 			r.Configuration.LwaAppID = configurationPriorData.LwaAppID
 			r.Configuration.LwaClientSecret = configurationPriorData.LwaClientSecret
 			r.Configuration.MaxAsyncJobCount = configurationPriorData.MaxAsyncJobCount
@@ -173,6 +174,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		financialEventsStep = nil
 	}
+	includePii := new(bool)
+	if !r.Configuration.IncludePii.IsUnknown() && !r.Configuration.IncludePii.IsNull() {
+		*includePii = r.Configuration.IncludePii.ValueBool()
+	} else {
+		includePii = nil
+	}
 	var lwaAppID string
 	lwaAppID = r.Configuration.LwaAppID.ValueString()
 
@@ -259,6 +266,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		AwsEnvironment:                   awsEnvironment,
 		FinancialEventsMaxResultsPerPage: financialEventsMaxResultsPerPage,
 		FinancialEventsStep:              financialEventsStep,
+		IncludePii:                       includePii,
 		LwaAppID:                         lwaAppID,
 		LwaClientSecret:                  lwaClientSecret,
 		MaxAsyncJobCount:                 maxAsyncJobCount,
@@ -327,6 +335,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		*financialEventsStep = shared.SourceAmazonSellerPartnerUpdateFinancialEventsStepSize(r.Configuration.FinancialEventsStep.ValueString())
 	} else {
 		financialEventsStep = nil
+	}
+	includePii := new(bool)
+	if !r.Configuration.IncludePii.IsUnknown() && !r.Configuration.IncludePii.IsNull() {
+		*includePii = r.Configuration.IncludePii.ValueBool()
+	} else {
+		includePii = nil
 	}
 	lwaAppID := new(string)
 	if !r.Configuration.LwaAppID.IsUnknown() && !r.Configuration.LwaAppID.IsNull() {
@@ -437,6 +451,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		AwsEnvironment:                   awsEnvironment,
 		FinancialEventsMaxResultsPerPage: financialEventsMaxResultsPerPage,
 		FinancialEventsStep:              financialEventsStep,
+		IncludePii:                       includePii,
 		LwaAppID:                         lwaAppID,
 		LwaClientSecret:                  lwaClientSecret,
 		MaxAsyncJobCount:                 maxAsyncJobCount,

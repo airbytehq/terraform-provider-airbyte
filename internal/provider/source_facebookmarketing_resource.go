@@ -263,9 +263,20 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									Computed:    true,
 									Optional:    true,
 									Default:     int64default.StaticInt64(1),
-									Description: `Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89. Default: 1`,
+									Description: `Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89. Cannot be used together with time_increment_period. Default: 1`,
 									Validators: []validator.Int64{
 										int64validator.Between(1, 89),
+									},
+								},
+								"time_increment_period": schema.StringAttribute{
+									Optional:    true,
+									Description: `Calendar-aligned aggregation period for statistics. Use this instead of time_increment to produce consistently aligned time buckets regardless of start_date. 'daily' is equivalent to time_increment=1. 'weekly' aligns to Monday-through-Sunday calendar weeks. 'monthly' aligns to calendar month boundaries (1st to last day of each month) and is natively supported by the Facebook API. Cannot be used together with time_increment. must be one of ["daily", "weekly", "monthly"]`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"daily",
+											"weekly",
+											"monthly",
+										),
 									},
 								},
 							},

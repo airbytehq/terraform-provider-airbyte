@@ -288,6 +288,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 		} else {
 			timeIncrement = nil
 		}
+		timeIncrementPeriod := new(shared.TimeIncrementPeriod)
+		if !r.Configuration.CustomInsights[customInsightsIndex].TimeIncrementPeriod.IsUnknown() && !r.Configuration.CustomInsights[customInsightsIndex].TimeIncrementPeriod.IsNull() {
+			*timeIncrementPeriod = shared.TimeIncrementPeriod(r.Configuration.CustomInsights[customInsightsIndex].TimeIncrementPeriod.ValueString())
+		} else {
+			timeIncrementPeriod = nil
+		}
 		customInsights = append(customInsights, shared.InsightConfig{
 			ActionBreakdowns:       actionBreakdowns,
 			ActionReportTime:       actionReportTime,
@@ -301,6 +307,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 			Name:                   name1,
 			StartDate:              startDate,
 			TimeIncrement:          timeIncrement,
+			TimeIncrementPeriod:    timeIncrementPeriod,
 		})
 	}
 	defaultAdsInsightsActionBreakdowns := make([]shared.ValidActionBreakdowns, 0, len(r.Configuration.DefaultAdsInsightsActionBreakdowns))
@@ -552,6 +559,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		} else {
 			timeIncrement = nil
 		}
+		timeIncrementPeriod := new(shared.SourceFacebookMarketingUpdateTimeIncrementPeriod)
+		if !r.Configuration.CustomInsights[customInsightsIndex].TimeIncrementPeriod.IsUnknown() && !r.Configuration.CustomInsights[customInsightsIndex].TimeIncrementPeriod.IsNull() {
+			*timeIncrementPeriod = shared.SourceFacebookMarketingUpdateTimeIncrementPeriod(r.Configuration.CustomInsights[customInsightsIndex].TimeIncrementPeriod.ValueString())
+		} else {
+			timeIncrementPeriod = nil
+		}
 		customInsights = append(customInsights, shared.SourceFacebookMarketingUpdateInsightConfig{
 			ActionBreakdowns:       actionBreakdowns,
 			ActionReportTime:       actionReportTime,
@@ -565,6 +578,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 			Name:                   name1,
 			StartDate:              startDate,
 			TimeIncrement:          timeIncrement,
+			TimeIncrementPeriod:    timeIncrementPeriod,
 		})
 	}
 	defaultAdsInsightsActionBreakdowns := make([]shared.SourceFacebookMarketingUpdateValidActionBreakdowns, 0, len(r.Configuration.DefaultAdsInsightsActionBreakdowns))

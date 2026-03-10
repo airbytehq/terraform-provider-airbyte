@@ -206,6 +206,8 @@ type SourceShopify struct {
 	Credentials *ShopifyAuthorizationMethod `json:"credentials,omitempty"`
 	// Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch.
 	FetchTransactionsUserID *bool `default:"false" json:"fetch_transactions_user_id"`
+	// If enabled, the `Fulfillment Orders` stream includes closed fulfillment orders. Shopify excludes closed orders by default.
+	FulfillmentOrdersIncludeClosed *bool `default:"false" json:"fulfillment_orders_include_closed"`
 	// The threshold, after which the single BULK Job should be checkpointed (min: 15k, max: 1M)
 	JobCheckpointInterval *int64 `default:"100000" json:"job_checkpoint_interval"`
 	// If enabled, the `Product Variants` stream attempts to include `Presentment prices` field (may affect the performance).
@@ -250,6 +252,13 @@ func (s *SourceShopify) GetFetchTransactionsUserID() *bool {
 		return nil
 	}
 	return s.FetchTransactionsUserID
+}
+
+func (s *SourceShopify) GetFulfillmentOrdersIncludeClosed() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.FulfillmentOrdersIncludeClosed
 }
 
 func (s *SourceShopify) GetJobCheckpointInterval() *int64 {

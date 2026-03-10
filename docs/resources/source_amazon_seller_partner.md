@@ -21,6 +21,7 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
     aws_environment                       = "PRODUCTION"
     financial_events_max_results_per_page = 46
     financial_events_step                 = "2H"
+    include_pii                           = true
     lwa_app_id                            = "...my_lwa_app_id..."
     lwa_client_secret                     = "...my_lwa_client_secret..."
     max_async_job_count                   = 10
@@ -89,6 +90,7 @@ Optional:
 - `aws_environment` (String) Select the AWS Environment. Default: "PRODUCTION"; must be one of ["PRODUCTION", "SANDBOX"]
 - `financial_events_max_results_per_page` (Number) The maximum number of results to return per page for the ListFinancialEvents stream. If the response exceeds the maximum number of transactions or 10 MB, the API returns an InvalidInput error. Lower this value if you encounter InvalidInput errors during sync. Valid range is 1-100. Default: 100
 - `financial_events_step` (String) The time window size for fetching financial events data in chunks for the ListFinancialEvents and ListFinancialEventGroups streams. Options include hourly (1H, 6H, 12H) and daily (1D, 7D, 14D, 30D, 60D, 90D, 180D) granularity. - **Hourly step sizes (e.g., 1H, 6H)** are recommended for very high data volumes where daily windows cause pagination token expiration (TTL errors). They fetch smaller chunks per request, reducing the risk of timeouts. - **Daily step sizes (e.g., 1D, 7D)** are better for moderate data volumes. They balance sync speed with API efficiency. - **Larger step sizes (e.g., 30D, 180D)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls. Select a step size that matches your data volume to optimize syncing speed and API performance. Default: "180D"; must be one of ["1H", "2H", "4H", "6H", "8H", "12H", "1D", "7D", "14D", "30D", "60D", "90D", "180D"]
+- `include_pii` (Boolean) When enabled, the connector requests a Restricted Data Token (RDT) to access PII fields such as BuyerInfo and ShippingAddress in the Orders and OrderItems streams. Your Amazon SP-API developer profile must have an approved Restricted Role (Direct-to-Consumer Shipping or Tax Invoicing). If the RDT request is denied (HTTP 403), the connector falls back to the standard token automatically and PII fields remain empty. Default: false
 - `max_async_job_count` (Number) The maximum number of concurrent asynchronous job requests that can be active at a time. Default: 2
 - `num_workers` (Number) The number of workers to use for the connector when syncing concurrently. Default: 2
 - `period_in_days` (Number) For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day. Default: 90

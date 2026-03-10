@@ -19,4 +19,5 @@ type InsightConfig struct {
 	Name                   types.String   `tfsdk:"name"`
 	StartDate              types.String   `tfsdk:"start_date"`
 	TimeIncrement          types.Int64    `tfsdk:"time_increment"`
+	TimeIncrementPeriod    types.String   `tfsdk:"time_increment_period"`
 }

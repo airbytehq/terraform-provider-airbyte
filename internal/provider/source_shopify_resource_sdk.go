@@ -24,6 +24,7 @@ func (r *SourceShopifyResourceModel) RefreshFromSharedSourceResponse(ctx context
 			r.Configuration.BulkWindowInDays = configurationPriorData.BulkWindowInDays
 			r.Configuration.Credentials = configurationPriorData.Credentials
 			r.Configuration.FetchTransactionsUserID = configurationPriorData.FetchTransactionsUserID
+			r.Configuration.FulfillmentOrdersIncludeClosed = configurationPriorData.FulfillmentOrdersIncludeClosed
 			r.Configuration.JobCheckpointInterval = configurationPriorData.JobCheckpointInterval
 			r.Configuration.JobProductVariantsIncludePresPrices = configurationPriorData.JobProductVariantsIncludePresPrices
 			r.Configuration.JobTerminationThreshold = configurationPriorData.JobTerminationThreshold
@@ -195,6 +196,12 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest(ctx cont
 	} else {
 		fetchTransactionsUserID = nil
 	}
+	fulfillmentOrdersIncludeClosed := new(bool)
+	if !r.Configuration.FulfillmentOrdersIncludeClosed.IsUnknown() && !r.Configuration.FulfillmentOrdersIncludeClosed.IsNull() {
+		*fulfillmentOrdersIncludeClosed = r.Configuration.FulfillmentOrdersIncludeClosed.ValueBool()
+	} else {
+		fulfillmentOrdersIncludeClosed = nil
+	}
 	jobCheckpointInterval := new(int64)
 	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
 		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
@@ -230,6 +237,7 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest(ctx cont
 		BulkWindowInDays:                    bulkWindowInDays,
 		Credentials:                         credentials,
 		FetchTransactionsUserID:             fetchTransactionsUserID,
+		FulfillmentOrdersIncludeClosed:      fulfillmentOrdersIncludeClosed,
 		JobCheckpointInterval:               jobCheckpointInterval,
 		JobProductVariantsIncludePresPrices: jobProductVariantsIncludePresPrices,
 		JobTerminationThreshold:             jobTerminationThreshold,
@@ -326,6 +334,12 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest(ctx context
 	} else {
 		fetchTransactionsUserID = nil
 	}
+	fulfillmentOrdersIncludeClosed := new(bool)
+	if !r.Configuration.FulfillmentOrdersIncludeClosed.IsUnknown() && !r.Configuration.FulfillmentOrdersIncludeClosed.IsNull() {
+		*fulfillmentOrdersIncludeClosed = r.Configuration.FulfillmentOrdersIncludeClosed.ValueBool()
+	} else {
+		fulfillmentOrdersIncludeClosed = nil
+	}
 	jobCheckpointInterval := new(int64)
 	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
 		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
@@ -364,6 +378,7 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest(ctx context
 		BulkWindowInDays:                    bulkWindowInDays,
 		Credentials:                         credentials,
 		FetchTransactionsUserID:             fetchTransactionsUserID,
+		FulfillmentOrdersIncludeClosed:      fulfillmentOrdersIncludeClosed,
 		JobCheckpointInterval:               jobCheckpointInterval,
 		JobProductVariantsIncludePresPrices: jobProductVariantsIncludePresPrices,
 		JobTerminationThreshold:             jobTerminationThreshold,

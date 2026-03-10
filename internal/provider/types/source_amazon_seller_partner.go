@@ -14,6 +14,7 @@ type SourceAmazonSellerPartner struct {
 	AwsEnvironment                   types.String         `tfsdk:"aws_environment"`
 	FinancialEventsMaxResultsPerPage types.Int64          `tfsdk:"financial_events_max_results_per_page"`
 	FinancialEventsStep              types.String         `tfsdk:"financial_events_step"`
+	IncludePii                       types.Bool           `tfsdk:"include_pii"`
 	LwaAppID                         types.String         `tfsdk:"lwa_app_id"`
 	LwaClientSecret                  types.String         `tfsdk:"lwa_client_secret"`
 	MaxAsyncJobCount                 types.Int64          `tfsdk:"max_async_job_count"`

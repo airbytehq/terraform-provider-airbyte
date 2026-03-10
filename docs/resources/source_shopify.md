@@ -23,6 +23,7 @@ resource "airbyte_source_shopify" "my_source_shopify" {
       }
     }
     fetch_transactions_user_id               = true
+    fulfillment_orders_include_closed        = true
     job_checkpoint_interval                  = 484517
     job_product_variants_include_pres_prices = true
     job_termination_threshold                = 5282
@@ -70,6 +71,7 @@ Optional:
 - `bulk_window_in_days` (Number) Defines what would be a date range per single BULK Job. Default: 30
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
 - `fetch_transactions_user_id` (Boolean) Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch. Default: false
+- `fulfillment_orders_include_closed` (Boolean) If enabled, the `Fulfillment Orders` stream includes closed fulfillment orders. Shopify excludes closed orders by default. Default: false
 - `job_checkpoint_interval` (Number) The threshold, after which the single BULK Job should be checkpointed (min: 15k, max: 1M). Default: 100000
 - `job_product_variants_include_pres_prices` (Boolean) If enabled, the `Product Variants` stream attempts to include `Presentment prices` field (may affect the performance). Default: true
 - `job_termination_threshold` (Number) The max time in seconds, after which the single BULK Job should be `CANCELED` and retried. The bigger the value the longer the BULK Job is allowed to run. Default: 7200

@@ -6,6 +6,7 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
     aws_environment                       = "PRODUCTION"
     financial_events_max_results_per_page = 46
     financial_events_step                 = "2H"
+    include_pii                           = true
     lwa_app_id                            = "...my_lwa_app_id..."
     lwa_client_secret                     = "...my_lwa_client_secret..."
     max_async_job_count                   = 10
