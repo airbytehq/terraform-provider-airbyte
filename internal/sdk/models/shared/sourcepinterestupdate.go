@@ -192,6 +192,7 @@ const (
 	SourcePinterestUpdateSchemasValidEnumsTotalEngagementSignup                        SourcePinterestUpdateSchemasValidEnums = "TOTAL_ENGAGEMENT_SIGNUP"
 	SourcePinterestUpdateSchemasValidEnumsTotalEngagementSignupValueInMicroDollar      SourcePinterestUpdateSchemasValidEnums = "TOTAL_ENGAGEMENT_SIGNUP_VALUE_IN_MICRO_DOLLAR"
 	SourcePinterestUpdateSchemasValidEnumsTotalIdeaPinProductTagVisit                  SourcePinterestUpdateSchemasValidEnums = "TOTAL_IDEA_PIN_PRODUCT_TAG_VISIT"
+	SourcePinterestUpdateSchemasValidEnumsTotalImpression                              SourcePinterestUpdateSchemasValidEnums = "TOTAL_IMPRESSION"
 	SourcePinterestUpdateSchemasValidEnumsTotalImpressionFrequency                     SourcePinterestUpdateSchemasValidEnums = "TOTAL_IMPRESSION_FREQUENCY"
 	SourcePinterestUpdateSchemasValidEnumsTotalImpressionUser                          SourcePinterestUpdateSchemasValidEnums = "TOTAL_IMPRESSION_USER"
 	SourcePinterestUpdateSchemasValidEnumsTotalLead                                    SourcePinterestUpdateSchemasValidEnums = "TOTAL_LEAD"
@@ -381,6 +382,8 @@ func (e *SourcePinterestUpdateSchemasValidEnums) UnmarshalJSON(data []byte) erro
 	case "TOTAL_ENGAGEMENT_SIGNUP_VALUE_IN_MICRO_DOLLAR":
 		fallthrough
 	case "TOTAL_IDEA_PIN_PRODUCT_TAG_VISIT":
+		fallthrough
+	case "TOTAL_IMPRESSION":
 		fallthrough
 	case "TOTAL_IMPRESSION_FREQUENCY":
 		fallthrough
