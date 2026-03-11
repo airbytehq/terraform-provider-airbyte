@@ -1,17 +1,17 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 6a712bc0d21de8538f3058094c58bd0e
+  docChecksum: bfae1a2dd729a6c413069937da293c49
   docVersion: 1.0.0
-  speakeasyVersion: 1.750.0
-  generationVersion: 2.856.1
+  speakeasyVersion: 1.751.0
+  generationVersion: 2.858.2
   releaseVersion: 1.0.1
   configChecksum: 9a1885ef1b9ee42a2b12cbfa8182eb73
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: d851fc34-d740-4fdf-9e8a-454811852c51
-  pristine_commit_hash: f2ff648d7506530e2f029aca08a94432ced0662d
-  pristine_tree_hash: 43b952adc4d8fac3d28850f65c48c7cbaeee5f73
+  generation_id: b4d2f35a-596b-4628-881a-3b83aee24986
+  pristine_commit_hash: 1140711d6ee84aeb35ad54cecf38a4bb2607d116
+  pristine_tree_hash: aa9d170d54c4f3ba301eca0f966ea4b44b4bf836
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -21571,8 +21571,8 @@ trackedFiles:
     pristine_git_object: 63daafe61fc852ba6f6706cce47977890c7b0c3f
   internal/sdk/models/shared/sourcepinterest.go:
     id: ff1201f1e10c
-    last_write_checksum: sha1:976b1d238821e5fef60eedec6be36dbd762f061a
-    pristine_git_object: 6a76ccb2dbf0fcde62f4d687d5470f5146e5a552
+    last_write_checksum: sha1:7d5498dd8b8101dbb5571218f7c05033c73c7356
+    pristine_git_object: c0a96ee008642480ca3d8168afbfd1108838b962
   internal/sdk/models/shared/sourcepinterestcreaterequest.go:
     id: bcbf00c9baa2
     last_write_checksum: sha1:ae28cb2dc9d1aaee066bccc666ca0cdad82f06ba
@@ -21583,8 +21583,8 @@ trackedFiles:
     pristine_git_object: 31a7ba1d1908bd01284487af6f4a32911d30b38a
   internal/sdk/models/shared/sourcepinterestupdate.go:
     id: 920ef1506acc
-    last_write_checksum: sha1:e607433ad41049793af23ad59d0227cd47d5c16a
-    pristine_git_object: ac0af2e0131567d0a81ef61c02321584fcd63a8e
+    last_write_checksum: sha1:4f8156785ac2ee4233ca17ffe12b2969c521b3e5
+    pristine_git_object: 059c4b711c34b11e19820786e4c2a07f16aaf0c5
   internal/sdk/models/shared/sourcepipedrive.go:
     id: 0ccc40be3e54
     last_write_checksum: sha1:cee62eb89f1b5d85bf211873f64baa05152e5c16
@@ -23039,8 +23039,8 @@ trackedFiles:
     pristine_git_object: aa809fccb3445b1e2530a979dad620512f50e70f
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:27aa5bcfd0fd6950c0074986c6dc48d4cb8ed0b0
-    pristine_git_object: e65a6137c35be192b4e981336f0c42f2708a57fb
+    last_write_checksum: sha1:51641898ed6a78501a6361c3b80a12cb30338e16
+    pristine_git_object: ad256f364daf8b6f3aec111a8f3247b74e335058
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
