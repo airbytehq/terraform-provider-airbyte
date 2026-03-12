@@ -62,8 +62,9 @@ type SourceFileUpdateSFTPSecureFileTransferProtocol struct {
 	Host     *string `json:"host,omitempty"`
 	Password *string `json:"password,omitempty"`
 	Port     *string `default:"22" json:"port"`
-	storage  *string `const:"SFTP" json:"storage,omitempty"`
-	User     *string `json:"user,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	storage *string `const:"SFTP" json:"storage,omitempty"`
+	User    *string `json:"user,omitempty"`
 }
 
 func (s SourceFileUpdateSFTPSecureFileTransferProtocol) MarshalJSON() ([]byte, error) {
@@ -113,8 +114,9 @@ type SourceFileUpdateSCPSecureCopyProtocol struct {
 	Host     *string `json:"host,omitempty"`
 	Password *string `json:"password,omitempty"`
 	Port     *string `default:"22" json:"port"`
-	storage  *string `const:"SCP" json:"storage,omitempty"`
-	User     *string `json:"user,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	storage *string `const:"SCP" json:"storage,omitempty"`
+	User    *string `json:"user,omitempty"`
 }
 
 func (s SourceFileUpdateSCPSecureCopyProtocol) MarshalJSON() ([]byte, error) {
@@ -164,8 +166,9 @@ type SourceFileUpdateSSHSecureShell struct {
 	Host     *string `json:"host,omitempty"`
 	Password *string `json:"password,omitempty"`
 	Port     *string `default:"22" json:"port"`
-	storage  *string `const:"SSH" json:"storage,omitempty"`
-	User     *string `json:"user,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	storage *string `const:"SSH" json:"storage,omitempty"`
+	User    *string `json:"user,omitempty"`
 }
 
 func (s SourceFileUpdateSSHSecureShell) MarshalJSON() ([]byte, error) {
@@ -216,7 +219,8 @@ type SourceFileUpdateAzBlobAzureBlobStorage struct {
 	SasToken *string `json:"sas_token,omitempty"`
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.
 	SharedKey *string `json:"shared_key,omitempty"`
-	storage   *string `const:"AzBlob" json:"storage,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	storage *string `const:"AzBlob" json:"storage,omitempty"`
 	// The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.
 	StorageAccount *string `json:"storage_account,omitempty"`
 }
@@ -262,7 +266,8 @@ type SourceFileUpdateS3AmazonWebServices struct {
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
-	storage            *string `const:"S3" json:"storage,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	storage *string `const:"S3" json:"storage,omitempty"`
 }
 
 func (s SourceFileUpdateS3AmazonWebServices) MarshalJSON() ([]byte, error) {
@@ -294,10 +299,14 @@ func (s *SourceFileUpdateS3AmazonWebServices) GetStorage() *string {
 	return types.Pointer("S3")
 }
 
+// #region class-body-sourcefileupdates3amazonwebservices
+// #endregion class-body-sourcefileupdates3amazonwebservices
+
 type SourceFileUpdateGCSGoogleCloudStorage struct {
 	// In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
 	ServiceAccountJSON *string `json:"service_account_json,omitempty"`
-	storage            *string `const:"GCS" json:"storage,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	storage *string `const:"GCS" json:"storage,omitempty"`
 }
 
 func (s SourceFileUpdateGCSGoogleCloudStorage) MarshalJSON() ([]byte, error) {
@@ -323,6 +332,7 @@ func (s *SourceFileUpdateGCSGoogleCloudStorage) GetStorage() *string {
 }
 
 type SourceFileUpdateHTTPSPublicWeb struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	storage *string `const:"HTTPS" json:"storage,omitempty"`
 	// Add User-Agent to request
 	UserAgent *bool `default:"false" json:"user_agent"`
@@ -603,7 +613,8 @@ type SourceFileUpdate struct {
 	// This should be a string in JSON format. It depends on the chosen file format to provide additional options and tune its behavior.
 	ReaderOptions *string `json:"reader_options,omitempty"`
 	// The URL path to access the file which should be replicated.
-	URL                  *string                     `json:"url,omitempty"`
+	URL *string `json:"url,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFileUpdateSourceType `const:"file" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

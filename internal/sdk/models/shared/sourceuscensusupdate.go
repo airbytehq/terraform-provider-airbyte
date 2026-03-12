@@ -37,7 +37,8 @@ type SourceUsCensusUpdate struct {
 	// The query parameters portion of the GET request, without the api key
 	QueryParams *string `json:"query_params,omitempty"`
 	// The path portion of the GET request
-	QueryPath            *string                         `json:"query_path,omitempty"`
+	QueryPath *string `json:"query_path,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceUsCensusUpdateSourceType `const:"us-census" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

@@ -13,7 +13,8 @@ import (
 
 type SourceSlackUpdateAPIToken struct {
 	// A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.
-	APIToken    *string `json:"api_token,omitempty"`
+	APIToken *string `json:"api_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	optionTitle *string `const:"API Token Credentials" json:"option_title,omitempty"`
 }
 
@@ -46,7 +47,8 @@ type SourceSlackUpdateSignInViaSlackOAuth struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
 	ClientSecret *string `json:"client_secret,omitempty"`
-	optionTitle  *string `const:"Default OAuth2.0 authorization" json:"option_title,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	optionTitle *string `const:"Default OAuth2.0 authorization" json:"option_title,omitempty"`
 }
 
 func (s SourceSlackUpdateSignInViaSlackOAuth) MarshalJSON() ([]byte, error) {
@@ -214,7 +216,8 @@ type SourceSlackUpdate struct {
 	// The number of worker threads to use for the sync.
 	NumWorkers *int64 `default:"2" json:"num_workers"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            *time.Time                   `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSlackUpdateSourceType `const:"slack" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

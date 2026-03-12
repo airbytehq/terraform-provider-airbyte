@@ -33,8 +33,9 @@ func (e *SourceRecreationSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceRecreation struct {
 	// API Key
-	Apikey               string                      `json:"apikey"`
-	QueryCampsites       *string                     `json:"query_campsites,omitempty"`
+	Apikey         string  `json:"apikey"`
+	QueryCampsites *string `json:"query_campsites,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceRecreationSourceType `const:"recreation" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

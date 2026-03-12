@@ -35,8 +35,9 @@ func (e *SourceGoogleTasksSourceType) UnmarshalJSON(data []byte) error {
 type SourceGoogleTasks struct {
 	APIKey string `json:"api_key"`
 	// The maximum number of records to be returned per request
-	RecordsLimit         *string                      `default:"50" json:"records_limit"`
-	StartDate            time.Time                    `json:"start_date"`
+	RecordsLimit *string   `default:"50" json:"records_limit"`
+	StartDate    time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGoogleTasksSourceType `const:"google-tasks" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

@@ -33,7 +33,8 @@ func (e *SourceEmailoctopusUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceEmailoctopusUpdate struct {
 	// EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
-	APIKey               *string                             `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceEmailoctopusUpdateSourceType `const:"emailoctopus" json:"sourceType"`
 	AdditionalProperties any                                 `additionalProperties:"true" json:"-"`
 }

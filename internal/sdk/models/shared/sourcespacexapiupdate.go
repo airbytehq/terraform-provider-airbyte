@@ -32,8 +32,9 @@ func (e *SourceSpacexAPIUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSpacexAPIUpdate struct {
-	ID                   *string                          `json:"id,omitempty"`
-	Options              *string                          `json:"options,omitempty"`
+	ID      *string `json:"id,omitempty"`
+	Options *string `json:"options,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSpacexAPIUpdateSourceType `const:"spacex-api" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

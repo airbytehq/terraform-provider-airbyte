@@ -11,6 +11,7 @@ import (
 )
 
 type DestinationGoogleSheetsServiceAccountKeyAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"service" json:"auth_type"`
 	// Enter your service account key in JSON format. See the <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#service-account'>docs</a> for more information on how to generate this key.
 	ServiceAccountInfo string `json:"service_account_info"`
@@ -39,6 +40,7 @@ func (d *DestinationGoogleSheetsServiceAccountKeyAuthentication) GetServiceAccou
 }
 
 type DestinationGoogleSheetsAuthenticateViaGoogleOAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your Google Sheets developer application.
 	ClientID string `json:"client_id"`
@@ -201,7 +203,8 @@ type DestinationGoogleSheets struct {
 	// Authentication method to access Google Sheets
 	Credentials DestinationGoogleSheetsAuthentication `json:"credentials"`
 	// The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
-	SpreadsheetID   string                                  `json:"spreadsheet_id"`
+	SpreadsheetID string `json:"spreadsheet_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationGoogleSheetsDestinationType `const:"google-sheets" json:"destinationType"`
 }
 

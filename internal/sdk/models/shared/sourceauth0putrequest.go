@@ -28,3 +28,6 @@ func (s *SourceAuth0PutRequest) GetConfiguration() SourceAuth0Update {
 	}
 	return s.Configuration
 }
+
+// #region class-body-sourceauth0putrequest
+// #endregion class-body-sourceauth0putrequest

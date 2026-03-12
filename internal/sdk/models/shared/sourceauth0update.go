@@ -13,7 +13,8 @@ import (
 type SourceAuth0UpdateOAuth2AccessToken struct {
 	// Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"oauth2_access_token" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2_access_token" json:"auth_type,omitempty"`
 }
 
 func (s SourceAuth0UpdateOAuth2AccessToken) MarshalJSON() ([]byte, error) {
@@ -38,9 +39,13 @@ func (s *SourceAuth0UpdateOAuth2AccessToken) GetAuthType() *string {
 	return types.Pointer("oauth2_access_token")
 }
 
+// #region class-body-sourceauth0updateoauth2accesstoken
+// #endregion class-body-sourceauth0updateoauth2accesstoken
+
 type SourceAuth0UpdateOAuth2ConfidentialApplication struct {
 	// The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>
 	Audience *string `json:"audience,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2_confidential_application" json:"auth_type,omitempty"`
 	// Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
 	ClientID *string `json:"client_id,omitempty"`
@@ -83,6 +88,9 @@ func (s *SourceAuth0UpdateOAuth2ConfidentialApplication) GetClientSecret() *stri
 	}
 	return s.ClientSecret
 }
+
+// #region class-body-sourceauth0updateoauth2confidentialapplication
+// #endregion class-body-sourceauth0updateoauth2confidentialapplication
 
 type SourceAuth0UpdateAuthenticationMethodType string
 
@@ -201,7 +209,8 @@ type SourceAuth0Update struct {
 	BaseURL     *string                                `json:"base_url,omitempty"`
 	Credentials *SourceAuth0UpdateAuthenticationMethod `json:"credentials,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            *string                      `default:"2023-08-05T00:43:59.244Z" json:"start_date"`
+	StartDate *string `default:"2023-08-05T00:43:59.244Z" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAuth0UpdateSourceType `const:"auth0" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }
@@ -248,3 +257,6 @@ func (s *SourceAuth0Update) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourceauth0update
+// #endregion class-body-sourceauth0update

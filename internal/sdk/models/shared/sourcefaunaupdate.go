@@ -12,7 +12,8 @@ import (
 
 type SourceFaunaUpdateEnabled struct {
 	// Name of the "deleted at" column.
-	Column       *string `default:"deleted_at" json:"column"`
+	Column *string `default:"deleted_at" json:"column"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deletionMode *string `const:"deleted_field" json:"deletion_mode,omitempty"`
 }
 
@@ -39,6 +40,7 @@ func (s *SourceFaunaUpdateEnabled) GetDeletionMode() *string {
 }
 
 type SourceFaunaUpdateDisabled struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deletionMode *string `const:"ignore" json:"deletion_mode,omitempty"`
 }
 
@@ -213,7 +215,8 @@ type SourceFaunaUpdate struct {
 	// URL scheme.
 	Scheme *string `default:"https" json:"scheme"`
 	// Fauna secret, used when authenticating with the database.
-	Secret               *string                      `json:"secret,omitempty"`
+	Secret *string `json:"secret,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFaunaUpdateSourceType `const:"fauna" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

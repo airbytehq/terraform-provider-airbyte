@@ -32,6 +32,7 @@ func (e *SourceScryfallUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceScryfallUpdate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceScryfallUpdateSourceType `const:"scryfall" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

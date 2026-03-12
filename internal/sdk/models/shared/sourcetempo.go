@@ -33,7 +33,8 @@ func (e *SourceTempoSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceTempo struct {
 	// Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
-	APIToken             string                 `json:"api_token"`
+	APIToken string `json:"api_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTempoSourceType `const:"tempo" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

@@ -17,6 +17,9 @@ func (d *DeleteDestinationS3Request) GetDestinationID() string {
 	return d.DestinationID
 }
 
+// #region class-body-deletedestinations3request
+// #endregion class-body-deletedestinations3request
+
 type DeleteDestinationS3Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -46,3 +49,6 @@ func (d *DeleteDestinationS3Response) GetRawResponse() *http.Response {
 	}
 	return d.RawResponse
 }
+
+// #region class-body-deletedestinations3response
+// #endregion class-body-deletedestinations3response

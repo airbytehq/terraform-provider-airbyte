@@ -13,7 +13,8 @@ import (
 
 type SourceAirtableUpdatePersonalAccessToken struct {
 	// The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-	APIKey     *string `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod *string `const:"api_key" json:"auth_method,omitempty"`
 }
 
@@ -42,7 +43,8 @@ func (s *SourceAirtableUpdatePersonalAccessToken) GetAuthMethod() *string {
 type SourceAirtableUpdateOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authMethod  *string `const:"oauth2.0" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The client ID of the Airtable developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The client secret of the Airtable developer application.
@@ -102,6 +104,9 @@ func (s *SourceAirtableUpdateOAuth20) GetTokenExpiryDate() *time.Time {
 	}
 	return s.TokenExpiryDate
 }
+
+// #region class-body-sourceairtableupdateoauth20
+// #endregion class-body-sourceairtableupdateoauth20
 
 type SourceAirtableUpdateAuthenticationType string
 
@@ -220,7 +225,8 @@ type SourceAirtableUpdate struct {
 	AddBaseIDToStreamName *bool                               `default:"false" json:"add_base_id_to_stream_name"`
 	Credentials           *SourceAirtableUpdateAuthentication `json:"credentials,omitempty"`
 	// Number of concurrent threads for syncing. Higher values can speed up syncs but may hit rate limits. Airtable limits to 5 requests per second per base.
-	NumWorkers           *int64                          `default:"5" json:"num_workers"`
+	NumWorkers *int64 `default:"5" json:"num_workers"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAirtableUpdateSourceType `const:"airtable" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

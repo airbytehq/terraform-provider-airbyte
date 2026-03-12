@@ -35,7 +35,8 @@ type SourceClickupAPI struct {
 	// Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.
 	APIToken string `json:"api_token"`
 	// Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.
-	IncludeClosedTasks   *bool                       `default:"false" json:"include_closed_tasks"`
+	IncludeClosedTasks *bool `default:"false" json:"include_closed_tasks"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceClickupAPISourceType `const:"clickup-api" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

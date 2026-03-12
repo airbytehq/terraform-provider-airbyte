@@ -35,7 +35,8 @@ type SourcePypi struct {
 	// Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
 	ProjectName string `json:"project_name"`
 	// Version of the project/package.  Use it to find a particular release instead of all releases.
-	Version              *string               `json:"version,omitempty"`
+	Version *string `json:"version,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePypiSourceType `const:"pypi" json:"sourceType"`
 	AdditionalProperties any                   `additionalProperties:"true" json:"-"`
 }

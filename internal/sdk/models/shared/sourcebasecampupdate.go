@@ -33,11 +33,12 @@ func (e *SourceBasecampUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBasecampUpdate struct {
-	AccountID            *float64                        `json:"account_id,omitempty"`
-	ClientID             *string                         `json:"client_id,omitempty"`
-	ClientRefreshToken2  *string                         `json:"client_refresh_token_2,omitempty"`
-	ClientSecret         *string                         `json:"client_secret,omitempty"`
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
+	AccountID           *float64   `json:"account_id,omitempty"`
+	ClientID            *string    `json:"client_id,omitempty"`
+	ClientRefreshToken2 *string    `json:"client_refresh_token_2,omitempty"`
+	ClientSecret        *string    `json:"client_secret,omitempty"`
+	StartDate           *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBasecampUpdateSourceType `const:"basecamp" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

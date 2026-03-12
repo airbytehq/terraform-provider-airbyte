@@ -33,7 +33,8 @@ func (e *SourceGainsightPxSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceGainsightPx struct {
 	// The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
-	APIKey               string                       `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGainsightPxSourceType `const:"gainsight-px" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

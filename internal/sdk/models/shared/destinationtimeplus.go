@@ -35,7 +35,8 @@ type DestinationTimeplus struct {
 	// Personal API key
 	Apikey string `json:"apikey"`
 	// Timeplus workspace endpoint
-	Endpoint        *string                             `default:"https://us-west-2.timeplus.cloud/<workspace_id>" json:"endpoint"`
+	Endpoint *string `default:"https://us-west-2.timeplus.cloud/<workspace_id>" json:"endpoint"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationTimeplusDestinationType `const:"timeplus" json:"destinationType"`
 }
 

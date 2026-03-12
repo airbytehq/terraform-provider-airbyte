@@ -28,3 +28,6 @@ func (s *SourceK6CloudPutRequest) GetConfiguration() SourceK6CloudUpdate {
 	}
 	return s.Configuration
 }
+
+// #region class-body-sourcek6cloudputrequest
+// #endregion class-body-sourcek6cloudputrequest

@@ -15,7 +15,8 @@ type DestinationFireboltUpdateExternalTableViaS3 struct {
 	AwsKeyID *string `json:"aws_key_id,omitempty"`
 	// Corresponding secret part of the AWS Key
 	AwsKeySecret *string `json:"aws_key_secret,omitempty"`
-	method       *string `const:"S3" json:"method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	method *string `const:"S3" json:"method,omitempty"`
 	// The name of the S3 bucket.
 	S3Bucket *string `json:"s3_bucket,omitempty"`
 	// Region name of the S3 bucket.
@@ -65,7 +66,11 @@ func (d *DestinationFireboltUpdateExternalTableViaS3) GetS3Region() *string {
 	return d.S3Region
 }
 
+// #region class-body-destinationfireboltupdateexternaltablevias3
+// #endregion class-body-destinationfireboltupdateexternaltablevias3
+
 type DestinationFireboltUpdateSQLInserts struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	method *string `const:"SQL" json:"method,omitempty"`
 }
 
@@ -211,7 +216,8 @@ type DestinationFireboltUpdate struct {
 	// The host name of your Firebolt database.
 	Host *string `json:"host,omitempty"`
 	// Loading method used to select the way data will be uploaded to Firebolt
-	LoadingMethod   *DestinationFireboltUpdateLoadingMethod   `json:"loading_method,omitempty"`
+	LoadingMethod *DestinationFireboltUpdateLoadingMethod `json:"loading_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationFireboltUpdateDestinationType `const:"firebolt" json:"destinationType"`
 }
 

@@ -35,8 +35,9 @@ func (e *SourceHeightSourceType) UnmarshalJSON(data []byte) error {
 type SourceHeight struct {
 	APIKey string `json:"api_key"`
 	// Search query to be used with search stream
-	SearchQuery          *string                 `default:"task" json:"search_query"`
-	StartDate            time.Time               `json:"start_date"`
+	SearchQuery *string   `default:"task" json:"search_query"`
+	StartDate   time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceHeightSourceType `const:"height" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

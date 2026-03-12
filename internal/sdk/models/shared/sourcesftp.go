@@ -11,6 +11,7 @@ import (
 
 type SourceSftpSSHKeyAuthentication struct {
 	// Connect through ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod string `const:"SSH_KEY_AUTH" json:"auth_method"`
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	AuthSSHKey string `json:"auth_ssh_key"`
@@ -40,6 +41,7 @@ func (s *SourceSftpSSHKeyAuthentication) GetAuthSSHKey() string {
 
 type SourceSftpPasswordAuthentication struct {
 	// Connect through password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod string `const:"SSH_PASSWORD_AUTH" json:"auth_method"`
 	// OS-level password for logging into the jump server host
 	AuthUserPassword string `json:"auth_user_password"`
@@ -194,7 +196,8 @@ type SourceSftp struct {
 	// The server port
 	Port *int64 `default:"22" json:"port"`
 	// The server user
-	User                 string                `json:"user"`
+	User string `json:"user"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSftpSourceType `const:"sftp" json:"sourceType"`
 	AdditionalProperties any                   `additionalProperties:"true" json:"-"`
 }

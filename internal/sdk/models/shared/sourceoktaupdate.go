@@ -14,6 +14,7 @@ import (
 type SourceOktaUpdateAPIToken struct {
 	// An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
 	APIToken *string `json:"api_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"api_token" json:"auth_type,omitempty"`
 }
 
@@ -40,6 +41,7 @@ func (s *SourceOktaUpdateAPIToken) GetAuthType() *string {
 }
 
 type SourceOktaUpdateOAuth20WithPrivateKey struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2.0_private_key" json:"auth_type,omitempty"`
 	// The Client ID of your OAuth application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -94,7 +96,11 @@ func (s *SourceOktaUpdateOAuth20WithPrivateKey) GetScope() *string {
 	return s.Scope
 }
 
+// #region class-body-sourceoktaupdateoauth20withprivatekey
+// #endregion class-body-sourceoktaupdateoauth20withprivatekey
+
 type SourceOktaUpdateOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Client ID of your OAuth application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -139,6 +145,9 @@ func (s *SourceOktaUpdateOAuth20) GetRefreshToken() *string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourceoktaupdateoauth20
+// #endregion class-body-sourceoktaupdateoauth20
 
 type SourceOktaUpdateAuthorizationMethodType string
 
@@ -283,7 +292,8 @@ type SourceOktaUpdate struct {
 	// The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.
 	Domain *string `json:"domain,omitempty"`
 	// UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.
-	StartDate            *time.Time                  `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceOktaUpdateSourceType `const:"okta" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

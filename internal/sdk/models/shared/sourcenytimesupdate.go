@@ -95,7 +95,8 @@ type SourceNytimesUpdate struct {
 	// Share Type
 	ShareType *SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
 	// Start date to begin the article retrieval (format YYYY-MM)
-	StartDate            *string                        `json:"start_date,omitempty"`
+	StartDate *string `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceNytimesUpdateSourceType `const:"nytimes" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

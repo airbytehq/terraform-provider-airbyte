@@ -36,7 +36,8 @@ type SourceIterableUpdate struct {
 	// Iterable API Key. See the <a href=\"https://docs.airbyte.com/integrations/sources/iterable\">docs</a>  for more information on how to obtain this key.
 	APIKey *string `json:"api_key,omitempty"`
 	// The date from which you'd like to replicate data for Iterable, in the format YYYY-MM-DDT00:00:00Z.  All data generated after this date will be replicated.
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceIterableUpdateSourceType `const:"iterable" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

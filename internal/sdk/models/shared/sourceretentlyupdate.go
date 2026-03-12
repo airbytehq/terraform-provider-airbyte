@@ -12,7 +12,8 @@ import (
 
 type SourceRetentlyUpdateAuthenticateWithAPIToken struct {
 	// Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
-	APIKey               *string `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType             *string `const:"Token" json:"auth_type,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -47,6 +48,7 @@ func (s *SourceRetentlyUpdateAuthenticateWithAPIToken) GetAdditionalProperties()
 }
 
 type SourceRetentlyUpdateAuthenticateViaRetentlyOAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Retently developer application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -215,9 +217,10 @@ func (e *SourceRetentlyUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceRetentlyUpdate struct {
 	// Choose how to authenticate to Retently
-	Credentials          *SourceRetentlyUpdateAuthenticationMechanism `json:"credentials,omitempty"`
-	sourceType           *SourceRetentlyUpdateSourceType              `const:"retently" json:"sourceType"`
-	AdditionalProperties any                                          `additionalProperties:"true" json:"-"`
+	Credentials *SourceRetentlyUpdateAuthenticationMechanism `json:"credentials,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceRetentlyUpdateSourceType `const:"retently" json:"sourceType"`
+	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceRetentlyUpdate) MarshalJSON() ([]byte, error) {

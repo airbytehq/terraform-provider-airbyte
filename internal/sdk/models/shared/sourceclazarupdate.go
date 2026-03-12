@@ -32,8 +32,9 @@ func (e *SourceClazarUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceClazarUpdate struct {
-	ClientID             *string                       `json:"client_id,omitempty"`
-	ClientSecret         *string                       `json:"client_secret,omitempty"`
+	ClientID     *string `json:"client_id,omitempty"`
+	ClientSecret *string `json:"client_secret,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceClazarUpdateSourceType `const:"clazar" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

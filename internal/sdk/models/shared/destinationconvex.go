@@ -35,7 +35,8 @@ type DestinationConvex struct {
 	// API access key used to send data to a Convex deployment.
 	AccessKey string `json:"access_key"`
 	// URL of the Convex deployment that is the destination
-	DeploymentURL   string                            `json:"deployment_url"`
+	DeploymentURL string `json:"deployment_url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationConvexDestinationType `const:"convex" json:"destinationType"`
 }
 

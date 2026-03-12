@@ -430,7 +430,8 @@ type SourceGnews struct {
 	//   iPhone
 	TopHeadlinesQuery *string `json:"top_headlines_query,omitempty"`
 	// This parameter allows you to change the category for the request.
-	TopHeadlinesTopic    *TopHeadlinesTopic     `json:"top_headlines_topic,omitempty"`
+	TopHeadlinesTopic *TopHeadlinesTopic `json:"top_headlines_topic,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGnewsSourceType `const:"gnews" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

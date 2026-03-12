@@ -28,3 +28,6 @@ func (s *SourceMongodbV2PutRequest) GetConfiguration() SourceMongodbV2Update {
 	}
 	return s.Configuration
 }
+
+// #region class-body-sourcemongodbv2putrequest
+// #endregion class-body-sourcemongodbv2putrequest

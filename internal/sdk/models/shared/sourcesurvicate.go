@@ -33,8 +33,9 @@ func (e *SourceSurvicateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSurvicate struct {
-	APIKey               string                     `json:"api_key"`
-	StartDate            time.Time                  `json:"start_date"`
+	APIKey    string    `json:"api_key"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSurvicateSourceType `const:"survicate" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

@@ -12,8 +12,9 @@ import (
 // SelfManagedReplicaSet - MongoDB self-hosted cluster configured as a replica set
 type SelfManagedReplicaSet struct {
 	// The authentication source where the user information is stored.
-	AuthSource  *string `default:"admin" json:"auth_source"`
-	clusterType string  `const:"SELF_MANAGED_REPLICA_SET" json:"cluster_type"`
+	AuthSource *string `default:"admin" json:"auth_source"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	clusterType string `const:"SELF_MANAGED_REPLICA_SET" json:"cluster_type"`
 	// The connection string of the cluster that you want to replicate.  https://www.mongodb.com/docs/manual/reference/connection-string/#find-your-self-hosted-deployment-s-connection-string for more information.
 	ConnectionString string `json:"connection_string"`
 	// The names of the MongoDB databases that contain the collection(s) to replicate.
@@ -94,8 +95,9 @@ func (s *SelfManagedReplicaSet) GetAdditionalProperties() any {
 // MongoDBAtlasReplicaSet - MongoDB Atlas-hosted cluster configured as a replica set
 type MongoDBAtlasReplicaSet struct {
 	// The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details.
-	AuthSource  *string `default:"admin" json:"auth_source"`
-	clusterType string  `const:"ATLAS_REPLICA_SET" json:"cluster_type"`
+	AuthSource *string `default:"admin" json:"auth_source"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	clusterType string `const:"ATLAS_REPLICA_SET" json:"cluster_type"`
 	// The connection string of the cluster that you want to replicate.
 	ConnectionString string `json:"connection_string"`
 	// The names of the MongoDB databases that contain the collection(s) to replicate.
@@ -356,7 +358,8 @@ type SourceMongodbV2 struct {
 	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 	QueueSize *int64 `default:"10000" json:"queue_size"`
 	// Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images.
-	UpdateCaptureMode    *CaptureModeAdvanced       `default:"Lookup" json:"update_capture_mode"`
+	UpdateCaptureMode *CaptureModeAdvanced `default:"Lookup" json:"update_capture_mode"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMongodbV2SourceType `const:"mongodb-v2" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }
@@ -438,3 +441,6 @@ func (s *SourceMongodbV2) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourcemongodbv2
+// #endregion class-body-sourcemongodbv2

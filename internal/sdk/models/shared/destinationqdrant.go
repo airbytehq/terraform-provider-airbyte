@@ -38,8 +38,9 @@ type DestinationQdrantOpenAICompatible struct {
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
 	// The number of dimensions the embedding model is generating
-	Dimensions int64                                            `json:"dimensions"`
-	mode       *DestinationQdrantSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
+	Dimensions int64 `json:"dimensions"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationQdrantSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -115,8 +116,9 @@ type DestinationQdrantAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string                                          `json:"deployment"`
-	mode       *DestinationQdrantSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	Deployment string `json:"deployment"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationQdrantSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey string `json:"openai_key"`
 }
@@ -182,6 +184,7 @@ func (e *DestinationQdrantSchemasEmbeddingMode) UnmarshalJSON(data []byte) error
 
 // DestinationQdrantFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationQdrantFake struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationQdrantSchemasEmbeddingMode `const:"fake" json:"mode"`
 }
 
@@ -225,8 +228,9 @@ func (e *DestinationQdrantSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationQdrantCohere - Use the Cohere API to embed text.
 type DestinationQdrantCohere struct {
-	CohereKey string                        `json:"cohere_key"`
-	mode      *DestinationQdrantSchemasMode `const:"cohere" json:"mode"`
+	CohereKey string `json:"cohere_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationQdrantSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationQdrantCohere) MarshalJSON() ([]byte, error) {
@@ -276,6 +280,7 @@ func (e *DestinationQdrantMode) UnmarshalJSON(data []byte) error {
 
 // DestinationQdrantOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationQdrantOpenAI struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode      *DestinationQdrantMode `const:"openai" json:"mode"`
 	OpenaiKey string                 `json:"openai_key"`
 }
@@ -494,6 +499,7 @@ func (e *DestinationQdrantSchemasIndexingAuthMethodMode) UnmarshalJSON(data []by
 }
 
 type DestinationQdrantNoAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationQdrantSchemasIndexingAuthMethodMode `const:"no_auth" json:"mode"`
 }
 
@@ -537,8 +543,9 @@ func (e *DestinationQdrantSchemasIndexingMode) UnmarshalJSON(data []byte) error 
 
 type APIKeyAuth struct {
 	// API Key for the Qdrant instance
-	APIKey string                                `json:"api_key"`
-	mode   *DestinationQdrantSchemasIndexingMode `const:"api_key_auth" json:"mode"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationQdrantSchemasIndexingMode `const:"api_key_auth" json:"mode"`
 }
 
 func (a APIKeyAuth) MarshalJSON() ([]byte, error) {
@@ -868,8 +875,9 @@ func (e *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode) Unmarsh
 // DestinationQdrantByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationQdrantByProgrammingLanguage struct {
 	// Split code in suitable places based on the programming language
-	Language DestinationQdrantLanguage                                       `json:"language"`
-	mode     *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+	Language DestinationQdrantLanguage `json:"language"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationQdrantByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -919,6 +927,7 @@ func (e *DestinationQdrantSchemasProcessingTextSplitterMode) UnmarshalJSON(data 
 
 // DestinationQdrantByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
 type DestinationQdrantByMarkdownHeader struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationQdrantSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
 	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
 	SplitLevel *int64 `default:"1" json:"split_level"`
@@ -972,8 +981,9 @@ func (e *DestinationQdrantSchemasProcessingMode) UnmarshalJSON(data []byte) erro
 // DestinationQdrantBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationQdrantBySeparator struct {
 	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool                                   `default:"false" json:"keep_separator"`
-	mode          *DestinationQdrantSchemasProcessingMode `const:"separator" json:"mode"`
+	KeepSeparator *bool `default:"false" json:"keep_separator"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationQdrantSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
 }
@@ -1221,9 +1231,10 @@ type DestinationQdrant struct {
 	// Indexing configuration
 	Indexing DestinationQdrantIndexing `json:"indexing"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText     *bool                                  `default:"false" json:"omit_raw_text"`
-	Processing      DestinationQdrantProcessingConfigModel `json:"processing"`
-	destinationType *DestinationQdrantDestinationType      `const:"qdrant" json:"destinationType"`
+	OmitRawText *bool                                  `default:"false" json:"omit_raw_text"`
+	Processing  DestinationQdrantProcessingConfigModel `json:"processing"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType *DestinationQdrantDestinationType `const:"qdrant" json:"destinationType"`
 }
 
 func (d DestinationQdrant) MarshalJSON() ([]byte, error) {

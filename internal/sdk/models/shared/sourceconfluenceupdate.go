@@ -37,7 +37,8 @@ type SourceConfluenceUpdate struct {
 	// Your Confluence domain name
 	DomainName *string `json:"domain_name,omitempty"`
 	// Your Confluence login email
-	Email                *string                           `json:"email,omitempty"`
+	Email *string `json:"email,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceConfluenceUpdateSourceType `const:"confluence" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

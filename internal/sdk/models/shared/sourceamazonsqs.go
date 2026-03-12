@@ -196,7 +196,8 @@ type SourceAmazonSqs struct {
 	// Note - Different targets have different attribute enum requirements, please refer actions sections in https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/Welcome.html
 	Target *TheTargetedActionResourceForTheFetch `default:"ReceiveMessage" json:"target"`
 	// Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
-	VisibilityTimeout    *int64                     `default:"20" json:"visibility_timeout"`
+	VisibilityTimeout *int64 `default:"20" json:"visibility_timeout"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAmazonSqsSourceType `const:"amazon-sqs" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

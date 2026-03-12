@@ -310,7 +310,8 @@ type DestinationSnowflakeUpdate struct {
 	// Enter the name of the user you want to use to access the database
 	Username *string `json:"username,omitempty"`
 	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster
-	Warehouse            *string                                    `json:"warehouse,omitempty"`
+	Warehouse *string `json:"warehouse,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationSnowflakeUpdateDestinationType `const:"snowflake" json:"destinationType"`
 	AdditionalProperties any                                        `additionalProperties:"true" json:"-"`
 }

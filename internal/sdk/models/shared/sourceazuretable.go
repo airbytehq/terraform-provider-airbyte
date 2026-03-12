@@ -37,8 +37,9 @@ type SourceAzureTable struct {
 	// The name of your storage account.
 	StorageAccountName string `json:"storage_account_name"`
 	// Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix
-	StorageEndpointSuffix *string                     `default:"core.windows.net" json:"storage_endpoint_suffix"`
-	sourceType            *SourceAzureTableSourceType `const:"azure-table" json:"sourceType"`
+	StorageEndpointSuffix *string `default:"core.windows.net" json:"storage_endpoint_suffix"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType *SourceAzureTableSourceType `const:"azure-table" json:"sourceType"`
 }
 
 func (s SourceAzureTable) MarshalJSON() ([]byte, error) {

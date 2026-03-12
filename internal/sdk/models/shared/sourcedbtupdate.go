@@ -32,8 +32,9 @@ func (e *SourceDbtUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDbtUpdate struct {
-	AccountID            *string                    `json:"account_id,omitempty"`
-	APIKey2              *string                    `json:"api_key_2,omitempty"`
+	AccountID *string `json:"account_id,omitempty"`
+	APIKey2   *string `json:"api_key_2,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDbtUpdateSourceType `const:"dbt" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

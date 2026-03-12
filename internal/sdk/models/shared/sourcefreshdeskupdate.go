@@ -15,8 +15,9 @@ type SourceFreshdeskUpdateCustomPlan struct {
 	// Maximum Rate in Limit/minute for contacts list endpoint in Custom Plan
 	ContactsRateLimit *int64 `json:"contacts_rate_limit,omitempty"`
 	// General Maximum Rate in Limit/minute for other endpoints in Custom Plan
-	GeneralRateLimit *int64  `json:"general_rate_limit,omitempty"`
-	planType         *string `const:"custom" json:"plan_type,omitempty"`
+	GeneralRateLimit *int64 `json:"general_rate_limit,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	planType *string `const:"custom" json:"plan_type,omitempty"`
 	// Maximum Rate in Limit/minute for tickets list endpoint in Custom Plan
 	TicketsRateLimit *int64 `json:"tickets_rate_limit,omitempty"`
 }
@@ -59,11 +60,15 @@ func (s *SourceFreshdeskUpdateCustomPlan) GetTicketsRateLimit() *int64 {
 
 type SourceFreshdeskUpdateEnterprisePlan struct {
 	// Maximum Rate in Limit/minute for contacts list endpoint in Enterprise Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	contactsRateLimit *int64 `const:"200" json:"contacts_rate_limit,omitempty"`
 	// General Maximum Rate in Limit/minute for other endpoints in Enterprise Plan
-	generalRateLimit *int64  `const:"700" json:"general_rate_limit,omitempty"`
-	planType         *string `const:"enterprise" json:"plan_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	generalRateLimit *int64 `const:"700" json:"general_rate_limit,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	planType *string `const:"enterprise" json:"plan_type,omitempty"`
 	// Maximum Rate in Limit/minute for tickets list endpoint in Enterprise Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	ticketsRateLimit *int64 `const:"200" json:"tickets_rate_limit,omitempty"`
 }
 
@@ -96,11 +101,15 @@ func (s *SourceFreshdeskUpdateEnterprisePlan) GetTicketsRateLimit() *int64 {
 
 type SourceFreshdeskUpdateProPlan struct {
 	// Maximum Rate in Limit/minute for contacts list endpoint in Pro Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	contactsRateLimit *int64 `const:"100" json:"contacts_rate_limit,omitempty"`
 	// General Maximum Rate in Limit/minute for other endpoints in Pro Plan
-	generalRateLimit *int64  `const:"400" json:"general_rate_limit,omitempty"`
-	planType         *string `const:"pro" json:"plan_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	generalRateLimit *int64 `const:"400" json:"general_rate_limit,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	planType *string `const:"pro" json:"plan_type,omitempty"`
 	// Maximum Rate in Limit/minute for tickets list endpoint in Pro Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	ticketsRateLimit *int64 `const:"100" json:"tickets_rate_limit,omitempty"`
 }
 
@@ -133,11 +142,15 @@ func (s *SourceFreshdeskUpdateProPlan) GetTicketsRateLimit() *int64 {
 
 type SourceFreshdeskUpdateGrowthPlan struct {
 	// Maximum Rate in Limit/minute for contacts list endpoint in Growth Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	contactsRateLimit *int64 `const:"20" json:"contacts_rate_limit,omitempty"`
 	// General Maximum Rate in Limit/minute for other endpoints in Growth Plan
-	generalRateLimit *int64  `const:"200" json:"general_rate_limit,omitempty"`
-	planType         *string `const:"growth" json:"plan_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	generalRateLimit *int64 `const:"200" json:"general_rate_limit,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	planType *string `const:"growth" json:"plan_type,omitempty"`
 	// Maximum Rate in Limit/minute for tickets list endpoint in Growth Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	ticketsRateLimit *int64 `const:"20" json:"tickets_rate_limit,omitempty"`
 }
 
@@ -170,11 +183,15 @@ func (s *SourceFreshdeskUpdateGrowthPlan) GetTicketsRateLimit() *int64 {
 
 type SourceFreshdeskUpdateFreePlan struct {
 	// Maximum Rate in Limit/minute for contacts list endpoint in Free Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	contactsRateLimit *int64 `const:"50" json:"contacts_rate_limit,omitempty"`
 	// General Maximum Rate in Limit/minute for other endpoints in Free Plan
-	generalRateLimit *int64  `const:"50" json:"general_rate_limit,omitempty"`
-	planType         *string `const:"free" json:"plan_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	generalRateLimit *int64 `const:"50" json:"general_rate_limit,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	planType *string `const:"free" json:"plan_type,omitempty"`
 	// Maximum Rate in Limit/minute for tickets list endpoint in Free Plan
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	ticketsRateLimit *int64 `const:"50" json:"tickets_rate_limit,omitempty"`
 }
 
@@ -408,7 +425,8 @@ type SourceFreshdeskUpdate struct {
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
 	RequestsPerMinute *int64 `json:"requests_per_minute,omitempty"`
 	// UTC date and time. Any data created after this date will be replicated. If this parameter is not set, all data will be replicated.
-	StartDate            *time.Time                       `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFreshdeskUpdateSourceType `const:"freshdesk" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

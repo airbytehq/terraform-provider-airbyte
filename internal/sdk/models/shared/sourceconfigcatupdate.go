@@ -35,7 +35,8 @@ type SourceConfigcatUpdate struct {
 	// Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Password *string `json:"password,omitempty"`
 	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-	Username             *string                          `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceConfigcatUpdateSourceType `const:"configcat" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

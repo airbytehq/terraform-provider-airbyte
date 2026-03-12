@@ -14,8 +14,9 @@ type SandboxAccessToken struct {
 	// The long-term authorized access token.
 	AccessToken string `json:"access_token"`
 	// The Advertiser ID which generated for the developer's Sandbox application.
-	AdvertiserID string  `json:"advertiser_id"`
-	authType     *string `const:"sandbox_access_token" json:"auth_type,omitempty"`
+	AdvertiserID string `json:"advertiser_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"sandbox_access_token" json:"auth_type,omitempty"`
 }
 
 func (s SandboxAccessToken) MarshalJSON() ([]byte, error) {
@@ -53,7 +54,8 @@ type SourceTiktokMarketingOAuth20 struct {
 	// The Advertiser ID to filter reports and streams. Let this empty to retrieve all.
 	AdvertiserID *string `json:"advertiser_id,omitempty"`
 	// The Developer Application App ID.
-	AppID    string  `json:"app_id"`
+	AppID string `json:"app_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Developer Application Secret.
 	Secret string `json:"secret"`
@@ -101,6 +103,9 @@ func (s *SourceTiktokMarketingOAuth20) GetSecret() string {
 	}
 	return s.Secret
 }
+
+// #region class-body-sourcetiktokmarketingoauth20
+// #endregion class-body-sourcetiktokmarketingoauth20
 
 type SourceTiktokMarketingAuthenticationMethodType string
 
@@ -225,7 +230,8 @@ type SourceTiktokMarketing struct {
 	// Set to active if you want to include deleted data in report based streams and Ads, Ad Groups and Campaign streams.
 	IncludeDeleted *bool `default:"false" json:"include_deleted"`
 	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
-	StartDate            *types.Date                      `default:"2016-09-01" json:"start_date"`
+	StartDate *types.Date `default:"2016-09-01" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTiktokMarketingSourceType `const:"tiktok-marketing" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

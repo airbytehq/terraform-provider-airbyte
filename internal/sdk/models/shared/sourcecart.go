@@ -12,7 +12,8 @@ import (
 type SingleStoreAccessToken struct {
 	// Access Token for making authenticated requests.
 	AccessToken string `json:"access_token"`
-	authType    string `const:"SINGLE_STORE_ACCESS_TOKEN" json:"auth_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType string `const:"SINGLE_STORE_ACCESS_TOKEN" json:"auth_type"`
 	// The name of Cart.com Online Store. All API URLs start with https://[mystorename.com]/api/v1/, where [mystorename.com] is the domain name of your store.
 	StoreName string `json:"store_name"`
 }
@@ -47,6 +48,7 @@ func (s *SingleStoreAccessToken) GetStoreName() string {
 }
 
 type CentralAPIRouter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"CENTRAL_API_ROUTER" json:"auth_type"`
 	// You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
 	SiteID string `json:"site_id"`
@@ -207,7 +209,8 @@ func (e *SourceCartSourceType) UnmarshalJSON(data []byte) error {
 type SourceCart struct {
 	Credentials *AuthorizationMethod `json:"credentials,omitempty"`
 	// The date from which you'd like to replicate the data
-	StartDate            string                `json:"start_date"`
+	StartDate string `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceCartSourceType `const:"cart" json:"sourceType"`
 	AdditionalProperties any                   `additionalProperties:"true" json:"-"`
 }

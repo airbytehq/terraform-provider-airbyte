@@ -18,6 +18,9 @@ func (g *GetSourceMongodbV2Request) GetSourceID() string {
 	return g.SourceID
 }
 
+// #region class-body-getsourcemongodbv2request
+// #endregion class-body-getsourcemongodbv2request
+
 type GetSourceMongodbV2Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -56,3 +59,6 @@ func (g *GetSourceMongodbV2Response) GetSourceResponse() *shared.SourceResponse 
 	}
 	return g.SourceResponse
 }
+
+// #region class-body-getsourcemongodbv2response
+// #endregion class-body-getsourcemongodbv2response

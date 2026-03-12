@@ -40,7 +40,8 @@ type SourceExchangeRatesUpdate struct {
 	// Ignore weekends? (Exchanges don't run on weekends)
 	IgnoreWeekends *bool `default:"true" json:"ignore_weekends"`
 	// Start getting data from that date.
-	StartDate            *types.Date                          `json:"start_date,omitempty"`
+	StartDate *types.Date `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceExchangeRatesUpdateSourceType `const:"exchange-rates" json:"sourceType"`
 	AdditionalProperties any                                  `additionalProperties:"true" json:"-"`
 }

@@ -63,3 +63,6 @@ func (s *SourceS3CreateRequest) GetSecretID() *string {
 	}
 	return s.SecretID
 }
+
+// #region class-body-sources3createrequest
+// #endregion class-body-sources3createrequest

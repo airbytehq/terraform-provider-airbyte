@@ -33,6 +33,7 @@ func (e *SourceMicrosoftTeamsUpdateSchemasAuthType) UnmarshalJSON(data []byte) e
 }
 
 type SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *SourceMicrosoftTeamsUpdateSchemasAuthType `const:"Token" json:"auth_type"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -102,6 +103,7 @@ func (e *SourceMicrosoftTeamsUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *SourceMicrosoftTeamsUpdateAuthType `const:"Client" json:"auth_type"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -155,6 +157,9 @@ func (s *SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20) GetTenantID(
 	}
 	return s.TenantID
 }
+
+// #region class-body-sourcemicrosoftteamsupdateauthenticateviamicrosoftoauth20
+// #endregion class-body-sourcemicrosoftteamsupdateauthenticateviamicrosoftoauth20
 
 type SourceMicrosoftTeamsUpdateAuthenticationMechanismType string
 
@@ -273,7 +278,8 @@ type SourceMicrosoftTeamsUpdate struct {
 	// Choose how to authenticate to Microsoft
 	Credentials *SourceMicrosoftTeamsUpdateAuthenticationMechanism `json:"credentials,omitempty"`
 	// Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
-	Period               *string                               `json:"period,omitempty"`
+	Period *string `json:"period,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMicrosoftTeamsUpdateSourceType `const:"microsoft-teams" json:"sourceType"`
 	AdditionalProperties any                                   `additionalProperties:"true" json:"-"`
 }

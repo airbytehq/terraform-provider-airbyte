@@ -13,8 +13,9 @@ import (
 
 type SourceLinkedinPagesAccessToken struct {
 	// The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-	AccessToken string  `json:"access_token"`
-	authMethod  *string `const:"access_token" json:"auth_method,omitempty"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"access_token" json:"auth_method,omitempty"`
 }
 
 func (s SourceLinkedinPagesAccessToken) MarshalJSON() ([]byte, error) {
@@ -40,6 +41,7 @@ func (s *SourceLinkedinPagesAccessToken) GetAuthMethod() *string {
 }
 
 type SourceLinkedinPagesOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod *string `const:"oAuth2.0" json:"auth_method,omitempty"`
 	// The client ID of the LinkedIn developer application.
 	ClientID string `json:"client_id"`
@@ -84,6 +86,9 @@ func (s *SourceLinkedinPagesOAuth20) GetRefreshToken() string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourcelinkedinpagesoauth20
+// #endregion class-body-sourcelinkedinpagesoauth20
 
 type SourceLinkedinPagesAuthenticationType string
 
@@ -231,7 +236,8 @@ type SourceLinkedinPages struct {
 	// Start date for getting metrics per time period. Must be atmost 12 months before the request date (UTC) and atleast 2 days prior to the request date (UTC). See https://bit.ly/linkedin-pages-date-rules {{ "\n" }} {{ response.errorDetails }}
 	StartDate *time.Time `default:"2023-01-01T00:00:00Z" json:"start_date"`
 	// Granularity of the statistics for metrics per time period. Must be either "DAY" or "MONTH"
-	TimeGranularityType  *TimeGranularityType           `default:"DAY" json:"time_granularity_type"`
+	TimeGranularityType *TimeGranularityType `default:"DAY" json:"time_granularity_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLinkedinPagesSourceType `const:"linkedin-pages" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

@@ -13,6 +13,7 @@ import (
 
 // SourceTrustpilotUpdateAPIKey - The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.
 type SourceTrustpilotUpdateAPIKey struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"apikey" json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -43,7 +44,8 @@ func (s *SourceTrustpilotUpdateAPIKey) GetClientID() *string {
 type SourceTrustpilotUpdateOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"oauth2.0" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application. (represents the OAuth Client ID)
 	ClientID *string `json:"client_id,omitempty"`
 	// The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
@@ -103,6 +105,9 @@ func (s *SourceTrustpilotUpdateOAuth20) GetTokenExpiryDate() *time.Time {
 	}
 	return s.TokenExpiryDate
 }
+
+// #region class-body-sourcetrustpilotupdateoauth20
+// #endregion class-body-sourcetrustpilotupdateoauth20
 
 type SourceTrustpilotUpdateAuthorizationMethodType string
 
@@ -221,7 +226,8 @@ type SourceTrustpilotUpdate struct {
 	BusinessUnits []string                                   `json:"business_units,omitempty"`
 	Credentials   *SourceTrustpilotUpdateAuthorizationMethod `json:"credentials,omitempty"`
 	// For streams with sync. method incremental the start date time to be used
-	StartDate            *string                           `json:"start_date,omitempty"`
+	StartDate *string `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTrustpilotUpdateSourceType `const:"trustpilot" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

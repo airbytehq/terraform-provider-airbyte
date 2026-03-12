@@ -33,7 +33,8 @@ func (e *SourceSavvycalUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceSavvycalUpdate struct {
 	// Go to SavvyCal → Settings → Developer → Personal Tokens and make a new token. Then, copy the private key. https://savvycal.com/developers
-	APIKey               *string                         `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSavvycalUpdateSourceType `const:"savvycal" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

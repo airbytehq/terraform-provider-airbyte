@@ -37,7 +37,8 @@ type SourceSmaily struct {
 	// API Subdomain. See https://smaily.com/help/api/general/create-api-user/
 	APISubdomain string `json:"api_subdomain"`
 	// API user username. See https://smaily.com/help/api/general/create-api-user/
-	APIUsername          string                  `json:"api_username"`
+	APIUsername string `json:"api_username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSmailySourceType `const:"smaily" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

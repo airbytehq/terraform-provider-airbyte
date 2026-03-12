@@ -38,7 +38,8 @@ type SourceAircall struct {
 	// App token found at settings (Ref- https://dashboard.aircall.io/integrations/api-keys)
 	APIToken string `json:"api_token"`
 	// Date time filter for incremental filter, Specify which date to extract from.
-	StartDate            time.Time                `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAircallSourceType `const:"aircall" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

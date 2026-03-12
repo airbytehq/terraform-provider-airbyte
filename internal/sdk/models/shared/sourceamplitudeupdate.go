@@ -71,7 +71,8 @@ type SourceAmplitudeUpdate struct {
 	// Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
 	SecretKey *string `json:"secret_key,omitempty"`
 	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            *time.Time                       `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAmplitudeUpdateSourceType `const:"amplitude" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

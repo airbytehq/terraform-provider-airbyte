@@ -67,7 +67,8 @@ type SourceOnesignal struct {
 	// The date from which you'd like to replicate data for OneSignal API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.
-	UserAuthKey          string                     `json:"user_auth_key"`
+	UserAuthKey string `json:"user_auth_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceOnesignalSourceType `const:"onesignal" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

@@ -266,7 +266,8 @@ func (e *SourceBingAdsUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceBingAdsUpdate struct {
 	// Predicates that will be used to sync data by specific accounts.
 	AccountNames []SourceBingAdsUpdateAccountNames `json:"account_names,omitempty"`
-	authMethod   *string                           `const:"oauth2.0" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your Microsoft Advertising developer application.
@@ -282,7 +283,8 @@ type SourceBingAdsUpdate struct {
 	// The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format. If not set, data from previous and current calendar year will be replicated.
 	ReportsStartDate *types.Date `json:"reports_start_date,omitempty"`
 	// The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
-	TenantID             *string                        `default:"common" json:"tenant_id"`
+	TenantID *string `default:"common" json:"tenant_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBingAdsUpdateSourceType `const:"bing-ads" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

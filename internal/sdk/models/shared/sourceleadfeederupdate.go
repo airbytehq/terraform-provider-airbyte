@@ -33,8 +33,9 @@ func (e *SourceLeadfeederUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceLeadfeederUpdate struct {
-	APIToken             *string                           `json:"api_token,omitempty"`
-	StartDate            *time.Time                        `json:"start_date,omitempty"`
+	APIToken  *string    `json:"api_token,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLeadfeederUpdateSourceType `const:"leadfeeder" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

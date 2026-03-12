@@ -62,3 +62,6 @@ func (s *SourceIp2whoisCreateRequest) GetSecretID() *string {
 	}
 	return s.SecretID
 }
+
+// #region class-body-sourceip2whoiscreaterequest
+// #endregion class-body-sourceip2whoiscreaterequest

@@ -173,7 +173,8 @@ type SourcePocket struct {
 	// Select the state of the items to retrieve.
 	State *State `json:"state,omitempty"`
 	// Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
-	Tag                  *string                 `json:"tag,omitempty"`
+	Tag *string `json:"tag,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePocketSourceType `const:"pocket" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

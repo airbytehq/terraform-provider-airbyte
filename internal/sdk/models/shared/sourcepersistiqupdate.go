@@ -33,7 +33,8 @@ func (e *SourcePersistiqUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourcePersistiqUpdate struct {
 	// PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
-	APIKey               *string                          `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePersistiqUpdateSourceType `const:"persistiq" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

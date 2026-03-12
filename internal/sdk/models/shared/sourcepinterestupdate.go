@@ -10,6 +10,7 @@ import (
 )
 
 type SourcePinterestUpdateOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod *string `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of your OAuth application
 	ClientID *string `json:"client_id,omitempty"`
@@ -54,6 +55,9 @@ func (s *SourcePinterestUpdateOAuth20) GetRefreshToken() *string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourcepinterestupdateoauth20
+// #endregion class-body-sourcepinterestupdateoauth20
 
 // SourcePinterestUpdateValidEnums - An enumeration.
 type SourcePinterestUpdateValidEnums string
@@ -847,7 +851,8 @@ type SourcePinterestUpdate struct {
 	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 	StartDate *types.Date `json:"start_date,omitempty"`
 	// For the ads, ad_groups, and campaigns streams, specifying a status will filter out records that do not match the specified ones. If a status is not specified, the source will default to records with a status of either ACTIVE or PAUSED.
-	Status               []SourcePinterestUpdateStatus    `json:"status,omitempty"`
+	Status []SourcePinterestUpdateStatus `json:"status,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePinterestUpdateSourceType `const:"pinterest" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

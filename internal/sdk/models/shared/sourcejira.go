@@ -83,7 +83,8 @@ type SourceJira struct {
 	// (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.
 	RenderFields *bool `json:"render_fields,omitempty"`
 	// The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
-	StartDate            *time.Time            `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceJiraSourceType `const:"jira" json:"sourceType"`
 	AdditionalProperties any                   `additionalProperties:"true" json:"-"`
 }

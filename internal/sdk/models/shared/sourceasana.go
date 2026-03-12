@@ -12,6 +12,7 @@ import (
 
 type AuthenticateWithPersonalAccessToken struct {
 	// PAT Credentials
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	optionTitle *string `const:"PAT Credentials" json:"option_title,omitempty"`
 	// Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 	PersonalAccessToken string `json:"personal_access_token"`
@@ -43,6 +44,7 @@ type AuthenticateViaAsanaOauth struct {
 	ClientID     string `json:"client_id"`
 	ClientSecret string `json:"client_secret"`
 	// OAuth Credentials
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	optionTitle  *string `const:"OAuth Credentials" json:"option_title,omitempty"`
 	RefreshToken string  `json:"refresh_token"`
 }
@@ -204,7 +206,8 @@ type SourceAsana struct {
 	// Globally unique identifiers for the organization exports
 	OrganizationExportIds []string `json:"organization_export_ids,omitempty"`
 	// This flag is used for testing purposes for certain streams that return a lot of data. This flag is not meant to be enabled for prod.
-	TestMode             *bool                  `json:"test_mode,omitempty"`
+	TestMode *bool `json:"test_mode,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAsanaSourceType `const:"asana" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

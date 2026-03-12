@@ -12,6 +12,7 @@ import (
 )
 
 type SourceJotformUpdateEnterprise struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	apiEndpoint *string `const:"enterprise" json:"api_endpoint,omitempty"`
 	// Upgrade to Enterprise to make your API url your-domain.com/API or subdomain.jotform.com/API instead of api.jotform.com
 	EnterpriseURL *string `json:"enterprise_url,omitempty"`
@@ -70,6 +71,7 @@ func (e *SourceJotformUpdateBaseURLPrefix) UnmarshalJSON(data []byte) error {
 }
 
 type SourceJotformUpdateBasic struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	apiEndpoint *string `const:"basic" json:"api_endpoint,omitempty"`
 	// You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
 	URLPrefix *SourceJotformUpdateBaseURLPrefix `default:"Standard" json:"url_prefix"`
@@ -210,12 +212,13 @@ func (e *SourceJotformUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceJotformUpdate struct {
-	APIEndpoint          *SourceJotformUpdateAPIEndpoint `json:"api_endpoint,omitempty"`
-	APIKey               *string                         `json:"api_key,omitempty"`
-	EndDate              *time.Time                      `json:"end_date,omitempty"`
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
-	sourceType           *SourceJotformUpdateSourceType  `const:"jotform" json:"sourceType"`
-	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
+	APIEndpoint *SourceJotformUpdateAPIEndpoint `json:"api_endpoint,omitempty"`
+	APIKey      *string                         `json:"api_key,omitempty"`
+	EndDate     *time.Time                      `json:"end_date,omitempty"`
+	StartDate   *time.Time                      `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceJotformUpdateSourceType `const:"jotform" json:"sourceType"`
+	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceJotformUpdate) MarshalJSON() ([]byte, error) {

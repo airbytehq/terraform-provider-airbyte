@@ -34,8 +34,9 @@ func (e *SourceProductboardSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceProductboard struct {
 	// Your Productboard access token. See https://developer.productboard.com/reference/authentication for steps to generate one.
-	AccessToken          string                        `json:"access_token"`
-	StartDate            time.Time                     `json:"start_date"`
+	AccessToken string    `json:"access_token"`
+	StartDate   time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceProductboardSourceType `const:"productboard" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

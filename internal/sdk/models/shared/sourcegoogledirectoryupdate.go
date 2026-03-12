@@ -15,6 +15,7 @@ type SourceGoogleDirectoryUpdateServiceAccountKey struct {
 	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 	CredentialsJSON *string `json:"credentials_json,omitempty"`
 	// Authentication Scenario
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentialsTitle *string `const:"Service accounts" json:"credentials_title,omitempty"`
 	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
 	Email *string `json:"email,omitempty"`
@@ -56,6 +57,7 @@ type SourceGoogleDirectoryUpdateSignInViaGoogleOAuth struct {
 	// The Client Secret of the developer application.
 	ClientSecret *string `json:"client_secret,omitempty"`
 	// Authentication Scenario
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentialsTitle *string `const:"Web server app" json:"credentials_title,omitempty"`
 	// The Token for obtaining a new access token.
 	RefreshToken *string `json:"refresh_token,omitempty"`
@@ -212,9 +214,10 @@ func (e *SourceGoogleDirectoryUpdateSourceType) UnmarshalJSON(data []byte) error
 
 type SourceGoogleDirectoryUpdate struct {
 	// Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios.
-	Credentials          *SourceGoogleDirectoryUpdateGoogleCredentials `json:"credentials,omitempty"`
-	sourceType           *SourceGoogleDirectoryUpdateSourceType        `const:"google-directory" json:"sourceType"`
-	AdditionalProperties any                                           `additionalProperties:"true" json:"-"`
+	Credentials *SourceGoogleDirectoryUpdateGoogleCredentials `json:"credentials,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceGoogleDirectoryUpdateSourceType `const:"google-directory" json:"sourceType"`
+	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceGoogleDirectoryUpdate) MarshalJSON() ([]byte, error) {

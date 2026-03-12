@@ -40,7 +40,8 @@ type SourceMarketo struct {
 	// Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 	DomainURL string `json:"domain_url"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            time.Time                `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMarketoSourceType `const:"marketo" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

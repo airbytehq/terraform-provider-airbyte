@@ -14,7 +14,8 @@ type ExternalTableViaS3 struct {
 	AwsKeyID string `json:"aws_key_id"`
 	// Corresponding secret part of the AWS Key
 	AwsKeySecret string `json:"aws_key_secret"`
-	method       string `const:"S3" json:"method"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	method string `const:"S3" json:"method"`
 	// The name of the S3 bucket.
 	S3Bucket string `json:"s3_bucket"`
 	// Region name of the S3 bucket.
@@ -64,7 +65,11 @@ func (e *ExternalTableViaS3) GetS3Region() string {
 	return e.S3Region
 }
 
+// #region class-body-externaltablevias3
+// #endregion class-body-externaltablevias3
+
 type SQLInserts struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	method string `const:"SQL" json:"method"`
 }
 
@@ -210,7 +215,8 @@ type DestinationFirebolt struct {
 	// The host name of your Firebolt database.
 	Host *string `json:"host,omitempty"`
 	// Loading method used to select the way data will be uploaded to Firebolt
-	LoadingMethod   *DestinationFireboltLoadingMethod   `json:"loading_method,omitempty"`
+	LoadingMethod *DestinationFireboltLoadingMethod `json:"loading_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationFireboltDestinationType `const:"firebolt" json:"destinationType"`
 }
 

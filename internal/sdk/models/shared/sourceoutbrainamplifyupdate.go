@@ -40,7 +40,8 @@ func (e *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports) Unmars
 type SourceOutbrainAmplifyUpdateUsernamePassword struct {
 	// Add Password for authentication.
 	Password *string `json:"password,omitempty"`
-	type_    *string `const:"username_password" json:"type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_ *string `const:"username_password" json:"type,omitempty"`
 	// Add Username for authentication.
 	Username *string `json:"username,omitempty"`
 }
@@ -77,7 +78,8 @@ func (s *SourceOutbrainAmplifyUpdateUsernamePassword) GetUsername() *string {
 type SourceOutbrainAmplifyUpdateAccessToken struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	type_       *string `const:"access_token" json:"type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_ *string `const:"access_token" json:"type,omitempty"`
 }
 
 func (s SourceOutbrainAmplifyUpdateAccessToken) MarshalJSON() ([]byte, error) {
@@ -287,7 +289,8 @@ type SourceOutbrainAmplifyUpdate struct {
 	// The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
 	ReportGranularity *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports `json:"report_granularity,omitempty"`
 	// Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
-	StartDate  *string                                `json:"start_date,omitempty"`
+	StartDate *string `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceOutbrainAmplifyUpdateSourceType `const:"outbrain-amplify" json:"sourceType"`
 }
 

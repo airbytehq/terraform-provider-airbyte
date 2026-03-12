@@ -14,7 +14,8 @@ import (
 type SourceGitlabUpdatePrivateToken struct {
 	// Log into your Gitlab account and then generate a personal Access Token.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"access_token" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"access_token" json:"auth_type,omitempty"`
 }
 
 func (s SourceGitlabUpdatePrivateToken) MarshalJSON() ([]byte, error) {
@@ -42,7 +43,8 @@ func (s *SourceGitlabUpdatePrivateToken) GetAuthType() *string {
 type SourceGitlabUpdateOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"oauth2.0" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API ID of the Gitlab developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The API Secret the Gitlab developer application.
@@ -102,6 +104,9 @@ func (s *SourceGitlabUpdateOAuth20) GetTokenExpiryDate() *time.Time {
 	}
 	return s.TokenExpiryDate
 }
+
+// #region class-body-sourcegitlabupdateoauth20
+// #endregion class-body-sourcegitlabupdateoauth20
 
 type SourceGitlabUpdateAuthorizationMethodType string
 
@@ -228,7 +233,8 @@ type SourceGitlabUpdate struct {
 	// Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
 	ProjectsList []string `json:"projects_list,omitempty"`
 	// The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. Optional. If not set, all data will be replicated. All data generated after this date will be replicated.
-	StartDate            *time.Time                    `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGitlabUpdateSourceType `const:"gitlab" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

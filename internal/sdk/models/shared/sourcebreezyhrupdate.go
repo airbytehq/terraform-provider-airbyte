@@ -32,8 +32,9 @@ func (e *SourceBreezyHrUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBreezyHrUpdate struct {
-	APIKey               *string                         `json:"api_key,omitempty"`
-	CompanyID            *string                         `json:"company_id,omitempty"`
+	APIKey    *string `json:"api_key,omitempty"`
+	CompanyID *string `json:"company_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBreezyHrUpdateSourceType `const:"breezy-hr" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

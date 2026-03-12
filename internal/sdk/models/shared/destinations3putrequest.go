@@ -28,3 +28,6 @@ func (d *DestinationS3PutRequest) GetConfiguration() DestinationS3Update {
 	}
 	return d.Configuration
 }
+
+// #region class-body-destinations3putrequest
+// #endregion class-body-destinations3putrequest

@@ -91,16 +91,17 @@ func (e *SourceCimisUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCimisUpdate struct {
-	APIKey               *string                         `json:"api_key,omitempty"`
-	DailyDataItems       []any                           `json:"daily_data_items,omitempty"`
-	EndDate              *time.Time                      `json:"end_date,omitempty"`
-	HourlyDataItems      []any                           `json:"hourly_data_items,omitempty"`
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
-	Targets              []any                           `json:"targets,omitempty"`
-	TargetsType          *SourceCimisUpdateTargetsType   `json:"targets_type,omitempty"`
-	UnitOfMeasure        *SourceCimisUpdateUnitOfMeasure `json:"unit_of_measure,omitempty"`
-	sourceType           *SourceCimisUpdateSourceType    `const:"cimis" json:"sourceType"`
-	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
+	APIKey          *string                         `json:"api_key,omitempty"`
+	DailyDataItems  []any                           `json:"daily_data_items,omitempty"`
+	EndDate         *time.Time                      `json:"end_date,omitempty"`
+	HourlyDataItems []any                           `json:"hourly_data_items,omitempty"`
+	StartDate       *time.Time                      `json:"start_date,omitempty"`
+	Targets         []any                           `json:"targets,omitempty"`
+	TargetsType     *SourceCimisUpdateTargetsType   `json:"targets_type,omitempty"`
+	UnitOfMeasure   *SourceCimisUpdateUnitOfMeasure `json:"unit_of_measure,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceCimisUpdateSourceType `const:"cimis" json:"sourceType"`
+	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceCimisUpdate) MarshalJSON() ([]byte, error) {

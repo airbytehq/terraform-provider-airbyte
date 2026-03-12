@@ -12,7 +12,8 @@ import (
 
 type APIKey struct {
 	// Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-	Apikey   string `json:"apikey"`
+	Apikey string `json:"apikey"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"apikey" json:"auth_type"`
 }
 
@@ -41,7 +42,8 @@ func (a *APIKey) GetAuthType() string {
 type SourceMailchimpOAuth20 struct {
 	// An access token generated using the above client ID and secret.
 	AccessToken string `json:"access_token"`
-	authType    string `const:"oauth2.0" json:"auth_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType string `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
@@ -83,6 +85,9 @@ func (s *SourceMailchimpOAuth20) GetClientSecret() *string {
 	}
 	return s.ClientSecret
 }
+
+// #region class-body-sourcemailchimpoauth20
+// #endregion class-body-sourcemailchimpoauth20
 
 type SourceMailchimpAuthenticationType string
 
@@ -201,7 +206,8 @@ type SourceMailchimp struct {
 	// Technical fields used to identify datacenter to send request to
 	DataCenter *string `json:"data_center,omitempty"`
 	// The date from which you want to start syncing data for Incremental streams. Only records that have been created or modified since this date will be synced. If left blank, all data will by synced.
-	StartDate            *time.Time                 `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMailchimpSourceType `const:"mailchimp" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

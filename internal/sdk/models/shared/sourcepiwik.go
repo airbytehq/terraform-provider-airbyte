@@ -35,7 +35,8 @@ type SourcePiwik struct {
 	ClientID     string `json:"client_id"`
 	ClientSecret string `json:"client_secret"`
 	// The organization id appearing at URL of your piwik website
-	OrganizationID       string                 `json:"organization_id"`
+	OrganizationID string `json:"organization_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePiwikSourceType `const:"piwik" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

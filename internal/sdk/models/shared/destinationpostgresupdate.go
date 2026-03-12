@@ -1026,7 +1026,8 @@ type DestinationPostgresUpdate struct {
 	// Create numeric columns as unconstrained DECIMAL instead of NUMBER(38, 9). This will allow increased precision in numeric values. (this is disabled by default for backwards compatibility, but is recommended to enable)
 	UnconstrainedNumber *bool `json:"unconstrained_number,omitempty"`
 	// Username to access the database.
-	Username             *string                                   `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationPostgresUpdateDestinationType `const:"postgres" json:"destinationType"`
 	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
 }

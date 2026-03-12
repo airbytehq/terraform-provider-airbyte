@@ -437,7 +437,8 @@ type SourceAmazonSellerPartnerUpdate struct {
 	// Type of the Account you're going to authorize the Airbyte application by
 	AccountType *SourceAmazonSellerPartnerUpdateAWSSellerPartnerAccountType `default:"Seller" json:"account_type"`
 	// Your Amazon Application ID.
-	AppID    *string `json:"app_id,omitempty"`
+	AppID *string `json:"app_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Select the AWS Environment.
 	AwsEnvironment *SourceAmazonSellerPartnerUpdateAWSEnvironment `default:"PRODUCTION" json:"aws_environment"`
@@ -468,9 +469,10 @@ type SourceAmazonSellerPartnerUpdate struct {
 	// Additional information passed to reports. This varies by report type.
 	ReportOptionsList []SourceAmazonSellerPartnerUpdateReportOptions `json:"report_options_list,omitempty"`
 	// For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details
-	WaitToAvoidFatalErrors *bool                                      `default:"false" json:"wait_to_avoid_fatal_errors"`
-	sourceType             *SourceAmazonSellerPartnerUpdateSourceType `const:"amazon-seller-partner" json:"sourceType"`
-	AdditionalProperties   any                                        `additionalProperties:"true" json:"-"`
+	WaitToAvoidFatalErrors *bool `default:"false" json:"wait_to_avoid_fatal_errors"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceAmazonSellerPartnerUpdateSourceType `const:"amazon-seller-partner" json:"sourceType"`
+	AdditionalProperties any                                        `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceAmazonSellerPartnerUpdate) MarshalJSON() ([]byte, error) {

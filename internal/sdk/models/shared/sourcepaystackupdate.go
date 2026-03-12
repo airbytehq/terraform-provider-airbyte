@@ -38,7 +38,8 @@ type SourcePaystackUpdate struct {
 	// The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
 	SecretKey *string `json:"secret_key,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePaystackUpdateSourceType `const:"paystack" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

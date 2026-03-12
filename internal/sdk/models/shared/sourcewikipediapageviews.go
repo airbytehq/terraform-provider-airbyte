@@ -45,7 +45,8 @@ type SourceWikipediaPageviews struct {
 	// If you want to filter by project, use the domain of any Wikimedia project.
 	Project string `json:"project"`
 	// The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format. Also serves as the date to retrieve data for the top articles.
-	Start                string                              `json:"start"`
+	Start string `json:"start"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceWikipediaPageviewsSourceType `const:"wikipedia-pageviews" json:"sourceType"`
 	AdditionalProperties any                                 `additionalProperties:"true" json:"-"`
 }

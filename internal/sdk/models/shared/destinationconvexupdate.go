@@ -35,7 +35,8 @@ type DestinationConvexUpdate struct {
 	// API access key used to send data to a Convex deployment.
 	AccessKey *string `json:"access_key,omitempty"`
 	// URL of the Convex deployment that is the destination
-	DeploymentURL   *string                                 `json:"deployment_url,omitempty"`
+	DeploymentURL *string `json:"deployment_url,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationConvexUpdateDestinationType `const:"convex" json:"destinationType"`
 }
 

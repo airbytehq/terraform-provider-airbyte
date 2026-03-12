@@ -36,7 +36,8 @@ type SourceChartmogulUpdate struct {
 	// Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
 	APIKey *string `json:"api_key,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. When feasible, any data before this date will not be replicated.
-	StartDate            *time.Time                        `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceChartmogulUpdateSourceType `const:"chartmogul" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

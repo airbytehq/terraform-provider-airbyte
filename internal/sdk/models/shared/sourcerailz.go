@@ -37,7 +37,8 @@ type SourceRailz struct {
 	// Secret key (secret_key)
 	SecretKey string `json:"secret_key"`
 	// Start date
-	StartDate  string                 `json:"start_date"`
+	StartDate string `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceRailzSourceType `const:"railz" json:"sourceType"`
 }
 

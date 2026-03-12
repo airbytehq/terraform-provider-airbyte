@@ -33,7 +33,8 @@ func (e *SourceLumaUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceLumaUpdate struct {
 	// Get your API key on lu.ma Calendars dashboard → Settings.
-	APIKey               *string                     `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLumaUpdateSourceType `const:"luma" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

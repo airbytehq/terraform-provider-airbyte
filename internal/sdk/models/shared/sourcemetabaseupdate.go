@@ -41,8 +41,9 @@ type SourceMetabaseUpdate struct {
 	//   http://localhost:3000/api/session
 	// ``` Then copy the value of the `id` field returned by a successful call to that API.
 	// Note that by default, sessions are good for 14 days and needs to be regenerated.
-	SessionToken         *string                         `json:"session_token,omitempty"`
-	Username             *string                         `json:"username,omitempty"`
+	SessionToken *string `json:"session_token,omitempty"`
+	Username     *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMetabaseUpdateSourceType `const:"metabase" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

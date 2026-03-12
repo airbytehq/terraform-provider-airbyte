@@ -33,7 +33,8 @@ func (e *SourceGlassfrogSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceGlassfrog struct {
 	// API key provided by Glassfrog
-	APIKey               string                     `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGlassfrogSourceType `const:"glassfrog" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

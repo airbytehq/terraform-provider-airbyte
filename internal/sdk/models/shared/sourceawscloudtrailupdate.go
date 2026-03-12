@@ -71,7 +71,8 @@ type SourceAwsCloudtrailUpdate struct {
 	AwsSecretKey           *string                                                                                                                            `json:"aws_secret_key,omitempty"`
 	LookupAttributesFilter *SourceAwsCloudtrailUpdateFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody `json:"lookup_attributes_filter,omitempty"`
 	// The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
-	StartDate            *types.Date                          `json:"start_date,omitempty"`
+	StartDate *types.Date `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAwsCloudtrailUpdateSourceType `const:"aws-cloudtrail" json:"sourceType"`
 	AdditionalProperties any                                  `additionalProperties:"true" json:"-"`
 }

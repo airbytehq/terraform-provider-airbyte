@@ -65,7 +65,8 @@ type SourceMailgun struct {
 	// Primary account API key to access your Mailgun data.
 	PrivateKey string `json:"private_key"`
 	// UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
-	StartDate            *time.Time               `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMailgunSourceType `const:"mailgun" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

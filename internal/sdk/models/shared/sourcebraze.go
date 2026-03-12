@@ -38,7 +38,8 @@ type SourceBraze struct {
 	// Rows after this date will be synced
 	StartDate types.Date `json:"start_date"`
 	// Braze REST API endpoint
-	URL                  string                 `json:"url"`
+	URL string `json:"url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBrazeSourceType `const:"braze" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

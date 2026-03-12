@@ -988,6 +988,9 @@ func (d *DestinationGcsUpdateBzip2) GetCodec() *DestinationGcsUpdateSchemasForma
 	return d.Codec
 }
 
+// #region class-body-destinationgcsupdatebzip2
+// #endregion class-body-destinationgcsupdatebzip2
+
 type DestinationGcsUpdateSchemasCodec string
 
 const (
@@ -1637,6 +1640,7 @@ type DestinationGcsUpdate struct {
 	GcsBucketPath *string `json:"gcs_bucket_path,omitempty"`
 	// Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
 	GcsBucketRegion *DestinationGCSUpdateGCSBucketRegion `default:"us" json:"gcs_bucket_region"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationGcsUpdateDestinationType `const:"gcs" json:"destinationType"`
 }
 

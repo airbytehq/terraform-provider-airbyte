@@ -43,7 +43,8 @@ type SourceFireboltUpdate struct {
 	// Engine name to connect to.
 	Engine *string `json:"engine,omitempty"`
 	// The host name of your Firebolt database.
-	Host                 *string                         `json:"host,omitempty"`
+	Host *string `json:"host,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFireboltUpdateSourceType `const:"firebolt" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

@@ -12,6 +12,7 @@ import (
 type APIToken struct {
 	// API Token for making authenticated requests.
 	APIToken string `json:"api_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"api_token" json:"auth_type"`
 }
 
@@ -40,7 +41,8 @@ func (a *APIToken) GetAuthType() string {
 type SourceMondayOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken string `json:"access_token"`
-	authType    string `const:"oauth2.0" json:"auth_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType string `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
@@ -91,6 +93,9 @@ func (s *SourceMondayOAuth20) GetSubdomain() *string {
 	}
 	return s.Subdomain
 }
+
+// #region class-body-sourcemondayoauth20
+// #endregion class-body-sourcemondayoauth20
 
 type SourceMondayAuthorizationMethodType string
 
@@ -209,7 +214,8 @@ type SourceMonday struct {
 	BoardIds    []int64                          `json:"board_ids,omitempty"`
 	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
 	// The number of worker threads to use for the sync.
-	NumWorkers           *int64                  `default:"4" json:"num_workers"`
+	NumWorkers *int64 `default:"4" json:"num_workers"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMondaySourceType `const:"monday" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

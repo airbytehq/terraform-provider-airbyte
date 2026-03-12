@@ -42,7 +42,8 @@ type SourceInstagramUpdate struct {
 	// The number of worker threads to use for the sync.
 	NumWorkers *int64 `default:"15" json:"num_workers"`
 	// The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
-	StartDate  *time.Time                       `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceInstagramUpdateSourceType `const:"instagram" json:"sourceType"`
 }
 

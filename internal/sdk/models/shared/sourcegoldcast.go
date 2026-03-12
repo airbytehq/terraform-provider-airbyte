@@ -33,7 +33,8 @@ func (e *SourceGoldcastSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceGoldcast struct {
 	// Your API Access Key. See <a href="https://help.goldcast.io/hc/en-us/articles/22931655725723-How-To-Create-an-API-Token-in-Goldcast">here</a>. The key is case sensitive.
-	AccessKey            string                    `json:"access_key"`
+	AccessKey string `json:"access_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGoldcastSourceType `const:"goldcast" json:"sourceType"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }

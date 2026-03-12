@@ -33,8 +33,9 @@ func (e *SourceBuildkiteUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBuildkiteUpdate struct {
-	APIKey               *string                          `json:"api_key,omitempty"`
-	StartDate            *time.Time                       `json:"start_date,omitempty"`
+	APIKey    *string    `json:"api_key,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBuildkiteUpdateSourceType `const:"buildkite" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

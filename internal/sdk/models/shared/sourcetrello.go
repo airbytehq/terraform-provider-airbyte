@@ -40,7 +40,8 @@ type SourceTrello struct {
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	// Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
-	Token                string                  `json:"token"`
+	Token string `json:"token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTrelloSourceType `const:"trello" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

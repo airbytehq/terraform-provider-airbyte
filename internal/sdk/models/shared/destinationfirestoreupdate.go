@@ -35,7 +35,8 @@ type DestinationFirestoreUpdate struct {
 	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 	CredentialsJSON *string `json:"credentials_json,omitempty"`
 	// The GCP project ID for the project containing the target BigQuery dataset.
-	ProjectID       *string                                    `json:"project_id,omitempty"`
+	ProjectID *string `json:"project_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationFirestoreUpdateDestinationType `const:"firestore" json:"destinationType"`
 }
 

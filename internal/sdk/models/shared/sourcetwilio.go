@@ -42,7 +42,8 @@ type SourceTwilio struct {
 	// The number of worker threads to use for the sync.
 	NumWorker *int64 `default:"3" json:"num_worker"`
 	// UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
-	StartDate  time.Time               `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceTwilioSourceType `const:"twilio" json:"sourceType"`
 }
 

@@ -18,6 +18,9 @@ func (g *GetSourceIp2whoisRequest) GetSourceID() string {
 	return g.SourceID
 }
 
+// #region class-body-getsourceip2whoisrequest
+// #endregion class-body-getsourceip2whoisrequest
+
 type GetSourceIp2whoisResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -56,3 +59,6 @@ func (g *GetSourceIp2whoisResponse) GetSourceResponse() *shared.SourceResponse {
 	}
 	return g.SourceResponse
 }
+
+// #region class-body-getsourceip2whoisresponse
+// #endregion class-body-getsourceip2whoisresponse

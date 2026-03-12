@@ -35,8 +35,9 @@ func (e *SourceBuzzsproutUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceBuzzsproutUpdate struct {
 	APIKey *string `json:"api_key,omitempty"`
 	// Podcast ID found in `https://www.buzzsprout.com/my/profile/api`
-	PodcastID            *string                           `json:"podcast_id,omitempty"`
-	StartDate            *time.Time                        `json:"start_date,omitempty"`
+	PodcastID *string    `json:"podcast_id,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBuzzsproutUpdateSourceType `const:"buzzsprout" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

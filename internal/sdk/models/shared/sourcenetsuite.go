@@ -47,7 +47,8 @@ type SourceNetsuite struct {
 	// Access token secret
 	TokenSecret string `json:"token_secret"`
 	// The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
-	WindowInDays         *int64                    `default:"30" json:"window_in_days"`
+	WindowInDays *int64 `default:"30" json:"window_in_days"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceNetsuiteSourceType `const:"netsuite" json:"sourceType"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }

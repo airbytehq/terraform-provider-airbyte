@@ -64,7 +64,8 @@ type SourceCoinmarketcap struct {
 	// /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
 	DataType DataType `json:"data_type"`
 	// Cryptocurrency symbols. (only used for quotes stream)
-	Symbols              []string                       `json:"symbols,omitempty"`
+	Symbols []string `json:"symbols,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceCoinmarketcapSourceType `const:"coinmarketcap" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

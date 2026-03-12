@@ -70,8 +70,9 @@ type SourceAppfiguresUpdate struct {
 	// Category term for grouping the search results
 	GroupBy *SourceAppfiguresUpdateGroupBy `default:"product" json:"group_by"`
 	// The store which needs to be searched in streams
-	SearchStore          *string                           `default:"apple" json:"search_store"`
-	StartDate            *time.Time                        `json:"start_date,omitempty"`
+	SearchStore *string    `default:"apple" json:"search_store"`
+	StartDate   *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAppfiguresUpdateSourceType `const:"appfigures" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

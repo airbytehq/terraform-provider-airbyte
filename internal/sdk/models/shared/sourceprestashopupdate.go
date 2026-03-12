@@ -38,7 +38,8 @@ type SourcePrestashopUpdate struct {
 	// The Start date in the format YYYY-MM-DD.
 	StartDate *types.Date `json:"start_date,omitempty"`
 	// Shop URL without trailing slash.
-	URL                  *string                           `json:"url,omitempty"`
+	URL *string `json:"url,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePrestashopUpdateSourceType `const:"prestashop" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

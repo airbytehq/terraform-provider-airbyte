@@ -12,6 +12,7 @@ import (
 
 // SourceOracleUpdateSystemIDSID - Use SID (Oracle System Identifier)
 type SourceOracleUpdateSystemIDSID struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	connectionType *string `const:"sid" json:"connection_type,omitempty"`
 	Sid            *string `json:"sid,omitempty"`
 }
@@ -40,6 +41,7 @@ func (s *SourceOracleUpdateSystemIDSID) GetSid() *string {
 
 // SourceOracleUpdateServiceName - Use service name
 type SourceOracleUpdateServiceName struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	connectionType *string `const:"service_name" json:"connection_type,omitempty"`
 	ServiceName    *string `json:"service_name,omitempty"`
 }
@@ -158,6 +160,7 @@ func (u SourceOracleUpdateConnectBy) MarshalJSON() ([]byte, error) {
 
 // SourceOracleUpdateTLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type SourceOracleUpdateTLSEncryptedVerifyCertificate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	encryptionMethod *string `const:"encrypted_verify_certificate" json:"encryption_method,omitempty"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate *string `json:"ssl_certificate,omitempty"`
@@ -219,7 +222,8 @@ func (e *SourceOracleUpdateEncryptionAlgorithm) UnmarshalJSON(data []byte) error
 type SourceOracleUpdateNativeNetworkEncryptionNNE struct {
 	// This parameter defines what encryption algorithm is used.
 	EncryptionAlgorithm *SourceOracleUpdateEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
-	encryptionMethod    *string                                `const:"client_nne" json:"encryption_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	encryptionMethod *string `const:"client_nne" json:"encryption_method,omitempty"`
 }
 
 func (s SourceOracleUpdateNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -338,6 +342,7 @@ type SourceOracleUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_PASSWORD_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -396,6 +401,7 @@ type SourceOracleUpdateSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_KEY_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -448,6 +454,7 @@ func (s *SourceOracleUpdateSSHKeyAuthentication) GetTunnelUser() *string {
 
 type SourceOracleUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"NO_TUNNEL" json:"tunnel_method,omitempty"`
 }
 
@@ -626,7 +633,8 @@ type SourceOracleUpdate struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceOracleUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
-	Username   *string                       `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceOracleUpdateSourceType `const:"oracle" json:"sourceType"`
 }
 

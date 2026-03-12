@@ -37,7 +37,8 @@ type SourceBigquery struct {
 	// The dataset ID to search for tables and views. If you are only loading data from one dataset, setting this option could result in much faster schema discovery.
 	DatasetID *string `json:"dataset_id,omitempty"`
 	// The GCP project ID for the project containing the target BigQuery dataset.
-	ProjectID  string                    `json:"project_id"`
+	ProjectID string `json:"project_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceBigquerySourceType `const:"bigquery" json:"sourceType"`
 }
 

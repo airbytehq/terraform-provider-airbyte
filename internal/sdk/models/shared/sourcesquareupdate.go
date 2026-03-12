@@ -12,7 +12,8 @@ import (
 
 type SourceSquareUpdateAPIKey struct {
 	// The API key for a Square application
-	APIKey   *string `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"API Key" json:"auth_type,omitempty"`
 }
 
@@ -39,6 +40,7 @@ func (s *SourceSquareUpdateAPIKey) GetAuthType() *string {
 }
 
 type SourceSquareUpdateOauthAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"OAuth" json:"auth_type,omitempty"`
 	// The Square-issued ID of your application
 	ClientID *string `json:"client_id,omitempty"`
@@ -205,7 +207,8 @@ type SourceSquareUpdate struct {
 	// Determines whether to use the sandbox or production environment.
 	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
-	StartDate            *types.Date                   `default:"2021-01-01" json:"start_date"`
+	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSquareUpdateSourceType `const:"square" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

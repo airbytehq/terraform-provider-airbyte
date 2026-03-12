@@ -14,6 +14,7 @@ import (
 type SourceZendeskChatUpdateAccessToken struct {
 	// The Access Token to make authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentials *string `const:"access_token" json:"credentials,omitempty"`
 }
 
@@ -46,7 +47,8 @@ type SourceZendeskChatUpdateOAuth20 struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
 	ClientSecret *string `json:"client_secret,omitempty"`
-	credentials  *string `const:"oauth2.0" json:"credentials,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	credentials *string `const:"oauth2.0" json:"credentials,omitempty"`
 	// Refresh Token to obtain new Access Token, when it's expired.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
@@ -93,6 +95,9 @@ func (s *SourceZendeskChatUpdateOAuth20) GetRefreshToken() *string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourcezendeskchatupdateoauth20
+// #endregion class-body-sourcezendeskchatupdateoauth20
 
 type SourceZendeskChatUpdateAuthorizationMethodType string
 
@@ -211,7 +216,8 @@ type SourceZendeskChatUpdate struct {
 	// The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// The unique subdomain of your Zendesk account (without https://). <a href=\"https://support.zendesk.com/hc/en-us/articles/4409381383578-Where-can-I-find-my-Zendesk-subdomain\">See the Zendesk docs to find your subdomain</a>.
-	Subdomain            *string                            `json:"subdomain,omitempty"`
+	Subdomain *string `json:"subdomain,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceZendeskChatUpdateSourceType `const:"zendesk-chat" json:"sourceType"`
 	AdditionalProperties any                                `additionalProperties:"true" json:"-"`
 }

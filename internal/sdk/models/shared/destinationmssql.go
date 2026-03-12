@@ -959,7 +959,8 @@ type DestinationMssql struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationMssqlSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
-	User                 string                           `json:"user"`
+	User string `json:"user"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationMssqlDestinationType `const:"mssql" json:"destinationType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

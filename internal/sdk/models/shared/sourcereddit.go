@@ -44,7 +44,8 @@ type SourceReddit struct {
 	Query     *string   `default:"airbyte" json:"query"`
 	StartDate time.Time `json:"start_date"`
 	// Subreddits for exploration
-	Subreddits           []any                   `json:"subreddits,omitempty"`
+	Subreddits []any `json:"subreddits,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceRedditSourceType `const:"reddit" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

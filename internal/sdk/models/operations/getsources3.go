@@ -18,6 +18,9 @@ func (g *GetSourceS3Request) GetSourceID() string {
 	return g.SourceID
 }
 
+// #region class-body-getsources3request
+// #endregion class-body-getsources3request
+
 type GetSourceS3Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -56,3 +59,6 @@ func (g *GetSourceS3Response) GetSourceResponse() *shared.SourceResponse {
 	}
 	return g.SourceResponse
 }
+
+// #region class-body-getsources3response
+// #endregion class-body-getsources3response

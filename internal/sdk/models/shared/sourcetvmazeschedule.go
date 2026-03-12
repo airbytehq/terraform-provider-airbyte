@@ -39,9 +39,10 @@ type SourceTvmazeSchedule struct {
 	// Start date for TV schedule retrieval. May be in the future.
 	StartDate string `json:"start_date"`
 	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for all countries plus global web channels (e.g. Netflix). Alternatively, set to 'global' for just global web channels.
-	WebScheduleCountryCode *string                         `json:"web_schedule_country_code,omitempty"`
-	sourceType             *SourceTvmazeScheduleSourceType `const:"tvmaze-schedule" json:"sourceType"`
-	AdditionalProperties   any                             `additionalProperties:"true" json:"-"`
+	WebScheduleCountryCode *string `json:"web_schedule_country_code,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceTvmazeScheduleSourceType `const:"tvmaze-schedule" json:"sourceType"`
+	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceTvmazeSchedule) MarshalJSON() ([]byte, error) {

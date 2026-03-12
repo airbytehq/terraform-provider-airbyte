@@ -38,8 +38,9 @@ type DestinationAstraUpdateOpenAICompatible struct {
 	// The base URL for your OpenAI-compatible service
 	BaseURL *string `json:"base_url,omitempty"`
 	// The number of dimensions the embedding model is generating
-	Dimensions *int64                                                `json:"dimensions,omitempty"`
-	mode       *DestinationAstraUpdateSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
+	Dimensions *int64 `json:"dimensions,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationAstraUpdateSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -115,8 +116,9 @@ type DestinationAstraUpdateAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase *string `json:"api_base,omitempty"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment *string                                              `json:"deployment,omitempty"`
-	mode       *DestinationAstraUpdateSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	Deployment *string `json:"deployment,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationAstraUpdateSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey *string `json:"openai_key,omitempty"`
 }
@@ -182,6 +184,7 @@ func (e *DestinationAstraUpdateSchemasEmbeddingMode) UnmarshalJSON(data []byte) 
 
 // DestinationAstraUpdateFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationAstraUpdateFake struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationAstraUpdateSchemasEmbeddingMode `const:"fake" json:"mode"`
 }
 
@@ -225,8 +228,9 @@ func (e *DestinationAstraUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationAstraUpdateCohere - Use the Cohere API to embed text.
 type DestinationAstraUpdateCohere struct {
-	CohereKey *string                            `json:"cohere_key,omitempty"`
-	mode      *DestinationAstraUpdateSchemasMode `const:"cohere" json:"mode"`
+	CohereKey *string `json:"cohere_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationAstraUpdateSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationAstraUpdateCohere) MarshalJSON() ([]byte, error) {
@@ -276,6 +280,7 @@ func (e *DestinationAstraUpdateMode) UnmarshalJSON(data []byte) error {
 
 // DestinationAstraUpdateOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationAstraUpdateOpenAI struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode      *DestinationAstraUpdateMode `const:"openai" json:"mode"`
 	OpenaiKey *string                     `json:"openai_key,omitempty"`
 }
@@ -626,8 +631,9 @@ func (e *DestinationAstraUpdateSchemasProcessingTextSplitterTextSplitterMode) Un
 // DestinationAstraUpdateByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationAstraUpdateByProgrammingLanguage struct {
 	// Split code in suitable places based on the programming language
-	Language *DestinationAstraUpdateLanguage                                      `json:"language,omitempty"`
-	mode     *DestinationAstraUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+	Language *DestinationAstraUpdateLanguage `json:"language,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationAstraUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationAstraUpdateByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -677,6 +683,7 @@ func (e *DestinationAstraUpdateSchemasProcessingTextSplitterMode) UnmarshalJSON(
 
 // DestinationAstraUpdateByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
 type DestinationAstraUpdateByMarkdownHeader struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationAstraUpdateSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
 	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
 	SplitLevel *int64 `default:"1" json:"split_level"`
@@ -730,8 +737,9 @@ func (e *DestinationAstraUpdateSchemasProcessingMode) UnmarshalJSON(data []byte)
 // DestinationAstraUpdateBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationAstraUpdateBySeparator struct {
 	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool                                        `default:"false" json:"keep_separator"`
-	mode          *DestinationAstraUpdateSchemasProcessingMode `const:"separator" json:"mode"`
+	KeepSeparator *bool `default:"false" json:"keep_separator"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationAstraUpdateSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
 }
@@ -979,9 +987,10 @@ type DestinationAstraUpdate struct {
 	// Astra DB gives developers the APIs, real-time data and ecosystem integrations to put accurate RAG and Gen AI apps with fewer hallucinations in production.
 	Indexing *DestinationAstraUpdateIndexing `json:"indexing,omitempty"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText     *bool                                        `default:"false" json:"omit_raw_text"`
-	Processing      *DestinationAstraUpdateProcessingConfigModel `json:"processing,omitempty"`
-	destinationType *DestinationAstraUpdateDestinationType       `const:"astra" json:"destinationType"`
+	OmitRawText *bool                                        `default:"false" json:"omit_raw_text"`
+	Processing  *DestinationAstraUpdateProcessingConfigModel `json:"processing,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType *DestinationAstraUpdateDestinationType `const:"astra" json:"destinationType"`
 }
 
 func (d DestinationAstraUpdate) MarshalJSON() ([]byte, error) {

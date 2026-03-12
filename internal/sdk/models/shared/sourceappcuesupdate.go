@@ -34,10 +34,11 @@ func (e *SourceAppcuesUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceAppcuesUpdate struct {
 	// Account ID of Appcues found in account settings page (https://studio.appcues.com/settings/account)
-	AccountID            *string                        `json:"account_id,omitempty"`
-	Password             *string                        `json:"password,omitempty"`
-	StartDate            *time.Time                     `json:"start_date,omitempty"`
-	Username             *string                        `json:"username,omitempty"`
+	AccountID *string    `json:"account_id,omitempty"`
+	Password  *string    `json:"password,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	Username  *string    `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAppcuesUpdateSourceType `const:"appcues" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

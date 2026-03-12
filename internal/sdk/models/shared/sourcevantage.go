@@ -33,7 +33,8 @@ func (e *SourceVantageSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceVantage struct {
 	// Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
-	AccessToken          string                   `json:"access_token"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceVantageSourceType `const:"vantage" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

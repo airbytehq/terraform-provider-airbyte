@@ -38,8 +38,9 @@ type SourceGuruUpdate struct {
 	SearchCardsQuery *string    `json:"search_cards_query,omitempty"`
 	StartDate        *time.Time `json:"start_date,omitempty"`
 	// Team ID received through response of /teams streams, make sure about access to the team
-	TeamID               *string                     `json:"team_id,omitempty"`
-	Username             *string                     `json:"username,omitempty"`
+	TeamID   *string `json:"team_id,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGuruUpdateSourceType `const:"guru" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

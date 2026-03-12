@@ -38,7 +38,8 @@ type SourceEzofficeinventoryUpdate struct {
 	// Earliest date you want to sync historical streams (inventory_histories, asset_histories, asset_stock_histories) from
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// The company name used in signup, also visible in the URL when logged in.
-	Subdomain            *string                                  `json:"subdomain,omitempty"`
+	Subdomain *string `json:"subdomain,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceEzofficeinventoryUpdateSourceType `const:"ezofficeinventory" json:"sourceType"`
 	AdditionalProperties any                                      `additionalProperties:"true" json:"-"`
 }

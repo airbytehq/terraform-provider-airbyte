@@ -151,7 +151,8 @@ type SourceZohoCrm struct {
 	// OAuth2.0 Refresh Token
 	RefreshToken string `json:"refresh_token"`
 	// ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
-	StartDatetime        *time.Time               `json:"start_datetime,omitempty"`
+	StartDatetime *time.Time `json:"start_datetime,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceZohoCrmSourceType `const:"zoho-crm" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

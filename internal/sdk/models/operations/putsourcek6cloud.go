@@ -26,6 +26,9 @@ func (p *PutSourceK6CloudRequest) GetSourceK6CloudPutRequest() shared.SourceK6Cl
 	return p.SourceK6CloudPutRequest
 }
 
+// #region class-body-putsourcek6cloudrequest
+// #endregion class-body-putsourcek6cloudrequest
+
 type PutSourceK6CloudResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (p *PutSourceK6CloudResponse) GetSourceResponse() *shared.SourceResponse {
 	}
 	return p.SourceResponse
 }
+
+// #region class-body-putsourcek6cloudresponse
+// #endregion class-body-putsourcek6cloudresponse

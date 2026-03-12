@@ -35,7 +35,8 @@ type SourcePipedriveUpdate struct {
 	// The Pipedrive API Token.
 	APIToken *string `json:"api_token,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
-	ReplicationStartDate *string                          `json:"replication_start_date,omitempty"`
+	ReplicationStartDate *string `json:"replication_start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePipedriveUpdateSourceType `const:"pipedrive" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

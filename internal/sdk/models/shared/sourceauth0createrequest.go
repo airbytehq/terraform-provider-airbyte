@@ -62,3 +62,6 @@ func (s *SourceAuth0CreateRequest) GetSecretID() *string {
 	}
 	return s.SecretID
 }
+
+// #region class-body-sourceauth0createrequest
+// #endregion class-body-sourceauth0createrequest

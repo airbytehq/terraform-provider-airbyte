@@ -32,7 +32,8 @@ func (e *SourcePendoSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePendo struct {
-	APIKey               string                 `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePendoSourceType `const:"pendo" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

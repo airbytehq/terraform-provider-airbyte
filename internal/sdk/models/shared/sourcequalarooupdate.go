@@ -39,7 +39,8 @@ type SourceQualarooUpdate struct {
 	// IDs of the surveys from which you'd like to replicate data. If left empty, data from all surveys to which you have access will be replicated.
 	SurveyIds []string `json:"survey_ids,omitempty"`
 	// A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
-	Token                *string                         `json:"token,omitempty"`
+	Token *string `json:"token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceQualarooUpdateSourceType `const:"qualaroo" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

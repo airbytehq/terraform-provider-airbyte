@@ -158,6 +158,9 @@ func (d *DestinationS3ParquetColumnarStorage) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3parquetcolumnarstorage
+// #endregion class-body-destinations3parquetcolumnarstorage
+
 type DestinationS3SchemasFormatOutputFormat3CompressionCodecCodec string
 
 const (
@@ -210,6 +213,9 @@ func (d *DestinationS3Snappy) GetAdditionalProperties() any {
 	}
 	return d.AdditionalProperties
 }
+
+// #region class-body-destinations3snappy
+// #endregion class-body-destinations3snappy
 
 type DestinationS3SchemasFormatOutputFormat3Codec string
 
@@ -280,6 +286,9 @@ func (d *DestinationS3Zstandard) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3zstandard
+// #endregion class-body-destinations3zstandard
+
 type DestinationS3SchemasFormatOutputFormatCodec string
 
 const (
@@ -341,6 +350,9 @@ func (d *DestinationS3Xz) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3xz
+// #endregion class-body-destinations3xz
+
 type DestinationS3SchemasFormatCodec string
 
 const (
@@ -393,6 +405,9 @@ func (d *DestinationS3Bzip2) GetAdditionalProperties() any {
 	}
 	return d.AdditionalProperties
 }
+
+// #region class-body-destinations3bzip2
+// #endregion class-body-destinations3bzip2
 
 type DestinationS3SchemasCodec string
 
@@ -455,6 +470,9 @@ func (d *DestinationS3Deflate) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3deflate
+// #endregion class-body-destinations3deflate
+
 type DestinationS3Codec string
 
 const (
@@ -507,6 +525,9 @@ func (d *DestinationS3SchemasFormatNoCompression) GetAdditionalProperties() any 
 	}
 	return d.AdditionalProperties
 }
+
+// #region class-body-destinations3schemasformatnocompression
+// #endregion class-body-destinations3schemasformatnocompression
 
 type DestinationS3CompressionCodecType string
 
@@ -764,6 +785,9 @@ func (d *DestinationS3AvroApacheAvro) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3avroapacheavro
+// #endregion class-body-destinations3avroapacheavro
+
 type DestinationS3SchemasFormatOutputFormatCompressionType string
 
 const (
@@ -817,6 +841,9 @@ func (d *DestinationS3SchemasGZIP) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3schemasgzip
+// #endregion class-body-destinations3schemasgzip
+
 type DestinationS3SchemasFormatCompressionType string
 
 const (
@@ -869,6 +896,9 @@ func (d *DestinationS3SchemasNoCompression) GetAdditionalProperties() any {
 	}
 	return d.AdditionalProperties
 }
+
+// #region class-body-destinations3schemasnocompression
+// #endregion class-body-destinations3schemasnocompression
 
 type DestinationS3SchemasCompressionUnionType string
 
@@ -1056,6 +1086,9 @@ func (d *DestinationS3JSONLinesNewlineDelimitedJSON) GetAdditionalProperties() a
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3jsonlinesnewlinedelimitedjson
+// #endregion class-body-destinations3jsonlinesnewlinedelimitedjson
+
 type DestinationS3SchemasCompressionType string
 
 const (
@@ -1109,6 +1142,9 @@ func (d *DestinationS3GZIP) GetAdditionalProperties() any {
 	return d.AdditionalProperties
 }
 
+// #region class-body-destinations3gzip
+// #endregion class-body-destinations3gzip
+
 type DestinationS3CompressionType string
 
 const (
@@ -1161,6 +1197,9 @@ func (d *DestinationS3NoCompression) GetAdditionalProperties() any {
 	}
 	return d.AdditionalProperties
 }
+
+// #region class-body-destinations3nocompression
+// #endregion class-body-destinations3nocompression
 
 type DestinationS3CompressionUnionType string
 
@@ -1347,6 +1386,9 @@ func (d *DestinationS3CSVCommaSeparatedValues) GetAdditionalProperties() any {
 	}
 	return d.AdditionalProperties
 }
+
+// #region class-body-destinations3csvcommaseparatedvalues
+// #endregion class-body-destinations3csvcommaseparatedvalues
 
 type DestinationS3OutputFormatType string
 
@@ -1656,7 +1698,8 @@ type DestinationS3 struct {
 	// Format string on how data will be organized inside the bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
 	S3PathFormat *string `json:"s3_path_format,omitempty"`
 	// The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
-	SecretAccessKey      *string                       `json:"secret_access_key,omitempty"`
+	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationS3DestinationType `const:"s3" json:"destinationType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }
@@ -1752,3 +1795,6 @@ func (d *DestinationS3) GetAdditionalProperties() any {
 	}
 	return d.AdditionalProperties
 }
+
+// #region class-body-destinations3
+// #endregion class-body-destinations3

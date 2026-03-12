@@ -33,7 +33,8 @@ func (e *SourceSecodaSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceSecoda struct {
 	// Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
-	APIKey               string                  `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSecodaSourceType `const:"secoda" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

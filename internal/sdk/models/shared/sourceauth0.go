@@ -12,7 +12,8 @@ import (
 type OAuth2AccessToken struct {
 	// Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.
 	AccessToken string `json:"access_token"`
-	authType    string `const:"oauth2_access_token" json:"auth_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType string `const:"oauth2_access_token" json:"auth_type"`
 }
 
 func (o OAuth2AccessToken) MarshalJSON() ([]byte, error) {
@@ -37,9 +38,13 @@ func (o *OAuth2AccessToken) GetAuthType() string {
 	return "oauth2_access_token"
 }
 
+// #region class-body-oauth2accesstoken
+// #endregion class-body-oauth2accesstoken
+
 type OAuth2ConfidentialApplication struct {
 	// The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>
 	Audience string `json:"audience"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"oauth2_confidential_application" json:"auth_type"`
 	// Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
 	ClientID string `json:"client_id"`
@@ -82,6 +87,9 @@ func (o *OAuth2ConfidentialApplication) GetClientSecret() string {
 	}
 	return o.ClientSecret
 }
+
+// #region class-body-oauth2confidentialapplication
+// #endregion class-body-oauth2confidentialapplication
 
 type AuthenticationMethodType string
 
@@ -200,7 +208,8 @@ type SourceAuth0 struct {
 	BaseURL     string               `json:"base_url"`
 	Credentials AuthenticationMethod `json:"credentials"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            *string                `default:"2023-08-05T00:43:59.244Z" json:"start_date"`
+	StartDate *string `default:"2023-08-05T00:43:59.244Z" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAuth0SourceType `const:"auth0" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }
@@ -247,3 +256,6 @@ func (s *SourceAuth0) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourceauth0
+// #endregion class-body-sourceauth0

@@ -11,6 +11,7 @@ import (
 )
 
 type SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"Service" json:"auth_type,omitempty"`
 	// The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 	CredentialsJSON string `json:"credentials_json"`
@@ -41,7 +42,8 @@ func (s *SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication) GetCredent
 type SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"Client" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Google Analytics developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Google Analytics developer application.
@@ -380,7 +382,8 @@ type SourceGoogleAnalyticsDataAPIEnabled struct {
 	CohortReportSettings *CohortReportSettings `json:"cohortReportSettings,omitempty"`
 	Cohorts              []Cohorts             `json:"cohorts,omitempty"`
 	CohortsRange         *CohortsRange         `json:"cohortsRange,omitempty"`
-	enabled              *string               `const:"true" json:"enabled,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	enabled *string `const:"true" json:"enabled,omitempty"`
 }
 
 func (s SourceGoogleAnalyticsDataAPIEnabled) MarshalJSON() ([]byte, error) {
@@ -420,6 +423,7 @@ func (s *SourceGoogleAnalyticsDataAPIEnabled) GetEnabled() *string {
 }
 
 type SourceGoogleAnalyticsDataAPIDisabled struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	enabled *string `const:"false" json:"enabled,omitempty"`
 }
 
@@ -529,8 +533,9 @@ func (u CohortReports) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleAnalyticsDataAPIDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPIDoubleValue) MarshalJSON() ([]byte, error) {
@@ -556,7 +561,8 @@ func (s *SourceGoogleAnalyticsDataAPIDoubleValue) GetValueType() string {
 }
 
 type SourceGoogleAnalyticsDataAPIInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -581,6 +587,9 @@ func (s *SourceGoogleAnalyticsDataAPIInt64Value) GetValue() string {
 func (s *SourceGoogleAnalyticsDataAPIInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapiint64value
+// #endregion class-body-sourcegoogleanalyticsdataapiint64value
 
 type FromValueType string
 
@@ -672,8 +681,9 @@ func (u FromValue) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasDoubleValue) MarshalJSON() ([]byte, error) {
@@ -699,7 +709,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasDoubleValue) GetValueType() string {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -724,6 +735,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasInt64Value) GetValue() string {
 func (s *SourceGoogleAnalyticsDataAPISchemasInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemasint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemasint64value
 
 type ToValueType string
 
@@ -815,6 +829,7 @@ func (u ToValue) MarshalJSON() ([]byte, error) {
 }
 
 type BetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string    `const:"betweenFilter" json:"filter_name"`
 	FromValue  FromValue `json:"fromValue"`
 	ToValue    ToValue   `json:"toValue"`
@@ -888,8 +903,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasValidEnums) UnmarshalJSON(data []byt
 }
 
 type DoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (d DoubleValue) MarshalJSON() ([]byte, error) {
@@ -915,7 +931,8 @@ func (d *DoubleValue) GetValueType() string {
 }
 
 type Int64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -940,6 +957,9 @@ func (i *Int64Value) GetValue() string {
 func (i *Int64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-int64value
+// #endregion class-body-int64value
 
 type ValueType string
 
@@ -1031,6 +1051,7 @@ func (u Value) MarshalJSON() ([]byte, error) {
 }
 
 type NumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                          `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasValidEnums `json:"operation"`
 	Value      Value                                           `json:"value"`
@@ -1066,9 +1087,10 @@ func (n *NumericFilter) GetValue() Value {
 }
 
 type InListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (i InListFilter) MarshalJSON() ([]byte, error) {
@@ -1142,10 +1164,11 @@ func (e *SourceGoogleAnalyticsDataAPIValidEnums) UnmarshalJSON(data []byte) erro
 }
 
 type StringFilter struct {
-	CaseSensitive *bool                                    `json:"caseSensitive,omitempty"`
-	filterName    string                                   `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPIValidEnums `json:"matchType,omitempty"`
-	Value         string                                   `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                   `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPIValidEnums `json:"matchType,omitempty"`
+	Value      string                                   `json:"value"`
 }
 
 func (s StringFilter) MarshalJSON() ([]byte, error) {
@@ -1327,9 +1350,10 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilt
 
 // SourceGoogleAnalyticsDataAPIFilter - A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all dimensions.
 type SourceGoogleAnalyticsDataAPIFilter struct {
-	FieldName  string                                                                     `json:"field_name"`
-	Filter     SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter `json:"filter"`
-	filterType *string                                                                    `const:"filter" json:"filter_type,omitempty"`
+	FieldName string                                                                     `json:"field_name"`
+	Filter    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter `json:"filter"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType *string `const:"filter" json:"filter_type,omitempty"`
 }
 
 func (s SourceGoogleAnalyticsDataAPIFilter) MarshalJSON() ([]byte, error) {
@@ -1362,8 +1386,9 @@ func (s *SourceGoogleAnalyticsDataAPIFilter) GetFilterType() *string {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue) MarshalJSON() ([]byte, error) {
@@ -1388,8 +1413,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressiondoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressiondoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -1414,6 +1443,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressionint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressionint64value
 
 type SourceGoogleAnalyticsDataAPISchemasFromValueType string
 
@@ -1505,8 +1537,9 @@ func (u SourceGoogleAnalyticsDataAPISchemasFromValue) MarshalJSON() ([]byte, err
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -1531,8 +1564,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressionfilterdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressionfilterdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -1557,6 +1594,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressionfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3expressionfilterint64value
 
 type SourceGoogleAnalyticsDataAPISchemasToValueType string
 
@@ -1648,6 +1688,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasToValue) MarshalJSON() ([]byte, error
 }
 
 type SourceGoogleAnalyticsDataAPISchemasBetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                       `const:"betweenFilter" json:"filter_name"`
 	FromValue  SourceGoogleAnalyticsDataAPISchemasFromValue `json:"fromValue"`
 	ToValue    SourceGoogleAnalyticsDataAPISchemasToValue   `json:"toValue"`
@@ -1721,8 +1762,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue) MarshalJSON() ([]byte, error) {
@@ -1747,8 +1789,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3doublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3doublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -1773,6 +1819,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3int64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter3int64value
 
 type SourceGoogleAnalyticsDataAPISchemasValueType string
 
@@ -1864,6 +1913,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasValue) MarshalJSON() ([]byte, error) 
 }
 
 type SourceGoogleAnalyticsDataAPISchemasNumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                                            `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums `json:"operation"`
 	Value      SourceGoogleAnalyticsDataAPISchemasValue                                                          `json:"value"`
@@ -1899,9 +1949,10 @@ func (s *SourceGoogleAnalyticsDataAPISchemasNumericFilter) GetValue() SourceGoog
 }
 
 type SourceGoogleAnalyticsDataAPISchemasInListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasInListFilter) MarshalJSON() ([]byte, error) {
@@ -1975,10 +2026,11 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 }
 
 type SourceGoogleAnalyticsDataAPISchemasStringFilter struct {
-	CaseSensitive *bool                                                                                            `json:"caseSensitive,omitempty"`
-	filterName    string                                                                                           `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums `json:"matchType,omitempty"`
-	Value         string                                                                                           `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                                                                           `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums `json:"matchType,omitempty"`
+	Value      string                                                                                           `json:"value"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasStringFilter) MarshalJSON() ([]byte, error) {
@@ -2191,7 +2243,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasExpression) GetFilter() SourceGoogle
 // NotExpression - The FilterExpression is NOT of notExpression.
 type NotExpression struct {
 	Expression *SourceGoogleAnalyticsDataAPISchemasExpression `json:"expression,omitempty"`
-	filterType *string                                        `const:"notExpression" json:"filter_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType *string `const:"notExpression" json:"filter_type,omitempty"`
 }
 
 func (n NotExpression) MarshalJSON() ([]byte, error) {
@@ -2217,8 +2270,9 @@ func (n *NotExpression) GetFilterType() *string {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -2244,7 +2298,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDou
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -2269,6 +2324,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValueType string
 
@@ -2360,8 +2418,9 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFrom
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -2387,7 +2446,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -2412,6 +2472,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilterint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValueType string
 
@@ -2503,6 +2566,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToVa
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                        `const:"betweenFilter" json:"filter_name"`
 	FromValue  SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValue `json:"fromValue"`
 	ToValue    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValue   `json:"toValue"`
@@ -2576,8 +2640,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterVal
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue) MarshalJSON() ([]byte, error) {
@@ -2602,8 +2667,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter2doublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter2doublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -2628,6 +2697,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter2int64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter2int64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValueType string
 
@@ -2719,6 +2791,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValu
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                           `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValidEnums `json:"operation"`
 	Value      SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValue        `json:"value"`
@@ -2754,9 +2827,10 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNum
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter) MarshalJSON() ([]byte, error) {
@@ -2830,10 +2904,11 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter struct {
-	CaseSensitive *bool                                                                                             `json:"caseSensitive,omitempty"`
-	filterName    string                                                                                            `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums `json:"matchType,omitempty"`
-	Value         string                                                                                            `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                                                                            `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums `json:"matchType,omitempty"`
+	Value      string                                                                                            `json:"value"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter) MarshalJSON() ([]byte, error) {
@@ -3046,7 +3121,8 @@ func (s *SourceGoogleAnalyticsDataAPIExpression) GetFilter() SourceGoogleAnalyti
 // OrGroup - The FilterExpressions in orGroup have an OR relationship.
 type OrGroup struct {
 	Expressions []SourceGoogleAnalyticsDataAPIExpression `json:"expressions"`
-	filterType  string                                   `const:"orGroup" json:"filter_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType string `const:"orGroup" json:"filter_type"`
 }
 
 func (o OrGroup) MarshalJSON() ([]byte, error) {
@@ -3072,8 +3148,9 @@ func (o *OrGroup) GetFilterType() string {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue) MarshalJSON() ([]byte, error) {
@@ -3098,8 +3175,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -3124,6 +3205,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValueType string
 
@@ -3215,8 +3299,9 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue) MarshalJ
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -3241,8 +3326,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsfilterdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsfilterdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -3267,6 +3356,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1expressionsfilterint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValueType string
 
@@ -3358,6 +3450,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue) MarshalJSO
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                         `const:"betweenFilter" json:"filter_name"`
 	FromValue  SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue `json:"fromValue"`
 	ToValue    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue   `json:"toValue"`
@@ -3431,8 +3524,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue) MarshalJSON() ([]byte, error) {
@@ -3457,8 +3551,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1doublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1doublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -3483,6 +3581,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1int64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraydimensionfilterdimensionsfilter1int64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValueType string
 
@@ -3574,6 +3675,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue) MarshalJSON(
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                                                       `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums `json:"operation"`
 	Value      SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue                                                   `json:"value"`
@@ -3609,9 +3711,10 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter) Get
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter) MarshalJSON() ([]byte, error) {
@@ -3685,10 +3788,11 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter struct {
-	CaseSensitive *bool                                                                                             `json:"caseSensitive,omitempty"`
-	filterName    string                                                                                            `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums `json:"matchType,omitempty"`
-	Value         string                                                                                            `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                                                                            `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums `json:"matchType,omitempty"`
+	Value      string                                                                                            `json:"value"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter) MarshalJSON() ([]byte, error) {
@@ -3901,7 +4005,8 @@ func (e *Expression) GetFilter() SourceGoogleAnalyticsDataAPISchemasCustomReport
 // AndGroup - The FilterExpressions in andGroup have an AND relationship.
 type AndGroup struct {
 	Expressions []Expression `json:"expressions"`
-	filterType  string       `const:"andGroup" json:"filter_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType string `const:"andGroup" json:"filter_type"`
 }
 
 func (a AndGroup) MarshalJSON() ([]byte, error) {
@@ -4069,8 +4174,9 @@ func (u DimensionsFilter) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -4096,7 +4202,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDouble
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -4121,6 +4228,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64V
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfilterint64value
 
 type SourceGoogleAnalyticsDataAPIFromValueType string
 
@@ -4212,8 +4322,9 @@ func (u SourceGoogleAnalyticsDataAPIFromValue) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -4239,7 +4350,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -4264,6 +4376,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilterint64value
 
 type SourceGoogleAnalyticsDataAPIToValueType string
 
@@ -4355,6 +4470,7 @@ func (u SourceGoogleAnalyticsDataAPIToValue) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleAnalyticsDataAPIBetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                `const:"betweenFilter" json:"filter_name"`
 	FromValue  SourceGoogleAnalyticsDataAPIFromValue `json:"fromValue"`
 	ToValue    SourceGoogleAnalyticsDataAPIToValue   `json:"toValue"`
@@ -4428,8 +4544,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValidE
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue) MarshalJSON() ([]byte, error) {
@@ -4455,7 +4572,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue) GetVa
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -4480,6 +4598,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value) GetVal
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarrayint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarrayint64value
 
 type SourceGoogleAnalyticsDataAPIValueType string
 
@@ -4571,6 +4692,7 @@ func (u SourceGoogleAnalyticsDataAPIValue) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleAnalyticsDataAPINumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                        `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValidEnums `json:"operation"`
 	Value      SourceGoogleAnalyticsDataAPIValue                                             `json:"value"`
@@ -4606,9 +4728,10 @@ func (s *SourceGoogleAnalyticsDataAPINumericFilter) GetValue() SourceGoogleAnaly
 }
 
 type SourceGoogleAnalyticsDataAPIInListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (s SourceGoogleAnalyticsDataAPIInListFilter) MarshalJSON() ([]byte, error) {
@@ -4682,10 +4805,11 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums) Unmars
 }
 
 type SourceGoogleAnalyticsDataAPIStringFilter struct {
-	CaseSensitive *bool                                                             `json:"caseSensitive,omitempty"`
-	filterName    string                                                            `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums `json:"matchType,omitempty"`
-	Value         string                                                            `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                                            `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums `json:"matchType,omitempty"`
+	Value      string                                                            `json:"value"`
 }
 
 func (s SourceGoogleAnalyticsDataAPIStringFilter) MarshalJSON() ([]byte, error) {
@@ -4867,9 +4991,10 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter) MarshalJSON
 
 // SourceGoogleAnalyticsDataAPISchemasFilter - A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all metrics.
 type SourceGoogleAnalyticsDataAPISchemasFilter struct {
-	FieldName  string                                                      `json:"field_name"`
-	Filter     SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter `json:"filter"`
-	filterType *string                                                     `const:"filter" json:"filter_type,omitempty"`
+	FieldName string                                                      `json:"field_name"`
+	Filter    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter `json:"filter"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType *string `const:"filter" json:"filter_type,omitempty"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasFilter) MarshalJSON() ([]byte, error) {
@@ -4902,8 +5027,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasFilter) GetFilterType() *string {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue) MarshalJSON() ([]byte, error) {
@@ -4928,8 +5054,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressiondoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressiondoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -4954,6 +5084,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressionint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressionint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValueType string
 
@@ -5045,8 +5178,9 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -5071,8 +5205,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressionfilterdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressionfilterdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -5097,6 +5235,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressionfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3expressionfilterint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValueType string
 
@@ -5188,6 +5329,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                                   `const:"betweenFilter" json:"filter_name"`
 	FromValue  SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue `json:"fromValue"`
 	ToValue    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue   `json:"toValue"`
@@ -5221,6 +5363,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	}
 	return s.ToValue
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3betweenfilter
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3betweenfilter
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums string
 
@@ -5261,8 +5406,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue) MarshalJSON() ([]byte, error) {
@@ -5287,8 +5433,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3doublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3doublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -5313,6 +5463,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3int64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3int64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValueType string
 
@@ -5404,6 +5557,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                                                `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums `json:"operation"`
 	Value      SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Value                  `json:"value"`
@@ -5438,10 +5592,14 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return s.Value
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3numericfilter
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3numericfilter
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter) MarshalJSON() ([]byte, error) {
@@ -5472,6 +5630,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	}
 	return s.Values
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3inlistfilter
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3inlistfilter
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums string
 
@@ -5515,10 +5676,11 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter struct {
-	CaseSensitive *bool                                                                                       `json:"caseSensitive,omitempty"`
-	filterName    string                                                                                      `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums `json:"matchType,omitempty"`
-	Value         string                                                                                      `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                                                                      `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums `json:"matchType,omitempty"`
+	Value      string                                                                                      `json:"value"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter) MarshalJSON() ([]byte, error) {
@@ -5556,6 +5718,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	}
 	return s.Value
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3stringfilter
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter3stringfilter
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FilterType string
 
@@ -5731,7 +5896,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 // SourceGoogleAnalyticsDataAPINotExpression - The FilterExpression is NOT of notExpression.
 type SourceGoogleAnalyticsDataAPINotExpression struct {
 	Expression *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterExpression `json:"expression,omitempty"`
-	filterType *string                                                                                   `const:"notExpression" json:"filter_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType *string `const:"notExpression" json:"filter_type,omitempty"`
 }
 
 func (s SourceGoogleAnalyticsDataAPINotExpression) MarshalJSON() ([]byte, error) {
@@ -5757,8 +5923,9 @@ func (s *SourceGoogleAnalyticsDataAPINotExpression) GetFilterType() *string {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue) MarshalJSON() ([]byte, error) {
@@ -5783,8 +5950,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -5809,6 +5980,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValueType string
 
@@ -5900,8 +6074,9 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -5926,8 +6101,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsfilterdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsfilterdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -5952,6 +6131,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2expressionsfilterint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValueType string
 
@@ -6043,6 +6225,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                                  `const:"betweenFilter" json:"filter_name"`
 	FromValue  SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValue `json:"fromValue"`
 	ToValue    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue   `json:"toValue"`
@@ -6116,8 +6299,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue) MarshalJSON() ([]byte, error) {
@@ -6142,8 +6326,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2doublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2doublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -6168,6 +6356,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2int64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter2int64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValueType string
 
@@ -6259,6 +6450,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                                                 `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums `json:"operation"`
 	Value      SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue                    `json:"value"`
@@ -6294,9 +6486,10 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter) MarshalJSON() ([]byte, error) {
@@ -6370,10 +6563,11 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter struct {
-	CaseSensitive *bool                                                                                       `json:"caseSensitive,omitempty"`
-	filterName    string                                                                                      `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums `json:"matchType,omitempty"`
-	Value         string                                                                                      `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                                                                      `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums `json:"matchType,omitempty"`
+	Value      string                                                                                      `json:"value"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter) MarshalJSON() ([]byte, error) {
@@ -6586,7 +6780,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterExpres
 // SourceGoogleAnalyticsDataAPIOrGroup - The FilterExpressions in orGroup have an OR relationship.
 type SourceGoogleAnalyticsDataAPIOrGroup struct {
 	Expressions []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterExpression `json:"expressions"`
-	filterType  string                                                                        `const:"orGroup" json:"filter_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType string `const:"orGroup" json:"filter_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPIOrGroup) MarshalJSON() ([]byte, error) {
@@ -6612,8 +6807,9 @@ func (s *SourceGoogleAnalyticsDataAPIOrGroup) GetFilterType() string {
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue) MarshalJSON() ([]byte, error) {
@@ -6638,8 +6834,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsfilterdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsfilterdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -6664,6 +6864,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsfilterint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsfilterint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValueType string
 
@@ -6755,8 +6958,9 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromVal
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue) MarshalJSON() ([]byte, error) {
@@ -6781,8 +6985,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1doublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1doublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -6807,6 +7015,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1int64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1int64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValueType string
 
@@ -6898,6 +7109,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                     `const:"betweenFilter" json:"filter_name"`
 	FromValue  SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValue `json:"fromValue"`
 	ToValue    SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue   `json:"toValue"`
@@ -6971,8 +7183,9 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue struct {
-	Value     float64 `json:"value"`
-	valueType string  `const:"doubleValue" json:"value_type"`
+	Value float64 `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	valueType string `const:"doubleValue" json:"value_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue) MarshalJSON() ([]byte, error) {
@@ -6997,8 +7210,12 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 	return "doubleValue"
 }
 
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsdoublevalue
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsdoublevalue
+
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value struct {
-	Value     string `json:"value"`
+	Value string `json:"value"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	valueType string `const:"int64Value" json:"value_type"`
 }
 
@@ -7023,6 +7240,9 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value) GetValueType() string {
 	return "int64Value"
 }
+
+// #region class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsint64value
+// #endregion class-body-sourcegoogleanalyticsdataapischemascustomreportsarraymetricfiltermetricsfilter1expressionsint64value
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValueType string
 
@@ -7114,6 +7334,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue) 
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filterName string                                                                                     `const:"numericFilter" json:"filter_name"`
 	Operation  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums `json:"operation"`
 	Value      SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue                     `json:"value"`
@@ -7149,9 +7370,10 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumeri
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter struct {
-	CaseSensitive *bool    `json:"caseSensitive,omitempty"`
-	filterName    string   `const:"inListFilter" json:"filter_name"`
-	Values        []string `json:"values"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string   `const:"inListFilter" json:"filter_name"`
+	Values     []string `json:"values"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter) MarshalJSON() ([]byte, error) {
@@ -7225,10 +7447,11 @@ func (e *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter struct {
-	CaseSensitive *bool                                                                                       `json:"caseSensitive,omitempty"`
-	filterName    string                                                                                      `const:"stringFilter" json:"filter_name"`
-	MatchType     []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums `json:"matchType,omitempty"`
-	Value         string                                                                                      `json:"value"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterName string                                                                                      `const:"stringFilter" json:"filter_name"`
+	MatchType  []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums `json:"matchType,omitempty"`
+	Value      string                                                                                      `json:"value"`
 }
 
 func (s SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter) MarshalJSON() ([]byte, error) {
@@ -7441,7 +7664,8 @@ func (s *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayExpression) GetFil
 // SourceGoogleAnalyticsDataAPIAndGroup - The FilterExpressions in andGroup have an AND relationship.
 type SourceGoogleAnalyticsDataAPIAndGroup struct {
 	Expressions []SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayExpression `json:"expressions"`
-	filterType  string                                                            `const:"andGroup" json:"filter_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filterType string `const:"andGroup" json:"filter_type"`
 }
 
 func (s SourceGoogleAnalyticsDataAPIAndGroup) MarshalJSON() ([]byte, error) {
@@ -7706,7 +7930,8 @@ type SourceGoogleAnalyticsDataAPI struct {
 	// A list of your Property IDs. The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
 	PropertyIds []string `json:"property_ids"`
 	// The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
-	WindowInDays         *int64                                  `default:"1" json:"window_in_days"`
+	WindowInDays *int64 `default:"1" json:"window_in_days"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGoogleAnalyticsDataAPISourceType `const:"google-analytics-data-api" json:"sourceType"`
 	AdditionalProperties any                                     `additionalProperties:"true" json:"-"`
 }

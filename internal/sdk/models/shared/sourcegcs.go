@@ -35,6 +35,7 @@ func (e *SourceGcsSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type ServiceAccountAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *SourceGcsSchemasAuthType `const:"Service" json:"auth_type"`
 	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
 	ServiceAccount string `json:"service_account"`
@@ -87,8 +88,9 @@ func (e *SourceGcsAuthType) UnmarshalJSON(data []byte) error {
 
 type AuthenticateViaGoogleOAuth struct {
 	// Access Token
-	AccessToken string             `json:"access_token"`
-	authType    *SourceGcsAuthType `const:"Client" json:"auth_type"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *SourceGcsAuthType `const:"Client" json:"auth_type"`
 	// Client ID
 	ClientID string `json:"client_id"`
 	// Client Secret
@@ -255,6 +257,7 @@ func (e *SourceGcsSchemasDeliveryType) UnmarshalJSON(data []byte) error {
 
 // SourceGcsCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
 type SourceGcsCopyRawFiles struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceGcsSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
 	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
 	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
@@ -307,6 +310,7 @@ func (e *SourceGcsDeliveryType) UnmarshalJSON(data []byte) error {
 
 // SourceGcsReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
 type SourceGcsReplicateRecords struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceGcsDeliveryType `const:"use_records_transfer" json:"delivery_type"`
 }
 
@@ -415,6 +419,7 @@ func (u SourceGcsDeliveryMethod) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGcsExcelFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"excel" json:"filetype"`
 }
 
@@ -493,8 +498,9 @@ type ViaAPI struct {
 	// The API key to use matching the environment
 	APIKey *string `default:"" json:"api_key"`
 	// The URL of the unstructured API to use
-	APIURL *string               `default:"https://api.unstructured.io" json:"api_url"`
-	mode   *SourceGcsSchemasMode `const:"api" json:"mode"`
+	APIURL *string `default:"https://api.unstructured.io" json:"api_url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *SourceGcsSchemasMode `const:"api" json:"mode"`
 	// List of parameters send to the API
 	Parameters []APIParameterConfigModel `json:"parameters,omitempty"`
 }
@@ -560,6 +566,7 @@ func (e *SourceGcsMode) UnmarshalJSON(data []byte) error {
 
 // SourceGcsLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
 type SourceGcsLocal struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *SourceGcsMode `const:"local" json:"mode"`
 }
 
@@ -703,6 +710,7 @@ func (e *SourceGcsParsingStrategy) UnmarshalJSON(data []byte) error {
 
 // SourceGcsUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceGcsUnstructuredDocumentFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceGcsProcessing `json:"processing,omitempty"`
@@ -750,8 +758,9 @@ func (s *SourceGcsUnstructuredDocumentFormat) GetStrategy() *SourceGcsParsingStr
 
 type SourceGcsParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool   `default:"false" json:"decimal_as_float"`
-	filetype       *string `const:"parquet" json:"filetype"`
+	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"parquet" json:"filetype"`
 }
 
 func (s SourceGcsParquetFormat) MarshalJSON() ([]byte, error) {
@@ -777,6 +786,7 @@ func (s *SourceGcsParquetFormat) GetFiletype() *string {
 }
 
 type SourceGcsJsonlFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"jsonl" json:"filetype"`
 }
 
@@ -797,8 +807,9 @@ func (s *SourceGcsJsonlFormat) GetFiletype() *string {
 
 type SourceGcsUserProvided struct {
 	// The column names that will be used while emitting the CSV records
-	ColumnNames          []string `json:"column_names"`
-	headerDefinitionType *string  `const:"User Provided" json:"header_definition_type"`
+	ColumnNames []string `json:"column_names"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	headerDefinitionType *string `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceGcsUserProvided) MarshalJSON() ([]byte, error) {
@@ -824,6 +835,7 @@ func (s *SourceGcsUserProvided) GetHeaderDefinitionType() *string {
 }
 
 type SourceGcsAutogenerated struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"Autogenerated" json:"header_definition_type"`
 }
 
@@ -843,6 +855,7 @@ func (s *SourceGcsAutogenerated) GetHeaderDefinitionType() *string {
 }
 
 type SourceGcsFromCSV struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"From CSV" json:"header_definition_type"`
 }
 
@@ -1015,7 +1028,8 @@ type SourceGcsCSVFormat struct {
 	EscapeChar *string `json:"escape_char,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as false values.
 	FalseValues []string `json:"false_values,omitempty"`
-	filetype    *string  `const:"csv" json:"filetype"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceGcsCSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
@@ -1151,8 +1165,9 @@ func (s *SourceGcsCSVFormat) GetTrueValues() []string {
 
 type SourceGcsAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool   `default:"false" json:"double_as_string"`
-	filetype       *string `const:"avro" json:"filetype"`
+	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"avro" json:"filetype"`
 }
 
 func (s SourceGcsAvroFormat) MarshalJSON() ([]byte, error) {
@@ -1547,8 +1562,9 @@ type SourceGcs struct {
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams    []SourceGcsFileBasedStreamConfig `json:"streams"`
-	sourceType *SourceGcsSourceType             `const:"gcs" json:"sourceType"`
+	Streams []SourceGcsFileBasedStreamConfig `json:"streams"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType *SourceGcsSourceType `const:"gcs" json:"sourceType"`
 }
 
 func (s SourceGcs) MarshalJSON() ([]byte, error) {

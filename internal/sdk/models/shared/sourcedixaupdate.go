@@ -38,7 +38,8 @@ type SourceDixaUpdate struct {
 	// Number of days to batch into one request. Max 31.
 	BatchSize *int64 `default:"31" json:"batch_size"`
 	// The connector pulls records updated from this date onwards.
-	StartDate            *time.Time                  `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDixaUpdateSourceType `const:"dixa" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

@@ -33,7 +33,8 @@ func (e *SourcePlanhatUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourcePlanhatUpdate struct {
 	// Your Planhat <a href="https://docs.planhat.com/#authentication">API Access Token</a>
-	APIToken             *string                        `json:"api_token,omitempty"`
+	APIToken *string `json:"api_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePlanhatUpdateSourceType `const:"planhat" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

@@ -63,6 +63,7 @@ func (e *SourceAmazonAdsUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAmazonAdsUpdate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2.0" json:"auth_type"`
 	// The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 	ClientID *string `json:"client_id,omitempty"`
@@ -81,7 +82,8 @@ type SourceAmazonAdsUpdate struct {
 	// Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
 	Region *SourceAmazonAdsUpdateRegion `default:"NA" json:"region"`
 	// The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format
-	StartDate  *types.Date                      `json:"start_date,omitempty"`
+	StartDate *types.Date `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceAmazonAdsUpdateSourceType `const:"amazon-ads" json:"sourceType"`
 }
 

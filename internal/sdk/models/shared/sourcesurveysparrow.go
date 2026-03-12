@@ -11,6 +11,7 @@ import (
 )
 
 type GlobalAccount struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	urlBase *string `const:"https://api.surveysparrow.com/v3" json:"url_base,omitempty"`
 }
 
@@ -30,6 +31,7 @@ func (g *GlobalAccount) GetURLBase() *string {
 }
 
 type EUBasedAccount struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	urlBase *string `const:"https://eu-api.surveysparrow.com/v3" json:"url_base,omitempty"`
 }
 
@@ -167,7 +169,8 @@ type SourceSurveySparrow struct {
 	// Is your account location is EU based? If yes, the base url to retrieve data will be different.
 	Region *BaseURL `json:"region,omitempty"`
 	// A List of your survey ids for survey-specific stream
-	SurveyID             []any                          `json:"survey_id,omitempty"`
+	SurveyID []any `json:"survey_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSurveySparrowSourceType `const:"survey-sparrow" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

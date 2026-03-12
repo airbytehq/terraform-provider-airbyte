@@ -42,7 +42,8 @@ type SourceSonarCloud struct {
 	// To retrieve issues created after the given date (inclusive).
 	StartDate *types.Date `json:"start_date,omitempty"`
 	// Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
-	UserToken            string                      `json:"user_token"`
+	UserToken string `json:"user_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSonarCloudSourceType `const:"sonar-cloud" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

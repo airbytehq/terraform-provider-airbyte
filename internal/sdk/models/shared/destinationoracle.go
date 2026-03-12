@@ -13,6 +13,7 @@ type DestinationOraclePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -71,6 +72,7 @@ type DestinationOracleSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -123,6 +125,7 @@ func (d *DestinationOracleSSHKeyAuthentication) GetTunnelUser() string {
 
 type DestinationOracleNoTunnel struct {
 	// No ssh tunnel needed to connect to database
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"NO_TUNNEL" json:"tunnel_method"`
 }
 
@@ -298,7 +301,8 @@ type DestinationOracle struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationOracleSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username to access the database. This user must have CREATE USER privileges in the database.
-	Username             string                            `json:"username"`
+	Username string `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationOracleDestinationType `const:"oracle" json:"destinationType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

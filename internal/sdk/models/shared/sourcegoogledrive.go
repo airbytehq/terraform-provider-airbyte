@@ -35,6 +35,7 @@ func (e *SourceGoogleDriveSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleDriveServiceAccountKeyAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *SourceGoogleDriveSchemasAuthType `const:"Service" json:"auth_type"`
 	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 	ServiceAccountInfo string `json:"service_account_info"`
@@ -86,6 +87,7 @@ func (e *SourceGoogleDriveAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleDriveAuthenticateViaGoogleOAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *SourceGoogleDriveAuthType `const:"Client" json:"auth_type"`
 	// Client ID for the Google Drive API
 	ClientID string `json:"client_id"`
@@ -246,6 +248,7 @@ func (e *SourceGoogleDriveSchemasDeliveryMethodDeliveryType) UnmarshalJSON(data 
 
 // ReplicatePermissionsACL - Sends one identity stream and one for more permissions (ACL) streams to the destination. This data can be used in downstream systems to recreate permission restrictions mirroring the original source.
 type ReplicatePermissionsACL struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceGoogleDriveSchemasDeliveryMethodDeliveryType `const:"use_permissions_transfer" json:"delivery_type"`
 	// The Google domain of the identities.
 	Domain *string `json:"domain,omitempty"`
@@ -307,6 +310,7 @@ func (e *SourceGoogleDriveSchemasDeliveryType) UnmarshalJSON(data []byte) error 
 
 // SourceGoogleDriveCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
 type SourceGoogleDriveCopyRawFiles struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceGoogleDriveSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
 	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
 	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
@@ -359,6 +363,7 @@ func (e *SourceGoogleDriveDeliveryType) UnmarshalJSON(data []byte) error {
 
 // SourceGoogleDriveReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
 type SourceGoogleDriveReplicateRecords struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceGoogleDriveDeliveryType `const:"use_records_transfer" json:"delivery_type"`
 }
 
@@ -493,6 +498,7 @@ func (u SourceGoogleDriveDeliveryMethod) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleDriveExcelFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"excel" json:"filetype"`
 }
 
@@ -536,6 +542,7 @@ func (e *SourceGoogleDriveMode) UnmarshalJSON(data []byte) error {
 
 // SourceGoogleDriveLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
 type SourceGoogleDriveLocal struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *SourceGoogleDriveMode `const:"local" json:"mode"`
 }
 
@@ -653,6 +660,7 @@ func (e *SourceGoogleDriveParsingStrategy) UnmarshalJSON(data []byte) error {
 
 // SourceGoogleDriveUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceGoogleDriveUnstructuredDocumentFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceGoogleDriveProcessing `json:"processing,omitempty"`
@@ -700,8 +708,9 @@ func (s *SourceGoogleDriveUnstructuredDocumentFormat) GetStrategy() *SourceGoogl
 
 type SourceGoogleDriveParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool   `default:"false" json:"decimal_as_float"`
-	filetype       *string `const:"parquet" json:"filetype"`
+	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"parquet" json:"filetype"`
 }
 
 func (s SourceGoogleDriveParquetFormat) MarshalJSON() ([]byte, error) {
@@ -727,6 +736,7 @@ func (s *SourceGoogleDriveParquetFormat) GetFiletype() *string {
 }
 
 type SourceGoogleDriveJsonlFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"jsonl" json:"filetype"`
 }
 
@@ -747,8 +757,9 @@ func (s *SourceGoogleDriveJsonlFormat) GetFiletype() *string {
 
 type SourceGoogleDriveUserProvided struct {
 	// The column names that will be used while emitting the CSV records
-	ColumnNames          []string `json:"column_names"`
-	headerDefinitionType *string  `const:"User Provided" json:"header_definition_type"`
+	ColumnNames []string `json:"column_names"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	headerDefinitionType *string `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceGoogleDriveUserProvided) MarshalJSON() ([]byte, error) {
@@ -774,6 +785,7 @@ func (s *SourceGoogleDriveUserProvided) GetHeaderDefinitionType() *string {
 }
 
 type SourceGoogleDriveAutogenerated struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"Autogenerated" json:"header_definition_type"`
 }
 
@@ -793,6 +805,7 @@ func (s *SourceGoogleDriveAutogenerated) GetHeaderDefinitionType() *string {
 }
 
 type SourceGoogleDriveFromCSV struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"From CSV" json:"header_definition_type"`
 }
 
@@ -938,7 +951,8 @@ type SourceGoogleDriveCSVFormat struct {
 	EscapeChar *string `json:"escape_char,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as false values.
 	FalseValues []string `json:"false_values,omitempty"`
-	filetype    *string  `const:"csv" json:"filetype"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceGoogleDriveCSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
@@ -1065,8 +1079,9 @@ func (s *SourceGoogleDriveCSVFormat) GetTrueValues() []string {
 
 type SourceGoogleDriveAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool   `default:"false" json:"double_as_string"`
-	filetype       *string `const:"avro" json:"filetype"`
+	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"avro" json:"filetype"`
 }
 
 func (s SourceGoogleDriveAvroFormat) MarshalJSON() ([]byte, error) {
@@ -1452,8 +1467,9 @@ type SourceGoogleDrive struct {
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams    []SourceGoogleDriveFileBasedStreamConfig `json:"streams"`
-	sourceType *SourceGoogleDriveSourceType             `const:"google-drive" json:"sourceType"`
+	Streams []SourceGoogleDriveFileBasedStreamConfig `json:"streams"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType *SourceGoogleDriveSourceType `const:"google-drive" json:"sourceType"`
 }
 
 func (s SourceGoogleDrive) MarshalJSON() ([]byte, error) {

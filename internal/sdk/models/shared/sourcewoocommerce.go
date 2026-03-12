@@ -40,7 +40,8 @@ type SourceWoocommerce struct {
 	// The name of the store. For https://EXAMPLE.com, the shop name is 'EXAMPLE.com'.
 	Shop string `json:"shop"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD
-	StartDate            types.Date                   `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceWoocommerceSourceType `const:"woocommerce" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

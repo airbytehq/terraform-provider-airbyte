@@ -18,6 +18,9 @@ func (g *GetDestinationS3Request) GetDestinationID() string {
 	return g.DestinationID
 }
 
+// #region class-body-getdestinations3request
+// #endregion class-body-getdestinations3request
+
 type GetDestinationS3Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -56,3 +59,6 @@ func (g *GetDestinationS3Response) GetDestinationResponse() *shared.DestinationR
 	}
 	return g.DestinationResponse
 }
+
+// #region class-body-getdestinations3response
+// #endregion class-body-getdestinations3response

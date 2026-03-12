@@ -26,6 +26,9 @@ func (p *PutSourceAuth0Request) GetSourceAuth0PutRequest() shared.SourceAuth0Put
 	return p.SourceAuth0PutRequest
 }
 
+// #region class-body-putsourceauth0request
+// #endregion class-body-putsourceauth0request
+
 type PutSourceAuth0Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (p *PutSourceAuth0Response) GetSourceResponse() *shared.SourceResponse {
 	}
 	return p.SourceResponse
 }
+
+// #region class-body-putsourceauth0response
+// #endregion class-body-putsourceauth0response

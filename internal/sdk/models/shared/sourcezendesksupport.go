@@ -17,7 +17,8 @@ type SourceZendeskSupportOAuth20Legacy struct {
 	// The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 	ClientID *string `json:"client_id,omitempty"`
 	// The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
-	ClientSecret         *string `json:"client_secret,omitempty"`
+	ClientSecret *string `json:"client_secret,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentials          *string `const:"oauth2.0" json:"credentials,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -65,9 +66,13 @@ func (s *SourceZendeskSupportOAuth20Legacy) GetAdditionalProperties() any {
 	return s.AdditionalProperties
 }
 
+// #region class-body-sourcezendesksupportoauth20legacy
+// #endregion class-body-sourcezendesksupportoauth20legacy
+
 type SourceZendeskSupportAPIToken struct {
 	// The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.
-	APIToken    string  `json:"api_token"`
+	APIToken string `json:"api_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentials *string `const:"api_token" json:"credentials,omitempty"`
 	// The user email for your Zendesk account.
 	Email                string `json:"email"`
@@ -116,8 +121,9 @@ type OAuth20WithRefreshToken struct {
 	// The OAuth client's ID. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
 	ClientID string `json:"client_id"`
 	// The OAuth client secret. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
-	ClientSecret string  `json:"client_secret"`
-	credentials  *string `const:"oauth2_refresh" json:"credentials,omitempty"`
+	ClientSecret string `json:"client_secret"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	credentials *string `const:"oauth2_refresh" json:"credentials,omitempty"`
 	// The refresh token used to obtain new access tokens. Note that Zendesk uses rotating refresh tokens - each refresh will return a new refresh token and invalidate the previous one.
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed.
@@ -181,6 +187,9 @@ func (o *OAuth20WithRefreshToken) GetAdditionalProperties() any {
 	}
 	return o.AdditionalProperties
 }
+
+// #region class-body-oauth20withrefreshtoken
+// #endregion class-body-oauth20withrefreshtoken
 
 type SourceZendeskSupportAuthenticationType string
 
@@ -333,7 +342,8 @@ type SourceZendeskSupport struct {
 	// The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
-	Subdomain            string                          `json:"subdomain"`
+	Subdomain string `json:"subdomain"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceZendeskSupportSourceType `const:"zendesk-support" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

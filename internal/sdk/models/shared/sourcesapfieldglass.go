@@ -33,7 +33,8 @@ func (e *SourceSapFieldglassSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceSapFieldglass struct {
 	// API Key
-	APIKey               string                         `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSapFieldglassSourceType `const:"sap-fieldglass" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

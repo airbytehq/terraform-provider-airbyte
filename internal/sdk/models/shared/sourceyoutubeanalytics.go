@@ -57,6 +57,9 @@ func (a *AuthenticateViaOAuth20) GetAdditionalProperties() any {
 	return a.AdditionalProperties
 }
 
+// #region class-body-authenticateviaoauth20
+// #endregion class-body-authenticateviaoauth20
+
 type SourceYoutubeAnalyticsSourceType string
 
 const (
@@ -82,8 +85,9 @@ func (e *SourceYoutubeAnalyticsSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceYoutubeAnalytics struct {
 	// The ID of the content owner for whom the API request is being made. This is useful if you manage multiple YouTube channels and need to specify which content owner's data to retrieve. If not provided, the API will use the channel associated with your OAuth credentials.
-	ContentOwnerID       *string                           `json:"content_owner_id,omitempty"`
-	Credentials          AuthenticateViaOAuth20            `json:"credentials"`
+	ContentOwnerID *string                `json:"content_owner_id,omitempty"`
+	Credentials    AuthenticateViaOAuth20 `json:"credentials"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceYoutubeAnalyticsSourceType `const:"youtube-analytics" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

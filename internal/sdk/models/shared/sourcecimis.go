@@ -91,14 +91,15 @@ func (e *SourceCimisSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCimis struct {
-	APIKey               string                 `json:"api_key"`
-	DailyDataItems       []any                  `json:"daily_data_items,omitempty"`
-	EndDate              time.Time              `json:"end_date"`
-	HourlyDataItems      []any                  `json:"hourly_data_items,omitempty"`
-	StartDate            time.Time              `json:"start_date"`
-	Targets              []any                  `json:"targets"`
-	TargetsType          TargetsType            `json:"targets_type"`
-	UnitOfMeasure        *UnitOfMeasure         `json:"unit_of_measure,omitempty"`
+	APIKey          string         `json:"api_key"`
+	DailyDataItems  []any          `json:"daily_data_items,omitempty"`
+	EndDate         time.Time      `json:"end_date"`
+	HourlyDataItems []any          `json:"hourly_data_items,omitempty"`
+	StartDate       time.Time      `json:"start_date"`
+	Targets         []any          `json:"targets"`
+	TargetsType     TargetsType    `json:"targets_type"`
+	UnitOfMeasure   *UnitOfMeasure `json:"unit_of_measure,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceCimisSourceType `const:"cimis" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

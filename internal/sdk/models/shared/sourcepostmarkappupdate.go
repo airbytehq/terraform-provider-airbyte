@@ -35,7 +35,8 @@ type SourcePostmarkappUpdate struct {
 	// API Key for account
 	XPostmarkAccountToken *string `json:"X-Postmark-Account-Token,omitempty"`
 	// API Key for server
-	XPostmarkServerToken *string                            `json:"X-Postmark-Server-Token,omitempty"`
+	XPostmarkServerToken *string `json:"X-Postmark-Server-Token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePostmarkappUpdateSourceType `const:"postmarkapp" json:"sourceType"`
 	AdditionalProperties any                                `additionalProperties:"true" json:"-"`
 }

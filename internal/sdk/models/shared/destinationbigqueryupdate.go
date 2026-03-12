@@ -624,7 +624,8 @@ type DestinationBigqueryUpdate struct {
 	// The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.
 	ProjectID *string `json:"project_id,omitempty"`
 	// Airbyte will use this dataset for various internal tables. In legacy raw tables mode, the raw tables will be stored in this dataset. Defaults to "airbyte_internal".
-	RawDataDataset       *string                                   `json:"raw_data_dataset,omitempty"`
+	RawDataDataset *string `json:"raw_data_dataset,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationBigqueryUpdateDestinationType `const:"bigquery" json:"destinationType"`
 	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
 }

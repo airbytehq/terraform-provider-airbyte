@@ -41,7 +41,8 @@ type SourceSentry struct {
 	// The slug of the organization the groups belong to.
 	Organization string `json:"organization"`
 	// The name (slug) of the Project you want to sync.
-	Project              string                  `json:"project"`
+	Project string `json:"project"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSentrySourceType `const:"sentry" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

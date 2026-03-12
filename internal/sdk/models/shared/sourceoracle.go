@@ -12,6 +12,7 @@ import (
 
 // SystemIDSID - Use SID (Oracle System Identifier)
 type SystemIDSID struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	connectionType *string `const:"sid" json:"connection_type,omitempty"`
 	Sid            string  `json:"sid"`
 }
@@ -40,6 +41,7 @@ func (s *SystemIDSID) GetSid() string {
 
 // ServiceName - Use service name
 type ServiceName struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	connectionType *string `const:"service_name" json:"connection_type,omitempty"`
 	ServiceName    string  `json:"service_name"`
 }
@@ -158,6 +160,7 @@ func (u ConnectBy) MarshalJSON() ([]byte, error) {
 
 // TLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type TLSEncryptedVerifyCertificate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	encryptionMethod string `const:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate string `json:"ssl_certificate"`
@@ -219,7 +222,8 @@ func (e *EncryptionAlgorithm) UnmarshalJSON(data []byte) error {
 type NativeNetworkEncryptionNNE struct {
 	// This parameter defines what encryption algorithm is used.
 	EncryptionAlgorithm *EncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
-	encryptionMethod    string               `const:"client_nne" json:"encryption_method"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	encryptionMethod string `const:"client_nne" json:"encryption_method"`
 }
 
 func (n NativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -338,6 +342,7 @@ type SourceOraclePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -396,6 +401,7 @@ type SourceOracleSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -448,6 +454,7 @@ func (s *SourceOracleSSHKeyAuthentication) GetTunnelUser() string {
 
 type SourceOracleNoTunnel struct {
 	// No ssh tunnel needed to connect to database
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"NO_TUNNEL" json:"tunnel_method"`
 }
 
@@ -626,7 +633,8 @@ type SourceOracle struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceOracleSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
-	Username   string                  `json:"username"`
+	Username string `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceOracleSourceType `const:"oracle" json:"sourceType"`
 }
 

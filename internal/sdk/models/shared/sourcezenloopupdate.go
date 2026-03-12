@@ -39,7 +39,8 @@ type SourceZenloopUpdate struct {
 	// Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups
 	SurveyGroupID *string `json:"survey_group_id,omitempty"`
 	// Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
-	SurveyID   *string                        `json:"survey_id,omitempty"`
+	SurveyID *string `json:"survey_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceZenloopUpdateSourceType `const:"zenloop" json:"sourceType"`
 }
 

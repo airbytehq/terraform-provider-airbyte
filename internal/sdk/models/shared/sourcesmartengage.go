@@ -33,7 +33,8 @@ func (e *SourceSmartengageSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceSmartengage struct {
 	// API Key
-	APIKey               string                       `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSmartengageSourceType `const:"smartengage" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

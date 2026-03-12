@@ -41,7 +41,8 @@ type SourceKyveUpdate struct {
 	// The start-id defines, from which bundle id the pipeline should start to extract the data. (Comma separated)
 	StartIds *string `json:"start_ids,omitempty"`
 	// URL to the KYVE Chain API.
-	URLBase    *string                     `default:"https://api.kyve.network" json:"url_base"`
+	URLBase *string `default:"https://api.kyve.network" json:"url_base"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceKyveUpdateSourceType `const:"kyve" json:"sourceType"`
 }
 

@@ -26,6 +26,9 @@ func (p *PutSourceS3Request) GetSourceS3PutRequest() shared.SourceS3PutRequest {
 	return p.SourceS3PutRequest
 }
 
+// #region class-body-putsources3request
+// #endregion class-body-putsources3request
+
 type PutSourceS3Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (p *PutSourceS3Response) GetSourceResponse() *shared.SourceResponse {
 	}
 	return p.SourceResponse
 }
+
+// #region class-body-putsources3response
+// #endregion class-body-putsources3response

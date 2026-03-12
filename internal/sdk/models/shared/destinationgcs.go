@@ -988,6 +988,9 @@ func (b *Bzip2) GetCodec() *DestinationGcsSchemasCodec {
 	return b.Codec
 }
 
+// #region class-body-bzip2
+// #endregion class-body-bzip2
+
 type DestinationGcsCodec string
 
 const (
@@ -1636,7 +1639,8 @@ type DestinationGcs struct {
 	// GCS Bucket Path string Subdirectory under the above bucket to sync the data into.
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
-	GcsBucketRegion *GCSBucketRegion               `default:"us" json:"gcs_bucket_region"`
+	GcsBucketRegion *GCSBucketRegion `default:"us" json:"gcs_bucket_region"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationGcsDestinationType `const:"gcs" json:"destinationType"`
 }
 

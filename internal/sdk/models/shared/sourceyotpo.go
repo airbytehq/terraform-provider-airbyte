@@ -40,7 +40,8 @@ type SourceYotpo struct {
 	// Email address registered with yotpo.
 	Email *string `default:"example@gmail.com" json:"email"`
 	// Date time filter for incremental filter, Specify which date to extract from.
-	StartDate            time.Time              `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceYotpoSourceType `const:"yotpo" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }
