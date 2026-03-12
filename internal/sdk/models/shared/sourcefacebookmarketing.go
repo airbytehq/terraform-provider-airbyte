@@ -173,8 +173,9 @@ func (e *SourceFacebookMarketingSchemasAuthType) UnmarshalJSON(data []byte) erro
 
 type ServiceAccountKeyAuthentication struct {
 	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-	AccessToken string                                  `json:"access_token"`
-	authType    *SourceFacebookMarketingSchemasAuthType `const:"Service" json:"auth_type"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *SourceFacebookMarketingSchemasAuthType `const:"Service" json:"auth_type"`
 }
 
 func (s ServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -224,8 +225,9 @@ func (e *SourceFacebookMarketingAuthType) UnmarshalJSON(data []byte) error {
 
 type AuthenticateViaFacebookMarketingOauth struct {
 	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-	AccessToken *string                          `json:"access_token,omitempty"`
-	authType    *SourceFacebookMarketingAuthType `const:"Client" json:"auth_type"`
+	AccessToken *string `json:"access_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *SourceFacebookMarketingAuthType `const:"Client" json:"auth_type"`
 	// Client ID for the Facebook Marketing API
 	ClientID string `json:"client_id"`
 	// Client Secret for the Facebook Marketing API
@@ -1611,7 +1613,8 @@ type SourceFacebookMarketing struct {
 	// Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
 	PageSize *int64 `default:"100" json:"page_size"`
 	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. If not set then all data will be replicated for usual streams and only last 2 years for insight streams.
-	StartDate  *time.Time                         `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceFacebookMarketingSourceType `const:"facebook-marketing" json:"sourceType"`
 }
 

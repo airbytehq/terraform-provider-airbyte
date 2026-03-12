@@ -38,8 +38,9 @@ type DestinationWeaviateUpdateOpenAICompatible struct {
 	// The base URL for your OpenAI-compatible service
 	BaseURL *string `json:"base_url,omitempty"`
 	// The number of dimensions the embedding model is generating
-	Dimensions *int64                                                   `json:"dimensions,omitempty"`
-	mode       *DestinationWeaviateUpdateSchemasEmbeddingEmbedding7Mode `const:"openai_compatible" json:"mode"`
+	Dimensions *int64 `json:"dimensions,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateUpdateSchemasEmbeddingEmbedding7Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -112,6 +113,7 @@ func (e *DestinationWeaviateUpdateSchemasEmbeddingEmbedding6Mode) UnmarshalJSON(
 
 // DestinationWeaviateUpdateFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationWeaviateUpdateFake struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateUpdateSchemasEmbeddingEmbedding6Mode `const:"fake" json:"mode"`
 }
 
@@ -158,8 +160,9 @@ type DestinationWeaviateUpdateFromField struct {
 	// The number of dimensions the embedding model is generating
 	Dimensions *int64 `json:"dimensions,omitempty"`
 	// Name of the field in the record that contains the embedding
-	FieldName *string                                                  `json:"field_name,omitempty"`
-	mode      *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
+	FieldName *string `json:"field_name,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
 }
 
 func (d DestinationWeaviateUpdateFromField) MarshalJSON() ([]byte, error) {
@@ -216,8 +219,9 @@ func (e *DestinationWeaviateUpdateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(d
 
 // DestinationWeaviateUpdateCohere - Use the Cohere API to embed text.
 type DestinationWeaviateUpdateCohere struct {
-	CohereKey *string                                                 `json:"cohere_key,omitempty"`
-	mode      *DestinationWeaviateUpdateSchemasEmbeddingEmbeddingMode `const:"cohere" json:"mode"`
+	CohereKey *string `json:"cohere_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateUpdateSchemasEmbeddingEmbeddingMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationWeaviateUpdateCohere) MarshalJSON() ([]byte, error) {
@@ -267,6 +271,7 @@ func (e *DestinationWeaviateUpdateSchemasEmbeddingMode) UnmarshalJSON(data []byt
 
 // DestinationWeaviateUpdateOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationWeaviateUpdateOpenAI struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode      *DestinationWeaviateUpdateSchemasEmbeddingMode `const:"openai" json:"mode"`
 	OpenaiKey *string                                        `json:"openai_key,omitempty"`
 }
@@ -321,8 +326,9 @@ type DestinationWeaviateUpdateAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase *string `json:"api_base,omitempty"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment *string                               `json:"deployment,omitempty"`
-	mode       *DestinationWeaviateUpdateSchemasMode `const:"azure_openai" json:"mode"`
+	Deployment *string `json:"deployment,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateUpdateSchemasMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey *string `json:"openai_key,omitempty"`
 }
@@ -388,6 +394,7 @@ func (e *DestinationWeaviateUpdateMode) UnmarshalJSON(data []byte) error {
 
 // DestinationWeaviateUpdateNoExternalEmbedding - Do not calculate and pass embeddings to Weaviate. Suitable for clusters with configured vectorizers to calculate embeddings within Weaviate or for classes that should only support regular text search.
 type DestinationWeaviateUpdateNoExternalEmbedding struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateUpdateMode `const:"no_embedding" json:"mode"`
 }
 
@@ -670,6 +677,7 @@ func (e *DestinationWeaviateUpdateSchemasIndexingAuthAuthenticationMode) Unmarsh
 
 // DestinationWeaviateUpdateNoAuthentication - Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)
 type DestinationWeaviateUpdateNoAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateUpdateSchemasIndexingAuthAuthenticationMode `const:"no_auth" json:"mode"`
 }
 
@@ -713,6 +721,7 @@ func (e *DestinationWeaviateUpdateSchemasIndexingAuthMode) UnmarshalJSON(data []
 
 // DestinationWeaviateUpdateUsernamePassword - Authenticate using username and password (suitable for self-managed Weaviate clusters)
 type DestinationWeaviateUpdateUsernamePassword struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateUpdateSchemasIndexingAuthMode `const:"username_password" json:"mode"`
 	// Password for the Weaviate cluster
 	Password *string `json:"password,omitempty"`
@@ -774,6 +783,7 @@ func (e *DestinationWeaviateUpdateSchemasIndexingMode) UnmarshalJSON(data []byte
 
 // DestinationWeaviateUpdateAPIToken - Authenticate using an API token (suitable for Weaviate Cloud)
 type DestinationWeaviateUpdateAPIToken struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateUpdateSchemasIndexingMode `const:"token" json:"mode"`
 	// API Token for the Weaviate instance
 	Token *string `json:"token,omitempty"`
@@ -1156,8 +1166,9 @@ func (e *DestinationWeaviateUpdateSchemasProcessingTextSplitterTextSplitterMode)
 // DestinationWeaviateUpdateByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationWeaviateUpdateByProgrammingLanguage struct {
 	// Split code in suitable places based on the programming language
-	Language *DestinationWeaviateUpdateLanguage                                      `json:"language,omitempty"`
-	mode     *DestinationWeaviateUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+	Language *DestinationWeaviateUpdateLanguage `json:"language,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationWeaviateUpdateByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -1207,6 +1218,7 @@ func (e *DestinationWeaviateUpdateSchemasProcessingTextSplitterMode) UnmarshalJS
 
 // DestinationWeaviateUpdateByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
 type DestinationWeaviateUpdateByMarkdownHeader struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateUpdateSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
 	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
 	SplitLevel *int64 `default:"1" json:"split_level"`
@@ -1260,8 +1272,9 @@ func (e *DestinationWeaviateUpdateSchemasProcessingMode) UnmarshalJSON(data []by
 // DestinationWeaviateUpdateBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationWeaviateUpdateBySeparator struct {
 	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool                                           `default:"false" json:"keep_separator"`
-	mode          *DestinationWeaviateUpdateSchemasProcessingMode `const:"separator" json:"mode"`
+	KeepSeparator *bool `default:"false" json:"keep_separator"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateUpdateSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
 }
@@ -1509,9 +1522,10 @@ type DestinationWeaviateUpdate struct {
 	// Indexing configuration
 	Indexing *DestinationWeaviateUpdateIndexing `json:"indexing,omitempty"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText     *bool                                           `default:"false" json:"omit_raw_text"`
-	Processing      *DestinationWeaviateUpdateProcessingConfigModel `json:"processing,omitempty"`
-	destinationType *DestinationWeaviateUpdateDestinationType       `const:"weaviate" json:"destinationType"`
+	OmitRawText *bool                                           `default:"false" json:"omit_raw_text"`
+	Processing  *DestinationWeaviateUpdateProcessingConfigModel `json:"processing,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType *DestinationWeaviateUpdateDestinationType `const:"weaviate" json:"destinationType"`
 }
 
 func (d DestinationWeaviateUpdate) MarshalJSON() ([]byte, error) {

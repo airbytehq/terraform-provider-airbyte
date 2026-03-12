@@ -43,7 +43,8 @@ type SourceRecurlyUpdate struct {
 	// Set to true for sandbox accounts (400 requests/min, all types). Defaults to false for production accounts (1,000 GET requests/min).
 	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// The number of worker threads to use for the sync.
-	NumWorkers           *int64                         `default:"10" json:"num_workers"`
+	NumWorkers *int64 `default:"10" json:"num_workers"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceRecurlyUpdateSourceType `const:"recurly" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

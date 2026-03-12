@@ -14,6 +14,7 @@ type DestinationRedshiftUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_PASSWORD_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -72,6 +73,7 @@ type DestinationRedshiftUpdateSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_KEY_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -124,6 +126,7 @@ func (d *DestinationRedshiftUpdateSSHKeyAuthentication) GetTunnelUser() *string 
 
 type DestinationRedshiftUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"NO_TUNNEL" json:"tunnel_method,omitempty"`
 }
 
@@ -387,7 +390,8 @@ type DestinationRedshiftUpdateAWSS3Staging struct {
 	AccessKeyID *string `json:"access_key_id,omitempty"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
 	FileNamePattern *string `json:"file_name_pattern,omitempty"`
-	method          *string `const:"S3 Staging" json:"method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	method *string `const:"S3 Staging" json:"method,omitempty"`
 	// Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.
 	PurgeStagingData *bool `default:"true" json:"purge_staging_data"`
 	// The name of the staging S3 bucket.
@@ -463,6 +467,9 @@ func (d *DestinationRedshiftUpdateAWSS3Staging) GetSecretAccessKey() *string {
 	}
 	return d.SecretAccessKey
 }
+
+// #region class-body-destinationredshiftupdateawss3staging
+// #endregion class-body-destinationredshiftupdateawss3staging
 
 type DestinationRedshiftUpdateUploadingMethodType string
 
@@ -575,7 +582,8 @@ type DestinationRedshiftUpdate struct {
 	// The way data will be uploaded to Redshift.
 	UploadingMethod *DestinationRedshiftUpdateUploadingMethod `json:"uploading_method,omitempty"`
 	// Username to use to access the database.
-	Username             *string                                   `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationRedshiftUpdateDestinationType `const:"redshift" json:"destinationType"`
 	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
 }

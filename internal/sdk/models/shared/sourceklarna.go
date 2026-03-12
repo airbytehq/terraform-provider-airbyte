@@ -69,7 +69,8 @@ type SourceKlarna struct {
 	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'
 	Region SourceKlarnaRegion `json:"region"`
 	// Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
-	Username             string                  `json:"username"`
+	Username string `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceKlarnaSourceType `const:"klarna" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

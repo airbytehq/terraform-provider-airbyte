@@ -14,7 +14,8 @@ import (
 type SourceLinkedinPagesUpdateAccessToken struct {
 	// The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 	AccessToken *string `json:"access_token,omitempty"`
-	authMethod  *string `const:"access_token" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"access_token" json:"auth_method,omitempty"`
 }
 
 func (s SourceLinkedinPagesUpdateAccessToken) MarshalJSON() ([]byte, error) {
@@ -40,6 +41,7 @@ func (s *SourceLinkedinPagesUpdateAccessToken) GetAuthMethod() *string {
 }
 
 type SourceLinkedinPagesUpdateOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod *string `const:"oAuth2.0" json:"auth_method,omitempty"`
 	// The client ID of the LinkedIn developer application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -84,6 +86,9 @@ func (s *SourceLinkedinPagesUpdateOAuth20) GetRefreshToken() *string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourcelinkedinpagesupdateoauth20
+// #endregion class-body-sourcelinkedinpagesupdateoauth20
 
 type SourceLinkedinPagesUpdateAuthenticationType string
 
@@ -231,9 +236,10 @@ type SourceLinkedinPagesUpdate struct {
 	// Start date for getting metrics per time period. Must be atmost 12 months before the request date (UTC) and atleast 2 days prior to the request date (UTC). See https://bit.ly/linkedin-pages-date-rules {{ "\n" }} {{ response.errorDetails }}
 	StartDate *time.Time `default:"2023-01-01T00:00:00Z" json:"start_date"`
 	// Granularity of the statistics for metrics per time period. Must be either "DAY" or "MONTH"
-	TimeGranularityType  *SourceLinkedinPagesUpdateTimeGranularityType `default:"DAY" json:"time_granularity_type"`
-	sourceType           *SourceLinkedinPagesUpdateSourceType          `const:"linkedin-pages" json:"sourceType"`
-	AdditionalProperties any                                           `additionalProperties:"true" json:"-"`
+	TimeGranularityType *SourceLinkedinPagesUpdateTimeGranularityType `default:"DAY" json:"time_granularity_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceLinkedinPagesUpdateSourceType `const:"linkedin-pages" json:"sourceType"`
+	AdditionalProperties any                                  `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceLinkedinPagesUpdate) MarshalJSON() ([]byte, error) {

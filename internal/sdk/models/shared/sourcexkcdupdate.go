@@ -33,7 +33,8 @@ func (e *SourceXkcdUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceXkcdUpdate struct {
 	// Specifies the comic number in which details are to be extracted, pagination will begin with that number to end of available comics
-	ComicNumber          *string                     `default:"2960" json:"comic_number"`
+	ComicNumber *string `default:"2960" json:"comic_number"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceXkcdUpdateSourceType `const:"xkcd" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

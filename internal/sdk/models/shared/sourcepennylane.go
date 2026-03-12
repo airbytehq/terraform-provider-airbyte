@@ -33,8 +33,9 @@ func (e *SourcePennylaneSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePennylane struct {
-	APIKey               string                     `json:"api_key"`
-	StartTime            time.Time                  `json:"start_time"`
+	APIKey    string    `json:"api_key"`
+	StartTime time.Time `json:"start_time"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePennylaneSourceType `const:"pennylane" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

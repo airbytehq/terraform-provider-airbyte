@@ -108,6 +108,7 @@ func (e *SourceSalesforceUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSalesforceUpdate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"Client" json:"auth_type,omitempty"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
 	ClientID *string `json:"client_id,omitempty"`
@@ -126,9 +127,10 @@ type SourceSalesforceUpdate struct {
 	// The size of the time window (ISO8601 duration) to slice requests.
 	StreamSliceStep *string `default:"P30D" json:"stream_slice_step"`
 	// Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector.
-	StreamsCriteria      []SourceSalesforceUpdateStreamsCriteria `json:"streams_criteria,omitempty"`
-	sourceType           *SourceSalesforceUpdateSourceType       `const:"salesforce" json:"sourceType"`
-	AdditionalProperties any                                     `additionalProperties:"true" json:"-"`
+	StreamsCriteria []SourceSalesforceUpdateStreamsCriteria `json:"streams_criteria,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceSalesforceUpdateSourceType `const:"salesforce" json:"sourceType"`
+	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceSalesforceUpdate) MarshalJSON() ([]byte, error) {

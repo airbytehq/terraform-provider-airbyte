@@ -45,3 +45,6 @@ func (c *CreateSourceMongodbV2Response) GetSourceResponse() *shared.SourceRespon
 	}
 	return c.SourceResponse
 }
+
+// #region class-body-createsourcemongodbv2response
+// #endregion class-body-createsourcemongodbv2response

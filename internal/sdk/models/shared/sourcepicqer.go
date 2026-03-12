@@ -34,10 +34,11 @@ func (e *SourcePicqerSourceType) UnmarshalJSON(data []byte) error {
 
 type SourcePicqer struct {
 	// The organization name which is used to login to picqer
-	OrganizationName     string                  `json:"organization_name"`
-	Password             *string                 `json:"password,omitempty"`
-	StartDate            time.Time               `json:"start_date"`
-	Username             string                  `json:"username"`
+	OrganizationName string    `json:"organization_name"`
+	Password         *string   `json:"password,omitempty"`
+	StartDate        time.Time `json:"start_date"`
+	Username         string    `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePicqerSourceType `const:"picqer" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

@@ -75,7 +75,8 @@ type SourceBraintree struct {
 	// Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 	PublicKey string `json:"public_key"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate  *time.Time                 `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceBraintreeSourceType `const:"braintree" json:"sourceType"`
 }
 

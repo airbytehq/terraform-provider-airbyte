@@ -37,7 +37,8 @@ type SourceMailjetSmsUpdate struct {
 	// Retrieve SMS messages created after the specified timestamp. Required format - Unix timestamp.
 	StartDate *int64 `json:"start_date,omitempty"`
 	// Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
-	Token                *string                           `json:"token,omitempty"`
+	Token *string `json:"token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMailjetSmsUpdateSourceType `const:"mailjet-sms" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

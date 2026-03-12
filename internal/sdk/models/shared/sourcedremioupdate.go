@@ -35,7 +35,8 @@ type SourceDremioUpdate struct {
 	// API Key that is generated when you authenticate to Dremio API
 	APIKey *string `json:"api_key,omitempty"`
 	// URL of your Dremio instance
-	BaseURL              *string                       `default:"https://app.dremio.cloud" json:"base_url"`
+	BaseURL *string `default:"https://app.dremio.cloud" json:"base_url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDremioUpdateSourceType `const:"dremio" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

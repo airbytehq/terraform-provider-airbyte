@@ -36,7 +36,8 @@ type SourceDelightedUpdate struct {
 	// A Delighted API key.
 	APIKey *string `json:"api_key,omitempty"`
 	// The date from which you'd like to replicate the data
-	Since                *time.Time                       `json:"since,omitempty"`
+	Since *time.Time `json:"since,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDelightedUpdateSourceType `const:"delighted" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

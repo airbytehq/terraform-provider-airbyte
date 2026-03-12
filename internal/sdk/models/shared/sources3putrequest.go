@@ -29,3 +29,6 @@ func (s *SourceS3PutRequest) GetConfiguration() SourceS3Update {
 	}
 	return s.Configuration
 }
+
+// #region class-body-sources3putrequest
+// #endregion class-body-sources3putrequest

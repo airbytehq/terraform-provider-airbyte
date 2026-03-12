@@ -40,7 +40,8 @@ type SourceYandexMetrica struct {
 	// Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD".
-	StartDate            types.Date                     `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceYandexMetricaSourceType `const:"yandex-metrica" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

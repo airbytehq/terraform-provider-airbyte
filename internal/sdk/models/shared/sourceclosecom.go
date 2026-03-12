@@ -36,7 +36,8 @@ type SourceCloseCom struct {
 	// Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
 	APIKey string `json:"api_key"`
 	// The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
-	StartDate            *types.Date               `default:"2021-01-01" json:"start_date"`
+	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceCloseComSourceType `const:"close-com" json:"sourceType"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }

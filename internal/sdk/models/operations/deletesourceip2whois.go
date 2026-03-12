@@ -17,6 +17,9 @@ func (d *DeleteSourceIp2whoisRequest) GetSourceID() string {
 	return d.SourceID
 }
 
+// #region class-body-deletesourceip2whoisrequest
+// #endregion class-body-deletesourceip2whoisrequest
+
 type DeleteSourceIp2whoisResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -46,3 +49,6 @@ func (d *DeleteSourceIp2whoisResponse) GetRawResponse() *http.Response {
 	}
 	return d.RawResponse
 }
+
+// #region class-body-deletesourceip2whoisresponse
+// #endregion class-body-deletesourceip2whoisresponse

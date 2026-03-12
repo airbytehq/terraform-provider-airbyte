@@ -13,8 +13,9 @@ import (
 
 type SourceZendeskTalkOAuth20Legacy struct {
 	// The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
-	AccessToken string  `json:"access_token"`
-	authType    *string `const:"oauth2.0" json:"auth_type,omitempty"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 	ClientID *string `json:"client_id,omitempty"`
 	// The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
@@ -65,9 +66,13 @@ func (s *SourceZendeskTalkOAuth20Legacy) GetAdditionalProperties() any {
 	return s.AdditionalProperties
 }
 
+// #region class-body-sourcezendesktalkoauth20legacy
+// #endregion class-body-sourcezendesktalkoauth20legacy
+
 type SourceZendeskTalkAPIToken struct {
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-	APIToken string  `json:"api_token"`
+	APIToken string `json:"api_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"api_token" json:"auth_type,omitempty"`
 	// The user email for your Zendesk account.
 	Email                string `json:"email"`
@@ -113,7 +118,8 @@ func (s *SourceZendeskTalkAPIToken) GetAdditionalProperties() any {
 type SourceZendeskTalkOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"oauth2_refresh" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2_refresh" json:"auth_type,omitempty"`
 	// The OAuth client's ID. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
 	ClientID string `json:"client_id"`
 	// The OAuth client secret. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
@@ -181,6 +187,9 @@ func (s *SourceZendeskTalkOAuth20) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourcezendesktalkoauth20
+// #endregion class-body-sourcezendesktalkoauth20
 
 type SourceZendeskTalkAuthenticationType string
 
@@ -327,7 +336,8 @@ type SourceZendeskTalk struct {
 	// The date from which you'd like to replicate data for Zendesk Talk API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.
-	Subdomain            string                       `json:"subdomain"`
+	Subdomain string `json:"subdomain"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceZendeskTalkSourceType `const:"zendesk-talk" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

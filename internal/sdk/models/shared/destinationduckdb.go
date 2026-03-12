@@ -37,7 +37,8 @@ type DestinationDuckdb struct {
 	// API key to use for authentication to a MotherDuck database.
 	MotherduckAPIKey *string `json:"motherduck_api_key,omitempty"`
 	// Database schema name, default for duckdb is 'main'.
-	Schema               *string                           `json:"schema,omitempty"`
+	Schema *string `json:"schema,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationDuckdbDestinationType `const:"duckdb" json:"destinationType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

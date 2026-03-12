@@ -32,6 +32,7 @@ func (e *SourceWhiskyHunterSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWhiskyHunter struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceWhiskyHunterSourceType `const:"whisky-hunter" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

@@ -17,6 +17,9 @@ func (d *DeleteSourceAuth0Request) GetSourceID() string {
 	return d.SourceID
 }
 
+// #region class-body-deletesourceauth0request
+// #endregion class-body-deletesourceauth0request
+
 type DeleteSourceAuth0Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -46,3 +49,6 @@ func (d *DeleteSourceAuth0Response) GetRawResponse() *http.Response {
 	}
 	return d.RawResponse
 }
+
+// #region class-body-deletesourceauth0response
+// #endregion class-body-deletesourceauth0response

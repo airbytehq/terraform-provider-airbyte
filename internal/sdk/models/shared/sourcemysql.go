@@ -1133,7 +1133,8 @@ type SourceMysql struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceMysqlSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
-	Username             string                 `json:"username"`
+	Username string `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMysqlSourceType `const:"mysql" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

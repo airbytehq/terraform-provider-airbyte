@@ -38,8 +38,9 @@ type DestinationWeaviateOpenAICompatible struct {
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
 	// The number of dimensions the embedding model is generating
-	Dimensions int64                                              `json:"dimensions"`
-	mode       *DestinationWeaviateSchemasEmbeddingEmbedding7Mode `const:"openai_compatible" json:"mode"`
+	Dimensions int64 `json:"dimensions"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateSchemasEmbeddingEmbedding7Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -112,6 +113,7 @@ func (e *DestinationWeaviateSchemasEmbeddingEmbedding6Mode) UnmarshalJSON(data [
 
 // DestinationWeaviateFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationWeaviateFake struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateSchemasEmbeddingEmbedding6Mode `const:"fake" json:"mode"`
 }
 
@@ -158,8 +160,9 @@ type FromField struct {
 	// The number of dimensions the embedding model is generating
 	Dimensions int64 `json:"dimensions"`
 	// Name of the field in the record that contains the embedding
-	FieldName string                                             `json:"field_name"`
-	mode      *DestinationWeaviateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
+	FieldName string `json:"field_name"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
 }
 
 func (f FromField) MarshalJSON() ([]byte, error) {
@@ -216,8 +219,9 @@ func (e *DestinationWeaviateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []
 
 // DestinationWeaviateCohere - Use the Cohere API to embed text.
 type DestinationWeaviateCohere struct {
-	CohereKey string                                            `json:"cohere_key"`
-	mode      *DestinationWeaviateSchemasEmbeddingEmbeddingMode `const:"cohere" json:"mode"`
+	CohereKey string `json:"cohere_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateSchemasEmbeddingEmbeddingMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationWeaviateCohere) MarshalJSON() ([]byte, error) {
@@ -267,6 +271,7 @@ func (e *DestinationWeaviateSchemasEmbeddingMode) UnmarshalJSON(data []byte) err
 
 // DestinationWeaviateOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationWeaviateOpenAI struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode      *DestinationWeaviateSchemasEmbeddingMode `const:"openai" json:"mode"`
 	OpenaiKey string                                   `json:"openai_key"`
 }
@@ -321,8 +326,9 @@ type DestinationWeaviateAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string                          `json:"deployment"`
-	mode       *DestinationWeaviateSchemasMode `const:"azure_openai" json:"mode"`
+	Deployment string `json:"deployment"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateSchemasMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey string `json:"openai_key"`
 }
@@ -388,6 +394,7 @@ func (e *DestinationWeaviateMode) UnmarshalJSON(data []byte) error {
 
 // NoExternalEmbedding - Do not calculate and pass embeddings to Weaviate. Suitable for clusters with configured vectorizers to calculate embeddings within Weaviate or for classes that should only support regular text search.
 type NoExternalEmbedding struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateMode `const:"no_embedding" json:"mode"`
 }
 
@@ -670,6 +677,7 @@ func (e *DestinationWeaviateSchemasIndexingAuthAuthenticationMode) UnmarshalJSON
 
 // NoAuthentication - Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)
 type NoAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateSchemasIndexingAuthAuthenticationMode `const:"no_auth" json:"mode"`
 }
 
@@ -713,6 +721,7 @@ func (e *DestinationWeaviateSchemasIndexingAuthMode) UnmarshalJSON(data []byte) 
 
 // DestinationWeaviateUsernamePassword - Authenticate using username and password (suitable for self-managed Weaviate clusters)
 type DestinationWeaviateUsernamePassword struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateSchemasIndexingAuthMode `const:"username_password" json:"mode"`
 	// Password for the Weaviate cluster
 	Password string `json:"password"`
@@ -774,6 +783,7 @@ func (e *DestinationWeaviateSchemasIndexingMode) UnmarshalJSON(data []byte) erro
 
 // DestinationWeaviateAPIToken - Authenticate using an API token (suitable for Weaviate Cloud)
 type DestinationWeaviateAPIToken struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateSchemasIndexingMode `const:"token" json:"mode"`
 	// API Token for the Weaviate instance
 	Token string `json:"token"`
@@ -1156,8 +1166,9 @@ func (e *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode) Unmar
 // DestinationWeaviateByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationWeaviateByProgrammingLanguage struct {
 	// Split code in suitable places based on the programming language
-	Language DestinationWeaviateLanguage                                       `json:"language"`
-	mode     *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+	Language DestinationWeaviateLanguage `json:"language"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationWeaviateByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -1207,6 +1218,7 @@ func (e *DestinationWeaviateSchemasProcessingTextSplitterMode) UnmarshalJSON(dat
 
 // DestinationWeaviateByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
 type DestinationWeaviateByMarkdownHeader struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationWeaviateSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
 	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
 	SplitLevel *int64 `default:"1" json:"split_level"`
@@ -1260,8 +1272,9 @@ func (e *DestinationWeaviateSchemasProcessingMode) UnmarshalJSON(data []byte) er
 // DestinationWeaviateBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationWeaviateBySeparator struct {
 	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool                                     `default:"false" json:"keep_separator"`
-	mode          *DestinationWeaviateSchemasProcessingMode `const:"separator" json:"mode"`
+	KeepSeparator *bool `default:"false" json:"keep_separator"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationWeaviateSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
 }
@@ -1509,9 +1522,10 @@ type DestinationWeaviate struct {
 	// Indexing configuration
 	Indexing DestinationWeaviateIndexing `json:"indexing"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText     *bool                                    `default:"false" json:"omit_raw_text"`
-	Processing      DestinationWeaviateProcessingConfigModel `json:"processing"`
-	destinationType *DestinationWeaviateDestinationType      `const:"weaviate" json:"destinationType"`
+	OmitRawText *bool                                    `default:"false" json:"omit_raw_text"`
+	Processing  DestinationWeaviateProcessingConfigModel `json:"processing"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType *DestinationWeaviateDestinationType `const:"weaviate" json:"destinationType"`
 }
 
 func (d DestinationWeaviate) MarshalJSON() ([]byte, error) {

@@ -14,7 +14,8 @@ import (
 type SourceZendeskSunshineUpdateOAuth20Legacy struct {
 	// The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
 	AccessToken *string `json:"access_token,omitempty"`
-	authMethod  *string `const:"oauth2.0" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 	ClientID *string `json:"client_id,omitempty"`
 	// The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
@@ -65,9 +66,13 @@ func (s *SourceZendeskSunshineUpdateOAuth20Legacy) GetAdditionalProperties() any
 	return s.AdditionalProperties
 }
 
+// #region class-body-sourcezendesksunshineupdateoauth20legacy
+// #endregion class-body-sourcezendesksunshineupdateoauth20legacy
+
 type SourceZendeskSunshineUpdateAPIToken struct {
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-sunshine">docs</a> for more information.
-	APIToken   *string `json:"api_token,omitempty"`
+	APIToken *string `json:"api_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod *string `const:"api_token" json:"auth_method,omitempty"`
 	// The user email for your Zendesk account.
 	Email                *string `json:"email,omitempty"`
@@ -113,7 +118,8 @@ func (s *SourceZendeskSunshineUpdateAPIToken) GetAdditionalProperties() any {
 type SourceZendeskSunshineUpdateOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authMethod  *string `const:"oauth2_refresh" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"oauth2_refresh" json:"auth_method,omitempty"`
 	// The OAuth client's ID. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
 	ClientID *string `json:"client_id,omitempty"`
 	// The OAuth client secret. See <a href="https://developer.zendesk.com/api-reference/ticketing/oauth/grant_type_tokens/">Zendesk OAuth grant-type tokens documentation</a> for more information.
@@ -181,6 +187,9 @@ func (s *SourceZendeskSunshineUpdateOAuth20) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourcezendesksunshineupdateoauth20
+// #endregion class-body-sourcezendesksunshineupdateoauth20
 
 type SourceZendeskSunshineUpdateAuthenticationType string
 
@@ -327,7 +336,8 @@ type SourceZendeskSunshineUpdate struct {
 	// The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// The subdomain for your Zendesk Account.
-	Subdomain            *string                                `json:"subdomain,omitempty"`
+	Subdomain *string `json:"subdomain,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceZendeskSunshineUpdateSourceType `const:"zendesk-sunshine" json:"sourceType"`
 	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
 }

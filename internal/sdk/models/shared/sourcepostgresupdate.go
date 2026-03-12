@@ -12,6 +12,7 @@ import (
 
 // SourcePostgresUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
 type SourcePostgresUpdateScanChangesWithUserDefinedCursor struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	method *string `const:"Standard" json:"method,omitempty"`
 }
 
@@ -32,6 +33,7 @@ func (s *SourcePostgresUpdateScanChangesWithUserDefinedCursor) GetMethod() *stri
 
 // SourcePostgresUpdateDetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Suitable for databases that have low transaction pressure.
 type SourcePostgresUpdateDetectChangesWithXminSystemColumn struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	method *string `const:"Xmin" json:"method,omitempty"`
 }
 
@@ -140,7 +142,8 @@ type SourcePostgresUpdateReadChangesUsingWriteAheadLogCDC struct {
 	InvalidCdcCursorPositionBehavior *SourcePostgresUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
 	// Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
 	LsnCommitBehaviour *SourcePostgresUpdateLSNCommitBehaviour `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
-	method             *string                                 `const:"CDC" json:"method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	method *string `const:"CDC" json:"method,omitempty"`
 	// A logical decoding plugin installed on the PostgreSQL server.
 	Plugin *SourcePostgresUpdatePlugin `default:"pgoutput" json:"plugin"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
@@ -362,7 +365,8 @@ type SourcePostgresUpdateVerifyFull struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword    *string `json:"client_key_password,omitempty"`
+	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode                 *string `const:"verify-full" json:"mode,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -426,7 +430,8 @@ type SourcePostgresUpdateVerifyCa struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword    *string `json:"client_key_password,omitempty"`
+	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode                 *string `const:"verify-ca" json:"mode,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -483,6 +488,7 @@ func (s *SourcePostgresUpdateVerifyCa) GetAdditionalProperties() any {
 
 // SourcePostgresUpdateRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
 type SourcePostgresUpdateRequire struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode                 *string `const:"require" json:"mode,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -511,6 +517,7 @@ func (s *SourcePostgresUpdateRequire) GetAdditionalProperties() any {
 
 // SourcePostgresUpdatePrefer - Allows unencrypted connection only if the source database does not support encryption.
 type SourcePostgresUpdatePrefer struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode                 *string `const:"prefer" json:"mode,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -539,6 +546,7 @@ func (s *SourcePostgresUpdatePrefer) GetAdditionalProperties() any {
 
 // SourcePostgresUpdateAllow - Enables encryption only when required by the source database.
 type SourcePostgresUpdateAllow struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode                 *string `const:"allow" json:"mode,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -567,6 +575,7 @@ func (s *SourcePostgresUpdateAllow) GetAdditionalProperties() any {
 
 // SourcePostgresUpdateDisable - Disables encryption of communication between Airbyte and source database.
 type SourcePostgresUpdateDisable struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode                 *string `const:"disable" json:"mode,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -793,6 +802,7 @@ type SourcePostgresUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_PASSWORD_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -851,6 +861,7 @@ type SourcePostgresUpdateSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_KEY_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -903,6 +914,7 @@ func (s *SourcePostgresUpdateSSHKeyAuthentication) GetTunnelUser() *string {
 
 type SourcePostgresUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"NO_TUNNEL" json:"tunnel_method,omitempty"`
 }
 
@@ -1087,7 +1099,8 @@ type SourcePostgresUpdate struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourcePostgresUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to access the database.
-	Username   *string                         `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourcePostgresUpdateSourceType `const:"postgres" json:"sourceType"`
 }
 

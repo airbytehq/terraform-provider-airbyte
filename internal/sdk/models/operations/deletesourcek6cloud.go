@@ -17,6 +17,9 @@ func (d *DeleteSourceK6CloudRequest) GetSourceID() string {
 	return d.SourceID
 }
 
+// #region class-body-deletesourcek6cloudrequest
+// #endregion class-body-deletesourcek6cloudrequest
+
 type DeleteSourceK6CloudResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -46,3 +49,6 @@ func (d *DeleteSourceK6CloudResponse) GetRawResponse() *http.Response {
 	}
 	return d.RawResponse
 }
+
+// #region class-body-deletesourcek6cloudresponse
+// #endregion class-body-deletesourcek6cloudresponse

@@ -33,7 +33,8 @@ func (e *SourceDockerhubSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceDockerhub struct {
 	// Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
-	DockerUsername       string                     `json:"docker_username"`
+	DockerUsername string `json:"docker_username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDockerhubSourceType `const:"dockerhub" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

@@ -33,7 +33,8 @@ func (e *SourceInstatusSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceInstatus struct {
 	// Instatus REST API key
-	APIKey               string                    `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceInstatusSourceType `const:"instatus" json:"sourceType"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }

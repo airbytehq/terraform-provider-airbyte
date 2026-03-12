@@ -12,6 +12,7 @@ import (
 )
 
 type SourceGithubUpdatePersonalAccessToken struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	optionTitle *string `const:"PAT Credentials" json:"option_title,omitempty"`
 	// Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
 	PersonalAccessToken *string `json:"personal_access_token,omitempty"`
@@ -46,7 +47,8 @@ type SourceGithubUpdateOAuth struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// OAuth Client secret
 	ClientSecret *string `json:"client_secret,omitempty"`
-	optionTitle  *string `const:"OAuth Credentials" json:"option_title,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	optionTitle *string `const:"OAuth Credentials" json:"option_title,omitempty"`
 }
 
 func (s SourceGithubUpdateOAuth) MarshalJSON() ([]byte, error) {
@@ -214,7 +216,8 @@ type SourceGithubUpdate struct {
 	// (DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
 	Repository *string `json:"repository,omitempty"`
 	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
-	StartDate            *time.Time                    `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGithubUpdateSourceType `const:"github" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

@@ -43,7 +43,8 @@ type SourcePexelsAPI struct {
 	// Optional, the search query, Example Ocean, Tigers, Pears, etc.
 	Query string `json:"query"`
 	// Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
-	Size                 *string                    `json:"size,omitempty"`
+	Size *string `json:"size,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePexelsAPISourceType `const:"pexels-api" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

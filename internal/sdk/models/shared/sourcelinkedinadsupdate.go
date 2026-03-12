@@ -161,7 +161,8 @@ func (s *SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration) GetTimeGranulari
 type SourceLinkedinAdsUpdateAccessToken struct {
 	// The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	AccessToken *string `json:"access_token,omitempty"`
-	authMethod  *string `const:"access_token" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"access_token" json:"auth_method,omitempty"`
 }
 
 func (s SourceLinkedinAdsUpdateAccessToken) MarshalJSON() ([]byte, error) {
@@ -187,6 +188,7 @@ func (s *SourceLinkedinAdsUpdateAccessToken) GetAuthMethod() *string {
 }
 
 type SourceLinkedinAdsUpdateOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod *string `const:"oAuth2.0" json:"auth_method,omitempty"`
 	// The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	ClientID *string `json:"client_id,omitempty"`
@@ -231,6 +233,9 @@ func (s *SourceLinkedinAdsUpdateOAuth20) GetRefreshToken() *string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourcelinkedinadsupdateoauth20
+// #endregion class-body-sourcelinkedinadsupdateoauth20
 
 type SourceLinkedinAdsUpdateAuthenticationType string
 
@@ -354,7 +359,8 @@ type SourceLinkedinAdsUpdate struct {
 	// The number of workers to use for the connector. This is used to limit the number of concurrent requests to the LinkedIn Ads API. If not set, the default is 3 workers.
 	NumWorkers *int64 `default:"3" json:"num_workers"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate            *types.Date                        `json:"start_date,omitempty"`
+	StartDate *types.Date `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLinkedinAdsUpdateSourceType `const:"linkedin-ads" json:"sourceType"`
 	AdditionalProperties any                                `additionalProperties:"true" json:"-"`
 }

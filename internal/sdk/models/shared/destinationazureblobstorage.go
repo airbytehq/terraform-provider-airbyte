@@ -316,9 +316,10 @@ type DestinationAzureBlobStorage struct {
 	// Format of the data output.
 	Format OutputFormat `json:"format"`
 	// A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the "Azure Blob Storage Account Key", "Azure Tenant ID", "Azure Client ID", or "Azure Client Secret" fields.
-	SharedAccessSignature *string                                     `json:"shared_access_signature,omitempty"`
-	destinationType       *DestinationAzureBlobStorageDestinationType `const:"azure-blob-storage" json:"destinationType"`
-	AdditionalProperties  any                                         `additionalProperties:"true" json:"-"`
+	SharedAccessSignature *string `json:"shared_access_signature,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType      *DestinationAzureBlobStorageDestinationType `const:"azure-blob-storage" json:"destinationType"`
+	AdditionalProperties any                                         `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationAzureBlobStorage) MarshalJSON() ([]byte, error) {

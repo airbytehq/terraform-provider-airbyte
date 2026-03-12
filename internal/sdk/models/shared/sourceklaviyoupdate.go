@@ -44,7 +44,8 @@ type SourceKlaviyoUpdate struct {
 	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Klaviyo plan. More info about the rate limit plan tiers can be found on Klaviyo's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>.
 	NumWorkers *int64 `default:"10" json:"num_workers"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.
-	StartDate            *time.Time                     `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceKlaviyoUpdateSourceType `const:"klaviyo" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

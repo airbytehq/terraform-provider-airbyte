@@ -38,8 +38,9 @@ type DestinationPineconeOpenAICompatible struct {
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
 	// The number of dimensions the embedding model is generating
-	Dimensions int64                                              `json:"dimensions"`
-	mode       *DestinationPineconeSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
+	Dimensions int64 `json:"dimensions"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPineconeSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -115,8 +116,9 @@ type DestinationPineconeAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string                                            `json:"deployment"`
-	mode       *DestinationPineconeSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	Deployment string `json:"deployment"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPineconeSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey string `json:"openai_key"`
 }
@@ -182,6 +184,7 @@ func (e *DestinationPineconeSchemasEmbeddingMode) UnmarshalJSON(data []byte) err
 
 // DestinationPineconeFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationPineconeFake struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationPineconeSchemasEmbeddingMode `const:"fake" json:"mode"`
 }
 
@@ -225,8 +228,9 @@ func (e *DestinationPineconeSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationPineconeCohere - Use the Cohere API to embed text.
 type DestinationPineconeCohere struct {
-	CohereKey string                          `json:"cohere_key"`
-	mode      *DestinationPineconeSchemasMode `const:"cohere" json:"mode"`
+	CohereKey string `json:"cohere_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPineconeSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationPineconeCohere) MarshalJSON() ([]byte, error) {
@@ -276,6 +280,7 @@ func (e *DestinationPineconeMode) UnmarshalJSON(data []byte) error {
 
 // DestinationPineconeOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationPineconeOpenAI struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode      *DestinationPineconeMode `const:"openai" json:"mode"`
 	OpenaiKey string                   `json:"openai_key"`
 }
@@ -617,8 +622,9 @@ func (e *DestinationPineconeSchemasProcessingTextSplitterTextSplitterMode) Unmar
 // DestinationPineconeByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationPineconeByProgrammingLanguage struct {
 	// Split code in suitable places based on the programming language
-	Language DestinationPineconeLanguage                                       `json:"language"`
-	mode     *DestinationPineconeSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+	Language DestinationPineconeLanguage `json:"language"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPineconeSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationPineconeByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -668,6 +674,7 @@ func (e *DestinationPineconeSchemasProcessingTextSplitterMode) UnmarshalJSON(dat
 
 // DestinationPineconeByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
 type DestinationPineconeByMarkdownHeader struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationPineconeSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
 	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
 	SplitLevel *int64 `default:"1" json:"split_level"`
@@ -721,8 +728,9 @@ func (e *DestinationPineconeSchemasProcessingMode) UnmarshalJSON(data []byte) er
 // DestinationPineconeBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationPineconeBySeparator struct {
 	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool                                     `default:"false" json:"keep_separator"`
-	mode          *DestinationPineconeSchemasProcessingMode `const:"separator" json:"mode"`
+	KeepSeparator *bool `default:"false" json:"keep_separator"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPineconeSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
 }
@@ -970,9 +978,10 @@ type DestinationPinecone struct {
 	// Pinecone is a popular vector store that can be used to store and retrieve embeddings.
 	Indexing DestinationPineconeIndexing `json:"indexing"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText     *bool                                    `default:"false" json:"omit_raw_text"`
-	Processing      DestinationPineconeProcessingConfigModel `json:"processing"`
-	destinationType *DestinationPineconeDestinationType      `const:"pinecone" json:"destinationType"`
+	OmitRawText *bool                                    `default:"false" json:"omit_raw_text"`
+	Processing  DestinationPineconeProcessingConfigModel `json:"processing"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType *DestinationPineconeDestinationType `const:"pinecone" json:"destinationType"`
 }
 
 func (d DestinationPinecone) MarshalJSON() ([]byte, error) {

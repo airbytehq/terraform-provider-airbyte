@@ -37,7 +37,8 @@ type SourceClockify struct {
 	// The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.
 	APIURL *string `default:"https://api.clockify.me" json:"api_url"`
 	// WorkSpace Id
-	WorkspaceID          string                    `json:"workspace_id"`
+	WorkspaceID string `json:"workspace_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceClockifySourceType `const:"clockify" json:"sourceType"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }

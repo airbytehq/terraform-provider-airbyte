@@ -160,8 +160,9 @@ func (a *AdAnalyticsReportConfiguration) GetTimeGranularity() TimeGranularity {
 
 type AccessToken struct {
 	// The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
-	AccessToken string  `json:"access_token"`
-	authMethod  *string `const:"access_token" json:"auth_method,omitempty"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"access_token" json:"auth_method,omitempty"`
 }
 
 func (a AccessToken) MarshalJSON() ([]byte, error) {
@@ -187,6 +188,7 @@ func (a *AccessToken) GetAuthMethod() *string {
 }
 
 type SourceLinkedinAdsOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authMethod *string `const:"oAuth2.0" json:"auth_method,omitempty"`
 	// The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	ClientID string `json:"client_id"`
@@ -231,6 +233,9 @@ func (s *SourceLinkedinAdsOAuth20) GetRefreshToken() string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourcelinkedinadsoauth20
+// #endregion class-body-sourcelinkedinadsoauth20
 
 type SourceLinkedinAdsAuthenticationType string
 
@@ -354,7 +359,8 @@ type SourceLinkedinAds struct {
 	// The number of workers to use for the connector. This is used to limit the number of concurrent requests to the LinkedIn Ads API. If not set, the default is 3 workers.
 	NumWorkers *int64 `default:"3" json:"num_workers"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate            types.Date                   `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLinkedinAdsSourceType `const:"linkedin-ads" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

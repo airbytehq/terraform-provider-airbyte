@@ -36,7 +36,8 @@ type SourceInsightlyUpdate struct {
 	// The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Your Insightly API token.
-	Token                *string                          `json:"token,omitempty"`
+	Token *string `json:"token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceInsightlyUpdateSourceType `const:"insightly" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

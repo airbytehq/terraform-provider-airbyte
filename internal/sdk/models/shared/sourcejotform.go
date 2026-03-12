@@ -12,6 +12,7 @@ import (
 )
 
 type Enterprise struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	apiEndpoint *string `const:"enterprise" json:"api_endpoint,omitempty"`
 	// Upgrade to Enterprise to make your API url your-domain.com/API or subdomain.jotform.com/API instead of api.jotform.com
 	EnterpriseURL string `json:"enterprise_url"`
@@ -70,6 +71,7 @@ func (e *BaseURLPrefix) UnmarshalJSON(data []byte) error {
 }
 
 type Basic struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	apiEndpoint *string `const:"basic" json:"api_endpoint,omitempty"`
 	// You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
 	URLPrefix *BaseURLPrefix `default:"Standard" json:"url_prefix"`
@@ -210,10 +212,11 @@ func (e *SourceJotformSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceJotform struct {
-	APIEndpoint          APIEndpoint              `json:"api_endpoint"`
-	APIKey               string                   `json:"api_key"`
-	EndDate              time.Time                `json:"end_date"`
-	StartDate            time.Time                `json:"start_date"`
+	APIEndpoint APIEndpoint `json:"api_endpoint"`
+	APIKey      string      `json:"api_key"`
+	EndDate     time.Time   `json:"end_date"`
+	StartDate   time.Time   `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceJotformSourceType `const:"jotform" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

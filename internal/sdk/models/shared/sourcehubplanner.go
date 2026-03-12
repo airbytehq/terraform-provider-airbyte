@@ -33,7 +33,8 @@ func (e *SourceHubplannerSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceHubplanner struct {
 	// Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
-	APIKey               string                      `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceHubplannerSourceType `const:"hubplanner" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

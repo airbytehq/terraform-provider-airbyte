@@ -33,7 +33,8 @@ func (e *SourceCodaSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceCoda struct {
 	// Bearer token
-	AuthToken            string                `json:"auth_token"`
+	AuthToken string `json:"auth_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceCodaSourceType `const:"coda" json:"sourceType"`
 	AdditionalProperties any                   `additionalProperties:"true" json:"-"`
 }

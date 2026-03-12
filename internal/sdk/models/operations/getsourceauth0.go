@@ -18,6 +18,9 @@ func (g *GetSourceAuth0Request) GetSourceID() string {
 	return g.SourceID
 }
 
+// #region class-body-getsourceauth0request
+// #endregion class-body-getsourceauth0request
+
 type GetSourceAuth0Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -56,3 +59,6 @@ func (g *GetSourceAuth0Response) GetSourceResponse() *shared.SourceResponse {
 	}
 	return g.SourceResponse
 }
+
+// #region class-body-getsourceauth0response
+// #endregion class-body-getsourceauth0response

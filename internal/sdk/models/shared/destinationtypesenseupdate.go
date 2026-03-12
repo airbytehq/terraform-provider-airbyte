@@ -43,7 +43,8 @@ type DestinationTypesenseUpdate struct {
 	// Port of the Typesense instance. Ex: 8108, 80, 443. Default is 8108
 	Port *string `json:"port,omitempty"`
 	// Protocol of the Typesense instance. Ex: http or https. Default is https
-	Protocol        *string                                    `json:"protocol,omitempty"`
+	Protocol *string `json:"protocol,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationTypesenseUpdateDestinationType `const:"typesense" json:"destinationType"`
 }
 

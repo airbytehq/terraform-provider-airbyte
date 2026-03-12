@@ -40,7 +40,8 @@ type SourcePosthog struct {
 	// Set lower value in case of failing long running sync of events stream.
 	EventsTimeStep *int64 `default:"30" json:"events_time_step"`
 	// The date from which you'd like to replicate the data. Any data before this date will not be replicated.
-	StartDate  time.Time                `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourcePosthogSourceType `const:"posthog" json:"sourceType"`
 }
 

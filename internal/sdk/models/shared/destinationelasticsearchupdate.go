@@ -12,6 +12,7 @@ import (
 
 // DestinationElasticsearchUpdateUsernamePassword - Basic auth header with a username and password
 type DestinationElasticsearchUpdateUsernamePassword struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	method *string `const:"basic" json:"method,omitempty"`
 	// Basic auth password to access a secure Elasticsearch server
 	Password *string `json:"password,omitempty"`
@@ -54,7 +55,8 @@ type DestinationElasticsearchUpdateAPIKeySecret struct {
 	APIKeyID *string `json:"apiKeyId,omitempty"`
 	// The secret associated with the API Key ID.
 	APIKeySecret *string `json:"apiKeySecret,omitempty"`
-	method       *string `const:"secret" json:"method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	method *string `const:"secret" json:"method,omitempty"`
 }
 
 func (d DestinationElasticsearchUpdateAPIKeySecret) MarshalJSON() ([]byte, error) {
@@ -207,7 +209,8 @@ type DestinationElasticsearchUpdate struct {
 	// The full url of the Elasticsearch server
 	Endpoint *string `json:"endpoint,omitempty"`
 	// If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
-	Upsert          *bool                                          `default:"true" json:"upsert"`
+	Upsert *bool `default:"true" json:"upsert"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationElasticsearchUpdateDestinationType `const:"elasticsearch" json:"destinationType"`
 }
 

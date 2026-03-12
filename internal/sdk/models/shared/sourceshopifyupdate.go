@@ -14,7 +14,8 @@ import (
 type SourceShopifyUpdateAPIPassword struct {
 	// The API Password for your private application in the `Shopify` store.
 	APIPassword *string `json:"api_password,omitempty"`
-	authMethod  *string `const:"api_password" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"api_password" json:"auth_method,omitempty"`
 }
 
 func (s SourceShopifyUpdateAPIPassword) MarshalJSON() ([]byte, error) {
@@ -43,7 +44,8 @@ func (s *SourceShopifyUpdateAPIPassword) GetAuthMethod() *string {
 type SourceShopifyUpdateOAuth20 struct {
 	// The Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authMethod  *string `const:"oauth2.0" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of the Shopify developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of the Shopify developer application.
@@ -85,6 +87,9 @@ func (s *SourceShopifyUpdateOAuth20) GetClientSecret() *string {
 	}
 	return s.ClientSecret
 }
+
+// #region class-body-sourceshopifyupdateoauth20
+// #endregion class-body-sourceshopifyupdateoauth20
 
 type SourceShopifyUpdateShopifyAuthorizationMethodType string
 
@@ -217,7 +222,8 @@ type SourceShopifyUpdate struct {
 	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
 	Shop *string `json:"shop,omitempty"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate            *types.Date                    `default:"2020-01-01" json:"start_date"`
+	StartDate *types.Date `default:"2020-01-01" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceShopifyUpdateSourceType `const:"shopify" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

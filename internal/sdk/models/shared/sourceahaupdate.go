@@ -35,7 +35,8 @@ type SourceAhaUpdate struct {
 	// API Key
 	APIKey *string `json:"api_key,omitempty"`
 	// URL
-	URL                  *string                    `json:"url,omitempty"`
+	URL *string `json:"url,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAhaUpdateSourceType `const:"aha" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

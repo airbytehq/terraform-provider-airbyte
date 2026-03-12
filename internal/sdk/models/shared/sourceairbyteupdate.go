@@ -36,8 +36,9 @@ type SourceAirbyteUpdate struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
 	// The Host URL of your Self-Managed Deployment (e.x. airbtye.mydomain.com)
-	Host                 *string                        `json:"host,omitempty"`
-	StartDate            *time.Time                     `json:"start_date,omitempty"`
+	Host      *string    `json:"host,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAirbyteUpdateSourceType `const:"airbyte" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

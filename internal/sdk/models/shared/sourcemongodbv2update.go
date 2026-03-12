@@ -13,7 +13,8 @@ import (
 // SourceMongodbV2UpdateSelfManagedReplicaSet - MongoDB self-hosted cluster configured as a replica set
 type SourceMongodbV2UpdateSelfManagedReplicaSet struct {
 	// The authentication source where the user information is stored.
-	AuthSource  *string `default:"admin" json:"auth_source"`
+	AuthSource *string `default:"admin" json:"auth_source"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	clusterType *string `const:"SELF_MANAGED_REPLICA_SET" json:"cluster_type,omitempty"`
 	// The connection string of the cluster that you want to replicate.  https://www.mongodb.com/docs/manual/reference/connection-string/#find-your-self-hosted-deployment-s-connection-string for more information.
 	ConnectionString *string `json:"connection_string,omitempty"`
@@ -92,10 +93,14 @@ func (s *SourceMongodbV2UpdateSelfManagedReplicaSet) GetAdditionalProperties() a
 	return s.AdditionalProperties
 }
 
+// #region class-body-sourcemongodbv2updateselfmanagedreplicaset
+// #endregion class-body-sourcemongodbv2updateselfmanagedreplicaset
+
 // SourceMongodbV2UpdateMongoDBAtlasReplicaSet - MongoDB Atlas-hosted cluster configured as a replica set
 type SourceMongodbV2UpdateMongoDBAtlasReplicaSet struct {
 	// The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details.
-	AuthSource  *string `default:"admin" json:"auth_source"`
+	AuthSource *string `default:"admin" json:"auth_source"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	clusterType *string `const:"ATLAS_REPLICA_SET" json:"cluster_type,omitempty"`
 	// The connection string of the cluster that you want to replicate.
 	ConnectionString *string `json:"connection_string,omitempty"`
@@ -173,6 +178,9 @@ func (s *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetAdditionalProperties() 
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourcemongodbv2updatemongodbatlasreplicaset
+// #endregion class-body-sourcemongodbv2updatemongodbatlasreplicaset
 
 type SourceMongodbV2UpdateClusterTypeType string
 
@@ -357,9 +365,10 @@ type SourceMongodbV2Update struct {
 	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 	QueueSize *int64 `default:"10000" json:"queue_size"`
 	// Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images.
-	UpdateCaptureMode    *SourceMongodbV2UpdateCaptureModeAdvanced `default:"Lookup" json:"update_capture_mode"`
-	sourceType           *SourceMongodbV2UpdateSourceType          `const:"mongodb-v2" json:"sourceType"`
-	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
+	UpdateCaptureMode *SourceMongodbV2UpdateCaptureModeAdvanced `default:"Lookup" json:"update_capture_mode"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceMongodbV2UpdateSourceType `const:"mongodb-v2" json:"sourceType"`
+	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMongodbV2Update) MarshalJSON() ([]byte, error) {
@@ -439,3 +448,6 @@ func (s *SourceMongodbV2Update) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourcemongodbv2update
+// #endregion class-body-sourcemongodbv2update

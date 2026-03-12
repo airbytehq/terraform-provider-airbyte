@@ -14,6 +14,7 @@ type SourceClickhouseUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_PASSWORD_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -72,6 +73,7 @@ type SourceClickhouseUpdateSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost *string `json:"tunnel_host,omitempty"`
 	// Connect through a jump server tunnel host using username and ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"SSH_KEY_AUTH" json:"tunnel_method,omitempty"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -124,6 +126,7 @@ func (s *SourceClickhouseUpdateSSHKeyAuthentication) GetTunnelUser() *string {
 
 type SourceClickhouseUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod *string `const:"NO_TUNNEL" json:"tunnel_method,omitempty"`
 }
 
@@ -295,7 +298,8 @@ type SourceClickhouseUpdate struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceClickhouseUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
-	Username   *string                           `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceClickhouseUpdateSourceType `const:"clickhouse" json:"sourceType"`
 }
 

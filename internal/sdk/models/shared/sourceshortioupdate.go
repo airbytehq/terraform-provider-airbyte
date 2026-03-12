@@ -36,7 +36,8 @@ type SourceShortioUpdate struct {
 	// Short.io Secret Key
 	SecretKey *string `json:"secret_key,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            *string                        `json:"start_date,omitempty"`
+	StartDate *string `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceShortioUpdateSourceType `const:"shortio" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

@@ -72,7 +72,8 @@ type SourceCoinAPI struct {
 	// The start date in ISO 8601 format.
 	StartDate string `json:"start_date"`
 	// The symbol ID to use. See the documentation for a list. https://docs.coinapi.io/#list-all-symbols-get
-	SymbolID   string                   `json:"symbol_id"`
+	SymbolID string `json:"symbol_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceCoinAPISourceType `const:"coin-api" json:"sourceType"`
 }
 

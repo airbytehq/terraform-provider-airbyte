@@ -14,6 +14,7 @@ type PrivateApp struct {
 	// HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 	AccessToken string `json:"access_token"`
 	// Name of the credentials set
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentialsTitle string `const:"Private App Credentials" json:"credentials_title"`
 }
 
@@ -45,6 +46,7 @@ type SourceHubspotOAuth struct {
 	// The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
 	ClientSecret string `json:"client_secret"`
 	// Name of the credentials
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentialsTitle string `const:"OAuth Credentials" json:"credentials_title"`
 	// Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 	RefreshToken string `json:"refresh_token"`
@@ -209,7 +211,8 @@ type SourceHubspot struct {
 	// The number of worker threads to use for the sync.
 	NumWorker *int64 `default:"10" json:"num_worker"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If not set, "2006-06-01T00:00:00Z" (Hubspot creation date) will be used as start date. It's recommended to provide relevant to your data start date value to optimize synchronization.
-	StartDate            *time.Time               `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceHubspotSourceType `const:"hubspot" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

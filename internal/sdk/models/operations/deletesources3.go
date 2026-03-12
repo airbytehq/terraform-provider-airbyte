@@ -17,6 +17,9 @@ func (d *DeleteSourceS3Request) GetSourceID() string {
 	return d.SourceID
 }
 
+// #region class-body-deletesources3request
+// #endregion class-body-deletesources3request
+
 type DeleteSourceS3Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -46,3 +49,6 @@ func (d *DeleteSourceS3Response) GetRawResponse() *http.Response {
 	}
 	return d.RawResponse
 }
+
+// #region class-body-deletesources3response
+// #endregion class-body-deletesources3response

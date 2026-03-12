@@ -36,8 +36,9 @@ type SourceCalendlyUpdate struct {
 	// Go to Integrations → API & Webhooks to obtain your bearer token. https://calendly.com/integrations/api_webhooks
 	APIKey *string `json:"api_key,omitempty"`
 	// Number of days to be subtracted from the last cutoff date before starting to sync the `scheduled_events` stream.
-	LookbackDays         *float64                        `default:"0" json:"lookback_days"`
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
+	LookbackDays *float64   `default:"0" json:"lookback_days"`
+	StartDate    *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceCalendlyUpdateSourceType `const:"calendly" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

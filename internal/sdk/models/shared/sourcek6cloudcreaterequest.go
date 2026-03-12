@@ -62,3 +62,6 @@ func (s *SourceK6CloudCreateRequest) GetSecretID() *string {
 	}
 	return s.SecretID
 }
+
+// #region class-body-sourcek6cloudcreaterequest
+// #endregion class-body-sourcek6cloudcreaterequest

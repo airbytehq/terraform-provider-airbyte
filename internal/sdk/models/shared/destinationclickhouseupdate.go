@@ -427,7 +427,8 @@ type DestinationClickhouseUpdate struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationClickhouseUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
-	Username             *string                                     `default:"default" json:"username"`
+	Username *string `default:"default" json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationClickhouseUpdateDestinationType `const:"clickhouse" json:"destinationType"`
 	AdditionalProperties any                                         `additionalProperties:"true" json:"-"`
 }

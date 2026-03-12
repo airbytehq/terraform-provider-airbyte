@@ -33,7 +33,8 @@ func (e *SourceRkiCovidSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceRkiCovid struct {
 	// UTC date in the format 2017-01-25. Any data before this date will not be replicated.
-	StartDate            string                    `json:"start_date"`
+	StartDate string `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceRkiCovidSourceType `const:"rki-covid" json:"sourceType"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }

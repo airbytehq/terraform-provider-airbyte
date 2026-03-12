@@ -62,3 +62,6 @@ func (s *SourceMongodbV2CreateRequest) GetSecretID() *string {
 	}
 	return s.SecretID
 }
+
+// #region class-body-sourcemongodbv2createrequest
+// #endregion class-body-sourcemongodbv2createrequest

@@ -41,7 +41,8 @@ type SourceFakerUpdate struct {
 	// How many fake records will be in each page (stream slice), before a state message is emitted?
 	RecordsPerSlice *int64 `default:"1000" json:"records_per_slice"`
 	// Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
-	Seed                 *int64                       `default:"-1" json:"seed"`
+	Seed *int64 `default:"-1" json:"seed"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFakerUpdateSourceType `const:"faker" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

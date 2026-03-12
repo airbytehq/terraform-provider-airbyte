@@ -18,6 +18,9 @@ func (g *GetSourceK6CloudRequest) GetSourceID() string {
 	return g.SourceID
 }
 
+// #region class-body-getsourcek6cloudrequest
+// #endregion class-body-getsourcek6cloudrequest
+
 type GetSourceK6CloudResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -56,3 +59,6 @@ func (g *GetSourceK6CloudResponse) GetSourceResponse() *shared.SourceResponse {
 	}
 	return g.SourceResponse
 }
+
+// #region class-body-getsourcek6cloudresponse
+// #endregion class-body-getsourcek6cloudresponse

@@ -69,8 +69,9 @@ type SourceChameleon struct {
 	// Filter for using in the `segments_experiences` stream
 	Filter *Filter `default:"tour" json:"filter"`
 	// Max records per page limit
-	Limit                *string                    `default:"50" json:"limit"`
-	StartDate            time.Time                  `json:"start_date"`
+	Limit     *string   `default:"50" json:"limit"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceChameleonSourceType `const:"chameleon" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

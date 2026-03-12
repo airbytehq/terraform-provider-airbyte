@@ -48,9 +48,10 @@ type SourceOrbUpdate struct {
 	// Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
 	StringEventPropertiesKeys []string `json:"string_event_properties_keys,omitempty"`
 	// Property key name to group subscription usage by.
-	SubscriptionUsageGroupingKey *string                    `json:"subscription_usage_grouping_key,omitempty"`
-	sourceType                   *SourceOrbUpdateSourceType `const:"orb" json:"sourceType"`
-	AdditionalProperties         any                        `additionalProperties:"true" json:"-"`
+	SubscriptionUsageGroupingKey *string `json:"subscription_usage_grouping_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceOrbUpdateSourceType `const:"orb" json:"sourceType"`
+	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceOrbUpdate) MarshalJSON() ([]byte, error) {

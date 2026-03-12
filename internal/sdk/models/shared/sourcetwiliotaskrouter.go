@@ -35,7 +35,8 @@ type SourceTwilioTaskrouter struct {
 	// Twilio Account ID
 	AccountSid string `json:"account_sid"`
 	// Twilio Auth Token
-	AuthToken            string                            `json:"auth_token"`
+	AuthToken string `json:"auth_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTwilioTaskrouterSourceType `const:"twilio-taskrouter" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

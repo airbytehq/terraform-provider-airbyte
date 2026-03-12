@@ -26,6 +26,9 @@ func (p *PutSourceMongodbV2Request) GetSourceMongodbV2PutRequest() shared.Source
 	return p.SourceMongodbV2PutRequest
 }
 
+// #region class-body-putsourcemongodbv2request
+// #endregion class-body-putsourcemongodbv2request
+
 type PutSourceMongodbV2Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (p *PutSourceMongodbV2Response) GetSourceResponse() *shared.SourceResponse 
 	}
 	return p.SourceResponse
 }
+
+// #region class-body-putsourcemongodbv2response
+// #endregion class-body-putsourcemongodbv2response

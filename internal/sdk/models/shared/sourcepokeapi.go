@@ -2748,7 +2748,8 @@ func (e *SourcePokeapiSourceType) UnmarshalJSON(data []byte) error {
 
 type SourcePokeapi struct {
 	// Pokemon requested from the API.
-	PokemonName          PokemonName              `json:"pokemon_name"`
+	PokemonName PokemonName `json:"pokemon_name"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePokeapiSourceType `const:"pokeapi" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

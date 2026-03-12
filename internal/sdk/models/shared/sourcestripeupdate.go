@@ -173,7 +173,8 @@ type SourceStripeUpdate struct {
 	// The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.
 	SliceRange *int64 `default:"365" json:"slice_range"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
-	StartDate  *time.Time                    `default:"2017-01-25T00:00:00Z" json:"start_date"`
+	StartDate *time.Time `default:"2017-01-25T00:00:00Z" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceStripeUpdateSourceType `const:"stripe" json:"sourceType"`
 }
 

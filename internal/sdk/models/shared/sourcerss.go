@@ -33,7 +33,8 @@ func (e *SourceRssSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceRss struct {
 	// RSS Feed URL
-	URL        string               `json:"url"`
+	URL string `json:"url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceRssSourceType `const:"rss" json:"sourceType"`
 }
 

@@ -13,6 +13,7 @@ import (
 type SourceMondayUpdateAPIToken struct {
 	// API Token for making authenticated requests.
 	APIToken *string `json:"api_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"api_token" json:"auth_type,omitempty"`
 }
 
@@ -41,7 +42,8 @@ func (s *SourceMondayUpdateAPIToken) GetAuthType() *string {
 type SourceMondayUpdateOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"oauth2.0" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Client ID of your OAuth application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
@@ -92,6 +94,9 @@ func (s *SourceMondayUpdateOAuth20) GetSubdomain() *string {
 	}
 	return s.Subdomain
 }
+
+// #region class-body-sourcemondayupdateoauth20
+// #endregion class-body-sourcemondayupdateoauth20
 
 type SourceMondayUpdateAuthorizationMethodType string
 
@@ -210,7 +215,8 @@ type SourceMondayUpdate struct {
 	BoardIds    []int64                                `json:"board_ids,omitempty"`
 	Credentials *SourceMondayUpdateAuthorizationMethod `json:"credentials,omitempty"`
 	// The number of worker threads to use for the sync.
-	NumWorkers           *int64                        `default:"4" json:"num_workers"`
+	NumWorkers *int64 `default:"4" json:"num_workers"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMondayUpdateSourceType `const:"monday" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

@@ -11,6 +11,7 @@ import (
 )
 
 type SourceNotionAccessToken struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"token" json:"auth_type"`
 	// The Access Token for your private Notion integration. See the <a href='https://docs.airbyte.com/integrations/sources/notion#step-1-create-an-integration-in-notion'>docs</a> for more information on how to obtain this token.
 	Token string `json:"token"`
@@ -41,7 +42,8 @@ func (s *SourceNotionAccessToken) GetToken() string {
 type SourceNotionOAuth20 struct {
 	// The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 	AccessToken string `json:"access_token"`
-	authType    string `const:"OAuth2.0" json:"auth_type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType string `const:"OAuth2.0" json:"auth_type"`
 	// The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
@@ -83,6 +85,9 @@ func (s *SourceNotionOAuth20) GetClientSecret() string {
 	}
 	return s.ClientSecret
 }
+
+// #region class-body-sourcenotionoauth20
+// #endregion class-body-sourcenotionoauth20
 
 type SourceNotionAuthenticationMethodType string
 
@@ -201,7 +206,8 @@ type SourceNotion struct {
 	// Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information.
 	Credentials *SourceNotionAuthenticationMethod `json:"credentials,omitempty"`
 	// UTC date and time in the format YYYY-MM-DDTHH:MM:SS.000Z. During incremental sync, any data generated before this date will not be replicated. If left blank, the start date will be set to 2 years before the present date.
-	StartDate  *time.Time              `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceNotionSourceType `const:"notion" json:"sourceType"`
 }
 

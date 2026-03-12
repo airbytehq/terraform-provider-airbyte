@@ -34,7 +34,8 @@ func (e *SourceGridlyUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceGridlyUpdate struct {
 	APIKey *string `json:"api_key,omitempty"`
 	// ID of a grid, or can be ID of a branch
-	GridID     *string                       `json:"grid_id,omitempty"`
+	GridID *string `json:"grid_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceGridlyUpdateSourceType `const:"gridly" json:"sourceType"`
 }
 

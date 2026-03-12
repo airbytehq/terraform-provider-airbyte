@@ -34,7 +34,8 @@ func (e *SourceProductiveUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceProductiveUpdate struct {
 	APIKey *string `json:"api_key,omitempty"`
 	// The organization ID which could be seen from `https://app.productive.io/xxxx-xxxx/settings/api-integrations` page
-	OrganizationID       *string                           `json:"organization_id,omitempty"`
+	OrganizationID *string `json:"organization_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceProductiveUpdateSourceType `const:"productive" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

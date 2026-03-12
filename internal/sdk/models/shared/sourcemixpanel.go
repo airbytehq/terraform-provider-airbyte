@@ -13,7 +13,8 @@ import (
 
 type ProjectSecret struct {
 	// Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
-	APISecret   string  `json:"api_secret"`
+	APISecret string `json:"api_secret"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	optionTitle *string `const:"Project Secret" json:"option_title,omitempty"`
 }
 
@@ -40,6 +41,7 @@ func (p *ProjectSecret) GetOptionTitle() *string {
 }
 
 type ServiceAccount struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	optionTitle *string `const:"Service Account" json:"option_title,omitempty"`
 	// Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
 	ProjectID int64 `json:"project_id"`
@@ -247,7 +249,8 @@ type SourceMixpanel struct {
 	// Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
 	SelectPropertiesByDefault *bool `default:"true" json:"select_properties_by_default"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
-	StartDate  *time.Time                `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceMixpanelSourceType `const:"mixpanel" json:"sourceType"`
 }
 

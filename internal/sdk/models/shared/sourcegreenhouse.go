@@ -33,7 +33,8 @@ func (e *SourceGreenhouseSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceGreenhouse struct {
 	// Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
-	APIKey               string                      `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGreenhouseSourceType `const:"greenhouse" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

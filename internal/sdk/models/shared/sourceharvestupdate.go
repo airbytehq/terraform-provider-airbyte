@@ -13,7 +13,8 @@ import (
 
 type SourceHarvestUpdateAuthenticateWithPersonalAccessToken struct {
 	// Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
-	APIToken             *string `json:"api_token,omitempty"`
+	APIToken *string `json:"api_token,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType             *string `const:"Token" json:"auth_type,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -48,6 +49,7 @@ func (s *SourceHarvestUpdateAuthenticateWithPersonalAccessToken) GetAdditionalPr
 }
 
 type SourceHarvestUpdateAuthenticateViaHarvestOAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Harvest developer application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -222,7 +224,8 @@ type SourceHarvestUpdate struct {
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 	ReplicationEndDate *time.Time `json:"replication_end_date,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	ReplicationStartDate *time.Time                     `json:"replication_start_date,omitempty"`
+	ReplicationStartDate *time.Time `json:"replication_start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceHarvestUpdateSourceType `const:"harvest" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

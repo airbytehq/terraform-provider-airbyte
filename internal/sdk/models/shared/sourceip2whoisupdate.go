@@ -35,7 +35,8 @@ type SourceIp2whoisUpdate struct {
 	// Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 	APIKey *string `json:"api_key,omitempty"`
 	// Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
-	Domain               *string                         `json:"domain,omitempty"`
+	Domain *string `json:"domain,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceIp2whoisUpdateSourceType `const:"ip2whois" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }
@@ -75,3 +76,6 @@ func (s *SourceIp2whoisUpdate) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourceip2whoisupdate
+// #endregion class-body-sourceip2whoisupdate

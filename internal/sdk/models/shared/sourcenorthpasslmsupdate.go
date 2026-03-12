@@ -32,7 +32,8 @@ func (e *SourceNorthpassLmsUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceNorthpassLmsUpdate struct {
-	APIKey               *string                             `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceNorthpassLmsUpdateSourceType `const:"northpass-lms" json:"sourceType"`
 	AdditionalProperties any                                 `additionalProperties:"true" json:"-"`
 }

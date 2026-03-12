@@ -35,6 +35,7 @@ func (e *SourceAzureBlobStorageUpdateSchemasCredentialsAuthType) UnmarshalJSON(d
 }
 
 type SourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *SourceAzureBlobStorageUpdateSchemasCredentialsAuthType `const:"storage_account_key" json:"auth_type"`
 	// The Azure blob storage account key.
 	AzureBlobStorageAccountKey *string `json:"azure_blob_storage_account_key,omitempty"`
@@ -91,8 +92,9 @@ type SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials struct {
 	// Client Secret of your Microsoft developer application
 	AppClientSecret *string `json:"app_client_secret,omitempty"`
 	// Tenant ID of the Microsoft Azure Application
-	AppTenantID *string                                      `json:"app_tenant_id,omitempty"`
-	authType    *SourceAzureBlobStorageUpdateSchemasAuthType `const:"client_credentials" json:"auth_type"`
+	AppTenantID *string `json:"app_tenant_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *SourceAzureBlobStorageUpdateSchemasAuthType `const:"client_credentials" json:"auth_type"`
 }
 
 func (s SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials) MarshalJSON() ([]byte, error) {
@@ -155,6 +157,7 @@ func (e *SourceAzureBlobStorageUpdateAuthType) UnmarshalJSON(data []byte) error 
 }
 
 type SourceAzureBlobStorageUpdateAuthenticateViaOauth2 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *SourceAzureBlobStorageUpdateAuthType `const:"oauth2" json:"auth_type"`
 	// Client ID of your Microsoft developer application
 	ClientID *string `json:"client_id,omitempty"`
@@ -208,6 +211,9 @@ func (s *SourceAzureBlobStorageUpdateAuthenticateViaOauth2) GetTenantID() *strin
 	}
 	return s.TenantID
 }
+
+// #region class-body-sourceazureblobstorageupdateauthenticateviaoauth2
+// #endregion class-body-sourceazureblobstorageupdateauthenticateviaoauth2
 
 type SourceAzureBlobStorageUpdateAuthenticationType string
 
@@ -350,6 +356,7 @@ func (e *SourceAzureBlobStorageUpdateSchemasDeliveryType) UnmarshalJSON(data []b
 
 // SourceAzureBlobStorageUpdateCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
 type SourceAzureBlobStorageUpdateCopyRawFiles struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceAzureBlobStorageUpdateSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
 	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
 	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
@@ -402,6 +409,7 @@ func (e *SourceAzureBlobStorageUpdateDeliveryType) UnmarshalJSON(data []byte) er
 
 // SourceAzureBlobStorageUpdateReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
 type SourceAzureBlobStorageUpdateReplicateRecords struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceAzureBlobStorageUpdateDeliveryType `const:"use_records_transfer" json:"delivery_type"`
 }
 
@@ -510,6 +518,7 @@ func (u SourceAzureBlobStorageUpdateDeliveryMethod) MarshalJSON() ([]byte, error
 }
 
 type SourceAzureBlobStorageUpdateExcelFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"excel" json:"filetype"`
 }
 
@@ -553,6 +562,7 @@ func (e *SourceAzureBlobStorageUpdateMode) UnmarshalJSON(data []byte) error {
 
 // SourceAzureBlobStorageUpdateLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
 type SourceAzureBlobStorageUpdateLocal struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *SourceAzureBlobStorageUpdateMode `const:"local" json:"mode"`
 }
 
@@ -670,6 +680,7 @@ func (e *SourceAzureBlobStorageUpdateParsingStrategy) UnmarshalJSON(data []byte)
 
 // SourceAzureBlobStorageUpdateUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceAzureBlobStorageUpdateUnstructuredDocumentFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceAzureBlobStorageUpdateProcessing `json:"processing,omitempty"`
@@ -717,8 +728,9 @@ func (s *SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) GetStrategy() *
 
 type SourceAzureBlobStorageUpdateParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool   `default:"false" json:"decimal_as_float"`
-	filetype       *string `const:"parquet" json:"filetype"`
+	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"parquet" json:"filetype"`
 }
 
 func (s SourceAzureBlobStorageUpdateParquetFormat) MarshalJSON() ([]byte, error) {
@@ -744,6 +756,7 @@ func (s *SourceAzureBlobStorageUpdateParquetFormat) GetFiletype() *string {
 }
 
 type SourceAzureBlobStorageUpdateJsonlFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"jsonl" json:"filetype"`
 }
 
@@ -764,8 +777,9 @@ func (s *SourceAzureBlobStorageUpdateJsonlFormat) GetFiletype() *string {
 
 type SourceAzureBlobStorageUpdateUserProvided struct {
 	// The column names that will be used while emitting the CSV records
-	ColumnNames          []string `json:"column_names,omitempty"`
-	headerDefinitionType *string  `const:"User Provided" json:"header_definition_type"`
+	ColumnNames []string `json:"column_names,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	headerDefinitionType *string `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceAzureBlobStorageUpdateUserProvided) MarshalJSON() ([]byte, error) {
@@ -791,6 +805,7 @@ func (s *SourceAzureBlobStorageUpdateUserProvided) GetHeaderDefinitionType() *st
 }
 
 type SourceAzureBlobStorageUpdateAutogenerated struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"Autogenerated" json:"header_definition_type"`
 }
 
@@ -810,6 +825,7 @@ func (s *SourceAzureBlobStorageUpdateAutogenerated) GetHeaderDefinitionType() *s
 }
 
 type SourceAzureBlobStorageUpdateFromCSV struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"From CSV" json:"header_definition_type"`
 }
 
@@ -982,7 +998,8 @@ type SourceAzureBlobStorageUpdateCSVFormat struct {
 	EscapeChar *string `json:"escape_char,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as false values.
 	FalseValues []string `json:"false_values,omitempty"`
-	filetype    *string  `const:"csv" json:"filetype"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceAzureBlobStorageUpdateCSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
@@ -1118,8 +1135,9 @@ func (s *SourceAzureBlobStorageUpdateCSVFormat) GetTrueValues() []string {
 
 type SourceAzureBlobStorageUpdateAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool   `default:"false" json:"double_as_string"`
-	filetype       *string `const:"avro" json:"filetype"`
+	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"avro" json:"filetype"`
 }
 
 func (s SourceAzureBlobStorageUpdateAvroFormat) MarshalJSON() ([]byte, error) {
@@ -1518,8 +1536,9 @@ type SourceAzureBlobStorageUpdate struct {
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams    []SourceAzureBlobStorageUpdateFileBasedStreamConfig `json:"streams,omitempty"`
-	sourceType *SourceAzureBlobStorageUpdateSourceType             `const:"azure-blob-storage" json:"sourceType"`
+	Streams []SourceAzureBlobStorageUpdateFileBasedStreamConfig `json:"streams,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType *SourceAzureBlobStorageUpdateSourceType `const:"azure-blob-storage" json:"sourceType"`
 }
 
 func (s SourceAzureBlobStorageUpdate) MarshalJSON() ([]byte, error) {

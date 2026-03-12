@@ -50,7 +50,8 @@ type SourcePolygonStockAPIUpdate struct {
 	// The exchange symbol that this item is traded under.
 	StocksTicker *string `json:"stocksTicker,omitempty"`
 	// The size of the time window.
-	Timespan             *string                                `json:"timespan,omitempty"`
+	Timespan *string `json:"timespan,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePolygonStockAPIUpdateSourceType `const:"polygon-stock-api" json:"sourceType"`
 	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
 }

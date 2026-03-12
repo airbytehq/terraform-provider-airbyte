@@ -35,9 +35,10 @@ func (e *SourceTeamworkUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceTeamworkUpdate struct {
 	Password *string `json:"password,omitempty"`
 	// The teamwork site name appearing at the url
-	SiteName             *string                         `json:"site_name,omitempty"`
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
-	Username             *string                         `json:"username,omitempty"`
+	SiteName  *string    `json:"site_name,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	Username  *string    `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTeamworkUpdateSourceType `const:"teamwork" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

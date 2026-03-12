@@ -41,8 +41,9 @@ type DestinationYellowbrickVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                            `json:"client_key_password,omitempty"`
-	mode              *DestinationYellowbrickSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
+	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationYellowbrickSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 }
 
 func (d DestinationYellowbrickVerifyFull) MarshalJSON() ([]byte, error) {
@@ -116,8 +117,9 @@ type DestinationYellowbrickVerifyCa struct {
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                            `json:"client_key_password,omitempty"`
-	mode              *DestinationYellowbrickSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
+	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationYellowbrickSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 }
 
 func (d DestinationYellowbrickVerifyCa) MarshalJSON() ([]byte, error) {
@@ -174,6 +176,7 @@ func (e *DestinationYellowbrickSchemasSSLModeSSLModesMode) UnmarshalJSON(data []
 
 // DestinationYellowbrickRequire - Require SSL mode.
 type DestinationYellowbrickRequire struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationYellowbrickSchemasSSLModeSSLModesMode `const:"require" json:"mode"`
 }
 
@@ -217,6 +220,7 @@ func (e *DestinationYellowbrickSchemasSslModeMode) UnmarshalJSON(data []byte) er
 
 // DestinationYellowbrickPrefer - Prefer SSL mode.
 type DestinationYellowbrickPrefer struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationYellowbrickSchemasSslModeMode `const:"prefer" json:"mode"`
 }
 
@@ -260,6 +264,7 @@ func (e *DestinationYellowbrickSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationYellowbrickAllow - Allow SSL mode.
 type DestinationYellowbrickAllow struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationYellowbrickSchemasMode `const:"allow" json:"mode"`
 }
 
@@ -303,6 +308,7 @@ func (e *DestinationYellowbrickMode) UnmarshalJSON(data []byte) error {
 
 // DestinationYellowbrickDisable - Disable SSL.
 type DestinationYellowbrickDisable struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationYellowbrickMode `const:"disable" json:"mode"`
 }
 
@@ -527,6 +533,7 @@ type DestinationYellowbrickPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -585,6 +592,7 @@ type DestinationYellowbrickSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
@@ -637,6 +645,7 @@ func (d *DestinationYellowbrickSSHKeyAuthentication) GetTunnelUser() string {
 
 type DestinationYellowbrickNoTunnel struct {
 	// No ssh tunnel needed to connect to database
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tunnelMethod string `const:"NO_TUNNEL" json:"tunnel_method"`
 }
 
@@ -821,7 +830,8 @@ type DestinationYellowbrick struct {
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationYellowbrickSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
-	Username             string                                 `json:"username"`
+	Username string `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationYellowbrickDestinationType `const:"yellowbrick" json:"destinationType"`
 	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
 }

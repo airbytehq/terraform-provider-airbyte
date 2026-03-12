@@ -411,7 +411,8 @@ type SourceSnowflake struct {
 	// The source Snowflake schema tables. Leave empty to access tables from multiple schemas.
 	Schema *string `json:"schema,omitempty"`
 	// The warehouse you created for Airbyte to access data.
-	Warehouse            string                     `json:"warehouse"`
+	Warehouse string `json:"warehouse"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSnowflakeSourceType `const:"snowflake" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

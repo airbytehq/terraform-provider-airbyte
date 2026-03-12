@@ -32,8 +32,9 @@ func (e *SourceDbtSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDbt struct {
-	AccountID            string               `json:"account_id"`
-	APIKey2              string               `json:"api_key_2"`
+	AccountID string `json:"account_id"`
+	APIKey2   string `json:"api_key_2"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDbtSourceType `const:"dbt" json:"sourceType"`
 	AdditionalProperties any                  `additionalProperties:"true" json:"-"`
 }

@@ -33,7 +33,8 @@ func (e *SourceOmnisendUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceOmnisendUpdate struct {
 	// API Key
-	APIKey               *string                         `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceOmnisendUpdateSourceType `const:"omnisend" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

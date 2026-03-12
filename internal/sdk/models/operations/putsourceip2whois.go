@@ -26,6 +26,9 @@ func (p *PutSourceIp2whoisRequest) GetSourceIp2whoisPutRequest() shared.SourceIp
 	return p.SourceIp2whoisPutRequest
 }
 
+// #region class-body-putsourceip2whoisrequest
+// #endregion class-body-putsourceip2whoisrequest
+
 type PutSourceIp2whoisResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (p *PutSourceIp2whoisResponse) GetSourceResponse() *shared.SourceResponse {
 	}
 	return p.SourceResponse
 }
+
+// #region class-body-putsourceip2whoisresponse
+// #endregion class-body-putsourceip2whoisresponse

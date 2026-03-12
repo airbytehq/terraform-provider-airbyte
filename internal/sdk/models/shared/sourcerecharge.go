@@ -40,9 +40,10 @@ type SourceRecharge struct {
 	// The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	// Define whether or not the `Orders` stream should use the deprecated `2021-01` API version, or use `2021-11`, otherwise.
-	UseOrdersDeprecatedAPI *bool                     `default:"true" json:"use_orders_deprecated_api"`
-	sourceType             *SourceRechargeSourceType `const:"recharge" json:"sourceType"`
-	AdditionalProperties   any                       `additionalProperties:"true" json:"-"`
+	UseOrdersDeprecatedAPI *bool `default:"true" json:"use_orders_deprecated_api"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceRechargeSourceType `const:"recharge" json:"sourceType"`
+	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceRecharge) MarshalJSON() ([]byte, error) {

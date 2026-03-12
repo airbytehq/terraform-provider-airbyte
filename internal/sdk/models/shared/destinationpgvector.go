@@ -38,8 +38,9 @@ type DestinationPgvectorOpenAICompatible struct {
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
 	// The number of dimensions the embedding model is generating
-	Dimensions int64                                              `json:"dimensions"`
-	mode       *DestinationPgvectorSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
+	Dimensions int64 `json:"dimensions"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPgvectorSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -115,8 +116,9 @@ type DestinationPgvectorAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string                                            `json:"deployment"`
-	mode       *DestinationPgvectorSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	Deployment string `json:"deployment"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPgvectorSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey string `json:"openai_key"`
 }
@@ -182,6 +184,7 @@ func (e *DestinationPgvectorSchemasEmbeddingMode) UnmarshalJSON(data []byte) err
 
 // DestinationPgvectorFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationPgvectorFake struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationPgvectorSchemasEmbeddingMode `const:"fake" json:"mode"`
 }
 
@@ -225,8 +228,9 @@ func (e *DestinationPgvectorSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationPgvectorCohere - Use the Cohere API to embed text.
 type DestinationPgvectorCohere struct {
-	CohereKey string                          `json:"cohere_key"`
-	mode      *DestinationPgvectorSchemasMode `const:"cohere" json:"mode"`
+	CohereKey string `json:"cohere_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPgvectorSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationPgvectorCohere) MarshalJSON() ([]byte, error) {
@@ -276,6 +280,7 @@ func (e *DestinationPgvectorMode) UnmarshalJSON(data []byte) error {
 
 // DestinationPgvectorOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationPgvectorOpenAI struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode      *DestinationPgvectorMode `const:"openai" json:"mode"`
 	OpenaiKey string                   `json:"openai_key"`
 }
@@ -666,8 +671,9 @@ func (e *DestinationPgvectorSchemasProcessingTextSplitterTextSplitterMode) Unmar
 // DestinationPgvectorByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationPgvectorByProgrammingLanguage struct {
 	// Split code in suitable places based on the programming language
-	Language DestinationPgvectorLanguage                                       `json:"language"`
-	mode     *DestinationPgvectorSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+	Language DestinationPgvectorLanguage `json:"language"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPgvectorSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationPgvectorByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -717,6 +723,7 @@ func (e *DestinationPgvectorSchemasProcessingTextSplitterMode) UnmarshalJSON(dat
 
 // DestinationPgvectorByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
 type DestinationPgvectorByMarkdownHeader struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationPgvectorSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
 	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
 	SplitLevel *int64 `default:"1" json:"split_level"`
@@ -770,8 +777,9 @@ func (e *DestinationPgvectorSchemasProcessingMode) UnmarshalJSON(data []byte) er
 // DestinationPgvectorBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationPgvectorBySeparator struct {
 	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool                                     `default:"false" json:"keep_separator"`
-	mode          *DestinationPgvectorSchemasProcessingMode `const:"separator" json:"mode"`
+	KeepSeparator *bool `default:"false" json:"keep_separator"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationPgvectorSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
 }
@@ -1019,9 +1027,10 @@ type DestinationPgvector struct {
 	// Postgres can be used to store vector data and retrieve embeddings.
 	Indexing PostgresConnection `json:"indexing"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText     *bool                                    `default:"false" json:"omit_raw_text"`
-	Processing      DestinationPgvectorProcessingConfigModel `json:"processing"`
-	destinationType *DestinationPgvectorDestinationType      `const:"pgvector" json:"destinationType"`
+	OmitRawText *bool                                    `default:"false" json:"omit_raw_text"`
+	Processing  DestinationPgvectorProcessingConfigModel `json:"processing"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType *DestinationPgvectorDestinationType `const:"pgvector" json:"destinationType"`
 }
 
 func (d DestinationPgvector) MarshalJSON() ([]byte, error) {

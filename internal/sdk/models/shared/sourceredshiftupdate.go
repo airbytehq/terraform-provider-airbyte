@@ -45,7 +45,8 @@ type SourceRedshiftUpdate struct {
 	// The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
 	Schemas []string `json:"schemas,omitempty"`
 	// Username to use to access the database.
-	Username   *string                         `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceRedshiftUpdateSourceType `const:"redshift" json:"sourceType"`
 }
 

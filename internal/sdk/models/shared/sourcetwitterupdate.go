@@ -40,7 +40,8 @@ type SourceTwitterUpdate struct {
 	// Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
 	Query *string `json:"query,omitempty"`
 	// The start date for retrieving tweets cannot be more than 7 days in the past.
-	StartDate            *time.Time                     `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTwitterUpdateSourceType `const:"twitter" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

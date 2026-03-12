@@ -45,3 +45,6 @@ func (c *CreateSourceK6CloudResponse) GetSourceResponse() *shared.SourceResponse
 	}
 	return c.SourceResponse
 }
+
+// #region class-body-createsourcek6cloudresponse
+// #endregion class-body-createsourcek6cloudresponse

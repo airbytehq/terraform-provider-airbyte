@@ -17,6 +17,9 @@ func (d *DeleteSourceMongodbV2Request) GetSourceID() string {
 	return d.SourceID
 }
 
+// #region class-body-deletesourcemongodbv2request
+// #endregion class-body-deletesourcemongodbv2request
+
 type DeleteSourceMongodbV2Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -46,3 +49,6 @@ func (d *DeleteSourceMongodbV2Response) GetRawResponse() *http.Response {
 	}
 	return d.RawResponse
 }
+
+// #region class-body-deletesourcemongodbv2response
+// #endregion class-body-deletesourcemongodbv2response

@@ -33,7 +33,8 @@ func (e *SourceCannySourceType) UnmarshalJSON(data []byte) error {
 
 type SourceCanny struct {
 	// You can find your secret API key in Your Canny Subdomain > Settings > API
-	APIKey               string                 `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceCannySourceType `const:"canny" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

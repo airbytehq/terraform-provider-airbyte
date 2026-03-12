@@ -26,6 +26,9 @@ func (p *PutDestinationS3Request) GetDestinationS3PutRequest() shared.Destinatio
 	return p.DestinationS3PutRequest
 }
 
+// #region class-body-putdestinations3request
+// #endregion class-body-putdestinations3request
+
 type PutDestinationS3Response struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (p *PutDestinationS3Response) GetDestinationResponse() *shared.DestinationR
 	}
 	return p.DestinationResponse
 }
+
+// #region class-body-putdestinations3response
+// #endregion class-body-putdestinations3response

@@ -13,6 +13,7 @@ import (
 type SourceOktaAPIToken struct {
 	// An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
 	APIToken string `json:"api_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"api_token" json:"auth_type"`
 }
 
@@ -39,6 +40,7 @@ func (s *SourceOktaAPIToken) GetAuthType() string {
 }
 
 type OAuth20WithPrivateKey struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"oauth2.0_private_key" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
@@ -93,7 +95,11 @@ func (o *OAuth20WithPrivateKey) GetScope() string {
 	return o.Scope
 }
 
+// #region class-body-oauth20withprivatekey
+// #endregion class-body-oauth20withprivatekey
+
 type SourceOktaOAuth20 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
@@ -138,6 +144,9 @@ func (s *SourceOktaOAuth20) GetRefreshToken() string {
 	}
 	return s.RefreshToken
 }
+
+// #region class-body-sourceoktaoauth20
+// #endregion class-body-sourceoktaoauth20
 
 type SourceOktaAuthorizationMethodType string
 
@@ -282,7 +291,8 @@ type SourceOkta struct {
 	// The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.
 	Domain *string `json:"domain,omitempty"`
 	// UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.
-	StartDate            *time.Time            `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceOktaSourceType `const:"okta" json:"sourceType"`
 	AdditionalProperties any                   `additionalProperties:"true" json:"-"`
 }

@@ -53,3 +53,6 @@ func (d *DestinationS3CreateRequest) GetConfiguration() DestinationS3 {
 	}
 	return d.Configuration
 }
+
+// #region class-body-destinations3createrequest
+// #endregion class-body-destinations3createrequest

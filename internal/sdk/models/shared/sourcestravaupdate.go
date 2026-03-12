@@ -57,8 +57,9 @@ func (e *SourceStravaUpdateSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceStravaUpdate struct {
 	// The Athlete ID of your Strava developer application.
-	AthleteID *int64                      `json:"athlete_id,omitempty"`
-	authType  *SourceStravaUpdateAuthType `const:"Client" json:"auth_type"`
+	AthleteID *int64 `json:"athlete_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *SourceStravaUpdateAuthType `const:"Client" json:"auth_type"`
 	// The Client ID of your Strava developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your Strava developer application.
@@ -66,7 +67,8 @@ type SourceStravaUpdate struct {
 	// The Refresh Token with the activity: read_all permissions.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 	// UTC date and time. Any data before this date will not be replicated.
-	StartDate            *time.Time                    `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceStravaUpdateSourceType `const:"strava" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

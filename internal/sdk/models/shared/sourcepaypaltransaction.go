@@ -48,7 +48,8 @@ type SourcePaypalTransaction struct {
 	// Start Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 	StartDate time.Time `json:"start_date"`
 	// The number of days per request. Must be a number between 1 and 31.
-	TimeWindow           *int64                             `default:"7" json:"time_window"`
+	TimeWindow *int64 `default:"7" json:"time_window"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourcePaypalTransactionSourceType `const:"paypal-transaction" json:"sourceType"`
 	AdditionalProperties any                                `additionalProperties:"true" json:"-"`
 }

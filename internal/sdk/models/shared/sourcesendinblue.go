@@ -33,7 +33,8 @@ func (e *SourceSendinblueSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceSendinblue struct {
 	// Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
-	APIKey               string                      `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSendinblueSourceType `const:"sendinblue" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

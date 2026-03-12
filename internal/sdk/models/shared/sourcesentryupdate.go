@@ -41,7 +41,8 @@ type SourceSentryUpdate struct {
 	// The slug of the organization the groups belong to.
 	Organization *string `json:"organization,omitempty"`
 	// The name (slug) of the Project you want to sync.
-	Project              *string                       `json:"project,omitempty"`
+	Project *string `json:"project,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSentryUpdateSourceType `const:"sentry" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

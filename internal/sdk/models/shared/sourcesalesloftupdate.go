@@ -13,7 +13,8 @@ import (
 
 type SourceSalesloftUpdateAuthenticateViaAPIKey struct {
 	// API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
-	APIKey   *string `json:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"api_key" json:"auth_type,omitempty"`
 }
 
@@ -42,7 +43,8 @@ func (s *SourceSalesloftUpdateAuthenticateViaAPIKey) GetAuthType() *string {
 type SourceSalesloftUpdateAuthenticateViaOAuth struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"oauth2.0" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Client ID of your Salesloft developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your Salesloft developer application.
@@ -218,7 +220,8 @@ func (e *SourceSalesloftUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceSalesloftUpdate struct {
 	Credentials *SourceSalesloftUpdateCredentials `json:"credentials,omitempty"`
 	// The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate            *time.Time                       `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSalesloftUpdateSourceType `const:"salesloft" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

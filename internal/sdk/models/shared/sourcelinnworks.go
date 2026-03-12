@@ -38,8 +38,9 @@ type SourceLinnworks struct {
 	// Linnworks Application Secret
 	ApplicationSecret string `json:"application_secret"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            time.Time                  `json:"start_date"`
-	Token                string                     `json:"token"`
+	StartDate time.Time `json:"start_date"`
+	Token     string    `json:"token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLinnworksSourceType `const:"linnworks" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

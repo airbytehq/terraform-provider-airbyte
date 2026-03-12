@@ -33,8 +33,9 @@ func (e *SourceConvexSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceConvex struct {
 	// API access key used to retrieve data from Convex.
-	AccessKey            string                  `json:"access_key"`
-	DeploymentURL        string                  `json:"deployment_url"`
+	AccessKey     string `json:"access_key"`
+	DeploymentURL string `json:"deployment_url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceConvexSourceType `const:"convex" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

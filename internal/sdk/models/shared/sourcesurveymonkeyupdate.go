@@ -14,7 +14,8 @@ import (
 type SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod struct {
 	// Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
 	AccessToken *string `json:"access_token,omitempty"`
-	authMethod  *string `const:"oauth2.0" json:"auth_method,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authMethod *string `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of the SurveyMonkey developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of the SurveyMonkey developer application.
@@ -118,7 +119,8 @@ type SourceSurveymonkeyUpdate struct {
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.
-	SurveyIds            []string                            `json:"survey_ids,omitempty"`
+	SurveyIds []string `json:"survey_ids,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceSurveymonkeyUpdateSourceType `const:"surveymonkey" json:"sourceType"`
 	AdditionalProperties any                                 `additionalProperties:"true" json:"-"`
 }

@@ -45,3 +45,6 @@ func (c *CreateSourceIp2whoisResponse) GetSourceResponse() *shared.SourceRespons
 	}
 	return c.SourceResponse
 }
+
+// #region class-body-createsourceip2whoisresponse
+// #endregion class-body-createsourceip2whoisresponse

@@ -164,7 +164,8 @@ type DestinationDynamodbUpdate struct {
 	// The prefix to use when naming DynamoDB tables.
 	DynamodbTableNamePrefix *string `json:"dynamodb_table_name_prefix,omitempty"`
 	// The corresponding secret to the access key id.
-	SecretAccessKey *string                                   `json:"secret_access_key,omitempty"`
+	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationDynamodbUpdateDestinationType `const:"dynamodb" json:"destinationType"`
 }
 

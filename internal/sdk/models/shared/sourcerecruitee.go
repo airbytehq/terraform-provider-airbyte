@@ -35,7 +35,8 @@ type SourceRecruitee struct {
 	// Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.
 	APIKey string `json:"api_key"`
 	// Recruitee Company ID. You can also find this ID on the <a href="https://app.recruitee.com/#/settings/api_tokens">Recruitee API tokens page</a>.
-	CompanyID            int64                      `json:"company_id"`
+	CompanyID int64 `json:"company_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceRecruiteeSourceType `const:"recruitee" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

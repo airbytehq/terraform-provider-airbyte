@@ -33,9 +33,10 @@ func (e *SourceHibobSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceHibob struct {
 	// Toggle true if this instance is a HiBob sandbox
-	IsSandbox            bool                   `json:"is_sandbox"`
-	Password             *string                `json:"password,omitempty"`
-	Username             string                 `json:"username"`
+	IsSandbox bool    `json:"is_sandbox"`
+	Password  *string `json:"password,omitempty"`
+	Username  string  `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceHibobSourceType `const:"hibob" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

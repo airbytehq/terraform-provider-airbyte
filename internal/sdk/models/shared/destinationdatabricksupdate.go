@@ -11,6 +11,7 @@ import (
 )
 
 type DestinationDatabricksUpdatePersonalAccessToken struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType            *string `const:"BASIC" json:"auth_type,omitempty"`
 	PersonalAccessToken *string `json:"personal_access_token,omitempty"`
 }
@@ -38,6 +39,7 @@ func (d *DestinationDatabricksUpdatePersonalAccessToken) GetPersonalAccessToken(
 }
 
 type DestinationDatabricksUpdateOAuth2Recommended struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"OAUTH" json:"auth_type,omitempty"`
 	ClientID *string `json:"client_id,omitempty"`
 	Secret   *string `json:"secret,omitempty"`
@@ -71,6 +73,9 @@ func (d *DestinationDatabricksUpdateOAuth2Recommended) GetSecret() *string {
 	}
 	return d.Secret
 }
+
+// #region class-body-destinationdatabricksupdateoauth2recommended
+// #endregion class-body-destinationdatabricksupdateoauth2recommended
 
 type DestinationDatabricksUpdateAuthenticationType string
 
@@ -203,7 +208,8 @@ type DestinationDatabricksUpdate struct {
 	// The schema to write raw tables into (default: airbyte_internal)
 	RawSchemaOverride *string `default:"airbyte_internal" json:"raw_schema_override"`
 	// The default schema tables are written. If not specified otherwise, the "default" will be used.
-	Schema          *string                                     `default:"default" json:"schema"`
+	Schema *string `default:"default" json:"schema"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationDatabricksUpdateDestinationType `const:"databricks" json:"destinationType"`
 }
 

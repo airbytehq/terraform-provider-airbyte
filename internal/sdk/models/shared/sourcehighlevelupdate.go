@@ -33,9 +33,10 @@ func (e *SourceHighLevelUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHighLevelUpdate struct {
-	APIKey               *string                          `json:"api_key,omitempty"`
-	LocationID           *string                          `json:"location_id,omitempty"`
-	StartDate            *time.Time                       `json:"start_date,omitempty"`
+	APIKey     *string    `json:"api_key,omitempty"`
+	LocationID *string    `json:"location_id,omitempty"`
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceHighLevelUpdateSourceType `const:"high-level" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

@@ -146,8 +146,9 @@ type SourceSnapchatMarketingUpdate struct {
 	SwipeUpAttributionWindow *SourceSnapchatMarketingUpdateSwipeUpAttributionWindow `default:"28_DAY" json:"swipe_up_attribution_window"`
 	// Attribution window for views.
 	ViewAttributionWindow *SourceSnapchatMarketingUpdateViewAttributionWindow `default:"1_DAY" json:"view_attribution_window"`
-	sourceType            *SourceSnapchatMarketingUpdateSourceType            `const:"snapchat-marketing" json:"sourceType"`
-	AdditionalProperties  any                                                 `additionalProperties:"true" json:"-"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType           *SourceSnapchatMarketingUpdateSourceType `const:"snapchat-marketing" json:"sourceType"`
+	AdditionalProperties any                                      `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceSnapchatMarketingUpdate) MarshalJSON() ([]byte, error) {

@@ -14,7 +14,8 @@ import (
 type SourceTypeformUpdatePrivateToken struct {
 	// Log into your Typeform account and then generate a personal Access Token.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"access_token" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"access_token" json:"auth_type,omitempty"`
 }
 
 func (s SourceTypeformUpdatePrivateToken) MarshalJSON() ([]byte, error) {
@@ -42,7 +43,8 @@ func (s *SourceTypeformUpdatePrivateToken) GetAuthType() *string {
 type SourceTypeformUpdateOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"oauth2.0" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Client ID of the Typeform developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret the Typeform developer application.
@@ -102,6 +104,9 @@ func (s *SourceTypeformUpdateOAuth20) GetTokenExpiryDate() *time.Time {
 	}
 	return s.TokenExpiryDate
 }
+
+// #region class-body-sourcetypeformupdateoauth20
+// #endregion class-body-sourcetypeformupdateoauth20
 
 type SourceTypeformUpdateAuthorizationMethodType string
 
@@ -220,7 +225,8 @@ type SourceTypeformUpdate struct {
 	// When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel
 	FormIds []string `json:"form_ids,omitempty"`
 	// The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTypeformUpdateSourceType `const:"typeform" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

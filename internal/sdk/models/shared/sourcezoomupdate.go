@@ -38,7 +38,8 @@ type SourceZoomUpdate struct {
 	// The client ID for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
 	ClientID *string `json:"client_id,omitempty"`
 	// The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
-	ClientSecret         *string                     `json:"client_secret,omitempty"`
+	ClientSecret *string `json:"client_secret,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceZoomUpdateSourceType `const:"zoom" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

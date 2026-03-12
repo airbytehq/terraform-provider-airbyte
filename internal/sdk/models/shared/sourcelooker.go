@@ -39,7 +39,8 @@ type SourceLooker struct {
 	// Domain for your Looker account, e.g. airbyte.cloud.looker.com,looker.[clientname].com,IP address
 	Domain string `json:"domain"`
 	// The IDs of any Looks to run
-	RunLookIds           []string                `json:"run_look_ids,omitempty"`
+	RunLookIds []string `json:"run_look_ids,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLookerSourceType `const:"looker" json:"sourceType"`
 	AdditionalProperties any                     `additionalProperties:"true" json:"-"`
 }

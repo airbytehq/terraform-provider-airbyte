@@ -13,6 +13,7 @@ import (
 
 // SourceTrustpilotAPIKey - The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.
 type SourceTrustpilotAPIKey struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"apikey" json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application.
 	ClientID string `json:"client_id"`
@@ -42,8 +43,9 @@ func (s *SourceTrustpilotAPIKey) GetClientID() string {
 
 type SourceTrustpilotOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken string  `json:"access_token"`
-	authType    *string `const:"oauth2.0" json:"auth_type,omitempty"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application. (represents the OAuth Client ID)
 	ClientID string `json:"client_id"`
 	// The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
@@ -103,6 +105,9 @@ func (s *SourceTrustpilotOAuth20) GetTokenExpiryDate() time.Time {
 	}
 	return s.TokenExpiryDate
 }
+
+// #region class-body-sourcetrustpilotoauth20
+// #endregion class-body-sourcetrustpilotoauth20
 
 type SourceTrustpilotAuthorizationMethodType string
 
@@ -221,7 +226,8 @@ type SourceTrustpilot struct {
 	BusinessUnits []string                            `json:"business_units"`
 	Credentials   SourceTrustpilotAuthorizationMethod `json:"credentials"`
 	// For streams with sync. method incremental the start date time to be used
-	StartDate            string                      `json:"start_date"`
+	StartDate string `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTrustpilotSourceType `const:"trustpilot" json:"sourceType"`
 	AdditionalProperties any                         `additionalProperties:"true" json:"-"`
 }

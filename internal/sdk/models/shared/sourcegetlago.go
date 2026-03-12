@@ -35,7 +35,8 @@ type SourceGetlago struct {
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
 	APIKey string `json:"api_key"`
 	// Your Lago API URL
-	APIURL               *string                  `default:"https://api.getlago.com/api/v1" json:"api_url"`
+	APIURL *string `default:"https://api.getlago.com/api/v1" json:"api_url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGetlagoSourceType `const:"getlago" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

@@ -12,7 +12,8 @@ import (
 
 type AuthenticateViaLeverAPIKey struct {
 	// The Api Key of your Lever Hiring account.
-	APIKey   string  `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"Api Key" json:"auth_type,omitempty"`
 }
 
@@ -39,6 +40,7 @@ func (a *AuthenticateViaLeverAPIKey) GetAuthType() *string {
 }
 
 type AuthenticateViaLeverOAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Lever Hiring developer application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -230,7 +232,8 @@ type SourceLeverHiring struct {
 	// The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.
 	Environment *SourceLeverHiringEnvironment `default:"Sandbox" json:"environment"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Note that it will be used only in the following incremental streams: comments, commits, and issues.
-	StartDate            string                       `json:"start_date"`
+	StartDate string `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLeverHiringSourceType `const:"lever-hiring" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

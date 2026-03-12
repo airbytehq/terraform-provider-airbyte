@@ -42,7 +42,8 @@ type SourceOutreachUpdate struct {
 	// The token for obtaining the new access token.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 	// The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00.000Z. All data generated after this date will be replicated.
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceOutreachUpdateSourceType `const:"outreach" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

@@ -35,7 +35,8 @@ type SourceLokaliseUpdate struct {
 	// Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
 	APIKey *string `json:"api_key,omitempty"`
 	// Lokalise project ID. Available at Project Settings > General.
-	ProjectID            *string                         `json:"project_id,omitempty"`
+	ProjectID *string `json:"project_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLokaliseUpdateSourceType `const:"lokalise" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

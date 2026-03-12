@@ -33,7 +33,8 @@ func (e *SourceLaunchdarklySourceType) UnmarshalJSON(data []byte) error {
 
 type SourceLaunchdarkly struct {
 	// Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
-	AccessToken          string                        `json:"access_token"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLaunchdarklySourceType `const:"launchdarkly" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

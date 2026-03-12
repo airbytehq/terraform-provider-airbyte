@@ -10,6 +10,7 @@ import (
 )
 
 type SourceGoogleSheetsServiceAccountKeyAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"Service" json:"auth_type"`
 	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 	ServiceAccountInfo string `json:"service_account_info"`
@@ -38,6 +39,7 @@ func (s *SourceGoogleSheetsServiceAccountKeyAuthentication) GetServiceAccountInf
 }
 
 type SourceGoogleSheetsAuthenticateViaGoogleOAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType string `const:"Client" json:"auth_type"`
 	// Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 	ClientID string `json:"client_id"`
@@ -250,7 +252,8 @@ type SourceGoogleSheets struct {
 	//       { "source_stream_name": "2024 Q1", "custom_stream_name": "q1_2024" }
 	//     ]
 	//   - If you do not wish to rename any streams, leave this blank.
-	StreamNameOverrides  []StreamNameOverrides         `json:"stream_name_overrides,omitempty"`
+	StreamNameOverrides []StreamNameOverrides `json:"stream_name_overrides,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGoogleSheetsSourceType `const:"google-sheets" json:"sourceType"`
 	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
 }

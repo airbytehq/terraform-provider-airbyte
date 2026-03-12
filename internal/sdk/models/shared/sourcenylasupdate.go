@@ -59,10 +59,11 @@ func (e *SourceNylasUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceNylasUpdate struct {
-	APIKey               *string                      `json:"api_key,omitempty"`
-	APIServer            *SourceNylasUpdateAPIServer  `json:"api_server,omitempty"`
-	EndDate              *time.Time                   `json:"end_date,omitempty"`
-	StartDate            *time.Time                   `json:"start_date,omitempty"`
+	APIKey    *string                     `json:"api_key,omitempty"`
+	APIServer *SourceNylasUpdateAPIServer `json:"api_server,omitempty"`
+	EndDate   *time.Time                  `json:"end_date,omitempty"`
+	StartDate *time.Time                  `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceNylasUpdateSourceType `const:"nylas" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

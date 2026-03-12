@@ -39,6 +39,7 @@ type DestinationAwsDatalakeUpdateIAMUser struct {
 	// Secret Access Key
 	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
 	// Name of the credentials
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentialsTitle *DestinationAwsDatalakeUpdateSchemasCredentialsTitle `const:"IAM User" json:"credentials_title"`
 }
 
@@ -97,6 +98,7 @@ func (e *DestinationAwsDatalakeUpdateCredentialsTitle) UnmarshalJSON(data []byte
 
 type DestinationAwsDatalakeUpdateIAMRole struct {
 	// Name of the credentials
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	credentialsTitle *DestinationAwsDatalakeUpdateCredentialsTitle `const:"IAM Role" json:"credentials_title"`
 	// Will assume this role to write data to s3
 	RoleArn *string `json:"role_arn,omitempty"`
@@ -684,7 +686,8 @@ type DestinationAwsDatalakeUpdate struct {
 	// Partition data by cursor fields when a cursor field is a date
 	Partitioning *DestinationAwsDatalakeUpdateChooseHowToPartitionData `default:"NO PARTITIONING" json:"partitioning"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-	Region          *DestinationAwsDatalakeUpdateS3BucketRegion  `default:"" json:"region"`
+	Region *DestinationAwsDatalakeUpdateS3BucketRegion `default:"" json:"region"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationAwsDatalakeUpdateDestinationType `const:"aws-datalake" json:"destinationType"`
 }
 

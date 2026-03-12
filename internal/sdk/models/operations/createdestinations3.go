@@ -45,3 +45,6 @@ func (c *CreateDestinationS3Response) GetDestinationResponse() *shared.Destinati
 	}
 	return c.DestinationResponse
 }
+
+// #region class-body-createdestinations3response
+// #endregion class-body-createdestinations3response

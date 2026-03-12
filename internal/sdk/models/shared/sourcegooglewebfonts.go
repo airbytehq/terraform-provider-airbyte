@@ -39,7 +39,8 @@ type SourceGoogleWebfonts struct {
 	// Optional, boolean type
 	PrettyPrint *string `json:"prettyPrint,omitempty"`
 	// Optional, to find how to sort
-	Sort                 *string                         `json:"sort,omitempty"`
+	Sort *string `json:"sort,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGoogleWebfontsSourceType `const:"google-webfonts" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

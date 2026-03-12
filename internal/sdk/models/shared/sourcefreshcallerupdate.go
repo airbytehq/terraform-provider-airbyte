@@ -42,7 +42,8 @@ type SourceFreshcallerUpdate struct {
 	// UTC date and time. Any data created after this date will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
-	SyncLagMinutes       *int64                             `json:"sync_lag_minutes,omitempty"`
+	SyncLagMinutes *int64 `json:"sync_lag_minutes,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFreshcallerUpdateSourceType `const:"freshcaller" json:"sourceType"`
 	AdditionalProperties any                                `additionalProperties:"true" json:"-"`
 }

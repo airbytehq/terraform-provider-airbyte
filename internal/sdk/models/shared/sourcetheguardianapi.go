@@ -43,7 +43,8 @@ type SourceTheGuardianAPI struct {
 	// Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
 	StartDate string `json:"start_date"`
 	// (Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.
-	Tag                  *string                         `json:"tag,omitempty"`
+	Tag *string `json:"tag,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTheGuardianAPISourceType `const:"the-guardian-api" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

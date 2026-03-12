@@ -146,7 +146,8 @@ type SourceDatadog struct {
 	// The site where Datadog data resides in.
 	Site *Site `default:"datadoghq.com" json:"site"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This just applies to Incremental syncs.
-	StartDate            *string                  `default:"2023-12-01T00:00:00Z" json:"start_date"`
+	StartDate *string `default:"2023-12-01T00:00:00Z" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDatadogSourceType `const:"datadog" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

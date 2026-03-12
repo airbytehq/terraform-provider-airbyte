@@ -41,7 +41,8 @@ type DestinationSftpJSON struct {
 	// Port of the SFTP server.
 	Port *int64 `default:"22" json:"port"`
 	// Username to use to access the SFTP server.
-	Username        string                              `json:"username"`
+	Username string `json:"username"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationSftpJSONDestinationType `const:"sftp-json" json:"destinationType"`
 }
 

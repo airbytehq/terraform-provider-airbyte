@@ -35,7 +35,8 @@ type SourceDatascopeUpdate struct {
 	// API Key
 	APIKey *string `json:"api_key,omitempty"`
 	// Start date for the data to be replicated
-	StartDate            *string                          `json:"start_date,omitempty"`
+	StartDate *string `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceDatascopeUpdateSourceType `const:"datascope" json:"sourceType"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }

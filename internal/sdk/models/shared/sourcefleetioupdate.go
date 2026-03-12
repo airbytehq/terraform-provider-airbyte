@@ -32,8 +32,9 @@ func (e *SourceFleetioUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFleetioUpdate struct {
-	AccountToken         *string                        `json:"account_token,omitempty"`
-	APIKey               *string                        `json:"api_key,omitempty"`
+	AccountToken *string `json:"account_token,omitempty"`
+	APIKey       *string `json:"api_key,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFleetioUpdateSourceType `const:"fleetio" json:"sourceType"`
 	AdditionalProperties any                            `additionalProperties:"true" json:"-"`
 }

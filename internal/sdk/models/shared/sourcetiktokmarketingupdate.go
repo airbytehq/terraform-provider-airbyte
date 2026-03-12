@@ -15,7 +15,8 @@ type SourceTiktokMarketingUpdateSandboxAccessToken struct {
 	AccessToken *string `json:"access_token,omitempty"`
 	// The Advertiser ID which generated for the developer's Sandbox application.
 	AdvertiserID *string `json:"advertiser_id,omitempty"`
-	authType     *string `const:"sandbox_access_token" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"sandbox_access_token" json:"auth_type,omitempty"`
 }
 
 func (s SourceTiktokMarketingUpdateSandboxAccessToken) MarshalJSON() ([]byte, error) {
@@ -53,7 +54,8 @@ type SourceTiktokMarketingUpdateOAuth20 struct {
 	// The Advertiser ID to filter reports and streams. Let this empty to retrieve all.
 	AdvertiserID *string `json:"advertiser_id,omitempty"`
 	// The Developer Application App ID.
-	AppID    *string `json:"app_id,omitempty"`
+	AppID *string `json:"app_id,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Developer Application Secret.
 	Secret *string `json:"secret,omitempty"`
@@ -101,6 +103,9 @@ func (s *SourceTiktokMarketingUpdateOAuth20) GetSecret() *string {
 	}
 	return s.Secret
 }
+
+// #region class-body-sourcetiktokmarketingupdateoauth20
+// #endregion class-body-sourcetiktokmarketingupdateoauth20
 
 type SourceTiktokMarketingUpdateAuthenticationMethodType string
 
@@ -225,7 +230,8 @@ type SourceTiktokMarketingUpdate struct {
 	// Set to active if you want to include deleted data in report based streams and Ads, Ad Groups and Campaign streams.
 	IncludeDeleted *bool `default:"false" json:"include_deleted"`
 	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
-	StartDate            *types.Date                            `default:"2016-09-01" json:"start_date"`
+	StartDate *types.Date `default:"2016-09-01" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceTiktokMarketingUpdateSourceType `const:"tiktok-marketing" json:"sourceType"`
 	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
 }

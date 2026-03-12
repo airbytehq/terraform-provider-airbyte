@@ -33,7 +33,8 @@ func (e *SourceLemlistSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceLemlist struct {
 	// Lemlist API key,
-	APIKey               string                   `json:"api_key"`
+	APIKey string `json:"api_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceLemlistSourceType `const:"lemlist" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

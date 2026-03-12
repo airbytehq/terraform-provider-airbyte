@@ -45,3 +45,6 @@ func (c *CreateSourceS3Response) GetSourceResponse() *shared.SourceResponse {
 	}
 	return c.SourceResponse
 }
+
+// #region class-body-createsources3response
+// #endregion class-body-createsources3response

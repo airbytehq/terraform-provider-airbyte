@@ -28,3 +28,6 @@ func (s *SourceIp2whoisPutRequest) GetConfiguration() SourceIp2whoisUpdate {
 	}
 	return s.Configuration
 }
+
+// #region class-body-sourceip2whoisputrequest
+// #endregion class-body-sourceip2whoisputrequest

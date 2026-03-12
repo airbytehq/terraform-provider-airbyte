@@ -35,8 +35,9 @@ func (e *SourceFrontSourceType) UnmarshalJSON(data []byte) error {
 type SourceFront struct {
 	APIKey string `json:"api_key"`
 	// Page limit for the responses
-	PageLimit            *string                `default:"50" json:"page_limit"`
-	StartDate            time.Time              `json:"start_date"`
+	PageLimit *string   `default:"50" json:"page_limit"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFrontSourceType `const:"front" json:"sourceType"`
 	AdditionalProperties any                    `additionalProperties:"true" json:"-"`
 }

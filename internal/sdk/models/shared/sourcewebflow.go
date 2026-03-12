@@ -37,7 +37,8 @@ type SourceWebflow struct {
 	// The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 	APIKey string `json:"api_key"`
 	// The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
-	SiteID               string                   `json:"site_id"`
+	SiteID string `json:"site_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceWebflowSourceType `const:"webflow" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

@@ -47,7 +47,8 @@ type DestinationPubsub struct {
 	// The GCP project ID for the project containing the target PubSub.
 	ProjectID string `json:"project_id"`
 	// The PubSub topic ID in the given GCP project ID.
-	TopicID              string                            `json:"topic_id"`
+	TopicID string `json:"topic_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationPubsubDestinationType `const:"pubsub" json:"destinationType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

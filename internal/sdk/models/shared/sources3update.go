@@ -36,6 +36,7 @@ func (e *SourceS3UpdateSchemasDeliveryType) UnmarshalJSON(data []byte) error {
 
 // SourceS3UpdateCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
 type SourceS3UpdateCopyRawFiles struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceS3UpdateSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
 	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
 	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
@@ -63,6 +64,9 @@ func (s *SourceS3UpdateCopyRawFiles) GetPreserveDirectoryStructure() *bool {
 	return s.PreserveDirectoryStructure
 }
 
+// #region class-body-sources3updatecopyrawfiles
+// #endregion class-body-sources3updatecopyrawfiles
+
 type SourceS3UpdateDeliveryType string
 
 const (
@@ -88,6 +92,7 @@ func (e *SourceS3UpdateDeliveryType) UnmarshalJSON(data []byte) error {
 
 // SourceS3UpdateReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
 type SourceS3UpdateReplicateRecords struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	deliveryType *SourceS3UpdateDeliveryType `const:"use_records_transfer" json:"delivery_type"`
 }
 
@@ -105,6 +110,9 @@ func (s *SourceS3UpdateReplicateRecords) UnmarshalJSON(data []byte) error {
 func (s *SourceS3UpdateReplicateRecords) GetDeliveryType() *SourceS3UpdateDeliveryType {
 	return SourceS3UpdateDeliveryTypeUseRecordsTransfer.ToPointer()
 }
+
+// #region class-body-sources3updatereplicaterecords
+// #endregion class-body-sources3updatereplicaterecords
 
 type SourceS3UpdateDeliveryMethodType string
 
@@ -228,8 +236,9 @@ func (e *SourceS3UpdateUnexpectedFieldBehavior) UnmarshalJSON(data []byte) error
 // SourceS3UpdateJsonl - This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.
 type SourceS3UpdateJsonl struct {
 	// The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-	BlockSize *int64  `default:"0" json:"block_size"`
-	filetype  *string `const:"jsonl" json:"filetype"`
+	BlockSize *int64 `default:"0" json:"block_size"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"jsonl" json:"filetype"`
 	// Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
 	NewlinesInValues *bool `default:"false" json:"newlines_in_values"`
 	// How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
@@ -272,8 +281,12 @@ func (s *SourceS3UpdateJsonl) GetUnexpectedFieldBehavior() *SourceS3UpdateUnexpe
 	return s.UnexpectedFieldBehavior
 }
 
+// #region class-body-sources3updatejsonl
+// #endregion class-body-sources3updatejsonl
+
 // SourceS3UpdateAvro - This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.
 type SourceS3UpdateAvro struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"avro" json:"filetype"`
 }
 
@@ -292,6 +305,9 @@ func (s *SourceS3UpdateAvro) GetFiletype() *string {
 	return types.Pointer("avro")
 }
 
+// #region class-body-sources3updateavro
+// #endregion class-body-sources3updateavro
+
 // SourceS3UpdateParquet - This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.
 type SourceS3UpdateParquet struct {
 	// Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
@@ -299,8 +315,9 @@ type SourceS3UpdateParquet struct {
 	// Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
 	BufferSize *int64 `default:"2" json:"buffer_size"`
 	// If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-	Columns  []string `json:"columns,omitempty"`
-	filetype *string  `const:"parquet" json:"filetype"`
+	Columns []string `json:"columns,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"parquet" json:"filetype"`
 }
 
 func (s SourceS3UpdateParquet) MarshalJSON() ([]byte, error) {
@@ -339,6 +356,9 @@ func (s *SourceS3UpdateParquet) GetFiletype() *string {
 	return types.Pointer("parquet")
 }
 
+// #region class-body-sources3updateparquet
+// #endregion class-body-sources3updateparquet
+
 // SourceS3UpdateCSV - This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.
 type SourceS3UpdateCSV struct {
 	// Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.
@@ -355,7 +375,8 @@ type SourceS3UpdateCSV struct {
 	Encoding *string `default:"utf8" json:"encoding"`
 	// The character used for escaping special characters. To disallow escaping, leave this field blank.
 	EscapeChar *string `json:"escape_char,omitempty"`
-	filetype   *string `const:"csv" json:"filetype"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"csv" json:"filetype"`
 	// Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
 	InferDatatypes *bool `default:"true" json:"infer_datatypes"`
 	// Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
@@ -448,6 +469,9 @@ func (s *SourceS3UpdateCSV) GetQuoteChar() *string {
 	}
 	return s.QuoteChar
 }
+
+// #region class-body-sources3updatecsv
+// #endregion class-body-sources3updatecsv
 
 type SourceS3UpdateFileFormatType string
 
@@ -678,7 +702,11 @@ func (s *SourceS3UpdateS3AmazonWebServices) GetStartDate() *time.Time {
 	return s.StartDate
 }
 
+// #region class-body-sources3updates3amazonwebservices
+// #endregion class-body-sources3updates3amazonwebservices
+
 type SourceS3UpdateExcelFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"excel" json:"filetype"`
 }
 
@@ -696,6 +724,9 @@ func (s *SourceS3UpdateExcelFormat) UnmarshalJSON(data []byte) error {
 func (s *SourceS3UpdateExcelFormat) GetFiletype() *string {
 	return types.Pointer("excel")
 }
+
+// #region class-body-sources3updateexcelformat
+// #endregion class-body-sources3updateexcelformat
 
 type SourceS3UpdateMode string
 
@@ -722,6 +753,7 @@ func (e *SourceS3UpdateMode) UnmarshalJSON(data []byte) error {
 
 // SourceS3UpdateLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
 type SourceS3UpdateLocal struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *SourceS3UpdateMode `const:"local" json:"mode"`
 }
 
@@ -739,6 +771,9 @@ func (s *SourceS3UpdateLocal) UnmarshalJSON(data []byte) error {
 func (s *SourceS3UpdateLocal) GetMode() *SourceS3UpdateMode {
 	return SourceS3UpdateModeLocal.ToPointer()
 }
+
+// #region class-body-sources3updatelocal
+// #endregion class-body-sources3updatelocal
 
 type SourceS3UpdateProcessingType string
 
@@ -839,6 +874,7 @@ func (e *SourceS3UpdateParsingStrategy) UnmarshalJSON(data []byte) error {
 
 // SourceS3UpdateUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceS3UpdateUnstructuredDocumentFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceS3UpdateProcessing `json:"processing,omitempty"`
@@ -884,10 +920,14 @@ func (s *SourceS3UpdateUnstructuredDocumentFormat) GetStrategy() *SourceS3Update
 	return s.Strategy
 }
 
+// #region class-body-sources3updateunstructureddocumentformat
+// #endregion class-body-sources3updateunstructureddocumentformat
+
 type SourceS3UpdateParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool   `default:"false" json:"decimal_as_float"`
-	filetype       *string `const:"parquet" json:"filetype"`
+	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"parquet" json:"filetype"`
 }
 
 func (s SourceS3UpdateParquetFormat) MarshalJSON() ([]byte, error) {
@@ -912,7 +952,11 @@ func (s *SourceS3UpdateParquetFormat) GetFiletype() *string {
 	return types.Pointer("parquet")
 }
 
+// #region class-body-sources3updateparquetformat
+// #endregion class-body-sources3updateparquetformat
+
 type SourceS3UpdateJsonlFormat struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	filetype *string `const:"jsonl" json:"filetype"`
 }
 
@@ -931,10 +975,14 @@ func (s *SourceS3UpdateJsonlFormat) GetFiletype() *string {
 	return types.Pointer("jsonl")
 }
 
+// #region class-body-sources3updatejsonlformat
+// #endregion class-body-sources3updatejsonlformat
+
 type SourceS3UpdateUserProvided struct {
 	// The column names that will be used while emitting the CSV records
-	ColumnNames          []string `json:"column_names,omitempty"`
-	headerDefinitionType *string  `const:"User Provided" json:"header_definition_type"`
+	ColumnNames []string `json:"column_names,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	headerDefinitionType *string `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceS3UpdateUserProvided) MarshalJSON() ([]byte, error) {
@@ -959,7 +1007,11 @@ func (s *SourceS3UpdateUserProvided) GetHeaderDefinitionType() *string {
 	return types.Pointer("User Provided")
 }
 
+// #region class-body-sources3updateuserprovided
+// #endregion class-body-sources3updateuserprovided
+
 type SourceS3UpdateAutogenerated struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"Autogenerated" json:"header_definition_type"`
 }
 
@@ -978,7 +1030,11 @@ func (s *SourceS3UpdateAutogenerated) GetHeaderDefinitionType() *string {
 	return types.Pointer("Autogenerated")
 }
 
+// #region class-body-sources3updateautogenerated
+// #endregion class-body-sources3updateautogenerated
+
 type SourceS3UpdateFromCSV struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	headerDefinitionType *string `const:"From CSV" json:"header_definition_type"`
 }
 
@@ -996,6 +1052,9 @@ func (s *SourceS3UpdateFromCSV) UnmarshalJSON(data []byte) error {
 func (s *SourceS3UpdateFromCSV) GetHeaderDefinitionType() *string {
 	return types.Pointer("From CSV")
 }
+
+// #region class-body-sources3updatefromcsv
+// #endregion class-body-sources3updatefromcsv
 
 type SourceS3UpdateCSVHeaderDefinitionType string
 
@@ -1151,7 +1210,8 @@ type SourceS3UpdateCSVFormat struct {
 	EscapeChar *string `json:"escape_char,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as false values.
 	FalseValues []string `json:"false_values,omitempty"`
-	filetype    *string  `const:"csv" json:"filetype"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceS3UpdateCSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
@@ -1285,10 +1345,14 @@ func (s *SourceS3UpdateCSVFormat) GetTrueValues() []string {
 	return s.TrueValues
 }
 
+// #region class-body-sources3updatecsvformat
+// #endregion class-body-sources3updatecsvformat
+
 type SourceS3UpdateAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool   `default:"false" json:"double_as_string"`
-	filetype       *string `const:"avro" json:"filetype"`
+	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	filetype *string `const:"avro" json:"filetype"`
 }
 
 func (s SourceS3UpdateAvroFormat) MarshalJSON() ([]byte, error) {
@@ -1312,6 +1376,9 @@ func (s *SourceS3UpdateAvroFormat) GetDoubleAsString() *bool {
 func (s *SourceS3UpdateAvroFormat) GetFiletype() *string {
 	return types.Pointer("avro")
 }
+
+// #region class-body-sources3updateavroformat
+// #endregion class-body-sources3updateavroformat
 
 type SourceS3UpdateFormatType string
 
@@ -1641,6 +1708,9 @@ func (s *SourceS3UpdateFileBasedStreamConfig) GetValidationPolicy() *SourceS3Upd
 	return s.ValidationPolicy
 }
 
+// #region class-body-sources3updatefilebasedstreamconfig
+// #endregion class-body-sources3updatefilebasedstreamconfig
+
 type SourceS3UpdateSourceType string
 
 const (
@@ -1692,8 +1762,9 @@ type SourceS3Update struct {
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams    []SourceS3UpdateFileBasedStreamConfig `json:"streams,omitempty"`
-	sourceType *SourceS3UpdateSourceType             `const:"s3" json:"sourceType"`
+	Streams []SourceS3UpdateFileBasedStreamConfig `json:"streams,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType *SourceS3UpdateSourceType `const:"s3" json:"sourceType"`
 }
 
 func (s SourceS3Update) MarshalJSON() ([]byte, error) {
@@ -1808,3 +1879,6 @@ func (s *SourceS3Update) GetStreams() []SourceS3UpdateFileBasedStreamConfig {
 func (s *SourceS3Update) GetSourceType() *SourceS3UpdateSourceType {
 	return SourceS3UpdateSourceTypeS3.ToPointer()
 }
+
+// #region class-body-sources3update
+// #endregion class-body-sources3update

@@ -39,7 +39,8 @@ type SourceMyHours struct {
 	// The password associated to the username
 	Password string `json:"password"`
 	// Start date for collecting time logs
-	StartDate            string                   `json:"start_date"`
+	StartDate string `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceMyHoursSourceType `const:"my-hours" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }

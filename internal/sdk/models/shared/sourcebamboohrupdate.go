@@ -43,7 +43,8 @@ type SourceBambooHrUpdate struct {
 	EmployeeFields *string    `default:"firstName,lastName" json:"employee_fields"`
 	StartDate      *time.Time `json:"start_date,omitempty"`
 	// Sub Domain of bamboo hr
-	Subdomain            *string                         `json:"subdomain,omitempty"`
+	Subdomain *string `json:"subdomain,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBambooHrUpdateSourceType `const:"bamboo-hr" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

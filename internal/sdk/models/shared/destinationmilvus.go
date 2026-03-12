@@ -38,8 +38,9 @@ type DestinationMilvusOpenAICompatible struct {
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
 	// The number of dimensions the embedding model is generating
-	Dimensions int64                                            `json:"dimensions"`
-	mode       *DestinationMilvusSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
+	Dimensions int64 `json:"dimensions"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationMilvusSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -115,8 +116,9 @@ type DestinationMilvusAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string                                          `json:"deployment"`
-	mode       *DestinationMilvusSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	Deployment string `json:"deployment"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationMilvusSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey string `json:"openai_key"`
 }
@@ -182,6 +184,7 @@ func (e *DestinationMilvusSchemasEmbeddingMode) UnmarshalJSON(data []byte) error
 
 // DestinationMilvusFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationMilvusFake struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationMilvusSchemasEmbeddingMode `const:"fake" json:"mode"`
 }
 
@@ -225,8 +228,9 @@ func (e *DestinationMilvusSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationMilvusCohere - Use the Cohere API to embed text.
 type DestinationMilvusCohere struct {
-	CohereKey string                        `json:"cohere_key"`
-	mode      *DestinationMilvusSchemasMode `const:"cohere" json:"mode"`
+	CohereKey string `json:"cohere_key"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationMilvusSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationMilvusCohere) MarshalJSON() ([]byte, error) {
@@ -276,6 +280,7 @@ func (e *DestinationMilvusMode) UnmarshalJSON(data []byte) error {
 
 // DestinationMilvusOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationMilvusOpenAI struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode      *DestinationMilvusMode `const:"openai" json:"mode"`
 	OpenaiKey string                 `json:"openai_key"`
 }
@@ -495,6 +500,7 @@ func (e *DestinationMilvusSchemasIndexingAuthAuthenticationMode) UnmarshalJSON(d
 
 // NoAuth - Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)
 type NoAuth struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationMilvusSchemasIndexingAuthAuthenticationMode `const:"no_auth" json:"mode"`
 }
 
@@ -538,6 +544,7 @@ func (e *DestinationMilvusSchemasIndexingAuthMode) UnmarshalJSON(data []byte) er
 
 // DestinationMilvusUsernamePassword - Authenticate using username and password (suitable for self-managed Milvus clusters)
 type DestinationMilvusUsernamePassword struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationMilvusSchemasIndexingAuthMode `const:"username_password" json:"mode"`
 	// Password for the Milvus instance
 	Password string `json:"password"`
@@ -599,6 +606,7 @@ func (e *DestinationMilvusSchemasIndexingMode) UnmarshalJSON(data []byte) error 
 
 // DestinationMilvusAPIToken - Authenticate using an API token (suitable for Zilliz Cloud)
 type DestinationMilvusAPIToken struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationMilvusSchemasIndexingMode `const:"token" json:"mode"`
 	// API Token for the Milvus instance
 	Token string `json:"token"`
@@ -927,8 +935,9 @@ func (e *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode) Unmarsh
 // DestinationMilvusByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationMilvusByProgrammingLanguage struct {
 	// Split code in suitable places based on the programming language
-	Language DestinationMilvusLanguage                                       `json:"language"`
-	mode     *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+	Language DestinationMilvusLanguage `json:"language"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationMilvusByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -978,6 +987,7 @@ func (e *DestinationMilvusSchemasProcessingTextSplitterMode) UnmarshalJSON(data 
 
 // DestinationMilvusByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
 type DestinationMilvusByMarkdownHeader struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationMilvusSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
 	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
 	SplitLevel *int64 `default:"1" json:"split_level"`
@@ -1031,8 +1041,9 @@ func (e *DestinationMilvusSchemasProcessingMode) UnmarshalJSON(data []byte) erro
 // DestinationMilvusBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationMilvusBySeparator struct {
 	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool                                   `default:"false" json:"keep_separator"`
-	mode          *DestinationMilvusSchemasProcessingMode `const:"separator" json:"mode"`
+	KeepSeparator *bool `default:"false" json:"keep_separator"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	mode *DestinationMilvusSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
 }
@@ -1280,9 +1291,10 @@ type DestinationMilvus struct {
 	// Indexing configuration
 	Indexing DestinationMilvusIndexing `json:"indexing"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText     *bool                                  `default:"false" json:"omit_raw_text"`
-	Processing      DestinationMilvusProcessingConfigModel `json:"processing"`
-	destinationType *DestinationMilvusDestinationType      `const:"milvus" json:"destinationType"`
+	OmitRawText *bool                                  `default:"false" json:"omit_raw_text"`
+	Processing  DestinationMilvusProcessingConfigModel `json:"processing"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	destinationType *DestinationMilvusDestinationType `const:"milvus" json:"destinationType"`
 }
 
 func (d DestinationMilvus) MarshalJSON() ([]byte, error) {

@@ -45,3 +45,6 @@ func (c *CreateSourceAuth0Response) GetSourceResponse() *shared.SourceResponse {
 	}
 	return c.SourceResponse
 }
+
+// #region class-body-createsourceauth0response
+// #endregion class-body-createsourceauth0response

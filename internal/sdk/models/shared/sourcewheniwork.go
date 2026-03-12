@@ -35,7 +35,8 @@ type SourceWhenIWork struct {
 	// Email of your when-i-work account
 	Email string `json:"email"`
 	// Password for your when-i-work account
-	Password             string                     `json:"password"`
+	Password string `json:"password"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceWhenIWorkSourceType `const:"when-i-work" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

@@ -100,7 +100,8 @@ type SourceGooglePagespeedInsights struct {
 	// The analyses strategy to use. Either "desktop" or "mobile".
 	Strategies []Strategies `json:"strategies"`
 	// The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
-	Urls                 []string                                 `json:"urls"`
+	Urls []string `json:"urls"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceGooglePagespeedInsightsSourceType `const:"google-pagespeed-insights" json:"sourceType"`
 	AdditionalProperties any                                      `additionalProperties:"true" json:"-"`
 }

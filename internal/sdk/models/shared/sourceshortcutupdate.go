@@ -35,8 +35,9 @@ func (e *SourceShortcutUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceShortcutUpdate struct {
 	APIKey2 *string `json:"api_key_2,omitempty"`
 	// Query for searching as defined in `https://help.shortcut.com/hc/en-us/articles/360000046646-Searching-in-Shortcut-Using-Search-Operators`
-	Query                *string                         `default:"title:Our first Epic" json:"query"`
-	StartDate            *time.Time                      `json:"start_date,omitempty"`
+	Query     *string    `default:"title:Our first Epic" json:"query"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceShortcutUpdateSourceType `const:"shortcut" json:"sourceType"`
 	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }

@@ -30,6 +30,9 @@ func (o *OAuth20Credentials) GetClientSecret() string {
 	return o.ClientSecret
 }
 
+// #region class-body-oauth20credentials
+// #endregion class-body-oauth20credentials
+
 type DestinationVectaraDestinationType string
 
 const (
@@ -68,7 +71,8 @@ type DestinationVectara struct {
 	// List of fields in the record that should be in the section of the document. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
 	TextFields []string `json:"text_fields,omitempty"`
 	// A field that will be used to populate the `title` of each document. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TitleField      *string                            `default:"" json:"title_field"`
+	TitleField *string `default:"" json:"title_field"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType *DestinationVectaraDestinationType `const:"vectara" json:"destinationType"`
 }
 

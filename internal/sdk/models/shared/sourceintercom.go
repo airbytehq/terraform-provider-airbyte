@@ -44,7 +44,8 @@ type SourceIntercom struct {
 	// The number of days to shift the state value backward for record sync
 	LookbackWindow *int64 `default:"0" json:"lookback_window"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate            time.Time                 `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceIntercomSourceType `const:"intercom" json:"sourceType"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }

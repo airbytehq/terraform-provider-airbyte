@@ -33,7 +33,8 @@ func (e *SourceHardcodedRecordsUpdateSourceType) UnmarshalJSON(data []byte) erro
 
 type SourceHardcodedRecordsUpdate struct {
 	// How many records per stream should be generated
-	Count                *int64                                  `default:"1000" json:"count"`
+	Count *int64 `default:"1000" json:"count"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceHardcodedRecordsUpdateSourceType `const:"hardcoded-records" json:"sourceType"`
 	AdditionalProperties any                                     `additionalProperties:"true" json:"-"`
 }

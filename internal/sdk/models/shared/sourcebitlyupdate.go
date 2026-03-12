@@ -33,9 +33,10 @@ func (e *SourceBitlyUpdateSourceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBitlyUpdate struct {
-	APIKey               *string                      `json:"api_key,omitempty"`
-	EndDate              *time.Time                   `json:"end_date,omitempty"`
-	StartDate            *time.Time                   `json:"start_date,omitempty"`
+	APIKey    *string    `json:"api_key,omitempty"`
+	EndDate   *time.Time `json:"end_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceBitlyUpdateSourceType `const:"bitly" json:"sourceType"`
 	AdditionalProperties any                          `additionalProperties:"true" json:"-"`
 }

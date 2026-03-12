@@ -11,6 +11,7 @@ import (
 )
 
 type RoleBasedAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType             *string `const:"Role" json:"auth_type,omitempty"`
 	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
@@ -39,8 +40,9 @@ func (r *RoleBasedAuthentication) GetAdditionalProperties() any {
 
 type AuthenticateViaAccessKeys struct {
 	// The access key id to access Dynamodb. Airbyte requires read permissions to the database
-	AccessKeyID string  `json:"access_key_id"`
-	authType    *string `const:"User" json:"auth_type,omitempty"`
+	AccessKeyID string `json:"access_key_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"User" json:"auth_type,omitempty"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey      string `json:"secret_access_key"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
@@ -328,8 +330,9 @@ type SourceDynamodb struct {
 	// The region of the Dynamodb database
 	Region *DynamodbRegion `default:"" json:"region"`
 	// Comma separated reserved attribute names present in your tables
-	ReservedAttributeNames *string                   `json:"reserved_attribute_names,omitempty"`
-	sourceType             *SourceDynamodbSourceType `const:"dynamodb" json:"sourceType"`
+	ReservedAttributeNames *string `json:"reserved_attribute_names,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	sourceType *SourceDynamodbSourceType `const:"dynamodb" json:"sourceType"`
 }
 
 func (s SourceDynamodb) MarshalJSON() ([]byte, error) {

@@ -35,7 +35,8 @@ type SourceFreshsalesUpdate struct {
 	// Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
 	APIKey *string `json:"api_key,omitempty"`
 	// The Name of your Freshsales domain
-	DomainName           *string                           `json:"domain_name,omitempty"`
+	DomainName *string `json:"domain_name,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceFreshsalesUpdateSourceType `const:"freshsales" json:"sourceType"`
 	AdditionalProperties any                               `additionalProperties:"true" json:"-"`
 }

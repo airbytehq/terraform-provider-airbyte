@@ -33,7 +33,8 @@ func (e *SourceK6CloudSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceK6Cloud struct {
 	// Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
-	APIToken             string                   `json:"api_token"`
+	APIToken string `json:"api_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceK6CloudSourceType `const:"k6-cloud" json:"sourceType"`
 	AdditionalProperties any                      `additionalProperties:"true" json:"-"`
 }
@@ -66,3 +67,6 @@ func (s *SourceK6Cloud) GetAdditionalProperties() any {
 	}
 	return s.AdditionalProperties
 }
+
+// #region class-body-sourcek6cloud
+// #endregion class-body-sourcek6cloud

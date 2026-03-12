@@ -11,6 +11,7 @@ import (
 )
 
 type SourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *string `const:"Service" json:"auth_type,omitempty"`
 	// The email of the user which has permissions to access the Google Workspace Admin APIs.
 	Email *string `json:"email,omitempty"`
@@ -50,7 +51,8 @@ func (s *SourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication) GetServ
 type SourceGoogleSearchConsoleUpdateOAuth struct {
 	// Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	AccessToken *string `json:"access_token,omitempty"`
-	authType    *string `const:"Client" json:"auth_type,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	authType *string `const:"Client" json:"auth_type,omitempty"`
 	// The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	ClientID *string `json:"client_id,omitempty"`
 	// The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
@@ -317,7 +319,8 @@ type SourceGoogleSearchConsoleUpdate struct {
 	// The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
 	SiteUrls []string `json:"site_urls,omitempty"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate  *types.Date                                `default:"2021-01-01" json:"start_date"`
+	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType *SourceGoogleSearchConsoleUpdateSourceType `const:"google-search-console" json:"sourceType"`
 }
 

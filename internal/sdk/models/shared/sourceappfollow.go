@@ -33,7 +33,8 @@ func (e *SourceAppfollowSourceType) UnmarshalJSON(data []byte) error {
 
 type SourceAppfollow struct {
 	// API Key provided by Appfollow
-	APISecret            *string                    `json:"api_secret,omitempty"`
+	APISecret *string `json:"api_secret,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	sourceType           *SourceAppfollowSourceType `const:"appfollow" json:"sourceType"`
 	AdditionalProperties any                        `additionalProperties:"true" json:"-"`
 }

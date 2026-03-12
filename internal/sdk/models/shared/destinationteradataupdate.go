@@ -33,6 +33,7 @@ func (e *DestinationTeradataUpdateSchemasAuthType) UnmarshalJSON(data []byte) er
 }
 
 type DestinationTeradataUpdateLDAP struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *DestinationTeradataUpdateSchemasAuthType `const:"LDAP" json:"auth_type"`
 	// Enter the password associated with the username.
 	Password *string `json:"password,omitempty"`
@@ -93,6 +94,7 @@ func (e *DestinationTeradataUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationTeradataUpdateTd2 struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authType *DestinationTeradataUpdateAuthType `const:"TD2" json:"auth_type"`
 	// Enter the password associated with the username.
 	Password *string `json:"password,omitempty"`
@@ -128,6 +130,9 @@ func (d *DestinationTeradataUpdateTd2) GetUsername() *string {
 	}
 	return d.Username
 }
+
+// #region class-body-destinationteradataupdatetd2
+// #endregion class-body-destinationteradataupdatetd2
 
 type DestinationTeradataUpdateAuthorizationMechanismType string
 
@@ -243,6 +248,7 @@ func (e *DestinationTeradataUpdateSchemasSSLModeSSLModes6Mode) UnmarshalJSON(dat
 
 // DestinationTeradataUpdateVerifyFull - Verify-full SSL mode.
 type DestinationTeradataUpdateVerifyFull struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationTeradataUpdateSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 	// Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.
 	//  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
@@ -296,6 +302,7 @@ func (e *DestinationTeradataUpdateSchemasSSLModeSSLModes5Mode) UnmarshalJSON(dat
 
 // DestinationTeradataUpdateVerifyCa - Verify-ca SSL mode.
 type DestinationTeradataUpdateVerifyCa struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationTeradataUpdateSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 	// Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-ca.
 	//  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
@@ -349,6 +356,7 @@ func (e *DestinationTeradataUpdateSchemasSSLModeSSLModesMode) UnmarshalJSON(data
 
 // DestinationTeradataUpdateRequire - Require SSL mode.
 type DestinationTeradataUpdateRequire struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationTeradataUpdateSchemasSSLModeSSLModesMode `const:"require" json:"mode"`
 }
 
@@ -392,6 +400,7 @@ func (e *DestinationTeradataUpdateSchemasSslModeMode) UnmarshalJSON(data []byte)
 
 // DestinationTeradataUpdatePrefer - Prefer SSL mode.
 type DestinationTeradataUpdatePrefer struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationTeradataUpdateSchemasSslModeMode `const:"prefer" json:"mode"`
 }
 
@@ -435,6 +444,7 @@ func (e *DestinationTeradataUpdateSchemasMode) UnmarshalJSON(data []byte) error 
 
 // DestinationTeradataUpdateAllow - Allow SSL mode.
 type DestinationTeradataUpdateAllow struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationTeradataUpdateSchemasMode `const:"allow" json:"mode"`
 }
 
@@ -478,6 +488,7 @@ func (e *DestinationTeradataUpdateMode) UnmarshalJSON(data []byte) error {
 
 // DestinationTeradataUpdateDisable - Disable SSL.
 type DestinationTeradataUpdateDisable struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	mode *DestinationTeradataUpdateMode `const:"disable" json:"mode"`
 }
 
@@ -747,7 +758,8 @@ type DestinationTeradataUpdate struct {
 	//   <b>verify-ca</b> - Chose this mode to always require encryption and to verify that the destination database server has a valid SSL certificate
 	//   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the destination database server
 	//  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLMODE"> in the docs</a>.
-	SslMode              *DestinationTeradataUpdateSSLModes        `json:"ssl_mode,omitempty"`
+	SslMode *DestinationTeradataUpdateSSLModes `json:"ssl_mode,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	destinationType      *DestinationTeradataUpdateDestinationType `const:"teradata" json:"destinationType"`
 	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
 }
