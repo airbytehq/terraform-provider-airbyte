@@ -64,6 +64,7 @@ terraform:
   inputModelSuffix: input
   outputModelSuffix: output
   packageName: airbyte
+  preApplyUnionDiscriminators: false
   respectRequiredFields: false
   respectTitlesForPrimitiveUnionMembers: false
   unionStrategy: populated-fields
