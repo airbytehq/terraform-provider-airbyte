@@ -33,6 +33,20 @@ import yaml
 OSS_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
 CLOUD_REGISTRY_URL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
 
+# Default schema version for all typed connector resources (sources and destinations).
+# Bump this when introducing a breaking schema change that requires a state migration
+# across all resources (e.g., adding write-only attributes to secret fields).
+# Speakeasy uses this to set the Terraform resource schema `Version` field and
+# bootstraps a boilerplate state upgrader at internal/stateupgraders/<resource>_v<N>.go.
+# Individual resources can override this via ENTITY_VERSION_OVERRIDES below.
+# See: https://www.speakeasy.com/docs/terraform/customize/resource-configuration
+DEFAULT_ENTITY_VERSION = 1
+
+# Per-resource entity version overrides. Use this to set a different schema version
+# for specific resources that need independent state migration versioning.
+# Keys are entity names like "Source_Notion" or "Destination_Snowflake".
+ENTITY_VERSION_OVERRIDES: dict[str, int] = {}
+
 # Base API spec URL - the actual OpenAPI spec maintained by the platform team.
 # This is the source of truth for the Airbyte API. The terraform provider adds
 # connector-specific paths and schemas on top of this base spec.
@@ -269,6 +283,7 @@ SOURCE_CREATE_REQUEST_TEMPLATE = """
             \\ flow."
           type: "string"
       x-speakeasy-entity: Source_{upper_camel_name}
+      x-speakeasy-entity-version: {entity_version}
       x-speakeasy-param-suppress-computed-diff: true
 """
 
@@ -296,6 +311,7 @@ DESTINATION_CREATE_REQUEST_TEMPLATE = """
         configuration:
           $ref: "#/components/schemas/destination-{hyphen_name}"
       x-speakeasy-entity: Destination_{upper_camel_name}
+      x-speakeasy-entity-version: {entity_version}
       x-speakeasy-param-suppress-computed-diff: true
 """
 
@@ -317,6 +333,7 @@ SOURCE_UPDATE_REQUEST_TEMPLATE = """
         configuration:
           $ref: "#/components/schemas/source-{hyphen_name}-update"
       x-speakeasy-entity: Source_{upper_camel_name}
+      x-speakeasy-entity-version: {entity_version}
       x-speakeasy-param-suppress-computed-diff: true
 """
 
@@ -338,6 +355,7 @@ DESTINATION_UPDATE_REQUEST_TEMPLATE = """
         configuration:
           $ref: "#/components/schemas/destination-{hyphen_name}-update"
       x-speakeasy-entity: Destination_{upper_camel_name}
+      x-speakeasy-entity-version: {entity_version}
       x-speakeasy-param-suppress-computed-diff: true
 """
 
@@ -834,6 +852,11 @@ def transform_spec_properties(spec: dict[str, Any], is_update: bool) -> dict[str
     return result
 
 
+def get_entity_version(entity_name: str) -> int:
+    """Get the schema version for a given entity, with per-resource override support."""
+    return ENTITY_VERSION_OVERRIDES.get(entity_name, DEFAULT_ENTITY_VERSION)
+
+
 def generate_source_path(upper_camel_name: str) -> str:
     """Generate the OpenAPI path template for a source connector."""
     return SOURCE_PATH_TEMPLATE.format(upper_camel_name=upper_camel_name)
@@ -852,6 +875,7 @@ def generate_source_create_request(
         upper_camel_name=upper_camel_name,
         hyphen_name=hyphen_name,
         definition_id=definition_id,
+        entity_version=get_entity_version(f"Source_{upper_camel_name}"),
     )
 
 
@@ -863,20 +887,25 @@ def generate_destination_create_request(
         upper_camel_name=upper_camel_name,
         hyphen_name=hyphen_name,
         definition_id=definition_id,
+        entity_version=get_entity_version(f"Destination_{upper_camel_name}"),
     )
 
 
 def generate_source_update_request(upper_camel_name: str, hyphen_name: str) -> str:
     """Generate the OpenAPI schema for a source update request."""
     return SOURCE_UPDATE_REQUEST_TEMPLATE.format(
-        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+        upper_camel_name=upper_camel_name,
+        hyphen_name=hyphen_name,
+        entity_version=get_entity_version(f"Source_{upper_camel_name}"),
     )
 
 
 def generate_destination_update_request(upper_camel_name: str, hyphen_name: str) -> str:
     """Generate the OpenAPI schema for a destination update request."""
     return DESTINATION_UPDATE_REQUEST_TEMPLATE.format(
-        upper_camel_name=upper_camel_name, hyphen_name=hyphen_name
+        upper_camel_name=upper_camel_name,
+        hyphen_name=hyphen_name,
+        entity_version=get_entity_version(f"Destination_{upper_camel_name}"),
     )
 
 
