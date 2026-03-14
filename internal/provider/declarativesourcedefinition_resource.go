@@ -52,6 +52,9 @@ func (r *DeclarativeSourceDefinitionResource) Schema(ctx context.Context, req re
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 			"manifest": schema.StringAttribute{
 				CustomType:  jsontypes.NormalizedType{},
