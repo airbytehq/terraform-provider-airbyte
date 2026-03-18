@@ -22,7 +22,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
       awss3_staging = {
         access_key_id      = "...my_access_key_id..."
         file_name_pattern  = "{date}"
-        purge_staging_data = false
+        purge_staging_data = true
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
         s3_bucket_region   = "eu-west-2"
@@ -31,7 +31,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
     }
     username = "...my_username..."
   }
-  definition_id = "50bfb2e7-1ca1-4132-b623-8606f328175d"
+  definition_id = "f7a7d195-377f-cf5b-70a5-be6b819019dc"
   name          = "...my_name..."
   workspace_id  = "e25c2049-8986-4945-a3f6-604de181966d"
 }

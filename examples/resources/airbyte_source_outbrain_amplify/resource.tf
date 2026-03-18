@@ -12,7 +12,7 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
     report_granularity     = "monthly"
     start_date             = "...my_start_date..."
   }
-  definition_id = "10259945-d6ad-44fd-802a-f39a5ba64e1a"
+  definition_id = "4fe962d0-a70e-4516-aa99-c551abf46352"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "0bef4627-47e6-4baf-ad2c-6a8adf015e34"

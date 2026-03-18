@@ -26,9 +26,9 @@ resource "airbyte_source_airtable" "my_source_airtable" {
         token_expiry_date = "2022-01-14T11:50:58.504Z"
       }
     }
-    num_workers = 37
+    num_workers = 5
   }
-  definition_id = "fdd0b7d7-bc62-4e45-9809-2513b5f90d61"
+  definition_id = "14c6e7ea-97ed-4f5e-a7b5-25e9a80b8212"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "110737e7-1846-4cca-8ebc-d0f82e4b8ffb"

@@ -24,7 +24,7 @@ resource "airbyte_source_redshift" "my_source_redshift" {
     ]
     username = "...my_username..."
   }
-  definition_id = "e25148e3-3c6f-4e5f-88e2-c90d1e9f9593"
+  definition_id = "e87ffa8e-a3b5-f69c-9076-6011339de1f6"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "84353b00-31b2-4302-bdea-2a56e10ac383"

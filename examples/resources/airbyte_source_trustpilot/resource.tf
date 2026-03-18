@@ -15,7 +15,7 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
     }
     start_date = "%Y-%m-%dT%H:%M:%SZ"
   }
-  definition_id = "581c2bce-fff6-4e03-8eb1-8a082e29e93b"
+  definition_id = "d7e23ea6-d741-4314-9209-a33c91a2e945"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "89025dc4-af49-4123-85ae-315d50718f82"

@@ -22,9 +22,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     site_urls = [
       "..."
     ]
-    start_date = "2022-02-19"
+    start_date = "2021-01-01"
   }
-  definition_id = "38737380-4b05-400b-8478-4fc78e02be0f"
+  definition_id = "eb4c9e00-db83-4d63-a386-39cfa91012a8"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "6406adf4-523d-4b9e-8f60-e386f18bd02c"

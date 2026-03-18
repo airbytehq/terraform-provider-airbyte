@@ -33,7 +33,7 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     }
     username = "...my_username..."
   }
-  definition_id = "28ddc2bd-35a7-4a51-966c-b9e88351add3"
+  definition_id = "3986776d-2319-4de9-8af8-db14c0996e72"
   name          = "...my_name..."
   workspace_id  = "6900342e-4f38-4480-a5e0-1dce84f57ee6"
 }

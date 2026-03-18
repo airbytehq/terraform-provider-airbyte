@@ -27,17 +27,17 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
         attribution_types = [
           "INDIVIDUAL"
         ]
-        click_window_days = 60
+        click_window_days = 30
         columns = [
           "PIN_PROMOTION_ID"
         ]
-        conversion_report_time = "TIME_OF_CONVERSION"
+        conversion_report_time = "TIME_OF_AD_ACTION"
         engagement_window_days = 30
-        granularity            = "MONTH"
-        level                  = "CAMPAIGN"
+        granularity            = "TOTAL"
+        level                  = "ADVERTISER"
         name                   = "...my_name..."
         start_date             = "2022-07-28"
-        view_window_days       = 7
+        view_window_days       = 30
       }
     ]
     num_threads = 1
@@ -46,7 +46,7 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
       "ACTIVE"
     ]
   }
-  definition_id = "7540406c-2051-4504-8c28-ddff47d8716f"
+  definition_id = "5cb7e5fe-38c2-11ec-8d3d-0242ac130003"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "4d479a13-e183-4090-af9e-7a388174d4f2"

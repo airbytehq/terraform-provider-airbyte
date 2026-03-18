@@ -38,7 +38,7 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     num_workers = 2
     start_date  = "2017-01-25"
   }
-  definition_id = "340bf2e2-1dfb-458f-b22d-521448c56250"
+  definition_id = "253487c0-2246-43ba-a21f-5116b20a2c50"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "b2e3af36-07c6-4325-9aae-252084b9ca1b"

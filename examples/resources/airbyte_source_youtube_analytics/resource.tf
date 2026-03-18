@@ -9,7 +9,7 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "277cc3f8-b558-4609-821a-eb821b00a3f7"
+  definition_id = "afa734e4-3571-11ec-991a-1e0031268139"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "ddc4ab00-8822-4a78-bd4f-944dac4fd75d"

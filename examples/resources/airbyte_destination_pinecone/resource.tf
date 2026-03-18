@@ -10,9 +10,9 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       pinecone_environment = "us-west1-gcp"
       pinecone_key         = "...my_pinecone_key..."
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 4
+      chunk_overlap = 0
       chunk_size    = 7074
       field_name_mappings = [
         {
@@ -28,7 +28,7 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       ]
       text_splitter = {
         by_separator = {
-          keep_separator = true
+          keep_separator = false
           separators = [
             "..."
           ]
@@ -36,7 +36,7 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       }
     }
   }
-  definition_id = "ae1c7c9a-2b03-4eee-843a-7ed67978265e"
+  definition_id = "3d2b6f84-7f0d-4e3f-a5e5-7c7d4b50eabd"
   name          = "...my_name..."
   workspace_id  = "a8bd2b0a-cdce-4816-9962-7547715c4567"
 }

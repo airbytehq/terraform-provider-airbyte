@@ -39,7 +39,7 @@ resource "airbyte_destination_s3" "my_destination_s3" {
     s3_path_format    = "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_"
     secret_access_key = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "78e0a8ec-be25-40bf-b8ba-093bfe7a6f05"
+  definition_id = "4816b78f-1489-44c1-9060-4b19d5fa9362"
   name          = "...my_name..."
   workspace_id  = "9842b6c1-e43f-4d6f-90dd-f293538933f0"
 }

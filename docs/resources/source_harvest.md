@@ -28,7 +28,7 @@ resource "airbyte_source_harvest" "my_source_harvest" {
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "ce100c29-1a0e-4458-807d-89392892e3da"
+  definition_id = "fe2b4084-3386-4d3b-9ad6-308f61a6f1e6"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "7a62499e-b740-4a2d-a2c0-621f38c60e24"

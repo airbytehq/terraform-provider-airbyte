@@ -21,7 +21,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
       }
     }
   }
-  definition_id = "ecb670c3-9030-4c95-a447-d69ea2c1371e"
+  definition_id = "8b746512-8c2e-6ac1-4adc-b59faafd473c"
   name          = "...my_name..."
   workspace_id  = "63ac2b57-1c99-4294-8b40-d92cdc44ffaf"
 }

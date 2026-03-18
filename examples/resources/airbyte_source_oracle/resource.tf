@@ -13,7 +13,7 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 22568
+    port            = 1521
     schemas = [
       "..."
     ]
@@ -24,7 +24,7 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     }
     username = "...my_username..."
   }
-  definition_id = "19b6db41-3eb9-40e4-9d70-9711de027975"
+  definition_id = "b39a7370-74c3-45a6-ac3a-380d48520a83"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "a4ecddd5-3505-44b1-8fbf-25c1225b2856"

@@ -18,15 +18,15 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
           token = "...my_token..."
         }
       }
-      batch_size         = 9
-      default_vectorizer = "text2vec-cohere"
+      batch_size         = 128
+      default_vectorizer = "none"
       host               = "https://my-cluster.weaviate.network"
-      tenant_id          = "...my_tenant_id..."
-      text_field         = "...my_text_field..."
+      tenant_id          = ""
+      text_field         = "text"
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 4
+      chunk_overlap = 0
       chunk_size    = 4921
       field_name_mappings = [
         {
@@ -42,12 +42,12 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 4
+          split_level = 1
         }
       }
     }
   }
-  definition_id = "37374193-1614-4ed2-9e81-293bdd2b75ef"
+  definition_id = "7b7d7a0d-954c-45a0-bcfc-39a634b97736"
   name          = "...my_name..."
   workspace_id  = "3a2f5d63-fb57-4357-9913-ad72f8c70fbf"
 }

@@ -19,17 +19,17 @@ resource "airbyte_source_fauna" "my_source_fauna" {
     collection = {
       deletions = {
         enabled = {
-          column = "...my_column..."
+          column = "deleted_at"
         }
       }
-      page_size = 2
+      page_size = 64
     }
-    domain = "...my_domain..."
-    port   = 3
-    scheme = "...my_scheme..."
+    domain = "db.fauna.com"
+    port   = 443
+    scheme = "https"
     secret = "...my_secret..."
   }
-  definition_id = "7da8a804-135a-42a9-9fae-e38938f1ebbf"
+  definition_id = "3825db3e-c94b-42ac-bd53-b5a9507ace2b"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "82a1bb0b-2686-4b4c-86cd-84520efe37b7"

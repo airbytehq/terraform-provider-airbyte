@@ -45,7 +45,7 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     }
     user = "...my_user..."
   }
-  definition_id = "a282fec3-7b94-4274-9620-860fbc85f5d6"
+  definition_id = "d4353156-9217-4cad-8dd7-c108fd4f74cf"
   name          = "...my_name..."
   workspace_id  = "2e9afd8a-c9ca-4f91-bf9f-71f1a7c362df"
 }

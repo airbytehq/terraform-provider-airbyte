@@ -29,7 +29,7 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
     start_date = "2021-01-01"
     streams = [
       {
-        days_to_sync_if_history_is_full = 4
+        days_to_sync_if_history_is_full = 3
         format = {
           avro_format = {
             double_as_string = false
@@ -43,12 +43,12 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
         primary_key                                 = "...my_primary_key..."
         recent_n_files_to_read_for_schema_discovery = 6
         schemaless                                  = false
-        use_first_found_file_for_schema_discovery   = true
-        validation_policy                           = "Wait for Discover"
+        use_first_found_file_for_schema_discovery   = false
+        validation_policy                           = "Emit Record"
       }
     ]
   }
-  definition_id = "dabf0c27-e2bf-4270-bf90-ad35112231f8"
+  definition_id = "9f8dda77-1048-4368-815b-269bf54ee9b8"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "30ad3d09-6bd9-4a3c-8f7f-71bcb2227e8f"

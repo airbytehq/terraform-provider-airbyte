@@ -28,13 +28,13 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
         # ...
       }
     }
-    folder_path  = "...my_folder_path..."
+    folder_path  = "."
     search_scope = "ALL"
-    site_url     = "...my_site_url..."
+    site_url     = ""
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 0
+        days_to_sync_if_history_is_full = 3
         format = {
           jsonl_format = {
             # ...
@@ -47,12 +47,12 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
         name                                        = "...my_name..."
         primary_key                                 = "...my_primary_key..."
         recent_n_files_to_read_for_schema_discovery = 7
-        schemaless                                  = true
-        validation_policy                           = "Skip Record"
+        schemaless                                  = false
+        validation_policy                           = "Emit Record"
       }
     ]
   }
-  definition_id = "8120bea0-1e02-41bc-80a8-406f7b21913d"
+  definition_id = "59353119-f0f2-4e5a-a8ba-15d887bc34f6"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "27c9b886-94de-4d83-9b82-5954db7af16b"

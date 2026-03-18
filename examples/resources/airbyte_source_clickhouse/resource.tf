@@ -15,7 +15,7 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     }
     username = "...my_username..."
   }
-  definition_id = "00b2c59e-fb58-46ac-b669-7fa91692b680"
+  definition_id = "bad83517-5e54-4a3d-9b53-63e85fbd4d7c"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "d293fe7d-2312-4e0a-bed1-1c816b32f541"

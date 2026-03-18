@@ -1,9 +1,9 @@
 resource "airbyte_source_snowflake" "my_source_snowflake" {
   configuration = {
     additional_properties              = "{ \"see\": \"documentation\" }"
-    check_privileges                   = false
-    checkpoint_target_interval_seconds = 5
-    concurrency                        = 0
+    check_privileges                   = true
+    checkpoint_target_interval_seconds = 300
+    concurrency                        = 1
     credentials = {
       key_pair_authentication = {
         additional_properties = "{ \"see\": \"documentation\" }"
@@ -26,7 +26,7 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "...my_schema..."
     warehouse       = "...my_warehouse..."
   }
-  definition_id = "27125485-2542-4c33-816b-4945c1b73270"
+  definition_id = "e2d65910-8c8b-40a1-ae7d-ee2416b2bfa2"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "f456591a-a491-49d7-af41-2d440d1ae6ee"

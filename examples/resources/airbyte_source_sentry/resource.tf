@@ -5,11 +5,11 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }"
     ]
-    hostname     = "...my_hostname..."
+    hostname     = "sentry.io"
     organization = "...my_organization..."
     project      = "...my_project..."
   }
-  definition_id = "224b3e94-d53b-4e9f-81ae-9a2d6b899fdf"
+  definition_id = "cdaf146a-9b75-49fd-9dd2-9d64a0bb4781"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "f98e0e59-4799-4e21-9773-f1fd5decb3e6"

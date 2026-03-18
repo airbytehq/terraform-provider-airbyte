@@ -8,10 +8,10 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
     ]
     additional_properties = "{ \"see\": \"documentation\" }"
     client_id             = "...my_client_id..."
-    client_secret         = "...my_client_secret..."
+    client_secret         = ""
     custom_reports = [
       {
-        disable_custom_report_names_camel_to_snake_conversion = true
+        disable_custom_report_names_camel_to_snake_conversion = false
         name                                                  = "Account Performance"
         report_aggregation                                    = "...my_report_aggregation..."
         report_columns = [
@@ -21,12 +21,12 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
       }
     ]
     developer_token    = "...my_developer_token..."
-    lookback_window    = 80
+    lookback_window    = 0
     refresh_token      = "...my_refresh_token..."
     reports_start_date = "2021-12-24"
-    tenant_id          = "...my_tenant_id..."
+    tenant_id          = "common"
   }
-  definition_id = "8a913fc3-a81b-4dc2-af5d-8db1e8246d7a"
+  definition_id = "47f25999-dd5e-4636-8c39-e7cea2453331"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "4b3ac887-f124-40a8-ae8c-9b91fd955bc7"

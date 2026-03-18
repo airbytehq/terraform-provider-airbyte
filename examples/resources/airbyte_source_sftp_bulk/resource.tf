@@ -16,7 +16,7 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
     start_date  = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 5
+        days_to_sync_if_history_is_full = 3
         format = {
           jsonl_format = {
             # ...
@@ -31,13 +31,13 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
         primary_key                                 = "...my_primary_key..."
         recent_n_files_to_read_for_schema_discovery = 4
         schemaless                                  = false
-        use_first_found_file_for_schema_discovery   = true
-        validation_policy                           = "Skip Record"
+        use_first_found_file_for_schema_discovery   = false
+        validation_policy                           = "Emit Record"
       }
     ]
     username = "...my_username..."
   }
-  definition_id = "68ea307f-7d93-44b6-91fe-f4681001bb74"
+  definition_id = "31e3242f-dee7-4cdc-a4b8-8e06c5458517"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "ec1a23b7-466d-4987-acf2-eae96eb456d0"

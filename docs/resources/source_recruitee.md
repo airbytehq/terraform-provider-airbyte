@@ -19,7 +19,7 @@ resource "airbyte_source_recruitee" "my_source_recruitee" {
     api_key               = "...my_api_key..."
     company_id            = 8
   }
-  definition_id = "53294a7e-92a7-4ac0-b80c-e8e49fae074e"
+  definition_id = "3b046ac7-d8d3-4eb3-b122-f96b2a16d8a8"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "057cfcf4-95ad-4bfd-a7be-d97df8787ae0"

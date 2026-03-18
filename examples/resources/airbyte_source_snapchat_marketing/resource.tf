@@ -1,6 +1,6 @@
 resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
   configuration = {
-    action_report_time = "impression"
+    action_report_time = "conversion"
     ad_account_ids = [
       "{ \"see\": \"documentation\" }"
     ]
@@ -13,10 +13,10 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     ]
     refresh_token               = "...my_refresh_token..."
     start_date                  = "2022-01-01"
-    swipe_up_attribution_window = "7_DAY"
-    view_attribution_window     = "1_HOUR"
+    swipe_up_attribution_window = "28_DAY"
+    view_attribution_window     = "1_DAY"
   }
-  definition_id = "1299fa04-4937-407e-99e4-bc441ad499f0"
+  definition_id = "200330b2-ea62-4d11-ac6d-cfe3e3f8ab2b"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "a5e72bda-13a9-4a82-ab4d-94fe6a570980"

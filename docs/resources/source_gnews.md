@@ -32,7 +32,7 @@ resource "airbyte_source_gnews" "my_source_gnews" {
     top_headlines_query = "Microsoft Windows 10"
     top_headlines_topic = "health"
   }
-  definition_id = "c6b2adaf-5531-41d5-90fd-e24b104a9d91"
+  definition_id = "ce38aec4-5a77-439a-be29-9ca44fd4e811"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "a4cd7e01-eaeb-4a47-98ed-9dadb5de4147"

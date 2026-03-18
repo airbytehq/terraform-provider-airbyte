@@ -15,9 +15,9 @@ resource "airbyte_destination_pgvector" "my_destination_pgvector" {
       port           = 5432
       username       = "AIRBYTE_USER"
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 7
+      chunk_overlap = 0
       chunk_size    = 8035
       field_name_mappings = [
         {
@@ -38,7 +38,7 @@ resource "airbyte_destination_pgvector" "my_destination_pgvector" {
       }
     }
   }
-  definition_id = "ace91495-b654-40da-a8bd-73a5b3a4b3ee"
+  definition_id = "e0e06cd9-57a9-4d39-b032-bedd874ae875"
   name          = "...my_name..."
   workspace_id  = "0b8f211f-70ad-47f2-a6ea-1e915e8005be"
 }

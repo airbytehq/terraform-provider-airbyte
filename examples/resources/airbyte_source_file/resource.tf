@@ -13,7 +13,7 @@ resource "airbyte_source_file" "my_source_file" {
     reader_options = "{}"
     url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
   }
-  definition_id = "a86f29c4-a6d3-472d-a3d8-9e8b8db9cd49"
+  definition_id = "778daa7c-feaf-4db6-96f3-70fd645acc77"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "6c152f5f-2668-4edb-bbeb-b6add70adfbc"

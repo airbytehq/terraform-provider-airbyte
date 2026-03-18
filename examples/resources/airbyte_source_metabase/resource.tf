@@ -6,7 +6,7 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     session_token         = "...my_session_token..."
     username              = "...my_username..."
   }
-  definition_id = "d43c9538-9f19-48fa-839b-519d7ddc6528"
+  definition_id = "c7cb421b-942e-4468-99ee-e369bcabaec5"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "2a6ca9f4-7b13-4377-aec7-a4e44e8ebd23"

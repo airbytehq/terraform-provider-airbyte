@@ -14,15 +14,15 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
         format_type       = "JSONL"
       }
     }
-    glue_catalog_float_as_decimal             = true
+    glue_catalog_float_as_decimal             = false
     lakeformation_database_default_tag_key    = "pii_level"
     lakeformation_database_default_tag_values = "private,public"
     lakeformation_database_name               = "...my_lakeformation_database_name..."
-    lakeformation_governed_tables             = true
-    partitioning                              = "DAY"
+    lakeformation_governed_tables             = false
+    partitioning                              = "NO PARTITIONING"
     region                                    = "ap-southeast-4"
   }
-  definition_id = "aa9c2d01-84b7-4474-ba6f-e45dbbc28cdd"
+  definition_id = "99878c90-0fbd-46d3-9d98-ffde879d17fc"
   name          = "...my_name..."
   workspace_id  = "3df68150-9956-454d-8144-1645f409cdd1"
 }

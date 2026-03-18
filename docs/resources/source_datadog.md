@@ -19,7 +19,7 @@ resource "airbyte_source_datadog" "my_source_datadog" {
     api_key                 = "...my_api_key..."
     application_key         = "...my_application_key..."
     end_date                = "2022-10-01T00:00:00Z"
-    max_records_per_request = 2070
+    max_records_per_request = 5000
     queries = [
       {
         data_source = "rum"
@@ -28,10 +28,10 @@ resource "airbyte_source_datadog" "my_source_datadog" {
       }
     ]
     query      = "...my_query..."
-    site       = "us3.datadoghq.com"
+    site       = "datadoghq.com"
     start_date = "2022-10-01T00:00:00Z"
   }
-  definition_id = "2540902d-96ce-424c-aecb-6e08ce06d99a"
+  definition_id = "1cfc30c7-82db-43f4-9fd7-ac1b42312cda"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "de17fce0-44d9-442c-bb38-b8bd289009e8"

@@ -27,7 +27,7 @@ resource "airbyte_source_asana" "my_source_asana" {
     ]
     test_mode = false
   }
-  definition_id = "190f0a64-da8f-4fe0-96fe-8f093bde58b4"
+  definition_id = "d0243522-dccf-4978-8ba0-37ed47a0bdbf"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "04d30e4f-141a-4d2b-bfba-3940b90ad598"

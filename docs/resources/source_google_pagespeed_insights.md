@@ -27,7 +27,7 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
       "..."
     ]
   }
-  definition_id = "26e9a294-5883-4e18-ab22-4401b7f98355"
+  definition_id = "1e9086ab-ddac-4c1d-aafd-ba43ff575fe4"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "9300a7b0-b87b-471a-83dd-e87236710c39"

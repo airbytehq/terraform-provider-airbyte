@@ -17,7 +17,7 @@ resource "airbyte_source_postgres" "my_source_postgres" {
   configuration = {
     database                     = "...my_database..."
     entra_client_id              = "...my_entra_client_id..."
-    entra_service_principal_auth = true
+    entra_service_principal_auth = false
     entra_tenant_id              = "...my_entra_tenant_id..."
     host                         = "...my_host..."
     jdbc_url_params              = "...my_jdbc_url_params..."
@@ -45,7 +45,7 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     }
     username = "...my_username..."
   }
-  definition_id = "be56435e-cbaf-420b-889d-1d220ff21125"
+  definition_id = "decd338e-5647-4c0b-adf4-da0e75f5a750"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "d122fa45-e536-42be-a02d-5e851e4eb0a6"

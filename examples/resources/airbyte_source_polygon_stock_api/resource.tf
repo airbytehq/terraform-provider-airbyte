@@ -11,7 +11,7 @@ resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
     stocks_ticker         = "IBM"
     timespan              = "day"
   }
-  definition_id = "4b695283-4e49-4369-9fc3-8a9878680f1b"
+  definition_id = "5807d72f-0abc-49f9-8fa5-ae820007032b"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "107f0754-ac3a-433a-939c-817661495e42"

@@ -33,7 +33,7 @@ resource "airbyte_source_github" "my_source_github" {
     repository = "airbytehq/airbyte airbytehq/another-repo"
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "eed1fe5e-7311-4b8b-9ce8-186629287c2f"
+  definition_id = "ef69ef6e-aa7f-4af1-a01d-ef775033524e"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "8cc76dd7-521b-4116-ab6d-3a729514b42f"

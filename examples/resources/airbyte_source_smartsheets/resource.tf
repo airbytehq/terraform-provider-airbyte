@@ -17,7 +17,7 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
     spreadsheet_id = "...my_spreadsheet_id..."
     start_datetime = "2000-01-01T13:00:00"
   }
-  definition_id = "002b9562-dfe0-4357-bd10-30c9f3cda4c7"
+  definition_id = "374ebc65-6636-4ea0-925c-7d35999a8ffc"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "65f657d8-fd3b-49a9-af69-90fbc23c85f7"

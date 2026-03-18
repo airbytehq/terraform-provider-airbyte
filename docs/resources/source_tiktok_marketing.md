@@ -16,7 +16,7 @@ SourceTiktokMarketing Resource
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
     additional_properties = "{ \"see\": \"documentation\" }"
-    attribution_window    = 233
+    attribution_window    = 3
     credentials = {
       o_auth20 = {
         access_token  = "...my_access_token..."
@@ -26,10 +26,10 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
       }
     }
     end_date        = "2022-11-01"
-    include_deleted = true
-    start_date      = "2022-04-25"
+    include_deleted = false
+    start_date      = "2016-09-01"
   }
-  definition_id = "1ec33e26-a63c-4daf-be97-7f4062cb980d"
+  definition_id = "4bfac00d-ce15-44ff-95b9-9e3c3e8fbd35"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "972417c8-071a-43d1-8082-a2d88ae006dc"

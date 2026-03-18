@@ -29,7 +29,7 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
     start_date = "2021-01-01T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "43634078-6fe9-43b1-8353-3f4d41ebe272"
+  definition_id = "325e0640-e7b3-4e24-b823-3361008f603f"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "07eb1a65-b331-4763-a6be-7aae875b6a88"

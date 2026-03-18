@@ -1,7 +1,7 @@
 resource "airbyte_destination_snowflake" "my_destination_snowflake" {
   configuration = {
     additional_properties = "{ \"see\": \"documentation\" }"
-    cdc_deletion_mode     = "Soft delete"
+    cdc_deletion_mode     = "Hard delete"
     credentials = {
       key_pair_authentication = {
         additional_properties = "{ \"see\": \"documentation\" }"
@@ -21,7 +21,7 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
     username              = "AIRBYTE_USER"
     warehouse             = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "fce231ce-04a4-46ec-a244-d1436db0281f"
+  definition_id = "424892c4-daac-4491-b35d-c6688ba547ba"
   name          = "...my_name..."
   workspace_id  = "058d9730-38a6-485c-8631-dc0cc86125f9"
 }

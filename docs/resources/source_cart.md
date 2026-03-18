@@ -24,7 +24,7 @@ resource "airbyte_source_cart" "my_source_cart" {
     }
     start_date = "2021-01-01T00:00:00Z"
   }
-  definition_id = "33c6453d-2a16-47f0-8374-5c4dba262a49"
+  definition_id = "bb1a6d31-6879-4819-a2bd-3eed299ea8e2"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "1aa2904a-5ba0-4ded-aa51-0be365206ac8"

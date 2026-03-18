@@ -16,9 +16,9 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       username       = "AIRBYTE_USER"
       warehouse      = "AIRBYTE_WAREHOUSE"
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 3
+      chunk_overlap = 0
       chunk_size    = 6147
       field_name_mappings = [
         {
@@ -34,7 +34,7 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       ]
       text_splitter = {
         by_separator = {
-          keep_separator = true
+          keep_separator = false
           separators = [
             "..."
           ]
@@ -42,7 +42,7 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       }
     }
   }
-  definition_id = "4e970f65-b8a4-4398-b19e-2a5644731a72"
+  definition_id = "d9e5418d-f0f4-4d19-a8b1-5630543638e2"
   name          = "...my_name..."
   workspace_id  = "d33dd7fd-91b5-4245-9a6e-0c987c8003c9"
 }
