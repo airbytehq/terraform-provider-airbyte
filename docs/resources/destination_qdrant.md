@@ -29,14 +29,14 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
         }
       }
       collection      = "...my_collection..."
-      distance_metric = "euc"
+      distance_metric = "cos"
       prefer_grpc     = true
-      text_field      = "...my_text_field..."
+      text_field      = "text"
       url             = "...my_url..."
     }
     omit_raw_text = false
     processing = {
-      chunk_overlap = 8
+      chunk_overlap = 0
       chunk_size    = 5940
       field_name_mappings = [
         {
@@ -57,7 +57,7 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
       }
     }
   }
-  definition_id = "e4cd6268-0c7d-4392-aa26-d281d1f04358"
+  definition_id = "6eb1198a-6d38-43e5-aaaa-dccd8f71db2b"
   name          = "...my_name..."
   workspace_id  = "18b7e27a-33b2-4cf8-9366-9a30dabc6cf0"
 }

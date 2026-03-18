@@ -1,19 +1,19 @@
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
-    account_type                          = "Vendor"
+    account_type                          = "Seller"
     additional_properties                 = "{ \"see\": \"documentation\" }"
     app_id                                = "...my_app_id..."
     aws_environment                       = "PRODUCTION"
-    financial_events_max_results_per_page = 46
-    financial_events_step                 = "2H"
-    include_pii                           = true
+    financial_events_max_results_per_page = 100
+    financial_events_step                 = "180D"
+    include_pii                           = false
     lwa_app_id                            = "...my_lwa_app_id..."
     lwa_client_secret                     = "...my_lwa_client_secret..."
-    max_async_job_count                   = 10
-    num_workers                           = 8
-    period_in_days                        = 10
+    max_async_job_count                   = 2
+    num_workers                           = 2
+    period_in_days                        = 90
     refresh_token                         = "...my_refresh_token..."
-    region                                = "TR"
+    region                                = "US"
     replication_end_date                  = "2017-01-25T00:00:00Z"
     replication_start_date                = "2017-01-25T00:00:00Z"
     report_options_list = [
@@ -30,7 +30,7 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
     ]
     wait_to_avoid_fatal_errors = false
   }
-  definition_id = "d8c1cdd2-677c-4769-a67f-0d49c962b2c7"
+  definition_id = "e55879a8-0ef8-4557-abcf-ab34c53ec460"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "7495ec12-91c5-4b14-ab51-6fd77e9fda23"

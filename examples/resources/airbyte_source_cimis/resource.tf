@@ -16,7 +16,7 @@ resource "airbyte_source_cimis" "my_source_cimis" {
     targets_type    = "California zip codes"
     unit_of_measure = "E"
   }
-  definition_id = "58ad382d-b84b-4901-9270-1ea4e0d67c63"
+  definition_id = "d169ef9b-6741-4af6-b4c8-7ec4410d7f0e"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "7a77ac9a-00d4-4975-8d98-cec7c9a9a112"

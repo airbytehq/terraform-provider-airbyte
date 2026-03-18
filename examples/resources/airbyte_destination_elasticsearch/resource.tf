@@ -8,9 +8,9 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     }
     ca_certificate = "...my_ca_certificate..."
     endpoint       = "...my_endpoint..."
-    upsert         = false
+    upsert         = true
   }
-  definition_id = "fa3d17d3-6d2d-4bd3-a934-fcd7370e225f"
+  definition_id = "68f351a7-2745-4bef-ad7f-996b8e51bb8c"
   name          = "...my_name..."
   workspace_id  = "9de55ce7-1e79-4018-9818-c9bf634debae"
 }

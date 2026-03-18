@@ -19,9 +19,9 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     }
     gcs_bucket_name   = "airbyte_sync"
     gcs_bucket_path   = "data_sync/test"
-    gcs_bucket_region = "australia-southeast2"
+    gcs_bucket_region = "us"
   }
-  definition_id = "fbdeaa3f-58d4-41ca-a298-54ecee1615a0"
+  definition_id = "ca8f6566-e555-4b40-943a-545bf123117a"
   name          = "...my_name..."
   workspace_id  = "0ffee906-5986-410b-95a7-80c6f12aeac3"
 }

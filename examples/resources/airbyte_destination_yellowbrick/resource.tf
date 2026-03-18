@@ -7,7 +7,7 @@ resource "airbyte_destination_yellowbrick" "my_destination_yellowbrick" {
     password              = "...my_password..."
     port                  = 5432
     schema                = "public"
-    ssl                   = true
+    ssl                   = false
     ssl_mode = {
       require = {
         # ...
@@ -20,7 +20,7 @@ resource "airbyte_destination_yellowbrick" "my_destination_yellowbrick" {
     }
     username = "...my_username..."
   }
-  definition_id = "81a773ac-fba0-424f-a74b-6a91a45ce8fe"
+  definition_id = "1f7bac7e-53ff-4e0b-b6df-b74aa85cf703"
   name          = "...my_name..."
   workspace_id  = "2d4bfbc0-aa6b-42b1-9222-6303d0c9671f"
 }

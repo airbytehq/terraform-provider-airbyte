@@ -6,7 +6,7 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
     ignore_weekends       = true
     start_date            = "YYYY-MM-DD"
   }
-  definition_id = "c49afc85-a53f-43b2-92dd-a787ae40e34f"
+  definition_id = "e2b40e36-aa0e-4bed-b41b-bcea6fa348b1"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "93ca9905-1947-4829-aec9-6a2652d69c6a"

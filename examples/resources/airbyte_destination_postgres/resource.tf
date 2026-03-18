@@ -1,7 +1,7 @@
 resource "airbyte_destination_postgres" "my_destination_postgres" {
   configuration = {
     additional_properties = "{ \"see\": \"documentation\" }"
-    cdc_deletion_mode     = "Soft delete"
+    cdc_deletion_mode     = "Hard delete"
     database              = "...my_database..."
     disable_type_dedupe   = true
     drop_cascade          = false
@@ -25,7 +25,7 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
         additional_properties = "{ \"see\": \"documentation\" }"
         tunnel_host           = "...my_tunnel_host..."
         tunnel_method         = "SSH_PASSWORD_AUTH"
-        tunnel_port           = 28502
+        tunnel_port           = 22
         tunnel_user           = "...my_tunnel_user..."
         tunnel_user_password  = "...my_tunnel_user_password..."
       }
@@ -33,7 +33,7 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
     unconstrained_number = false
     username             = "...my_username..."
   }
-  definition_id = "6cc561e7-8b38-4621-919b-0687fe3682b7"
+  definition_id = "25c5221d-dce2-4163-ade9-739ef790f503"
   name          = "...my_name..."
   workspace_id  = "2b2d880a-23fd-4463-8627-0a837b28bb7e"
 }

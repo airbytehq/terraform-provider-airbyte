@@ -1,21 +1,21 @@
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
     additional_properties = "{ \"see\": \"documentation\" }"
-    bulk_window_in_days   = 4
+    bulk_window_in_days   = 30
     credentials = {
       api_password = {
         api_password = "...my_api_password..."
       }
     }
-    fetch_transactions_user_id               = true
-    fulfillment_orders_include_closed        = true
-    job_checkpoint_interval                  = 484517
+    fetch_transactions_user_id               = false
+    fulfillment_orders_include_closed        = false
+    job_checkpoint_interval                  = 100000
     job_product_variants_include_pres_prices = true
-    job_termination_threshold                = 5282
+    job_termination_threshold                = 7200
     shop                                     = "my-store"
-    start_date                               = "2021-05-19"
+    start_date                               = "2020-01-01"
   }
-  definition_id = "1a8f2c45-b7ec-4db1-8680-d2e228b3d43e"
+  definition_id = "9da77001-af33-4bcd-be46-6252bf9342b9"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "de6ea042-7883-4cc3-9786-89e9d969aa09"

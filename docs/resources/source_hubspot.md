@@ -26,7 +26,7 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
     num_worker                  = 1
     start_date                  = "2017-01-25T00:00:00Z"
   }
-  definition_id = "5a78ec38-3a27-4695-8c44-7a6d7e5af928"
+  definition_id = "36c891d9-4bd9-43ac-bad2-10e12756272c"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "5867a7a3-cda1-42de-aa60-dea6430ea0d1"

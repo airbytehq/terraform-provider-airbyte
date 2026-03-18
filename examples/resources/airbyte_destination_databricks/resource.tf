@@ -10,11 +10,11 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     hostname            = "abc-12345678-wxyz.cloud.databricks.com"
     http_path           = "sql/1.0/warehouses/0000-1111111-abcd90"
     port                = "443"
-    purge_staging_data  = false
-    raw_schema_override = "...my_raw_schema_override..."
+    purge_staging_data  = true
+    raw_schema_override = "airbyte_internal"
     schema              = "default"
   }
-  definition_id = "fb6a88f5-a304-46f5-ab8b-4280a6d91f99"
+  definition_id = "072d5540-f236-4294-ba7c-ade8fd918496"
   name          = "...my_name..."
   workspace_id  = "2615758c-c904-459e-9fd6-c8a55cba9327"
 }

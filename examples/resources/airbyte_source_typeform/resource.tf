@@ -15,7 +15,7 @@ resource "airbyte_source_typeform" "my_source_typeform" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "bd0ee776-77dc-42cf-9652-75d60b24ac1b"
+  definition_id = "e7eff203-90bf-43e5-a240-19ea3056c474"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "b21de812-8c61-487c-b7b3-9e15f5256664"

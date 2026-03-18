@@ -8,7 +8,7 @@ resource "airbyte_source_intercom" "my_source_intercom" {
     lookback_window         = 60
     start_date              = "2020-11-16T00:00:00Z"
   }
-  definition_id = "ba1133d3-c5a5-4970-9a43-797e5df4ec84"
+  definition_id = "d8313939-3782-41b0-be29-b3ca20d8dd3a"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "84e9b47b-01ac-499b-b969-63ece4bac1b1"

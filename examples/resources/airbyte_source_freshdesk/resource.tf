@@ -3,7 +3,7 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
     additional_properties   = "{ \"see\": \"documentation\" }"
     api_key                 = "...my_api_key..."
     domain                  = "myaccount.freshdesk.com"
-    lookback_window_in_days = 7
+    lookback_window_in_days = 14
     rate_limit_plan = {
       pro_plan = {
         # ...
@@ -12,7 +12,7 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
     requests_per_minute = 0
     start_date          = "2020-12-01T00:00:00Z"
   }
-  definition_id = "58d83f7f-a804-4af2-96e8-fa39c3b39944"
+  definition_id = "ec4b9503-13cb-48ab-a4ab-6ade4be46567"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "b2cdea40-9812-46df-a900-c64c52ad9f81"

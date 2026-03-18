@@ -15,7 +15,7 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
       }
     }
   }
-  definition_id = "cb044c1f-5609-4f2c-a0f3-7f7fd2ae8ba8"
+  definition_id = "18081484-02a5-4662-8dba-b270b582f321"
   name          = "...my_name..."
   workspace_id  = "3a7065bd-8875-464a-a7d2-4af683bf7d5f"
 }

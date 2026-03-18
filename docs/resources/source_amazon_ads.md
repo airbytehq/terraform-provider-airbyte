@@ -26,10 +26,10 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
       1
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "FE"
+    region        = "NA"
     start_date    = "2022-10-10"
   }
-  definition_id = "af6454d1-eef9-48c7-951f-d90f8c67b58a"
+  definition_id = "c6b0a29e-1da9-4512-9002-7bfd0cba2246"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "a6beec71-8c3b-4cf7-87f9-463dd8bf8f4e"

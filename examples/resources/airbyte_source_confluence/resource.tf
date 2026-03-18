@@ -5,7 +5,7 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     domain_name           = "...my_domain_name..."
     email                 = "abc@example.com"
   }
-  definition_id = "ed1e98ac-2e56-44e0-8c47-a9ee6675d565"
+  definition_id = "cf40a7f8-71f8-45ce-a7fa-fca053e4028c"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "3ec221a7-9e42-4d09-9767-198ecfc0508b"

@@ -37,12 +37,12 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
           "cost_per_result"
         ]
         include_incrementality   = false
-        insights_job_timeout     = 50
-        insights_lookback_window = 9
-        level                    = "account"
+        insights_job_timeout     = 60
+        insights_lookback_window = 28
+        level                    = "ad"
         name                     = "...my_name..."
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 33
+        time_increment           = 1
         time_increment_period    = "monthly"
       }
     ]
@@ -51,13 +51,13 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
-    include_incrementality   = true
-    insights_job_timeout     = 55
-    insights_lookback_window = 9
-    page_size                = 7
+    include_incrementality   = false
+    insights_job_timeout     = 60
+    insights_lookback_window = 28
+    page_size                = 100
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "efac1af8-dd35-4940-8819-0027d27f358d"
+  definition_id = "e7778cfc-e97c-4458-9ecb-b4f2bba8946c"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "1c443315-5b54-4630-ad55-2f2c6821ece4"

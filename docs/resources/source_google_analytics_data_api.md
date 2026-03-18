@@ -16,7 +16,7 @@ SourceGoogleAnalyticsDataAPI Resource
 resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataapi" {
   configuration = {
     additional_properties     = "{ \"see\": \"documentation\" }"
-    convert_conversions_event = true
+    convert_conversions_event = false
     credentials = {
       authenticate_via_google_oauth = {
         access_token  = "...my_access_token..."
@@ -100,7 +100,7 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
     ]
     window_in_days = 30
   }
-  definition_id = "7802af8f-5c6f-48ec-9d74-596e4bdcf24c"
+  definition_id = "3cc2eafd-84aa-4dca-93af-322d9dfeec1a"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "78e7637d-eb31-40e9-8ac3-f8953ca23ae1"

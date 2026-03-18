@@ -25,13 +25,13 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     }
     delivery_method = {
       copy_raw_files = {
-        preserve_directory_structure = false
+        preserve_directory_structure = true
       }
     }
     start_date = "2021-01-01"
     streams = [
       {
-        days_to_sync_if_history_is_full = 1
+        days_to_sync_if_history_is_full = 3
         format = {
           excel_format = {
             # ...
@@ -45,13 +45,13 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
         name                                        = "...my_name..."
         primary_key                                 = "...my_primary_key..."
         recent_n_files_to_read_for_schema_discovery = 2
-        schemaless                                  = true
+        schemaless                                  = false
         use_first_found_file_for_schema_discovery   = false
-        validation_policy                           = "Wait for Discover"
+        validation_policy                           = "Emit Record"
       }
     ]
   }
-  definition_id = "3385920f-d837-42e0-b72d-7927f28bf9f2"
+  definition_id = "fdaaba68-4875-4ed9-8fcd-4ae1e0a25093"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "2c3aeaad-c70f-44a8-a981-aca12752c864"

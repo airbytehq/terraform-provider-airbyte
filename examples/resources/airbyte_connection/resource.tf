@@ -46,10 +46,10 @@ resource "airbyte_connection" "my_connection" {
   data_residency                       = "...my_data_residency..."
   destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
   name                                 = "...my_name..."
-  namespace_definition                 = "custom_format"
+  namespace_definition                 = "destination"
   namespace_format                     = SOURCE_NAMESPACE
   non_breaking_schema_updates_behavior = "ignore"
-  prefix                               = "...my_prefix..."
+  prefix                               = ""
   schedule = {
     cron_expression = "...my_cron_expression..."
     schedule_type   = "cron"

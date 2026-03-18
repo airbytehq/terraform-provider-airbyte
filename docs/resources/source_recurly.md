@@ -23,7 +23,7 @@ resource "airbyte_source_recurly" "my_source_recurly" {
     is_sandbox            = false
     num_workers           = 1
   }
-  definition_id = "1b86db68-e6fd-41f2-aaf4-a216a5175319"
+  definition_id = "cd42861b-01fc-4658-a8ab-5d11d0510f01"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "6eacf260-b477-41b6-8093-1c461d8bd3e7"

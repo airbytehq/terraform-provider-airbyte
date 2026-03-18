@@ -28,12 +28,12 @@ resource "airbyte_source_slack" "my_source_slack" {
       }
     }
     include_private_channels = false
-    join_channels            = false
+    join_channels            = true
     lookback_window          = 7
     num_workers              = 2
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "0e40c94d-0533-49a9-8fb8-ec1935c15487"
+  definition_id = "c2281cee-86f9-4a86-bb48-d23286b4c7bd"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "c0473aa4-957d-44db-ac2f-386282ba46e7"

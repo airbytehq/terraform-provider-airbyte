@@ -23,7 +23,7 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  definition_id = "b7194fe9-6d05-4518-a733-2d0a267898f0"
+  definition_id = "eb655362-28a8-4311-8806-4fcc612734a7"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "1ae5ddc1-32e1-440d-abfd-bbc323d309da"

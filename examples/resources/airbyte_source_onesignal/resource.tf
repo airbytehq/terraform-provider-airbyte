@@ -12,7 +12,7 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  definition_id = "9608243e-fba5-4235-8589-eba62995ea27"
+  definition_id = "bb6afd81-87d5-47e3-97c4-e2c2901b1cf8"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "92405047-4f40-4ac1-b6d6-132d4ec3edbf"

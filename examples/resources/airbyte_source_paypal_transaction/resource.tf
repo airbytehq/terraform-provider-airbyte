@@ -8,9 +8,9 @@ resource "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
     is_sandbox            = false
     refresh_token         = "...my_refresh_token..."
     start_date            = "2021-06-11T23:59:59Z"
-    time_window           = 15
+    time_window           = 7
   }
-  definition_id = "3eb04bd6-98a6-48c4-a062-47a98b062443"
+  definition_id = "d913b0f2-cc51-4e55-a44c-8ba1697b9239"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "50745f0a-d8f4-4aaf-82d4-113d8f1712a4"

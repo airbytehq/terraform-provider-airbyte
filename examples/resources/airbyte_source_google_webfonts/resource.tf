@@ -6,7 +6,7 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     pretty_print          = "...my_pretty_print..."
     sort                  = "...my_sort..."
   }
-  definition_id = "3dd39ae5-449b-402e-8b34-95af9a841c8e"
+  definition_id = "a68fbcde-b465-4ab3-b2a6-b0590a875835"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "de7d79c8-bd9b-41bc-bbab-b419bed9d264"

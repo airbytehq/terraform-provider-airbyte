@@ -18,7 +18,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     cache_type = "hash"
     host       = "localhost,127.0.0.1"
     password   = "...my_password..."
-    port       = 31782
+    port       = 6379
     ssl        = false
     ssl_mode = {
       disable = {
@@ -35,7 +35,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     }
     username = "...my_username..."
   }
-  definition_id = "08bb0713-356c-488b-92c9-dca7b330d808"
+  definition_id = "d4d3fef9-e319-45c2-881a-bd02ce44cc9f"
   name          = "...my_name..."
   workspace_id  = "689f014e-fdd2-4302-a299-7c4cc3f23969"
 }

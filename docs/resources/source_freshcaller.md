@@ -22,7 +22,7 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
     start_date            = "2022-01-01T12:00:00Z"
     sync_lag_minutes      = 8
   }
-  definition_id = "deb0531a-d46e-4420-8d0a-20391d7b6758"
+  definition_id = "8a5d48f6-03bb-4038-a942-a8d3f175cca3"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "29ab7204-6411-4939-bbb7-9dd52dfdaf8e"

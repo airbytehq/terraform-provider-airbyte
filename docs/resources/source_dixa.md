@@ -20,7 +20,7 @@ resource "airbyte_source_dixa" "my_source_dixa" {
     batch_size            = 1
     start_date            = "YYYY-MM-DD"
   }
-  definition_id = "c89cdab2-ae44-4bc0-a6fa-3a4b7fe80911"
+  definition_id = "0b5c867e-1b12-4d02-ab74-97b2184ff6d7"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "2e314291-ef9d-4ed9-95b7-aa2210b0220e"

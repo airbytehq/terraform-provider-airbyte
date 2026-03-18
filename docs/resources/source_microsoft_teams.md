@@ -25,7 +25,7 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "9c7c92b5-c652-4363-8342-1deb8b5e46f4"
+  definition_id = "eaf50f04-21dd-4620-913b-2a83f5635227"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "5bc16313-0df8-4b0a-937a-7ae3de2c21ca"

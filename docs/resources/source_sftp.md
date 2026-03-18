@@ -28,7 +28,7 @@ resource "airbyte_source_sftp" "my_source_sftp" {
     port         = 22
     user         = "...my_user..."
   }
-  definition_id = "ef03926e-13cb-4929-aa6b-e7c8e1b0c80e"
+  definition_id = "a827c52e-791c-4135-a245-e233c5255199"
   name          = "...my_name..."
   secret_id     = "...my_secret_id..."
   workspace_id  = "de2e80b4-0898-4bea-821b-cb0c33f06888"
