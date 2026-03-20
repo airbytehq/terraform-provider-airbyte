@@ -120,17 +120,47 @@ def patch_cursor_primary_key_nil_guards(content: str) -> str:
     cursor_count = content.count(old_cursor)
     pk_count = content.count(old_pk)
 
-    if cursor_count > 0:
-        content = content.replace(old_cursor, new_cursor)
-        print(f"  Patched {cursor_count} cursorField serialization block(s)")
-    else:
-        print("  WARNING: cursorField pattern not found (already patched or code changed)")
+    # If neither legacy pattern is present, assume the file is already patched
+    # or upstream code layout has changed in a way that removed these blocks.
+    # This keeps the script idempotent.
+    if cursor_count == 0 and pk_count == 0:
+        print("  No legacy cursorField/primaryKey serialization patterns found; assuming already patched")
+        return content
 
-    if pk_count > 0:
-        content = content.replace(old_pk, new_pk)
-        print(f"  Patched {pk_count} primaryKey serialization block(s)")
-    else:
-        print("  WARNING: primaryKey pattern not found (already patched or code changed)")
+    # Validate we see exactly the expected number of occurrences for each block
+    # (create + patch). Any deviation risks a partial patch and should fail fast.
+    has_error = False
+    expected_blocks = 2
+
+    if cursor_count != expected_blocks:
+        print(
+            f"ERROR: expected to find {expected_blocks} cursorField serialization block(s) "
+            f"(create + patch), but found {cursor_count}",
+            file=sys.stderr,
+        )
+        has_error = True
+
+    if pk_count != expected_blocks:
+        print(
+            f"ERROR: expected to find {expected_blocks} primaryKey serialization block(s) "
+            f"(create + patch), but found {pk_count}",
+            file=sys.stderr,
+        )
+        has_error = True
+
+    if has_error:
+        print(
+            "  Aborting cursorField/primaryKey patch to avoid partially updated connection_resource_sdk.go",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    # At this point, we know we have the expected number of blocks; apply patches.
+    content = content.replace(old_cursor, new_cursor)
+    print(f"  Patched {cursor_count} cursorField serialization block(s)")
+
+    content = content.replace(old_pk, new_pk)
+    print(f"  Patched {pk_count} primaryKey serialization block(s)")
 
     return content
 
