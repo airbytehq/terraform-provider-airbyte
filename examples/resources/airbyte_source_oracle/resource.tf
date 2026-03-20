@@ -6,8 +6,8 @@ resource "airbyte_source_oracle" "my_source_oracle" {
       }
     }
     encryption = {
-      tls_encrypted_verify_certificate = {
-        ssl_certificate = "...my_ssl_certificate..."
+      native_network_encryption_nne = {
+        encryption_algorithm = "AES256"
       }
     }
     host            = "...my_host..."

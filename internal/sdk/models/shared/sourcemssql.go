@@ -9,18 +9,18 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// SourceMssqlInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-type SourceMssqlInvalidCDCPositionBehaviorAdvanced string
+// InvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+type InvalidCDCPositionBehaviorAdvanced string
 
 const (
-	SourceMssqlInvalidCDCPositionBehaviorAdvancedFailSync   SourceMssqlInvalidCDCPositionBehaviorAdvanced = "Fail sync"
-	SourceMssqlInvalidCDCPositionBehaviorAdvancedReSyncData SourceMssqlInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
+	InvalidCDCPositionBehaviorAdvancedFailSync   InvalidCDCPositionBehaviorAdvanced = "Fail sync"
+	InvalidCDCPositionBehaviorAdvancedReSyncData InvalidCDCPositionBehaviorAdvanced = "Re-sync data"
 )
 
-func (e SourceMssqlInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceMssqlInvalidCDCPositionBehaviorAdvanced {
+func (e InvalidCDCPositionBehaviorAdvanced) ToPointer() *InvalidCDCPositionBehaviorAdvanced {
 	return &e
 }
-func (e *SourceMssqlInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
+func (e *InvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,10 +29,10 @@ func (e *SourceMssqlInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byt
 	case "Fail sync":
 		fallthrough
 	case "Re-sync data":
-		*e = SourceMssqlInvalidCDCPositionBehaviorAdvanced(v)
+		*e = InvalidCDCPositionBehaviorAdvanced(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlInvalidCDCPositionBehaviorAdvanced: %v", v)
+		return fmt.Errorf("invalid value for InvalidCDCPositionBehaviorAdvanced: %v", v)
 	}
 }
 
@@ -66,8 +66,8 @@ type ReadChangesUsingChangeDataCaptureCDC struct {
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 3600 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mssql#setting-up-cdc-for-mssql">initial waiting time</a>
 	InitialWaitingSeconds *int64 `json:"initial_waiting_seconds,omitempty"`
 	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-	InvalidCdcCursorPositionBehavior *SourceMssqlInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	Method                           *SourceMssqlMethod                             `default:"CDC" json:"method"`
+	InvalidCdcCursorPositionBehavior *InvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
+	Method                           *SourceMssqlMethod                  `default:"CDC" json:"method"`
 	// How often (in milliseconds) Debezium should poll for new data. Must be smaller than heartbeat interval (15000ms). Lower values provide more responsive data capture but may increase database load.
 	PollIntervalMs       *int64 `default:"500" json:"poll_interval_ms"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
@@ -98,7 +98,7 @@ func (r *ReadChangesUsingChangeDataCaptureCDC) GetInitialWaitingSeconds() *int64
 	return r.InitialWaitingSeconds
 }
 
-func (r *ReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceMssqlInvalidCDCPositionBehaviorAdvanced {
+func (r *ReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *InvalidCDCPositionBehaviorAdvanced {
 	if r == nil {
 		return nil
 	}

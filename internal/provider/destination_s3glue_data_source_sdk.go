@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMongodbV2DataSourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+func (r *DestinationS3GlueDataSourceModel) RefreshFromSharedDestinationResponse(ctx context.Context, resp *shared.DestinationResponse) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	if resp != nil {
@@ -21,6 +21,8 @@ func (r *SourceMongodbV2DataSourceModel) RefreshFromSharedSourceResponse(ctx con
 		r.Configuration = jsontypes.NewNormalizedValue(string(configurationResult))
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
 		r.Name = types.StringValue(resp.Name)
 		if resp.ResourceAllocation == nil {
 			r.ResourceAllocation = nil
@@ -54,22 +56,20 @@ func (r *SourceMongodbV2DataSourceModel) RefreshFromSharedSourceResponse(ctx con
 				r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
 			}
 		}
-		r.SourceID = types.StringValue(resp.SourceID)
-		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
 
 	return diags
 }
 
-func (r *SourceMongodbV2DataSourceModel) ToOperationsGetSourceMongodbV2Request(ctx context.Context) (*operations.GetSourceMongodbV2Request, diag.Diagnostics) {
+func (r *DestinationS3GlueDataSourceModel) ToOperationsGetDestinationS3GlueRequest(ctx context.Context) (*operations.GetDestinationS3GlueRequest, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
+	var destinationID string
+	destinationID = r.DestinationID.ValueString()
 
-	out := operations.GetSourceMongodbV2Request{
-		SourceID: sourceID,
+	out := operations.GetDestinationS3GlueRequest{
+		DestinationID: destinationID,
 	}
 
 	return &out, diags

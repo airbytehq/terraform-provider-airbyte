@@ -15,51 +15,57 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ datasource.DataSource = &SourceMongodbV2DataSource{}
-var _ datasource.DataSourceWithConfigure = &SourceMongodbV2DataSource{}
+var _ datasource.DataSource = &DestinationS3GlueDataSource{}
+var _ datasource.DataSourceWithConfigure = &DestinationS3GlueDataSource{}
 
-func NewSourceMongodbV2DataSource() datasource.DataSource {
-	return &SourceMongodbV2DataSource{}
+func NewDestinationS3GlueDataSource() datasource.DataSource {
+	return &DestinationS3GlueDataSource{}
 }
 
-// SourceMongodbV2DataSource is the data source implementation.
-type SourceMongodbV2DataSource struct {
+// DestinationS3GlueDataSource is the data source implementation.
+type DestinationS3GlueDataSource struct {
 	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
-// SourceMongodbV2DataSourceModel describes the data model.
-type SourceMongodbV2DataSourceModel struct {
+// DestinationS3GlueDataSourceModel describes the data model.
+type DestinationS3GlueDataSourceModel struct {
 	Configuration      jsontypes.Normalized                `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
+	DestinationID      types.String                        `tfsdk:"destination_id"`
+	DestinationType    types.String                        `tfsdk:"destination_type"`
 	Name               types.String                        `tfsdk:"name"`
 	ResourceAllocation *tfTypes.ScopedResourceRequirements `tfsdk:"resource_allocation"`
-	SourceID           types.String                        `tfsdk:"source_id"`
-	SourceType         types.String                        `tfsdk:"source_type"`
 	WorkspaceID        types.String                        `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
-func (r *SourceMongodbV2DataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_source_mongodb_v2"
+func (r *DestinationS3GlueDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_destination_s3_glue"
 }
 
 // Schema defines the schema for the data source.
-func (r *SourceMongodbV2DataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (r *DestinationS3GlueDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SourceMongodbV2 DataSource",
+		MarkdownDescription: "DestinationS3Glue DataSource",
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.StringAttribute{
 				CustomType:  jsontypes.NormalizedType{},
 				Computed:    true,
-				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source. Parsed as JSON.`,
+				Description: `The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. Parsed as JSON.`,
 			},
 			"created_at": schema.Int64Attribute{
 				Computed: true,
 			},
 			"definition_id": schema.StringAttribute{
+				Computed: true,
+			},
+			"destination_id": schema.StringAttribute{
+				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
@@ -130,12 +136,6 @@ func (r *SourceMongodbV2DataSource) Schema(ctx context.Context, req datasource.S
 				},
 				Description: `actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.`,
 			},
-			"source_id": schema.StringAttribute{
-				Required: true,
-			},
-			"source_type": schema.StringAttribute{
-				Computed: true,
-			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
 			},
@@ -143,7 +143,7 @@ func (r *SourceMongodbV2DataSource) Schema(ctx context.Context, req datasource.S
 	}
 }
 
-func (r *SourceMongodbV2DataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
+func (r *DestinationS3GlueDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
 		return
@@ -163,8 +163,8 @@ func (r *SourceMongodbV2DataSource) Configure(ctx context.Context, req datasourc
 	r.client = client
 }
 
-func (r *SourceMongodbV2DataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data *SourceMongodbV2DataSourceModel
+func (r *DestinationS3GlueDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var data *DestinationS3GlueDataSourceModel
 	var item types.Object
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &item)...)
@@ -181,13 +181,13 @@ func (r *SourceMongodbV2DataSource) Read(ctx context.Context, req datasource.Rea
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetSourceMongodbV2Request(ctx)
+	request, requestDiags := data.ToOperationsGetDestinationS3GlueRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Sources.GetSourceMongodbV2(ctx, *request)
+	res, err := r.client.Destinations.GetDestinationS3Glue(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -203,11 +203,11 @@ func (r *SourceMongodbV2DataSource) Read(ctx context.Context, req datasource.Rea
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.SourceResponse != nil) {
+	if !(res.DestinationResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return

@@ -248,19 +248,51 @@ func (n *NativeNetworkEncryptionNNE) GetEncryptionMethod() string {
 	return "client_nne"
 }
 
+// SourceOracleUnencrypted - Data transfer will not be encrypted.
+type SourceOracleUnencrypted struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	encryptionMethod string `const:"unencrypted" json:"encryption_method"`
+}
+
+func (s SourceOracleUnencrypted) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleUnencrypted) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *SourceOracleUnencrypted) GetEncryptionMethod() string {
+	return "unencrypted"
+}
+
 type SourceOracleEncryptionType string
 
 const (
+	SourceOracleEncryptionTypeSourceOracleUnencrypted       SourceOracleEncryptionType = "source-oracle_Unencrypted"
 	SourceOracleEncryptionTypeNativeNetworkEncryptionNNE    SourceOracleEncryptionType = "Native Network Encryption (NNE)"
 	SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate SourceOracleEncryptionType = "TLS Encrypted (verify certificate)"
 )
 
 // SourceOracleEncryption - The encryption method with is used when communicating with the database.
 type SourceOracleEncryption struct {
+	SourceOracleUnencrypted       *SourceOracleUnencrypted       `queryParam:"inline" union:"member"`
 	NativeNetworkEncryptionNNE    *NativeNetworkEncryptionNNE    `queryParam:"inline" union:"member"`
 	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate `queryParam:"inline" union:"member"`
 
 	Type SourceOracleEncryptionType
+}
+
+func CreateSourceOracleEncryptionSourceOracleUnencrypted(sourceOracleUnencrypted SourceOracleUnencrypted) SourceOracleEncryption {
+	typ := SourceOracleEncryptionTypeSourceOracleUnencrypted
+
+	return SourceOracleEncryption{
+		SourceOracleUnencrypted: &sourceOracleUnencrypted,
+		Type:                    typ,
+	}
 }
 
 func CreateSourceOracleEncryptionNativeNetworkEncryptionNNE(nativeNetworkEncryptionNNE NativeNetworkEncryptionNNE) SourceOracleEncryption {
@@ -286,6 +318,14 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
+	var sourceOracleUnencrypted SourceOracleUnencrypted = SourceOracleUnencrypted{}
+	if err := utils.UnmarshalJSON(data, &sourceOracleUnencrypted, "", true, nil); err == nil {
+		candidates = append(candidates, utils.UnionCandidate{
+			Type:  SourceOracleEncryptionTypeSourceOracleUnencrypted,
+			Value: &sourceOracleUnencrypted,
+		})
+	}
+
 	var nativeNetworkEncryptionNNE NativeNetworkEncryptionNNE = NativeNetworkEncryptionNNE{}
 	if err := utils.UnmarshalJSON(data, &nativeNetworkEncryptionNNE, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
@@ -315,6 +355,9 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(SourceOracleEncryptionType)
 	switch best.Type {
+	case SourceOracleEncryptionTypeSourceOracleUnencrypted:
+		u.SourceOracleUnencrypted = best.Value.(*SourceOracleUnencrypted)
+		return nil
 	case SourceOracleEncryptionTypeNativeNetworkEncryptionNNE:
 		u.NativeNetworkEncryptionNNE = best.Value.(*NativeNetworkEncryptionNNE)
 		return nil
@@ -327,6 +370,10 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleEncryption) MarshalJSON() ([]byte, error) {
+	if u.SourceOracleUnencrypted != nil {
+		return utils.MarshalJSON(u.SourceOracleUnencrypted, "", true)
+	}
+
 	if u.NativeNetworkEncryptionNNE != nil {
 		return utils.MarshalJSON(u.NativeNetworkEncryptionNNE, "", true)
 	}
@@ -616,7 +663,7 @@ type SourceOracle struct {
 	// Connect data that will be used for DB connection
 	ConnectionData *ConnectBy `json:"connection_data,omitempty"`
 	// The encryption method with is used when communicating with the database.
-	Encryption SourceOracleEncryption `json:"encryption"`
+	Encryption *SourceOracleEncryption `json:"encryption,omitempty"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -656,9 +703,9 @@ func (s *SourceOracle) GetConnectionData() *ConnectBy {
 	return s.ConnectionData
 }
 
-func (s *SourceOracle) GetEncryption() SourceOracleEncryption {
+func (s *SourceOracle) GetEncryption() *SourceOracleEncryption {
 	if s == nil {
-		return SourceOracleEncryption{}
+		return nil
 	}
 	return s.Encryption
 }
