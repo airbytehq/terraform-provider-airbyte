@@ -36,23 +36,64 @@ def patch_set_to_list_attribute(content: str) -> str:
     correlate config elements (with Unknown computed fields) to state elements
     (with Known computed fields), causing stream properties to swap.
     """
-    # Replace the schema type declaration
-    content = content.replace(
-        '"streams": schema.SetNestedAttribute{',
-        '"streams": schema.ListNestedAttribute{',
-    )
+    old_schema = '"streams": schema.SetNestedAttribute{'
+    new_schema = '"streams": schema.ListNestedAttribute{'
 
-    # Replace the plan modifier type (Set -> List) for the streams attribute.
-    # This must only target the streams-level plan modifier, not nested ones.
-    # The pattern uses tab indentation matching the generated Go code.
-    content = content.replace(
+    old_plan_modifier = (
         "PlanModifiers: []planmodifier.Set{\n"
         "\t\t\t\t\t\t\tspeakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),\n"
-        "\t\t\t\t\t\t},",
+        "\t\t\t\t\t\t},"
+    )
+    new_plan_modifier = (
         "PlanModifiers: []planmodifier.List{\n"
         "\t\t\t\t\t\t\tspeakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),\n"
-        "\t\t\t\t\t\t},",
+        "\t\t\t\t\t\t},"
     )
+
+    schema_count = content.count(old_schema)
+    modifier_count = content.count(old_plan_modifier)
+
+    # If neither pattern is present, check if already patched
+    if schema_count == 0 and modifier_count == 0:
+        if '"streams": schema.ListNestedAttribute{' in content:
+            print("  Set->List patch already applied; skipping")
+            return content
+        # Neither old nor new pattern found — something is wrong
+        print(
+            "ERROR: could not find SetNestedAttribute or ListNestedAttribute for streams",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    has_error = False
+    if schema_count != 1:
+        print(
+            f'ERROR: expected 1 occurrence of \'"streams": schema.SetNestedAttribute{{\''
+            f" but found {schema_count}",
+            file=sys.stderr,
+        )
+        has_error = True
+
+    if modifier_count != 1:
+        print(
+            f"ERROR: expected 1 occurrence of the Set plan modifier block "
+            f"but found {modifier_count}",
+            file=sys.stderr,
+        )
+        has_error = True
+
+    if has_error:
+        print(
+            "  Aborting Set->List patch to avoid partially updated connection_resource.go",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    content = content.replace(old_schema, new_schema)
+    print("  Patched SetNestedAttribute -> ListNestedAttribute")
+
+    content = content.replace(old_plan_modifier, new_plan_modifier)
+    print("  Patched Set plan modifier -> List plan modifier")
 
     return content
 
