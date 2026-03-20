@@ -20,6 +20,7 @@ uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
 help = "Patch provider registrations and tidy Go modules after Speakeasy generation."
 shell = """
 python3 scripts/patch_provider_registrations.py internal/provider/provider.go
+python3 scripts/patch_connection_streams.py
 go mod tidy
 """
 

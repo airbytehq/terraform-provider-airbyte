@@ -241,17 +241,23 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 			} else {
 				syncMode = nil
 			}
-			cursorField := make([]string, 0, len(r.Configurations.Streams[streamsIndex].CursorField))
-			for cursorFieldIndex := range r.Configurations.Streams[streamsIndex].CursorField {
-				cursorField = append(cursorField, r.Configurations.Streams[streamsIndex].CursorField[cursorFieldIndex].ValueString())
-			}
-			primaryKey := make([][]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey))
-			for primaryKeyIndex := range r.Configurations.Streams[streamsIndex].PrimaryKey {
-				primaryKeyTmp := make([]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex]))
-				for index := range r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex] {
-					primaryKeyTmp = append(primaryKeyTmp, r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex][index].ValueString())
+			var cursorField []string
+			if len(r.Configurations.Streams[streamsIndex].CursorField) > 0 {
+				cursorField = make([]string, 0, len(r.Configurations.Streams[streamsIndex].CursorField))
+				for cursorFieldIndex := range r.Configurations.Streams[streamsIndex].CursorField {
+					cursorField = append(cursorField, r.Configurations.Streams[streamsIndex].CursorField[cursorFieldIndex].ValueString())
 				}
-				primaryKey = append(primaryKey, primaryKeyTmp)
+			}
+			var primaryKey [][]string
+			if len(r.Configurations.Streams[streamsIndex].PrimaryKey) > 0 {
+				primaryKey = make([][]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey))
+				for primaryKeyIndex := range r.Configurations.Streams[streamsIndex].PrimaryKey {
+					primaryKeyTmp := make([]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex]))
+					for index := range r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex] {
+						primaryKeyTmp = append(primaryKeyTmp, r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex][index].ValueString())
+					}
+					primaryKey = append(primaryKey, primaryKeyTmp)
+				}
 			}
 			includeFiles := new(bool)
 			if !r.Configurations.Streams[streamsIndex].IncludeFiles.IsUnknown() && !r.Configurations.Streams[streamsIndex].IncludeFiles.IsNull() {
@@ -549,17 +555,23 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 			} else {
 				syncMode = nil
 			}
-			cursorField := make([]string, 0, len(r.Configurations.Streams[streamsIndex].CursorField))
-			for cursorFieldIndex := range r.Configurations.Streams[streamsIndex].CursorField {
-				cursorField = append(cursorField, r.Configurations.Streams[streamsIndex].CursorField[cursorFieldIndex].ValueString())
-			}
-			primaryKey := make([][]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey))
-			for primaryKeyIndex := range r.Configurations.Streams[streamsIndex].PrimaryKey {
-				primaryKeyTmp := make([]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex]))
-				for index := range r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex] {
-					primaryKeyTmp = append(primaryKeyTmp, r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex][index].ValueString())
+			var cursorField []string
+			if len(r.Configurations.Streams[streamsIndex].CursorField) > 0 {
+				cursorField = make([]string, 0, len(r.Configurations.Streams[streamsIndex].CursorField))
+				for cursorFieldIndex := range r.Configurations.Streams[streamsIndex].CursorField {
+					cursorField = append(cursorField, r.Configurations.Streams[streamsIndex].CursorField[cursorFieldIndex].ValueString())
 				}
-				primaryKey = append(primaryKey, primaryKeyTmp)
+			}
+			var primaryKey [][]string
+			if len(r.Configurations.Streams[streamsIndex].PrimaryKey) > 0 {
+				primaryKey = make([][]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey))
+				for primaryKeyIndex := range r.Configurations.Streams[streamsIndex].PrimaryKey {
+					primaryKeyTmp := make([]string, 0, len(r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex]))
+					for index := range r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex] {
+						primaryKeyTmp = append(primaryKeyTmp, r.Configurations.Streams[streamsIndex].PrimaryKey[primaryKeyIndex][index].ValueString())
+					}
+					primaryKey = append(primaryKey, primaryKeyTmp)
+				}
 			}
 			includeFiles := new(bool)
 			if !r.Configurations.Streams[streamsIndex].IncludeFiles.IsUnknown() && !r.Configurations.Streams[streamsIndex].IncludeFiles.IsNull() {
