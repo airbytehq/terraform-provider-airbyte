@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-type CreateSourceMongodbV2Response struct {
+type CreateDestinationS3GlueResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// HTTP response status code for this operation
@@ -15,36 +15,36 @@ type CreateSourceMongodbV2Response struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful operation
-	SourceResponse *shared.SourceResponse
+	DestinationResponse *shared.DestinationResponse
 }
 
-func (c *CreateSourceMongodbV2Response) GetContentType() string {
+func (c *CreateDestinationS3GlueResponse) GetContentType() string {
 	if c == nil {
 		return ""
 	}
 	return c.ContentType
 }
 
-func (c *CreateSourceMongodbV2Response) GetStatusCode() int {
+func (c *CreateDestinationS3GlueResponse) GetStatusCode() int {
 	if c == nil {
 		return 0
 	}
 	return c.StatusCode
 }
 
-func (c *CreateSourceMongodbV2Response) GetRawResponse() *http.Response {
+func (c *CreateDestinationS3GlueResponse) GetRawResponse() *http.Response {
 	if c == nil {
 		return nil
 	}
 	return c.RawResponse
 }
 
-func (c *CreateSourceMongodbV2Response) GetSourceResponse() *shared.SourceResponse {
+func (c *CreateDestinationS3GlueResponse) GetDestinationResponse() *shared.DestinationResponse {
 	if c == nil {
 		return nil
 	}
-	return c.SourceResponse
+	return c.DestinationResponse
 }
 
-// #region class-body-createsourcemongodbv2response
-// #endregion class-body-createsourcemongodbv2response
+// #region class-body-createdestinations3glueresponse
+// #endregion class-body-createdestinations3glueresponse

@@ -48,48 +48,48 @@ func (l *LoginPassword) GetUsername() string {
 	return l.Username
 }
 
-// None - None.
-type None struct {
+// DestinationMongodbNone - None.
+type DestinationMongodbNone struct {
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	authorization string `const:"none" json:"authorization"`
 }
 
-func (n None) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(n, "", false)
+func (d DestinationMongodbNone) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
 }
 
-func (n *None) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &n, "", false, nil); err != nil {
+func (d *DestinationMongodbNone) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (n *None) GetAuthorization() string {
+func (d *DestinationMongodbNone) GetAuthorization() string {
 	return "none"
 }
 
 type AuthorizationTypeType string
 
 const (
-	AuthorizationTypeTypeNone          AuthorizationTypeType = "None"
-	AuthorizationTypeTypeLoginPassword AuthorizationTypeType = "Login/Password"
+	AuthorizationTypeTypeDestinationMongodbNone AuthorizationTypeType = "destination-mongodb_None"
+	AuthorizationTypeTypeLoginPassword          AuthorizationTypeType = "Login/Password"
 )
 
 // AuthorizationType - Authorization type.
 type AuthorizationType struct {
-	None          *None          `queryParam:"inline" union:"member"`
-	LoginPassword *LoginPassword `queryParam:"inline" union:"member"`
+	DestinationMongodbNone *DestinationMongodbNone `queryParam:"inline" union:"member"`
+	LoginPassword          *LoginPassword          `queryParam:"inline" union:"member"`
 
 	Type AuthorizationTypeType
 }
 
-func CreateAuthorizationTypeNone(none None) AuthorizationType {
-	typ := AuthorizationTypeTypeNone
+func CreateAuthorizationTypeDestinationMongodbNone(destinationMongodbNone DestinationMongodbNone) AuthorizationType {
+	typ := AuthorizationTypeTypeDestinationMongodbNone
 
 	return AuthorizationType{
-		None: &none,
-		Type: typ,
+		DestinationMongodbNone: &destinationMongodbNone,
+		Type:                   typ,
 	}
 }
 
@@ -107,11 +107,11 @@ func (u *AuthorizationType) UnmarshalJSON(data []byte) error {
 	var candidates []utils.UnionCandidate
 
 	// Collect all valid candidates
-	var none None = None{}
-	if err := utils.UnmarshalJSON(data, &none, "", true, nil); err == nil {
+	var destinationMongodbNone DestinationMongodbNone = DestinationMongodbNone{}
+	if err := utils.UnmarshalJSON(data, &destinationMongodbNone, "", true, nil); err == nil {
 		candidates = append(candidates, utils.UnionCandidate{
-			Type:  AuthorizationTypeTypeNone,
-			Value: &none,
+			Type:  AuthorizationTypeTypeDestinationMongodbNone,
+			Value: &destinationMongodbNone,
 		})
 	}
 
@@ -136,8 +136,8 @@ func (u *AuthorizationType) UnmarshalJSON(data []byte) error {
 	// Set the union type and value based on the best candidate
 	u.Type = best.Type.(AuthorizationTypeType)
 	switch best.Type {
-	case AuthorizationTypeTypeNone:
-		u.None = best.Value.(*None)
+	case AuthorizationTypeTypeDestinationMongodbNone:
+		u.DestinationMongodbNone = best.Value.(*DestinationMongodbNone)
 		return nil
 	case AuthorizationTypeTypeLoginPassword:
 		u.LoginPassword = best.Value.(*LoginPassword)
@@ -148,8 +148,8 @@ func (u *AuthorizationType) UnmarshalJSON(data []byte) error {
 }
 
 func (u AuthorizationType) MarshalJSON() ([]byte, error) {
-	if u.None != nil {
-		return utils.MarshalJSON(u.None, "", true)
+	if u.DestinationMongodbNone != nil {
+		return utils.MarshalJSON(u.DestinationMongodbNone, "", true)
 	}
 
 	if u.LoginPassword != nil {

@@ -11,15 +11,11 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -29,39 +25,38 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ resource.Resource = &SourceMongodbV2Resource{}
-var _ resource.ResourceWithImportState = &SourceMongodbV2Resource{}
+var _ resource.Resource = &DestinationS3GlueResource{}
+var _ resource.ResourceWithImportState = &DestinationS3GlueResource{}
 
-func NewSourceMongodbV2Resource() resource.Resource {
-	return &SourceMongodbV2Resource{}
+func NewDestinationS3GlueResource() resource.Resource {
+	return &DestinationS3GlueResource{}
 }
 
-// SourceMongodbV2Resource defines the resource implementation.
-type SourceMongodbV2Resource struct {
+// DestinationS3GlueResource defines the resource implementation.
+type DestinationS3GlueResource struct {
 	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
-// SourceMongodbV2ResourceModel describes the resource data model.
-type SourceMongodbV2ResourceModel struct {
-	Configuration      *tfTypes.SourceMongodbV2            `tfsdk:"configuration"`
+// DestinationS3GlueResourceModel describes the resource data model.
+type DestinationS3GlueResourceModel struct {
+	Configuration      *tfTypes.DestinationS3Glue          `tfsdk:"configuration"`
 	CreatedAt          types.Int64                         `tfsdk:"created_at"`
 	DefinitionID       types.String                        `tfsdk:"definition_id"`
+	DestinationID      types.String                        `tfsdk:"destination_id"`
+	DestinationType    types.String                        `tfsdk:"destination_type"`
 	Name               types.String                        `tfsdk:"name"`
 	ResourceAllocation *tfTypes.ScopedResourceRequirements `tfsdk:"resource_allocation"`
-	SecretID           types.String                        `tfsdk:"secret_id"`
-	SourceID           types.String                        `tfsdk:"source_id"`
-	SourceType         types.String                        `tfsdk:"source_type"`
 	WorkspaceID        types.String                        `tfsdk:"workspace_id"`
 }
 
-func (r *SourceMongodbV2Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_source_mongodb_v2"
+func (r *DestinationS3GlueResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_destination_s3_glue"
 }
 
-func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SourceMongodbV2 Resource",
+		MarkdownDescription: "DestinationS3Glue Resource",
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
@@ -69,171 +64,178 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
-					"additional_properties": schema.StringAttribute{
-						CustomType:  jsontypes.NormalizedType{},
+					"access_key_id": schema.StringAttribute{
 						Optional:    true,
-						Description: `Parsed as JSON.`,
+						Sensitive:   true,
+						Description: `The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.`,
 					},
-					"database_config": schema.SingleNestedAttribute{
+					"file_name_pattern": schema.StringAttribute{
+						Optional:    true,
+						Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
+					},
+					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"mongo_db_atlas_replica_set": schema.SingleNestedAttribute{
+							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"additional_properties": schema.StringAttribute{
-										CustomType:  jsontypes.NormalizedType{},
-										Optional:    true,
-										Description: `Parsed as JSON.`,
+									"compression": schema.SingleNestedAttribute{
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"gzip": schema.SingleNestedAttribute{
+												Optional: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed:    true,
+														Optional:    true,
+														Default:     stringdefault.StaticString(`GZIP`),
+														Description: `Default: "GZIP"; must be "GZIP"`,
+														Validators: []validator.String{
+															stringvalidator.OneOf("GZIP"),
+														},
+													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_compression"),
+													}...),
+												},
+											},
+											"no_compression": schema.SingleNestedAttribute{
+												Optional: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed:    true,
+														Optional:    true,
+														Default:     stringdefault.StaticString(`No Compression`),
+														Description: `Default: "No Compression"; must be "No Compression"`,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("gzip"),
+													}...),
+												},
+											},
+										},
+										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 									},
-									"auth_source": schema.StringAttribute{
+									"flattening": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString(`admin`),
-										Description: `The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details. Default: "admin"`,
+										Default:     stringdefault.StaticString(`Root level flattening`),
+										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details. Default: "Root level flattening"; must be one of ["No flattening", "Root level flattening"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"No flattening",
+												"Root level flattening",
+											),
+										},
 									},
-									"connection_string": schema.StringAttribute{
-										Required:    true,
-										Description: `The connection string of the cluster that you want to replicate.`,
-									},
-									"databases": schema.ListAttribute{
-										Required:    true,
-										ElementType: types.StringType,
-										Description: `The names of the MongoDB databases that contain the collection(s) to replicate.`,
-									},
-									"password": schema.StringAttribute{
-										Required:    true,
-										Sensitive:   true,
-										Description: `The password associated with this username.`,
-									},
-									"schema_enforced": schema.BoolAttribute{
+									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     booldefault.StaticBool(true),
-										Description: `When enabled, syncs will validate and structure records against the stream's schema. Default: true`,
+										Default:     stringdefault.StaticString(`JSONL`),
+										Description: `Default: "JSONL"; must be "JSONL"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf("JSONL"),
+										},
 									},
-									"username": schema.StringAttribute{
-										Required:    true,
-										Description: `The username which is used to access the database.`,
-									},
-								},
-								Description: `MongoDB Atlas-hosted cluster configured as a replica set`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("self_managed_replica_set"),
-									}...),
-								},
-							},
-							"self_managed_replica_set": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"additional_properties": schema.StringAttribute{
-										CustomType:  jsontypes.NormalizedType{},
-										Optional:    true,
-										Description: `Parsed as JSON.`,
-									},
-									"auth_source": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString(`admin`),
-										Description: `The authentication source where the user information is stored. Default: "admin"`,
-									},
-									"connection_string": schema.StringAttribute{
-										Required:    true,
-										Description: `The connection string of the cluster that you want to replicate.  https://www.mongodb.com/docs/manual/reference/connection-string/#find-your-self-hosted-deployment-s-connection-string for more information.`,
-									},
-									"databases": schema.ListAttribute{
-										Required:    true,
-										ElementType: types.StringType,
-										Description: `The names of the MongoDB databases that contain the collection(s) to replicate.`,
-									},
-									"password": schema.StringAttribute{
-										Optional:    true,
-										Sensitive:   true,
-										Description: `The password associated with this username.`,
-									},
-									"schema_enforced": schema.BoolAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     booldefault.StaticBool(true),
-										Description: `When enabled, syncs will validate and structure records against the stream's schema. Default: true`,
-									},
-									"username": schema.StringAttribute{
-										Optional:    true,
-										Description: `The username which is used to access the database.`,
-									},
-								},
-								Description: `MongoDB self-hosted cluster configured as a replica set`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("mongo_db_atlas_replica_set"),
-									}...),
 								},
 							},
 						},
-						Description: `Configures the MongoDB cluster type.`,
+						Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 					},
-					"discover_sample_size": schema.Int64Attribute{
+					"glue_database": schema.StringAttribute{
+						Required:    true,
+						Description: `Name of the glue database for creating the tables, leave blank if no integration`,
+					},
+					"glue_serialization_library": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     int64default.StaticInt64(10000),
-						Description: `The maximum number of documents to sample when attempting to discover the unique fields for a collection. Default: 10000`,
-						Validators: []validator.Int64{
-							int64validator.Between(10, 100000),
-						},
-					},
-					"discover_timeout_seconds": schema.Int64Attribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     int64default.StaticInt64(600),
-						Description: `The amount of time the connector will wait when it discovers a document. Defaults to 600 seconds. Valid range: 5 seconds to 1200 seconds. Default: 600`,
-						Validators: []validator.Int64{
-							int64validator.Between(5, 1200),
-						},
-					},
-					"initial_load_timeout_hours": schema.Int64Attribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     int64default.StaticInt64(8),
-						Description: `The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8`,
-					},
-					"initial_waiting_seconds": schema.Int64Attribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     int64default.StaticInt64(300),
-						Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Default: 300`,
-					},
-					"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     stringdefault.StaticString(`Fail sync`),
-						Description: `Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. Default: "Fail sync"; must be one of ["Fail sync", "Re-sync data"]`,
+						Default:     stringdefault.StaticString(`org.openx.data.jsonserde.JsonSerDe`),
+						Description: `The library that your query engine will use for reading and writing data in your lake. Default: "org.openx.data.jsonserde.JsonSerDe"; must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
-								"Fail sync",
-								"Re-sync data",
+								"org.openx.data.jsonserde.JsonSerDe",
+								"org.apache.hive.hcatalog.data.JsonSerDe",
 							),
 						},
 					},
-					"queue_size": schema.Int64Attribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     int64default.StaticInt64(10000),
-						Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000`,
+					"s3_bucket_name": schema.StringAttribute{
+						Required:    true,
+						Description: `The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.`,
 					},
-					"update_capture_mode": schema.StringAttribute{
+					"s3_bucket_path": schema.StringAttribute{
+						Required:    true,
+						Description: `Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>`,
+					},
+					"s3_bucket_region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(`Lookup`),
-						Description: `Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images. Default: "Lookup"; must be one of ["Lookup", "Post Image"]`,
+						Default:     stringdefault.StaticString(``),
+						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
-								"Lookup",
-								"Post Image",
+								"",
+								"af-south-1",
+								"ap-east-1",
+								"ap-northeast-1",
+								"ap-northeast-2",
+								"ap-northeast-3",
+								"ap-south-1",
+								"ap-south-2",
+								"ap-southeast-1",
+								"ap-southeast-2",
+								"ap-southeast-3",
+								"ap-southeast-4",
+								"ca-central-1",
+								"ca-west-1",
+								"cn-north-1",
+								"cn-northwest-1",
+								"eu-central-1",
+								"eu-central-2",
+								"eu-north-1",
+								"eu-south-1",
+								"eu-south-2",
+								"eu-west-1",
+								"eu-west-2",
+								"eu-west-3",
+								"il-central-1",
+								"me-central-1",
+								"me-south-1",
+								"sa-east-1",
+								"us-east-1",
+								"us-east-2",
+								"us-gov-east-1",
+								"us-gov-west-1",
+								"us-west-1",
+								"us-west-2",
 							),
 						},
+					},
+					"s3_endpoint": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(``),
+						Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>. Default: ""`,
+					},
+					"s3_path_format": schema.StringAttribute{
+						Optional:    true,
+						Description: `Format string on how data will be organized inside the S3 bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>`,
+					},
+					"secret_access_key": schema.StringAttribute{
+						Optional:    true,
+						Sensitive:   true,
+						Description: `The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>`,
 					},
 				},
-				Description: `The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.`,
+				Description: `The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.`,
 			},
 			"created_at": schema.Int64Attribute{
 				Computed: true,
@@ -244,19 +246,31 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 			"definition_id": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
-				Default:  stringdefault.StaticString(`b2e713cd-cc36-4c0a-b5bd-b47cb8a0561e`),
+				Default:  stringdefault.StaticString(`471e5cab-8ed1-49f3-ba11-79c687784737`),
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Default: "b2e713cd-cc36-4c0a-b5bd-b47cb8a0561e"; Requires replacement if changed.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Default: "471e5cab-8ed1-49f3-ba11-79c687784737"; Requires replacement if changed.`,
+			},
+			"destination_id": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `Name of the source e.g. dev-mysql-instance.`,
+				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"resource_allocation": schema.SingleNestedAttribute{
 				Computed: true,
@@ -377,25 +391,6 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 				},
 				Description: `actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.`,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-				},
-				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.`,
-			},
-			"source_id": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-			},
-			"source_type": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,
 				PlanModifiers: []planmodifier.String{
@@ -406,7 +401,7 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 	}
 }
 
-func (r *SourceMongodbV2Resource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *DestinationS3GlueResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
 		return
@@ -426,8 +421,8 @@ func (r *SourceMongodbV2Resource) Configure(ctx context.Context, req resource.Co
 	r.client = client
 }
 
-func (r *SourceMongodbV2Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data *SourceMongodbV2ResourceModel
+func (r *DestinationS3GlueResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data *DestinationS3GlueResourceModel
 	var plan types.Object
 
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
@@ -444,13 +439,13 @@ func (r *SourceMongodbV2Resource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request, requestDiags := data.ToSharedSourceMongodbV2CreateRequest(ctx)
+	request, requestDiags := data.ToSharedDestinationS3GlueCreateRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Sources.CreateSourceMongodbV2(ctx, *request)
+	res, err := r.client.Destinations.CreateDestinationS3Glue(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -466,11 +461,11 @@ func (r *SourceMongodbV2Resource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.SourceResponse != nil) {
+	if !(res.DestinationResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -486,8 +481,8 @@ func (r *SourceMongodbV2Resource) Create(ctx context.Context, req resource.Creat
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *SourceMongodbV2Resource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data *SourceMongodbV2ResourceModel
+func (r *DestinationS3GlueResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data *DestinationS3GlueResourceModel
 	var item types.Object
 
 	resp.Diagnostics.Append(req.State.Get(ctx, &item)...)
@@ -504,13 +499,13 @@ func (r *SourceMongodbV2Resource) Read(ctx context.Context, req resource.ReadReq
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetSourceMongodbV2Request(ctx)
+	request, requestDiags := data.ToOperationsGetDestinationS3GlueRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Sources.GetSourceMongodbV2(ctx, *request)
+	res, err := r.client.Destinations.GetDestinationS3Glue(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -530,11 +525,11 @@ func (r *SourceMongodbV2Resource) Read(ctx context.Context, req resource.ReadReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.SourceResponse != nil) {
+	if !(res.DestinationResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -544,8 +539,8 @@ func (r *SourceMongodbV2Resource) Read(ctx context.Context, req resource.ReadReq
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *SourceMongodbV2Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data *SourceMongodbV2ResourceModel
+func (r *DestinationS3GlueResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var data *DestinationS3GlueResourceModel
 	var plan types.Object
 
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
@@ -558,13 +553,13 @@ func (r *SourceMongodbV2Resource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutSourceMongodbV2Request(ctx)
+	request, requestDiags := data.ToOperationsPutDestinationS3GlueRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Sources.PutSourceMongodbV2(ctx, *request)
+	res, err := r.client.Destinations.PutDestinationS3Glue(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -580,11 +575,11 @@ func (r *SourceMongodbV2Resource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.SourceResponse != nil) {
+	if !(res.DestinationResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -600,8 +595,8 @@ func (r *SourceMongodbV2Resource) Update(ctx context.Context, req resource.Updat
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *SourceMongodbV2Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data *SourceMongodbV2ResourceModel
+func (r *DestinationS3GlueResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data *DestinationS3GlueResourceModel
 	var item types.Object
 
 	resp.Diagnostics.Append(req.State.Get(ctx, &item)...)
@@ -618,13 +613,13 @@ func (r *SourceMongodbV2Resource) Delete(ctx context.Context, req resource.Delet
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteSourceMongodbV2Request(ctx)
+	request, requestDiags := data.ToOperationsDeleteDestinationS3GlueRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Sources.DeleteSourceMongodbV2(ctx, *request)
+	res, err := r.client.Destinations.DeleteDestinationS3Glue(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -646,6 +641,6 @@ func (r *SourceMongodbV2Resource) Delete(ctx context.Context, req resource.Delet
 
 }
 
-func (r *SourceMongodbV2Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
+func (r *DestinationS3GlueResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

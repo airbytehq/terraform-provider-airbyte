@@ -8,7 +8,13 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     }
     ca_certificate = "...my_ca_certificate..."
     endpoint       = "...my_endpoint..."
-    upsert         = true
+    path_prefix    = "...my_path_prefix..."
+    tunnel_method = {
+      no_tunnel = {
+        # ...
+      }
+    }
+    upsert = true
   }
   definition_id = "68f351a7-2745-4bef-ad7f-996b8e51bb8c"
   name          = "...my_name..."
