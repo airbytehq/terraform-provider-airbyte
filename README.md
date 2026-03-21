@@ -43,7 +43,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "1.0.1"
+      version = "1.0.2"
     }
   }
 }
@@ -294,6 +294,7 @@ Available configuration:
 * [airbyte_source_microsoft_teams](docs/resources/source_microsoft_teams.md)
 * [airbyte_source_mixpanel](docs/resources/source_mixpanel.md)
 * [airbyte_source_monday](docs/resources/source_monday.md)
+* [airbyte_source_mongodb_v2](docs/resources/source_mongodb_v2.md)
 * [airbyte_source_mssql](docs/resources/source_mssql.md)
 * [airbyte_source_my_hours](docs/resources/source_my_hours.md)
 * [airbyte_source_mysql](docs/resources/source_mysql.md)
@@ -575,6 +576,7 @@ Available configuration:
 * [airbyte_source_microsoft_teams](docs/data-sources/source_microsoft_teams.md)
 * [airbyte_source_mixpanel](docs/data-sources/source_mixpanel.md)
 * [airbyte_source_monday](docs/data-sources/source_monday.md)
+* [airbyte_source_mongodb_v2](docs/data-sources/source_mongodb_v2.md)
 * [airbyte_source_mssql](docs/data-sources/source_mssql.md)
 * [airbyte_source_my_hours](docs/data-sources/source_my_hours.md)
 * [airbyte_source_mysql](docs/data-sources/source_mysql.md)
