@@ -233,9 +233,9 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest(ctx context.
 		} else {
 			initialWaitingSeconds = nil
 		}
-		invalidCdcCursorPositionBehavior := new(shared.InvalidCDCPositionBehaviorAdvanced)
+		invalidCdcCursorPositionBehavior := new(shared.SourceMssqlInvalidCDCPositionBehaviorAdvanced)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-			*invalidCdcCursorPositionBehavior = shared.InvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
+			*invalidCdcCursorPositionBehavior = shared.SourceMssqlInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InvalidCdcCursorPositionBehavior.ValueString())
 		} else {
 			invalidCdcCursorPositionBehavior = nil
 		}
