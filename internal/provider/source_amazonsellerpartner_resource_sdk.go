@@ -37,6 +37,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromSharedSourceResponse
 			r.Configuration.ReplicationEndDate = configurationPriorData.ReplicationEndDate
 			r.Configuration.ReplicationStartDate = configurationPriorData.ReplicationStartDate
 			r.Configuration.ReportOptionsList = configurationPriorData.ReportOptionsList
+			r.Configuration.SalesAndTrafficReportAsinGranularity = configurationPriorData.SalesAndTrafficReportAsinGranularity
 			r.Configuration.WaitToAvoidFatalErrors = configurationPriorData.WaitToAvoidFatalErrors
 		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
@@ -250,6 +251,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 			StreamName:  streamName,
 		})
 	}
+	salesAndTrafficReportAsinGranularity := new(shared.SalesAndTrafficReportASINGranularity)
+	if !r.Configuration.SalesAndTrafficReportAsinGranularity.IsUnknown() && !r.Configuration.SalesAndTrafficReportAsinGranularity.IsNull() {
+		*salesAndTrafficReportAsinGranularity = shared.SalesAndTrafficReportASINGranularity(r.Configuration.SalesAndTrafficReportAsinGranularity.ValueString())
+	} else {
+		salesAndTrafficReportAsinGranularity = nil
+	}
 	waitToAvoidFatalErrors := new(bool)
 	if !r.Configuration.WaitToAvoidFatalErrors.IsUnknown() && !r.Configuration.WaitToAvoidFatalErrors.IsNull() {
 		*waitToAvoidFatalErrors = r.Configuration.WaitToAvoidFatalErrors.ValueBool()
@@ -261,24 +268,25 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		_ = json.Unmarshal([]byte(r.Configuration.AdditionalProperties.ValueString()), &additionalProperties)
 	}
 	configuration := shared.SourceAmazonSellerPartner{
-		AccountType:                      accountType,
-		AppID:                            appID,
-		AwsEnvironment:                   awsEnvironment,
-		FinancialEventsMaxResultsPerPage: financialEventsMaxResultsPerPage,
-		FinancialEventsStep:              financialEventsStep,
-		IncludePii:                       includePii,
-		LwaAppID:                         lwaAppID,
-		LwaClientSecret:                  lwaClientSecret,
-		MaxAsyncJobCount:                 maxAsyncJobCount,
-		NumWorkers:                       numWorkers,
-		PeriodInDays:                     periodInDays,
-		RefreshToken:                     refreshToken,
-		Region:                           region,
-		ReplicationEndDate:               replicationEndDate,
-		ReplicationStartDate:             replicationStartDate,
-		ReportOptionsList:                reportOptionsList,
-		WaitToAvoidFatalErrors:           waitToAvoidFatalErrors,
-		AdditionalProperties:             additionalProperties,
+		AccountType:                          accountType,
+		AppID:                                appID,
+		AwsEnvironment:                       awsEnvironment,
+		FinancialEventsMaxResultsPerPage:     financialEventsMaxResultsPerPage,
+		FinancialEventsStep:                  financialEventsStep,
+		IncludePii:                           includePii,
+		LwaAppID:                             lwaAppID,
+		LwaClientSecret:                      lwaClientSecret,
+		MaxAsyncJobCount:                     maxAsyncJobCount,
+		NumWorkers:                           numWorkers,
+		PeriodInDays:                         periodInDays,
+		RefreshToken:                         refreshToken,
+		Region:                               region,
+		ReplicationEndDate:                   replicationEndDate,
+		ReplicationStartDate:                 replicationStartDate,
+		ReportOptionsList:                    reportOptionsList,
+		SalesAndTrafficReportAsinGranularity: salesAndTrafficReportAsinGranularity,
+		WaitToAvoidFatalErrors:               waitToAvoidFatalErrors,
+		AdditionalProperties:                 additionalProperties,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -435,6 +443,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 			StreamName:  streamName,
 		})
 	}
+	salesAndTrafficReportAsinGranularity := new(shared.SourceAmazonSellerPartnerUpdateSalesAndTrafficReportASINGranularity)
+	if !r.Configuration.SalesAndTrafficReportAsinGranularity.IsUnknown() && !r.Configuration.SalesAndTrafficReportAsinGranularity.IsNull() {
+		*salesAndTrafficReportAsinGranularity = shared.SourceAmazonSellerPartnerUpdateSalesAndTrafficReportASINGranularity(r.Configuration.SalesAndTrafficReportAsinGranularity.ValueString())
+	} else {
+		salesAndTrafficReportAsinGranularity = nil
+	}
 	waitToAvoidFatalErrors := new(bool)
 	if !r.Configuration.WaitToAvoidFatalErrors.IsUnknown() && !r.Configuration.WaitToAvoidFatalErrors.IsNull() {
 		*waitToAvoidFatalErrors = r.Configuration.WaitToAvoidFatalErrors.ValueBool()
@@ -446,24 +460,25 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		_ = json.Unmarshal([]byte(r.Configuration.AdditionalProperties.ValueString()), &additionalProperties)
 	}
 	configuration := shared.SourceAmazonSellerPartnerUpdate{
-		AccountType:                      accountType,
-		AppID:                            appID,
-		AwsEnvironment:                   awsEnvironment,
-		FinancialEventsMaxResultsPerPage: financialEventsMaxResultsPerPage,
-		FinancialEventsStep:              financialEventsStep,
-		IncludePii:                       includePii,
-		LwaAppID:                         lwaAppID,
-		LwaClientSecret:                  lwaClientSecret,
-		MaxAsyncJobCount:                 maxAsyncJobCount,
-		NumWorkers:                       numWorkers,
-		PeriodInDays:                     periodInDays,
-		RefreshToken:                     refreshToken,
-		Region:                           region,
-		ReplicationEndDate:               replicationEndDate,
-		ReplicationStartDate:             replicationStartDate,
-		ReportOptionsList:                reportOptionsList,
-		WaitToAvoidFatalErrors:           waitToAvoidFatalErrors,
-		AdditionalProperties:             additionalProperties,
+		AccountType:                          accountType,
+		AppID:                                appID,
+		AwsEnvironment:                       awsEnvironment,
+		FinancialEventsMaxResultsPerPage:     financialEventsMaxResultsPerPage,
+		FinancialEventsStep:                  financialEventsStep,
+		IncludePii:                           includePii,
+		LwaAppID:                             lwaAppID,
+		LwaClientSecret:                      lwaClientSecret,
+		MaxAsyncJobCount:                     maxAsyncJobCount,
+		NumWorkers:                           numWorkers,
+		PeriodInDays:                         periodInDays,
+		RefreshToken:                         refreshToken,
+		Region:                               region,
+		ReplicationEndDate:                   replicationEndDate,
+		ReplicationStartDate:                 replicationStartDate,
+		ReportOptionsList:                    reportOptionsList,
+		SalesAndTrafficReportAsinGranularity: salesAndTrafficReportAsinGranularity,
+		WaitToAvoidFatalErrors:               waitToAvoidFatalErrors,
+		AdditionalProperties:                 additionalProperties,
 	}
 	out := shared.SourceAmazonSellerPartnerPutRequest{
 		Name:          name,

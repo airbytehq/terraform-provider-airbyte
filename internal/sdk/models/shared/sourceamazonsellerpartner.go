@@ -410,6 +410,36 @@ func (r *ReportOptions) GetStreamName() string {
 	return r.StreamName
 }
 
+// SalesAndTrafficReportASINGranularity - The level of ASIN granularity for the Sales and Traffic report streams. PARENT returns data aggregated at the parent ASIN level. CHILD returns data at the child ASIN level with populated childAsin values. SKU returns data at the individual SKU level with populated childAsin and sku values.
+type SalesAndTrafficReportASINGranularity string
+
+const (
+	SalesAndTrafficReportASINGranularityParent SalesAndTrafficReportASINGranularity = "PARENT"
+	SalesAndTrafficReportASINGranularityChild  SalesAndTrafficReportASINGranularity = "CHILD"
+	SalesAndTrafficReportASINGranularitySku    SalesAndTrafficReportASINGranularity = "SKU"
+)
+
+func (e SalesAndTrafficReportASINGranularity) ToPointer() *SalesAndTrafficReportASINGranularity {
+	return &e
+}
+func (e *SalesAndTrafficReportASINGranularity) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "PARENT":
+		fallthrough
+	case "CHILD":
+		fallthrough
+	case "SKU":
+		*e = SalesAndTrafficReportASINGranularity(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SalesAndTrafficReportASINGranularity: %v", v)
+	}
+}
+
 type SourceAmazonSellerPartnerSourceType string
 
 const (
@@ -468,6 +498,8 @@ type SourceAmazonSellerPartner struct {
 	ReplicationStartDate *time.Time `json:"replication_start_date,omitempty"`
 	// Additional information passed to reports. This varies by report type.
 	ReportOptionsList []ReportOptions `json:"report_options_list,omitempty"`
+	// The level of ASIN granularity for the Sales and Traffic report streams. PARENT returns data aggregated at the parent ASIN level. CHILD returns data at the child ASIN level with populated childAsin values. SKU returns data at the individual SKU level with populated childAsin and sku values.
+	SalesAndTrafficReportAsinGranularity *SalesAndTrafficReportASINGranularity `default:"PARENT" json:"sales_and_traffic_report_asin_granularity"`
 	// For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details
 	WaitToAvoidFatalErrors *bool `default:"false" json:"wait_to_avoid_fatal_errors"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
@@ -600,6 +632,13 @@ func (s *SourceAmazonSellerPartner) GetReportOptionsList() []ReportOptions {
 		return nil
 	}
 	return s.ReportOptionsList
+}
+
+func (s *SourceAmazonSellerPartner) GetSalesAndTrafficReportAsinGranularity() *SalesAndTrafficReportASINGranularity {
+	if s == nil {
+		return nil
+	}
+	return s.SalesAndTrafficReportAsinGranularity
 }
 
 func (s *SourceAmazonSellerPartner) GetWaitToAvoidFatalErrors() *bool {
