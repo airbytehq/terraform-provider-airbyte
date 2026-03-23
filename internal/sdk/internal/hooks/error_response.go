@@ -1,7 +1,6 @@
 package hooks
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -41,10 +40,9 @@ func (h *errorResponseHook) AfterSuccess(hookCtx AfterSuccessContext, res *http.
 		return nil, fmt.Errorf("API error (HTTP %d): failed to read response body: %w", res.StatusCode, err)
 	}
 
-	// Restore the body so it remains available for any downstream processing.
-	res.Body = io.NopCloser(bytes.NewReader(body))
-
-	// Build a user-friendly error message from the response body.
+	// Return a non-nil error to short-circuit SDK processing and surface
+	// the extracted message to Terraform. The response is not returned
+	// because the SDK would otherwise drain the body and discard the detail.
 	return nil, fmt.Errorf("%s", extractAPIErrorMessage(res.StatusCode, body))
 }
 
