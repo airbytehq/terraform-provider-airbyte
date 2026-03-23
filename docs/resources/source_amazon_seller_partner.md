@@ -43,7 +43,8 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
         stream_name = "...my_stream_name..."
       }
     ]
-    wait_to_avoid_fatal_errors = false
+    sales_and_traffic_report_asin_granularity = "PARENT"
+    wait_to_avoid_fatal_errors                = false
   }
   definition_id = "e55879a8-0ef8-4557-abcf-ab34c53ec460"
   name          = "...my_name..."
@@ -98,6 +99,7 @@ Optional:
 - `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.
 - `report_options_list` (Attributes List) Additional information passed to reports. This varies by report type. (see [below for nested schema](#nestedatt--configuration--report_options_list))
+- `sales_and_traffic_report_asin_granularity` (String) The level of ASIN granularity for the Sales and Traffic report streams. PARENT returns data aggregated at the parent ASIN level. CHILD returns data at the child ASIN level with populated childAsin values. SKU returns data at the individual SKU level with populated childAsin and sku values. Default: "PARENT"; must be one of ["PARENT", "CHILD", "SKU"]
 - `wait_to_avoid_fatal_errors` (Boolean) For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details. Default: false
 
 <a id="nestedatt--configuration--report_options_list"></a>

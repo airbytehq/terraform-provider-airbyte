@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 75834e8899bb4a9f304f810a35fea0fc
+  docChecksum: 670a2ff9ef94433700cf6f97bf252362
   docVersion: 1.0.0
   speakeasyVersion: 1.759.1
   generationVersion: 2.869.10
@@ -9,9 +9,9 @@ management:
   configChecksum: b7554ee79afb067c27345dfb626b1383
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 93623d15-f677-4a1b-8f83-8ae8bfc65acd
-  pristine_commit_hash: 6b88dd6d3d8b87676647df00ee78242fb9c4547b
-  pristine_tree_hash: 596ad979d0023d1fdb61be95a67ce8d8a484c681
+  generation_id: cda057f4-ffcf-4492-b730-9efc09b2e495
+  pristine_commit_hash: bc8a0e552e43e3734ec238e5213372783ef13253
+  pristine_tree_hash: ef79f6936611db63e8506bc138659850dc66faa9
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -1743,8 +1743,8 @@ trackedFiles:
     pristine_git_object: 595ab1d4762297b3c91013e98577641f935c04ab
   examples/resources/airbyte_source_amazon_seller_partner/resource.tf:
     id: b5f842cf1ace
-    last_write_checksum: sha1:c0a738c35dc1565e60c1ccbd3c02951b1407304d
-    pristine_git_object: 669d327c79cae1d9e34e4eeda135e0d60acd3ad7
+    last_write_checksum: sha1:52196a85d59b602f621f7b77eb9c3cba7d003a8c
+    pristine_git_object: 3f29daa745bd652da04769a72b488bab59b08b7a
   examples/resources/airbyte_source_amazon_sqs/import-by-string-id.tf:
     id: 75700fb82da4
     last_write_checksum: sha1:f6ed8f3e2c075c2e179fd941261c15ccff98a040
@@ -5467,12 +5467,12 @@ trackedFiles:
     pristine_git_object: 8032991307df40978d1cea78b8e2f83624f1a945
   internal/provider/source_amazonsellerpartner_resource.go:
     id: b9a1cabedf6d
-    last_write_checksum: sha1:951c4a35bdf41c889cdaaa4fd9679059a22332da
-    pristine_git_object: bd60aa1bc2135d0cb2019cd3244add17c542eeba
+    last_write_checksum: sha1:0a0f71a86b4292e8c518dbc91fc0d9c5e63c0eae
+    pristine_git_object: 232c187044fa95fc285d493fa62c37269f5f5bc8
   internal/provider/source_amazonsellerpartner_resource_sdk.go:
     id: 26fbb3a921cc
-    last_write_checksum: sha1:173701ea0432135d5e7d405d270344d7e2a70389
-    pristine_git_object: 5e05162a9643987265e3558d3253f6d86299c7e0
+    last_write_checksum: sha1:5a65ffce649bdb419b8f2848569cc94e963cdf17
+    pristine_git_object: f8e0ff5c7a9d8505d14f2334ab202b3a567e4adf
   internal/provider/source_amazonsqs_data_source.go:
     id: 4c2f79e43ab9
     last_write_checksum: sha1:b90092328b263735778431766f360f005965dca1
@@ -11039,8 +11039,8 @@ trackedFiles:
     pristine_git_object: 89529b5de776604422f35b5b2f4d70694d197e15
   internal/provider/types/source_amazon_seller_partner.go:
     id: 41007cd805fc
-    last_write_checksum: sha1:e08aeb93c0d17f1a8ee74bb4ea0e8e326287bd60
-    pristine_git_object: 0234284723d9e6ef2f09c376ca5e006c25faf01f
+    last_write_checksum: sha1:e21c6252304ffe2e30f7e67da3f566879534db25
+    pristine_git_object: b13e82b94d12075578129ceab3d26d3ca1791209
   internal/provider/types/source_amazon_sqs.go:
     id: b8d366d3e790
     last_write_checksum: sha1:763b8cb0506c04f53a709c2091ab2b21feb01a0a
@@ -19383,8 +19383,8 @@ trackedFiles:
     pristine_git_object: a5b1e290fd459c96d96b26d2811d9119523bb91f
   internal/sdk/models/shared/sourceamazonsellerpartner.go:
     id: a3c7811ef49a
-    last_write_checksum: sha1:bbeefecaf8cd8141500dd1f77f5c425a7a42df86
-    pristine_git_object: 11f6993dbf785cc1f54c201f88d9f45600b0592f
+    last_write_checksum: sha1:391c4812bc8d0051ada33df35c35ae201fe2e0c5
+    pristine_git_object: e7dd8e449c092ad5047db8372024fe298adaa09a
   internal/sdk/models/shared/sourceamazonsellerpartnercreaterequest.go:
     id: 262d5536b57a
     last_write_checksum: sha1:e5a261bae444eb4d45ec517aa8b99c4cf029e3b8
@@ -19395,8 +19395,8 @@ trackedFiles:
     pristine_git_object: f98395f32749a06bcb3529afa0ae6f50c294e11a
   internal/sdk/models/shared/sourceamazonsellerpartnerupdate.go:
     id: 1242f9bf4b96
-    last_write_checksum: sha1:2398cac6f14b1a62959751364e32819504cb1e63
-    pristine_git_object: 6d20e56bc8bf0429dd51c3915c8f797a8053727c
+    last_write_checksum: sha1:0cc950a79ee3b23995041762d7086916399edb5e
+    pristine_git_object: 1804745652b5fb419a215db67ce347d6c6f5b474
   internal/sdk/models/shared/sourceamazonsqs.go:
     id: 08a29e17a4d3
     last_write_checksum: sha1:612c20151a6a88545827f75b81a6893da348b4e6
@@ -24486,7 +24486,7 @@ examples:
   createSourceAmazonSellerPartner:
     speakeasy-default-create-source-amazon-seller-partner:
       requestBody:
-        application/json: {"name": "<value>", "definitionId": "e55879a8-0ef8-4557-abcf-ab34c53ec460", "workspaceId": "6c466d7b-f6d4-4233-9331-b76247d56387", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "include_pii": false, "lwa_app_id": "<id>", "lwa_client_secret": "<value>", "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "refresh_token": "<value>", "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
+        application/json: {"name": "<value>", "definitionId": "e55879a8-0ef8-4557-abcf-ab34c53ec460", "workspaceId": "6c466d7b-f6d4-4233-9331-b76247d56387", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "include_pii": false, "lwa_app_id": "<id>", "lwa_client_secret": "<value>", "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "refresh_token": "<value>", "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "sales_and_traffic_report_asin_granularity": "PARENT", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 939408}
@@ -24504,7 +24504,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "2dfc7b9e-4c2b-46ac-8eaa-0381f2d0c614", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "include_pii": false, "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
+        application/json: {"name": "<value>", "workspaceId": "2dfc7b9e-4c2b-46ac-8eaa-0381f2d0c614", "configuration": {"account_type": "Seller", "auth_type": "oauth2.0", "aws_environment": "PRODUCTION", "financial_events_max_results_per_page": 100, "financial_events_step": "180D", "include_pii": false, "max_async_job_count": 2, "num_workers": 2, "period_in_days": 90, "region": "US", "replication_end_date": "2017-01-25T00:00:00Z", "replication_start_date": "2017-01-25T00:00:00Z", "sales_and_traffic_report_asin_granularity": "PARENT", "wait_to_avoid_fatal_errors": false, "sourceType": "amazon-seller-partner"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {}, "createdAt": 185865}

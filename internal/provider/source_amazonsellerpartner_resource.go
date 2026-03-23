@@ -306,6 +306,19 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						},
 						Description: `Additional information passed to reports. This varies by report type.`,
 					},
+					"sales_and_traffic_report_asin_granularity": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(`PARENT`),
+						Description: `The level of ASIN granularity for the Sales and Traffic report streams. PARENT returns data aggregated at the parent ASIN level. CHILD returns data at the child ASIN level with populated childAsin values. SKU returns data at the individual SKU level with populated childAsin and sku values. Default: "PARENT"; must be one of ["PARENT", "CHILD", "SKU"]`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"PARENT",
+								"CHILD",
+								"SKU",
+							),
+						},
+					},
 					"wait_to_avoid_fatal_errors": schema.BoolAttribute{
 						Computed:    true,
 						Optional:    true,

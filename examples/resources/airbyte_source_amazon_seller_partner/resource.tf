@@ -28,7 +28,8 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
         stream_name = "...my_stream_name..."
       }
     ]
-    wait_to_avoid_fatal_errors = false
+    sales_and_traffic_report_asin_granularity = "PARENT"
+    wait_to_avoid_fatal_errors                = false
   }
   definition_id = "e55879a8-0ef8-4557-abcf-ab34c53ec460"
   name          = "...my_name..."
