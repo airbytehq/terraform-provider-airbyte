@@ -43,7 +43,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "1.0.2"
+      version = "1.0.3"
     }
   }
 }
@@ -179,7 +179,6 @@ Available configuration:
 * [airbyte_source_apify_dataset](docs/resources/source_apify_dataset.md)
 * [airbyte_source_appcues](docs/resources/source_appcues.md)
 * [airbyte_source_appfigures](docs/resources/source_appfigures.md)
-* [airbyte_source_appfollow](docs/resources/source_appfollow.md)
 * [airbyte_source_asana](docs/resources/source_asana.md)
 * [airbyte_source_auth0](docs/resources/source_auth0.md)
 * [airbyte_source_aws_cloudtrail](docs/resources/source_aws_cloudtrail.md)
@@ -461,7 +460,6 @@ Available configuration:
 * [airbyte_source_apify_dataset](docs/data-sources/source_apify_dataset.md)
 * [airbyte_source_appcues](docs/data-sources/source_appcues.md)
 * [airbyte_source_appfigures](docs/data-sources/source_appfigures.md)
-* [airbyte_source_appfollow](docs/data-sources/source_appfollow.md)
 * [airbyte_source_asana](docs/data-sources/source_asana.md)
 * [airbyte_source_auth0](docs/data-sources/source_auth0.md)
 * [airbyte_source_aws_cloudtrail](docs/data-sources/source_aws_cloudtrail.md)
