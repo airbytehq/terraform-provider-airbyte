@@ -736,6 +736,7 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceZohoCrmDataSource,
 		NewSourceZoomDataSource,
 		NewWorkspaceDataSource,
+		NewWorkspaceIdsDataSource,
 	}
 }
 
