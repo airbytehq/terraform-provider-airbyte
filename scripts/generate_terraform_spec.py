@@ -771,10 +771,10 @@ def main() -> None:
     # so we no longer add them to the terraform spec.
     # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
 
-    # Filter typed resources to the frozen allowlist (deprecated connectors only).
-    # All connectors remain available via the generic airbyte_source /
-    # airbyte_destination resources; the typed resources are kept solely for
-    # backward compatibility and will be removed in 1.1.
+    # Filter typed resources to the allowlist.
+    # Since the allowlists are empty as of 1.1, no typed resources are generated.
+    # All connectors are available via the generic airbyte_source /
+    # airbyte_destination resources.
     _source_allowlist_lower = {s.lower() for s in TYPED_SOURCE_ALLOWLIST}
     _dest_allowlist_lower = {d.lower() for d in TYPED_DESTINATION_ALLOWLIST}
     source_names_for_terraform = [

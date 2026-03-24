@@ -5,7 +5,7 @@
 Version 1.0 of the Airbyte Terraform provider introduced **generic connector resources** (`airbyte_source` and `airbyte_destination`) that replace the typed connector-specific resources (e.g., `airbyte_source_postgres`, `airbyte_destination_bigquery`).
 
 > **Removal Notice**
-> Typed connector-specific resources were deprecated in 1.0 and have been **removed in 1.1**. If you are upgrading from a pre-1.1 provider version, you must migrate to the generic resources before upgrading.
+> Typed connector-specific resources were deprecated in 1.0 and have been **removed in 1.1**. If you are upgrading from a pre-1.1 provider version, you must migrate to the generic resources before upgrading to v1.1.
 
 The recommended way to use the generic resources is with the [`airbyte_connector_configuration`](../data-sources/connector_configuration.md) data source, which provides:
 - Automatic `definition_id` resolution from connector name
