@@ -13,9 +13,11 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -74,6 +76,15 @@ func (r *SourceIterableResource) Schema(ctx context.Context, req resource.Schema
 						Required:    true,
 						Sensitive:   true,
 						Description: `Iterable API Key. See the <a href=\"https://docs.airbyte.com/integrations/sources/iterable\">docs</a>  for more information on how to obtain this key.`,
+					},
+					"lookback_window": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(5),
+						Description: `Number of minutes to re-read from the current time when determining the end of each sync window for export-based streams. This accounts for eventual consistency delays in Iterable's Export API, preventing silent data loss for events not yet indexed. Increase this value if you observe missing events near the end of sync windows. Default: 5`,
+						Validators: []validator.Int64{
+							int64validator.AtLeast(0),
+						},
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

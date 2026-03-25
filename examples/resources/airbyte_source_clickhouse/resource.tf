@@ -5,7 +5,6 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
     port            = 8123
-    ssl             = true
     tunnel_method = {
       ssh_key_authentication = {
         ssh_key     = "...my_ssh_key..."
