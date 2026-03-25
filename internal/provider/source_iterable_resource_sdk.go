@@ -22,6 +22,7 @@ func (r *SourceIterableResourceModel) RefreshFromSharedSourceResponse(ctx contex
 		if configurationPriorData != nil {
 			r.Configuration.AdditionalProperties = configurationPriorData.AdditionalProperties
 			r.Configuration.APIKey = configurationPriorData.APIKey
+			r.Configuration.LookbackWindow = configurationPriorData.LookbackWindow
 			r.Configuration.StartDate = configurationPriorData.StartDate
 		}
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
@@ -132,6 +133,12 @@ func (r *SourceIterableResourceModel) ToSharedSourceIterableCreateRequest(ctx co
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var additionalProperties map[string]any
 	if !r.Configuration.AdditionalProperties.IsUnknown() && !r.Configuration.AdditionalProperties.IsNull() {
@@ -139,6 +146,7 @@ func (r *SourceIterableResourceModel) ToSharedSourceIterableCreateRequest(ctx co
 	}
 	configuration := shared.SourceIterable{
 		APIKey:               apiKey,
+		LookbackWindow:       lookbackWindow,
 		StartDate:            startDate,
 		AdditionalProperties: additionalProperties,
 	}
@@ -174,6 +182,12 @@ func (r *SourceIterableResourceModel) ToSharedSourceIterablePutRequest(ctx conte
 	} else {
 		apiKey = nil
 	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -186,6 +200,7 @@ func (r *SourceIterableResourceModel) ToSharedSourceIterablePutRequest(ctx conte
 	}
 	configuration := shared.SourceIterableUpdate{
 		APIKey:               apiKey,
+		LookbackWindow:       lookbackWindow,
 		StartDate:            startDate,
 		AdditionalProperties: additionalProperties,
 	}

@@ -10,5 +10,6 @@ import (
 type SourceIterable struct {
 	AdditionalProperties jsontypes.Normalized `tfsdk:"additional_properties"`
 	APIKey               types.String         `tfsdk:"api_key"`
+	LookbackWindow       types.Int64          `tfsdk:"lookback_window"`
 	StartDate            types.String         `tfsdk:"start_date"`
 }

@@ -17,6 +17,7 @@ resource "airbyte_source_iterable" "my_source_iterable" {
   configuration = {
     additional_properties = "{ \"see\": \"documentation\" }"
     api_key               = "...my_api_key..."
+    lookback_window       = 5
     start_date            = "2021-04-01T00:00:00Z"
   }
   definition_id = "2e875208-0c0b-4ee4-9e92-1cb3156ea799"
@@ -58,6 +59,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
+- `lookback_window` (Number) Number of minutes to re-read from the current time when determining the end of each sync window for export-based streams. This accounts for eventual consistency delays in Iterable's Export API, preventing silent data loss for events not yet indexed. Increase this value if you observe missing events near the end of sync windows. Default: 5
 
 
 <a id="nestedatt--resource_allocation"></a>

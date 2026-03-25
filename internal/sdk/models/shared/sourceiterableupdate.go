@@ -35,6 +35,8 @@ func (e *SourceIterableUpdateSourceType) UnmarshalJSON(data []byte) error {
 type SourceIterableUpdate struct {
 	// Iterable API Key. See the <a href=\"https://docs.airbyte.com/integrations/sources/iterable\">docs</a>  for more information on how to obtain this key.
 	APIKey *string `json:"api_key,omitempty"`
+	// Number of minutes to re-read from the current time when determining the end of each sync window for export-based streams. This accounts for eventual consistency delays in Iterable's Export API, preventing silent data loss for events not yet indexed. Increase this value if you observe missing events near the end of sync windows.
+	LookbackWindow *int64 `default:"5" json:"lookback_window"`
 	// The date from which you'd like to replicate data for Iterable, in the format YYYY-MM-DDT00:00:00Z.  All data generated after this date will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
@@ -58,6 +60,13 @@ func (s *SourceIterableUpdate) GetAPIKey() *string {
 		return nil
 	}
 	return s.APIKey
+}
+
+func (s *SourceIterableUpdate) GetLookbackWindow() *int64 {
+	if s == nil {
+		return nil
+	}
+	return s.LookbackWindow
 }
 
 func (s *SourceIterableUpdate) GetStartDate() *time.Time {
