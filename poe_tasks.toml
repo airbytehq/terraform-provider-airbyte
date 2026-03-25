@@ -17,9 +17,10 @@ uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
 """
 
 [tasks.post-generate]
-help = "Patch provider registrations and tidy Go modules after Speakeasy generation."
+help = "Patch provider registrations, preserve config across API calls, and tidy Go modules after Speakeasy generation."
 shell = """
 python3 scripts/patch_provider_registrations.py internal/provider/provider.go
+python3 scripts/patch_config_preservation.py internal/provider
 go mod tidy
 """
 
