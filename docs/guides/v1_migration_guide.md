@@ -7,6 +7,16 @@ Version 1.0 of the Airbyte Terraform provider introduced **generic connector res
 > **Removal Notice**
 > Typed connector-specific resources were deprecated in 1.0 and have been **removed in 1.1**. If you are upgrading from a pre-1.1 provider version, you must migrate to the generic resources before upgrading to v1.1.
 
+## Recommended upgrade path
+
+To avoid combining version updates with resource migration in a single step, we recommend upgrading in phases:
+
+1. **Upgrade to v1.0** — Typed resources still work but emit deprecation warnings. Your existing configuration continues to function without changes.
+2. **Resolve all deprecation warnings** — Migrate each typed resource to its generic equivalent using `moved` blocks (see [Migration walkthrough](#migration-walkthrough) below). Run `terraform plan` after each change and confirm no destroy actions. Take your time — v1.0 is stable and there is no rush.
+3. **Upgrade to v1.1+** — Once all deprecation warnings are resolved and your `terraform plan` is clean, upgrade the provider version. Since all typed resources have already been replaced, the upgrade is a no-op.
+
+> **Tip:** The `moved` block approach (Step 2) preserves your existing Airbyte resources in-place. Terraform will show `moved` in the plan output, not `create`/`destroy`. This avoids any disruption to running connections.
+
 The recommended way to use the generic resources is with the [`airbyte_connector_configuration`](../data-sources/connector_configuration.md) data source, which provides:
 - Automatic `definition_id` resolution from connector name
 - Optional version pinning via `connector_version` (e.g. `"3.6.28"`)
