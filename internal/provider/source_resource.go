@@ -313,6 +313,10 @@ func (r *SourceResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
+	// PATCHED: Preserve the user's plaintext configuration from the plan
+	// before API calls overwrite it with redacted secrets.
+	preservedConfig := data.Configuration
+
 	request, requestDiags := data.ToSharedSourceCreateRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
 
@@ -388,6 +392,12 @@ func (r *SourceResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
+	// PATCHED: Restore the user's original configuration instead of the
+	// API's redacted values to prevent phantom diffs.
+	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
+		data.Configuration = preservedConfig
+	}
+
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -409,6 +419,10 @@ func (r *SourceResource) Read(ctx context.Context, req resource.ReadRequest, res
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// PATCHED: Preserve the user's configuration from state before the API
+	// overwrites it with redacted secrets ("**********") or secret coordinates.
+	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsGetSourceRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -446,6 +460,11 @@ func (r *SourceResource) Read(ctx context.Context, req resource.ReadRequest, res
 		return
 	}
 
+	// PATCHED: Always restore the user's configuration from state — even
+	// when null (e.g. after terraform import) — so that API redactions are
+	// never persisted into state.
+	data.Configuration = preservedConfig
+
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -463,6 +482,10 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// PATCHED: Preserve the user's plaintext configuration from the plan
+	// before API calls overwrite it with redacted secrets.
+	preservedConfig := data.Configuration
 
 	request, requestDiags := data.ToOperationsPutSourceRequest(ctx)
 	resp.Diagnostics.Append(requestDiags...)
@@ -537,6 +560,12 @@ func (r *SourceResource) Update(ctx context.Context, req resource.UpdateRequest,
 
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// PATCHED: Restore the user's original configuration instead of the
+	// API's redacted values to prevent phantom diffs.
+	if !preservedConfig.IsNull() && !preservedConfig.IsUnknown() {
+		data.Configuration = preservedConfig
 	}
 
 	// Save updated data into Terraform state
