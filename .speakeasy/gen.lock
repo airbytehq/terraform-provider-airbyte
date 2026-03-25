@@ -5,13 +5,13 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.759.3
   generationVersion: 2.869.25
-  releaseVersion: 1.0.3
-  configChecksum: c96eaa6d1e8dacf5045b80b6ad853d4b
+  releaseVersion: 1.1.0
+  configChecksum: 899a24651ba47a8b4dd48f4e9eff7a03
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 4b10caff-0ebd-4cbe-b78b-d90266e6eedb
-  pristine_commit_hash: f6112cfaa4c135787db9bf62ed1f6e02f5dc0b5d
-  pristine_tree_hash: 0ee757b40133b491218e4e7aed08a07eac75c4f8
+  generation_id: 78033d8f-d497-4b8a-87d7-056b58311b60
+  pristine_commit_hash: 8ad59d8ef616c4f2d01d399bcb773088a409191c
+  pristine_tree_hash: 198a9bc298977bc85f33c52df1bb676cc3fa526b
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -74,8 +74,8 @@ trackedFiles:
     pristine_git_object: 8f46fa23e9ff318c727d03f0dcf5a8a677b6e617
   examples/provider/provider.tf:
     id: 954e955c0240
-    last_write_checksum: sha1:bb5fee02eabbae9d3bada50fcbe8cacaa0776cfc
-    pristine_git_object: 6a7df1d00035b8adcfa340511a2afc139b532548
+    last_write_checksum: sha1:3fd88d9aeef6ad77719feba0329952cc6721ad26
+    pristine_git_object: dd951030efb2ef923d1f20bbe5396f0ca810bbc5
   examples/resources/airbyte_connection/import-by-string-id.tf:
     id: 8c04ff01f5ae
     last_write_checksum: sha1:d0e6ff899bd5da0e7018c9420f4face02263ff4c
@@ -1722,8 +1722,8 @@ trackedFiles:
     pristine_git_object: 5b3dc7c122d8ab08905485342d7474f8f163888d
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:6b99c9dc53198f080b82ed3b8dfd2a7fb7df9f19
-    pristine_git_object: d760ca430a2cf4b080881cab594d16e556474c86
+    last_write_checksum: sha1:bfe8c75cad48928242aadf4055d15ab588ff931a
+    pristine_git_object: b591d2f3d97ea29068fa375a1e5a8dba587fbaed
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
