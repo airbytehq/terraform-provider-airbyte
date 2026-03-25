@@ -1,11 +1,21 @@
-# Migrating to 1.0
+# Migrating to Generic Resources
 
 ## Overview
 
-Version 1.0 of the Airbyte Terraform provider introduces **generic connector resources** (`airbyte_source` and `airbyte_destination`) that replace the typed connector-specific resources (e.g., `airbyte_source_postgres`, `airbyte_destination_bigquery`).
+Version 1.0 of the Airbyte Terraform provider introduced **generic connector resources** (`airbyte_source` and `airbyte_destination`) that replace the typed connector-specific resources (e.g., `airbyte_source_postgres`, `airbyte_destination_bigquery`).
 
-> **Deprecation Notice**
-> Typed connector-specific resources are **officially deprecated** as of 1.0. They remain available in 1.0 for backward compatibility but are **targeted for removal in 1.1**. Migrate to the generic resources at your earliest convenience.
+> **Removal Notice**
+> Typed connector-specific resources were deprecated in 1.0 and have been **removed in 1.1**. If you are upgrading from a pre-1.1 provider version, you must migrate to the generic resources before upgrading to v1.1.
+
+## Recommended upgrade path
+
+To avoid combining version updates with resource migration in a single step, we recommend upgrading in phases:
+
+1. **Upgrade to v1.0** — Typed resources still work but emit deprecation warnings. Your existing configuration continues to function without changes.
+2. **Resolve all deprecation warnings** — Migrate each typed resource to its generic equivalent using `moved` blocks (see [Migration walkthrough](#migration-walkthrough) below). Run `terraform plan` after each change and confirm no destroy actions. Take your time — v1.0 is stable and there is no rush.
+3. **Upgrade to v1.1+** — Once all deprecation warnings are resolved and your `terraform plan` is clean, upgrade the provider version. Since all typed resources have already been replaced, the upgrade is a no-op.
+
+> **Tip:** The `moved` block approach (Step 2) preserves your existing Airbyte resources in-place. Terraform will show `moved` in the plan output, not `create`/`destroy`. This avoids any disruption to running connections.
 
 The recommended way to use the generic resources is with the [`airbyte_connector_configuration`](../data-sources/connector_configuration.md) data source, which provides:
 - Automatic `definition_id` resolution from connector name
@@ -137,7 +147,7 @@ moved {
 
 ### Migrating from `_custom` resources
 
-If you are using `airbyte_source_custom` or `airbyte_destination_custom` from a pre-1.0 provider version, these have been replaced by the generic `airbyte_source` and `airbyte_destination` resources. The generic resources have the same contract (JSON configuration, `definition_id`, etc.), so migrating is straightforward:
+If you were using `airbyte_source_custom` or `airbyte_destination_custom` from a pre-1.0 provider version, these have been replaced by the generic `airbyte_source` and `airbyte_destination` resources. The generic resources have the same contract (JSON configuration, `definition_id`, etc.), so migrating is straightforward:
 
 ```hcl
 resource "airbyte_source" "my_source" {
