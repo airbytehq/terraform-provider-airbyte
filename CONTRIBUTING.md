@@ -89,6 +89,44 @@ Releases use a draft-based workflow:
 
 **Important**: Do not check "Set as a pre-release" unless you want to delay Terraform Registry sync.
 
+### Maintenance Branches and Backporting
+
+Following the [HashiCorp convention](https://github.com/terraform-providers/terraform-provider-aws/pull/14177) used by Terraform providers such as `terraform-provider-aws`, this project uses `release/` branches for maintaining older major or minor versions:
+
+| Branch | Purpose |
+|--------|---------|
+| `release/X.Y.x` | Maintenance branch for the `vX.Y` release line (receives patch releases) |
+| `main` | Active development toward the next minor or major release |
+
+The `.x` suffix signals that the branch is a living maintenance branch that will receive future patch releases (e.g., `release/1.0.x` receives `v1.0.3`, `v1.0.4`, etc.).
+
+**When to create a maintenance branch:**
+
+Create a `release/X.Y.x` branch from the latest `vX.Y.z` tag when:
+
+- A new minor or major version is about to be released on `main`
+- Bug fixes still need to be backported to the older version
+
+```bash
+# Example: create a maintenance branch for v1.0.x before releasing v1.1.0
+git checkout -b release/1.0.x v1.0.2
+git push origin release/1.0.x
+```
+
+**Backporting a fix:**
+
+1. Land the fix on `main` first (via PR as usual)
+2. Cherry-pick the fix commit(s) into the `release/X.Y.x` branch
+3. Open a PR targeting `release/X.Y.x` for CI validation
+4. After merging, tag and publish the patch release from the maintenance branch
+
+```bash
+# Example: backport a fix from main to release/1.0.x
+git checkout release/1.0.x
+git cherry-pick <commit-sha>
+git push origin release/1.0.x
+```
+
 ### Local Development
 
 ```bash
