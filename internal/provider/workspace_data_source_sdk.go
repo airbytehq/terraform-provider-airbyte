@@ -4,6 +4,7 @@ package provider
 
 import (
 	"context"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -16,6 +17,7 @@ func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(ctx contex
 	if resp != nil {
 		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.Name = types.StringValue(resp.Name)
+		r.Notifications = &tfTypes.NotificationsConfig{}
 		if resp.Notifications.ConnectionUpdate == nil {
 			r.Notifications.ConnectionUpdate = nil
 		} else {
