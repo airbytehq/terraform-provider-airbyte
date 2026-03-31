@@ -3,22 +3,22 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: 185867d52309adc0fc43c7480cf5ed05
   docVersion: 1.0.0
-  speakeasyVersion: 1.759.3
-  generationVersion: 2.869.25
+  speakeasyVersion: 1.760.0
+  generationVersion: 2.873.1
   releaseVersion: 1.1.1
   configChecksum: 3b02cf3e393710de506b955b0e2c1292
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 45df5169-4e1c-4a31-a4bb-d8ade912c5ab
-  pristine_commit_hash: ab563b623c03b1728d2a12bc545ca1f65f32344d
-  pristine_tree_hash: 3daae6ec7fdd21199bf70724065b95d0e8aee243
+  generation_id: 9cb8c29b-956a-44df-9d52-f4763d5acf72
+  pristine_commit_hash: 30b5c81d40156c0eeb0752717683a20f937e0c4c
+  pristine_tree_hash: a63ba869f21786ce7587990b46290491d49ad742
 features:
   terraform:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.3.2
-    core: 3.46.54
+    core: 3.47.2
     deprecations: 2.82.0
-    globalSecurity: 2.82.2
+    globalSecurity: 2.82.3
     globalServerURLs: 2.83.2
     groups: 2.81.3
     nameOverrides: 2.81.7
@@ -26,7 +26,7 @@ features:
     oauth2ClientCredentials: 0.3.4
     sets: 0.1.2
     typeOverrides: 2.81.1
-    unions: 2.82.14
+    unions: 2.82.15
 trackedFiles:
   .gitattributes:
     id: 24139dae6567
@@ -90,8 +90,8 @@ trackedFiles:
     pristine_git_object: 405ae76268fd75f618ca294ac90ad505b1ec4d0f
   examples/resources/airbyte_declarative_source_definition/import-by-string-id.tf:
     id: 772c17616a60
-    last_write_checksum: sha1:6f625cbea21e9cdbd0329b76acc71752043b18ef
-    pristine_git_object: 3b9bc5f3af05e9c39d66058ba49d0b2a02c7f38c
+    last_write_checksum: sha1:0ba67bf180bb442cabadc20a984fc5f49e967377
+    pristine_git_object: b3ac18fcd5b340d07e4a4176a8692afbe37e7ac8
   examples/resources/airbyte_declarative_source_definition/import.sh:
     id: dbbda6edb2e3
     last_write_checksum: sha1:f9a426064b09be318f47e76e4597ec932a0c2a92
@@ -114,8 +114,8 @@ trackedFiles:
     pristine_git_object: bd45c7c622c92ac875fb758f6fca8273b5946ce7
   examples/resources/airbyte_destination_definition/import-by-string-id.tf:
     id: 9fa6a2a71ef2
-    last_write_checksum: sha1:9f7e397f093593adebe856e227252706db74afdd
-    pristine_git_object: 063f32920091f7537a0ec67ec5a6c5b3981c2cf1
+    last_write_checksum: sha1:067cba73b0c7726e055432c019c03a5134df3a41
+    pristine_git_object: 198263538e60bc25c07679678018e81132438800
   examples/resources/airbyte_destination_definition/import.sh:
     id: bfeddbc1a493
     last_write_checksum: sha1:7e946c2f8a6aefbca21f77f3e5d9287213eeba1a
@@ -150,8 +150,8 @@ trackedFiles:
     pristine_git_object: d5ea44f11a3d396a739579b31be4878e99dea62a
   examples/resources/airbyte_source_definition/import-by-string-id.tf:
     id: 8f31b86f143d
-    last_write_checksum: sha1:c0d7c7dd33e7ee1477dbe018248b6b3ebc06ed21
-    pristine_git_object: 6f8f3d6d566ed0399eeab3fc33902edddd16466a
+    last_write_checksum: sha1:904bacac046df9fc2ba04907270187ee50593919
+    pristine_git_object: 757d7fe50dcea2174795405aef5c3263003b9cd7
   examples/resources/airbyte_source_definition/import.sh:
     id: ed7d5be2ba64
     last_write_checksum: sha1:2f906ff83858c1e05ccc0280651535f3cfeebf2f
@@ -174,8 +174,8 @@ trackedFiles:
     pristine_git_object: 5d8782d844334844f9a70d802b09c01635c89e1c
   go.mod:
     id: c47645c391ad
-    last_write_checksum: sha1:7872b0260402e8107ff3d2ae5c1d046c83055356
-    pristine_git_object: 6ea5e0af5bc076ff7bd5ffa4e8b071425ee3a7c2
+    last_write_checksum: sha1:b2b73af7c5b546b64ffedf9b28bcb78e5cc34c42
+    pristine_git_object: 63fb681d05acc86cda6e72279ace09129d2d515c
   internal/planmodifiers/boolplanmodifier/suppress_diff.go:
     id: 3cf85b98963e
     last_write_checksum: sha1:b8f503b7e3a2aef09ae00e84df772038d382b544
@@ -734,8 +734,8 @@ trackedFiles:
     pristine_git_object: fea212fd470ed6e9a6dd1d0eae1e1cb7affc9138
   internal/sdk/internal/utils/security.go:
     id: 6ebe9eaeb99b
-    last_write_checksum: sha1:573140faaff017cb3bd31e579c6b3949f3d8365b
-    pristine_git_object: 77566aa2c1127569d9de4a1782b58f852d926d0a
+    last_write_checksum: sha1:49fee4e9252239953611e6de36f4682851499ab5
+    pristine_git_object: a2332ee8de013a2121880e4b7be332d3385c6f41
   internal/sdk/internal/utils/union.go:
     id: 183142835cfe
     last_write_checksum: sha1:6dc4477adcb5b703d88949653bba0d4c938c47da
@@ -1722,8 +1722,8 @@ trackedFiles:
     pristine_git_object: 5b3dc7c122d8ab08905485342d7474f8f163888d
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:f871927e40d4039bb8c9b21b2062f2844cf39e50
-    pristine_git_object: 4b91cfa00892e4b5e1080f5933bd8fa7caa277d6
+    last_write_checksum: sha1:626dfad00f10cbec3aca72b9cc6e596111110a26
+    pristine_git_object: 0fb9a9cf5a903b55745048e461b875dccd819f70
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
