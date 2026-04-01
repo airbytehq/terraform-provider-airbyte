@@ -3,15 +3,15 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: 185867d52309adc0fc43c7480cf5ed05
   docVersion: 1.0.0
-  speakeasyVersion: 1.760.0
-  generationVersion: 2.873.1
+  speakeasyVersion: 1.761.0
+  generationVersion: 2.879.1
   releaseVersion: 1.1.1
-  configChecksum: 3b02cf3e393710de506b955b0e2c1292
+  configChecksum: 7dbf16e9a082cfb23a5d440a1b74a3ac
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 9cb8c29b-956a-44df-9d52-f4763d5acf72
-  pristine_commit_hash: 30b5c81d40156c0eeb0752717683a20f937e0c4c
-  pristine_tree_hash: a63ba869f21786ce7587990b46290491d49ad742
+  generation_id: 1f843ba6-c08e-4542-8921-385237ea6dd9
+  pristine_commit_hash: 65e6aa85b0806b0d99c0ab55d58b3ef879943249
+  pristine_tree_hash: 2262fe0a6df35515ccfa3b992d880c4c8f18aed8
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -706,8 +706,8 @@ trackedFiles:
     pristine_git_object: 81e39108a5ed6ccb2af8d0ad2fbd9319927df2e6
   internal/sdk/internal/utils/json.go:
     id: 2231afac3add
-    last_write_checksum: sha1:e5d871ad622d918763ae0633825450d225f7b442
-    pristine_git_object: 2ad94464f06e64558bc86d6ec9862f7c8abb8d23
+    last_write_checksum: sha1:5944e5e562d58c2f4e682006e74b8d46c5b243a5
+    pristine_git_object: 00c249c48f24d994911f3885a6b31431e3da5839
   internal/sdk/internal/utils/oauth2_credentials.go:
     id: 79f015ecdb31
     last_write_checksum: sha1:f9218b6b3dbd11494cc353bf22eb37f0ca654a7d
@@ -1722,8 +1722,8 @@ trackedFiles:
     pristine_git_object: 5b3dc7c122d8ab08905485342d7474f8f163888d
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:626dfad00f10cbec3aca72b9cc6e596111110a26
-    pristine_git_object: 0fb9a9cf5a903b55745048e461b875dccd819f70
+    last_write_checksum: sha1:f0419f123abdcb8ad32bd19a6295686d56f7cc0b
+    pristine_git_object: 4e8597092438d16ee4a95a04b3992a1d5a1d9c3b
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f

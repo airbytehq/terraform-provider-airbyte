@@ -51,6 +51,7 @@ terraform:
   enableTypeDeduplication: false
   environmentVariables: []
   excludeEmptyObjectSchemas: false
+  forwardCompatibleEnumsByDefault: false
   imports:
     option: openapi
     paths:
