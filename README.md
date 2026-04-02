@@ -27,7 +27,7 @@ airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
   * [Authentication](#authentication)
   * [Installation](#installation)
   * [Testing the provider locally](#testing-the-provider-locally)
-  * [Migrating to 1.0](#migrating-to-10)
+  * [Migrating from Pre-1.0](#migrating-from-pre-10)
   * [Authentication](#authentication-1)
   * [Available Resources and Data Sources](#available-resources-and-data-sources)
 
