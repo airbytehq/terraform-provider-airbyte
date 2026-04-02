@@ -92,7 +92,8 @@ jobs:
               DIFF_OUTPUT="${DIFF_OUTPUT}${PROVIDER_DIFF}"$'\n'
           fi
 
-          SDK_DIFF=$(diff -rq internal/sdk/ /tmp/generated/sdk/ 2>&1 || true)
+          # Exclude .gitattributes and .gitignore — these are static repo files, not generated
+          SDK_DIFF=$(diff -rq --exclude='.gitattributes' --exclude='.gitignore' internal/sdk/ /tmp/generated/sdk/ 2>&1 || true)
           if [ -n "$SDK_DIFF" ]; then
               DIFF_OUTPUT="${DIFF_OUTPUT}${SDK_DIFF}"$'\n'
           fi
