@@ -1,27 +1,28 @@
 # Speakeasy SDK Generation Workflow
 #
-# This workflow regenerates the Terraform provider code from the Airbyte connector registry using Speakeasy.
-# It can either create a PR with the regenerated code (default) or run in dry-run mode for validation.
+# This workflow regenerates the Terraform provider code using Speakeasy.
+# It can create a new PR, update an existing PR branch, or run in dry-run mode for validation.
 #
 # Triggers:
 # - On push to main: Auto-generates after every merge to ensure provider stays up-to-date (auto-merge enabled)
-# - Daily schedule (6 AM UTC): Catches connector registry changes that happen outside of PRs (auto-merge enabled)
+# - Daily schedule (6 AM UTC): Catches upstream API spec changes (auto-merge enabled)
 # - Manual workflow_dispatch: For on-demand generation
+# - Slash command (/generate): Regenerates and pushes results back to the PR branch
 # - workflow_call: For validation from other workflows (e.g., PR checks)
 #
 # Generation Process:
-# 1. Fetch connector definitions from the Airbyte connector registry (Cloud + OSS connectors)
-# 2. Generate api_terraform.yaml with connector-specific schemas (using scripts/generate_terraform_spec.py)
-# 3. Upload the generated spec as a GitHub artifact for documentation/debugging
-# 4. Run Speakeasy to generate the Terraform provider code
-# 5. Regenerate Terraform registry docs (`go generate ./...` via poe docs-generate)
-# 6. (If not dry_run) Create a PR with the regenerated code and docs (only if there are changes)
+# 1. Generate api_terraform.yaml from upstream API spec (using scripts/generate_terraform_spec.py)
+# 2. Upload the generated spec as a GitHub artifact for documentation/debugging
+# 3. Run Speakeasy to generate the Terraform provider code
+# 4. Regenerate Terraform registry docs (`go generate ./...` via poe docs-generate)
+# 5. (If PR context) Commit and push regenerated code back to the PR branch
+# 6. (If no PR context and not dry_run) Create a new PR with the regenerated code
 # 7. (If dry_run) Build and verify the generated code compiles
 #
 # How to use:
-# - Go to Actions > Generate > Run workflow
-# - Select the branch to run on (usually main)
-# - Optionally check "Dry run" to validate generation without creating a PR
+# - From a PR: Comment `/generate` to regenerate and push to the PR branch
+# - From Actions: Go to Actions > Generate > Run workflow (creates a new PR)
+# - Optionally check "Dry run" to validate generation without committing
 #
 # For clean regeneration (when API spec has breaking changes):
 # 1. First run the "Clean PR Branch" workflow on an existing Speakeasy PR branch
@@ -30,12 +31,8 @@
 # Note: This workflow calls the Speakeasy CLI directly (instead of using their Docker-based
 # reusable workflow) to allow us to control the Go version via setup-go. This is necessary
 # because the generated code requires Go 1.24+, but Speakeasy's Docker image uses Go 1.23.
-#
-# The spec generation logic is ported from:
-# - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/ApiDocumentationGenerator.kt
-# - https://github.com/airbytehq/airbyte-platform-internal/blob/master/cloud/public-api-spec-generation/src/main/kotlin/io/airbyte/api/publicapi/gradle/tasks/TemplatesForTerraformOpenapiSpec.kt
 
-name: Generate TF Provider (New PR)
+name: Generate TF Provider
 # Note: Top-level permissions are intentionally omitted to allow workflow_call
 # from pull_request triggers (which have restricted permissions).
 # Job-level permissions are used instead.
@@ -44,7 +41,7 @@ name: Generate TF Provider (New PR)
     push:
         branches:
             - main
-    # Daily scheduled generation to catch registry changes
+    # Daily scheduled generation to catch upstream API spec changes
     schedule:
         # Run daily at 6 AM UTC (10 PM PT / 1 AM ET)
         - cron: '0 6 * * *'
@@ -55,7 +52,7 @@ name: Generate TF Provider (New PR)
                 type: boolean
                 default: false
             pr:
-                description: 'PR number'
+                description: 'PR number (if set, pushes results to the PR branch instead of creating a new PR)'
                 type: string
                 required: false
             comment-id:
@@ -105,10 +102,32 @@ jobs:
 
                       > Job started... [Check job output.](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
+            # When triggered from a PR (/generate slash command), resolve the
+            # PR's head branch so we can push results back to it.
+            - name: Resolve PR head branch
+              if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
+              id: pr-branch
+              env:
+                  GH_TOKEN: ${{ steps.get-app-token.outputs.token }}
+                  PR_NUMBER: ${{ github.event.inputs.pr }}
+              run: |
+                  PR_JSON=$(gh api repos/${{ github.repository }}/pulls/${PR_NUMBER})
+                  HEAD_REF=$(echo "$PR_JSON" | jq -r '.head.ref')
+                  IS_FORK=$(echo "$PR_JSON" | jq -r '.head.repo.fork')
+                  echo "head_ref=${HEAD_REF}" >> $GITHUB_OUTPUT
+                  echo "is_fork=${IS_FORK}" >> $GITHUB_OUTPUT
+                  if [ "$IS_FORK" = "true" ]; then
+                      echo "::warning::Cannot push to fork branches. Will create a new PR instead."
+                  fi
+
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
+                  # When pushing to a PR branch, checkout that branch; otherwise default ref
+                  ref: ${{ steps.pr-branch.outputs.head_ref || '' }}
+                  # Use the app token when we need to push back to a PR branch
+                  token: ${{ steps.get-app-token.outputs.token || github.token }}
 
             - name: Install uv
               uses: astral-sh/setup-uv@v5
@@ -219,8 +238,19 @@ jobs:
                       echo "has_changes=false" >> $GITHUB_OUTPUT
                   fi
 
+            # --- PR branch mode: commit and push to the existing PR branch ---
+            - name: Push regenerated code to PR branch
+              if: ${{ !inputs.dry_run && github.event.inputs.pr != '' && steps.pr-branch.outputs.is_fork != 'true' && steps.changes.outputs.has_changes == 'true' }}
+              run: |
+                  git config user.name "octavia-bot[bot]"
+                  git config user.email "octavia-bot[bot]@users.noreply.github.com"
+                  git add -A
+                  git commit -m "chore: regenerate SDK with Speakeasy"
+                  git push
+
+            # --- New PR mode: create a PR to main (push/schedule/manual without PR context) ---
             - name: Authenticate as GitHub App for PR creation
-              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' }}
+              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' && (github.event.inputs.pr == '' || steps.pr-branch.outputs.is_fork == 'true') }}
               uses: actions/create-github-app-token@v2
               id: get-pr-token
               with:
@@ -228,7 +258,7 @@ jobs:
                   private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
 
             - name: Create Pull Request
-              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' }}
+              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' && (github.event.inputs.pr == '' || steps.pr-branch.outputs.is_fork == 'true') }}
               id: create-pr
               uses: peter-evans/create-pull-request@v6
               with:
@@ -237,8 +267,6 @@ jobs:
                   title: "chore: regenerate SDK with Speakeasy"
                   body: |
                       This PR was automatically generated by the Speakeasy SDK generation workflow.
-                      
-                      The spec was generated from the Airbyte connector registry with connector-specific schemas.
                       
                       Please review the changes and merge if they look correct.
                   branch: speakeasy-sdk-regen

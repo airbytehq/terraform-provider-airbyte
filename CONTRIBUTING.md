@@ -51,7 +51,7 @@ The Terraform provider is generated through a multi-step pipeline. Here is the e
 1. **Upstream OpenAPI Spec** — The source-of-truth API definition lives in `airbyte-platform-internal`:\
    [`oss/airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml)
 
-2. **Spec Transformation Script** — A Python script fetches connector definitions from the Airbyte connector registries, merges them with the upstream spec, and produces a Terraform-specific OpenAPI spec:\
+2. **Spec Transformation Script** — A Python script fetches the upstream API spec and injects missing schema/response stubs and security schemes required by Speakeasy:\
    [`scripts/generate_terraform_spec.py`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)
 
 3. **Generated OpenAPI Spec** — The transformation script produces `generated/api_terraform.yaml`, a Terraform-specific OpenAPI spec (gitignored, regenerated fresh each run). This is the spec that [Speakeasy consumes](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/.speakeasy/workflow.yaml).
@@ -152,7 +152,7 @@ uvx --from=poethepoet poe <task-name>
 | Task | Description | Underlying Command |
 |------|-------------|--------------------|
 | `clean-generated` | Delete generated files, preserving hand-written movestate/helpers | `rm -rf internal/sdk` + `find ... -delete` |
-| `generate-spec` | Generate Terraform OpenAPI spec from Airbyte connector registries | `uv run scripts/generate_terraform_spec.py` |
+| `generate-spec` | Generate Terraform OpenAPI spec from upstream API spec | `uv run scripts/generate_terraform_spec.py` |
 | `lint-spec` | Lint the OpenAPI spec for circular references | `speakeasy lint openapi -s generated/api_terraform.yaml` |
 | `generate-code` | Generate Terraform provider code from the OpenAPI spec | `speakeasy run --skip-compile` |
 | `post-generate` | Patch provider registrations and tidy Go modules | `python3 scripts/patch_provider_registrations.py` + `go mod tidy` |
@@ -327,6 +327,4 @@ The OpenAPI spec is maintained in the [airbyte-platform-internal](https://github
 
 ### Updating the Connector Models
 
-In general, no upstream action should be needed to capture updates to upstream connector models.
-
-Connector models are dynamically generated based on the connector definitions in the Airbyte connector registry. You can regenerate this provider at any time to pick up new or updated connector models.
+As of v1.1, typed connector-specific resources (e.g. `airbyte_source_postgres`) have been removed. All connectors are now managed via the generic `airbyte_source` / `airbyte_destination` resources. The spec generation script no longer fetches connector registries or generates connector-specific schemas.

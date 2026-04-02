@@ -1,8 +1,12 @@
-# Validate Speakeasy Generation (Dry Run)
+# Validate Speakeasy Generation (Dry Run) + Zero-Diff Check
 #
-# This workflow validates that Speakeasy generation can complete successfully.
-# It does NOT validate that the generated code matches the committed code (zero-diff).
-# It runs on every PR push but does NOT create PRs or push changes.
+# This workflow validates that Speakeasy generation can complete successfully
+# and that the committed generated code matches what the generation pipeline produces.
+#
+# Jobs:
+# 1. validate: Runs the full generation pipeline in dry-run mode (build + compile check)
+# 2. zero-diff: Compares the dry-run artifacts against the committed code to detect drift.
+#    If drift is detected, the check fails and posts a comment telling the author to run /generate.
 #
 # This workflow calls the main generation workflow with dry_run=true to ensure
 # both workflows use the same generation logic.
@@ -50,3 +54,106 @@ jobs:
     with:
       dry_run: true
     secrets: inherit
+
+  zero-diff:
+    name: Zero-Diff Check (Generated Code)
+    needs: [check-paths, validate]
+    if: needs.check-paths.outputs.should_run == 'true' && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+
+      - name: Download generated provider code artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: generated_provider_code
+          path: /tmp/generated/
+
+      - name: Download generated docs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: generated_docs
+          path: /tmp/generated-docs/
+
+      - name: Compare generated code against committed code
+        id: diff-check
+        run: |
+          echo "=== Comparing generated provider code ==="
+          # Compare internal/provider/ and internal/sdk/ against artifacts
+          DIFF_OUTPUT=""
+
+          # Compare provider code
+          if [ -d /tmp/generated/internal/provider ]; then
+              PROVIDER_DIFF=$(diff -rq internal/provider/ /tmp/generated/internal/provider/ 2>&1 || true)
+              if [ -n "$PROVIDER_DIFF" ]; then
+                  DIFF_OUTPUT="${DIFF_OUTPUT}${PROVIDER_DIFF}"$'\n'
+              fi
+          fi
+
+          if [ -d /tmp/generated/internal/sdk ]; then
+              SDK_DIFF=$(diff -rq internal/sdk/ /tmp/generated/internal/sdk/ 2>&1 || true)
+              if [ -n "$SDK_DIFF" ]; then
+                  DIFF_OUTPUT="${DIFF_OUTPUT}${SDK_DIFF}"$'\n'
+              fi
+          fi
+
+          echo "=== Comparing generated docs ==="
+          if [ -d /tmp/generated-docs ]; then
+              DOCS_DIFF=$(diff -rq docs/ /tmp/generated-docs/ 2>&1 || true)
+              if [ -n "$DOCS_DIFF" ]; then
+                  DIFF_OUTPUT="${DIFF_OUTPUT}${DOCS_DIFF}"$'\n'
+              fi
+          fi
+
+          if [ -n "$DIFF_OUTPUT" ]; then
+              echo "has_diff=true" >> $GITHUB_OUTPUT
+              echo "::warning::Generated code drift detected. The committed code does not match what the generation pipeline produces."
+              echo "$DIFF_OUTPUT" | head -50
+              # Save truncated diff summary for the PR comment
+              echo "$DIFF_OUTPUT" | head -20 > /tmp/diff_summary.txt
+          else
+              echo "has_diff=false" >> $GITHUB_OUTPUT
+              echo "Zero-diff check passed. Committed code matches generation output."
+          fi
+
+      - name: Prepare diff summary
+        if: steps.diff-check.outputs.has_diff == 'true'
+        id: diff-summary
+        run: |
+          SUMMARY=$(cat /tmp/diff_summary.txt 2>/dev/null || echo "(see job logs for full details)")
+          # Escape for GitHub Actions output (multiline)
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "content<<$EOF" >> $GITHUB_OUTPUT
+          echo "$SUMMARY" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+
+      - name: Post drift comment on PR
+        if: steps.diff-check.outputs.has_diff == 'true'
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **Generated Code Drift Detected**
+
+            The committed code does not match what the generation pipeline produces. This usually means a generated file was edited by hand or the generation pipeline needs to be re-run.
+
+            **To fix:** Comment `/generate` on this PR to regenerate and push updated code.
+
+            <details>
+            <summary>Diff summary</summary>
+
+            ```
+            ${{ steps.diff-summary.outputs.content }}
+            ```
+
+            </details>
+
+      - name: Fail if drift detected
+        if: steps.diff-check.outputs.has_diff == 'true'
+        run: |
+          echo "::error::Generated code drift detected. Run /generate on this PR to fix."
+          exit 1
