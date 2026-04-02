@@ -8,6 +8,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 )
 
 func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(ctx context.Context, resp *shared.WorkspaceResponse) diag.Diagnostics {
@@ -16,6 +17,7 @@ func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(ctx contex
 	if resp != nil {
 		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.Name = types.StringValue(resp.Name)
+		r.Notifications = &tfTypes.NotificationsConfig{}
 		if resp.Notifications.ConnectionUpdate == nil {
 			r.Notifications.ConnectionUpdate = nil
 		} else {
