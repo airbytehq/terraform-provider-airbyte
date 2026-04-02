@@ -10,7 +10,7 @@ rm -rf internal/provider/types/
 """
 
 [tasks.generate-spec]
-help = "Generate Terraform OpenAPI spec from Airbyte connector registries."
+help = "Generate Terraform OpenAPI spec from upstream API spec."
 shell = """
 mkdir -p generated
 uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml

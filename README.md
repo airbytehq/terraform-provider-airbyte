@@ -96,11 +96,11 @@ provider_installation {
 ```
 <!-- End Testing the provider locally [usage] -->
 
-## Migrating to 1.0
+## Migrating from Pre-1.0
 
-> **Deprecation Notice:** Typed connector-specific resources (e.g., `airbyte_source_postgres`) are deprecated in 1.0 and targeted for removal in 1.1.
+> **Note:** As of v1.1, typed connector-specific resources (e.g., `airbyte_source_postgres`) have been removed. All connectors are now managed via the generic `airbyte_source` / `airbyte_destination` resources.
 
-If you are using typed resources, see the [Migrating to 1.0](docs/guides/v1_migration_guide.md) guide to move to the generic `airbyte_source` / `airbyte_destination` resources with the `airbyte_connector_configuration` data source for type-validated configuration.
+If you are migrating from a pre-1.0 version, see the [Migration Guide](docs/guides/v1_migration_guide.md) for instructions on moving to the generic resources with the `airbyte_connector_configuration` data source for type-validated configuration.
 
 <!-- Start Authentication [security] -->
 ## Authentication

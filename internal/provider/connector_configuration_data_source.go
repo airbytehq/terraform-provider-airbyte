@@ -263,7 +263,7 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch connector metadata from %s: %w", url, err)
 	}
-	defer httpResp.Body.Close()
+	defer func() { _ = httpResp.Body.Close() }()
 
 	if httpResp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("connector metadata endpoint %s returned HTTP %d", url, httpResp.StatusCode)
@@ -318,7 +318,7 @@ func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, r
 	if err != nil {
 		return "", fmt.Errorf("failed to fetch registry from %s: %w", registryURL, err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("registry %s returned HTTP %d", registryURL, resp.StatusCode)
