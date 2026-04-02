@@ -82,38 +82,29 @@ jobs:
       - name: Compare generated code against committed code
         id: diff-check
         run: |
-          echo "=== Comparing generated provider code ==="
-          # Compare internal/provider/ and internal/sdk/ against artifacts
           DIFF_OUTPUT=""
 
-          # Compare provider code
-          if [ -d /tmp/generated/internal/provider ]; then
-              PROVIDER_DIFF=$(diff -rq internal/provider/ /tmp/generated/internal/provider/ 2>&1 || true)
-              if [ -n "$PROVIDER_DIFF" ]; then
-                  DIFF_OUTPUT="${DIFF_OUTPUT}${PROVIDER_DIFF}"$'\n'
-              fi
+          echo "=== Comparing generated provider code ==="
+          PROVIDER_DIFF=$(diff -rq internal/provider/ /tmp/generated/internal/provider/ 2>&1 || true)
+          if [ -n "$PROVIDER_DIFF" ]; then
+              DIFF_OUTPUT="${DIFF_OUTPUT}${PROVIDER_DIFF}"$'\n'
           fi
 
-          if [ -d /tmp/generated/internal/sdk ]; then
-              SDK_DIFF=$(diff -rq internal/sdk/ /tmp/generated/internal/sdk/ 2>&1 || true)
-              if [ -n "$SDK_DIFF" ]; then
-                  DIFF_OUTPUT="${DIFF_OUTPUT}${SDK_DIFF}"$'\n'
-              fi
+          SDK_DIFF=$(diff -rq internal/sdk/ /tmp/generated/internal/sdk/ 2>&1 || true)
+          if [ -n "$SDK_DIFF" ]; then
+              DIFF_OUTPUT="${DIFF_OUTPUT}${SDK_DIFF}"$'\n'
           fi
 
           echo "=== Comparing generated docs ==="
-          if [ -d /tmp/generated-docs ]; then
-              DOCS_DIFF=$(diff -rq docs/ /tmp/generated-docs/ 2>&1 || true)
-              if [ -n "$DOCS_DIFF" ]; then
-                  DIFF_OUTPUT="${DIFF_OUTPUT}${DOCS_DIFF}"$'\n'
-              fi
+          DOCS_DIFF=$(diff -rq docs/ /tmp/generated-docs/ 2>&1 || true)
+          if [ -n "$DOCS_DIFF" ]; then
+              DIFF_OUTPUT="${DIFF_OUTPUT}${DOCS_DIFF}"$'\n'
           fi
 
           if [ -n "$DIFF_OUTPUT" ]; then
               echo "has_diff=true" >> $GITHUB_OUTPUT
               echo "::warning::Generated code drift detected. The committed code does not match what the generation pipeline produces."
               echo "$DIFF_OUTPUT" | head -50
-              # Save truncated diff summary for the PR comment
               echo "$DIFF_OUTPUT" | head -20 > /tmp/diff_summary.txt
           else
               echo "has_diff=false" >> $GITHUB_OUTPUT
