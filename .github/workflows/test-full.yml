@@ -85,12 +85,14 @@ jobs:
           DIFF_OUTPUT=""
 
           echo "=== Comparing generated provider code ==="
-          PROVIDER_DIFF=$(diff -rq internal/provider/ /tmp/generated/internal/provider/ 2>&1 || true)
+          # upload-artifact strips paths to the least common ancestor (internal/),
+          # so artifacts are at /tmp/generated/provider/ and /tmp/generated/sdk/
+          PROVIDER_DIFF=$(diff -rq internal/provider/ /tmp/generated/provider/ 2>&1 || true)
           if [ -n "$PROVIDER_DIFF" ]; then
               DIFF_OUTPUT="${DIFF_OUTPUT}${PROVIDER_DIFF}"$'\n'
           fi
 
-          SDK_DIFF=$(diff -rq internal/sdk/ /tmp/generated/internal/sdk/ 2>&1 || true)
+          SDK_DIFF=$(diff -rq internal/sdk/ /tmp/generated/sdk/ 2>&1 || true)
           if [ -n "$SDK_DIFF" ]; then
               DIFF_OUTPUT="${DIFF_OUTPUT}${SDK_DIFF}"$'\n'
           fi
@@ -122,12 +124,23 @@ jobs:
           echo "$SUMMARY" >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
 
+      - name: Find existing drift comment
+        if: steps.diff-check.outputs.has_diff == 'true'
+        uses: peter-evans/find-comment@v3
+        id: find-drift-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: '<!-- zero-diff-check -->'
+
       - name: Post drift comment on PR
         if: steps.diff-check.outputs.has_diff == 'true'
         uses: peter-evans/create-or-update-comment@v5
         with:
           issue-number: ${{ github.event.pull_request.number }}
+          comment-id: ${{ steps.find-drift-comment.outputs.comment-id || '' }}
+          edit-mode: replace
           body: |
+            <!-- zero-diff-check -->
             **Generated Code Drift Detected**
 
             The committed code does not match what the generation pipeline produces. This usually means a generated file was edited by hand or the generation pipeline needs to be re-run.

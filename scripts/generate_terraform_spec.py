@@ -119,7 +119,7 @@ def main() -> None:
         "--base-spec",
         type=str,
         default=BASE_API_SPEC_URL,
-        help="URL or path to the base API spec",
+        help="URL to the base API spec",
     )
     args = parser.parse_args()
 
@@ -142,9 +142,8 @@ def main() -> None:
             responses_line_idx = i
         if line == "  schemas:":
             schemas_line_idx = i
-        if line == "  securitySchemes:":
+        if line == "  securitySchemes:" and security_schemes_line_idx is None:
             security_schemes_line_idx = i
-            break
 
     if components_line_idx is None:
         msg = "Could not find 'components:' section in base spec"
@@ -163,7 +162,7 @@ def main() -> None:
     output_parts.append("\n".join(base_lines[:components_line_idx]))
 
     # Part 2: Add components section with injected missing responses
-    if responses_line_idx and schemas_line_idx:
+    if responses_line_idx is not None and schemas_line_idx is not None:
         # Include components up to and including responses section header
         output_parts.append("\n".join(base_lines[components_line_idx:responses_line_idx + 1]))
         # Existing responses (between responses: and schemas:)

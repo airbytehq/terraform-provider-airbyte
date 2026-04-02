@@ -48,8 +48,8 @@ The Terraform provider is generated through a multi-step pipeline. Here is the e
 
 ### Step-by-step details
 
-1. **Upstream OpenAPI Spec** — The source-of-truth API definition lives in `airbyte-platform-internal`:\
-   [`oss/airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml)
+1. **Upstream OpenAPI Spec** — The source-of-truth API definition lives in `airbyte-platform`:\
+   [`airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform/blob/main/airbyte-api/server-api/src/main/openapi/api.yaml)
 
 2. **Spec Transformation Script** — A Python script fetches the upstream API spec and injects missing schema/response stubs and security schemes required by Speakeasy:\
    [`scripts/generate_terraform_spec.py`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)

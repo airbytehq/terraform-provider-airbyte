@@ -114,17 +114,17 @@ jobs:
                   PR_JSON=$(gh api repos/${{ github.repository }}/pulls/${PR_NUMBER})
                   HEAD_REF=$(echo "$PR_JSON" | jq -r '.head.ref')
                   IS_FORK=$(echo "$PR_JSON" | jq -r '.head.repo.fork')
-                  echo "head_ref=${HEAD_REF}" >> $GITHUB_OUTPUT
-                  echo "is_fork=${IS_FORK}" >> $GITHUB_OUTPUT
                   if [ "$IS_FORK" = "true" ]; then
-                      echo "::warning::Cannot push to fork branches. Will create a new PR instead."
+                      echo "::error::Cannot run /generate on fork PRs. Please regenerate locally."
+                      exit 1
                   fi
+                  echo "head_ref=${HEAD_REF}" >> $GITHUB_OUTPUT
 
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-                  # When pushing to a PR branch, checkout that branch; otherwise default ref
+                  # When pushing to a PR branch, checkout that branch; otherwise use default ref
                   ref: ${{ steps.pr-branch.outputs.head_ref || '' }}
                   # Use the app token when we need to push back to a PR branch
                   token: ${{ steps.get-app-token.outputs.token || github.token }}
@@ -240,7 +240,7 @@ jobs:
 
             # --- PR branch mode: commit and push to the existing PR branch ---
             - name: Push regenerated code to PR branch
-              if: ${{ !inputs.dry_run && github.event.inputs.pr != '' && steps.pr-branch.outputs.is_fork != 'true' && steps.changes.outputs.has_changes == 'true' }}
+              if: ${{ !inputs.dry_run && github.event.inputs.pr != '' && steps.changes.outputs.has_changes == 'true' }}
               run: |
                   git config user.name "octavia-bot[bot]"
                   git config user.email "octavia-bot[bot]@users.noreply.github.com"
@@ -250,7 +250,7 @@ jobs:
 
             # --- New PR mode: create a PR to main (push/schedule/manual without PR context) ---
             - name: Authenticate as GitHub App for PR creation
-              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' && (github.event.inputs.pr == '' || steps.pr-branch.outputs.is_fork == 'true') }}
+              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' && github.event.inputs.pr == '' }}
               uses: actions/create-github-app-token@v2
               id: get-pr-token
               with:
@@ -258,7 +258,7 @@ jobs:
                   private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
 
             - name: Create Pull Request
-              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' && (github.event.inputs.pr == '' || steps.pr-branch.outputs.is_fork == 'true') }}
+              if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' && github.event.inputs.pr == '' }}
               id: create-pr
               uses: peter-evans/create-pull-request@v6
               with:
