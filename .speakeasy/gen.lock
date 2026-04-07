@@ -1,7 +1,7 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 3834ad0239bb9fd13390f1c374c4a893
+  docChecksum: 7b3a8c437d8ea05036b502612efb5c69
   docVersion: 1.0.0
   speakeasyVersion: 1.761.1
   generationVersion: 2.879.6
@@ -9,9 +9,9 @@ management:
   configChecksum: 7dbf16e9a082cfb23a5d440a1b74a3ac
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: 6f26c735-c1da-4311-bbc5-b8812aa6f178
-  pristine_commit_hash: 356a7b37cd0b4f25e3e7c866b744281d3bbf4513
-  pristine_tree_hash: 27e2c1aaa3fd26c2111a191a6c6944c995ed789a
+  generation_id: 3dee43a4-0bd1-4b22-8a59-fa7b1067837c
+  pristine_commit_hash: facb76fe02a2a433cc31ffdad9d623a769132f24
+  pristine_tree_hash: 814c754402c331b38aa34eaa29b005d7a71ceec8
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -632,10 +632,6 @@ trackedFiles:
     id: 2ad2a1ad4815
     last_write_checksum: sha1:add649ccaeb3e3b5cfc2ceb5c5c63fa50c9bbdbd
     pristine_git_object: 54c48a8ed62de3e819c9a13b52ebf9d07d504939
-  internal/sdk/connectiontemplates.go:
-    id: 13017558f336
-    last_write_checksum: sha1:ee40baf4eb337d02c0aff97a5f7833c23e7ebb59
-    pristine_git_object: a4f4a9aaf7f1444be72155b9999308818833980c
   internal/sdk/connectordefinitions.go:
     id: 7f37e8d9961c
     last_write_checksum: sha1:ae5669ae876754f85029c44a0b2fab7c72da2145
@@ -772,10 +768,6 @@ trackedFiles:
     id: f981c424b67a
     last_write_checksum: sha1:ebef9f35ca92da8805f19363083a8837118b6a3e
     pristine_git_object: 42bdcd389a99797e341ffa411c105e76de753442
-  internal/sdk/models/operations/createconnectiontemplate.go:
-    id: 43582d0b39c5
-    last_write_checksum: sha1:bba2a6804597ef072080c3401a8b6fdf8c35e99d
-    pristine_git_object: a8e7c3569246f0086f45f59be3d0070c821ffa1d
   internal/sdk/models/operations/createdataplane.go:
     id: 746b8b047d16
     last_write_checksum: sha1:3f22b31631c0bb5fc54699a0db271435f9b476be
@@ -1180,14 +1172,6 @@ trackedFiles:
     id: b4c06c25f6d9
     last_write_checksum: sha1:f9cf2106231b4be0e86a5798f935bf592fa0c266
     pristine_git_object: a823d56b75ffbedb05c0d7e74e466a1894ca7ea9
-  internal/sdk/models/shared/connectiontemplatecreaterequestbody.go:
-    id: a1cd1549e31f
-    last_write_checksum: sha1:130cdc3ecd1e332033a77f6583e6d1e6dec7f024
-    pristine_git_object: 3effe747a55fcb1d834e3e358fc361864728d081
-  internal/sdk/models/shared/connectiontemplatecreateresponse.go:
-    id: 7029355954d3
-    last_write_checksum: sha1:db7366ba5f368e9d2123658fd763d749c5eca734
-    pristine_git_object: d93f6eabc97346db3ee4666692f73b6a83df901e
   internal/sdk/models/shared/connectordefinitionresponse.go:
     id: 793e0b14a3c6
     last_write_checksum: sha1:2c460c1d5e3f224c969b9c03cc23a0be31106ade
@@ -1408,14 +1392,6 @@ trackedFiles:
     id: 5f42ee8b9e35
     last_write_checksum: sha1:5c04aaa81258174316f84f4471626726e4a4e961
     pristine_git_object: 8e7ae99dce31d8b030bfcf33d311b804d09d680f
-  internal/sdk/models/shared/namespacedefinitiontype.go:
-    id: 26476a2da5d4
-    last_write_checksum: sha1:87513da82d1d7b22d3497451662c6aa197251770
-    pristine_git_object: 87394a638383fe2f40ed51d069ba7c188702bb1f
-  internal/sdk/models/shared/nonbreakingchangespreference.go:
-    id: cc1ca49257ea
-    last_write_checksum: sha1:f95e027d507ecd273e03f58853025af458b81b6f
-    pristine_git_object: 855084c4009a0d774c708233da1160fb58bfbdd7
   internal/sdk/models/shared/nonbreakingschemaupdatesbehaviorenum.go:
     id: 4ae23165c5b0
     last_write_checksum: sha1:2db4eb7cb190b4f1d3962321452fea71c57d712b
@@ -1670,8 +1646,8 @@ trackedFiles:
     pristine_git_object: 5b3dc7c122d8ab08905485342d7474f8f163888d
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:abb815b41c9f4fb783851faf64735bef93c297af
-    pristine_git_object: 255b2dc3571a9dafd94b2df0c381b1ee2c488eaa
+    last_write_checksum: sha1:f13e0dc507f412cd7eab0349a4ccb6a919e2a630
+    pristine_git_object: 7bccfd4e145f05e491d39e6295846463d8325d11
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f

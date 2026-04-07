@@ -54,7 +54,6 @@ type SDK struct {
 	PublicRoot                   *PublicRoot
 	Public                       *Public
 	Health                       *Health
-	ConnectionTemplates          *ConnectionTemplates
 	Applications                 *Applications
 	Jobs                         *Jobs
 	Regions                      *Regions
@@ -177,7 +176,6 @@ func New(opts ...SDKOption) *SDK {
 	sdk.PublicRoot = newPublicRoot(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Public = newPublic(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Health = newHealth(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.ConnectionTemplates = newConnectionTemplates(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Applications = newApplications(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Jobs = newJobs(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Regions = newRegions(sdk, sdk.sdkConfiguration, sdk.hooks)
