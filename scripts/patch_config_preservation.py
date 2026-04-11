@@ -4,19 +4,19 @@ configuration across API calls, preventing phantom diffs caused by the Airbyte
 API returning redacted secrets.
 
 After Speakeasy regenerates these files, this script inserts save/restore logic
-for ``data.Configuration`` in the Create, Read, and Update methods of both
+for `data.Configuration` in the Create, Read, and Update methods of both
 resources.
 
 **Why this is needed:**
 
-The Airbyte API returns ``**********`` (or secret coordinates) instead of
+The Airbyte API returns `**********` (or secret coordinates) instead of
 plaintext secret values.  When Terraform's Read/refresh stores those redacted
-values in state, the next ``terraform plan`` sees a diff between the user's
+values in state, the next `terraform plan` sees a diff between the user's
 real config and the masked one — even though nothing changed.
 
-The fix captures ``data.Configuration`` before any API call and restores it
+The fix captures `data.Configuration` before any API call and restores it
 before the state is saved.  In the Read method the restore is unconditional
-(covers the ``terraform import`` case where config may be null).  In Create
+(covers the `terraform import` case where config may be null).  In Create
 and Update the restore is guarded so that null/unknown values are not written.
 
 Resolves: https://github.com/airbytehq/terraform-provider-airbyte/issues/389
@@ -25,7 +25,7 @@ Prior fix: https://github.com/airbytehq/terraform-provider-airbyte/pull/362
 Usage:
     python3 scripts/patch_config_preservation.py [directory]
 
-If *directory* is omitted it defaults to ``internal/provider``.
+If *directory* is omitted it defaults to `internal/provider`.
 """
 
 from __future__ import annotations
@@ -43,7 +43,7 @@ SENTINEL = "// PATCHED: Preserve the user"
 # ---------------------------------------------------------------------------
 # Each tuple is (anchor_text, replacement_text).
 # anchor_text must appear *exactly* in the generated file.  The replacement
-# text includes the anchor so the patch is a simple ``str.replace``.
+# text includes the anchor so the patch is a simple `str.replace`.
 
 # ── Source ─────────────────────────────────────────────────────────────────
 
@@ -195,10 +195,10 @@ def _inject_restore_before_save_state(
     restore_block: str,
     label: str,
 ) -> str:
-    """Insert *restore_block* immediately before the ``// Save updated data``
+    """Insert *restore_block* immediately before the `// Save updated data`
     comment that lives inside the method identified by *method_signature*.
 
-    We locate the method first, then find the *last* ``// Save updated data``
+    We locate the method first, then find the *last* `// Save updated data`
     line inside that method body to handle generated code that may contain
     multiple such comments (e.g. Create calls Get after the initial create).
     """
