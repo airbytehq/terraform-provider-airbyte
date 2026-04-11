@@ -33,7 +33,10 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-SENTINEL = "preservedConfig"
+# Unique sentinel used by _already_patched() to detect prior patching.
+# This exact string is injected by every preserve block, so its presence
+# reliably indicates the file has already been patched.
+SENTINEL = "// PATCHED: Preserve the user"
 
 # ---------------------------------------------------------------------------
 # Patch definitions
@@ -133,7 +136,9 @@ DEST_UPDATE_REPLACEMENT = """\
 # ── Restore blocks (shared pattern) ───────────────────────────────────────
 # In Create and Update the restore is conditional; in Read it is unconditional.
 
-SAVE_STATE_LINE = "\t// Save updated data into Terraform state\n"
+# Match only the stable comment text so restore injection is resilient to
+# CRLF/LF differences and indentation changes in generated files.
+SAVE_STATE_MARKER = "Save updated data into Terraform state"
 
 
 def _restore_block_conditional() -> str:
@@ -217,13 +222,17 @@ def _inject_restore_before_save_state(
                 break
 
     method_body = content[method_start:method_end]
-    # Find the *last* occurrence of the save-state line in the method.
-    last_save_idx = method_body.rfind(SAVE_STATE_LINE)
+    # Find the *last* occurrence of the save-state marker in the method.
+    last_save_idx = method_body.rfind(SAVE_STATE_MARKER)
     if last_save_idx == -1:
-        print(f"  WARNING: save-state line not found for {label} restore — skipping", file=sys.stderr)
+        print(f"  WARNING: save-state marker not found for {label} restore — skipping", file=sys.stderr)
         return content
 
-    abs_idx = method_start + last_save_idx
+    # Walk backwards to the beginning of the line containing the marker.
+    line_start = method_body.rfind("\n", 0, last_save_idx)
+    line_start = 0 if line_start == -1 else line_start + 1
+
+    abs_idx = method_start + line_start
     content = content[:abs_idx] + restore_block + content[abs_idx:]
     print(f"  Injected restore for {label}")
     return content
@@ -302,6 +311,7 @@ def main() -> None:
         sys.exit(1)
 
     changed = False
+    errors = False
 
     for filename, patcher in [
         ("source_resource.go", patch_source),
@@ -309,7 +319,8 @@ def main() -> None:
     ]:
         filepath = provider_dir / filename
         if not filepath.exists():
-            print(f"WARNING: {filepath} not found — skipping", file=sys.stderr)
+            print(f"ERROR: {filepath} not found", file=sys.stderr)
+            errors = True
             continue
 
         print(f"Patching {filepath} ...")
@@ -321,6 +332,23 @@ def main() -> None:
             print(f"  ✓ {filepath} patched")
         else:
             print(f"  (no changes needed)")
+
+        # Verify all expected injections are present.
+        final = filepath.read_text()
+        expected_count = 3  # Create + Read + Update
+        actual_preserve = final.count("preservedConfig :=")
+        actual_restore = final.count("data.Configuration = preservedConfig")
+        if actual_preserve < expected_count or actual_restore < expected_count:
+            print(
+                f"  ERROR: {filepath} has {actual_preserve} preserve and "
+                f"{actual_restore} restore injections (expected {expected_count} each)",
+                file=sys.stderr,
+            )
+            errors = True
+
+    if errors:
+        print("FATAL: one or more patching errors occurred — failing.", file=sys.stderr)
+        sys.exit(1)
 
     if not changed:
         print("No files were modified.")
