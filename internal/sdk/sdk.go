@@ -2,7 +2,7 @@
 
 package sdk
 
-// Generated from OpenAPI doc version 1.0.0 and generator version 2.869.25
+// Generated from OpenAPI doc version 1.0.0 and generator version 2.879.6
 
 import (
 	"context"
@@ -54,8 +54,6 @@ type SDK struct {
 	PublicRoot                   *PublicRoot
 	Public                       *Public
 	Health                       *Health
-	ConfigTemplates              *ConfigTemplates
-	ConnectionTemplates          *ConnectionTemplates
 	Applications                 *Applications
 	Jobs                         *Jobs
 	Regions                      *Regions
@@ -152,9 +150,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
-		SDKVersion: "1.1.0",
+		SDKVersion: "1.1.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/terraform 1.1.0 2.869.25 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			UserAgent:  "speakeasy-sdk/terraform 1.1.1 2.879.6 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -178,8 +176,6 @@ func New(opts ...SDKOption) *SDK {
 	sdk.PublicRoot = newPublicRoot(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Public = newPublic(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Health = newHealth(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.ConfigTemplates = newConfigTemplates(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.ConnectionTemplates = newConnectionTemplates(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Applications = newApplications(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Jobs = newJobs(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Regions = newRegions(sdk, sdk.sdkConfiguration, sdk.hooks)
