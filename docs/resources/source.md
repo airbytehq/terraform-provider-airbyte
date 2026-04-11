@@ -97,7 +97,7 @@ For full details including alternative methods for older Terraform versions, see
 
 ### Required
 
-- `configuration` (String) The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source. Parsed as JSON.
+- `configuration` (String, Sensitive) The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source. Parsed as JSON.
 - `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String) Requires replacement if changed.
 
