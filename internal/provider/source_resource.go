@@ -63,6 +63,7 @@ func (r *SourceResource) Schema(ctx context.Context, req resource.SchemaRequest,
 			"configuration": schema.StringAttribute{
 				CustomType: jsontypes.NormalizedType{},
 				Required:   true,
+				Sensitive:  true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
