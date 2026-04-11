@@ -48,38 +48,56 @@ def patch_file(filepath: Path) -> bool:
 
     content = filepath.read_text()
 
-    # --- Already patched? ---
-    if SENSITIVE_LINE in content:
+    # --- Find and validate the configuration attribute block ---
+    config_count = content.count(CONFIG_CONTEXT)
+    if config_count != 1:
+        print(
+            f"ERROR: Expected exactly 1 configuration attribute block in {filepath.name}, "
+            f"found {config_count}. Speakeasy output may have changed format.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    config_idx = content.find(CONFIG_CONTEXT)
+
+    # Find the closing brace of the configuration attribute block.
+    config_end_idx = content.find("\n\t\t\t},", config_idx)
+    if config_end_idx == -1:
+        print(
+            f"ERROR: Could not find the end of the configuration attribute block in "
+            f"{filepath.name}. Speakeasy output may have changed format.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    config_block = content[config_idx:config_end_idx]
+
+    # --- Already patched? (scoped to configuration block) ---
+    if SENSITIVE_LINE in config_block:
         print(f"  Skipping {filepath.name} (already patched)")
         return False
 
-    # --- Find the configuration attribute block ---
-    config_idx = content.find(CONFIG_CONTEXT)
-    if config_idx == -1:
+    # --- Find and validate the anchor line within the configuration block ---
+    anchor_count = config_block.count(ANCHOR_LINE)
+    if anchor_count != 1:
         print(
-            f"ERROR: Could not find configuration attribute block in {filepath.name}. "
-            f"Speakeasy output may have changed format.",
+            f"ERROR: Expected exactly 1 anchor line (Required: true) in configuration "
+            f"attribute of {filepath.name}, found {anchor_count}.",
             file=sys.stderr,
         )
         sys.exit(1)
 
-    # --- Find the anchor line within the configuration block ---
-    anchor_idx = content.find(ANCHOR_LINE, config_idx)
-    if anchor_idx == -1:
-        print(
-            f"ERROR: Could not find anchor line (Required: true) in configuration "
-            f"attribute of {filepath.name}.",
-            file=sys.stderr,
-        )
-        sys.exit(1)
+    anchor_relative_idx = config_block.find(ANCHOR_LINE)
+    anchor_idx = config_idx + anchor_relative_idx
 
     # Sanity check: the anchor should be close to the config context (within ~200 chars)
-    if anchor_idx - config_idx > 200:
+    if anchor_relative_idx > 200:
         print(
-            f"WARNING: Anchor line is far from configuration block in {filepath.name} "
-            f"(offset {anchor_idx - config_idx}). Proceeding anyway.",
+            f"ERROR: Anchor line is too far from configuration block in {filepath.name} "
+            f"(offset {anchor_relative_idx}). Speakeasy output may have changed format.",
             file=sys.stderr,
         )
+        sys.exit(1)
 
     # --- Insert Sensitive: true after the anchor ---
     insert_point = anchor_idx + len(ANCHOR_LINE)
