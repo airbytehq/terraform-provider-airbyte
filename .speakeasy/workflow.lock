@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:d5b655eb4bd2d2258ba79a05a9bf1d5dfd5c6571b999827131e24d4345c4ad34
         tags:
             - latest
-            - main
+            - devin-1776102146-fix-connection-stream-drift
             - 1.0.0
     my-source:
         sourceNamespace: my-source
