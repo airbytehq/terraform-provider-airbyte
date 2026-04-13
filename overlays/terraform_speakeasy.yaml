@@ -155,3 +155,39 @@ actions:
     description: "Mark generic destination configuration as sensitive (patch)"
     update:
       x-speakeasy-param-sensitive: true
+
+  # =============================================================================
+  # Connection Stream Drift Fixes
+  # =============================================================================
+  # Fix perpetual drift and apply failures when streams have heterogeneous
+  # source-defined cursor_field/primary_key values (e.g., Salesforce, HubSpot).
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/374
+
+  # --- Layer 1: streams Set → List ---
+  # The upstream spec defines StreamConfigurations.streams with `format: set`,
+  # which causes Speakeasy to generate SetNestedAttribute. Terraform Sets use
+  # hash-based element matching; when config elements have Unknown computed
+  # fields and state elements have Known values, Terraform can't hash-match
+  # them, causing computed values to get swapped between streams when ordering
+  # differs. Removing `format: set` makes Speakeasy generate ListNestedAttribute
+  # instead, which uses stable positional correlation.
+  - target: "$.components.schemas.StreamConfigurations.properties.streams.format"
+    description: "Remove format:set from streams to generate ListNestedAttribute instead of SetNestedAttribute"
+    remove: true
+
+  # --- Layer 2: Make cursorField/primaryKey nullable ---
+  # The upstream spec defines cursorField and primaryKey as non-nullable,
+  # non-required arrays. Without nullable, Speakeasy generates unconditional
+  # serialization that always sends these values in API requests — even when
+  # the user didn't specify them. This causes source-defined values to
+  # round-trip back to the API and creates drift. Making them nullable
+  # generates nil guards that omit them when unset.
+  - target: "$.components.schemas.StreamConfiguration.properties.cursorField"
+    description: "Make cursorField nullable to generate nil guards for source-defined values"
+    update:
+      nullable: true
+
+  - target: "$.components.schemas.StreamConfiguration.properties.primaryKey"
+    description: "Make primaryKey nullable to generate nil guards for source-defined values"
+    update:
+      nullable: true
