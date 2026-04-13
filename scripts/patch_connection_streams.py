@@ -4,16 +4,16 @@ fixes for stream drift (issue #374).
 
 The overlay (overlays/terraform_speakeasy.yaml) applies two spec-level fixes:
 
-  Layer 1 — removes ``format: set`` from StreamConfigurations.streams so that
-            Speakeasy generates ``ListNestedAttribute`` instead of
-            ``SetNestedAttribute``.
+  Layer 1 - removes `format: set` from StreamConfigurations.streams so that
+            Speakeasy generates `ListNestedAttribute` instead of
+            `SetNestedAttribute`.
 
-  Layer 2 — adds ``nullable: true`` to cursorField and primaryKey so that
+  Layer 2 - adds `nullable: true` to cursorField and primaryKey so that
             Speakeasy generates nil-guarded (pointer-typed) serialisation,
             omitting these fields when the user hasn't set them.
 
-This script **validates** that the generated Go code reflects both fixes.  It
-runs as part of ``poe post-generate`` and will exit non-zero if the overlay
+This script validates that the generated Go code reflects both fixes.  It
+runs as part of `poe post-generate` and will exit non-zero if the overlay
 did not produce the expected output.
 """
 
