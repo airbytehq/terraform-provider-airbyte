@@ -1,4 +1,4 @@
-speakeasyVersion: 1.761.3
+speakeasyVersion: 1.761.4
 sources:
     airbyte-api:
         sourceNamespace: my-source
@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:d5b655eb4bd2d2258ba79a05a9bf1d5dfd5c6571b999827131e24d4345c4ad34
         tags:
             - latest
-            - devin-1776102146-fix-connection-stream-drift
+            - main
             - 1.0.0
     my-source:
         sourceNamespace: my-source
