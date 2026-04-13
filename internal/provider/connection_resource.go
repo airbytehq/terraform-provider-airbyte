@@ -78,11 +78,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
-					"streams": schema.SetNestedAttribute{
+					"streams": schema.ListNestedAttribute{
 						Computed: true,
 						Optional: true,
-						PlanModifiers: []planmodifier.Set{
-							speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 						},
 						NestedObject: schema.NestedAttributeObject{
 							Validators: []validator.Object{

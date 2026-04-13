@@ -69,7 +69,7 @@ Read-Only:
 
 Read-Only:
 
-- `streams` (Attributes Set) (see [below for nested schema](#nestedatt--data--configurations--streams))
+- `streams` (Attributes List) (see [below for nested schema](#nestedatt--data--configurations--streams))
 
 <a id="nestedatt--data--configurations--streams"></a>
 ### Nested Schema for `data.configurations.streams`
