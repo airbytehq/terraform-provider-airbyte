@@ -103,7 +103,7 @@ func TestFetchVersionedMetadata_Success(t *testing.T) {
 
 	resp, err := ds.httpClient.Do(req)
 	require.NoError(t, err)
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 
@@ -137,7 +137,7 @@ func TestFetchVersionedMetadata_LatestDefault(t *testing.T) {
 	client := server.Client()
 	resp, err := client.Do(req)
 	require.NoError(t, err)
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	var entry connectorVersionedEntry
 	err = json.NewDecoder(resp.Body).Decode(&entry)
@@ -163,7 +163,7 @@ func TestFetchVersionedMetadata_HTTPError(t *testing.T) {
 
 	resp, err := ds.httpClient.Do(req)
 	require.NoError(t, err)
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 }

@@ -1,9 +1,9 @@
-speakeasyVersion: 1.758.0
+speakeasyVersion: 1.761.3
 sources:
     airbyte-api:
         sourceNamespace: my-source
-        sourceRevisionDigest: sha256:05daad41240dac703f9717f8d64ab4a258d1cf3ba92a1f66a6aea3d8552893c8
-        sourceBlobDigest: sha256:17e086aeca6b28999dc3c3b61a4d60c69f042b8abf0e1beb6125bbd5dd10249e
+        sourceRevisionDigest: sha256:fdfa9853e5ee490332e09070c92a231e0a453f99c6e063ebe544f5d8d46b1dc2
+        sourceBlobDigest: sha256:f8347f5e63a00d708a393711ce29c1e90bd17b4191ffb2fdf64bb9e782983771
         tags:
             - latest
             - main
@@ -20,8 +20,8 @@ targets:
     terraform-provider-airbyte:
         source: airbyte-api
         sourceNamespace: my-source
-        sourceRevisionDigest: sha256:05daad41240dac703f9717f8d64ab4a258d1cf3ba92a1f66a6aea3d8552893c8
-        sourceBlobDigest: sha256:17e086aeca6b28999dc3c3b61a4d60c69f042b8abf0e1beb6125bbd5dd10249e
+        sourceRevisionDigest: sha256:fdfa9853e5ee490332e09070c92a231e0a453f99c6e063ebe544f5d8d46b1dc2
+        sourceBlobDigest: sha256:f8347f5e63a00d708a393711ce29c1e90bd17b4191ffb2fdf64bb9e782983771
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

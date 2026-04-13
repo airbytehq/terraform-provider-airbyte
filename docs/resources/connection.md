@@ -62,7 +62,7 @@ resource "airbyte_connection" "my_connection" {
   destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
   name                                 = "...my_name..."
   namespace_definition                 = "destination"
-  namespace_format                     = SOURCE_NAMESPACE
+  namespace_format                     = "$${SOURCE_NAMESPACE}"
   non_breaking_schema_updates_behavior = "ignore"
   prefix                               = ""
   schedule = {

@@ -48,10 +48,10 @@ The Terraform provider is generated through a multi-step pipeline. Here is the e
 
 ### Step-by-step details
 
-1. **Upstream OpenAPI Spec** — The source-of-truth API definition lives in `airbyte-platform-internal`:\
-   [`oss/airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml)
+1. **Upstream OpenAPI Spec** — The source-of-truth API definition lives in `airbyte-platform`:\
+   [`airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform/blob/main/airbyte-api/server-api/src/main/openapi/api.yaml)
 
-2. **Spec Transformation Script** — A Python script fetches connector definitions from the Airbyte connector registries, merges them with the upstream spec, and produces a Terraform-specific OpenAPI spec:\
+2. **Spec Transformation Script** — A Python script fetches the upstream API spec and injects missing schema/response stubs and security schemes required by Speakeasy:\
    [`scripts/generate_terraform_spec.py`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)
 
 3. **Generated OpenAPI Spec** — The transformation script produces `generated/api_terraform.yaml`, a Terraform-specific OpenAPI spec (gitignored, regenerated fresh each run). This is the spec that [Speakeasy consumes](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/.speakeasy/workflow.yaml).
@@ -89,6 +89,44 @@ Releases use a draft-based workflow:
 
 **Important**: Do not check "Set as a pre-release" unless you want to delay Terraform Registry sync.
 
+### Maintenance Branches and Backporting
+
+Following the [HashiCorp convention](https://github.com/terraform-providers/terraform-provider-aws/pull/14177) used by Terraform providers such as `terraform-provider-aws`, this project uses `release/` branches for maintaining older major or minor versions:
+
+| Branch | Purpose |
+|--------|---------|
+| `release/X.Y.x` | Maintenance branch for the `vX.Y` release line (receives patch releases) |
+| `main` | Active development toward the next minor or major release |
+
+The `.x` suffix signals that the branch is a living maintenance branch that will receive future patch releases (e.g., `release/1.0.x` receives `v1.0.3`, `v1.0.4`, etc.).
+
+**When to create a maintenance branch:**
+
+Create a `release/X.Y.x` branch from the latest `vX.Y.z` tag when:
+
+- A new minor or major version is about to be released on `main`
+- Bug fixes still need to be backported to the older version
+
+```bash
+# Example: create a maintenance branch for v1.0.x before releasing v1.1.0
+git checkout -b release/1.0.x v1.0.2
+git push origin release/1.0.x
+```
+
+**Backporting a fix:**
+
+1. Land the fix on `main` first (via PR as usual)
+2. Cherry-pick the fix commit(s) into the `release/X.Y.x` branch
+3. Open a PR targeting `release/X.Y.x` for CI validation
+4. After merging, tag and publish the patch release from the maintenance branch
+
+```bash
+# Example: backport a fix from main to release/1.0.x
+git checkout release/1.0.x
+git cherry-pick <commit-sha>
+git push origin release/1.0.x
+```
+
 ### Local Development
 
 ```bash
@@ -114,10 +152,10 @@ uvx --from=poethepoet poe <task-name>
 | Task | Description | Underlying Command |
 |------|-------------|--------------------|
 | `clean-generated` | Delete generated files, preserving hand-written movestate/helpers | `rm -rf internal/sdk` + `find ... -delete` |
-| `generate-spec` | Generate Terraform OpenAPI spec from Airbyte connector registries | `uv run scripts/generate_terraform_spec.py` |
+| `generate-spec` | Generate Terraform OpenAPI spec from upstream API spec | `uv run scripts/generate_terraform_spec.py` |
 | `lint-spec` | Lint the OpenAPI spec for circular references | `speakeasy lint openapi -s generated/api_terraform.yaml` |
 | `generate-code` | Generate Terraform provider code from the OpenAPI spec | `speakeasy run --skip-compile` |
-| `post-generate` | Patch provider registrations and tidy Go modules | `python3 scripts/patch_provider_registrations.py` + `go mod tidy` |
+| `post-generate` | Patch provider registrations, mark configuration as sensitive, and tidy Go modules | `python3 scripts/patch_provider_registrations.py` + `python3 scripts/patch_sensitive_configuration.py` + `go mod tidy` |
 | `docs-generate` | Generate Terraform provider documentation | `go generate ./...` |
 | `bin-generate` | Build cross-platform provider binaries (Linux amd64 + macOS arm64) | `go build -o dist/...` |
 | `generate-full` | Full pipeline: clean, spec, lint, generate, post-generate | Runs the above in sequence |
@@ -289,6 +327,4 @@ The OpenAPI spec is maintained in the [airbyte-platform-internal](https://github
 
 ### Updating the Connector Models
 
-In general, no upstream action should be needed to capture updates to upstream connector models.
-
-Connector models are dynamically generated based on the connector definitions in the Airbyte connector registry. You can regenerate this provider at any time to pick up new or updated connector models.
+As of v1.1, typed connector-specific resources (e.g. `airbyte_source_postgres`) have been removed. All connectors are now managed via the generic `airbyte_source` / `airbyte_destination` resources. The spec generation script no longer fetches connector registries or generates connector-specific schemas.
