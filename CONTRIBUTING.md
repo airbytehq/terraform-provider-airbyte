@@ -155,7 +155,7 @@ uvx --from=poethepoet poe <task-name>
 | `generate-spec` | Generate Terraform OpenAPI spec from upstream API spec | `uv run scripts/generate_terraform_spec.py` |
 | `lint-spec` | Lint the OpenAPI spec for circular references | `speakeasy lint openapi -s generated/api_terraform.yaml` |
 | `generate-code` | Generate Terraform provider code from the OpenAPI spec | `speakeasy run --skip-compile` |
-| `post-generate` | Patch provider registrations, mark configuration as sensitive, and tidy Go modules | `python3 scripts/patch_provider_registrations.py` + `python3 scripts/patch_sensitive_configuration.py` + `go mod tidy` |
+| `post-generate` | Patch provider registrations, mark configuration as sensitive, validate connection stream fixes, and tidy Go modules | `python3 scripts/patch_provider_registrations.py` + `python3 scripts/patch_sensitive_configuration.py` + `python3 scripts/patch_connection_streams.py` + `go mod tidy` |
 | `docs-generate` | Generate Terraform provider documentation | `go generate ./...` |
 | `bin-generate` | Build cross-platform provider binaries (Linux amd64 + macOS arm64) | `go build -o dist/...` |
 | `generate-full` | Full pipeline: clean, spec, lint, generate, post-generate | Runs the above in sequence |
