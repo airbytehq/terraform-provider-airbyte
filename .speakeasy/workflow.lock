@@ -1,4 +1,4 @@
-speakeasyVersion: 1.761.4
+speakeasyVersion: 1.761.5
 sources:
     airbyte-api:
         sourceNamespace: my-source
