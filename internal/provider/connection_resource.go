@@ -9,6 +9,7 @@ import (
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
+	custom_setplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/setplanmodifier"
 	speakeasy_setplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/setplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
@@ -82,8 +83,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Computed: true,
 						Optional: true,
 						PlanModifiers: []planmodifier.Set{
+							custom_setplanmodifier.UniqueByKey(),
 							speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
-							speakeasy_setplanmodifier.UniqueByKey(),
 						},
 						NestedObject: schema.NestedAttributeObject{
 							Validators: []validator.Object{
