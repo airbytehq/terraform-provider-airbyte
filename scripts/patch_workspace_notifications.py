@@ -56,18 +56,32 @@ def _inject_after_else(content: str, anchor: str, init_line: str) -> str:
 
     The anchor is a line like 'if resp.Notifications.Foo == nil {'.
     After the matching '} else {', we inject the init_line on the next line.
-    Returns the content unchanged if already patched or anchor not found.
+    Returns the content unchanged only if already patched; otherwise fails fast
+    when the expected generated-code structure is not found.
     """
     idx = content.find(anchor)
     if idx == -1:
-        return content
+        raise ValueError(
+            f"Failed to apply notification patch: anchor not found: {anchor!r}"
+        )
+
+    # Validate anchor appears exactly once
+    anchor_count = content.count(anchor)
+    if anchor_count != 1:
+        raise ValueError(
+            f"Failed to apply notification patch: anchor found {anchor_count} times "
+            f"(expected 1): {anchor!r}"
+        )
 
     # Find the '} else {' that follows this anchor
     else_pattern = "} else {"
     search_start = idx + len(anchor)
     else_idx = content.find(else_pattern, search_start)
     if else_idx == -1:
-        return content
+        raise ValueError(
+            f"Failed to apply notification patch: "
+            f"expected {else_pattern!r} after anchor {anchor!r}"
+        )
 
     insert_point = else_idx + len(else_pattern)
 
@@ -126,21 +140,25 @@ def patch_file(filepath: Path) -> bool:
         print(f"  Skipping top-level Notifications init in {filepath.name} (already patched)")
 
     # --- Step 3: Add sub-type and leaf pointer initializations ---
-    for sub_type in NOTIFICATION_SUB_TYPES:
-        # Sub-type level: after 'if resp.Notifications.<SubType> == nil { ... } else {'
-        sub_anchor = f"\t\tif resp.Notifications.{sub_type} == nil {{"
-        sub_init = f"\t\t\tr.Notifications.{sub_type} = &tfTypes.NotificationConfig{{}}"
-        content = _inject_after_else(content, sub_anchor, sub_init)
+    try:
+        for sub_type in NOTIFICATION_SUB_TYPES:
+            # Sub-type level: after 'if resp.Notifications.<SubType> == nil { ... } else {'
+            sub_anchor = f"\t\tif resp.Notifications.{sub_type} == nil {{"
+            sub_init = f"\t\t\tr.Notifications.{sub_type} = &tfTypes.NotificationConfig{{}}"
+            content = _inject_after_else(content, sub_anchor, sub_init)
 
-        # Email level: after 'if resp.Notifications.<SubType>.Email == nil { ... } else {'
-        email_anchor = f"\t\t\tif resp.Notifications.{sub_type}.Email == nil {{"
-        email_init = f"\t\t\t\tr.Notifications.{sub_type}.Email = &tfTypes.EmailNotificationConfig{{}}"
-        content = _inject_after_else(content, email_anchor, email_init)
+            # Email level: after 'if resp.Notifications.<SubType>.Email == nil { ... } else {'
+            email_anchor = f"\t\t\tif resp.Notifications.{sub_type}.Email == nil {{"
+            email_init = f"\t\t\t\tr.Notifications.{sub_type}.Email = &tfTypes.EmailNotificationConfig{{}}"
+            content = _inject_after_else(content, email_anchor, email_init)
 
-        # Webhook level: after 'if resp.Notifications.<SubType>.Webhook == nil { ... } else {'
-        webhook_anchor = f"\t\t\tif resp.Notifications.{sub_type}.Webhook == nil {{"
-        webhook_init = f"\t\t\t\tr.Notifications.{sub_type}.Webhook = &tfTypes.WebhookNotificationConfig{{}}"
-        content = _inject_after_else(content, webhook_anchor, webhook_init)
+            # Webhook level: after 'if resp.Notifications.<SubType>.Webhook == nil { ... } else {'
+            webhook_anchor = f"\t\t\tif resp.Notifications.{sub_type}.Webhook == nil {{"
+            webhook_init = f"\t\t\t\tr.Notifications.{sub_type}.Webhook = &tfTypes.WebhookNotificationConfig{{}}"
+            content = _inject_after_else(content, webhook_anchor, webhook_init)
+    except ValueError as exc:
+        print(f"ERROR in {filepath.name}: {exc}", file=sys.stderr)
+        sys.exit(1)
 
     changed = content != original
     if changed:
