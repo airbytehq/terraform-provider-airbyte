@@ -54,20 +54,6 @@ func stream(name, namespace, syncMode string, cursorField []string) basetypes.Ob
 	return obj
 }
 
-// streamWithUnknownCursor builds a stream where cursor_field is Unknown,
-// simulating Terraform's initial plan before any inner modifier runs.
-func streamWithUnknownCursor(name, namespace, syncMode string) basetypes.ObjectValue {
-	attrs := map[string]attr.Value{
-		"name":         types.StringValue(name),
-		"namespace":    types.StringValue(namespace),
-		"sync_mode":    types.StringValue(syncMode),
-		"cursor_field": types.ListUnknown(types.StringType),
-		"primary_key":  types.ListNull(types.ListType{ElemType: types.StringType}),
-	}
-	obj, _ := types.ObjectValue(streamAttrTypes, attrs)
-	return obj
-}
-
 // streamWithNullName builds a stream where the name attribute is null.
 func streamWithNullName(namespace, syncMode string) basetypes.ObjectValue {
 	attrs := map[string]attr.Value{
