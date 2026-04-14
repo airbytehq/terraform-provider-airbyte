@@ -80,15 +80,30 @@ func (m uniqueByKey) PlanModifySet(ctx context.Context, req planmodifier.SetRequ
 		stateByKey[key] = elem
 	}
 
+	// Build a config lookup so we can distinguish "user didn't specify" (null in
+	// config) from "user explicitly set to null" when merging computed values.
+	configElems := req.ConfigValue.Elements()
+	configByKey := make(map[string]attr.Value, len(configElems))
+	for _, elem := range configElems {
+		key := m.compositeKey(elem)
+		if key != "" {
+			configByKey[key] = elem
+		}
+	}
+
 	// For each plan element, if we find a matching state element by key,
 	// carry over computed attributes (cursor_field, primary_key) that are
-	// unknown in the plan but known in state.
+	// unknown or null-from-SuppressDiff in the plan but known in state.
+	// Note: inner plan modifiers (e.g. SuppressDiff on cursor_field) run
+	// before this set-level modifier, so they may have already converted
+	// unknown → null when no hash-matched state element was found.
 	merged := make([]attr.Value, 0, len(planElems))
 	for _, planElem := range planElems {
 		key := m.compositeKey(planElem)
 		stateElem, found := stateByKey[key]
 		if found && key != "" {
-			mergedElem := m.mergeComputedFromState(planElem, stateElem)
+			configElem := configByKey[key] // may be zero-value if not found
+			mergedElem := m.mergeComputedFromState(planElem, stateElem, configElem)
 			merged = append(merged, mergedElem)
 		} else {
 			merged = append(merged, planElem)
@@ -129,14 +144,28 @@ func (m uniqueByKey) compositeKey(elem attr.Value) string {
 	return strings.Join(parts, "\x00")
 }
 
-// mergeComputedFromState copies unknown attribute values from state into the
-// plan element. This preserves source-defined computed values (cursor_field,
-// primary_key) that the user didn't specify in their config.
-func (m uniqueByKey) mergeComputedFromState(planElem, stateElem attr.Value) attr.Value {
+// mergeComputedFromState copies computed attribute values from state into the
+// plan element when the user didn't explicitly configure them. This preserves
+// source-defined computed values (cursor_field, primary_key) across plan cycles.
+//
+// We merge from state when the plan attribute is unknown OR null, because inner
+// plan modifiers (e.g. SuppressDiff on cursor_field) execute before this
+// set-level modifier and may convert unknown → null when no hash-matched state
+// element was found. To avoid overwriting user intent, we only merge when the
+// corresponding config attribute is also null/missing (meaning user didn't
+// specify it).
+func (m uniqueByKey) mergeComputedFromState(planElem, stateElem, configElem attr.Value) attr.Value {
 	planObj, planOk := planElem.(basetypes.ObjectValue)
 	stateObj, stateOk := stateElem.(basetypes.ObjectValue)
 	if !planOk || !stateOk {
 		return planElem
+	}
+
+	// Extract config attributes if available, to distinguish "user didn't
+	// specify" from "user explicitly set to null".
+	var configAttrs map[string]attr.Value
+	if configObj, ok := configElem.(basetypes.ObjectValue); ok {
+		configAttrs = configObj.Attributes()
 	}
 
 	planAttrs := planObj.Attributes()
@@ -144,8 +173,16 @@ func (m uniqueByKey) mergeComputedFromState(planElem, stateElem attr.Value) attr
 
 	merged := make(map[string]attr.Value, len(planAttrs))
 	for k, planVal := range planAttrs {
-		if planVal.IsUnknown() {
-			// Use state value for unknown plan attributes (computed fields).
+		if planVal.IsUnknown() || planVal.IsNull() {
+			// Check if the user explicitly configured this attribute.
+			// If so, respect their intent (don't merge from state).
+			if configAttrs != nil {
+				if cfgVal, exists := configAttrs[k]; exists && !cfgVal.IsNull() && !cfgVal.IsUnknown() {
+					merged[k] = planVal
+					continue
+				}
+			}
+			// User didn't specify this attribute — use state value if available.
 			if stateVal, exists := stateAttrs[k]; exists && !stateVal.IsUnknown() {
 				merged[k] = stateVal
 			} else {
