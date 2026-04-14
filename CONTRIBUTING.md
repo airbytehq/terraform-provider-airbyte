@@ -202,6 +202,18 @@ gh run download <RUN_ID> --name provider_binaries --dir ./provider-bin
 
 For the sample project testing guide (configuring dev overrides, authentication, running Terraform with CI-built binaries), see [`test-projects/README.md`](test-projects/README.md).
 
+### Debugging Generation Drift Failures
+
+CI checks that committed code and docs match what the generation pipeline produces. When a drift check fails, download the CI artifacts to see what was actually generated:
+
+```bash
+gh run list --workflow="test-full.yml" --limit 5
+gh run download <RUN_ID> --name generated_provider_code --dir /tmp/generated_from_ci
+gh run download <RUN_ID> --name generated_docs --dir /tmp/generated_docs
+```
+
+The generated artifacts are the source of truth. Update your committed files to match them exactly.
+
 ## Documentation
 
 ### How docs generation works
