@@ -9,7 +9,7 @@ workspace to verify plan, apply, drift-check, and destroy all succeed.
   - `AIRBYTE_CLOUD_CLIENT_ID` — OAuth client ID for Airbyte Cloud
   - `AIRBYTE_CLOUD_CLIENT_SECRET` — OAuth client secret for Airbyte Cloud
   - `AIRBYTE_CLOUD_DEVIN_SANDBOX_WORKSPACE_ID` — Devin Sandbox workspace ID
-- **Terraform** must be installed (available on the Devin VM by default).
+- **Terraform** must be installed (`brew install hashicorp/tap/terraform`).
 - The test project is at `test-projects/v1-tf-generic-test/`.
 
 ## Steps
@@ -18,7 +18,7 @@ workspace to verify plan, apply, drift-check, and destroy all succeed.
 
 ```bash
 cd /home/ubuntu/repos/terraform-provider-airbyte
-go build -o dist/terraform-provider-airbyte ./cmd/terraform-provider-airbyte
+go build -o dist/terraform-provider-airbyte .
 ```
 
 If testing a PR, you can also download the CI-built binary from the
