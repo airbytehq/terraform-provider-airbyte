@@ -16,8 +16,7 @@ import (
 //
 // This is used for connection streams, where the identity key is the pair
 // (name, namespace). It ensures that computed fields (cursor_field, primary_key)
-// stay associated with the correct stream regardless of element ordering —
-// fixing both #374 (value swapping) and #414 (positional matching regression).
+// stay associated with the correct stream regardless of element ordering.
 //
 // When the plan value is unknown, the state value is propagated as-is (same
 // as SuppressDiff). When both plan and state are known, elements are matched
@@ -64,9 +63,21 @@ func (m uniqueByKey) PlanModifySet(ctx context.Context, req planmodifier.SetRequ
 	stateByKey := make(map[string]attr.Value, len(stateElems))
 	for _, elem := range stateElems {
 		key := m.compositeKey(elem)
-		if key != "" {
-			stateByKey[key] = elem
+		if key == "" {
+			continue
 		}
+		if _, exists := stateByKey[key]; exists {
+			resp.Diagnostics.AddError(
+				"Duplicate composite key in state",
+				fmt.Sprintf(
+					"Multiple state elements share composite key %q for fields (%s). Each element must have a unique identity.",
+					key,
+					strings.Join(m.keys, ", "),
+				),
+			)
+			return
+		}
+		stateByKey[key] = elem
 	}
 
 	// For each plan element, if we find a matching state element by key,
@@ -103,9 +114,17 @@ func (m uniqueByKey) compositeKey(elem attr.Value) string {
 		v, exists := attrs[k]
 		if !exists || v.IsNull() || v.IsUnknown() {
 			parts = append(parts, "")
+			continue
+		}
+		if sv, ok := v.(basetypes.StringValue); ok {
+			parts = append(parts, sv.ValueString())
 		} else {
 			parts = append(parts, v.String())
 		}
+	}
+	// If the first key (name) is empty, we can't reliably correlate.
+	if len(parts) > 0 && parts[0] == "" {
+		return ""
 	}
 	return strings.Join(parts, "\x00")
 }
