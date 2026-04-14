@@ -60,30 +60,26 @@ resource "airbyte_source" "faker_via_data_source" {
   configuration = data.airbyte_connector_configuration.faker_config.configuration_json
 }
 
-data "airbyte_connector_configuration" "e2e_test_destination_config" {
-  connector_name = "destination-e2e-test"
+data "airbyte_connector_configuration" "dev_null_config" {
+  connector_name = "destination-dev-null"
   configuration = {
     test_destination = {
-      test_destination_type = "LOGGING"
-      logging_config = {
-        logging_type    = "FirstN"
-        max_entry_count = 100
-      }
+      test_destination_type = "SILENT"
     }
   }
 }
 
-resource "airbyte_destination" "e2e_test" {
-  name          = "e2e-destination-test"
+resource "airbyte_destination" "dev_null" {
+  name          = "e2e-destination-dev-null"
   workspace_id  = var.workspace_id
-  definition_id = data.airbyte_connector_configuration.e2e_test_destination_config.definition_id
-  configuration = data.airbyte_connector_configuration.e2e_test_destination_config.configuration_json
+  definition_id = data.airbyte_connector_configuration.dev_null_config.definition_id
+  configuration = data.airbyte_connector_configuration.dev_null_config.configuration_json
 }
 
 resource "airbyte_connection" "faker_ds_to_e2e" {
   name           = "e2e-faker-ds-to-test"
   source_id      = airbyte_source.faker_via_data_source.source_id
-  destination_id = airbyte_destination.e2e_test.destination_id
+  destination_id = airbyte_destination.dev_null.destination_id
   schedule = {
     schedule_type = "manual"
   }
@@ -109,7 +105,7 @@ resource "airbyte_source" "faker_inline" {
 resource "airbyte_connection" "faker_inline_to_e2e" {
   name           = "e2e-faker-inline-to-test"
   source_id      = airbyte_source.faker_inline.source_id
-  destination_id = airbyte_destination.e2e_test.destination_id
+  destination_id = airbyte_destination.dev_null.destination_id
   schedule = {
     schedule_type = "manual"
   }
@@ -131,9 +127,9 @@ output "faker_inline_source_id" {
   description = "The ID of the generic faker source (inline config)"
 }
 
-output "e2e_test_destination_id" {
-  value       = airbyte_destination.e2e_test.destination_id
-  description = "The ID of the E2E test destination"
+output "dev_null_destination_id" {
+  value       = airbyte_destination.dev_null.destination_id
+  description = "The ID of the dev-null destination"
 }
 
 output "faker_ds_connection_id" {
