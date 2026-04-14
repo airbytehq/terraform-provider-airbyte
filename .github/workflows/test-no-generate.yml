@@ -1,7 +1,7 @@
 # Terraform Provider Testing Workflow
 #
 # This workflow runs build, lint, and acceptance tests for the Terraform provider.
-# It runs automatically on every pull request and push.
+# It runs automatically on every pull request.
 #
 # Jobs:
 # - build: Compiles the provider and runs golangci-lint
@@ -16,15 +16,9 @@
 
 name: Test (No Generate)
 
-# This GitHub action runs your tests for each pull request and push.
-# Optionally, you can turn it on using a schedule for regular testing.
+# This GitHub action runs your tests for each pull request.
 on:
   pull_request:
-    paths-ignore:
-      - 'README.md'
-  push:
-    branches:
-      - main
     paths-ignore:
       - 'README.md'
 
