@@ -11,8 +11,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
-// UniqueByKey returns a plan modifier that correlates set elements between
-// state and plan using (name, namespace) as the composite identity key.
+// UniqueByNameAndNamespace returns a plan modifier that correlates set elements
+// between state and plan using (name, namespace) as the composite identity key.
 //
 // This is used for connection streams, where the identity key is the pair
 // (name, namespace). It ensures that computed fields (cursor_field, primary_key)
@@ -22,23 +22,23 @@ import (
 // as SuppressDiff). When both plan and state are known, elements are matched
 // by their composite key and computed attributes from state are carried over
 // to the plan, preserving source-defined values across read/plan cycles.
-func UniqueByKey() planmodifier.Set {
-	return uniqueByKey{keys: []string{"name", "namespace"}}
+func UniqueByNameAndNamespace() planmodifier.Set {
+	return uniqueByNameAndNamespace{keys: []string{"name", "namespace"}}
 }
 
-type uniqueByKey struct {
+type uniqueByNameAndNamespace struct {
 	keys []string
 }
 
-func (m uniqueByKey) Description(_ context.Context) string {
+func (m uniqueByNameAndNamespace) Description(_ context.Context) string {
 	return fmt.Sprintf("Correlates set elements by composite key (%s) instead of by hash.", strings.Join(m.keys, ", "))
 }
 
-func (m uniqueByKey) MarkdownDescription(_ context.Context) string {
+func (m uniqueByNameAndNamespace) MarkdownDescription(_ context.Context) string {
 	return fmt.Sprintf("Correlates set elements by composite key (`%s`) instead of by hash.", strings.Join(m.keys, "`, `"))
 }
 
-func (m uniqueByKey) PlanModifySet(ctx context.Context, req planmodifier.SetRequest, resp *planmodifier.SetResponse) {
+func (m uniqueByNameAndNamespace) PlanModifySet(ctx context.Context, req planmodifier.SetRequest, resp *planmodifier.SetResponse) {
 	// If the entire resource is being created, nothing to correlate.
 	if req.StateValue.IsNull() || req.StateValue.IsUnknown() {
 		return
@@ -118,7 +118,7 @@ func (m uniqueByKey) PlanModifySet(ctx context.Context, req planmodifier.SetRequ
 }
 
 // compositeKey extracts the composite key from a set element (assumed to be an Object).
-func (m uniqueByKey) compositeKey(elem attr.Value) string {
+func (m uniqueByNameAndNamespace) compositeKey(elem attr.Value) string {
 	obj, ok := elem.(basetypes.ObjectValue)
 	if !ok {
 		return ""
@@ -154,7 +154,7 @@ func (m uniqueByKey) compositeKey(elem attr.Value) string {
 // element was found. To avoid overwriting user intent, we only merge when the
 // corresponding config attribute is also null/missing (meaning user didn't
 // specify it).
-func (m uniqueByKey) mergeComputedFromState(planElem, stateElem, configElem attr.Value) attr.Value {
+func (m uniqueByNameAndNamespace) mergeComputedFromState(planElem, stateElem, configElem attr.Value) attr.Value {
 	planObj, planOk := planElem.(basetypes.ObjectValue)
 	stateObj, stateOk := stateElem.(basetypes.ObjectValue)
 	if !planOk || !stateOk {

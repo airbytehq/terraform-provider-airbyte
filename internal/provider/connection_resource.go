@@ -83,7 +83,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Computed: true,
 						Optional: true,
 						PlanModifiers: []planmodifier.Set{
-							custom_setplanmodifier.UniqueByKey(),
+							custom_setplanmodifier.UniqueByNameAndNamespace(),
 							speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
 						},
 						NestedObject: schema.NestedAttributeObject{
