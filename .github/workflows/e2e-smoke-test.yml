@@ -57,12 +57,21 @@ jobs:
         with:
           terraform_wrapper: false
 
-      - name: Download provider binary artifact
+      - name: Download provider binary artifact (specific run)
+        if: inputs.run-id != ''
         uses: actions/download-artifact@v4
         with:
           name: provider_binaries
           path: /tmp/provider-bin
-          run-id: ${{ inputs.run-id || '' }}
+          run-id: ${{ inputs.run-id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download provider binary artifact (current run)
+        if: inputs.run-id == ''
+        uses: actions/download-artifact@v4
+        with:
+          name: provider_binaries
+          path: /tmp/provider-bin
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure provider dev override
