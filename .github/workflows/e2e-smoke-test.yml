@@ -63,7 +63,7 @@ jobs:
           name: provider_binaries
           path: /tmp/provider-bin
           run-id: ${{ inputs.run-id || '' }}
-          github-token: ${{ inputs.run-id && secrets.GITHUB_TOKEN || '' }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure provider dev override
         run: |
