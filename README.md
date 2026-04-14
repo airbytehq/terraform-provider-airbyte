@@ -144,6 +144,7 @@ Available configuration:
 * [airbyte_source](docs/data-sources/source.md)
 * [airbyte_source_definition](docs/data-sources/source_definition.md)
 * [airbyte_workspace](docs/data-sources/workspace.md)
+* [airbyte_workspace_ids](docs/data-sources/workspace_ids.md)
 <!-- End Available Resources and Data Sources [operations] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
