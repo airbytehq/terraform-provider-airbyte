@@ -6,7 +6,7 @@ This directory contains test projects for validating the Airbyte Terraform provi
 
 | Directory | Description |
 | --- | --- |
-| `v1-tf-generic-test/` | **Current** — uses only generic resources (`airbyte_source`, `airbyte_destination`). Target for the automated E2E smoke test in CI. |
+| `v1-tf-generic-test/` | **Current** — uses only generic resources (`airbyte_source`, `airbyte_destination`). Target for the CI plan check and the Devin E2E testing skill. |
 | `v0-tf-migration-test/0.x-to-1.0/` | Pre-1.0 project using bearer auth and typed resources (`airbyte_source_faker`, etc.). Useful for testing migration from 0.x to 1.0. |
 | `v0-tf-migration-test/1.0-to-1.1/` | Early 1.0 project using OAuth auth and typed resources. Useful for testing migration from 1.0 to 1.1 (typed → generic). |
 
@@ -169,35 +169,22 @@ test-projects/
 └── README.md
 ```
 
-## Automated E2E Smoke Test (CI)
+## CI Plan Check
 
-The `test-full.yml` workflow includes an automated E2E smoke test that runs the CI-built provider binary against Airbyte Cloud on every PR. This is defined in `.github/workflows/e2e-smoke-test.yml` and uses `test-projects/v1-tf-generic-test/` as the test project.
+The `test-full.yml` workflow includes a plan-only smoke test (`.github/workflows/e2e-smoke-test.yml`) that validates the CI-built provider binary can load, parse HCL, resolve data sources, and produce a valid execution plan.
 
-### What it does
+This runs `terraform init` + `terraform plan` against `v1-tf-generic-test/` using the CI-built binary via a dev override. It does **not** apply or create real resources.
 
-1. Downloads the `provider_binaries` artifact built during the generation step.
-2. Configures a [dev override](https://developer.hashicorp.com/terraform/cli/config/config-file#development-overrides-for-provider-developers) via `~/.terraformrc` so Terraform uses the CI-built binary.
-3. Runs against `v1-tf-generic-test/`:
-   - `terraform init`
-   - `terraform plan` — must succeed with no errors
-   - `terraform apply -auto-approve` — creates real resources in Airbyte Cloud
-   - `terraform plan` (second time) — **must show no drift** (this is the key assertion)
-   - `terraform destroy -auto-approve` — cleans up all created resources
+## Full E2E Testing (Devin)
 
-### Secrets required
+For full end-to-end testing (apply, drift check, destroy), use the Devin E2E testing skill defined in `.agents/skills/e2e-testing/SKILL.md`. This skill runs the complete lifecycle against a real Airbyte Cloud workspace:
 
-The workflow uses these GitHub Actions secrets (already configured in the repo):
+1. `terraform plan` — must succeed
+2. `terraform apply` — creates real resources in Airbyte Cloud
+3. `terraform plan` (second time) — **must show no drift** (the key assertion)
+4. `terraform destroy` — cleans up all created resources
 
-| Secret | Description |
-| --- | --- |
-| `AIRBYTE_CLIENT_ID` | OAuth client ID, passed as `TF_VAR_airbyte_client_id` |
-| `AIRBYTE_CLIENT_SECRET` | OAuth client secret, passed as `TF_VAR_airbyte_client_secret` |
-
-The workspace ID (`266ebdfe-0d7b-4540-9817-de7e4505ba61`) is hardcoded as a default variable in `main.tf`.
-
-### Running manually
-
-The E2E smoke test workflow can also be triggered manually from the Actions tab via `workflow_dispatch`. When triggered manually, it downloads the latest `provider_binaries` artifact from a previous workflow run.
+The skill uses the Devin Sandbox workspace and requires `AIRBYTE_CLOUD_CLIENT_ID` and `AIRBYTE_CLOUD_CLIENT_SECRET` secrets (available as Devin org secrets).
 
 ## Tips
 

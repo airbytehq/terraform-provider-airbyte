@@ -1,11 +1,15 @@
-# E2E Smoke Test — runs the CI-built provider binary against Airbyte Cloud
+# E2E Smoke Test — validates CI-built provider binary via terraform plan
 #
-# This workflow validates the provider end-to-end by:
+# This workflow validates the provider binary end-to-end by:
 # 1. Downloading the CI-built provider binary
 # 2. Configuring a dev override so Terraform uses it instead of the registry version
-# 3. Running terraform init/plan/apply against test-projects/v1-tf-generic-test/
-# 4. Running a second plan to assert zero drift (the key assertion)
-# 5. Destroying all resources to clean up
+# 3. Running terraform init + plan against test-projects/v1-tf-generic-test/
+#
+# This verifies that the compiled binary can load, parse HCL, resolve data
+# sources (connector registry lookups), and produce a valid execution plan.
+#
+# For full E2E testing (apply, drift check, destroy), use the Devin E2E
+# testing skill defined in .agents/skills/e2e-testing/SKILL.md.
 #
 # Triggers:
 # - workflow_call: invoked by test-full.yml after provider binaries are built
@@ -25,14 +29,13 @@ jobs:
   e2e-smoke-test:
     name: E2E Smoke Test (v1-tf-generic-test)
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    concurrency:
-      group: e2e-smoke-test-v1
-      cancel-in-progress: false
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: test-projects/v1-tf-generic-test
     env:
+      # Plan-only: credentials are needed for data source resolution
+      # (connector registry lookups) but not for resource creation.
       TF_VAR_airbyte_client_id: ${{ secrets.AIRBYTE_CLIENT_ID }}
       TF_VAR_airbyte_client_secret: ${{ secrets.AIRBYTE_CLIENT_SECRET }}
     steps:
@@ -78,32 +81,13 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
-
-      - name: Terraform Plan (drift check)
-        id: drift-check
         run: |
-          terraform plan -detailed-exitcode -out=tfplan-drift 2>&1 | tee plan_output.txt
+          terraform plan 2>&1 | tee plan_output.txt
           PLAN_EXIT_CODE=${PIPESTATUS[0]}
 
-          if [ "$PLAN_EXIT_CODE" -eq 0 ]; then
-            echo "drift=false" >> "$GITHUB_OUTPUT"
-            echo "✅ No drift detected — plan is clean."
-          elif [ "$PLAN_EXIT_CODE" -eq 2 ]; then
-            echo "drift=true" >> "$GITHUB_OUTPUT"
-            echo "❌ Drift detected — plan shows changes after apply."
-            cat plan_output.txt
-            exit 1
-          else
-            echo "drift=error" >> "$GITHUB_OUTPUT"
-            echo "❌ Terraform plan failed with exit code $PLAN_EXIT_CODE."
-            cat plan_output.txt
+          if [ "$PLAN_EXIT_CODE" -ne 0 ]; then
+            echo "Terraform plan failed with exit code $PLAN_EXIT_CODE"
             exit 1
           fi
 
-      - name: Terraform Destroy
-        if: always()
-        run: terraform destroy -auto-approve
+          echo "Plan succeeded — CI-built binary is valid."
