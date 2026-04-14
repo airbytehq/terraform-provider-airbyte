@@ -3,7 +3,7 @@
 # This workflow validates the provider end-to-end by:
 # 1. Downloading the CI-built provider binary
 # 2. Configuring a dev override so Terraform uses it instead of the registry version
-# 3. Running terraform init/plan/apply against test-projects/v1-tf-latest-test/
+# 3. Running terraform init/plan/apply against test-projects/v1-tf-generic-test/
 # 4. Running a second plan to assert zero drift (the key assertion)
 # 5. Destroying all resources to clean up
 #
@@ -23,7 +23,7 @@ permissions:
 
 jobs:
   e2e-smoke-test:
-    name: E2E Smoke Test (v1-tf-latest-test)
+    name: E2E Smoke Test (v1-tf-generic-test)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     concurrency:
@@ -31,7 +31,7 @@ jobs:
       cancel-in-progress: false
     defaults:
       run:
-        working-directory: test-projects/v1-tf-latest-test
+        working-directory: test-projects/v1-tf-generic-test
     env:
       TF_VAR_airbyte_client_id: ${{ secrets.AIRBYTE_CLIENT_ID }}
       TF_VAR_airbyte_client_secret: ${{ secrets.AIRBYTE_CLIENT_SECRET }}
