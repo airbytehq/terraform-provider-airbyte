@@ -7,6 +7,8 @@
 # 1. validate: Runs the full generation pipeline in dry-run mode (build + compile check)
 # 2. zero-diff: Compares the dry-run artifacts against the committed code to detect drift.
 #    If drift is detected, the check fails and posts a comment telling the author to run /generate.
+# 3. e2e-smoke-test: Runs the CI-built provider binary against Airbyte Cloud to validate
+#    end-to-end functionality (plan, apply, drift check, destroy).
 #
 # This workflow calls the main generation workflow with dry_run=true to ensure
 # both workflows use the same generation logic.
@@ -25,6 +27,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: read
 
 jobs:
   check-paths:
@@ -162,3 +165,10 @@ jobs:
         run: |
           echo "::error::Generated code drift detected. Run /generate on this PR to fix."
           exit 1
+
+  e2e-smoke-test:
+    name: E2E Smoke Test
+    needs: [check-paths, validate]
+    if: needs.check-paths.outputs.should_run == 'true'
+    uses: ./.github/workflows/e2e-smoke-test.yml
+    secrets: inherit

@@ -156,6 +156,36 @@ test-projects/v1-tf-latest-test/
 └── provider-override/      # Active provider binary (gitignored)
 ```
 
+## Automated E2E Smoke Test (CI)
+
+The `test-full.yml` workflow includes an automated E2E smoke test that runs the CI-built provider binary against Airbyte Cloud on every PR. This is defined in `.github/workflows/e2e-smoke-test.yml` and uses `test-projects/v1-tf-latest-test/` as the test project.
+
+### What it does
+
+1. Downloads the `provider_binaries` artifact built during the generation step.
+2. Configures a [dev override](https://developer.hashicorp.com/terraform/cli/config/config-file#development-overrides-for-provider-developers) via `~/.terraformrc` so Terraform uses the CI-built binary.
+3. Runs against `v1-tf-latest-test/`:
+   - `terraform init`
+   - `terraform plan` — must succeed with no errors
+   - `terraform apply -auto-approve` — creates real resources in Airbyte Cloud
+   - `terraform plan` (second time) — **must show no drift** (this is the key assertion)
+   - `terraform destroy -auto-approve` — cleans up all created resources
+
+### Secrets required
+
+The workflow uses these GitHub Actions secrets (already configured in the repo):
+
+| Secret | Description |
+| --- | --- |
+| `AIRBYTE_CLIENT_ID` | OAuth client ID, passed as `TF_VAR_airbyte_client_id` |
+| `AIRBYTE_CLIENT_SECRET` | OAuth client secret, passed as `TF_VAR_airbyte_client_secret` |
+
+The workspace ID (`266ebdfe-0d7b-4540-9817-de7e4505ba61`) is hardcoded as a default variable in `main.tf`.
+
+### Running manually
+
+The E2E smoke test workflow can also be triggered manually from the Actions tab via `workflow_dispatch`. When triggered manually, it downloads the latest `provider_binaries` artifact from a previous workflow run.
+
 ## Tips
 
 - **Always test with the workaround in `main.tf`** until [#280](https://github.com/airbytehq/terraform-provider-airbyte/issues/280) is fixed
