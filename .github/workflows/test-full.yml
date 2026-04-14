@@ -7,6 +7,8 @@
 # 1. validate: Runs the full generation pipeline in dry-run mode (build + compile check)
 # 2. zero-diff: Compares the dry-run artifacts against the committed code to detect drift.
 #    If drift is detected, the check fails and posts a comment telling the author to run /generate.
+# 3. e2e-smoke-test: Validates the CI-built provider binary by running terraform plan
+#    against test-projects/v1-tf-generic-test/ (plan-only, no apply/destroy).
 #
 # This workflow calls the main generation workflow with dry_run=true to ensure
 # both workflows use the same generation logic.
@@ -25,6 +27,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: read
 
 jobs:
   check-paths:
@@ -170,3 +173,12 @@ jobs:
         run: |
           echo "::error::Generated code drift detected. Run /generate on this PR to fix, or debug locally with: gh run download ${{ github.run_id }} --name generated_provider_code --dir /tmp/generated_from_ci && diff -rq internal/provider/ /tmp/generated_from_ci/provider/ && diff -rq --exclude=.gitattributes --exclude=.gitignore internal/sdk/ /tmp/generated_from_ci/sdk/ . See CONTRIBUTING.md#debugging-generation-drift-failures for the full procedure."
           exit 1
+
+  e2e-smoke-test:
+    name: E2E Smoke Test
+    needs: [check-paths, validate]
+    if: needs.check-paths.outputs.should_run == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false)
+    uses: ./.github/workflows/e2e-smoke-test.yml
+    with:
+      run-id: ${{ github.run_id }}
+    secrets: inherit

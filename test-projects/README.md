@@ -2,6 +2,14 @@
 
 This directory contains test projects for validating the Airbyte Terraform provider with different configurations and provider versions.
 
+## Project Layout
+
+| Directory | Description |
+| --- | --- |
+| `v1-tf-generic-test/` | **Current** — uses only generic resources (`airbyte_source`, `airbyte_destination`). Target for the CI plan check and the Devin E2E testing skill. |
+| `v0-tf-migration-test/0.x-to-1.0/` | Pre-1.0 project using bearer auth and typed resources (`airbyte_source_faker`, etc.). Useful for testing migration from 0.x to 1.0. |
+| `v0-tf-migration-test/1.0-to-1.1/` | Early 1.0 project using OAuth auth and typed resources. Useful for testing migration from 1.0 to 1.1 (typed → generic). |
+
 ## Testing with CI-Built Provider Binaries
 
 This process allows you to test provider builds from GitHub Actions CI workflows before they are released.
@@ -24,7 +32,7 @@ This process allows you to test provider builds from GitHub Actions CI workflows
 2. **Download the provider binaries** (replace `<RUN_ID>` with actual run ID; e.g., PR #283 used `21724498442`):
 
    ```bash
-   cd test-projects/v1-tf-latest-test
+   cd test-projects/v1-tf-generic-test
    gh run download <RUN_ID> --name provider_binaries --dir ./provider-bin
    ```
 
@@ -147,14 +155,36 @@ chmod +x provider-override/terraform-provider-airbyte
 ### File Structure
 
 ```text
-test-projects/v1-tf-latest-test/
-├── .env                    # Your credentials (gitignored)
-├── .env.example            # Template for credentials
-├── .terraformrc            # Dev override config (created locally)
-├── main.tf                 # Terraform configuration
-├── provider-bin/           # Downloaded CI binaries (gitignored)
-└── provider-override/      # Active provider binary (gitignored)
+test-projects/
+├── v1-tf-generic-test/         # Current — generic resources only (v1.1+)
+│   ├── .env.example
+│   └── main.tf
+├── v0-tf-migration-test/
+│   ├── 0.x-to-1.0/            # Pre-1.0 typed resources + bearer auth
+│   │   └── main.tf
+│   └── 1.0-to-1.1/            # Early 1.0 typed resources + OAuth
+│       ├── .env.example
+│       └── main.tf
+├── .gitignore
+└── README.md
 ```
+
+## CI Plan Check
+
+The `test-full.yml` workflow includes a plan-only smoke test (`.github/workflows/e2e-smoke-test.yml`) that validates the CI-built provider binary can load, parse HCL, resolve data sources, and produce a valid execution plan.
+
+This runs `terraform init` + `terraform plan` against `v1-tf-generic-test/` using the CI-built binary via a dev override. It does **not** apply or create real resources.
+
+## Full E2E Testing (Devin)
+
+For full end-to-end testing (apply, drift check, destroy), use the Devin E2E testing skill defined in `.agents/skills/e2e-testing/SKILL.md`. This skill runs the complete lifecycle against a real Airbyte Cloud workspace:
+
+1. `terraform plan` — must succeed
+2. `terraform apply` — creates real resources in Airbyte Cloud
+3. `terraform plan` (second time) — **must show no drift** (the key assertion)
+4. `terraform destroy` — cleans up all created resources
+
+The skill uses the Devin Sandbox workspace and requires `AIRBYTE_CLOUD_CLIENT_ID` and `AIRBYTE_CLOUD_CLIENT_SECRET` secrets (available as Devin org secrets).
 
 ## Tips
 
