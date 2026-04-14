@@ -78,14 +78,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
-						"streams": schema.SetNestedAttribute{
+							"streams": schema.SetNestedAttribute{
 						Computed: true,
 						Optional: true,
-						// PATCHED: UniqueByKey correlates set elements by (name, namespace)
-						// instead of by hash, fixing #374 (value swapping) and #414
-						// (positional matching regression from Set->List change).
 						PlanModifiers: []planmodifier.Set{
-							speakeasy_setplanmodifier.UniqueByKey("name", "namespace"),
+							speakeasy_setplanmodifier.UniqueByKey(),
 						},
 						NestedObject: schema.NestedAttributeObject{
 							Validators: []validator.Object{

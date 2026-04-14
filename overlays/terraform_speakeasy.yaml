@@ -163,22 +163,26 @@ actions:
   # source-defined cursor_field/primary_key values (e.g., Salesforce, HubSpot).
   # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/374
 
-  # --- Layer 1: streams as SetNestedAttribute with uniqueByKey ---
+  # --- Layer 1: streams as SetNestedAttribute with UniqueByKey plan modifier ---
   # The upstream spec defines StreamConfigurations.streams with `format: set`,
   # which causes Speakeasy to generate SetNestedAttribute. This is semantically
   # correct — streams are identified by the composite key (name, namespace),
-  # not by position. We keep `format: set` (no overlay needed) and apply a
-  # custom `uniqueByKey` plan modifier via a post-generate patch script
-  # (scripts/patch_connection_streams.py) that replaces the default
-  # SuppressDiff modifier with UniqueByKey("name", "namespace").
+  # not by position. We use x-speakeasy-plan-modifiers to wire in a custom
+  # UniqueByKey modifier that matches set elements by (name, namespace) instead
+  # of by hash, preserving computed attributes across plan cycles.
   #
   # Previously, PR #410 removed format:set to switch to ListNestedAttribute,
   # but this introduced a regression (#414) where users had to declare streams
-  # in API order. Reverting to Set + uniqueByKey fixes both #374 and #414.
+  # in API order. Reverting to Set + UniqueByKey fixes both #374 and #414.
   #
   # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/414
   # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/374
   # See: https://github.com/airbytehq/terraform-provider-airbyte/pull/128
+
+  - target: "$.components.schemas.StreamConfigurations.properties.streams"
+    description: "Add UniqueByKey plan modifier to correlate streams by (name, namespace) instead of hash"
+    update:
+      x-speakeasy-plan-modifiers: UniqueByKey
 
   # --- Layer 2: Make cursorField/primaryKey nullable ---
   # The upstream spec defines cursorField and primaryKey as non-nullable,

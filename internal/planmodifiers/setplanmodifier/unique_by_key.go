@@ -12,19 +12,19 @@ import (
 )
 
 // UniqueByKey returns a plan modifier that correlates set elements between
-// state and plan using the given attribute keys as a composite identity.
+// state and plan using (name, namespace) as the composite identity key.
 //
-// For connection streams, the identity key is (name, namespace). This ensures
-// that computed fields (cursor_field, primary_key) stay associated with the
-// correct stream regardless of element ordering — fixing both #374 (value
-// swapping) and #414 (positional matching regression).
+// This is used for connection streams, where the identity key is the pair
+// (name, namespace). It ensures that computed fields (cursor_field, primary_key)
+// stay associated with the correct stream regardless of element ordering —
+// fixing both #374 (value swapping) and #414 (positional matching regression).
 //
 // When the plan value is unknown, the state value is propagated as-is (same
 // as SuppressDiff). When both plan and state are known, elements are matched
 // by their composite key and computed attributes from state are carried over
 // to the plan, preserving source-defined values across read/plan cycles.
-func UniqueByKey(keys ...string) planmodifier.Set {
-	return uniqueByKey{keys: keys}
+func UniqueByKey() planmodifier.Set {
+	return uniqueByKey{keys: []string{"name", "namespace"}}
 }
 
 type uniqueByKey struct {
