@@ -13,13 +13,23 @@
 #
 # Triggers:
 # - workflow_call: invoked by test-full.yml after provider binaries are built
-# - workflow_dispatch: for manual runs (downloads the latest provider_binaries artifact)
+# - workflow_dispatch: for manual runs (requires run-id of a workflow that produced provider_binaries)
 
 name: E2E Smoke Test
 
 on:
   workflow_call:
+    inputs:
+      run-id:
+        description: 'Workflow run ID to download provider_binaries artifact from (defaults to current run)'
+        type: string
+        required: false
   workflow_dispatch:
+    inputs:
+      run-id:
+        description: 'Workflow run ID to download provider_binaries artifact from (required for manual dispatch)'
+        type: string
+        required: true
 
 permissions:
   contents: read
@@ -52,6 +62,8 @@ jobs:
         with:
           name: provider_binaries
           path: /tmp/provider-bin
+          run-id: ${{ inputs.run-id || github.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure provider dev override
         run: |
