@@ -26,6 +26,9 @@ jobs:
     name: E2E Smoke Test (v1-tf-latest-test)
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    concurrency:
+      group: e2e-smoke-test-v1
+      cancel-in-progress: false
     defaults:
       run:
         working-directory: test-projects/v1-tf-latest-test
