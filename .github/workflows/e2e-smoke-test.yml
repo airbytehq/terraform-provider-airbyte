@@ -96,8 +96,10 @@ jobs:
 
       - name: Terraform Plan
         run: |
+          set +eo pipefail
           terraform plan 2>&1 | tee plan_output.txt
           PLAN_EXIT_CODE=${PIPESTATUS[0]}
+          set -eo pipefail
 
           if [ "$PLAN_EXIT_CODE" -ne 0 ]; then
             echo "Terraform plan failed with exit code $PLAN_EXIT_CODE"
