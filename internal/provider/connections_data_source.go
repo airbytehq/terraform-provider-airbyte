@@ -60,7 +60,7 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 						"configurations": schema.SingleNestedAttribute{
 							Computed: true,
 							Attributes: map[string]schema.Attribute{
-									"streams": schema.SetNestedAttribute{
+								"streams": schema.SetNestedAttribute{
 									Computed: true,
 									NestedObject: schema.NestedAttributeObject{
 										Attributes: map[string]schema.Attribute{
