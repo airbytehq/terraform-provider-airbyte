@@ -171,4 +171,6 @@ jobs:
     needs: [check-paths, validate]
     if: needs.check-paths.outputs.should_run == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false)
     uses: ./.github/workflows/e2e-smoke-test.yml
+    with:
+      run-id: ${{ github.run_id }}
     secrets: inherit
