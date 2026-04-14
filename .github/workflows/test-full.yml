@@ -154,7 +154,7 @@ jobs:
             diff -rq internal/provider/ /tmp/generated_from_ci/provider/
             diff -rq --exclude=.gitattributes --exclude=.gitignore internal/sdk/ /tmp/generated_from_ci/sdk/
             ```
-            See [CONTRIBUTING.md — Debugging Zero-Diff Failures](https://github.com/${{ github.repository }}/blob/main/CONTRIBUTING.md#debugging-zero-diff-failures) for the full procedure.
+            See [CONTRIBUTING.md — Debugging Generation Drift Failures](https://github.com/${{ github.repository }}/blob/main/CONTRIBUTING.md#debugging-generation-drift-failures) for the full procedure.
 
             <details>
             <summary>Diff summary</summary>
@@ -168,5 +168,5 @@ jobs:
       - name: Fail if drift detected
         if: steps.diff-check.outputs.has_diff == 'true'
         run: |
-          echo "::error::Generated code drift detected. Run /generate on this PR to fix, or debug locally with: gh run download ${{ github.run_id }} --name generated_provider_code --dir /tmp/generated_from_ci && diff -rq internal/provider/ /tmp/generated_from_ci/provider/ && diff -rq --exclude=.gitattributes --exclude=.gitignore internal/sdk/ /tmp/generated_from_ci/sdk/ . See CONTRIBUTING.md#debugging-zero-diff-failures for the full procedure."
+          echo "::error::Generated code drift detected. Run /generate on this PR to fix, or debug locally with: gh run download ${{ github.run_id }} --name generated_provider_code --dir /tmp/generated_from_ci && diff -rq internal/provider/ /tmp/generated_from_ci/provider/ && diff -rq --exclude=.gitattributes --exclude=.gitignore internal/sdk/ /tmp/generated_from_ci/sdk/ . See CONTRIBUTING.md#debugging-generation-drift-failures for the full procedure."
           exit 1
