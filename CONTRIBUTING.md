@@ -204,43 +204,14 @@ For the sample project testing guide (configuring dev overrides, authentication,
 
 ### Debugging Zero-Diff Failures
 
-The **Zero-Diff Check** CI job compares committed code against what the Speakeasy generation pipeline produces. When it fails, your committed code doesn't match the generated output. **Do not guess** what Speakeasy generates — download the actual artifacts and diff them.
-
-**Step 1: Find the CI run ID**
+When the **Zero-Diff Check** CI job fails, download the generated artifacts to see what Speakeasy actually produced:
 
 ```bash
 gh run list --workflow="test-full.yml" --limit 5
-```
-
-**Step 2: Download the generated code**
-
-```bash
 gh run download <RUN_ID> --name generated_provider_code --dir /tmp/generated_from_ci
 ```
 
-**Step 3: Diff against committed code**
-
-```bash
-# Compare a specific file:
-diff internal/provider/connection_resource.go /tmp/generated_from_ci/provider/connection_resource.go
-
-# Compare all provider files:
-diff -rq internal/provider/ /tmp/generated_from_ci/provider/
-
-# Compare SDK files (CI excludes .gitattributes and .gitignore):
-diff -rq --exclude=.gitattributes --exclude=.gitignore internal/sdk/ /tmp/generated_from_ci/sdk/
-```
-
-**Step 4: Update committed files to match**
-
-The generated artifact is the source of truth. Make your committed files match it exactly.
-
-**Common pitfalls:**
-
-- **Import aliases**: Speakeasy generates separate import aliases for custom vs built-in plan modifiers (e.g., `custom_setplanmodifier` vs `speakeasy_setplanmodifier`). These must be in alphabetical order.
-- **Plan modifier ordering**: The order of plan modifiers in the generated `PlanModifiers` slice may differ from what you expect.
-- **Indentation**: Must match exactly — extra or missing tabs will cause the diff to fail.
-- **Generated docs**: Also download `generated_docs` if the docs check fails: `gh run download <RUN_ID> --name generated_docs --dir /tmp/generated_docs`
+The generated artifact is the source of truth. Update your committed files to match it exactly.
 
 ## Documentation
 
