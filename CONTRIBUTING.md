@@ -227,8 +227,8 @@ diff internal/provider/connection_resource.go /tmp/generated_from_ci/provider/co
 # Compare all provider files:
 diff -rq internal/provider/ /tmp/generated_from_ci/provider/
 
-# Compare SDK files:
-diff -rq internal/sdk/ /tmp/generated_from_ci/sdk/
+# Compare SDK files (CI excludes .gitattributes and .gitignore):
+diff -rq --exclude=.gitattributes --exclude=.gitignore internal/sdk/ /tmp/generated_from_ci/sdk/
 ```
 
 **Step 4: Update committed files to match**
