@@ -152,7 +152,7 @@ jobs:
             ```bash
             gh run download ${{ github.run_id }} --name generated_provider_code --dir /tmp/generated_from_ci
             diff -rq internal/provider/ /tmp/generated_from_ci/provider/
-            diff -rq internal/sdk/ /tmp/generated_from_ci/sdk/
+            diff -rq --exclude=.gitattributes --exclude=.gitignore internal/sdk/ /tmp/generated_from_ci/sdk/
             ```
             See [CONTRIBUTING.md — Debugging Zero-Diff Failures](https://github.com/${{ github.repository }}/blob/main/CONTRIBUTING.md#debugging-zero-diff-failures) for the full procedure.
 
