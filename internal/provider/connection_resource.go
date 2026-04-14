@@ -9,6 +9,7 @@ import (
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
+	custom_setplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/setplanmodifier"
 	speakeasy_setplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/setplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
@@ -78,11 +79,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
-					"streams": schema.ListNestedAttribute{
+					"streams": schema.SetNestedAttribute{
 						Computed: true,
 						Optional: true,
-						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+						PlanModifiers: []planmodifier.Set{
+							custom_setplanmodifier.UniqueByNameAndNamespace(),
+							speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
 						},
 						NestedObject: schema.NestedAttributeObject{
 							Validators: []validator.Object{

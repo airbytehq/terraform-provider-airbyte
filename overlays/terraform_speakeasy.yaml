@@ -159,21 +159,19 @@ actions:
   # =============================================================================
   # Connection Stream Drift Fixes
   # =============================================================================
-  # Fix perpetual drift and apply failures when streams have heterogeneous
-  # source-defined cursor_field/primary_key values (e.g., Salesforce, HubSpot).
-  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/374
 
-  # --- Layer 1: streams Set → List ---
+  # --- Layer 1: streams as SetNestedAttribute with UniqueByNameAndNamespace plan modifier ---
   # The upstream spec defines StreamConfigurations.streams with `format: set`,
-  # which causes Speakeasy to generate SetNestedAttribute. Terraform Sets use
-  # hash-based element matching; when config elements have Unknown computed
-  # fields and state elements have Known values, Terraform can't hash-match
-  # them, causing computed values to get swapped between streams when ordering
-  # differs. Removing `format: set` makes Speakeasy generate ListNestedAttribute
-  # instead, which uses stable positional correlation.
-  - target: "$.components.schemas.StreamConfigurations.properties.streams.format"
-    description: "Remove format:set from streams to generate ListNestedAttribute instead of SetNestedAttribute"
-    remove: true
+  # which causes Speakeasy to generate SetNestedAttribute. Streams are identified
+  # by the composite key (name, namespace), not by position. We use
+  # x-speakeasy-plan-modifiers to wire in a custom UniqueByNameAndNamespace
+  # modifier that matches set elements by (name, namespace) instead of by hash,
+  # preserving computed attributes (cursor_field, primary_key) across plan cycles.
+
+  - target: "$.components.schemas.StreamConfigurations.properties.streams"
+    description: "Add UniqueByNameAndNamespace plan modifier to correlate streams by (name, namespace) instead of hash"
+    update:
+      x-speakeasy-plan-modifiers: UniqueByNameAndNamespace
 
   # --- Layer 2: Make cursorField/primaryKey nullable ---
   # The upstream spec defines cursorField and primaryKey as non-nullable,
