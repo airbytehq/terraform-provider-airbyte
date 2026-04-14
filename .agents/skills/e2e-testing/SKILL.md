@@ -1,7 +1,11 @@
-# E2E Smoke Test — Terraform Provider for Airbyte
+# Full E2E Test — Terraform Provider for Airbyte
 
 Run the CI-built (or locally built) provider binary against a real Airbyte Cloud
-workspace to verify plan, apply, drift-check, and destroy all succeed.
+workspace to verify the full Terraform lifecycle: plan, apply, drift-check,
+and destroy all succeed.
+
+This is distinct from `.github/workflows/e2e-smoke-test.yml`, which is a
+plan-only CI smoke test.
 
 ## Prerequisites
 
