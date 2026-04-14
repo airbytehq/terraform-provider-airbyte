@@ -17,12 +17,13 @@ uv run scripts/generate_terraform_spec.py --output generated/api_terraform.yaml
 """
 
 [tasks.post-generate]
-help = "Patch provider registrations, preserve config across API calls, fix workspace nil pointer, mark configuration as sensitive, and tidy Go modules after Speakeasy generation."
+help = "Patch provider registrations, preserve config across API calls, fix workspace nil pointer, mark configuration as sensitive, apply streams UniqueByKey modifier, and tidy Go modules after Speakeasy generation."
 shell = """
 python3 scripts/patch_provider_registrations.py internal/provider/provider.go
 python3 scripts/patch_config_preservation.py internal/provider
 python3 scripts/patch_workspace_notifications.py
 python3 scripts/patch_sensitive_configuration.py
+python3 scripts/patch_connection_streams.py
 go mod tidy
 """
 
