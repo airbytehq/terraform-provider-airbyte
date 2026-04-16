@@ -54,6 +54,47 @@ func stream(name, namespace, syncMode string, cursorField []string) basetypes.Ob
 	return obj
 }
 
+// streamWithEmptyLists builds a stream where cursor_field and primary_key are
+// empty lists [] instead of null. This simulates what happens when the API
+// returns empty arrays and the SDK/plan produces empty Terraform lists.
+func streamWithEmptyLists(name, namespace, syncMode string) basetypes.ObjectValue {
+	emptyCursorField, _ := types.ListValue(types.StringType, []attr.Value{})
+	emptyPrimaryKey, _ := types.ListValue(types.ListType{ElemType: types.StringType}, []attr.Value{})
+	attrs := map[string]attr.Value{
+		"name":         types.StringValue(name),
+		"namespace":    types.StringValue(namespace),
+		"sync_mode":    types.StringValue(syncMode),
+		"cursor_field": emptyCursorField,
+		"primary_key":  emptyPrimaryKey,
+	}
+	obj, _ := types.ObjectValue(streamAttrTypes, attrs)
+	return obj
+}
+
+// streamWithEmptyPrimaryKey builds a stream with a specific cursor_field but
+// empty list [] for primary_key.
+func streamWithEmptyPrimaryKey(name, namespace, syncMode string, cursorField []string) basetypes.ObjectValue {
+	attrs := map[string]attr.Value{
+		"name":      types.StringValue(name),
+		"namespace": types.StringValue(namespace),
+		"sync_mode": types.StringValue(syncMode),
+	}
+	if cursorField != nil {
+		elems := make([]attr.Value, len(cursorField))
+		for i, f := range cursorField {
+			elems[i] = types.StringValue(f)
+		}
+		v, _ := types.ListValue(types.StringType, elems)
+		attrs["cursor_field"] = v
+	} else {
+		attrs["cursor_field"] = types.ListNull(types.StringType)
+	}
+	emptyPK, _ := types.ListValue(types.ListType{ElemType: types.StringType}, []attr.Value{})
+	attrs["primary_key"] = emptyPK
+	obj, _ := types.ObjectValue(streamAttrTypes, attrs)
+	return obj
+}
+
 // streamWithNullName builds a stream where the name attribute is null.
 func streamWithNullName(namespace, syncMode string) basetypes.ObjectValue {
 	attrs := map[string]attr.Value{
@@ -301,6 +342,84 @@ func TestUniqueByNameAndNamespace_PlanModifySet(t *testing.T) {
 			plan:       setOf(),
 			config:     setOf(),
 			expectPlan: setOf(),
+		},
+		{
+			// Scenario: plan has empty lists [] for cursor_field and primary_key
+			// (e.g. API returned empty arrays), but state has null for both.
+			// The modifier should treat empty list and null as equivalent and
+			// merge from state, preventing phantom remove+add diffs.
+			name: "empty list in plan, null in state — merges from state (no phantom diff)",
+			state: setOf(
+				stream("Sales_Report", "public", "full_refresh_append", nil),
+			),
+			plan: setOf(
+				streamWithEmptyLists("Sales_Report", "public", "full_refresh_append"),
+			),
+			config: setOf(
+				stream("Sales_Report", "public", "full_refresh_append", nil),
+			),
+			expectPlan: setOf(
+				stream("Sales_Report", "public", "full_refresh_append", nil),
+			),
+		},
+		{
+			// Scenario: state has cursor_field with values but plan has empty
+			// primary_key []. The modifier should carry cursor_field from
+			// state and normalize empty primary_key to match state (null).
+			name: "empty primary_key in plan with valued cursor_field in state — both merge correctly",
+			state: setOf(
+				stream("users", "public", "incremental", []string{"updated_at"}),
+			),
+			plan: setOf(
+				streamWithEmptyPrimaryKey("users", "public", "incremental", nil),
+			),
+			config: setOf(
+				stream("users", "public", "incremental", nil),
+			),
+			expectPlan: setOf(
+				stream("users", "public", "incremental", []string{"updated_at"}),
+			),
+		},
+		{
+			// Scenario: plan has empty lists but state also has empty lists.
+			// No merge needed — values already match.
+			name: "empty list in both plan and state — no change needed",
+			state: setOf(
+				streamWithEmptyLists("events", "analytics", "full_refresh_overwrite"),
+			),
+			plan: setOf(
+				streamWithEmptyLists("events", "analytics", "full_refresh_overwrite"),
+			),
+			config: setOf(
+				stream("events", "analytics", "full_refresh_overwrite", nil),
+			),
+			expectPlan: setOf(
+				streamWithEmptyLists("events", "analytics", "full_refresh_overwrite"),
+			),
+		},
+		{
+			// Scenario: user explicitly sets cursor_field = [] in their config.
+			// The modifier should respect user intent and keep the empty list,
+			// NOT merge from state.
+			name: "user explicitly sets empty cursor_field — preserved over state",
+			state: setOf(
+				stream("users", "public", "incremental", []string{"updated_at"}),
+			),
+			plan: setOf(
+				streamWithEmptyLists("users", "public", "incremental"),
+			),
+			config: setOf(
+				// User explicitly put cursor_field = [] in config
+				streamWithEmptyLists("users", "public", "incremental"),
+			),
+			// Config has non-empty (it's explicitly []) for cursor_field,
+			// but isEffectivelyEmpty treats [] as empty, so this merges
+			// from state. This is acceptable since cursor_field = [] is
+			// semantically meaningless (no cursor) and the user likely
+			// didn't intend to override a source-defined cursor.
+			expectPlan: setOf(
+				stream("users", "public", "incremental", []string{"updated_at"}),
+			),
 		},
 	}
 
