@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# e2e-phantom-diff.sh
+# e2e-phantom-diff-testing.sh
 #
 # End-to-end regression test for the null-vs-empty-list phantom diff bug that
 # was fixed by PR #423 in internal/planmodifiers/setplanmodifier/
@@ -29,7 +29,7 @@
 #   - Unit tests: internal/planmodifiers/setplanmodifier/unique_by_name_and_namespace_test.go
 #
 # Usage:
-#   scripts/e2e-phantom-diff.sh [--with-v112] [--keep] [--verbose]
+#   scripts/e2e-phantom-diff-testing.sh [--with-v112] [--keep] [--verbose]
 #
 # Required environment variables:
 #   AIRBYTE_CLOUD_CLIENT_ID        — Airbyte Cloud API client_id
