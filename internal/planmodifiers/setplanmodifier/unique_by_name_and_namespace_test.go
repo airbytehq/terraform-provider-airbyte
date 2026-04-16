@@ -456,6 +456,105 @@ func TestUniqueByNameAndNamespace_PlanModifySet(t *testing.T) {
 	}
 }
 
+// TestUniqueByNameAndNamespace_SetHashIdentity proves that after the modifier
+// runs, the output set is byte-for-byte Equal to the state set when nothing
+// has actually changed. This is the critical property for SetNestedAttribute:
+// if the output set equals the state set, Terraform computes zero diff.
+// If the hashes DON'T match, Terraform renders it as delete+create (since
+// sets have no concept of in-place modification).
+func TestUniqueByNameAndNamespace_SetHashIdentity(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name   string
+		state  basetypes.SetValue
+		plan   basetypes.SetValue
+		config basetypes.SetValue
+	}{
+		{
+			// Customer scenario: primary_key is null in state, [] in plan.
+			// After merge, plan element should be identical to state element.
+			name: "primary_key null-vs-empty — output set equals state (zero diff)",
+			state: setOf(
+				stream("Sales_Report", "public", "full_refresh_append", nil),
+			),
+			plan: setOf(
+				streamWithEmptyLists("Sales_Report", "public", "full_refresh_append"),
+			),
+			config: setOf(
+				stream("Sales_Report", "public", "full_refresh_append", nil),
+			),
+		},
+		{
+			// Multiple streams, some with valued cursor_field in state.
+			// Plan has empty lists from API refresh. After merge, output
+			// must equal state exactly so Terraform sees zero diff.
+			name: "mixed streams with empty-vs-null — output set equals state",
+			state: setOf(
+				stream("users", "public", "incremental", []string{"updated_at"}),
+				stream("Sales_Report", "public", "full_refresh_append", nil),
+			),
+			plan: setOf(
+				streamWithEmptyPrimaryKey("users", "public", "incremental", nil),
+				streamWithEmptyLists("Sales_Report", "public", "full_refresh_append"),
+			),
+			config: setOf(
+				stream("users", "public", "incremental", nil),
+				stream("Sales_Report", "public", "full_refresh_append", nil),
+			),
+		},
+		{
+			// Reordered streams with empty lists. After merge, output must
+			// equal state (sets are order-independent, so Equal should hold).
+			name: "reordered streams with empty-vs-null — output set equals state",
+			state: setOf(
+				stream("orders", "sales", "incremental", []string{"created_at"}),
+				stream("users", "public", "incremental", []string{"updated_at"}),
+			),
+			plan: setOf(
+				streamWithEmptyPrimaryKey("users", "public", "incremental", nil),
+				streamWithEmptyPrimaryKey("orders", "sales", "incremental", nil),
+			),
+			config: setOf(
+				stream("users", "public", "incremental", nil),
+				stream("orders", "sales", "incremental", nil),
+			),
+		},
+	}
+
+	for _, tc := range tests {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			modifier := UniqueByNameAndNamespace()
+			req := planmodifier.SetRequest{
+				StateValue:  tc.state,
+				PlanValue:   tc.plan,
+				ConfigValue: tc.config,
+			}
+			resp := &planmodifier.SetResponse{
+				PlanValue: tc.plan,
+			}
+
+			modifier.PlanModifySet(context.Background(), req, resp)
+
+			require.False(t, resp.Diagnostics.HasError(),
+				"unexpected error: %s", resp.Diagnostics.Errors())
+
+			// The critical assertion: the output set must be Equal() to the
+			// state set. This proves Terraform would compute identical hashes
+			// and show zero diff — not delete+create, not modify, just
+			// "No changes. Your infrastructure matches the configuration."
+			assert.True(t, resp.PlanValue.Equal(tc.state),
+				"output set is NOT Equal to state set — Terraform would show a diff!\n"+
+					"state elements: %s\n"+
+					"plan elements:  %s",
+				tc.state.Elements(), resp.PlanValue.Elements())
+		})
+	}
+}
+
 func TestUniqueByNameAndNamespace_Description(t *testing.T) {
 	t.Parallel()
 	modifier := UniqueByNameAndNamespace()
