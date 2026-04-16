@@ -148,12 +148,21 @@ func (m uniqueByNameAndNamespace) compositeKey(elem attr.Value) string {
 // plan element when the user didn't explicitly configure them. This preserves
 // source-defined computed values (cursor_field, primary_key) across plan cycles.
 //
-// We merge from state when the plan attribute is unknown OR null, because inner
-// plan modifiers (e.g. SuppressDiff on cursor_field) execute before this
-// set-level modifier and may convert unknown → null when no hash-matched state
-// element was found. To avoid overwriting user intent, we only merge when the
-// corresponding config attribute is also null/missing (meaning user didn't
-// specify it).
+// We merge from state when the plan attribute is unknown, null, OR an empty
+// collection (empty list/set), because:
+//   - Inner plan modifiers (e.g. SuppressDiff on cursor_field) execute before
+//     this set-level modifier and may convert unknown → null when no
+//     hash-matched state element was found.
+//   - The API may return empty arrays (e.g. primary_key: []) which Terraform
+//     represents as empty lists, while state may have null. Both are
+//     semantically "not set", but they produce different set hashes, causing
+//     phantom remove+add diffs.
+//
+// To avoid overwriting user intent, we only merge when the corresponding
+// config attribute is also null/missing (meaning user didn't specify it).
+// We intentionally do NOT use isEffectivelyEmpty on the config value:
+// if the user explicitly writes `cursor_field = []`, that counts as
+// "configured" and we preserve their intent.
 func (m uniqueByNameAndNamespace) mergeComputedFromState(planElem, stateElem, configElem attr.Value) attr.Value {
 	planObj, planOk := planElem.(basetypes.ObjectValue)
 	stateObj, stateOk := stateElem.(basetypes.ObjectValue)
@@ -173,7 +182,7 @@ func (m uniqueByNameAndNamespace) mergeComputedFromState(planElem, stateElem, co
 
 	merged := make(map[string]attr.Value, len(planAttrs))
 	for k, planVal := range planAttrs {
-		if planVal.IsUnknown() || planVal.IsNull() {
+		if isEffectivelyEmpty(planVal) {
 			// Check if the user explicitly configured this attribute.
 			// If so, respect their intent (don't merge from state).
 			if configAttrs != nil {
@@ -198,4 +207,21 @@ func (m uniqueByNameAndNamespace) mergeComputedFromState(planElem, stateElem, co
 		return planElem
 	}
 	return result
+}
+
+// isEffectivelyEmpty returns true if the value is null, unknown, or a
+// collection (list/set) with zero elements. This treats null and empty
+// collections as semantically equivalent for merge purposes, preventing
+// phantom diffs caused by null-vs-empty-list hash mismatches.
+func isEffectivelyEmpty(v attr.Value) bool {
+	if v.IsNull() || v.IsUnknown() {
+		return true
+	}
+	if lv, ok := v.(basetypes.ListValue); ok {
+		return len(lv.Elements()) == 0
+	}
+	if sv, ok := v.(basetypes.SetValue); ok {
+		return len(sv.Elements()) == 0
+	}
+	return false
 }
