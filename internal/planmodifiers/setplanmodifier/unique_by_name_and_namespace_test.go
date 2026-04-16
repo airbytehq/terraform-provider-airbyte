@@ -400,7 +400,8 @@ func TestUniqueByNameAndNamespace_PlanModifySet(t *testing.T) {
 		{
 			// Scenario: user explicitly sets cursor_field = [] in their config.
 			// The modifier should respect user intent and keep the empty list,
-			// NOT merge from state.
+			// NOT merge from state. An explicit [] in config counts as
+			// "configured" even though the list is empty.
 			name: "user explicitly sets empty cursor_field — preserved over state",
 			state: setOf(
 				stream("users", "public", "incremental", []string{"updated_at"}),
@@ -412,13 +413,8 @@ func TestUniqueByNameAndNamespace_PlanModifySet(t *testing.T) {
 				// User explicitly put cursor_field = [] in config
 				streamWithEmptyLists("users", "public", "incremental"),
 			),
-			// Config has non-empty (it's explicitly []) for cursor_field,
-			// but isEffectivelyEmpty treats [] as empty, so this merges
-			// from state. This is acceptable since cursor_field = [] is
-			// semantically meaningless (no cursor) and the user likely
-			// didn't intend to override a source-defined cursor.
 			expectPlan: setOf(
-				stream("users", "public", "incremental", []string{"updated_at"}),
+				streamWithEmptyLists("users", "public", "incremental"),
 			),
 		},
 	}

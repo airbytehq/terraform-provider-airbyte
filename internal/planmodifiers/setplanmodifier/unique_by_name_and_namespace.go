@@ -159,7 +159,10 @@ func (m uniqueByNameAndNamespace) compositeKey(elem attr.Value) string {
 //     phantom remove+add diffs.
 //
 // To avoid overwriting user intent, we only merge when the corresponding
-// config attribute is also null/missing/empty (meaning user didn't specify it).
+// config attribute is also null/missing (meaning user didn't specify it).
+// We intentionally do NOT use isEffectivelyEmpty on the config value:
+// if the user explicitly writes `cursor_field = []`, that counts as
+// "configured" and we preserve their intent.
 func (m uniqueByNameAndNamespace) mergeComputedFromState(planElem, stateElem, configElem attr.Value) attr.Value {
 	planObj, planOk := planElem.(basetypes.ObjectValue)
 	stateObj, stateOk := stateElem.(basetypes.ObjectValue)
@@ -183,7 +186,7 @@ func (m uniqueByNameAndNamespace) mergeComputedFromState(planElem, stateElem, co
 			// Check if the user explicitly configured this attribute.
 			// If so, respect their intent (don't merge from state).
 			if configAttrs != nil {
-				if cfgVal, exists := configAttrs[k]; exists && !isEffectivelyEmpty(cfgVal) {
+				if cfgVal, exists := configAttrs[k]; exists && !cfgVal.IsNull() && !cfgVal.IsUnknown() {
 					merged[k] = planVal
 					continue
 				}
