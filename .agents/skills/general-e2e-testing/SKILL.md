@@ -1,5 +1,12 @@
 # Full E2E Test — Terraform Provider for Airbyte
 
+Related skill: [`e2e-phantom-diff-testing`](../e2e-phantom-diff-testing/SKILL.md)
+covers the null-vs-empty-list phantom diff on connection stream sets
+([PR #423](https://github.com/airbytehq/terraform-provider-airbyte/pull/423)).
+Use that one when regression-testing changes under
+`internal/planmodifiers/setplanmodifier/`; use this one for generic
+provider lifecycle coverage.
+
 Run the CI-built (or locally built) provider binary against a real Airbyte Cloud
 workspace to verify the full Terraform lifecycle: plan, apply, drift-check,
 and destroy all succeed.
