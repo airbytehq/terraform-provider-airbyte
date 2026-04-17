@@ -3,20 +3,20 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: e7b8b68efa070b9e644570e82ca8a4d6
   docVersion: 1.0.0
-  speakeasyVersion: 1.761.6
-  generationVersion: 2.879.13
-  releaseVersion: 1.1.3
-  configChecksum: 0cc43f55fdc4ad4ec3862eaf6389bb09
+  speakeasyVersion: 1.761.7
+  generationVersion: 2.881.0
+  releaseVersion: 1.1.4
+  configChecksum: f5c61f295361309282c37ca348840de4
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: e6380b58-5c61-420f-8861-c31289db92a3
-  pristine_commit_hash: ee208afed237954f6f3198473fa8da11bb0d1181
-  pristine_tree_hash: 160438a6decef7b872319e7b4bec3a7738d4a3fb
+  generation_id: 0156bbfa-0c77-4490-8fd9-79f2d008dd2e
+  pristine_commit_hash: 71f71b48552bba527751288f3ba8f3e0df8fd0b8
+  pristine_tree_hash: 7f17cfcf50b556e768c4aaba19ac7c966cf3c7a3
 features:
   terraform:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.3.2
-    core: 3.47.2
+    core: 3.47.3
     deprecations: 2.82.0
     globalSecurity: 2.82.3
     globalServerURLs: 2.83.2
@@ -74,8 +74,8 @@ trackedFiles:
     pristine_git_object: 8f46fa23e9ff318c727d03f0dcf5a8a677b6e617
   examples/provider/provider.tf:
     id: 954e955c0240
-    last_write_checksum: sha1:c63920738c955862607d2158c667a44fe912e142
-    pristine_git_object: 850a9ba1d20bfc79a9e7e7c0064ede6a3f7f477c
+    last_write_checksum: sha1:2b543198f37b628cb6fb2fa2ca16c175a28678f4
+    pristine_git_object: d0dcae0ff9de3ddde70b8315d62c9126cb9b87f4
   examples/resources/airbyte_connection/import-by-string-id.tf:
     id: 8c04ff01f5ae
     last_write_checksum: sha1:d0e6ff899bd5da0e7018c9420f4face02263ff4c
@@ -1646,8 +1646,8 @@ trackedFiles:
     pristine_git_object: 5b3dc7c122d8ab08905485342d7474f8f163888d
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:4d4166f92ccd9a697c7d88a0da8392fb6d07cc59
-    pristine_git_object: 49cf05f997307ddfd857924f04acf3a3ea82452c
+    last_write_checksum: sha1:d751e4c4c3335ea244bce19b76daa6d6ebfd6ba1
+    pristine_git_object: 43b81cfcf25bc0e79e8236fb9c3773cadab960f2
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
