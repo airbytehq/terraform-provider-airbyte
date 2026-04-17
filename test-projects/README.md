@@ -177,7 +177,7 @@ This runs `terraform init` + `terraform plan` against `v1-tf-generic-test/` usin
 
 ## Full E2E Testing (Devin)
 
-For full end-to-end testing (apply, drift check, destroy), use the Devin E2E testing skill defined in `.agents/skills/e2e-testing/SKILL.md`. This skill runs the complete lifecycle against a real Airbyte Cloud workspace:
+For full end-to-end testing (apply, drift check, destroy), use the Devin E2E testing skill defined in `.agents/skills/general-e2e-testing/SKILL.md`. This skill runs the complete lifecycle against a real Airbyte Cloud workspace:
 
 1. `terraform plan` — must succeed
 2. `terraform apply` — creates real resources in Airbyte Cloud
