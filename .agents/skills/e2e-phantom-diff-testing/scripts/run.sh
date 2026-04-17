@@ -123,7 +123,11 @@ log "step 9: apply the intentional change and re-plan for No changes"
 TF_CLI_CONFIG_FILE="$TF_DIR/.terraformrc-post-fix" \
   terraform -chdir="$TF_DIR" apply -auto-approve -no-color \
   >"$TF_DIR/apply-post-fix.txt" 2>&1
+# Pass -refresh=true explicitly so the post-apply plan hits the live API.
+# assert-no-changes.sh defaults to -refresh=false for the patched-state
+# assertions; here we want the opposite — catch any server-side drift or
+# unexpected provider-side normalization after apply.
 TF_CLI_CONFIG_FILE="$TF_DIR/.terraformrc-post-fix" \
-  "$SCRIPT_DIR/assert-no-changes.sh" "$TF_DIR/plan-post-apply.txt"
+  "$SCRIPT_DIR/assert-no-changes.sh" "$TF_DIR/plan-post-apply.txt" -refresh=true
 
 log "ALL ASSERTIONS PASSED"

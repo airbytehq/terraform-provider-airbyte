@@ -20,8 +20,10 @@ require_env TF_DIR TF_CLI_CONFIG_FILE
 log "restoring pre-patch state and flipping purchases: incremental_append -> full_refresh_append"
 cp "$TF_DIR/terraform.tfstate.pre-patch" "$TF_DIR/terraform.tfstate"
 # Match on the bare value, not `sync_mode = "incremental_append"`, because HCL
-# formatting pads the `=` with variable whitespace across TF versions.
-sed -i 's/"incremental_append"/"full_refresh_append"/' "$TF_DIR/main.tf"
+# formatting pads the `=` with variable whitespace across TF versions. Use
+# sed -i.bak so this works on both GNU (Linux) and BSD (macOS) sed.
+sed -i.bak 's/"incremental_append"/"full_refresh_append"/' "$TF_DIR/main.tf"
+rm -f "$TF_DIR/main.tf.bak"
 
 log "running terraform plan (expecting 1 in-place change)"
 terraform -chdir="$TF_DIR" plan -no-color \

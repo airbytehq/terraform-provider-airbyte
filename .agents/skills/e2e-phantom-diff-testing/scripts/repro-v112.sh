@@ -23,7 +23,9 @@ log "setting up v1.1.2 workspace at $V112_DIR"
 rm -rf "$V112_DIR"
 cp -r "$TF_DIR" "$V112_DIR"
 rm -rf "$V112_DIR/.terraform" "$V112_DIR/.terraform.lock.hcl"
-sed -i 's#version = "~> 1.1.0"#version = "= 1.1.2"#' "$V112_DIR/main.tf"
+# Use sed -i.bak so this works on both GNU (Linux) and BSD (macOS) sed.
+sed -i.bak 's#version = "~> 1.1.0"#version = "= 1.1.2"#' "$V112_DIR/main.tf"
+rm -f "$V112_DIR/main.tf.bak"
 
 log "terraform init against registry (no dev_overrides)"
 TF_CLI_CONFIG_FILE="$V112_DIR/.terraformrc-v112" \

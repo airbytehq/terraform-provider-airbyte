@@ -26,9 +26,19 @@ require_env AIRBYTE_CLOUD_CLIENT_ID AIRBYTE_CLOUD_CLIENT_SECRET \
 export AIRBYTE_API_URL="${AIRBYTE_API_URL:-https://api.airbyte.com/v1}"
 
 log "requesting bearer token from $AIRBYTE_API_URL"
+# Build the payload with jq --arg so JSON-special characters in secrets
+# (quotes, backslashes, newlines) can't produce a malformed request body.
+TOKEN_BODY=$(jq -n \
+  --arg client_id     "$AIRBYTE_CLOUD_CLIENT_ID" \
+  --arg client_secret "$AIRBYTE_CLOUD_CLIENT_SECRET" \
+  '{
+    client_id:     $client_id,
+    client_secret: $client_secret,
+    "grant-type":  "client_credentials"
+  }')
 TOKEN="$(curl -sS -X POST "$AIRBYTE_API_URL/applications/token" \
   -H "Content-Type: application/json" \
-  -d "{\"client_id\":\"$AIRBYTE_CLOUD_CLIENT_ID\",\"client_secret\":\"$AIRBYTE_CLOUD_CLIENT_SECRET\",\"grant-type\":\"client_credentials\"}" \
+  -d "$TOKEN_BODY" \
   | jq -r .access_token)"
 [[ -n "$TOKEN" && "$TOKEN" != "null" ]] || fail "token request returned empty/null access_token"
 
