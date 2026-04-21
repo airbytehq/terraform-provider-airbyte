@@ -3,20 +3,20 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: e7b8b68efa070b9e644570e82ca8a4d6
   docVersion: 1.0.0
-  speakeasyVersion: 1.761.8
-  generationVersion: 2.881.2
+  speakeasyVersion: 1.761.9
+  generationVersion: 2.881.4
   releaseVersion: 1.1.4
   configChecksum: f5c61f295361309282c37ca348840de4
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: df487d6f-4830-453b-9348-40b40228eacc
-  pristine_commit_hash: 209aa9f1859ec291a2fe4fb4b91b75f0cbf06ce8
-  pristine_tree_hash: 0622b73c63f426db068131ec5787585a6f8e1c02
+  generation_id: 4b7e1086-9e52-4bf9-93cc-ea4ff5de2ba6
+  pristine_commit_hash: c2da5b07847b3ef91a17afa553b2d51c80d2d26d
+  pristine_tree_hash: 0721f95d9600ccf3d8fe7bf18514812ed645ce69
 features:
   terraform:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.3.2
-    core: 3.47.3
+    core: 3.47.4
     deprecations: 2.82.0
     globalSecurity: 2.82.3
     globalServerURLs: 2.83.2
@@ -174,8 +174,8 @@ trackedFiles:
     pristine_git_object: 5d8782d844334844f9a70d802b09c01635c89e1c
   go.mod:
     id: c47645c391ad
-    last_write_checksum: sha1:b2b73af7c5b546b64ffedf9b28bcb78e5cc34c42
-    pristine_git_object: 63fb681d05acc86cda6e72279ace09129d2d515c
+    last_write_checksum: sha1:c4d445db1908aed27049f2697b827f7048df8ae0
+    pristine_git_object: 4497ce0539415af573e2cc81bb488aa33d830be2
   internal/planmodifiers/boolplanmodifier/suppress_diff.go:
     id: 3cf85b98963e
     last_write_checksum: sha1:b8f503b7e3a2aef09ae00e84df772038d382b544
@@ -1646,8 +1646,8 @@ trackedFiles:
     pristine_git_object: 5b3dc7c122d8ab08905485342d7474f8f163888d
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:e5b84f52f17e3600d58a97db39cde6a3b051e017
-    pristine_git_object: 87bcf678264d2b52814571fdca69dfb29f3ab035
+    last_write_checksum: sha1:463066cf969a80fcf0aeb052ac36ab8d81663a84
+    pristine_git_object: ca19efb1166d911e064c987f41c20562e6b3db5b
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
