@@ -9,7 +9,7 @@
 # sources (connector registry lookups), and produce a valid execution plan.
 #
 # For full E2E testing (apply, drift check, destroy), use the Devin E2E
-# testing skill defined in .agents/skills/e2e-testing/SKILL.md.
+# testing skill defined in .agents/skills/general-e2e-testing/SKILL.md.
 #
 # Triggers:
 # - workflow_call: invoked by test-full.yml after provider binaries are built
