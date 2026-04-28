@@ -185,22 +185,26 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 				return
 			}
 		}
-		if version != "" && !isExplicitOverride {
-			resp.Diagnostics.AddWarning(
-				"Could not fetch versioned connector metadata",
-				fmt.Sprintf("Failed to fetch spec for %s version %q: %v. Falling back to registry lookup without version pinning or JSONSchema validation.", connectorName, version, err),
-			)
-		}
-		definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName, registry)
-		if fallbackErr != nil {
-			addDiagnostic(resp, ignoreErrors, "Failed to resolve connector", fmt.Sprintf(
-				"Versioned endpoint: %v\nRegistry fallback: %v", err, fallbackErr,
-			))
-			if !ignoreErrors {
-				return
+		// Only fall back to registry lookup for keyword modes (cloud, oss, composite).
+		// Explicit URL/file overrides must not silently resolve from a different registry.
+		if !isExplicitOverride {
+			if version != "" {
+				resp.Diagnostics.AddWarning(
+					"Could not fetch versioned connector metadata",
+					fmt.Sprintf("Failed to fetch spec for %s version %q: %v. Falling back to registry lookup without version pinning or JSONSchema validation.", connectorName, version, err),
+				)
 			}
-		} else {
-			data.DefinitionID = types.StringValue(definitionID)
+			definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName, registry)
+			if fallbackErr != nil {
+				addDiagnostic(resp, ignoreErrors, "Failed to resolve connector", fmt.Sprintf(
+					"Versioned endpoint: %v\nRegistry fallback: %v", err, fallbackErr,
+				))
+				if !ignoreErrors {
+					return
+				}
+			} else {
+				data.DefinitionID = types.StringValue(definitionID)
+			}
 		}
 	} else {
 		if strings.HasPrefix(connectorName, "source-") {
