@@ -173,7 +173,7 @@ func TestValidateRegistryValue(t *testing.T) {
 	// Valid keywords.
 	assert.NoError(t, validateRegistryValue("cloud"))
 	assert.NoError(t, validateRegistryValue("oss"))
-	assert.NoError(t, validateRegistryValue("cloud_and_oss"))
+	assert.NoError(t, validateRegistryValue("composite"))
 
 	// Valid URLs.
 	assert.NoError(t, validateRegistryValue("https://example.com/spec.json"))

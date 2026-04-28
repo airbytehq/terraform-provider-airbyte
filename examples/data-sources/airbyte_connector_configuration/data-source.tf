@@ -31,7 +31,7 @@ data "airbyte_connector_configuration" "postgres" {
   }
 }
 
-# Validate against the OSS registry instead of the default (cloud_and_oss)
+# Validate against the OSS registry instead of the default (composite)
 data "airbyte_connector_configuration" "postgres_oss" {
   connector_name     = "source-postgres"
   connector_version  = "3.6.28"

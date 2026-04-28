@@ -103,7 +103,7 @@ configuration into a single JSON blob suitable for passing to a resource.`,
 			},
 			"connector_registry": schema.StringAttribute{
 				Optional:            true,
-				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `cloud_and_oss` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or an absolute file path (starting with `/`) to override the spec source entirely.",
+				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `composite` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or an absolute file path (starting with `/`) to override the spec source entirely.",
 			},
 			"configuration": schema.DynamicAttribute{
 				Required:            true,
@@ -162,7 +162,7 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		version = data.ConnectorVersion.ValueString()
 	}
 
-	registry := "cloud_and_oss"
+	registry := "composite"
 	if !data.ConnectorRegistry.IsNull() && !data.ConnectorRegistry.IsUnknown() {
 		registry = data.ConnectorRegistry.ValueString()
 	}
@@ -290,7 +290,7 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 	}
 
 	// Composite: try cloud first, fall back to oss.
-	if registry == "cloud_and_oss" {
+	if registry == "composite" {
 		entry, err := d.fetchSpecFromURL(ctx, fmt.Sprintf("%s/%s/%s/cloud.json", connectorCDNBase, connectorName, version))
 		if err == nil {
 			return entry, nil
@@ -351,7 +351,7 @@ func (d *ConnectorConfigurationDataSource) readSpecFromFile(path string) (*conne
 // keyword, a URL, or a local file path.
 func validateRegistryValue(registry string) error {
 	switch registry {
-	case "cloud", "oss", "cloud_and_oss":
+	case "cloud", "oss", "composite":
 		return nil
 	}
 	if strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") {
@@ -361,7 +361,7 @@ func validateRegistryValue(registry string) error {
 		return nil
 	}
 	return fmt.Errorf(
-		"unknown connector_registry value %q: must be one of \"cloud\", \"oss\", \"cloud_and_oss\", a URL (http:// or https://), or an absolute file path (starting with /)",
+		"unknown connector_registry value %q: must be one of \"cloud\", \"oss\", \"composite\", a URL (http:// or https://), or an absolute file path (starting with /)",
 		registry,
 	)
 }
