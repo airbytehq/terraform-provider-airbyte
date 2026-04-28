@@ -38,7 +38,7 @@ type ConnectorConfigurationDataSource struct {
 type ConnectorConfigurationDataSourceModel struct {
 	ConnectorName        types.String  `tfsdk:"connector_name"`
 	ConnectorVersion     types.String  `tfsdk:"connector_version"`
-	SpecSource           types.String  `tfsdk:"spec_source"`
+	ConnectorRegistry    types.String  `tfsdk:"connector_registry"`
 	Configuration        types.Dynamic `tfsdk:"configuration"`
 	ConfigurationSecrets types.Dynamic `tfsdk:"configuration_secrets"`
 	IgnoreErrors         types.Bool    `tfsdk:"ignore_errors"`
@@ -101,9 +101,9 @@ configuration into a single JSON blob suitable for passing to a resource.`,
 				Optional:            true,
 				MarkdownDescription: "The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.",
 			},
-			"spec_source": schema.StringAttribute{
+			"connector_registry": schema.StringAttribute{
 				Optional:            true,
-				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` (default) fetches from the Cloud registry, `oss` fetches from the OSS registry. You can also provide a full URL (starting with `http://` or `https://`) or a local file path to override the spec source entirely.",
+				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `cloud_and_oss` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or a local file path (starting with `/` or `./`) to override the spec source entirely.",
 			},
 			"configuration": schema.DynamicAttribute{
 				Required:            true,
@@ -162,20 +162,36 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		version = data.ConnectorVersion.ValueString()
 	}
 
-	specSource := "cloud"
-	if !data.SpecSource.IsNull() && !data.SpecSource.IsUnknown() {
-		specSource = data.SpecSource.ValueString()
+	registry := "cloud_and_oss"
+	if !data.ConnectorRegistry.IsNull() && !data.ConnectorRegistry.IsUnknown() {
+		registry = data.ConnectorRegistry.ValueString()
 	}
 
-	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version, specSource)
+	if err := validateRegistryValue(registry); err != nil {
+		resp.Diagnostics.AddError("Invalid connector_registry value", err.Error())
+		return
+	}
+
+	isExplicitOverride := strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") ||
+		strings.HasPrefix(registry, "/") || strings.HasPrefix(registry, "./")
+
+	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version, registry)
 	if err != nil {
-		if version != "" {
+		if isExplicitOverride {
+			addDiagnostic(resp, ignoreErrors, "Failed to fetch spec from connector_registry override", fmt.Sprintf(
+				"connector_registry=%q: %v", registry, err,
+			))
+			if !ignoreErrors {
+				return
+			}
+		}
+		if version != "" && !isExplicitOverride {
 			resp.Diagnostics.AddWarning(
 				"Could not fetch versioned connector metadata",
 				fmt.Sprintf("Failed to fetch spec for %s version %q: %v. Falling back to registry lookup without version pinning or JSONSchema validation.", connectorName, version, err),
 			)
 		}
-		definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName, specSource)
+		definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName, registry)
 		if fallbackErr != nil {
 			addDiagnostic(resp, ignoreErrors, "Failed to resolve connector", fmt.Sprintf(
 				"Versioned endpoint: %v\nRegistry fallback: %v", err, fallbackErr,
@@ -258,24 +274,38 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Context, connectorName, version, specSource string) (*connectorVersionedEntry, error) {
+func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Context, connectorName, version, registry string) (*connectorVersionedEntry, error) {
 	if version == "" {
 		version = "latest"
 	}
 
-	// If specSource is a local file path, read from disk.
-	if specSource != "cloud" && specSource != "oss" && !strings.HasPrefix(specSource, "http://") && !strings.HasPrefix(specSource, "https://") {
-		return d.readSpecFromFile(specSource)
+	// Local file path override.
+	if strings.HasPrefix(registry, "/") || strings.HasPrefix(registry, "./") {
+		return d.readSpecFromFile(registry)
 	}
 
+	// URL override.
+	if strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") {
+		return d.fetchSpecFromURL(ctx, registry)
+	}
+
+	// Composite: try cloud first, fall back to oss.
+	if registry == "cloud_and_oss" {
+		entry, err := d.fetchSpecFromURL(ctx, fmt.Sprintf("%s/%s/%s/cloud.json", connectorCDNBase, connectorName, version))
+		if err == nil {
+			return entry, nil
+		}
+		return d.fetchSpecFromURL(ctx, fmt.Sprintf("%s/%s/%s/oss.json", connectorCDNBase, connectorName, version))
+	}
+
+	// Single registry keyword ("cloud" or "oss").
 	var url string
-	if strings.HasPrefix(specSource, "http://") || strings.HasPrefix(specSource, "https://") {
-		url = specSource
-	} else {
-		// specSource is "cloud" or "oss"
-		url = fmt.Sprintf("%s/%s/%s/%s.json", connectorCDNBase, connectorName, version, specSource)
-	}
+	url = fmt.Sprintf("%s/%s/%s/%s.json", connectorCDNBase, connectorName, version, registry)
 
+	return d.fetchSpecFromURL(ctx, url)
+}
+
+func (d *ConnectorConfigurationDataSource) fetchSpecFromURL(ctx context.Context, url string) (*connectorVersionedEntry, error) {
 	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request for %s: %w", url, err)
@@ -307,26 +337,45 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 func (d *ConnectorConfigurationDataSource) readSpecFromFile(path string) (*connectorVersionedEntry, error) {
 	body, err := os.ReadFile(path)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read spec from file %s: %w", path, err)
+		return nil, fmt.Errorf("failed to read spec from file %q: %w", path, err)
 	}
 
 	var entry connectorVersionedEntry
 	if err := json.Unmarshal(body, &entry); err != nil {
-		return nil, fmt.Errorf("failed to parse spec JSON from file %s: %w", path, err)
+		return nil, fmt.Errorf("failed to parse spec JSON from file %q: %w", path, err)
 	}
 
 	return &entry, nil
 }
 
-func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName, specSource string) (string, error) {
+// validateRegistryValue checks that the connector_registry value is a known
+// keyword, a URL, or a local file path.
+func validateRegistryValue(registry string) error {
+	switch registry {
+	case "cloud", "oss", "cloud_and_oss":
+		return nil
+	}
+	if strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") {
+		return nil
+	}
+	if strings.HasPrefix(registry, "/") || strings.HasPrefix(registry, "./") {
+		return nil
+	}
+	return fmt.Errorf(
+		"unknown connector_registry value %q: must be one of \"cloud\", \"oss\", \"cloud_and_oss\", a URL (http:// or https://), or a local file path (starting with / or ./)",
+		registry,
+	)
+}
+
+func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName, registry string) (string, error) {
 	dockerName := "airbyte/" + connectorName
 
-	// Determine registry search order based on specSource.
+	// Determine registry search order.
 	primaryURL := cloudRegistryURL
 	secondaryURL := ossRegistryURL
 	primaryLabel := "cloud"
 	secondaryLabel := "oss"
-	if specSource == "oss" {
+	if registry == "oss" {
 		primaryURL = ossRegistryURL
 		secondaryURL = cloudRegistryURL
 		primaryLabel = "oss"

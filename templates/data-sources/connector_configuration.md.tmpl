@@ -61,16 +61,16 @@ data "airbyte_connector_configuration" "postgres" {
 }
 ```
 
-### Override the spec source (OSS, URL, or local file)
+### Override the connector registry
 
-By default, the spec is fetched from the **Cloud** registry. Use `spec_source` to switch to **OSS**, a custom **URL**, or a **local file**:
+By default, the spec is fetched from both **Cloud** and **OSS** registries (composite). Use `connector_registry` to target a specific registry, a custom **URL**, or a **local file**. URLs and file paths must serve well-formatted registry JSON:
 
 ```terraform
-# Use the OSS registry
+# Use the OSS registry only
 data "airbyte_connector_configuration" "postgres_oss" {
-  connector_name    = "source-postgres"
-  connector_version = "3.6.28"
-  spec_source       = "oss"
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "oss"
 
   configuration = {
     host     = "db.example.com"
@@ -81,9 +81,9 @@ data "airbyte_connector_configuration" "postgres_oss" {
 
 # Use a custom URL
 data "airbyte_connector_configuration" "custom_url" {
-  connector_name    = "source-postgres"
-  connector_version = "3.6.28"
-  spec_source       = "https://example.com/my-custom-spec.json"
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "https://example.com/my-registry-spec.json"
 
   configuration = {
     host     = "db.example.com"
@@ -94,9 +94,9 @@ data "airbyte_connector_configuration" "custom_url" {
 
 # Use a local file
 data "airbyte_connector_configuration" "local_spec" {
-  connector_name    = "source-postgres"
-  connector_version = "3.6.28"
-  spec_source       = "./specs/source-postgres.json"
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "./specs/source-postgres.json"
 
   configuration = {
     host     = "db.example.com"

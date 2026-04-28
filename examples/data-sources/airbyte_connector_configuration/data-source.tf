@@ -31,11 +31,11 @@ data "airbyte_connector_configuration" "postgres" {
   }
 }
 
-# Validate against the OSS registry instead of Cloud
+# Validate against the OSS registry instead of the default (cloud_and_oss)
 data "airbyte_connector_configuration" "postgres_oss" {
-  connector_name    = "source-postgres"
-  connector_version = "3.6.28"
-  spec_source       = "oss"
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "oss"
 
   configuration = {
     host     = "db.example.com"
@@ -44,11 +44,11 @@ data "airbyte_connector_configuration" "postgres_oss" {
   }
 }
 
-# Override spec source with a custom URL
+# Override registry source with a custom URL (must serve well-formatted registry JSON)
 data "airbyte_connector_configuration" "custom_url" {
-  connector_name    = "source-postgres"
-  connector_version = "3.6.28"
-  spec_source       = "https://example.com/my-custom-spec.json"
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "https://example.com/my-registry-spec.json"
 
   configuration = {
     host     = "db.example.com"
@@ -57,11 +57,11 @@ data "airbyte_connector_configuration" "custom_url" {
   }
 }
 
-# Override spec source with a local file path
+# Override registry source with a local file (must contain well-formatted registry JSON)
 data "airbyte_connector_configuration" "local_spec" {
-  connector_name    = "source-postgres"
-  connector_version = "3.6.28"
-  spec_source       = "./specs/source-postgres.json"
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "./specs/source-postgres.json"
 
   configuration = {
     host     = "db.example.com"
