@@ -299,8 +299,7 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 	}
 
 	// Single registry keyword ("cloud" or "oss").
-	var url string
-	url = fmt.Sprintf("%s/%s/%s/%s.json", connectorCDNBase, connectorName, version, registry)
+	url := fmt.Sprintf("%s/%s/%s/%s.json", connectorCDNBase, connectorName, version, registry)
 
 	return d.fetchSpecFromURL(ctx, url)
 }
