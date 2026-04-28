@@ -96,7 +96,7 @@ data "airbyte_connector_configuration" "custom_url" {
 data "airbyte_connector_configuration" "local_spec" {
   connector_name     = "source-postgres"
   connector_version  = "3.6.28"
-  connector_registry = "./path/to/my-custom-registry.json"
+  connector_registry = "/path/to/my-custom-registry.json"
 
   configuration = {
     host     = "db.example.com"
@@ -130,7 +130,7 @@ resource "airbyte_source" "postgres" {
 ### Optional
 
 - `configuration_secrets` (Dynamic, Sensitive) Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are deep-merged with (and override) keys in `configuration`.
-- `connector_registry` (String) Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `cloud_and_oss` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or a local file path (starting with `/` or `./`) to override the spec source entirely.
+- `connector_registry` (String) Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `cloud_and_oss` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or an absolute file path (starting with `/`) to override the spec source entirely.
 - `connector_version` (String) The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.
 - `ignore_errors` (Boolean) If true, validation errors (including JSONSchema validation) are reported as warnings instead of errors. Defaults to false.
 

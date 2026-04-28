@@ -179,13 +179,13 @@ func TestValidateRegistryValue(t *testing.T) {
 	assert.NoError(t, validateRegistryValue("https://example.com/spec.json"))
 	assert.NoError(t, validateRegistryValue("http://localhost:8080/spec.json"))
 
-	// Valid file paths.
+	// Valid file paths (absolute only).
 	assert.NoError(t, validateRegistryValue("/absolute/path/spec.json"))
-	assert.NoError(t, validateRegistryValue("./relative/path/spec.json"))
 
 	// Invalid values.
 	assert.Error(t, validateRegistryValue("bogus"))
 	assert.Error(t, validateRegistryValue("Cloud"))
+	assert.Error(t, validateRegistryValue("./relative/path/spec.json"))
 	assert.Error(t, validateRegistryValue("relative/path/spec.json"))
 	assert.Error(t, validateRegistryValue(""))
 }

@@ -103,7 +103,7 @@ configuration into a single JSON blob suitable for passing to a resource.`,
 			},
 			"connector_registry": schema.StringAttribute{
 				Optional:            true,
-				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `cloud_and_oss` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or a local file path (starting with `/` or `./`) to override the spec source entirely.",
+				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `cloud_and_oss` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or an absolute file path (starting with `/`) to override the spec source entirely.",
 			},
 			"configuration": schema.DynamicAttribute{
 				Required:            true,
@@ -173,7 +173,7 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	}
 
 	isExplicitOverride := strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") ||
-		strings.HasPrefix(registry, "/") || strings.HasPrefix(registry, "./")
+		strings.HasPrefix(registry, "/")
 
 	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version, registry)
 	if err != nil {
@@ -279,8 +279,8 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 		version = "latest"
 	}
 
-	// Local file path override.
-	if strings.HasPrefix(registry, "/") || strings.HasPrefix(registry, "./") {
+	// Local file path override (absolute paths only).
+	if strings.HasPrefix(registry, "/") {
 		return d.readSpecFromFile(registry)
 	}
 
@@ -357,11 +357,11 @@ func validateRegistryValue(registry string) error {
 	if strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") {
 		return nil
 	}
-	if strings.HasPrefix(registry, "/") || strings.HasPrefix(registry, "./") {
+	if strings.HasPrefix(registry, "/") {
 		return nil
 	}
 	return fmt.Errorf(
-		"unknown connector_registry value %q: must be one of \"cloud\", \"oss\", \"cloud_and_oss\", a URL (http:// or https://), or a local file path (starting with / or ./)",
+		"unknown connector_registry value %q: must be one of \"cloud\", \"oss\", \"cloud_and_oss\", a URL (http:// or https://), or an absolute file path (starting with /)",
 		registry,
 	)
 }
