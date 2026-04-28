@@ -61,7 +61,7 @@ data "airbyte_connector_configuration" "custom_url" {
 data "airbyte_connector_configuration" "local_spec" {
   connector_name     = "source-postgres"
   connector_version  = "3.6.28"
-  connector_registry = "./specs/source-postgres.json"
+  connector_registry = "./path/to/my-custom-registry.json"
 
   configuration = {
     host     = "db.example.com"
