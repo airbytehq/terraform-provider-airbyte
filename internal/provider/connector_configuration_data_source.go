@@ -21,8 +21,9 @@ import (
 )
 
 const (
-	ossRegistryURL   = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
-	cloudRegistryURL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
+	ossRegistryURL       = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
+	cloudRegistryURL     = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
+	compositeRegistryURL = "https://connectors.airbyte.com/files/registries/v0/composite_registry.json"
 	connectorCDNBase = "https://connectors.airbyte.com/files/metadata/airbyte"
 )
 
@@ -373,47 +374,24 @@ func validateRegistryValue(registry string) error {
 func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName, registry string) (string, error) {
 	dockerName := "airbyte/" + connectorName
 
-	// Determine registry search order.
-	primaryURL := cloudRegistryURL
-	secondaryURL := ossRegistryURL
-	primaryLabel := "cloud"
-	secondaryLabel := "oss"
-	if registry == "oss" {
-		primaryURL = ossRegistryURL
-		secondaryURL = cloudRegistryURL
-		primaryLabel = "oss"
-		secondaryLabel = "cloud"
+	var registryURL string
+	switch registry {
+	case "composite":
+		registryURL = compositeRegistryURL
+	case "oss":
+		registryURL = ossRegistryURL
+	default:
+		registryURL = cloudRegistryURL
 	}
 
-	primaryID, primaryErr := d.searchRegistry(ctx, primaryURL, dockerName, connectorName)
-	if primaryErr == nil && primaryID != "" {
-		return primaryID, nil
+	id, err := d.searchRegistry(ctx, registryURL, dockerName, connectorName)
+	if err != nil {
+		return "", fmt.Errorf("failed to resolve connector %q in %s registry: %w", connectorName, registry, err)
 	}
-
-	// Only fall back to the secondary registry for composite mode.
-	// Explicit "cloud" or "oss" must not silently resolve from the other registry.
-	if registry == "composite" {
-		secondaryID, secondaryErr := d.searchRegistry(ctx, secondaryURL, dockerName, connectorName)
-		if secondaryErr == nil && secondaryID != "" {
-			return secondaryID, nil
-		}
-		if primaryErr != nil || secondaryErr != nil {
-			var parts []string
-			if primaryErr != nil {
-				parts = append(parts, fmt.Sprintf("%s: %v", primaryLabel, primaryErr))
-			}
-			if secondaryErr != nil {
-				parts = append(parts, fmt.Sprintf("%s: %v", secondaryLabel, secondaryErr))
-			}
-			return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
-		}
-		return "", fmt.Errorf("connector %q not found in Cloud or OSS registries", connectorName)
+	if id == "" {
+		return "", fmt.Errorf("connector %q not found in %s registry", connectorName, registry)
 	}
-
-	if primaryErr != nil {
-		return "", fmt.Errorf("failed to resolve connector %q in %s registry: %v", connectorName, primaryLabel, primaryErr)
-	}
-	return "", fmt.Errorf("connector %q not found in %s registry", connectorName, primaryLabel)
+	return id, nil
 }
 
 func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, registryURL, dockerName, connectorName string) (string, error) {
