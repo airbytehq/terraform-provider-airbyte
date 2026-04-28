@@ -61,6 +61,51 @@ data "airbyte_connector_configuration" "postgres" {
 }
 ```
 
+### Override the spec source (OSS, URL, or local file)
+
+By default, the spec is fetched from the **Cloud** registry. Use `spec_source` to switch to **OSS**, a custom **URL**, or a **local file**:
+
+```terraform
+# Use the OSS registry
+data "airbyte_connector_configuration" "postgres_oss" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "oss"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Use a custom URL
+data "airbyte_connector_configuration" "custom_url" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "https://example.com/my-custom-spec.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Use a local file
+data "airbyte_connector_configuration" "local_spec" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "./specs/source-postgres.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+```
+
 ### Pass resolved values to a resource
 
 Use the data source outputs to configure an [`airbyte_source`](../resources/source.md) or [`airbyte_destination`](../resources/destination.md) resource:
@@ -87,6 +132,7 @@ resource "airbyte_source" "postgres" {
 - `configuration_secrets` (Dynamic, Sensitive) Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are deep-merged with (and override) keys in `configuration`.
 - `connector_version` (String) The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.
 - `ignore_errors` (Boolean) If true, validation errors (including JSONSchema validation) are reported as warnings instead of errors. Defaults to false.
+- `spec_source` (String) Controls where the connector spec is fetched from. Accepted values: `cloud` (default) fetches from the Cloud registry, `oss` fetches from the OSS registry. You can also provide a full URL (starting with `http://` or `https://`) or a local file path to override the spec source entirely.
 
 ### Read-Only
 
