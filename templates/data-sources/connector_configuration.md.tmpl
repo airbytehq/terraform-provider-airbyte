@@ -61,6 +61,51 @@ data "airbyte_connector_configuration" "postgres" {
 }
 ```
 
+### Override the spec source (OSS, URL, or local file)
+
+By default, the spec is fetched from the **Cloud** registry. Use `spec_source` to switch to **OSS**, a custom **URL**, or a **local file**:
+
+```terraform
+# Use the OSS registry
+data "airbyte_connector_configuration" "postgres_oss" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "oss"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Use a custom URL
+data "airbyte_connector_configuration" "custom_url" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "https://example.com/my-custom-spec.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Use a local file
+data "airbyte_connector_configuration" "local_spec" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "./specs/source-postgres.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+```
+
 ### Pass resolved values to a resource
 
 Use the data source outputs to configure an [`airbyte_source`](../resources/source.md) or [`airbyte_destination`](../resources/destination.md) resource:

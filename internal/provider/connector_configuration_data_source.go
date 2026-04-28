@@ -7,6 +7,7 @@ import (
 	"io"
 	"math/big"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -37,6 +38,7 @@ type ConnectorConfigurationDataSource struct {
 type ConnectorConfigurationDataSourceModel struct {
 	ConnectorName        types.String  `tfsdk:"connector_name"`
 	ConnectorVersion     types.String  `tfsdk:"connector_version"`
+	SpecSource           types.String  `tfsdk:"spec_source"`
 	Configuration        types.Dynamic `tfsdk:"configuration"`
 	ConfigurationSecrets types.Dynamic `tfsdk:"configuration_secrets"`
 	IgnoreErrors         types.Bool    `tfsdk:"ignore_errors"`
@@ -99,6 +101,10 @@ configuration into a single JSON blob suitable for passing to a resource.`,
 				Optional:            true,
 				MarkdownDescription: "The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.",
 			},
+			"spec_source": schema.StringAttribute{
+				Optional:            true,
+				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` (default) fetches from the Cloud registry, `oss` fetches from the OSS registry. You can also provide a full URL (starting with `http://` or `https://`) or a local file path to override the spec source entirely.",
+			},
 			"configuration": schema.DynamicAttribute{
 				Required:            true,
 				MarkdownDescription: "Non-sensitive configuration values as an HCL object. These will be visible in Terraform plan output.",
@@ -156,7 +162,12 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		version = data.ConnectorVersion.ValueString()
 	}
 
-	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version)
+	specSource := "cloud"
+	if !data.SpecSource.IsNull() && !data.SpecSource.IsUnknown() {
+		specSource = data.SpecSource.ValueString()
+	}
+
+	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version, specSource)
 	if err != nil {
 		if version != "" {
 			resp.Diagnostics.AddWarning(
@@ -164,7 +175,7 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 				fmt.Sprintf("Failed to fetch spec for %s version %q: %v. Falling back to registry lookup without version pinning or JSONSchema validation.", connectorName, version, err),
 			)
 		}
-		definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName)
+		definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName, specSource)
 		if fallbackErr != nil {
 			addDiagnostic(resp, ignoreErrors, "Failed to resolve connector", fmt.Sprintf(
 				"Versioned endpoint: %v\nRegistry fallback: %v", err, fallbackErr,
@@ -247,12 +258,23 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Context, connectorName, version string) (*connectorVersionedEntry, error) {
+func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Context, connectorName, version, specSource string) (*connectorVersionedEntry, error) {
 	if version == "" {
 		version = "latest"
 	}
 
-	url := fmt.Sprintf("%s/%s/%s/cloud.json", connectorCDNBase, connectorName, version)
+	// If specSource is a local file path, read from disk.
+	if specSource != "cloud" && specSource != "oss" && !strings.HasPrefix(specSource, "http://") && !strings.HasPrefix(specSource, "https://") {
+		return d.readSpecFromFile(specSource)
+	}
+
+	var url string
+	if strings.HasPrefix(specSource, "http://") || strings.HasPrefix(specSource, "https://") {
+		url = specSource
+	} else {
+		// specSource is "cloud" or "oss"
+		url = fmt.Sprintf("%s/%s/%s/%s.json", connectorCDNBase, connectorName, version, specSource)
+	}
 
 	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -282,26 +304,52 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 	return &entry, nil
 }
 
-func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName string) (string, error) {
+func (d *ConnectorConfigurationDataSource) readSpecFromFile(path string) (*connectorVersionedEntry, error) {
+	body, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read spec from file %s: %w", path, err)
+	}
+
+	var entry connectorVersionedEntry
+	if err := json.Unmarshal(body, &entry); err != nil {
+		return nil, fmt.Errorf("failed to parse spec JSON from file %s: %w", path, err)
+	}
+
+	return &entry, nil
+}
+
+func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName, specSource string) (string, error) {
 	dockerName := "airbyte/" + connectorName
 
-	cloudID, cloudErr := d.searchRegistry(ctx, cloudRegistryURL, dockerName, connectorName)
-	if cloudErr == nil && cloudID != "" {
-		return cloudID, nil
+	// Determine registry search order based on specSource.
+	primaryURL := cloudRegistryURL
+	secondaryURL := ossRegistryURL
+	primaryLabel := "cloud"
+	secondaryLabel := "oss"
+	if specSource == "oss" {
+		primaryURL = ossRegistryURL
+		secondaryURL = cloudRegistryURL
+		primaryLabel = "oss"
+		secondaryLabel = "cloud"
 	}
 
-	ossID, ossErr := d.searchRegistry(ctx, ossRegistryURL, dockerName, connectorName)
-	if ossErr == nil && ossID != "" {
-		return ossID, nil
+	primaryID, primaryErr := d.searchRegistry(ctx, primaryURL, dockerName, connectorName)
+	if primaryErr == nil && primaryID != "" {
+		return primaryID, nil
 	}
 
-	if cloudErr != nil || ossErr != nil {
+	secondaryID, secondaryErr := d.searchRegistry(ctx, secondaryURL, dockerName, connectorName)
+	if secondaryErr == nil && secondaryID != "" {
+		return secondaryID, nil
+	}
+
+	if primaryErr != nil || secondaryErr != nil {
 		var parts []string
-		if cloudErr != nil {
-			parts = append(parts, fmt.Sprintf("cloud: %v", cloudErr))
+		if primaryErr != nil {
+			parts = append(parts, fmt.Sprintf("%s: %v", primaryLabel, primaryErr))
 		}
-		if ossErr != nil {
-			parts = append(parts, fmt.Sprintf("oss: %v", ossErr))
+		if secondaryErr != nil {
+			parts = append(parts, fmt.Sprintf("%s: %v", secondaryLabel, secondaryErr))
 		}
 		return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
 	}

@@ -31,6 +31,45 @@ data "airbyte_connector_configuration" "postgres" {
   }
 }
 
+# Validate against the OSS registry instead of Cloud
+data "airbyte_connector_configuration" "postgres_oss" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "oss"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Override spec source with a custom URL
+data "airbyte_connector_configuration" "custom_url" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "https://example.com/my-custom-spec.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Override spec source with a local file path
+data "airbyte_connector_configuration" "local_spec" {
+  connector_name    = "source-postgres"
+  connector_version = "3.6.28"
+  spec_source       = "./specs/source-postgres.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
 # Pass the resolved values to an airbyte_source resource
 resource "airbyte_source" "postgres" {
   name            = "Postgres"
