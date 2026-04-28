@@ -386,23 +386,30 @@ func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Conte
 		return primaryID, nil
 	}
 
-	secondaryID, secondaryErr := d.searchRegistry(ctx, secondaryURL, dockerName, connectorName)
-	if secondaryErr == nil && secondaryID != "" {
-		return secondaryID, nil
+	// Only fall back to the secondary registry for composite mode.
+	// Explicit "cloud" or "oss" must not silently resolve from the other registry.
+	if registry == "composite" {
+		secondaryID, secondaryErr := d.searchRegistry(ctx, secondaryURL, dockerName, connectorName)
+		if secondaryErr == nil && secondaryID != "" {
+			return secondaryID, nil
+		}
+		if primaryErr != nil || secondaryErr != nil {
+			var parts []string
+			if primaryErr != nil {
+				parts = append(parts, fmt.Sprintf("%s: %v", primaryLabel, primaryErr))
+			}
+			if secondaryErr != nil {
+				parts = append(parts, fmt.Sprintf("%s: %v", secondaryLabel, secondaryErr))
+			}
+			return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
+		}
+		return "", fmt.Errorf("connector %q not found in Cloud or OSS registries", connectorName)
 	}
 
-	if primaryErr != nil || secondaryErr != nil {
-		var parts []string
-		if primaryErr != nil {
-			parts = append(parts, fmt.Sprintf("%s: %v", primaryLabel, primaryErr))
-		}
-		if secondaryErr != nil {
-			parts = append(parts, fmt.Sprintf("%s: %v", secondaryLabel, secondaryErr))
-		}
-		return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
+	if primaryErr != nil {
+		return "", fmt.Errorf("failed to resolve connector %q in %s registry: %v", connectorName, primaryLabel, primaryErr)
 	}
-
-	return "", fmt.Errorf("connector %q not found in Cloud or OSS registries", connectorName)
+	return "", fmt.Errorf("connector %q not found in %s registry", connectorName, primaryLabel)
 }
 
 func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, registryURL, dockerName, connectorName string) (string, error) {
