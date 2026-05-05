@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Authenticate as GitHub App
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         id: get-app-token
         with:
           app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}

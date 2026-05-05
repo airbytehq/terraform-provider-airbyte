@@ -81,7 +81,7 @@ jobs:
         steps:
             - name: Authenticate as GitHub App
               if: ${{ !inputs.dry_run && github.event.inputs.pr != '' }}
-              uses: actions/create-github-app-token@v2
+              uses: actions/create-github-app-token@v3
               id: get-app-token
               with:
                   app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
@@ -258,7 +258,7 @@ jobs:
             # --- New PR mode: create a PR to main (push/schedule/manual without PR context) ---
             - name: Authenticate as GitHub App for PR creation
               if: ${{ !inputs.dry_run && steps.changes.outputs.has_changes == 'true' && github.event.inputs.pr == '' }}
-              uses: actions/create-github-app-token@v2
+              uses: actions/create-github-app-token@v3
               id: get-pr-token
               with:
                   app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
