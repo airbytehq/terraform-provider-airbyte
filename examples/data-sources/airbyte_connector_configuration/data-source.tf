@@ -31,6 +31,45 @@ data "airbyte_connector_configuration" "postgres" {
   }
 }
 
+# Validate against the OSS registry instead of the default (composite)
+data "airbyte_connector_configuration" "postgres_oss" {
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "oss"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Override registry source with a custom URL (must serve well-formatted registry JSON)
+data "airbyte_connector_configuration" "custom_url" {
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "https://example.com/my-registry-spec.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Override registry source with a local file (must contain well-formatted registry JSON)
+data "airbyte_connector_configuration" "local_spec" {
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "/path/to/my-custom-registry.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
 # Pass the resolved values to an airbyte_source resource
 resource "airbyte_source" "postgres" {
   name            = "Postgres"
