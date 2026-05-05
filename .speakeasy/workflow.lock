@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:0cbfff7de7891f5f766611b072dba3678a0f965045f34f9bbf3310e2b8b2f7ce
         tags:
             - latest
-            - main
+            - devin-1777391769-spec-source-override
             - 1.0.0
     my-source:
         sourceNamespace: my-source
