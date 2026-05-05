@@ -1,0 +1,28 @@
+# Speakeasy CLI version pin (NOT a real Docker Compose file).
+#
+# This file exists solely to give Dependabot's `docker-compose`
+# package-ecosystem an `image:` tag to watch. It is never invoked via
+# `docker compose up` / `run`. The filename is intentionally
+# `dummy-compose.yml` to signal that.
+#
+# Whenever upstream publishes a new Speakeasy release, Dependabot opens a
+# PR bumping the tag below. CI consumes the pin in
+# `.github/workflows/generate-command.yml`: the runner pulls this image
+# and `docker cp`s the `speakeasy` binary onto the host so the rest of
+# the workflow uses Go from `setup-go` instead of the
+# language-toolchain-less Speakeasy image.
+#
+# Why pinned (rather than `latest`)? `.speakeasy/workflow.yaml` sets
+# `speakeasyVersion: pinned` so the CLI uses whatever version is
+# installed without trying to auto-upgrade mid-PR. See:
+#   https://www.speakeasy.com/docs/speakeasy-reference/workflow-file#speakeasy-version
+#
+# Why a compose-shaped file? Dependabot natively understands `image:`
+# references in `*compose*.yml` files (see
+# dependabot/dependabot-core#11492); see the regex in
+# https://github.com/dependabot/dependabot-core/blob/main/docker_compose/lib/dependabot/docker_compose/file_fetcher.rb
+# for the exact filename rules.
+
+services:
+    speakeasy:
+        image: ghcr.io/speakeasy-api/speakeasy:v1.761.11
