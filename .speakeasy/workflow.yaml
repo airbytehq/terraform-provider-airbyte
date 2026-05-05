@@ -1,7 +1,9 @@
 workflowVersion: 1.0.0
-# Pinned to a specific version so PRs aren't disrupted mid-flight by upstream releases.
-# Bumped automatically by .github/workflows/bump-speakeasy.yml; see also .github/dependabot.yml.
-speakeasyVersion: 1.761.11
+# `pinned` tells the Speakeasy CLI to use whatever version is currently installed
+# without attempting a blue/green auto-upgrade. The actual version is pinned in
+# .github/speakeasy/Dockerfile and bumped by Dependabot's `docker` ecosystem.
+# https://www.speakeasy.com/docs/speakeasy-reference/workflow-file#speakeasy-version
+speakeasyVersion: pinned
 sources:
     airbyte-api:
         inputs:

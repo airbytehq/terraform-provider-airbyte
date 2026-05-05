@@ -149,19 +149,19 @@ jobs:
                   cache: true
 
             - name: Install Speakeasy CLI
-              # Reads the pinned version from .speakeasy/workflow.yaml so the CLI
-              # matches what `speakeasy run` expects. Falls back to latest when
-              # the pin is "latest" (unset VERSION lets install.sh resolve latest).
+              # The Speakeasy CLI version is pinned via .github/speakeasy/Dockerfile,
+              # which Dependabot's `docker` ecosystem keeps up to date. We extract
+              # the binary from the published image rather than running speakeasy
+              # inside Docker so Go (configured by setup-go above) is available
+              # for the post-generation steps.
               run: |
-                  SPEAKEASY_VERSION=$(awk '/^speakeasyVersion:/ {print $2}' .speakeasy/workflow.yaml)
-                  if [ "$SPEAKEASY_VERSION" = "latest" ] || [ -z "$SPEAKEASY_VERSION" ]; then
-                      SPEAKEASY_VERSION=""
-                      echo "Installing latest Speakeasy CLI"
-                  else
-                      echo "Installing pinned Speakeasy CLI v$SPEAKEASY_VERSION"
-                  fi
-                  curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | VERSION="$SPEAKEASY_VERSION" sh
-                  echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
+                  SPEAKEASY_IMAGE=$(awk '/^FROM/ {print $2}' .github/speakeasy/Dockerfile)
+                  echo "Pinned Speakeasy image: $SPEAKEASY_IMAGE"
+                  docker pull "$SPEAKEASY_IMAGE"
+                  CONTAINER_ID=$(docker create "$SPEAKEASY_IMAGE")
+                  sudo docker cp "$CONTAINER_ID:/usr/local/bin/speakeasy" /usr/local/bin/speakeasy
+                  docker rm "$CONTAINER_ID" >/dev/null
+                  speakeasy --version
 
             - name: Get next version from release drafter
               id: get-version

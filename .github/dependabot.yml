@@ -1,11 +1,25 @@
 # Dependabot configuration for terraform-provider-airbyte.
 #
-# Note: dependabot does not natively understand .speakeasy/workflow.yaml, so the
-# pinned `speakeasyVersion` in that file is bumped by .github/workflows/bump-speakeasy.yml
-# instead. This file covers the standard ecosystems supported by dependabot.
+# `.speakeasy/workflow.yaml` uses `speakeasyVersion: pinned`, so the actual CLI
+# version is pinned in `.github/speakeasy/Dockerfile` and bumped by the docker
+# ecosystem entry below.
 
 version: 2
 updates:
+  # Speakeasy CLI version pin (FROM line in .github/speakeasy/Dockerfile).
+  # See .github/speakeasy/Dockerfile for the full explanation.
+  - package-ecosystem: docker
+    directory: /.github/speakeasy
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci(speakeasy)
+    labels:
+      - dependencies
+      - speakeasy
+
   # GitHub Actions used in .github/workflows/*.yml
   - package-ecosystem: github-actions
     directory: /
