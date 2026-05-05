@@ -24,7 +24,7 @@ targets:
         sourceBlobDigest: sha256:0cbfff7de7891f5f766611b072dba3678a0f965045f34f9bbf3310e2b8b2f7ce
 workflow:
     workflowVersion: 1.0.0
-    speakeasyVersion: latest
+    speakeasyVersion: 1.761.11
     sources:
         airbyte-api:
             inputs:

@@ -1,5 +1,7 @@
 workflowVersion: 1.0.0
-speakeasyVersion: latest
+# Pinned to a specific version so PRs aren't disrupted mid-flight by upstream releases.
+# Bumped automatically by .github/workflows/bump-speakeasy.yml; see also .github/dependabot.yml.
+speakeasyVersion: 1.761.11
 sources:
     airbyte-api:
         inputs:
