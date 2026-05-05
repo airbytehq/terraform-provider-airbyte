@@ -149,9 +149,16 @@ jobs:
                   cache: true
 
             - name: Install Speakeasy CLI
+              # Pin lives in .github/speakeasy/dummy-compose.yml. Extract the
+              # binary so Go from setup-go stays available for downstream steps.
               run: |
-                  curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
-                  echo "$HOME/.speakeasy/bin" >> $GITHUB_PATH
+                  SPEAKEASY_IMAGE=$(yq '.services.speakeasy.image' .github/speakeasy/dummy-compose.yml)
+                  echo "Pinned Speakeasy image: $SPEAKEASY_IMAGE"
+                  docker pull "$SPEAKEASY_IMAGE"
+                  CONTAINER_ID=$(docker create "$SPEAKEASY_IMAGE")
+                  sudo docker cp "$CONTAINER_ID:/usr/local/bin/speakeasy" /usr/local/bin/speakeasy
+                  docker rm "$CONTAINER_ID" >/dev/null
+                  speakeasy --version
 
             - name: Get next version from release drafter
               id: get-version

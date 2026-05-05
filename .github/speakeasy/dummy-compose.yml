@@ -1,0 +1,8 @@
+# Speakeasy CLI version pin. Bumped by Dependabot's `docker-compose`
+# ecosystem; never invoked via `docker compose` (hence `dummy-`).
+# Consumed by `.github/workflows/generate-command.yml`, which pulls the
+# image and copies `/usr/local/bin/speakeasy` onto the runner.
+
+services:
+    speakeasy:
+        image: ghcr.io/speakeasy-api/speakeasy:v1.761.11
