@@ -149,13 +149,13 @@ jobs:
                   cache: true
 
             - name: Install Speakeasy CLI
-              # The Speakeasy CLI version is pinned via .github/speakeasy/Dockerfile,
+              # The Speakeasy CLI version is pinned via .github/speakeasy/compose.yml,
               # which Dependabot's `docker` ecosystem keeps up to date. We extract
               # the binary from the published image rather than running speakeasy
               # inside Docker so Go (configured by setup-go above) is available
               # for the post-generation steps.
               run: |
-                  SPEAKEASY_IMAGE=$(awk '/^FROM/ {print $2}' .github/speakeasy/Dockerfile)
+                  SPEAKEASY_IMAGE=$(yq '.services.speakeasy.image' .github/speakeasy/compose.yml)
                   echo "Pinned Speakeasy image: $SPEAKEASY_IMAGE"
                   docker pull "$SPEAKEASY_IMAGE"
                   CONTAINER_ID=$(docker create "$SPEAKEASY_IMAGE")

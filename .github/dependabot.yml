@@ -1,14 +1,14 @@
 # Dependabot configuration for terraform-provider-airbyte.
 #
 # `.speakeasy/workflow.yaml` uses `speakeasyVersion: pinned`, so the actual CLI
-# version is pinned in `.github/speakeasy/Dockerfile` and bumped by the docker
+# version is pinned in `.github/speakeasy/compose.yml` and bumped by the docker
 # ecosystem entry below.
 
 version: 2
 updates:
-  # Speakeasy CLI version pin (FROM line in .github/speakeasy/Dockerfile).
-  # See .github/speakeasy/Dockerfile for the full explanation.
-  - package-ecosystem: docker
+  # Speakeasy CLI version pin (image: tag in .github/speakeasy/compose.yml).
+  # See .github/speakeasy/compose.yml for the full explanation.
+  - package-ecosystem: docker-compose
     directory: /.github/speakeasy
     schedule:
       interval: weekly

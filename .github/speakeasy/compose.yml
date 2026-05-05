@@ -1,0 +1,33 @@
+# Speakeasy CLI version pin
+#
+# This file is the single source of truth for which Speakeasy CLI version
+# CI installs. Dependabot's `docker` package-ecosystem (configured in
+# `.github/dependabot.yml`) watches the `image:` tag below and opens a PR
+# whenever upstream publishes a new release.
+#
+# CI consumes the pin in `.github/workflows/generate-command.yml`:
+# the runner pulls this image and `docker cp`s the `speakeasy` binary onto
+# the host so the rest of the workflow uses Go from `setup-go` rather than
+# the language-toolchain-less Speakeasy image.
+#
+# Why a compose file instead of a Dockerfile? Dependabot natively understands
+# `image:` references in `compose.yml` (see dependabot/dependabot-core#11492),
+# and humans can run the CLI locally with the same pin via:
+#
+#   docker compose -f .github/speakeasy/compose.yml run --rm speakeasy --version
+#
+# Why pinned (rather than `latest`)? `.speakeasy/workflow.yaml` sets
+# `speakeasyVersion: pinned` so the CLI uses whatever version is installed
+# without trying to auto-upgrade mid-PR. See:
+#   https://www.speakeasy.com/docs/speakeasy-reference/workflow-file#speakeasy-version
+
+services:
+    speakeasy:
+        image: ghcr.io/speakeasy-api/speakeasy:v1.761.11
+        # Mount the repo so `docker compose run` from the repo root works for
+        # local CLI usage (lint, etc.). CI does not use this mount because it
+        # extracts the binary onto the host instead of running speakeasy in a
+        # container.
+        working_dir: /workspace
+        volumes:
+            - ../..:/workspace
