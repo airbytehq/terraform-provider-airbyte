@@ -1,7 +1,7 @@
 workflowVersion: 1.0.0
 # `pinned` tells the Speakeasy CLI to use whatever version is currently installed
 # without attempting a blue/green auto-upgrade. The actual version is pinned in
-# .github/speakeasy/Dockerfile and bumped by Dependabot's `docker` ecosystem.
+# .github/speakeasy/compose.yml and bumped by Dependabot's `docker-compose` ecosystem.
 # https://www.speakeasy.com/docs/speakeasy-reference/workflow-file#speakeasy-version
 speakeasyVersion: pinned
 sources:
