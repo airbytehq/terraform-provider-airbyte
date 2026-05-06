@@ -19,7 +19,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "1.2.1"
+      version = "1.3.0"
     }
   }
 }
