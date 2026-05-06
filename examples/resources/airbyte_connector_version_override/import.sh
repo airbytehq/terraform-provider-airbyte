@@ -1,0 +1,1 @@
+terraform import airbyte_connector_version_override.my_pin "<scoped_configuration_uuid>"
