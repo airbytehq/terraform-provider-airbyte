@@ -464,7 +464,7 @@ func (r *ConnectorVersionOverrideResource) postJSONWithStatus(ctx context.Contex
 	if err != nil {
 		return 0, fmt.Errorf("execute request: %w", err)
 	}
-	defer httpResp.Body.Close()
+	defer func() { _ = httpResp.Body.Close() }()
 
 	respBody, _ := io.ReadAll(httpResp.Body)
 	if httpResp.StatusCode < 200 || httpResp.StatusCode >= 300 {
