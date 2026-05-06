@@ -23,9 +23,33 @@ Agent-specific pitfalls:
 - `internal/planmodifiers/` — Custom plan modifiers (not generated)
 - `internal/provider/*_movestate.go` — State migration helpers (not generated)
 - `internal/provider/movestate_helpers.go` — Shared movestate helper code (not generated)
+- `internal/provider/<name>_resource.go` and `internal/provider/<name>_data_source.go` — **Hand-coded resources/data sources** declared in `gen.yaml`'s `additionalResources` / `additionalDataSources`. Speakeasy imports the constructor and registers it in `provider.go`'s `Resources()` / `DataSources()` lists during regeneration; the body is left alone.
 - `templates/` — Documentation templates
 - `.github/workflows/` — CI workflows
 - `test-projects/` — Sample Terraform projects for testing
+
+### Adding a Hand-Coded Resource
+
+For endpoints that aren't in the public API (e.g. internal `config.yaml` admin endpoints), add a resource manually:
+
+1. Write `internal/provider/<name>_resource.go` implementing `resource.Resource`.
+2. Add the constructor to `gen.yaml.terraform.additionalResources` (e.g. `- resource: NewMyResource`). Same pattern with `additionalDataSources` for data sources.
+3. After regeneration, the constructor will appear in `provider.go`'s `Resources()` list automatically.
+4. Add a generated docs entry by writing `examples/resources/<name>/resource.tf` (and optionally `import.sh`); the post-generation step picks them up.
+5. The Zero-Diff CI check expects committed `internal/provider/provider.go`, `internal/sdk/sdk.go`, `docs/index.md`, and `docs/resources/<name>.md` to exactly match what the pipeline produces. After your first push, comment `/generate` on the PR (or download the `generated_provider_code` and `generated_docs` CI artifacts and copy them in) to land the regenerated files. The SDK version in `sdk.go` is set by the `aaronsteers/semantic-pr-release-drafter` action from your PR title (`feat:` = minor bump), not by `gen.yaml.terraform.version`.
+
+Do **not** use `scripts/patch_provider_registrations.py` for new resources — `additionalResources` is the supported path. The patch script remains for legacy registrations only.
+
+## Internal vs Public API
+
+The Speakeasy-generated SDK targets only the **public API** (`api.yaml`). The internal **config API** (`config.yaml`) — including admin-only endpoints like `/v1/scoped_configuration/*`, `/v1/connector_rollout/*`, etc. — is not in the SDK. For Cloud, the URLs are:
+
+- Public API: `https://api.airbyte.com/v1`
+- Config API: `https://cloud.airbyte.com/api/v1`
+
+(Source: PyAirbyte's `airbyte.constants.CLOUD_API_ROOT` / `CLOUD_CONFIG_API_ROOT`.)
+
+A Bearer token minted from OAuth client credentials at `POST {public-api}/applications/token` is accepted by both APIs. Hand-coded resources targeting the config API typically read the token from `AIRBYTE_BEARER_AUTH` and the URL from a resource attribute or `AIRBYTE_CONFIG_API_URL`. These endpoints require **instance-admin** permissions — workspace-scoped OAuth clients will get 401/403.
 
 ## Files You Must NOT Edit By Hand
 
