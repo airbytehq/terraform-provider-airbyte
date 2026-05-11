@@ -130,7 +130,7 @@ jobs:
 
       - name: Find existing drift comment
         if: steps.diff-check.outputs.has_diff == 'true'
-        uses: peter-evans/find-comment@v3
+        uses: peter-evans/find-comment@v4
         id: find-drift-comment
         with:
           issue-number: ${{ github.event.pull_request.number }}
