@@ -186,7 +186,7 @@ jobs:
               github.event.inputs.action == 'destroy'
             ))
           )
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.artifact }}
           path: ${{ env.TF_STATE_DIR }}

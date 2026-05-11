@@ -136,7 +136,7 @@ jobs:
               run: uvx --from=poethepoet poe generate-spec
 
             - name: Upload generated spec as artifact
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                   name: api_terraform_spec
                   path: generated/api_terraform.yaml
@@ -197,7 +197,7 @@ jobs:
 
             - name: Upload generated provider code as artifact
               if: ${{ inputs.dry_run }}
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                   name: generated_provider_code
                   path: |
@@ -210,7 +210,7 @@ jobs:
 
             - name: Upload generated docs as artifact
               if: ${{ inputs.dry_run }}
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                   name: generated_docs
                   path: docs/
@@ -222,7 +222,7 @@ jobs:
 
             - name: Upload provider binaries as artifact
               if: ${{ inputs.dry_run }}
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                   name: provider_binaries
                   path: dist/
