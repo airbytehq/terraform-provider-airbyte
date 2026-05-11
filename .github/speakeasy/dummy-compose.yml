@@ -5,4 +5,4 @@
 
 services:
     speakeasy:
-        image: ghcr.io/speakeasy-api/speakeasy:v1.761.11
+        image: ghcr.io/speakeasy-api/speakeasy:v1.762.0
