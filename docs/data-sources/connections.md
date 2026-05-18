@@ -14,9 +14,9 @@ Connections DataSource
 
 ```terraform
 data "airbyte_connections" "my_connections" {
-  include_deleted = true
-  limit           = 34
-  offset          = 1
+  include_deleted = false
+  limit           = 20
+  offset          = 0
   tag_ids = [
     "05db8e59-424e-49ea-80ce-1db6a74f3dfc"
   ]

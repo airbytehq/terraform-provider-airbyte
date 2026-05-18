@@ -13,6 +13,7 @@ generation:
     securityFeb2025: false
     sharedErrorComponentsApr2025: false
     sharedNestedComponentsJan2026: false
+    nameOverrideFeb2026: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: true
@@ -28,7 +29,7 @@ generation:
     skipResponseBodyAssertions: false
   telemetryEnabled: true
 terraform:
-  version: 1.0.0-rc7
+  version: 1.2.1
   additionalActions: []
   additionalDataSources: []
   additionalDependencies: {}
@@ -50,6 +51,7 @@ terraform:
   enableTypeDeduplication: false
   environmentVariables: []
   excludeEmptyObjectSchemas: false
+  forwardCompatibleEnumsByDefault: false
   imports:
     option: openapi
     paths:
@@ -63,6 +65,8 @@ terraform:
   inputModelSuffix: input
   outputModelSuffix: output
   packageName: airbyte
+  preApplyUnionDiscriminators: false
+  providerTypeNameOverride: ""
   respectRequiredFields: false
   respectTitlesForPrimitiveUnionMembers: false
   unionStrategy: populated-fields

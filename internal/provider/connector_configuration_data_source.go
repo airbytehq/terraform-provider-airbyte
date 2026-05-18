@@ -7,9 +7,11 @@ import (
 	"io"
 	"math/big"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
+	"github.com/dlclark/regexp2"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -19,8 +21,9 @@ import (
 )
 
 const (
-	ossRegistryURL   = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
-	cloudRegistryURL = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
+	ossRegistryURL       = "https://connectors.airbyte.com/files/registries/v0/oss_registry.json"
+	cloudRegistryURL     = "https://connectors.airbyte.com/files/registries/v0/cloud_registry.json"
+	compositeRegistryURL = "https://connectors.airbyte.com/files/registries/v0/composite_registry.json"
 	connectorCDNBase = "https://connectors.airbyte.com/files/metadata/airbyte"
 )
 
@@ -36,6 +39,7 @@ type ConnectorConfigurationDataSource struct {
 type ConnectorConfigurationDataSourceModel struct {
 	ConnectorName        types.String  `tfsdk:"connector_name"`
 	ConnectorVersion     types.String  `tfsdk:"connector_version"`
+	ConnectorRegistry    types.String  `tfsdk:"connector_registry"`
 	Configuration        types.Dynamic `tfsdk:"configuration"`
 	ConfigurationSecrets types.Dynamic `tfsdk:"configuration_secrets"`
 	IgnoreErrors         types.Bool    `tfsdk:"ignore_errors"`
@@ -98,6 +102,10 @@ configuration into a single JSON blob suitable for passing to a resource.`,
 				Optional:            true,
 				MarkdownDescription: "The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.",
 			},
+			"connector_registry": schema.StringAttribute{
+				Optional:            true,
+				MarkdownDescription: "Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `composite` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or an absolute file path (starting with `/`) to override the spec source entirely.",
+			},
 			"configuration": schema.DynamicAttribute{
 				Required:            true,
 				MarkdownDescription: "Non-sensitive configuration values as an HCL object. These will be visible in Terraform plan output.",
@@ -155,24 +163,49 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 		version = data.ConnectorVersion.ValueString()
 	}
 
-	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version)
+	registry := "composite"
+	if !data.ConnectorRegistry.IsNull() && !data.ConnectorRegistry.IsUnknown() {
+		registry = data.ConnectorRegistry.ValueString()
+	}
+
+	if err := validateRegistryValue(registry); err != nil {
+		resp.Diagnostics.AddError("Invalid connector_registry value", err.Error())
+		return
+	}
+
+	isExplicitOverride := strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") ||
+		strings.HasPrefix(registry, "/")
+
+	entry, err := d.fetchVersionedMetadata(ctx, connectorName, version, registry)
 	if err != nil {
-		if version != "" {
-			resp.Diagnostics.AddWarning(
-				"Could not fetch versioned connector metadata",
-				fmt.Sprintf("Failed to fetch spec for %s version %q: %v. Falling back to registry lookup without version pinning or JSONSchema validation.", connectorName, version, err),
-			)
-		}
-		definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName)
-		if fallbackErr != nil {
-			addDiagnostic(resp, ignoreErrors, "Failed to resolve connector", fmt.Sprintf(
-				"Versioned endpoint: %v\nRegistry fallback: %v", err, fallbackErr,
+		if isExplicitOverride {
+			addDiagnostic(resp, ignoreErrors, "Failed to fetch spec from connector_registry override", fmt.Sprintf(
+				"connector_registry=%q: %v", registry, err,
 			))
 			if !ignoreErrors {
 				return
 			}
-		} else {
-			data.DefinitionID = types.StringValue(definitionID)
+		}
+		// Only fall back to registry lookup for keyword modes (cloud, oss, composite).
+		// Explicit URL/file overrides must not silently resolve from a different registry.
+		if !isExplicitOverride {
+			if version != "" {
+				resp.Diagnostics.AddWarning(
+					"Could not fetch versioned connector metadata",
+					fmt.Sprintf("Failed to fetch spec for %s version %q: %v. Falling back to registry lookup without version pinning or JSONSchema validation.", connectorName, version, err),
+				)
+			}
+			definitionID, fallbackErr := d.resolveDefinitionID(ctx, connectorName, registry)
+			if fallbackErr != nil {
+				addDiagnostic(resp, ignoreErrors, "Failed to resolve connector", fmt.Sprintf(
+					"Versioned endpoint: %v\nRegistry fallback: %v", err, fallbackErr,
+				))
+				if !ignoreErrors {
+					return
+				}
+			} else {
+				data.DefinitionID = types.StringValue(definitionID)
+			}
 		}
 	} else {
 		if strings.HasPrefix(connectorName, "source-") {
@@ -246,13 +279,37 @@ func (d *ConnectorConfigurationDataSource) Read(ctx context.Context, req datasou
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Context, connectorName, version string) (*connectorVersionedEntry, error) {
+func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Context, connectorName, version, registry string) (*connectorVersionedEntry, error) {
 	if version == "" {
 		version = "latest"
 	}
 
-	url := fmt.Sprintf("%s/%s/%s/cloud.json", connectorCDNBase, connectorName, version)
+	// Local file path override (absolute paths only).
+	if strings.HasPrefix(registry, "/") {
+		return d.readSpecFromFile(registry)
+	}
 
+	// URL override.
+	if strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") {
+		return d.fetchSpecFromURL(ctx, registry)
+	}
+
+	// Composite: try cloud first, fall back to oss.
+	if registry == "composite" {
+		entry, err := d.fetchSpecFromURL(ctx, fmt.Sprintf("%s/%s/%s/cloud.json", connectorCDNBase, connectorName, version))
+		if err == nil {
+			return entry, nil
+		}
+		return d.fetchSpecFromURL(ctx, fmt.Sprintf("%s/%s/%s/oss.json", connectorCDNBase, connectorName, version))
+	}
+
+	// Single registry keyword ("cloud" or "oss").
+	url := fmt.Sprintf("%s/%s/%s/%s.json", connectorCDNBase, connectorName, version, registry)
+
+	return d.fetchSpecFromURL(ctx, url)
+}
+
+func (d *ConnectorConfigurationDataSource) fetchSpecFromURL(ctx context.Context, url string) (*connectorVersionedEntry, error) {
 	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request for %s: %w", url, err)
@@ -262,7 +319,7 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch connector metadata from %s: %w", url, err)
 	}
-	defer httpResp.Body.Close()
+	defer func() { _ = httpResp.Body.Close() }()
 
 	if httpResp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("connector metadata endpoint %s returned HTTP %d", url, httpResp.StatusCode)
@@ -281,31 +338,60 @@ func (d *ConnectorConfigurationDataSource) fetchVersionedMetadata(ctx context.Co
 	return &entry, nil
 }
 
-func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName string) (string, error) {
+func (d *ConnectorConfigurationDataSource) readSpecFromFile(path string) (*connectorVersionedEntry, error) {
+	body, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read spec from file %q: %w", path, err)
+	}
+
+	var entry connectorVersionedEntry
+	if err := json.Unmarshal(body, &entry); err != nil {
+		return nil, fmt.Errorf("failed to parse spec JSON from file %q: %w", path, err)
+	}
+
+	return &entry, nil
+}
+
+// validateRegistryValue checks that the connector_registry value is a known
+// keyword, a URL, or a local file path.
+func validateRegistryValue(registry string) error {
+	switch registry {
+	case "cloud", "oss", "composite":
+		return nil
+	}
+	if strings.HasPrefix(registry, "http://") || strings.HasPrefix(registry, "https://") {
+		return nil
+	}
+	if strings.HasPrefix(registry, "/") {
+		return nil
+	}
+	return fmt.Errorf(
+		"unknown connector_registry value %q: must be one of \"cloud\", \"oss\", \"composite\", a URL (http:// or https://), or an absolute file path (starting with /)",
+		registry,
+	)
+}
+
+func (d *ConnectorConfigurationDataSource) resolveDefinitionID(ctx context.Context, connectorName, registry string) (string, error) {
 	dockerName := "airbyte/" + connectorName
 
-	cloudID, cloudErr := d.searchRegistry(ctx, cloudRegistryURL, dockerName, connectorName)
-	if cloudErr == nil && cloudID != "" {
-		return cloudID, nil
+	var registryURL string
+	switch registry {
+	case "composite":
+		registryURL = compositeRegistryURL
+	case "oss":
+		registryURL = ossRegistryURL
+	default:
+		registryURL = cloudRegistryURL
 	}
 
-	ossID, ossErr := d.searchRegistry(ctx, ossRegistryURL, dockerName, connectorName)
-	if ossErr == nil && ossID != "" {
-		return ossID, nil
+	id, err := d.searchRegistry(ctx, registryURL, dockerName, connectorName)
+	if err != nil {
+		return "", fmt.Errorf("failed to resolve connector %q in %s registry: %w", connectorName, registry, err)
 	}
-
-	if cloudErr != nil || ossErr != nil {
-		var parts []string
-		if cloudErr != nil {
-			parts = append(parts, fmt.Sprintf("cloud: %v", cloudErr))
-		}
-		if ossErr != nil {
-			parts = append(parts, fmt.Sprintf("oss: %v", ossErr))
-		}
-		return "", fmt.Errorf("failed to resolve connector %q: %s", connectorName, strings.Join(parts, "; "))
+	if id == "" {
+		return "", fmt.Errorf("connector %q not found in %s registry", connectorName, registry)
 	}
-
-	return "", fmt.Errorf("connector %q not found in Cloud or OSS registries", connectorName)
+	return id, nil
 }
 
 func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, registryURL, dockerName, connectorName string) (string, error) {
@@ -317,7 +403,7 @@ func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, r
 	if err != nil {
 		return "", fmt.Errorf("failed to fetch registry from %s: %w", registryURL, err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("registry %s returned HTTP %d", registryURL, resp.StatusCode)
@@ -352,6 +438,30 @@ func (d *ConnectorConfigurationDataSource) searchRegistry(ctx context.Context, r
 	return "", nil
 }
 
+// regexp2Regexp wraps a dlclark/regexp2.Regexp to implement the
+// jsonschema.Regexp interface, giving the JSON Schema compiler
+// an ECMAScript/ECMA-262 (JavaScript) regex engine that supports lookahead/lookbehind.
+type regexp2Regexp regexp2.Regexp
+
+func (re *regexp2Regexp) MatchString(s string) bool {
+	matched, err := (*regexp2.Regexp)(re).MatchString(s)
+	return err == nil && matched
+}
+
+func (re *regexp2Regexp) String() string {
+	return (*regexp2.Regexp)(re).String()
+}
+
+func compileRegexp2(s string) (jsonschema.Regexp, error) {
+	re, err := regexp2.Compile(s, regexp2.ECMAScript)
+	if err != nil {
+		return nil, err
+	}
+	// Set a finite match timeout to avoid unbounded backtracking (ReDoS).
+	re.MatchTimeout = 5 * time.Second
+	return (*regexp2Regexp)(re), nil
+}
+
 func validateJSONSchema(schemaBytes json.RawMessage, instanceJSON string) []string {
 	var schemaObj interface{}
 	if err := json.Unmarshal(schemaBytes, &schemaObj); err != nil {
@@ -364,6 +474,7 @@ func validateJSONSchema(schemaBytes json.RawMessage, instanceJSON string) []stri
 	}
 
 	compiler := jsonschema.NewCompiler()
+	compiler.UseRegexpEngine(compileRegexp2)
 	if err := compiler.AddResource("schema.json", schemaObj); err != nil {
 		return []string{fmt.Sprintf("Failed to load connector spec as JSONSchema resource: %v", err)}
 	}

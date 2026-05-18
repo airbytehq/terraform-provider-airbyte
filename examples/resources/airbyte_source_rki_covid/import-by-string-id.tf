@@ -1,4 +1,0 @@
-import {
-  to = airbyte_source_rki_covid.my_airbyte_source_rki_covid
-  id = "..."
-}

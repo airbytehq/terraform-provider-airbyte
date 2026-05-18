@@ -149,6 +149,7 @@ func (s *SourceDefinitions) ListSourceDefinitions(ctx context.Context, request o
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -417,6 +418,7 @@ func (s *SourceDefinitions) GetSourceDefinition(ctx context.Context, request ope
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -556,6 +558,7 @@ func (s *SourceDefinitions) UpdateSourceDefinition(ctx context.Context, request 
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -688,6 +691,7 @@ func (s *SourceDefinitions) DeleteSourceDefinition(ctx context.Context, request 
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

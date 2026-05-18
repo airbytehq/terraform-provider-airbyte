@@ -13,6 +13,10 @@ type InitiateOauthRequest struct {
 	WorkspaceID string `json:"workspaceId"`
 	// The values required to configure OAuth flows. The schema for this must match the `OAuthConfigSpecification.oauthUserInputFromConnectorConfigSpecification` schema.
 	OAuthInputConfiguration any `json:"oAuthInputConfiguration,omitempty"`
+	// Optional OAuth scopes to request, overriding the connector's default scopes. Only supported for connectors that define scopes as an array.
+	RequestedScopes []string `json:"requestedScopes,omitempty"`
+	// Optional OAuth optional_scopes to request, overriding the connector's default optional_scopes. Only applied when requestedScopes is also provided.
+	RequestedOptionalScopes []string `json:"requestedOptionalScopes,omitempty"`
 }
 
 func (i *InitiateOauthRequest) GetName() *string {
@@ -48,4 +52,18 @@ func (i *InitiateOauthRequest) GetOAuthInputConfiguration() any {
 		return nil
 	}
 	return i.OAuthInputConfiguration
+}
+
+func (i *InitiateOauthRequest) GetRequestedScopes() []string {
+	if i == nil {
+		return nil
+	}
+	return i.RequestedScopes
+}
+
+func (i *InitiateOauthRequest) GetRequestedOptionalScopes() []string {
+	if i == nil {
+		return nil
+	}
+	return i.RequestedOptionalScopes
 }

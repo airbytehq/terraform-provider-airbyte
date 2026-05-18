@@ -2,7 +2,7 @@
 
 package sdk
 
-// Generated from OpenAPI doc version 1.0.0 and generator version 2.832.2
+// Generated from OpenAPI doc version 1.0.0 and generator version 2.881.17
 
 import (
 	"context"
@@ -54,8 +54,6 @@ type SDK struct {
 	PublicRoot                   *PublicRoot
 	Public                       *Public
 	Health                       *Health
-	ConfigTemplates              *ConfigTemplates
-	ConnectionTemplates          *ConnectionTemplates
 	Applications                 *Applications
 	Jobs                         *Jobs
 	Regions                      *Regions
@@ -84,7 +82,7 @@ type SDK struct {
 
 type SDKOption func(*SDK)
 
-// WithServerURL allows the overriding of the default server URL
+// WithServerURL allows providing an alternative server URL
 func WithServerURL(serverURL string) SDKOption {
 	return func(sdk *SDK) {
 		sdk.sdkConfiguration.ServerURL = serverURL
@@ -152,9 +150,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
-		SDKVersion: "1.0.0-rc7",
+		SDKVersion: "1.2.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/terraform 1.0.0-rc7 2.832.2 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			UserAgent:  "speakeasy-sdk/terraform 1.2.1 2.881.17 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -178,8 +176,6 @@ func New(opts ...SDKOption) *SDK {
 	sdk.PublicRoot = newPublicRoot(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Public = newPublic(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Health = newHealth(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.ConfigTemplates = newConfigTemplates(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.ConnectionTemplates = newConnectionTemplates(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Applications = newApplications(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Jobs = newJobs(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Regions = newRegions(sdk, sdk.sdkConfiguration, sdk.hooks)

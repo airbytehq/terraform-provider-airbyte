@@ -62,6 +62,19 @@ func (r *SourceResourceModel) RefreshFromSharedSourceResponse(ctx context.Contex
 	return diags
 }
 
+func (r *SourceResourceModel) ToOperationsDeleteSourceRequest(ctx context.Context) (*operations.DeleteSourceRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourceRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
 func (r *SourceResourceModel) ToOperationsGetSourceRequest(ctx context.Context) (*operations.GetSourceRequest, diag.Diagnostics) {
 	var diags diag.Diagnostics
 

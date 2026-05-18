@@ -154,6 +154,7 @@ func (s *ConnectorDefinitions) ListConnectorDefinitions(ctx context.Context, req
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

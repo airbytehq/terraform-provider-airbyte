@@ -157,6 +157,7 @@ func (s *Dataplanes) CreateRegion(ctx context.Context, request shared.RegionCrea
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 403:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -298,6 +299,7 @@ func (s *Dataplanes) UpdateRegion(ctx context.Context, request operations.Update
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -434,6 +436,7 @@ func (s *Dataplanes) ListDataplanes(ctx context.Context, request operations.List
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -575,6 +578,7 @@ func (s *Dataplanes) CreateDataplane(ctx context.Context, request shared.Datapla
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -707,6 +711,7 @@ func (s *Dataplanes) GetDataplane(ctx context.Context, request operations.GetDat
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -848,6 +853,7 @@ func (s *Dataplanes) UpdateDataplane(ctx context.Context, request operations.Upd
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -980,6 +986,7 @@ func (s *Dataplanes) DeleteDataplane(ctx context.Context, request operations.Del
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

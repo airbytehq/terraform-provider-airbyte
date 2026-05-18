@@ -155,6 +155,7 @@ func (s *Users) ListUsersWithinAnOrganization(ctx context.Context, request opera
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

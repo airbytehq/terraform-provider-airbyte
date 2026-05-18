@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 	"time"
 
@@ -103,7 +104,7 @@ func TestFetchVersionedMetadata_Success(t *testing.T) {
 
 	resp, err := ds.httpClient.Do(req)
 	require.NoError(t, err)
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 
@@ -137,7 +138,7 @@ func TestFetchVersionedMetadata_LatestDefault(t *testing.T) {
 	client := server.Client()
 	resp, err := client.Do(req)
 	require.NoError(t, err)
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	var entry connectorVersionedEntry
 	err = json.NewDecoder(resp.Body).Decode(&entry)
@@ -163,9 +164,179 @@ func TestFetchVersionedMetadata_HTTPError(t *testing.T) {
 
 	resp, err := ds.httpClient.Do(req)
 	require.NoError(t, err)
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
+}
+
+func TestValidateRegistryValue(t *testing.T) {
+	// Valid keywords.
+	assert.NoError(t, validateRegistryValue("cloud"))
+	assert.NoError(t, validateRegistryValue("oss"))
+	assert.NoError(t, validateRegistryValue("composite"))
+
+	// Valid URLs.
+	assert.NoError(t, validateRegistryValue("https://example.com/spec.json"))
+	assert.NoError(t, validateRegistryValue("http://localhost:8080/spec.json"))
+
+	// Valid file paths (absolute only).
+	assert.NoError(t, validateRegistryValue("/absolute/path/spec.json"))
+
+	// Invalid values.
+	assert.Error(t, validateRegistryValue("bogus"))
+	assert.Error(t, validateRegistryValue("Cloud"))
+	assert.Error(t, validateRegistryValue("./relative/path/spec.json"))
+	assert.Error(t, validateRegistryValue("relative/path/spec.json"))
+	assert.Error(t, validateRegistryValue(""))
+}
+
+func TestFetchVersionedMetadata_OSSRegistry(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, "/files/metadata/airbyte/source-postgres/3.6.28/oss.json", r.URL.Path)
+		resp := map[string]interface{}{
+			"sourceDefinitionId": "oss-def-id-456",
+			"dockerRepository":   "airbyte/source-postgres",
+			"dockerImageTag":     "3.6.28",
+			"name":               "Postgres",
+			"spec": map[string]interface{}{
+				"connectionSpecification": map[string]interface{}{
+					"type":       "object",
+					"properties": map[string]interface{}{},
+				},
+			},
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(resp)
+	}))
+	defer server.Close()
+
+	ctx := context.Background()
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, server.URL+"/files/metadata/airbyte/source-postgres/3.6.28/oss.json", nil)
+	require.NoError(t, err)
+
+	client := server.Client()
+	resp, err := client.Do(req)
+	require.NoError(t, err)
+	defer func() { _ = resp.Body.Close() }()
+
+	var entry connectorVersionedEntry
+	err = json.NewDecoder(resp.Body).Decode(&entry)
+	require.NoError(t, err)
+	assert.Equal(t, "oss-def-id-456", entry.SourceDefinitionID)
+	assert.Equal(t, "3.6.28", entry.DockerImageTag)
+	assert.NotNil(t, entry.Spec)
+}
+
+func TestFetchVersionedMetadata_URLOverride(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, "/custom/spec.json", r.URL.Path)
+		resp := map[string]interface{}{
+			"sourceDefinitionId": "custom-def-id-789",
+			"dockerRepository":   "airbyte/source-custom",
+			"dockerImageTag":     "1.0.0",
+			"name":               "Custom",
+			"spec": map[string]interface{}{
+				"connectionSpecification": map[string]interface{}{
+					"type":       "object",
+					"properties": map[string]interface{}{},
+				},
+			},
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(resp)
+	}))
+	defer server.Close()
+
+	ds := &ConnectorConfigurationDataSource{
+		httpClient: server.Client(),
+	}
+
+	ctx := context.Background()
+	entry, err := ds.fetchVersionedMetadata(ctx, "source-custom", "1.0.0", server.URL+"/custom/spec.json")
+	require.NoError(t, err)
+	assert.Equal(t, "custom-def-id-789", entry.SourceDefinitionID)
+	assert.Equal(t, "1.0.0", entry.DockerImageTag)
+}
+
+func TestFetchVersionedMetadata_FileOverride(t *testing.T) {
+	specJSON := `{
+		"sourceDefinitionId": "file-def-id-321",
+		"dockerRepository": "airbyte/source-file",
+		"dockerImageTag": "2.0.0",
+		"name": "File Source",
+		"spec": {
+			"connectionSpecification": {
+				"type": "object",
+				"properties": {}
+			}
+		}
+	}`
+	tmpDir := t.TempDir()
+	tmpFile := tmpDir + "/spec.json"
+	err := os.WriteFile(tmpFile, []byte(specJSON), 0644)
+	require.NoError(t, err)
+
+	ds := &ConnectorConfigurationDataSource{
+		httpClient: &http.Client{Timeout: 5 * time.Second},
+	}
+
+	// Absolute path (starts with /).
+	ctx := context.Background()
+	entry, err := ds.fetchVersionedMetadata(ctx, "source-file", "2.0.0", tmpFile)
+	require.NoError(t, err)
+	assert.Equal(t, "file-def-id-321", entry.SourceDefinitionID)
+	assert.Equal(t, "2.0.0", entry.DockerImageTag)
+	assert.NotNil(t, entry.Spec)
+}
+
+func TestFetchVersionedMetadata_FileNotFound(t *testing.T) {
+	ds := &ConnectorConfigurationDataSource{
+		httpClient: &http.Client{Timeout: 5 * time.Second},
+	}
+
+	ctx := context.Background()
+	_, err := ds.fetchVersionedMetadata(ctx, "source-test", "1.0.0", "/nonexistent/path/spec.json")
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "failed to read spec from file")
+}
+
+func TestFetchSpecFromURL_Success(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		resp := map[string]interface{}{
+			"sourceDefinitionId": "url-def-id",
+			"dockerRepository":   "airbyte/source-test",
+			"dockerImageTag":     "1.0.0",
+			"name":               "Test",
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(resp)
+	}))
+	defer server.Close()
+
+	ds := &ConnectorConfigurationDataSource{
+		httpClient: server.Client(),
+	}
+
+	ctx := context.Background()
+	entry, err := ds.fetchSpecFromURL(ctx, server.URL+"/spec.json")
+	require.NoError(t, err)
+	assert.Equal(t, "url-def-id", entry.SourceDefinitionID)
+}
+
+func TestFetchSpecFromURL_Fallback(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+	}))
+	defer server.Close()
+
+	ds := &ConnectorConfigurationDataSource{
+		httpClient: server.Client(),
+	}
+
+	ctx := context.Background()
+	_, err := ds.fetchSpecFromURL(ctx, server.URL+"/missing.json")
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "HTTP 404")
 }
 
 func TestCollectValidationErrors(t *testing.T) {
@@ -180,6 +351,48 @@ func TestCollectValidationErrors(t *testing.T) {
 	}`)
 	errors := validateJSONSchema(schema, `{"c": "not_a_bool"}`)
 	assert.NotEmpty(t, errors, "expected validation errors for missing required fields and wrong type")
+}
+
+func TestValidateJSONSchema_PCRELookbehind(t *testing.T) {
+	// This schema uses a negative lookbehind assertion (?<!...) which is valid
+	// in PCRE/ECMAScript but not in Go's RE2-based regexp package. The custom
+	// regexp2 engine should handle this without error.
+	schema := json.RawMessage(`{
+		"type": "object",
+		"properties": {
+			"repository": {
+				"type": "string",
+				"pattern": "^[\\w.-]+/([\\w.-]*\\*|[\\w.-]+(?<!\\.git))$"
+			}
+		}
+	}`)
+
+	// Valid input that matches the pattern.
+	errors := validateJSONSchema(schema, `{"repository": "airbytehq/airbyte"}`)
+	assert.Empty(t, errors, "expected no validation errors for valid repo name with PCRE lookbehind pattern")
+
+	// Invalid input ending in .git should fail the lookbehind.
+	errors = validateJSONSchema(schema, `{"repository": "airbytehq/airbyte.git"}`)
+	assert.NotEmpty(t, errors, "expected validation error for repo name ending in .git")
+}
+
+func TestValidateJSONSchema_PCRELookahead(t *testing.T) {
+	// Negative lookahead (?!...) is unsupported by Go's regexp/RE2 engine.
+	schema := json.RawMessage(`{
+		"type": "object",
+		"properties": {
+			"name": {
+				"type": "string",
+				"pattern": "^(?!admin).*$"
+			}
+		}
+	}`)
+
+	errors := validateJSONSchema(schema, `{"name": "user123"}`)
+	assert.Empty(t, errors, "expected no errors for name that doesn't start with 'admin'")
+
+	errors = validateJSONSchema(schema, `{"name": "admin_user"}`)
+	assert.NotEmpty(t, errors, "expected validation error for name starting with 'admin'")
 }
 
 func TestDeepMergeJSON_WithSecrets(t *testing.T) {

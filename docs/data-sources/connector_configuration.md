@@ -61,6 +61,51 @@ data "airbyte_connector_configuration" "postgres" {
 }
 ```
 
+### Override the connector registry
+
+By default, the spec is fetched from both **Cloud** and **OSS** registries (composite). Use `connector_registry` to target a specific registry, a custom **URL**, or a **local file**. URLs and file paths must serve well-formatted registry JSON:
+
+```terraform
+# Use the OSS registry only
+data "airbyte_connector_configuration" "postgres_oss" {
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "oss"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Use a custom URL
+data "airbyte_connector_configuration" "custom_url" {
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "https://example.com/my-registry-spec.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+
+# Use a local file
+data "airbyte_connector_configuration" "local_spec" {
+  connector_name     = "source-postgres"
+  connector_version  = "3.6.28"
+  connector_registry = "/path/to/my-custom-registry.json"
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+  }
+}
+```
+
 ### Pass resolved values to a resource
 
 Use the data source outputs to configure an [`airbyte_source`](../resources/source.md) or [`airbyte_destination`](../resources/destination.md) resource:
@@ -85,6 +130,7 @@ resource "airbyte_source" "postgres" {
 ### Optional
 
 - `configuration_secrets` (Dynamic, Sensitive) Sensitive configuration values (API keys, passwords, etc.) as an HCL object. These are hidden in Terraform plan output. Keys here are deep-merged with (and override) keys in `configuration`.
+- `connector_registry` (String) Controls where the connector spec is fetched from. Accepted values: `cloud` fetches from the Cloud registry, `oss` fetches from the OSS registry, and `composite` (default) tries Cloud first then falls back to OSS. You can also provide a full URL (starting with `http://` or `https://`) or an absolute file path (starting with `/`) to override the spec source entirely.
 - `connector_version` (String) The version of the connector (e.g. `2.0.0`). If not specified, the latest version is used. When set, the connector spec for that exact version is fetched and used for JSONSchema validation.
 - `ignore_errors` (Boolean) If true, validation errors (including JSONSchema validation) are reported as warnings instead of errors. Defaults to false.
 

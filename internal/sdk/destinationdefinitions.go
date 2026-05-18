@@ -149,6 +149,7 @@ func (s *DestinationDefinitions) ListDestinationDefinitions(ctx context.Context,
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -417,6 +418,7 @@ func (s *DestinationDefinitions) GetDestinationDefinition(ctx context.Context, r
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -556,6 +558,7 @@ func (s *DestinationDefinitions) UpdateDestinationDefinition(ctx context.Context
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -688,6 +691,7 @@ func (s *DestinationDefinitions) DeleteDestinationDefinition(ctx context.Context
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
