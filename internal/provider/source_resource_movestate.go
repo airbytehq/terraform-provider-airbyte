@@ -21,7 +21,7 @@ func (r *SourceResource) MoveState(ctx context.Context) []resource.StateMover {
 				if req.SourceTypeName == "airbyte_source" {
 					return
 				}
-				if !strings.HasSuffix(req.SourceProviderAddress, "airbytehq/airbyte") {
+				if req.SourceProviderAddress != "airbyte" && !strings.HasSuffix(req.SourceProviderAddress, "airbytehq/airbyte") {
 					return
 				}
 
@@ -44,13 +44,13 @@ func (r *SourceResource) MoveState(ctx context.Context) []resource.StateMover {
 				}
 
 				targetState := SourceResourceModel{
-					SourceID:    types.StringValue(sourceID),
-					Name:        extractJSONTypesString(rawState, "name"),
-					WorkspaceID: extractJSONTypesString(rawState, "workspace_id"),
+					SourceID:     types.StringValue(sourceID),
+					Name:         extractJSONTypesString(rawState, "name"),
+					WorkspaceID:  extractJSONTypesString(rawState, "workspace_id"),
 					DefinitionID: extractJSONTypesString(rawState, "definition_id"),
-					SourceType:  extractJSONTypesString(rawState, "source_type"),
-					SecretID:    extractJSONTypesString(rawState, "secret_id"),
-					CreatedAt:   extractJSONInt64(rawState, "created_at"),
+					SourceType:   extractJSONTypesString(rawState, "source_type"),
+					SecretID:     extractJSONTypesString(rawState, "secret_id"),
+					CreatedAt:    extractJSONInt64(rawState, "created_at"),
 				}
 
 				resp.Diagnostics.Append(resp.TargetState.Set(ctx, targetState)...)
