@@ -1,6 +1,7 @@
 # Using External Secret References
 
-If your Airbyte organization or workspace has a
+External secret storage is an Airbyte Enterprise feature. If your Airbyte
+organization or workspace is eligible and has
 [custom secret storage configured](https://docs.airbyte.com/platform/operating-airbyte/external-secrets),
 you can reference secrets that already exist in your external secret manager
 instead of passing raw secret values in your Terraform configuration.
