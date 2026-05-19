@@ -19,8 +19,8 @@ Using the generic `airbyte_source` resource:
 
 ```terraform
 resource "airbyte_source" "postgres" {
-  name         = "My Postgres Source"
-  workspace_id = var.workspace_id
+  name          = "My Postgres Source"
+  workspace_id  = var.workspace_id
   definition_id = var.postgres_source_definition_id
 
   configuration = jsonencode({
@@ -63,4 +63,4 @@ data "airbyte_source" "example" {
 ## Learn More
 
 For full details on how external secret references work, see the
-[Airbyte documentation on External Secret References](https://docs.airbyte.com/platform/understanding-airbyte/secrets#external-secret-references).
+[Airbyte documentation on External Secret References](https://docs.airbyte.com/platform/operating-airbyte/external-secrets#using-external-secret-references-in-connector-configurations).
