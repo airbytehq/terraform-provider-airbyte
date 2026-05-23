@@ -264,7 +264,9 @@ func (r *ConnectionResource) postConfigAPI(ctx context.Context, path string, aut
 	if err != nil {
 		return err
 	}
-	defer response.Body.Close()
+	defer func() {
+		_ = response.Body.Close()
+	}()
 
 	responseBody, err := io.ReadAll(response.Body)
 	if err != nil {

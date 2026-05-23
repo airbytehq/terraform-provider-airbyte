@@ -37,6 +37,7 @@ provider "airbyte" {
 - `bearer_auth` (String, Sensitive) HTTP Bearer.
 - `client_id` (String, Sensitive) OAuth2 Client Credentials Flow client identifier.
 - `client_secret` (String, Sensitive) OAuth2 Client Credentials Flow client secret.
+- `config_api_root` (String) Internal config API root used for connection schedule features not exposed by the public API (defaults to the corresponding Airbyte config API for server_url).
 - `password` (String, Sensitive) HTTP Basic password.
 - `server_url` (String) Server URL (defaults to https://api.airbyte.com/v1)
 - `token_url` (String, Sensitive) OAuth2 Client Credentials Flow token URL.

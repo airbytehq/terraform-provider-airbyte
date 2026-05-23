@@ -238,6 +238,7 @@ Optional:
 Optional:
 
 - `cron_expression` (String)
+- `cron_time_zone` (String) IANA time zone used to evaluate cron schedules, for example "America/New_York". Defaults to Airbyte's API default when omitted.
 - `schedule_type` (String) Not Null; must be one of ["manual", "cron"]
 
 Read-Only:
