@@ -38,8 +38,8 @@ type AirbyteProviderModel struct {
 	Password      types.String `tfsdk:"password"`
 	ConfigAPIRoot types.String `tfsdk:"config_api_root"`
 	ServerURL     types.String `tfsdk:"server_url"`
-	TokenURL      types.String `tfsdk:"token_url"`
-	Username      types.String `tfsdk:"username"`
+	TokenURL     types.String `tfsdk:"token_url"`
+	Username     types.String `tfsdk:"username"`
 }
 
 func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
