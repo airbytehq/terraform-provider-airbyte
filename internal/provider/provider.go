@@ -32,13 +32,14 @@ type AirbyteProvider struct {
 
 // AirbyteProviderModel describes the provider data model.
 type AirbyteProviderModel struct {
-	BearerAuth   types.String `tfsdk:"bearer_auth"`
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	Password     types.String `tfsdk:"password"`
-	ServerURL    types.String `tfsdk:"server_url"`
-	TokenURL     types.String `tfsdk:"token_url"`
-	Username     types.String `tfsdk:"username"`
+	BearerAuth    types.String `tfsdk:"bearer_auth"`
+	ClientID      types.String `tfsdk:"client_id"`
+	ClientSecret  types.String `tfsdk:"client_secret"`
+	Password      types.String `tfsdk:"password"`
+	ConfigAPIRoot types.String `tfsdk:"config_api_root"`
+	ServerURL     types.String `tfsdk:"server_url"`
+	TokenURL      types.String `tfsdk:"token_url"`
+	Username      types.String `tfsdk:"username"`
 }
 
 func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -68,6 +69,10 @@ func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest
 				MarkdownDescription: `HTTP Basic password.`,
 				Optional:            true,
 				Sensitive:           true,
+			},
+			"config_api_root": schema.StringAttribute{
+				Description: `Internal config API root used for connection schedule features not exposed by the public API (defaults to the corresponding Airbyte config API for server_url).`,
+				Optional:    true,
 			},
 			"server_url": schema.StringAttribute{
 				Description: `Server URL (defaults to https://api.airbyte.com/v1)`,
@@ -156,6 +161,11 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	}
 
 	client := sdk.New(opts...)
+	configAPIRoot := data.ConfigAPIRoot.ValueString()
+	if configAPIRoot == "" {
+		configAPIRoot = deriveConfigAPIRoot(serverUrl)
+	}
+	storeProviderRuntimeConfig(client, providerRuntimeConfig{ConfigAPIRoot: configAPIRoot})
 	resp.ActionData = client
 	resp.DataSourceData = client
 	resp.EphemeralResourceData = client

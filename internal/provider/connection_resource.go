@@ -612,6 +612,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 						},
 					},
+					"cron_time_zone": schema.StringAttribute{
+						Computed: true,
+						Optional: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+						},
+						Description: `IANA time zone used to evaluate cron schedules, for example "America/New_York". Defaults to Airbyte's API default when omitted.`,
+					},
 					"schedule_type": schema.StringAttribute{
 						Computed: true,
 						Optional: true,
@@ -796,6 +804,7 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -860,6 +869,7 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -910,6 +920,7 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return

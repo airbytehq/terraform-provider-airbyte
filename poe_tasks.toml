@@ -23,6 +23,7 @@ python3 scripts/patch_provider_registrations.py internal/provider/provider.go
 python3 scripts/patch_config_preservation.py internal/provider
 python3 scripts/patch_workspace_notifications.py
 python3 scripts/patch_sensitive_configuration.py
+python3 scripts/patch_connection_cron_timezone.py
 go mod tidy
 """
 

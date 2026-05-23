@@ -262,6 +262,9 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 								"cron_expression": schema.StringAttribute{
 									Computed: true,
 								},
+								"cron_time_zone": schema.StringAttribute{
+									Computed: true,
+								},
 								"schedule_type": schema.StringAttribute{
 									Computed: true,
 								},
