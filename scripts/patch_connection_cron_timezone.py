@@ -43,6 +43,12 @@ def replace_if_missing(content: str, marker: str, old: str, new: str, path: Path
     return replace_once(content, old, new, path)
 
 
+def replace_all_if_missing(content: str, marker: str, old: str, new: str) -> str:
+    if marker in content:
+        return content
+    return content.replace(old, new)
+
+
 def patch_file(path: Path, patcher) -> bool:
     if not path.exists():
         print(f"ERROR: {path} does not exist", file=sys.stderr)
@@ -60,12 +66,11 @@ def patch_file(path: Path, patcher) -> bool:
 
 
 def patch_provider_go(content: str, path: Path) -> str:
-    content = replace_if_missing(
+    content = replace_all_if_missing(
         content,
         "ConfigAPIRoot types.String `tfsdk:\"config_api_root\"`",
         "\tPassword     types.String `tfsdk:\"password\"`\n",
         "\tPassword      types.String `tfsdk:\"password\"`\n\tConfigAPIRoot types.String `tfsdk:\"config_api_root\"`\n",
-        path,
     )
     content = replace_if_missing(
         content,
@@ -86,36 +91,16 @@ def patch_provider_go(content: str, path: Path) -> str:
     )
     content = replace_if_missing(
         content,
+        "configAPIRoot := data.ConfigAPIRoot.ValueString()",
+        "\tclient := sdk.New(opts...)\n",
+        "\tclient := sdk.New(opts...)\n\tconfigAPIRoot := data.ConfigAPIRoot.ValueString()\n\tif configAPIRoot == \"\" {\n\t\tconfigAPIRoot = deriveConfigAPIRoot(serverUrl)\n\t}\n",
+        path,
+    )
+    content = replace_if_missing(
+        content,
         "providerData := &configuredProviderData{",
-        """\tclient := sdk.New(opts...)
-\tconfigAPIRoot := data.ConfigAPIRoot.ValueString()
-\tif configAPIRoot == "" {
-\t\tconfigAPIRoot = deriveConfigAPIRoot(serverUrl)
-\t}
-\tresp.ActionData = client
-\tresp.DataSourceData = client
-\tresp.EphemeralResourceData = client
-\tresp.ListResourceData = client
-\tresp.ResourceData = client
-""",
-        """\tclient := sdk.New(opts...)
-\tconfigAPIRoot := data.ConfigAPIRoot.ValueString()
-\tif configAPIRoot == "" {
-\t\tconfigAPIRoot = deriveConfigAPIRoot(serverUrl)
-\t}
-\tproviderData := &configuredProviderData{
-\t\tClient: client,
-\t\tRuntimeConfig: providerRuntimeConfig{
-\t\t\tConfigAPIRoot: configAPIRoot,
-\t\t\tHTTPClient:    httpClient,
-\t\t},
-\t}
-\tresp.ActionData = client
-\tresp.DataSourceData = client
-\tresp.EphemeralResourceData = client
-\tresp.ListResourceData = client
-\tresp.ResourceData = providerData
-""",
+        "\tresp.ResourceData = client\n",
+        "\tproviderData := &configuredProviderData{\n\t\tClient: client,\n\t\tRuntimeConfig: providerRuntimeConfig{\n\t\t\tConfigAPIRoot: configAPIRoot,\n\t\t\tHTTPClient:    httpClient,\n\t\t},\n\t}\n\tresp.ResourceData = providerData\n",
         path,
     )
 
@@ -158,22 +143,112 @@ def patch_connection_resource_go(content: str, path: Path) -> str:
     content = replace_if_missing(
         content,
         "r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse, plannedCronTimeZone)",
-        "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-        "\tplannedCronTimeZone := configuredCronTimeZone(data.Schedule)\n\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse, plannedCronTimeZone)...)\n\n\tif resp.Diagnostics.HasError() {",
+        """	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectionResource) Read""",
+        """	plannedCronTimeZone := configuredCronTimeZone(data.Schedule)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse, plannedCronTimeZone)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectionResource) Read""",
         path,
     )
     content = replace_if_missing(
         content,
         "r.refreshCronTimeZone(ctx, data, res.RawResponse, previousCronTimeZone)",
-        "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-        "\tpreviousCronTimeZone := configuredCronTimeZone(data.Schedule)\n\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse, previousCronTimeZone)...)\n\n\tif resp.Diagnostics.HasError() {",
+        """	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectionResource) Update""",
+        """	previousCronTimeZone := configuredCronTimeZone(data.Schedule)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse, previousCronTimeZone)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectionResource) Update""",
         path,
     )
     content = replace_if_missing(
         content,
         "r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse, plannedCronTimeZone)",
-        "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-        "\tplannedCronTimeZone := configuredCronTimeZone(data.Schedule)\n\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse, plannedCronTimeZone)...)\n\n\tif resp.Diagnostics.HasError() {",
+        """	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectionResource) Delete""",
+        """	plannedCronTimeZone := configuredCronTimeZone(data.Schedule)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse, plannedCronTimeZone)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *ConnectionResource) Delete""",
         path,
     )
 
@@ -187,24 +262,11 @@ def patch_connection_resource_sdk_go(content: str, path: Path) -> str:
         "\tapplyCronScheduleResponse(r.Schedule, resp.Schedule.CronExpression, nil)\n",
         path,
     )
-    content = replace_if_missing(
+    content = replace_all_if_missing(
         content,
         "cronExpressionForPublicAPI(r.Schedule)",
-        '''\t\tcronExpression := new(string)
-\t\tif !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
-\t\t\t*cronExpression = r.Schedule.CronExpression.ValueString()
-\t\t} else {
-\t\t\tcronExpression = nil
-\t\t}
-\t\tschedule = &shared.AirbyteAPIConnectionSchedule{
-\t\t\tScheduleType:   scheduleType,
-\t\t\tCronExpression: cronExpression,
-\t\t}''',
-        '''\t\tschedule = &shared.AirbyteAPIConnectionSchedule{
-\t\t\tScheduleType:   scheduleType,
-\t\t\tCronExpression: cronExpressionForPublicAPI(r.Schedule),
-\t\t}''',
-        path,
+        "\t\t\tCronExpression: cronExpression,\n",
+        "\t\t\tCronExpression: cronExpressionForPublicAPI(r.Schedule),\n",
     )
     return content
 
