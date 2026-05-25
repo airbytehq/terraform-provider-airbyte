@@ -449,12 +449,6 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 	var schedule *shared.AirbyteAPIConnectionSchedule
 	if r.Schedule != nil {
 		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
-		cronExpression := new(string)
-		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
-			*cronExpression = r.Schedule.CronExpression.ValueString()
-		} else {
-			cronExpression = nil
-		}
 		schedule = &shared.AirbyteAPIConnectionSchedule{
 			ScheduleType:   scheduleType,
 			CronExpression: cronExpressionForPublicAPI(r.Schedule),
@@ -763,12 +757,6 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 	var schedule *shared.AirbyteAPIConnectionSchedule
 	if r.Schedule != nil {
 		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
-		cronExpression := new(string)
-		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
-			*cronExpression = r.Schedule.CronExpression.ValueString()
-		} else {
-			cronExpression = nil
-		}
 		schedule = &shared.AirbyteAPIConnectionSchedule{
 			ScheduleType:   scheduleType,
 			CronExpression: cronExpressionForPublicAPI(r.Schedule),

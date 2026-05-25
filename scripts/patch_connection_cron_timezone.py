@@ -269,25 +269,21 @@ def patch_connection_resource_sdk_go(content: str, path: Path) -> str:
         "\tapplyCronScheduleResponse(r.Schedule, resp.Schedule.CronExpression, nil)\n",
         path,
     )
-    content = replace_if_missing(
-        content,
-        "cronExpressionForPublicAPI(r.Schedule)",
-        """		cronExpression := new(string)
-		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
-			*cronExpression = r.Schedule.CronExpression.ValueString()
-		} else {
-			cronExpression = nil
-		}
-""",
-        "",
-        path,
-    )
     content = replace_all_if_missing(
         content,
         "cronExpressionForPublicAPI(r.Schedule)",
         "\t\t\tCronExpression: cronExpression,\n",
         "\t\t\tCronExpression: cronExpressionForPublicAPI(r.Schedule),\n",
     )
+    if "cronExpressionForPublicAPI(r.Schedule)" in content:
+        old_block = """		cronExpression := new(string)
+		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
+			*cronExpression = r.Schedule.CronExpression.ValueString()
+		} else {
+			cronExpression = nil
+		}
+"""
+        content = content.replace(old_block, "")
     return content
 
 
