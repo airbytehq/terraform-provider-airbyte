@@ -25,21 +25,22 @@ PROVIDER_DIR = Path("internal/provider")
 TYPES_DIR = PROVIDER_DIR / "types"
 
 
+def fail(path: Path, message: str) -> None:
+    print(f"ERROR: {path}: {message}", file=sys.stderr)
+    sys.exit(1)
+
+
 def replace_once(content: str, old: str, new: str, path: Path) -> str:
     count = content.count(old)
     if count != 1:
-        print(f"ERROR: Expected exactly 1 occurrence in {path}: {old!r}; found {count}", file=sys.stderr)
-        sys.exit(1)
+        fail(path, f"Expected exactly 1 occurrence of {old!r}; found {count}")
     return content.replace(old, new, 1)
 
 
-def insert_after_once(content: str, anchor: str, insertion: str, path: Path) -> str:
-    count = content.count(anchor)
-    if count != 1:
-        print(f"ERROR: Expected exactly 1 anchor in {path}: {anchor!r}; found {count}", file=sys.stderr)
-        sys.exit(1)
-    idx = content.find(anchor) + len(anchor)
-    return content[:idx] + insertion + content[idx:]
+def replace_if_missing(content: str, marker: str, old: str, new: str, path: Path) -> str:
+    if marker in content:
+        return content
+    return replace_once(content, old, new, path)
 
 
 def patch_file(path: Path, patcher) -> bool:
@@ -59,25 +60,21 @@ def patch_file(path: Path, patcher) -> bool:
 
 
 def patch_provider_go(content: str, path: Path) -> str:
-    if "ConfigAPIRoot types.String `tfsdk:\"config_api_root\"`" not in content:
-        content = content.replace(
-            "\tPassword     types.String `tfsdk:\"password\"`\n",
-            "\tPassword      types.String `tfsdk:\"password\"`\n\tConfigAPIRoot types.String `tfsdk:\"config_api_root\"`\n",
-            1,
-        )
-        content = content.replace(
-            "\tBearerAuth   types.String `tfsdk:\"bearer_auth\"`\n\tClientID     types.String `tfsdk:\"client_id\"`\n\tClientSecret types.String `tfsdk:\"client_secret\"`\n\tPassword      types.String `tfsdk:\"password\"`\n\tConfigAPIRoot types.String `tfsdk:\"config_api_root\"`\n\tServerURL    types.String `tfsdk:\"server_url\"`",
-            "\tBearerAuth    types.String `tfsdk:\"bearer_auth\"`\n\tClientID      types.String `tfsdk:\"client_id\"`\n\tClientSecret  types.String `tfsdk:\"client_secret\"`\n\tPassword      types.String `tfsdk:\"password\"`\n\tConfigAPIRoot types.String `tfsdk:\"config_api_root\"`\n\tServerURL     types.String `tfsdk:\"server_url\"`",
-            1,
-        )
-
-    if '"config_api_root": schema.StringAttribute{' not in content:
-        content = content.replace(
-            '''\t\t\t"server_url": schema.StringAttribute{
+    content = replace_if_missing(
+        content,
+        "ConfigAPIRoot types.String `tfsdk:\"config_api_root\"`",
+        "\tPassword     types.String `tfsdk:\"password\"`\n",
+        "\tPassword      types.String `tfsdk:\"password\"`\n\tConfigAPIRoot types.String `tfsdk:\"config_api_root\"`\n",
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        '"config_api_root": schema.StringAttribute{',
+        '''\t\t\t"server_url": schema.StringAttribute{
 \t\t\t\tDescription: `Server URL (defaults to https://api.airbyte.com/v1)`,
 \t\t\t\tOptional:    true,
 \t\t\t},''',
-            '''\t\t\t"config_api_root": schema.StringAttribute{
+        '''\t\t\t"config_api_root": schema.StringAttribute{
 \t\t\t\tDescription: `Internal config API root used for connection schedule features not exposed by the public API (defaults to the corresponding Airbyte config API for server_url).`,
 \t\t\t\tOptional:    true,
 \t\t\t},
@@ -85,79 +82,115 @@ def patch_provider_go(content: str, path: Path) -> str:
 \t\t\t\tDescription: `Server URL (defaults to https://api.airbyte.com/v1)`,
 \t\t\t\tOptional:    true,
 \t\t\t},''',
-            1,
-        )
-
-    if "storeProviderRuntimeConfig(client, providerRuntimeConfig{ConfigAPIRoot: configAPIRoot})" not in content:
-        content = content.replace(
-            "\tclient := sdk.New(opts...)\n",
-            "\tclient := sdk.New(opts...)\n\tconfigAPIRoot := data.ConfigAPIRoot.ValueString()\n\tif configAPIRoot == \"\" {\n\t\tconfigAPIRoot = deriveConfigAPIRoot(serverUrl)\n\t}\n\tstoreProviderRuntimeConfig(client, providerRuntimeConfig{ConfigAPIRoot: configAPIRoot})\n",
-            1,
-        )
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "providerData := &configuredProviderData{",
+        """\tclient := sdk.New(opts...)
+\tconfigAPIRoot := data.ConfigAPIRoot.ValueString()
+\tif configAPIRoot == "" {
+\t\tconfigAPIRoot = deriveConfigAPIRoot(serverUrl)
+\t}
+\tresp.ActionData = client
+\tresp.DataSourceData = client
+\tresp.EphemeralResourceData = client
+\tresp.ListResourceData = client
+\tresp.ResourceData = client
+""",
+        """\tclient := sdk.New(opts...)
+\tconfigAPIRoot := data.ConfigAPIRoot.ValueString()
+\tif configAPIRoot == "" {
+\t\tconfigAPIRoot = deriveConfigAPIRoot(serverUrl)
+\t}
+\tproviderData := &configuredProviderData{
+\t\tClient: client,
+\t\tRuntimeConfig: providerRuntimeConfig{
+\t\t\tConfigAPIRoot: configAPIRoot,
+\t\t\tHTTPClient:    httpClient,
+\t\t},
+\t}
+\tresp.ActionData = client
+\tresp.DataSourceData = client
+\tresp.EphemeralResourceData = client
+\tresp.ListResourceData = client
+\tresp.ResourceData = providerData
+""",
+        path,
+    )
 
     return content
 
 
 def patch_connection_resource_go(content: str, path: Path) -> str:
-    if '"cron_time_zone": schema.StringAttribute{' not in content:
-        content = content.replace(
-            '''\t\t\t\t\t"cron_expression": schema.StringAttribute{
-\t\t\t\t\t\tComputed: true,
-\t\t\t\t\t\tOptional: true,
-\t\t\t\t\t\tPlanModifiers: []planmodifier.String{
-\t\t\t\t\t\t\tspeakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-\t\t\t\t\t\t},
-\t\t\t\t\t},''',
-            '''\t\t\t\t\t"cron_expression": schema.StringAttribute{
-\t\t\t\t\t\tComputed: true,
-\t\t\t\t\t\tOptional: true,
-\t\t\t\t\t\tPlanModifiers: []planmodifier.String{
-\t\t\t\t\t\t\tspeakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-\t\t\t\t\t\t},
-\t\t\t\t\t},
-\t\t\t\t\t"cron_time_zone": schema.StringAttribute{
-\t\t\t\t\t\tComputed: true,
-\t\t\t\t\t\tOptional: true,
-\t\t\t\t\t\tPlanModifiers: []planmodifier.String{
-\t\t\t\t\t\t\tspeakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-\t\t\t\t\t\t},
-\t\t\t\t\t\tDescription: `IANA time zone used to evaluate cron schedules, for example "America/New_York". Defaults to Airbyte's API default when omitted.`,
-\t\t\t\t\t},''',
-            1,
-        )
-
-    if "r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse)" not in content:
-        content = content.replace(
-            "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-            "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-            1,
-        )
-
-    if "r.refreshCronTimeZone(ctx, data, res.RawResponse)" not in content:
-        content = content.replace(
-            "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-            "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-            1,
-        )
-
-    if "r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse)" not in content:
-        content = content.replace(
-            "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-            "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
-            1,
-        )
+    content = replace_if_missing(
+        content,
+        '"cron_time_zone": schema.StringAttribute{',
+        '\t\t\t\t\t"cron_expression": schema.StringAttribute{\n\t\t\t\t\t\tComputed: true,\n\t\t\t\t\t\tOptional: true,\n\t\t\t\t\t\tPlanModifiers: []planmodifier.String{\n\t\t\t\t\t\t\tspeakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),\n\t\t\t\t\t\t},\n\t\t\t\t\t},',
+        '\t\t\t\t\t"cron_expression": schema.StringAttribute{\n\t\t\t\t\t\tComputed: true,\n\t\t\t\t\t\tOptional: true,\n\t\t\t\t\t\tPlanModifiers: []planmodifier.String{\n\t\t\t\t\t\t\tspeakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\t"cron_time_zone": schema.StringAttribute{\n\t\t\t\t\t\tComputed: true,\n\t\t\t\t\t\tOptional: true,\n\t\t\t\t\t\tPlanModifiers: []planmodifier.String{\n\t\t\t\t\t\t\tspeakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),\n\t\t\t\t\t\t},\n\t\t\t\t\t\tDescription: `IANA time zone used to evaluate cron schedules, for example "America/New_York". Defaults to Airbyte\'s API default when omitted.`,\n\t\t\t\t\t},',
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "config providerRuntimeConfig",
+        "type ConnectionResource struct {\n\t// Provider configured SDK client.\n\tclient *sdk.SDK\n}",
+        "type ConnectionResource struct {\n\t// Provider configured SDK client.\n\tclient *sdk.SDK\n\tconfig providerRuntimeConfig\n}",
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "connectionResourceProviderData(req.ProviderData)",
+        "client, ok := req.ProviderData.(*sdk.SDK)",
+        "client, config, ok := connectionResourceProviderData(req.ProviderData)",
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "r.config = config",
+        "\tr.client = client\n",
+        "\tr.client = client\n\tr.config = config\n",
+        path,
+    )
+    content = content.replace(
+        'fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData)',
+        'fmt.Sprintf("Expected *configuredProviderData, got: %T. Please report this issue to the provider developers.", req.ProviderData)',
+    )
+    content = replace_if_missing(
+        content,
+        "r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse, plannedCronTimeZone)",
+        "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
+        "\tplannedCronTimeZone := configuredCronTimeZone(data.Schedule)\n\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse, plannedCronTimeZone)...)\n\n\tif resp.Diagnostics.HasError() {",
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "r.refreshCronTimeZone(ctx, data, res.RawResponse, previousCronTimeZone)",
+        "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
+        "\tpreviousCronTimeZone := configuredCronTimeZone(data.Schedule)\n\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse, previousCronTimeZone)...)\n\n\tif resp.Diagnostics.HasError() {",
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse, plannedCronTimeZone)",
+        "\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\n\tif resp.Diagnostics.HasError() {",
+        "\tplannedCronTimeZone := configuredCronTimeZone(data.Schedule)\n\tresp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)\n\tresp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse, plannedCronTimeZone)...)\n\n\tif resp.Diagnostics.HasError() {",
+        path,
+    )
 
     return content
 
-
 def patch_connection_resource_sdk_go(content: str, path: Path) -> str:
-    content = content.replace(
+    content = replace_if_missing(
+        content,
+        "applyCronScheduleResponse(r.Schedule, resp.Schedule.CronExpression, nil)",
         "\tr.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)\n",
         "\tapplyCronScheduleResponse(r.Schedule, resp.Schedule.CronExpression, nil)\n",
+        path,
     )
-    if content.count("cronExpressionForPublicAPI(r.Schedule)") == 0:
-        content = content.replace(
-            '''\t\tcronExpression := new(string)
+    content = replace_if_missing(
+        content,
+        "cronExpressionForPublicAPI(r.Schedule)",
+        '''\t\tcronExpression := new(string)
 \t\tif !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
 \t\t\t*cronExpression = r.Schedule.CronExpression.ValueString()
 \t\t} else {
@@ -167,52 +200,73 @@ def patch_connection_resource_sdk_go(content: str, path: Path) -> str:
 \t\t\tScheduleType:   scheduleType,
 \t\t\tCronExpression: cronExpression,
 \t\t}''',
-            '''\t\tschedule = &shared.AirbyteAPIConnectionSchedule{
+        '''\t\tschedule = &shared.AirbyteAPIConnectionSchedule{
 \t\t\tScheduleType:   scheduleType,
 \t\t\tCronExpression: cronExpressionForPublicAPI(r.Schedule),
 \t\t}''',
-        )
+        path,
+    )
     return content
 
 
 def patch_connection_data_source_sdk_go(content: str, path: Path) -> str:
-    return content.replace(
+    return replace_if_missing(
+        content,
+        "applyCronScheduleDataSourceResponse(r.Schedule, resp.Schedule.CronExpression, nil)",
         "\tr.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)\n",
         "\tapplyCronScheduleDataSourceResponse(r.Schedule, resp.Schedule.CronExpression, nil)\n",
+        path,
     )
 
 
 def patch_connections_data_source_sdk_go(content: str, path: Path) -> str:
-    return content.replace(
+    return replace_if_missing(
+        content,
+        "applyCronScheduleDataSourceResponse(data.Schedule, dataItem.Schedule.CronExpression, nil)",
         "\t\t\tdata.Schedule.CronExpression = types.StringPointerValue(dataItem.Schedule.CronExpression)\n",
         "\t\t\tapplyCronScheduleDataSourceResponse(data.Schedule, dataItem.Schedule.CronExpression, nil)\n",
+        path,
     )
+
+
+def add_cron_time_zone_schema(content: str, path: Path) -> str:
+    if '"cron_time_zone": schema.StringAttribute{' in content:
+        return content
+
+    lines = content.splitlines(keepends=True)
+    matches = [index for index, line in enumerate(lines) if '"cron_expression": schema.StringAttribute{' in line]
+    if len(matches) != 1:
+        fail(path, f"Expected exactly 1 cron_expression schema attribute; found {len(matches)}")
+
+    start = matches[0]
+    end = None
+    for index in range(start + 1, len(lines)):
+        if lines[index].strip() == "},":
+            end = index
+            break
+    if end is None:
+        fail(path, "Could not find end of cron_expression schema attribute")
+
+    indent = lines[start].split('"cron_expression"')[0]
+    insertion = [
+        f'{indent}"cron_time_zone": schema.StringAttribute{{\n',
+        f"{indent}\tComputed: true,\n",
+        f"{indent}}},\n",
+    ]
+    return "".join(lines[: end + 1] + insertion + lines[end + 1 :])
 
 
 def patch_data_source_schema(content: str, path: Path) -> str:
-    if '"cron_time_zone": schema.StringAttribute{' in content:
-        return content
-    return content.replace(
-        '''"cron_expression": schema.StringAttribute{
-Computed: true,
-},''',
-        '''"cron_expression": schema.StringAttribute{
-Computed: true,
-},
-"cron_time_zone": schema.StringAttribute{
-Computed: true,
-},''',
-        1,
-    )
+    return add_cron_time_zone_schema(content, path)
 
 
 def patch_type(content: str, path: Path) -> str:
-    if "CronTimeZone" in content:
-        return content
-    return content.replace(
+    return replace_if_missing(
+        content,
+        "CronTimeZone",
         "\tCronExpression types.String `tfsdk:\"cron_expression\"`\n",
         "\tCronExpression types.String `tfsdk:\"cron_expression\"`\n\tCronTimeZone   types.String `tfsdk:\"cron_time_zone\"`\n",
-        1,
+        path,
     )
 
 

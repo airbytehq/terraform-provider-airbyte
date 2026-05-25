@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"sync"
 	"time"
 
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
@@ -20,19 +19,19 @@ import (
 
 type providerRuntimeConfig struct {
 	ConfigAPIRoot string
+	HTTPClient    *http.Client
 }
 
-var providerRuntimeConfigs sync.Map
-
-func storeProviderRuntimeConfig(client *sdk.SDK, config providerRuntimeConfig) {
-	providerRuntimeConfigs.Store(client, config)
+type configuredProviderData struct {
+	Client        *sdk.SDK
+	RuntimeConfig providerRuntimeConfig
 }
 
-func getProviderRuntimeConfig(client *sdk.SDK) providerRuntimeConfig {
-	if config, ok := providerRuntimeConfigs.Load(client); ok {
-		return config.(providerRuntimeConfig)
+func connectionResourceProviderData(data any) (*sdk.SDK, providerRuntimeConfig, bool) {
+	if data, ok := data.(*configuredProviderData); ok && data.Client != nil {
+		return data.Client, data.RuntimeConfig, true
 	}
-	return providerRuntimeConfig{}
+	return nil, providerRuntimeConfig{}, false
 }
 
 func deriveConfigAPIRoot(publicAPIRoot string) string {
@@ -70,7 +69,7 @@ func stringPointerValue(value string) *string {
 	return &value
 }
 
-func cronScheduleParts(schedule *tfTypes.AirbyteAPIConnectionSchedule) (string, string, diag.Diagnostics) {
+func cronScheduleParts(schedule *tfTypes.AirbyteAPIConnectionSchedule, configuredCronTimeZone string) (string, string, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if schedule == nil || schedule.ScheduleType.ValueString() != "cron" {
 		return "", "", diags
@@ -83,7 +82,9 @@ func cronScheduleParts(schedule *tfTypes.AirbyteAPIConnectionSchedule) (string, 
 
 	cleanCronExpression, suffixTimeZone := stripCronTimeZone(cronExpression)
 	cronTimeZone := suffixTimeZone
-	if !schedule.CronTimeZone.IsUnknown() && !schedule.CronTimeZone.IsNull() && schedule.CronTimeZone.ValueString() != "" {
+	if configuredCronTimeZone != "" {
+		cronTimeZone = configuredCronTimeZone
+	} else if !schedule.CronTimeZone.IsUnknown() && !schedule.CronTimeZone.IsNull() && schedule.CronTimeZone.ValueString() != "" {
 		cronTimeZone = schedule.CronTimeZone.ValueString()
 	}
 	if cronTimeZone == "" {
@@ -146,6 +147,13 @@ func applyCronScheduleDataSourceResponse(schedule *tfTypes.ConnectionScheduleRes
 	schedule.CronTimeZone = types.StringPointerValue(cronTimeZone)
 }
 
+func configuredCronTimeZone(schedule *tfTypes.AirbyteAPIConnectionSchedule) string {
+	if schedule == nil || schedule.CronTimeZone.IsUnknown() || schedule.CronTimeZone.IsNull() {
+		return ""
+	}
+	return schedule.CronTimeZone.ValueString()
+}
+
 type configConnectionScheduleData struct {
 	Cron *configConnectionScheduleDataCron `json:"cron,omitempty"`
 }
@@ -160,10 +168,10 @@ type configConnectionRead struct {
 	ScheduleData *configConnectionScheduleData `json:"scheduleData,omitempty"`
 }
 
-func (r *ConnectionResource) applyCronTimeZone(ctx context.Context, data *ConnectionResourceModel, connectionID string, rawResponse *http.Response) diag.Diagnostics {
+func (r *ConnectionResource) applyCronTimeZone(ctx context.Context, data *ConnectionResourceModel, connectionID string, rawResponse *http.Response, plannedCronTimeZone string) diag.Diagnostics {
 	var diags diag.Diagnostics
 
-	cronExpression, cronTimeZone, scheduleDiags := cronScheduleParts(data.Schedule)
+	cronExpression, cronTimeZone, scheduleDiags := cronScheduleParts(data.Schedule, plannedCronTimeZone)
 	diags.Append(scheduleDiags...)
 	if diags.HasError() || cronExpression == "" || cronTimeZone == "" || cronTimeZone == "UTC" {
 		return diags
@@ -199,7 +207,7 @@ func (r *ConnectionResource) applyCronTimeZone(ctx context.Context, data *Connec
 	return diags
 }
 
-func (r *ConnectionResource) refreshCronTimeZone(ctx context.Context, data *ConnectionResourceModel, rawResponse *http.Response) diag.Diagnostics {
+func (r *ConnectionResource) refreshCronTimeZone(ctx context.Context, data *ConnectionResourceModel, rawResponse *http.Response, previousCronTimeZone string) diag.Diagnostics {
 	var diags diag.Diagnostics
 	if data == nil || data.ConnectionID.IsNull() || data.ConnectionID.IsUnknown() {
 		return diags
@@ -207,6 +215,10 @@ func (r *ConnectionResource) refreshCronTimeZone(ctx context.Context, data *Conn
 
 	authHeader := authorizationHeader(rawResponse)
 	if authHeader == "" {
+		if previousCronTimeZone != "" {
+			preserveCronTimeZone(data, previousCronTimeZone)
+			diags.AddWarning("Unable to refresh cron time zone", "The Airbyte API response did not include an Authorization header to reuse for the internal config API request.")
+		}
 		return diags
 	}
 
@@ -214,6 +226,10 @@ func (r *ConnectionResource) refreshCronTimeZone(ctx context.Context, data *Conn
 
 	var out configConnectionRead
 	if err := r.postConfigAPI(ctx, "/v1/connections/get", authHeader, body, &out); err != nil {
+		if previousCronTimeZone != "" {
+			preserveCronTimeZone(data, previousCronTimeZone)
+			diags.AddWarning("Unable to refresh cron time zone", err.Error())
+		}
 		return diags
 	}
 
@@ -229,6 +245,13 @@ func (r *ConnectionResource) refreshCronTimeZone(ctx context.Context, data *Conn
 	return diags
 }
 
+func preserveCronTimeZone(data *ConnectionResourceModel, cronTimeZone string) {
+	if data.Schedule == nil {
+		data.Schedule = &tfTypes.AirbyteAPIConnectionSchedule{}
+	}
+	data.Schedule.CronTimeZone = types.StringValue(cronTimeZone)
+}
+
 func authorizationHeader(response *http.Response) string {
 	if response == nil || response.Request == nil {
 		return ""
@@ -237,9 +260,13 @@ func authorizationHeader(response *http.Response) string {
 }
 
 func (r *ConnectionResource) postConfigAPI(ctx context.Context, path string, authHeader string, body any, out any) error {
-	config := getProviderRuntimeConfig(r.client)
+	config := r.config
 	if config.ConfigAPIRoot == "" {
 		return fmt.Errorf("config_api_root is not configured")
+	}
+	httpClient := config.HTTPClient
+	if httpClient == nil {
+		httpClient = &http.Client{Timeout: 60 * time.Second}
 	}
 
 	endpoint, err := url.JoinPath(config.ConfigAPIRoot, path)
@@ -260,7 +287,7 @@ func (r *ConnectionResource) postConfigAPI(ctx context.Context, path string, aut
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", authHeader)
 
-	response, err := http.DefaultClient.Do(request)
+	response, err := httpClient.Do(request)
 	if err != nil {
 		return err
 	}

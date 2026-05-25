@@ -42,6 +42,7 @@ func NewConnectionResource() resource.Resource {
 type ConnectionResource struct {
 	// Provider configured SDK client.
 	client *sdk.SDK
+	config providerRuntimeConfig
 }
 
 // ConnectionResourceModel describes the resource data model.
@@ -745,18 +746,19 @@ func (r *ConnectionResource) Configure(ctx context.Context, req resource.Configu
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.SDK)
+	client, config, ok := connectionResourceProviderData(req.ProviderData)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *configuredProviderData, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
 	}
 
 	r.client = client
+	r.config = config
 }
 
 func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -803,8 +805,9 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	plannedCronTimeZone := configuredCronTimeZone(data.Schedule)
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
-	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse, plannedCronTimeZone)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -868,8 +871,9 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	previousCronTimeZone := configuredCronTimeZone(data.Schedule)
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
-	resp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse)...)
+	resp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse, previousCronTimeZone)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -919,8 +923,9 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	plannedCronTimeZone := configuredCronTimeZone(data.Schedule)
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
-	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse, plannedCronTimeZone)...)
 
 	if resp.Diagnostics.HasError() {
 		return
