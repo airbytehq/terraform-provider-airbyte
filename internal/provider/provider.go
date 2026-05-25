@@ -28,6 +28,7 @@ type AirbyteProvider struct {
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
 	version string
+	config  providerRuntimeConfig
 }
 
 // AirbyteProviderModel describes the provider data model.
@@ -165,18 +166,15 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	if configAPIRoot == "" {
 		configAPIRoot = deriveConfigAPIRoot(serverUrl)
 	}
-	providerData := &configuredProviderData{
-		Client: client,
-		RuntimeConfig: providerRuntimeConfig{
-			ConfigAPIRoot: configAPIRoot,
-			HTTPClient:    httpClient,
-		},
+	p.config = providerRuntimeConfig{
+		ConfigAPIRoot: configAPIRoot,
+		HTTPClient:    httpClient,
 	}
 	resp.ActionData = client
 	resp.DataSourceData = client
 	resp.EphemeralResourceData = client
 	resp.ListResourceData = client
-	resp.ResourceData = providerData
+	resp.ResourceData = client
 }
 
 func (p *AirbyteProvider) Functions(_ context.Context) []func() function.Function {
@@ -189,7 +187,11 @@ func (p *AirbyteProvider) Actions(_ context.Context) []func() action.Action {
 
 func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewConnectionResource,
+		func() resource.Resource {
+			resource := NewConnectionResource().(*ConnectionResource)
+			resource.config = p.config
+			return resource
+		},
 		NewDeclarativeSourceDefinitionResource,
 		NewDestinationResource,
 		NewDestinationDefinitionResource,

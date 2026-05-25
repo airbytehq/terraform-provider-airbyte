@@ -12,7 +12,6 @@ import (
 	"time"
 
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -20,18 +19,6 @@ import (
 type providerRuntimeConfig struct {
 	ConfigAPIRoot string
 	HTTPClient    *http.Client
-}
-
-type configuredProviderData struct {
-	Client        *sdk.SDK
-	RuntimeConfig providerRuntimeConfig
-}
-
-func connectionResourceProviderData(data any) (*sdk.SDK, providerRuntimeConfig, bool) {
-	if data, ok := data.(*configuredProviderData); ok && data.Client != nil {
-		return data.Client, data.RuntimeConfig, true
-	}
-	return nil, providerRuntimeConfig{}, false
 }
 
 func deriveConfigAPIRoot(publicAPIRoot string) string {

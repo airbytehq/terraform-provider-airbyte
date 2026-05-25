@@ -66,6 +66,24 @@ def patch_file(path: Path, patcher) -> bool:
 
 
 def patch_provider_go(content: str, path: Path) -> str:
+    content = replace_if_missing(
+        content,
+        "config  providerRuntimeConfig",
+        '''type AirbyteProvider struct {
+	// version is set to the provider version on release, "dev" when the
+	// provider is built and ran locally, and "test" when running acceptance
+	// testing.
+	version string
+}''',
+        '''type AirbyteProvider struct {
+	// version is set to the provider version on release, "dev" when the
+	// provider is built and ran locally, and "test" when running acceptance
+	// testing.
+	version string
+	config  providerRuntimeConfig
+}''',
+        path,
+    )
     content = replace_all_if_missing(
         content,
         "ConfigAPIRoot types.String `tfsdk:\"config_api_root\"`",
@@ -98,9 +116,16 @@ def patch_provider_go(content: str, path: Path) -> str:
     )
     content = replace_if_missing(
         content,
-        "providerData := &configuredProviderData{",
+        "p.config = providerRuntimeConfig{",
         "\tresp.ResourceData = client\n",
-        "\tproviderData := &configuredProviderData{\n\t\tClient: client,\n\t\tRuntimeConfig: providerRuntimeConfig{\n\t\t\tConfigAPIRoot: configAPIRoot,\n\t\t\tHTTPClient:    httpClient,\n\t\t},\n\t}\n\tresp.ResourceData = providerData\n",
+        "\tp.config = providerRuntimeConfig{\n\t\tConfigAPIRoot: configAPIRoot,\n\t\tHTTPClient:    httpClient,\n\t}\n\tresp.ResourceData = client\n",
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "resource.config = p.config",
+        "\t\tNewConnectionResource,\n",
+        "\t\tfunc() resource.Resource {\n\t\t\tresource := NewConnectionResource().(*ConnectionResource)\n\t\t\tresource.config = p.config\n\t\t\treturn resource\n\t\t},\n",
         path,
     )
 
@@ -121,24 +146,6 @@ def patch_connection_resource_go(content: str, path: Path) -> str:
         "type ConnectionResource struct {\n\t// Provider configured SDK client.\n\tclient *sdk.SDK\n}",
         "type ConnectionResource struct {\n\t// Provider configured SDK client.\n\tclient *sdk.SDK\n\tconfig providerRuntimeConfig\n}",
         path,
-    )
-    content = replace_if_missing(
-        content,
-        "connectionResourceProviderData(req.ProviderData)",
-        "client, ok := req.ProviderData.(*sdk.SDK)",
-        "client, config, ok := connectionResourceProviderData(req.ProviderData)",
-        path,
-    )
-    content = replace_if_missing(
-        content,
-        "r.config = config",
-        "\tr.client = client\n",
-        "\tr.client = client\n\tr.config = config\n",
-        path,
-    )
-    content = content.replace(
-        'fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData)',
-        'fmt.Sprintf("Expected *configuredProviderData, got: %T. Please report this issue to the provider developers.", req.ProviderData)',
     )
     content = replace_if_missing(
         content,
@@ -260,6 +267,19 @@ def patch_connection_resource_sdk_go(content: str, path: Path) -> str:
         "applyCronScheduleResponse(r.Schedule, resp.Schedule.CronExpression, nil)",
         "\tr.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)\n",
         "\tapplyCronScheduleResponse(r.Schedule, resp.Schedule.CronExpression, nil)\n",
+        path,
+    )
+    content = replace_if_missing(
+        content,
+        "cronExpressionForPublicAPI(r.Schedule)",
+        """		cronExpression := new(string)
+		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
+			*cronExpression = r.Schedule.CronExpression.ValueString()
+		} else {
+			cronExpression = nil
+		}
+""",
+        "",
         path,
     )
     content = replace_all_if_missing(

@@ -746,19 +746,18 @@ func (r *ConnectionResource) Configure(ctx context.Context, req resource.Configu
 		return
 	}
 
-	client, config, ok := connectionResourceProviderData(req.ProviderData)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *configuredProviderData, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
 	}
 
 	r.client = client
-	r.config = config
 }
 
 func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
