@@ -33,14 +33,14 @@ type AirbyteProvider struct {
 
 // AirbyteProviderModel describes the provider data model.
 type AirbyteProviderModel struct {
-	BearerAuth    types.String `tfsdk:"bearer_auth"`
-	ClientID      types.String `tfsdk:"client_id"`
-	ClientSecret  types.String `tfsdk:"client_secret"`
+	BearerAuth   types.String `tfsdk:"bearer_auth"`
+	ClientID     types.String `tfsdk:"client_id"`
+	ClientSecret types.String `tfsdk:"client_secret"`
 	Password      types.String `tfsdk:"password"`
 	ConfigAPIRoot types.String `tfsdk:"config_api_root"`
-	ServerURL     types.String `tfsdk:"server_url"`
-	TokenURL      types.String `tfsdk:"token_url"`
-	Username      types.String `tfsdk:"username"`
+	ServerURL    types.String `tfsdk:"server_url"`
+	TokenURL     types.String `tfsdk:"token_url"`
+	Username     types.String `tfsdk:"username"`
 }
 
 func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -166,14 +166,14 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	if configAPIRoot == "" {
 		configAPIRoot = deriveConfigAPIRoot(serverUrl)
 	}
-	p.config = providerRuntimeConfig{
-		ConfigAPIRoot: configAPIRoot,
-		HTTPClient:    httpClient,
-	}
 	resp.ActionData = client
 	resp.DataSourceData = client
 	resp.EphemeralResourceData = client
 	resp.ListResourceData = client
+	p.config = providerRuntimeConfig{
+		ConfigAPIRoot: configAPIRoot,
+		HTTPClient:    httpClient,
+	}
 	resp.ResourceData = client
 }
 

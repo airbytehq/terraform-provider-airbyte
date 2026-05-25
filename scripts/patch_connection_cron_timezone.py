@@ -88,7 +88,7 @@ def patch_provider_go(content: str, path: Path) -> str:
         content,
         "ConfigAPIRoot types.String `tfsdk:\"config_api_root\"`",
         "\tPassword     types.String `tfsdk:\"password\"`\n",
-        "\tPassword      types.String `tfsdk:\"password\"`\n\tConfigAPIRoot types.String `tfsdk:\"config_api_root\"`\n",
+        "\tPassword     types.String `tfsdk:\"password\"`\n\tConfigAPIRoot types.String `tfsdk:\"config_api_root\"`\n",
     )
     content = replace_if_missing(
         content,
@@ -118,7 +118,7 @@ def patch_provider_go(content: str, path: Path) -> str:
         content,
         "p.config = providerRuntimeConfig{",
         "\tresp.ResourceData = client\n",
-        "\tp.config = providerRuntimeConfig{\n\t\tConfigAPIRoot: configAPIRoot,\n\t\tHTTPClient:    httpClient,\n\t}\n\tresp.ResourceData = client\n",
+        "\tresp.ActionData = client\n\tresp.DataSourceData = client\n\tresp.EphemeralResourceData = client\n\tresp.ListResourceData = client\n\tp.config = providerRuntimeConfig{\n\t\tConfigAPIRoot: configAPIRoot,\n\t\tHTTPClient:    httpClient,\n\t}\n\tresp.ResourceData = client\n",
         path,
     )
     content = replace_if_missing(
