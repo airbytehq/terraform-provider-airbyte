@@ -99,10 +99,7 @@ Pre-releases let you publish a provider version for testing without making it th
    ```
    /pre-release version=v1.3.0-rc.1
    ```
-   This builds from the PR's head branch. You can override the ref:
-   ```
-   /pre-release version=v1.3.0-rc.1 ref=some-branch
-   ```
+   This builds from the PR's head branch.
 
 2. **Manual workflow dispatch** (from the [Actions tab](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/pre-release-command.yml)):
    - **version** (required): e.g. `v1.3.0-rc.1`, `v1.3.0-beta.1`. Must be valid semver with a pre-release suffix.
