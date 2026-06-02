@@ -21,13 +21,14 @@
 #     command on a PR, this defaults to the PR's head branch.
 #
 # How it works:
-#   1. Validates that `version` contains a pre-release suffix (safety check).
+#   1. Validates that `version` is valid semver with a pre-release suffix (safety check).
 #   2. Checks out the specified ref.
-#   3. Creates and pushes a git tag for the pre-release version.
-#   4. Runs GoReleaser with .goreleaser.prerelease.yml, which publishes a
+#   3. Fails if the version has already been published (existing release or tag).
+#   4. Creates and pushes a git tag for the pre-release version.
+#   5. Runs GoReleaser with .goreleaser.prerelease.yml, which publishes a
 #      non-draft, prerelease GitHub Release with GPG-signed cross-platform
 #      binaries and the terraform-registry-manifest.json.
-#   5. The Terraform Registry picks up the prerelease automatically.
+#   6. The Terraform Registry picks up the prerelease automatically.
 #
 # This workflow does NOT conflict with the Release Drafter workflow:
 #   - Release Drafter → draft releases for stable versions
@@ -129,10 +130,12 @@ jobs:
             exit 1
           fi
 
-          # Ensure version contains a pre-release suffix (hyphen after the semver core)
-          # Matches: v1.2.3-rc.1, v1.2.3-beta.1, v1.2.3-alpha.1, etc.
-          if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
-            echo "::error::Version must contain a pre-release suffix (e.g. -rc.1, -beta.1). Got: $VERSION"
+          # Strict semver validation (no leading zeros, valid pre-release identifiers)
+          # Per semver.org: MAJOR.MINOR.PATCH-PRERELEASE where each numeric part has no leading zeros,
+          # and pre-release is dot-separated alphanumeric identifiers (numeric ones must not have leading zeros).
+          SEMVER_RE='^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-(([0-9A-Za-z-]+\.)*[0-9A-Za-z-]+)$'
+          if [[ ! "$VERSION" =~ $SEMVER_RE ]]; then
+            echo "::error::Invalid semver or missing pre-release suffix. Expected format: vMAJOR.MINOR.PATCH-PRERELEASE (e.g. v1.3.0-rc.1). Got: $VERSION"
             echo "::error::This workflow is for pre-releases only. Use the Release Drafter for stable releases."
             exit 1
           fi
@@ -158,17 +161,29 @@ jobs:
           gpg_private_key: ${{ secrets.TERRAFORM_GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.TERRAFORM_GPG_PASSPHRASE }}
 
-      # ── Tag the commit ──────────────────────────────────────────────
-      - name: Create and push tag
+      # ── Check if version is already published ─────────────────────
+      - name: Check for existing release or tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION="${{ inputs.version }}"
 
-          # Fail early if the tag already exists on the remote
+          # Fail if a GitHub Release already exists for this version
+          if gh release view "$VERSION" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            echo "::error::Release $VERSION already exists. Use a different version or delete the existing release first."
+            exit 1
+          fi
+
+          # Fail if the tag already exists on the remote (even without a release)
           if git ls-remote --tags origin "refs/tags/$VERSION" | grep -q .; then
             echo "::error::Tag $VERSION already exists on the remote. Use a different version."
             exit 1
           fi
 
+      # ── Tag the commit ──────────────────────────────────────────────
+      - name: Create and push tag
+        run: |
+          VERSION="${{ inputs.version }}"
           git tag -a "$VERSION" -m "Pre-release $VERSION"
           git push origin "$VERSION"
 
