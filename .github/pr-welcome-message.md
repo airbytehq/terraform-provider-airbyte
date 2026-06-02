@@ -16,7 +16,6 @@ Your contribution is appreciated. Here are some helpful tips and resources.
 ### Pre-Release Commands
 
 - `/pre-release version=v1.3.0-rc.1` - Build and publish a pre-release from this PR's branch
-- `/pre-release version=v1.3.0-rc.1 ref=some-branch` - Build a pre-release from a specific branch
 
 Pre-releases are published to the Terraform Registry but are **not** the default version. See [CONTRIBUTING.md — Pre-Release Process](CONTRIBUTING.md#pre-release-process) for details.
 
