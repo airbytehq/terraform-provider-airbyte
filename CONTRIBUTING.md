@@ -89,6 +89,42 @@ Releases use a draft-based workflow:
 
 **Important**: Do not check "Set as a pre-release" unless you want to delay Terraform Registry sync.
 
+### Pre-Release Process
+
+Pre-releases let you publish a provider version for testing without making it the default on the Terraform Registry. Use this to validate community contributions or new features before a stable release.
+
+**Two ways to trigger a pre-release:**
+
+1. **Slash command on a PR** (recommended for PR-based work):
+   ```
+   /pre-release version=v1.3.0-rc.1
+   ```
+   This builds from the PR's head branch. You can override the ref:
+   ```
+   /pre-release version=v1.3.0-rc.1 ref=some-branch
+   ```
+
+2. **Manual workflow dispatch** (from the [Actions tab](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/pre-release-command.yml)):
+   - **version** (required): e.g. `v1.3.0-rc.1`, `v1.3.0-beta.1`. Must be valid semver with a pre-release suffix.
+   - **ref** (optional, default: `main`): branch, tag, or commit SHA to build from.
+
+**Safety checks** — the workflow will fail if:
+- The version is not valid semver or is missing a pre-release suffix (e.g. `v1.3.0` is rejected)
+- A GitHub Release or git tag already exists for the version
+
+**Using a pre-release in Terraform:**
+
+```hcl
+terraform {
+  required_providers {
+    airbyte = {
+      source  = "airbytehq/airbyte"
+      version = "1.3.0-rc.1"  # no 'v' prefix in Terraform
+    }
+  }
+}
+```
+
 ### Maintenance Branches and Backporting
 
 Following the [HashiCorp convention](https://github.com/terraform-providers/terraform-provider-aws/pull/14177) used by Terraform providers such as `terraform-provider-aws`, this project uses `release/` branches for maintaining older major or minor versions:
@@ -176,6 +212,8 @@ uvx --from=poethepoet poe <task-name>
 | `scripts/generate_terraform_spec.py` | Generates the Terraform-specific OpenAPI spec from upstream sources |
 | `overlays/terraform_speakeasy.yaml` | Speakeasy overlay for Terraform-specific customizations |
 | `.github/workflows/release-drafter.yml` | Creates draft releases with pre-built assets |
+| `.github/workflows/pre-release-command.yml` | Builds and publishes pre-release versions for testing |
+| `.goreleaser.prerelease.yml` | GoReleaser config for non-draft pre-releases |
 | `.github/workflows/generate-command.yml` | Triggers provider regeneration via Speakeasy |
 
 ### End-to-End Testing with CI Artifacts
