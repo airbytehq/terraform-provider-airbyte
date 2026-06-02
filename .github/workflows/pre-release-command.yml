@@ -4,15 +4,21 @@
 # Pre-releases are visible on the Terraform Registry but are NOT the default
 # version, so existing users are unaffected.
 #
-# Usage (from the Actions tab → "Pre-Release" → "Run workflow"):
+# Triggers:
+# - Manual workflow_dispatch: From the Actions tab
+# - Slash command: `/pre-release version=v1.3.0-rc.1` on a PR comment
+#   (optionally: `/pre-release version=v1.3.0-rc.1 ref=my-branch`)
 #
-#   version:  The pre-release version tag (REQUIRED).
-#             Must contain a pre-release suffix: -rc.N, -beta.N, -alpha.N, etc.
-#             Examples: v1.3.0-rc.1, v1.3.0-beta.1, v2.0.0-alpha.3
+# Inputs:
 #
-#   ref:      The branch, tag, or commit SHA to build from (default: main).
-#             Use a feature branch name to test unreleased code, or a PR
-#             merge-commit SHA for validating community contributions.
+#   version (REQUIRED): The pre-release version tag.
+#     Must contain a pre-release suffix: -rc.N, -beta.N, -alpha.N, etc.
+#     Examples: v1.3.0-rc.1, v1.3.0-beta.1, v2.0.0-alpha.3
+#
+#   ref (optional, default: main): The branch, tag, or commit SHA to build from.
+#     Use a feature branch name to test unreleased code, or a PR merge-commit
+#     SHA for validating community contributions. When triggered via slash
+#     command on a PR, this defaults to the PR's head branch.
 #
 # How it works:
 #   1. Validates that `version` contains a pre-release suffix (safety check).
@@ -54,6 +60,18 @@ on:
         required: false
         default: 'main'
         type: string
+      pr:
+        description: 'PR number (for slash command triggers)'
+        required: false
+        type: string
+      comment-id:
+        description: 'Comment ID (for slash command triggers)'
+        required: false
+        type: string
+
+concurrency:
+  group: pre-release-${{ inputs.version }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -63,8 +81,43 @@ jobs:
     name: Build & Publish Pre-Release
     permissions:
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest-16core
     steps:
+      # ── Slash command: post starting comment ────────────────────────
+      - name: Authenticate as GitHub App
+        if: ${{ inputs.pr != '' }}
+        uses: actions/create-github-app-token@v3
+        id: get-app-token
+        with:
+          app-id: ${{ secrets.OCTAVIA_BOT_APP_ID }}
+          private-key: ${{ secrets.OCTAVIA_BOT_PRIVATE_KEY }}
+
+      - name: Post starting comment
+        if: ${{ inputs.pr != '' }}
+        id: start-comment
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ steps.get-app-token.outputs.token }}
+          issue-number: ${{ inputs.pr }}
+          comment-id: ${{ inputs.comment-id || '' }}
+          body: |
+            > **Pre-Release Job Info**
+            >
+            > Building pre-release `${{ inputs.version }}` from ref `${{ inputs.ref || 'PR head branch' }}`.
+
+            > Job started... [Check job output.](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+      # ── Resolve ref from PR if not explicitly provided ──────────────
+      - name: Resolve PR head branch
+        if: ${{ inputs.pr != '' && inputs.ref == 'main' }}
+        id: resolve-ref
+        env:
+          GH_TOKEN: ${{ steps.get-app-token.outputs.token || secrets.GITHUB_TOKEN }}
+        run: |
+          PR_HEAD=$(gh pr view "${{ inputs.pr }}" --repo "${{ github.repository }}" --json headRefName -q '.headRefName')
+          echo "ref=$PR_HEAD" >> "$GITHUB_OUTPUT"
+
       # ── Validate version input ──────────────────────────────────────
       - name: Validate pre-release version
         run: |
@@ -89,7 +142,7 @@ jobs:
       # ── Checkout ────────────────────────────────────────────────────
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ steps.resolve-ref.outputs.ref || inputs.ref }}
           fetch-depth: 0
 
       - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
@@ -109,7 +162,14 @@ jobs:
       - name: Create and push tag
         run: |
           VERSION="${{ inputs.version }}"
-          git tag "$VERSION"
+
+          # Fail early if the tag already exists on the remote
+          if git ls-remote --tags origin "refs/tags/$VERSION" | grep -q .; then
+            echo "::error::Tag $VERSION already exists on the remote. Use a different version."
+            exit 1
+          fi
+
+          git tag -a "$VERSION" -m "Pre-release $VERSION"
           git push origin "$VERSION"
 
       # ── Build and publish with GoReleaser ───────────────────────────
@@ -123,3 +183,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
           GORELEASER_CURRENT_TAG: ${{ inputs.version }}
+
+      # ── Slash command: post result comment ──────────────────────────
+      - name: Post success comment
+        if: ${{ always() && inputs.pr != '' }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ steps.get-app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          issue-number: ${{ inputs.pr }}
+          body: |
+            > **Pre-Release Result:** ${{ job.status == 'success' && '✅ Published' || '❌ Failed' }}
+            >
+            > Version: `${{ inputs.version }}`
+            > Ref: `${{ steps.resolve-ref.outputs.ref || inputs.ref }}`
+            > [View run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            ${{ job.status == 'success' && format('> [View release]({0}/{1}/releases/tag/{2})', github.server_url, github.repository, inputs.version) || '' }}
