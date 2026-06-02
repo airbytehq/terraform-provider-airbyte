@@ -208,10 +208,8 @@ uvx --from=poethepoet poe <task-name>
 |------|---------|
 | `scripts/generate_terraform_spec.py` | Generates the Terraform-specific OpenAPI spec from upstream sources |
 | `overlays/terraform_speakeasy.yaml` | Speakeasy overlay for Terraform-specific customizations |
-| `.github/workflows/release-drafter.yml` | Creates draft releases with pre-built assets |
-| `.github/workflows/pre-release-command.yml` | Builds and publishes pre-release versions for testing |
-| `.goreleaser.prerelease.yml` | GoReleaser config for non-draft pre-releases |
-| `.github/workflows/generate-command.yml` | Triggers provider regeneration via Speakeasy |
+| `.github/workflows/*` | CI/CD workflows (release, pre-release, generation, testing) |
+| `.goreleaser*.yml` | GoReleaser configs (stable and pre-release) |
 
 ### End-to-End Testing with CI Artifacts
 
