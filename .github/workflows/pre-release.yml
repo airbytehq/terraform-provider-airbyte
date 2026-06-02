@@ -1,0 +1,125 @@
+# Pre-Release Workflow
+#
+# Builds and publishes a pre-release version of the Terraform provider.
+# Pre-releases are visible on the Terraform Registry but are NOT the default
+# version, so existing users are unaffected.
+#
+# Usage (from the Actions tab → "Pre-Release" → "Run workflow"):
+#
+#   version:  The pre-release version tag (REQUIRED).
+#             Must contain a pre-release suffix: -rc.N, -beta.N, -alpha.N, etc.
+#             Examples: v1.3.0-rc.1, v1.3.0-beta.1, v2.0.0-alpha.3
+#
+#   ref:      The branch, tag, or commit SHA to build from (default: main).
+#             Use a feature branch name to test unreleased code, or a PR
+#             merge-commit SHA for validating community contributions.
+#
+# How it works:
+#   1. Validates that `version` contains a pre-release suffix (safety check).
+#   2. Checks out the specified ref.
+#   3. Creates and pushes a git tag for the pre-release version.
+#   4. Runs GoReleaser with .goreleaser.prerelease.yml, which publishes a
+#      non-draft, prerelease GitHub Release with GPG-signed cross-platform
+#      binaries and the terraform-registry-manifest.json.
+#   5. The Terraform Registry picks up the prerelease automatically.
+#
+# This workflow does NOT conflict with the Release Drafter workflow:
+#   - Release Drafter → draft releases for stable versions
+#   - This workflow   → non-draft pre-releases for testing
+#
+# To install a pre-release in Terraform:
+#
+#   terraform {
+#     required_providers {
+#       airbyte = {
+#         source  = "airbytehq/airbyte"
+#         version = "1.3.0-rc.1"  # note: no 'v' prefix in Terraform
+#       }
+#     }
+#   }
+
+name: Pre-Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: >-
+          Pre-release version tag (e.g. v1.3.0-rc.1, v1.3.0-beta.1).
+          MUST contain a pre-release suffix.
+        required: true
+        type: string
+      ref:
+        description: 'Branch, tag, or commit SHA to build from'
+        required: false
+        default: 'main'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  pre_release:
+    name: Build & Publish Pre-Release
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest-16core
+    steps:
+      # ── Validate version input ──────────────────────────────────────
+      - name: Validate pre-release version
+        run: |
+          VERSION="${{ inputs.version }}"
+
+          # Ensure version starts with 'v'
+          if [[ ! "$VERSION" =~ ^v ]]; then
+            echo "::error::Version must start with 'v' (e.g. v1.3.0-rc.1). Got: $VERSION"
+            exit 1
+          fi
+
+          # Ensure version contains a pre-release suffix (hyphen after the semver core)
+          # Matches: v1.2.3-rc.1, v1.2.3-beta.1, v1.2.3-alpha.1, etc.
+          if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
+            echo "::error::Version must contain a pre-release suffix (e.g. -rc.1, -beta.1). Got: $VERSION"
+            echo "::error::This workflow is for pre-releases only. Use the Release Drafter for stable releases."
+            exit 1
+          fi
+
+          echo "Pre-release version validated: $VERSION"
+
+      # ── Checkout ────────────────────────────────────────────────────
+      - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      # ── GPG signing (same setup as release-drafter.yml) ─────────────
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5.2.0
+        id: import_gpg
+        with:
+          gpg_private_key: ${{ secrets.TERRAFORM_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.TERRAFORM_GPG_PASSPHRASE }}
+
+      # ── Tag the commit ──────────────────────────────────────────────
+      - name: Create and push tag
+        run: |
+          VERSION="${{ inputs.version }}"
+          git tag "$VERSION"
+          git push origin "$VERSION"
+
+      # ── Build and publish with GoReleaser ───────────────────────────
+      # Uses .goreleaser.prerelease.yml which sets draft=false, prerelease=true.
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
+        with:
+          args: release --clean --config .goreleaser.prerelease.yml
+          version: latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+          GORELEASER_CURRENT_TAG: ${{ inputs.version }}
