@@ -24,38 +24,38 @@ func (l ListSourcesRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListSourcesRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ListSourcesRequest) GetWorkspaceIds() []string {
-	if o == nil {
+func (l *ListSourcesRequest) GetWorkspaceIds() []string {
+	if l == nil {
 		return nil
 	}
-	return o.WorkspaceIds
+	return l.WorkspaceIds
 }
 
-func (o *ListSourcesRequest) GetIncludeDeleted() *bool {
-	if o == nil {
+func (l *ListSourcesRequest) GetIncludeDeleted() *bool {
+	if l == nil {
 		return nil
 	}
-	return o.IncludeDeleted
+	return l.IncludeDeleted
 }
 
-func (o *ListSourcesRequest) GetLimit() *int {
-	if o == nil {
+func (l *ListSourcesRequest) GetLimit() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Limit
+	return l.Limit
 }
 
-func (o *ListSourcesRequest) GetOffset() *int {
-	if o == nil {
+func (l *ListSourcesRequest) GetOffset() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Offset
+	return l.Offset
 }
 
 type ListSourcesResponse struct {
@@ -69,30 +69,30 @@ type ListSourcesResponse struct {
 	SourcesResponse *shared.SourcesResponse
 }
 
-func (o *ListSourcesResponse) GetContentType() string {
-	if o == nil {
+func (l *ListSourcesResponse) GetContentType() string {
+	if l == nil {
 		return ""
 	}
-	return o.ContentType
+	return l.ContentType
 }
 
-func (o *ListSourcesResponse) GetStatusCode() int {
-	if o == nil {
+func (l *ListSourcesResponse) GetStatusCode() int {
+	if l == nil {
 		return 0
 	}
-	return o.StatusCode
+	return l.StatusCode
 }
 
-func (o *ListSourcesResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (l *ListSourcesResponse) GetRawResponse() *http.Response {
+	if l == nil {
 		return nil
 	}
-	return o.RawResponse
+	return l.RawResponse
 }
 
-func (o *ListSourcesResponse) GetSourcesResponse() *shared.SourcesResponse {
-	if o == nil {
+func (l *ListSourcesResponse) GetSourcesResponse() *shared.SourcesResponse {
+	if l == nil {
 		return nil
 	}
-	return o.SourcesResponse
+	return l.SourcesResponse
 }

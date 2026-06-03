@@ -11,9 +11,15 @@ resource "airbyte_connection" "my_connection" {
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
             mapper_configuration = {
-              field_renaming = {
-                new_field_name      = "...my_new_field_name..."
-                original_field_name = "...my_original_field_name..."
+              encryption = {
+                aes = {
+                  algorithm         = "AES"
+                  field_name_suffix = "...my_field_name_suffix..."
+                  key               = "...my_key..."
+                  mode              = "CBC"
+                  padding           = "PKCS5Padding"
+                  target_field      = "...my_target_field..."
+                }
               }
             }
             type = "field-renaming"
@@ -40,10 +46,10 @@ resource "airbyte_connection" "my_connection" {
   data_residency                       = "...my_data_residency..."
   destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
   name                                 = "...my_name..."
-  namespace_definition                 = "custom_format"
-  namespace_format                     = SOURCE_NAMESPACE
+  namespace_definition                 = "destination"
+  namespace_format                     = "$${SOURCE_NAMESPACE}"
   non_breaking_schema_updates_behavior = "ignore"
-  prefix                               = "...my_prefix..."
+  prefix                               = ""
   schedule = {
     cron_expression = "...my_cron_expression..."
     schedule_type   = "cron"

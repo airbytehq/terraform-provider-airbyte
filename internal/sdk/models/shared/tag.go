@@ -10,30 +10,30 @@ type Tag struct {
 	Color       string `json:"color"`
 }
 
-func (o *Tag) GetTagID() string {
-	if o == nil {
+func (t *Tag) GetTagID() string {
+	if t == nil {
 		return ""
 	}
-	return o.TagID
+	return t.TagID
 }
 
-func (o *Tag) GetWorkspaceID() string {
-	if o == nil {
+func (t *Tag) GetWorkspaceID() string {
+	if t == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return t.WorkspaceID
 }
 
-func (o *Tag) GetName() string {
-	if o == nil {
+func (t *Tag) GetName() string {
+	if t == nil {
 		return ""
 	}
-	return o.Name
+	return t.Name
 }
 
-func (o *Tag) GetColor() string {
-	if o == nil {
+func (t *Tag) GetColor() string {
+	if t == nil {
 		return ""
 	}
-	return o.Color
+	return t.Color
 }

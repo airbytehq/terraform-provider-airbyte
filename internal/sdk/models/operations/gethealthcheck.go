@@ -15,23 +15,23 @@ type GetHealthCheckResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *GetHealthCheckResponse) GetContentType() string {
-	if o == nil {
+func (g *GetHealthCheckResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetHealthCheckResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetHealthCheckResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetHealthCheckResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetHealthCheckResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }

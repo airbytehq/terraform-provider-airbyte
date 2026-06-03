@@ -1,1 +1,0 @@
-terraform import airbyte_destination_firebolt.my_airbyte_destination_firebolt ""

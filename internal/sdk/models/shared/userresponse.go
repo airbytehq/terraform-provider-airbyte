@@ -11,23 +11,23 @@ type UserResponse struct {
 	Email string `json:"email"`
 }
 
-func (o *UserResponse) GetName() string {
-	if o == nil {
+func (u *UserResponse) GetName() string {
+	if u == nil {
 		return ""
 	}
-	return o.Name
+	return u.Name
 }
 
-func (o *UserResponse) GetID() string {
-	if o == nil {
+func (u *UserResponse) GetID() string {
+	if u == nil {
 		return ""
 	}
-	return o.ID
+	return u.ID
 }
 
-func (o *UserResponse) GetEmail() string {
-	if o == nil {
+func (u *UserResponse) GetEmail() string {
+	if u == nil {
 		return ""
 	}
-	return o.Email
+	return u.Email
 }

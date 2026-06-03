@@ -1,1 +1,0 @@
-terraform import airbyte_source_sharepoint_enterprise.my_airbyte_source_sharepoint_enterprise ""

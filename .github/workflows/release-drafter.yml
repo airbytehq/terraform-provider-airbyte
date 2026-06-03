@@ -1,0 +1,106 @@
+# Release Drafter Workflow
+#
+# This workflow automatically creates and updates draft releases based on merged PRs.
+# It uses semantic PR titles (conventional commits format) to categorize changes.
+#
+# How it works:
+# - On push to main: Updates the draft release with the merged PR and pre-built assets
+# - Categories are determined by conventional commit type (feat, fix, chore, etc.)
+#
+# To publish a release:
+# 1. Go to the Releases page
+# 2. Find the draft release (assets are already attached!)
+# 3. Edit the version number if needed
+# 4. Click "Publish release" - this creates the git tag and triggers the Release workflow
+#
+# Note: This workflow builds and attaches assets to the draft release to prevent
+# checksum mismatches with the Terraform Registry. The Registry syncs checksums
+# when a release is published, so assets must be present at that time.
+
+name: Release Drafter
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: release-drafter
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  draft_release:
+    name: Draft Release with Assets
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest-16core
+    steps:
+      # Step 1: Create/update draft release (no assets yet)
+      - name: Create draft release
+        uses: aaronsteers/semantic-pr-release-drafter@v1.1.0
+        id: release-drafter
+        with:
+          name-template: 'v$RESOLVED_VERSION'
+          tag-template: 'v$RESOLVED_VERSION'
+          change-template: '- $TITLE (#$NUMBER)'
+          reset-files: 'true'
+          template: |
+            ## Changes
+
+            $CHANGES
+
+            ## Installation
+
+            ```hcl
+            terraform {
+              required_providers {
+                airbyte = {
+                  source  = "airbytehq/airbyte"
+                  version = "$RESOLVED_VERSION"
+                }
+              }
+            }
+            ```
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 2: Checkout code to build assets
+      - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      # Step 3: Import GPG key for signing
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5.2.0
+        id: import_gpg
+        with:
+          gpg_private_key: ${{ secrets.TERRAFORM_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.TERRAFORM_GPG_PASSPHRASE }}
+
+      # Step 4: Create local tag for GoReleaser (not pushed)
+      - name: Create local tag
+        run: |
+          VERSION="${{ steps.release-drafter.outputs.resolved-version }}"
+          git tag "v${VERSION}" || true  # Ignore if tag already exists locally
+
+      # Step 5: Build and upload assets using GoReleaser
+      # GoReleaser will find the existing draft release and upload assets to it.
+      # Configured with `draft: true` and `use_existing_draft: true` in `.goreleaser.yml`.
+      - name: Build and upload release assets
+        uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
+        with:
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+          GORELEASER_CURRENT_TAG: v${{ steps.release-drafter.outputs.resolved-version }}

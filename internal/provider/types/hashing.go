@@ -2,7 +2,9 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type Hashing struct {
 	FieldNameSuffix types.String `tfsdk:"field_name_suffix"`

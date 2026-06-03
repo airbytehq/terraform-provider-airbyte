@@ -11,11 +11,11 @@ type ListDeclarativeSourceDefinitionsRequest struct {
 	WorkspaceID string `pathParam:"style=simple,explode=false,name=workspaceId"`
 }
 
-func (o *ListDeclarativeSourceDefinitionsRequest) GetWorkspaceID() string {
-	if o == nil {
+func (l *ListDeclarativeSourceDefinitionsRequest) GetWorkspaceID() string {
+	if l == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return l.WorkspaceID
 }
 
 type ListDeclarativeSourceDefinitionsResponse struct {
@@ -29,30 +29,30 @@ type ListDeclarativeSourceDefinitionsResponse struct {
 	DeclarativeSourceDefinitionsResponse *shared.DeclarativeSourceDefinitionsResponse
 }
 
-func (o *ListDeclarativeSourceDefinitionsResponse) GetContentType() string {
-	if o == nil {
+func (l *ListDeclarativeSourceDefinitionsResponse) GetContentType() string {
+	if l == nil {
 		return ""
 	}
-	return o.ContentType
+	return l.ContentType
 }
 
-func (o *ListDeclarativeSourceDefinitionsResponse) GetStatusCode() int {
-	if o == nil {
+func (l *ListDeclarativeSourceDefinitionsResponse) GetStatusCode() int {
+	if l == nil {
 		return 0
 	}
-	return o.StatusCode
+	return l.StatusCode
 }
 
-func (o *ListDeclarativeSourceDefinitionsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (l *ListDeclarativeSourceDefinitionsResponse) GetRawResponse() *http.Response {
+	if l == nil {
 		return nil
 	}
-	return o.RawResponse
+	return l.RawResponse
 }
 
-func (o *ListDeclarativeSourceDefinitionsResponse) GetDeclarativeSourceDefinitionsResponse() *shared.DeclarativeSourceDefinitionsResponse {
-	if o == nil {
+func (l *ListDeclarativeSourceDefinitionsResponse) GetDeclarativeSourceDefinitionsResponse() *shared.DeclarativeSourceDefinitionsResponse {
+	if l == nil {
 		return nil
 	}
-	return o.DeclarativeSourceDefinitionsResponse
+	return l.DeclarativeSourceDefinitionsResponse
 }

@@ -15,25 +15,25 @@ type ListUsersWithinAnOrganizationRequest struct {
 	Emails []string `queryParam:"style=form,explode=true,name=emails"`
 }
 
-func (o *ListUsersWithinAnOrganizationRequest) GetOrganizationID() string {
-	if o == nil {
+func (l *ListUsersWithinAnOrganizationRequest) GetOrganizationID() string {
+	if l == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return l.OrganizationID
 }
 
-func (o *ListUsersWithinAnOrganizationRequest) GetIds() []string {
-	if o == nil {
+func (l *ListUsersWithinAnOrganizationRequest) GetIds() []string {
+	if l == nil {
 		return nil
 	}
-	return o.Ids
+	return l.Ids
 }
 
-func (o *ListUsersWithinAnOrganizationRequest) GetEmails() []string {
-	if o == nil {
+func (l *ListUsersWithinAnOrganizationRequest) GetEmails() []string {
+	if l == nil {
 		return nil
 	}
-	return o.Emails
+	return l.Emails
 }
 
 type ListUsersWithinAnOrganizationResponse struct {
@@ -47,30 +47,30 @@ type ListUsersWithinAnOrganizationResponse struct {
 	UsersResponse *shared.UsersResponse
 }
 
-func (o *ListUsersWithinAnOrganizationResponse) GetContentType() string {
-	if o == nil {
+func (l *ListUsersWithinAnOrganizationResponse) GetContentType() string {
+	if l == nil {
 		return ""
 	}
-	return o.ContentType
+	return l.ContentType
 }
 
-func (o *ListUsersWithinAnOrganizationResponse) GetStatusCode() int {
-	if o == nil {
+func (l *ListUsersWithinAnOrganizationResponse) GetStatusCode() int {
+	if l == nil {
 		return 0
 	}
-	return o.StatusCode
+	return l.StatusCode
 }
 
-func (o *ListUsersWithinAnOrganizationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (l *ListUsersWithinAnOrganizationResponse) GetRawResponse() *http.Response {
+	if l == nil {
 		return nil
 	}
-	return o.RawResponse
+	return l.RawResponse
 }
 
-func (o *ListUsersWithinAnOrganizationResponse) GetUsersResponse() *shared.UsersResponse {
-	if o == nil {
+func (l *ListUsersWithinAnOrganizationResponse) GetUsersResponse() *shared.UsersResponse {
+	if l == nil {
 		return nil
 	}
-	return o.UsersResponse
+	return l.UsersResponse
 }

@@ -24,38 +24,38 @@ func (l ListWorkspacesRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListWorkspacesRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ListWorkspacesRequest) GetWorkspaceIds() []string {
-	if o == nil {
+func (l *ListWorkspacesRequest) GetWorkspaceIds() []string {
+	if l == nil {
 		return nil
 	}
-	return o.WorkspaceIds
+	return l.WorkspaceIds
 }
 
-func (o *ListWorkspacesRequest) GetIncludeDeleted() *bool {
-	if o == nil {
+func (l *ListWorkspacesRequest) GetIncludeDeleted() *bool {
+	if l == nil {
 		return nil
 	}
-	return o.IncludeDeleted
+	return l.IncludeDeleted
 }
 
-func (o *ListWorkspacesRequest) GetLimit() *int {
-	if o == nil {
+func (l *ListWorkspacesRequest) GetLimit() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Limit
+	return l.Limit
 }
 
-func (o *ListWorkspacesRequest) GetOffset() *int {
-	if o == nil {
+func (l *ListWorkspacesRequest) GetOffset() *int {
+	if l == nil {
 		return nil
 	}
-	return o.Offset
+	return l.Offset
 }
 
 type ListWorkspacesResponse struct {
@@ -69,30 +69,30 @@ type ListWorkspacesResponse struct {
 	WorkspacesResponse *shared.WorkspacesResponse
 }
 
-func (o *ListWorkspacesResponse) GetContentType() string {
-	if o == nil {
+func (l *ListWorkspacesResponse) GetContentType() string {
+	if l == nil {
 		return ""
 	}
-	return o.ContentType
+	return l.ContentType
 }
 
-func (o *ListWorkspacesResponse) GetStatusCode() int {
-	if o == nil {
+func (l *ListWorkspacesResponse) GetStatusCode() int {
+	if l == nil {
 		return 0
 	}
-	return o.StatusCode
+	return l.StatusCode
 }
 
-func (o *ListWorkspacesResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (l *ListWorkspacesResponse) GetRawResponse() *http.Response {
+	if l == nil {
 		return nil
 	}
-	return o.RawResponse
+	return l.RawResponse
 }
 
-func (o *ListWorkspacesResponse) GetWorkspacesResponse() *shared.WorkspacesResponse {
-	if o == nil {
+func (l *ListWorkspacesResponse) GetWorkspacesResponse() *shared.WorkspacesResponse {
+	if l == nil {
 		return nil
 	}
-	return o.WorkspacesResponse
+	return l.WorkspacesResponse
 }

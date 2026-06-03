@@ -12,44 +12,44 @@ type ResourceRequirements struct {
 	EphemeralStorageLimit   *string `json:"ephemeral_storage_limit,omitempty"`
 }
 
-func (o *ResourceRequirements) GetCPURequest() *string {
-	if o == nil {
+func (r *ResourceRequirements) GetCPURequest() *string {
+	if r == nil {
 		return nil
 	}
-	return o.CPURequest
+	return r.CPURequest
 }
 
-func (o *ResourceRequirements) GetCPULimit() *string {
-	if o == nil {
+func (r *ResourceRequirements) GetCPULimit() *string {
+	if r == nil {
 		return nil
 	}
-	return o.CPULimit
+	return r.CPULimit
 }
 
-func (o *ResourceRequirements) GetMemoryRequest() *string {
-	if o == nil {
+func (r *ResourceRequirements) GetMemoryRequest() *string {
+	if r == nil {
 		return nil
 	}
-	return o.MemoryRequest
+	return r.MemoryRequest
 }
 
-func (o *ResourceRequirements) GetMemoryLimit() *string {
-	if o == nil {
+func (r *ResourceRequirements) GetMemoryLimit() *string {
+	if r == nil {
 		return nil
 	}
-	return o.MemoryLimit
+	return r.MemoryLimit
 }
 
-func (o *ResourceRequirements) GetEphemeralStorageRequest() *string {
-	if o == nil {
+func (r *ResourceRequirements) GetEphemeralStorageRequest() *string {
+	if r == nil {
 		return nil
 	}
-	return o.EphemeralStorageRequest
+	return r.EphemeralStorageRequest
 }
 
-func (o *ResourceRequirements) GetEphemeralStorageLimit() *string {
-	if o == nil {
+func (r *ResourceRequirements) GetEphemeralStorageLimit() *string {
+	if r == nil {
 		return nil
 	}
-	return o.EphemeralStorageLimit
+	return r.EphemeralStorageLimit
 }

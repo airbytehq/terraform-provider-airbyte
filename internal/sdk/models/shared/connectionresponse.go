@@ -26,6 +26,7 @@ type ConnectionResponse struct {
 	Configurations StreamConfigurations `json:"configurations"`
 	CreatedAt      int64                `json:"createdAt"`
 	Tags           []Tag                `json:"tags"`
+	StatusReason   *string              `json:"statusReason,omitempty"`
 }
 
 func (c ConnectionResponse) MarshalJSON() ([]byte, error) {
@@ -33,106 +34,113 @@ func (c ConnectionResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionResponse) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectionResponse) GetConnectionID() string {
-	if o == nil {
+func (c *ConnectionResponse) GetConnectionID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ConnectionID
+	return c.ConnectionID
 }
 
-func (o *ConnectionResponse) GetName() string {
-	if o == nil {
+func (c *ConnectionResponse) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *ConnectionResponse) GetSourceID() string {
-	if o == nil {
+func (c *ConnectionResponse) GetSourceID() string {
+	if c == nil {
 		return ""
 	}
-	return o.SourceID
+	return c.SourceID
 }
 
-func (o *ConnectionResponse) GetDestinationID() string {
-	if o == nil {
+func (c *ConnectionResponse) GetDestinationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.DestinationID
+	return c.DestinationID
 }
 
-func (o *ConnectionResponse) GetWorkspaceID() string {
-	if o == nil {
+func (c *ConnectionResponse) GetWorkspaceID() string {
+	if c == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return c.WorkspaceID
 }
 
-func (o *ConnectionResponse) GetStatus() ConnectionStatusEnum {
-	if o == nil {
+func (c *ConnectionResponse) GetStatus() ConnectionStatusEnum {
+	if c == nil {
 		return ConnectionStatusEnum("")
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *ConnectionResponse) GetSchedule() ConnectionScheduleResponse {
-	if o == nil {
+func (c *ConnectionResponse) GetSchedule() ConnectionScheduleResponse {
+	if c == nil {
 		return ConnectionScheduleResponse{}
 	}
-	return o.Schedule
+	return c.Schedule
 }
 
-func (o *ConnectionResponse) GetNonBreakingSchemaUpdatesBehavior() *NonBreakingSchemaUpdatesBehaviorEnum {
-	if o == nil {
+func (c *ConnectionResponse) GetNonBreakingSchemaUpdatesBehavior() *NonBreakingSchemaUpdatesBehaviorEnum {
+	if c == nil {
 		return nil
 	}
-	return o.NonBreakingSchemaUpdatesBehavior
+	return c.NonBreakingSchemaUpdatesBehavior
 }
 
-func (o *ConnectionResponse) GetNamespaceDefinition() *NamespaceDefinitionEnum {
-	if o == nil {
+func (c *ConnectionResponse) GetNamespaceDefinition() *NamespaceDefinitionEnum {
+	if c == nil {
 		return nil
 	}
-	return o.NamespaceDefinition
+	return c.NamespaceDefinition
 }
 
-func (o *ConnectionResponse) GetNamespaceFormat() *string {
-	if o == nil {
+func (c *ConnectionResponse) GetNamespaceFormat() *string {
+	if c == nil {
 		return nil
 	}
-	return o.NamespaceFormat
+	return c.NamespaceFormat
 }
 
-func (o *ConnectionResponse) GetPrefix() *string {
-	if o == nil {
+func (c *ConnectionResponse) GetPrefix() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Prefix
+	return c.Prefix
 }
 
-func (o *ConnectionResponse) GetConfigurations() StreamConfigurations {
-	if o == nil {
+func (c *ConnectionResponse) GetConfigurations() StreamConfigurations {
+	if c == nil {
 		return StreamConfigurations{}
 	}
-	return o.Configurations
+	return c.Configurations
 }
 
-func (o *ConnectionResponse) GetCreatedAt() int64 {
-	if o == nil {
+func (c *ConnectionResponse) GetCreatedAt() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *ConnectionResponse) GetTags() []Tag {
-	if o == nil {
+func (c *ConnectionResponse) GetTags() []Tag {
+	if c == nil {
 		return []Tag{}
 	}
-	return o.Tags
+	return c.Tags
+}
+
+func (c *ConnectionResponse) GetStatusReason() *string {
+	if c == nil {
+		return nil
+	}
+	return c.StatusReason
 }

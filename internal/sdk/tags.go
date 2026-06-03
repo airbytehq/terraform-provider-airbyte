@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/config"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/hooks"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/errors"
@@ -16,12 +17,16 @@ import (
 )
 
 type Tags struct {
-	sdkConfiguration sdkConfiguration
+	rootSDK          *SDK
+	sdkConfiguration config.SDKConfiguration
+	hooks            *hooks.Hooks
 }
 
-func newTags(sdkConfig sdkConfiguration) *Tags {
+func newTags(rootSDK *SDK, sdkConfig config.SDKConfiguration, hooks *hooks.Hooks) *Tags {
 	return &Tags{
+		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
+		hooks:            hooks,
 	}
 }
 
@@ -51,11 +56,13 @@ func (s *Tags) ListTags(ctx context.Context, request operations.ListTagsRequest,
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "listTags",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "listTags",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -76,7 +83,7 @@ func (s *Tags) ListTags(ctx context.Context, request operations.ListTagsRequest,
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -88,7 +95,7 @@ func (s *Tags) ListTags(ctx context.Context, request operations.ListTagsRequest,
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -101,17 +108,17 @@ func (s *Tags) ListTags(ctx context.Context, request operations.ListTagsRequest,
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -148,6 +155,7 @@ func (s *Tags) ListTags(ctx context.Context, request operations.ListTagsRequest,
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -186,11 +194,13 @@ func (s *Tags) CreateTag(ctx context.Context, request shared.TagCreateRequest, o
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "createTag",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "createTag",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -226,7 +236,7 @@ func (s *Tags) CreateTag(ctx context.Context, request shared.TagCreateRequest, o
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -239,17 +249,17 @@ func (s *Tags) CreateTag(ctx context.Context, request shared.TagCreateRequest, o
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -288,6 +298,7 @@ func (s *Tags) CreateTag(ctx context.Context, request shared.TagCreateRequest, o
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 409:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -326,11 +337,13 @@ func (s *Tags) GetTag(ctx context.Context, request operations.GetTagRequest, opt
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "getTag",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "getTag",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -359,7 +372,7 @@ func (s *Tags) GetTag(ctx context.Context, request operations.GetTagRequest, opt
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -372,17 +385,17 @@ func (s *Tags) GetTag(ctx context.Context, request operations.GetTagRequest, opt
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -419,6 +432,7 @@ func (s *Tags) GetTag(ctx context.Context, request operations.GetTagRequest, opt
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -457,11 +471,13 @@ func (s *Tags) DeleteTag(ctx context.Context, request operations.DeleteTagReques
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "deleteTag",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "deleteTag",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -490,7 +506,7 @@ func (s *Tags) DeleteTag(ctx context.Context, request operations.DeleteTagReques
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -503,17 +519,17 @@ func (s *Tags) DeleteTag(ctx context.Context, request operations.DeleteTagReques
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -526,10 +542,12 @@ func (s *Tags) DeleteTag(ctx context.Context, request operations.DeleteTagReques
 	}
 
 	switch {
+	case httpRes.StatusCode == 204:
+		utils.DrainBody(httpRes)
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
-	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -568,11 +586,13 @@ func (s *Tags) UpdateTag(ctx context.Context, request operations.UpdateTagReques
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "updateTag",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "updateTag",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "TagPatchRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -608,7 +628,7 @@ func (s *Tags) UpdateTag(ctx context.Context, request operations.UpdateTagReques
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -621,17 +641,17 @@ func (s *Tags) UpdateTag(ctx context.Context, request operations.UpdateTagReques
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -670,6 +690,7 @@ func (s *Tags) UpdateTag(ctx context.Context, request operations.UpdateTagReques
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

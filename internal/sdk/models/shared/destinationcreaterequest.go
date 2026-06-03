@@ -8,43 +8,43 @@ type DestinationCreateRequest struct {
 	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 	DefinitionID *string `json:"definitionId,omitempty"`
 	WorkspaceID  string  `json:"workspaceId"`
-	// The values required to configure the destination.
+	// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
 	Configuration any `json:"configuration"`
 	// actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (o *DestinationCreateRequest) GetName() string {
-	if o == nil {
+func (d *DestinationCreateRequest) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DestinationCreateRequest) GetDefinitionID() *string {
-	if o == nil {
+func (d *DestinationCreateRequest) GetDefinitionID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.DefinitionID
+	return d.DefinitionID
 }
 
-func (o *DestinationCreateRequest) GetWorkspaceID() string {
-	if o == nil {
+func (d *DestinationCreateRequest) GetWorkspaceID() string {
+	if d == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return d.WorkspaceID
 }
 
-func (o *DestinationCreateRequest) GetConfiguration() any {
-	if o == nil {
+func (d *DestinationCreateRequest) GetConfiguration() any {
+	if d == nil {
 		return nil
 	}
-	return o.Configuration
+	return d.Configuration
 }
 
-func (o *DestinationCreateRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if o == nil {
+func (d *DestinationCreateRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if d == nil {
 		return nil
 	}
-	return o.ResourceAllocation
+	return d.ResourceAllocation
 }

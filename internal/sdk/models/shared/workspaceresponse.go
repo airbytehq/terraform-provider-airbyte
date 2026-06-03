@@ -11,30 +11,30 @@ type WorkspaceResponse struct {
 	Notifications NotificationsConfig `json:"notifications"`
 }
 
-func (o *WorkspaceResponse) GetWorkspaceID() string {
-	if o == nil {
+func (w *WorkspaceResponse) GetWorkspaceID() string {
+	if w == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return w.WorkspaceID
 }
 
-func (o *WorkspaceResponse) GetName() string {
-	if o == nil {
+func (w *WorkspaceResponse) GetName() string {
+	if w == nil {
 		return ""
 	}
-	return o.Name
+	return w.Name
 }
 
-func (o *WorkspaceResponse) GetDataResidency() string {
-	if o == nil {
+func (w *WorkspaceResponse) GetDataResidency() string {
+	if w == nil {
 		return ""
 	}
-	return o.DataResidency
+	return w.DataResidency
 }
 
-func (o *WorkspaceResponse) GetNotifications() NotificationsConfig {
-	if o == nil {
+func (w *WorkspaceResponse) GetNotifications() NotificationsConfig {
+	if w == nil {
 		return NotificationsConfig{}
 	}
-	return o.Notifications
+	return w.Notifications
 }

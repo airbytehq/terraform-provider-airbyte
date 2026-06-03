@@ -10,11 +10,11 @@ type DeletePermissionRequest struct {
 	PermissionID string `pathParam:"style=simple,explode=false,name=permissionId"`
 }
 
-func (o *DeletePermissionRequest) GetPermissionID() string {
-	if o == nil {
+func (d *DeletePermissionRequest) GetPermissionID() string {
+	if d == nil {
 		return ""
 	}
-	return o.PermissionID
+	return d.PermissionID
 }
 
 type DeletePermissionResponse struct {
@@ -26,23 +26,23 @@ type DeletePermissionResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *DeletePermissionResponse) GetContentType() string {
-	if o == nil {
+func (d *DeletePermissionResponse) GetContentType() string {
+	if d == nil {
 		return ""
 	}
-	return o.ContentType
+	return d.ContentType
 }
 
-func (o *DeletePermissionResponse) GetStatusCode() int {
-	if o == nil {
+func (d *DeletePermissionResponse) GetStatusCode() int {
+	if d == nil {
 		return 0
 	}
-	return o.StatusCode
+	return d.StatusCode
 }
 
-func (o *DeletePermissionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (d *DeletePermissionResponse) GetRawResponse() *http.Response {
+	if d == nil {
 		return nil
 	}
-	return o.RawResponse
+	return d.RawResponse
 }

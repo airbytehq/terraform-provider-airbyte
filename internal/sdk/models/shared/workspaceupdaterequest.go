@@ -10,23 +10,23 @@ type WorkspaceUpdateRequest struct {
 	RegionID      *string              `json:"regionId,omitempty"`
 }
 
-func (o *WorkspaceUpdateRequest) GetName() *string {
-	if o == nil {
+func (w *WorkspaceUpdateRequest) GetName() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Name
+	return w.Name
 }
 
-func (o *WorkspaceUpdateRequest) GetNotifications() *NotificationsConfig {
-	if o == nil {
+func (w *WorkspaceUpdateRequest) GetNotifications() *NotificationsConfig {
+	if w == nil {
 		return nil
 	}
-	return o.Notifications
+	return w.Notifications
 }
 
-func (o *WorkspaceUpdateRequest) GetRegionID() *string {
-	if o == nil {
+func (w *WorkspaceUpdateRequest) GetRegionID() *string {
+	if w == nil {
 		return nil
 	}
-	return o.RegionID
+	return w.RegionID
 }

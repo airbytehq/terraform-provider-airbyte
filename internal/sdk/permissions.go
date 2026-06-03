@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/config"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/hooks"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/errors"
@@ -16,12 +17,16 @@ import (
 )
 
 type Permissions struct {
-	sdkConfiguration sdkConfiguration
+	rootSDK          *SDK
+	sdkConfiguration config.SDKConfiguration
+	hooks            *hooks.Hooks
 }
 
-func newPermissions(sdkConfig sdkConfiguration) *Permissions {
+func newPermissions(rootSDK *SDK, sdkConfig config.SDKConfiguration, hooks *hooks.Hooks) *Permissions {
 	return &Permissions{
+		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
+		hooks:            hooks,
 	}
 }
 
@@ -50,11 +55,13 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "getPermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "getPermission",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -83,7 +90,7 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -96,17 +103,17 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -145,6 +152,7 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 	case httpRes.StatusCode == 404:
 		fallthrough
 	case httpRes.StatusCode == 422:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -182,11 +190,13 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "updatePermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "updatePermission",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "PermissionUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -222,7 +232,7 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -235,17 +245,17 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -286,6 +296,7 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 	case httpRes.StatusCode == 404:
 		fallthrough
 	case httpRes.StatusCode == 422:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -323,11 +334,13 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "deletePermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "deletePermission",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -356,7 +369,7 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -369,17 +382,17 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -392,12 +405,14 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 	}
 
 	switch {
+	case httpRes.StatusCode == 204:
+		utils.DrainBody(httpRes)
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
 		fallthrough
 	case httpRes.StatusCode == 422:
-	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -435,11 +450,13 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "listPermissions",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "listPermissions",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -460,7 +477,7 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -472,7 +489,7 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -485,17 +502,17 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -532,6 +549,7 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -569,11 +587,13 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "createPermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "createPermission",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -609,7 +629,7 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -622,17 +642,17 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -669,6 +689,7 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 403:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

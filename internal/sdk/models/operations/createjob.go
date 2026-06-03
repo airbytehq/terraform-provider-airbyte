@@ -18,30 +18,30 @@ type CreateJobResponse struct {
 	JobResponse *shared.JobResponse
 }
 
-func (o *CreateJobResponse) GetContentType() string {
-	if o == nil {
+func (c *CreateJobResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *CreateJobResponse) GetStatusCode() int {
-	if o == nil {
+func (c *CreateJobResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *CreateJobResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *CreateJobResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *CreateJobResponse) GetJobResponse() *shared.JobResponse {
-	if o == nil {
+func (c *CreateJobResponse) GetJobResponse() *shared.JobResponse {
+	if c == nil {
 		return nil
 	}
-	return o.JobResponse
+	return c.JobResponse
 }

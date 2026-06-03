@@ -3,6 +3,6 @@
 package types
 
 type Encryption struct {
-	Aes *EncryptionAES `queryParam:"inline" tfsdk:"aes" tfPlanOnly:"true"`
-	Rsa *EncryptionRSA `queryParam:"inline" tfsdk:"rsa" tfPlanOnly:"true"`
+	Aes *EncryptionMapperAESConfiguration `queryParam:"inline" tfsdk:"aes"`
+	Rsa *EncryptionMapperRSAConfiguration `queryParam:"inline" tfsdk:"rsa"`
 }

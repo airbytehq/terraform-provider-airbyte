@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/config"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/hooks"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/errors"
@@ -16,12 +17,16 @@ import (
 )
 
 type Connections struct {
-	sdkConfiguration sdkConfiguration
+	rootSDK          *SDK
+	sdkConfiguration config.SDKConfiguration
+	hooks            *hooks.Hooks
 }
 
-func newConnections(sdkConfig sdkConfiguration) *Connections {
+func newConnections(rootSDK *SDK, sdkConfig config.SDKConfiguration, hooks *hooks.Hooks) *Connections {
 	return &Connections{
+		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
+		hooks:            hooks,
 	}
 }
 
@@ -50,11 +55,13 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "createConnection",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "createConnection",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -90,7 +97,7 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -103,17 +110,17 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -150,6 +157,7 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 403:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -187,11 +195,13 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "listConnections",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "listConnections",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -212,7 +222,7 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -224,7 +234,7 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -237,17 +247,17 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -284,6 +294,7 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -321,11 +332,13 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "getConnection",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "getConnection",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -354,7 +367,7 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -367,17 +380,17 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -414,6 +427,7 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -451,11 +465,13 @@ func (s *Connections) PatchConnection(ctx context.Context, request operations.Pa
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "patchConnection",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "patchConnection",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "ConnectionPatchRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -491,7 +507,7 @@ func (s *Connections) PatchConnection(ctx context.Context, request operations.Pa
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -504,17 +520,17 @@ func (s *Connections) PatchConnection(ctx context.Context, request operations.Pa
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -551,6 +567,7 @@ func (s *Connections) PatchConnection(ctx context.Context, request operations.Pa
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -588,11 +605,13 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "deleteConnection",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "deleteConnection",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -621,7 +640,7 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 		req.Header.Set(k, v)
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
 		return nil, err
 	}
@@ -634,17 +653,17 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 			err = fmt.Errorf("error sending request: no response")
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
 		} else if _httpRes != nil {
 			httpRes = _httpRes
 		}
 	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
@@ -657,10 +676,12 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 	}
 
 	switch {
+	case httpRes.StatusCode == 204:
+		utils.DrainBody(httpRes)
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
-	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

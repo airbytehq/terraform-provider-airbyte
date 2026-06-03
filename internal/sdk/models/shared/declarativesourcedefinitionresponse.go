@@ -10,30 +10,30 @@ type DeclarativeSourceDefinitionResponse struct {
 	Version  int64 `json:"version"`
 }
 
-func (o *DeclarativeSourceDefinitionResponse) GetID() string {
-	if o == nil {
+func (d *DeclarativeSourceDefinitionResponse) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DeclarativeSourceDefinitionResponse) GetName() string {
-	if o == nil {
+func (d *DeclarativeSourceDefinitionResponse) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DeclarativeSourceDefinitionResponse) GetManifest() any {
-	if o == nil {
+func (d *DeclarativeSourceDefinitionResponse) GetManifest() any {
+	if d == nil {
 		return nil
 	}
-	return o.Manifest
+	return d.Manifest
 }
 
-func (o *DeclarativeSourceDefinitionResponse) GetVersion() int64 {
-	if o == nil {
+func (d *DeclarativeSourceDefinitionResponse) GetVersion() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.Version
+	return d.Version
 }

@@ -1,26 +1,375 @@
 # Contributing to This Repository
 
-Thank you for your interest in contributing to this repository. Please note that this repository contains generated code. As such, we do not accept direct changes or pull requests. Instead, we encourage you to follow the guidelines below to report issues and suggest improvements.
+## Important: This is a Generated Codebase
 
-## How to Report Issues
+> [!Important]
+> This repository contains predominantly generated code. We do not accept direct changes to generated files. Report issues on GitHub or submit fixes to the upstream OpenAPI spec in [airbyte-platform](https://github.com/airbytehq/airbyte-platform).
 
-If you encounter any bugs or have suggestions for improvements, please open an issue on GitHub. When reporting an issue, please provide as much detail as possible to help us reproduce the problem. This includes:
+## Code Generation Lineage
 
-- A clear and descriptive title
-- Steps to reproduce the issue
-- Expected and actual behavior
-- Any relevant logs, screenshots, or error messages
-- Information about your environment (e.g., operating system, software versions)
-    - For example can be collected using the `npx envinfo` command from your terminal if you have Node.js installed
+The Terraform provider is generated through a multi-step pipeline. Here is the end-to-end flow, with links to each artifact:
 
-## Issue Triage and Upstream Fixes
+```
+┌──────────────────────────────────────────┐
+│  1. Upstream OpenAPI Spec                │
+│  (airbyte-platform-internal)             │
+└──────────────────┬───────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────────┐
+│  2. Spec Transformation Script           │
+│  (generate_terraform_spec.py)            │
+└──────────────────┬───────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────────┐
+│  3. Generated OpenAPI Spec               │
+│  (generated/api_terraform.yaml)          │
+└──────────────────┬───────────────────────┘
+                   │  + overlay applied
+                   ▼
+┌──────────────────────────────────────────┐
+│  4. Speakeasy Overlay                    │
+│  (terraform_speakeasy.yaml)              │
+└──────────────────┬───────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────────┐
+│  5. Speakeasy Code Generation            │
+│  (internal/sdk/, internal/provider/)     │
+└──────────┬───────────────────┬───────────┘
+           │                   │
+           ▼                   ▼
+┌────────────────────┐ ┌───────────────────┐
+│ 6. Docs Generation │ │ 7. Binary Build   │
+│ (docs/)            │ │ (dist/)           │
+└────────────────────┘ └───────────────────┘
+```
 
-We will review and triage issues as quickly as possible. Our goal is to address bugs and incorporate improvements in the upstream source code. Fixes will be included in the next generation of the generated code.
+### Step-by-step details
 
-## Contact
+1. **Upstream OpenAPI Spec** — The source-of-truth API definition lives in `airbyte-platform`:\
+   [`airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform/blob/main/airbyte-api/server-api/src/main/openapi/api.yaml)
 
-If you have any questions or need further assistance, please feel free to reach out by opening an issue.
+2. **Spec Transformation Script** — A Python script fetches the upstream API spec and injects missing schema/response stubs and security schemes required by Speakeasy:\
+   [`scripts/generate_terraform_spec.py`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)
 
-Thank you for your understanding and cooperation!
+3. **Generated OpenAPI Spec** — The transformation script produces `generated/api_terraform.yaml`, a Terraform-specific OpenAPI spec (gitignored, regenerated fresh each run). This is the spec that [Speakeasy consumes](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/.speakeasy/workflow.yaml).
 
-The Maintainers
+4. **Speakeasy Overlay** — Terraform-specific customizations applied on top of the transformed spec before code generation (e.g., handling polymorphism, adjusting schemas):\
+   [`overlays/terraform_speakeasy.yaml`](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/overlays/terraform_speakeasy.yaml)
+
+5. **Generated Code** — Speakeasy consumes the spec + overlay and generates the Go SDK (`internal/sdk/`) and Terraform provider resources (`internal/provider/`). These files should never be edited by hand.
+
+6. **Docs Generation** — `go generate ./...` (via `poe docs-generate`) reads the generated Go source and produces Terraform registry documentation in `docs/`. This step depends on the generated code from step 5 and runs automatically as part of the [SDK generation workflow](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/.github/workflows/generate-command.yml).
+
+7. **Binary Build** — `poe bin-generate` compiles cross-platform provider binaries (`linux/amd64`, `darwin/arm64`) into `dist/`. Used in CI dry-run mode for validation and available as downloadable artifacts on PR workflows.
+
+> [!Tip]
+> If you need to change provider behavior, determine which layer is appropriate:
+> - **API changes** → submit to the [upstream OpenAPI spec](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml)
+> - **Terraform-specific schema tweaks** → modify the [overlay](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/overlays/terraform_speakeasy.yaml)
+> - **Spec transformation logic** → modify the [generation script](https://github.com/airbytehq/terraform-provider-airbyte/blob/main/scripts/generate_terraform_spec.py)
+> - Then trigger regeneration (see below)
+
+## For Maintainers
+
+### Regenerating the Provider
+
+Use the GitHub Actions workflow: [Actions > Generate](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/generate-command.yml) > Run workflow
+
+### Release Process
+
+Releases use a draft-based workflow:
+
+1. The `release-drafter.yml` workflow runs on every push to main, creating/updating a draft release with pre-built assets
+2. Review the draft at [Releases](https://github.com/airbytehq/terraform-provider-airbyte/releases)
+3. Edit the draft version if needed (e.g., `1.0.0-rc1` for release candidates)
+4. Click "Publish release" - assets are already attached and signed
+
+**Important**: Do not check "Set as a pre-release" unless you want to delay Terraform Registry sync.
+
+### Pre-Release Process
+
+Pre-releases let you publish a provider version for testing without making it the default on the Terraform Registry. Use this to validate community contributions or new features before a stable release.
+
+**Two ways to trigger a pre-release:**
+
+1. **Slash command on a PR** (recommended for PR-based work):
+   ```
+   /pre-release version=v1.3.0-rc.1
+   ```
+   This builds from the PR's head branch.
+
+2. **Manual workflow dispatch** (from the [Actions tab](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/pre-release-command.yml)):
+   - **version** (required): e.g. `v1.3.0-rc.1`, `v1.3.0-beta.1`. Must be valid semver with a pre-release suffix.
+   - **ref** (optional, default: `main`): branch, tag, or commit SHA to build from.
+
+**Safety checks** — the workflow will fail if:
+- The version is not valid semver or is missing a pre-release suffix (e.g. `v1.3.0` is rejected)
+- A GitHub Release or git tag already exists for the version
+
+**Using a pre-release in Terraform:**
+
+```hcl
+terraform {
+  required_providers {
+    airbyte = {
+      source  = "airbytehq/airbyte"
+      version = "1.3.0-rc.1"  # no 'v' prefix in Terraform
+    }
+  }
+}
+```
+
+### Maintenance Branches and Backporting
+
+Following the [HashiCorp convention](https://github.com/terraform-providers/terraform-provider-aws/pull/14177) used by Terraform providers such as `terraform-provider-aws`, this project uses `release/` branches for maintaining older major or minor versions:
+
+| Branch | Purpose |
+|--------|---------|
+| `release/X.Y.x` | Maintenance branch for the `vX.Y` release line (receives patch releases) |
+| `main` | Active development toward the next minor or major release |
+
+The `.x` suffix signals that the branch is a living maintenance branch that will receive future patch releases (e.g., `release/1.0.x` receives `v1.0.3`, `v1.0.4`, etc.).
+
+**When to create a maintenance branch:**
+
+Create a `release/X.Y.x` branch from the latest `vX.Y.z` tag when:
+
+- A new minor or major version is about to be released on `main`
+- Bug fixes still need to be backported to the older version
+
+```bash
+# Example: create a maintenance branch for v1.0.x before releasing v1.1.0
+git checkout -b release/1.0.x v1.0.2
+git push origin release/1.0.x
+```
+
+**Backporting a fix:**
+
+1. Land the fix on `main` first (via PR as usual)
+2. Cherry-pick the fix commit(s) into the `release/X.Y.x` branch
+3. Open a PR targeting `release/X.Y.x` for CI validation
+4. After merging, tag and publish the patch release from the maintenance branch
+
+```bash
+# Example: backport a fix from main to release/1.0.x
+git checkout release/1.0.x
+git cherry-pick <commit-sha>
+git push origin release/1.0.x
+```
+
+### Local Development
+
+```bash
+# Build
+go build -o terraform-provider-airbyte
+
+# Debug mode
+go run main.go --debug
+# Copy TF_REATTACH_PROVIDERS from output, then in another terminal:
+cd examples/your-example
+export TF_REATTACH_PROVIDERS='...'
+terraform plan
+```
+
+### Poe Tasks
+
+All build and generation tasks are managed via [Poe the Poet](https://poethepoet.naber.dev/) and defined in [`poe_tasks.toml`](poe_tasks.toml). Run any task with:
+
+```bash
+uvx --from=poethepoet poe <task-name>
+```
+
+| Task | Description | Underlying Command |
+|------|-------------|--------------------|
+| `clean-generated` | Delete generated files, preserving hand-written movestate/helpers | `rm -rf internal/sdk` + `find ... -delete` |
+| `generate-spec` | Generate Terraform OpenAPI spec from upstream API spec | `uv run scripts/generate_terraform_spec.py` |
+| `lint-spec` | Lint the OpenAPI spec for circular references | `speakeasy lint openapi -s generated/api_terraform.yaml` |
+| `generate-code` | Generate Terraform provider code from the OpenAPI spec | `speakeasy run --skip-compile` |
+| `post-generate` | Patch provider registrations, mark configuration as sensitive, and tidy Go modules | `python3 scripts/patch_provider_registrations.py` + `python3 scripts/patch_sensitive_configuration.py` + `go mod tidy` |
+| `docs-generate` | Generate Terraform provider documentation | `go generate ./...` |
+| `bin-generate` | Build cross-platform provider binaries (Linux amd64 + macOS arm64) | `go build -o dist/...` |
+| `generate-full` | Full pipeline: clean, spec, lint, generate, post-generate | Runs the above in sequence |
+
+### Configuration Files
+
+| File | Purpose |
+|------|---------|
+| `.speakeasy/workflow.yaml` | Speakeasy generation config |
+| `gen.yaml` | Provider version and settings |
+| `.goreleaser.yml` | Build and release config |
+| `overlays/terraform_speakeasy.yaml` | Speakeasy customizations |
+
+### Code Files (Not Generated)
+
+| File | Purpose |
+|------|---------|
+| `scripts/generate_terraform_spec.py` | Generates the Terraform-specific OpenAPI spec from upstream sources |
+| `overlays/terraform_speakeasy.yaml` | Speakeasy overlay for Terraform-specific customizations |
+| `.github/workflows/*` | CI/CD workflows (release, pre-release, generation, testing) |
+| `.goreleaser*.yml` | GoReleaser configs (stable and pre-release) |
+
+### End-to-End Testing with CI Artifacts
+
+The **"Test (Full)"** workflow ([`test-full.yml`](.github/workflows/test-full.yml)) runs on every PR and produces downloadable provider binaries as CI artifacts. These binaries can be used to test unreleased provider changes with real Airbyte Cloud resources before merging.
+
+**CI artifacts produced on every PR:**
+
+| Artifact | Contents | Retention |
+|----------|----------|-----------|
+| `provider_binaries` | Compiled provider binaries (`linux/amd64`, `darwin/arm64`) | 7 days |
+| `generated_provider_code` | Generated provider source code | 7 days |
+| `api_terraform_spec` | Generated OpenAPI spec | 30 days |
+
+**To download binaries from a PR's CI run:**
+
+```bash
+# List recent "Test (Full)" runs
+gh run list --workflow="test-full.yml" --limit 5
+
+# Download binaries (replace <RUN_ID> with the run ID)
+gh run download <RUN_ID> --name provider_binaries --dir ./provider-bin
+```
+
+For the sample project testing guide (configuring dev overrides, authentication, running Terraform with CI-built binaries), see [`test-projects/README.md`](test-projects/README.md).
+
+### Debugging Generation Drift Failures
+
+CI checks that committed code and docs match what the generation pipeline produces. When a drift check fails, download the CI artifacts to see what was actually generated:
+
+```bash
+gh run list --workflow="test-full.yml" --limit 5
+gh run download <RUN_ID> --name generated_provider_code --dir /tmp/generated_from_ci
+gh run download <RUN_ID> --name generated_docs --dir /tmp/generated_docs
+```
+
+The generated artifacts are the source of truth. Update your committed files to match them exactly.
+
+## Documentation
+
+### How docs generation works
+
+Provider documentation lives on the [Terraform Registry](https://registry.terraform.io/providers/airbytehq/airbyte/latest/docs) and is the source of truth for all Terraform provider docs. The registry renders Markdown files from the `docs/` directory.
+
+**`docs/` is generated — do not edit it directly.** The generation pipeline reads Go source code and Markdown templates to produce the final `docs/` tree:
+
+```
+templates/              ← you edit these
+  index.md.tmpl
+  guides/
+    getting_started.md.tmpl
+    v1_migration_guide.md.tmpl
+  resources/             (auto-generated from Go source)
+  data-sources/          (auto-generated from Go source)
+        │
+        ▼  go generate ./...  (or: uvx --from=poethepoet poe docs-generate)
+        │
+docs/                   ← generated output (committed, but never hand-edited)
+  index.md
+  guides/
+    getting_started.md
+    v1_migration_guide.md
+  resources/
+  data-sources/
+```
+
+CI runs `go generate ./...` and then `git diff --exit-code` to verify that `docs/` matches the templates. If you edit `docs/` directly without updating the corresponding template, CI will fail with:
+
+> Generated files are out of date. Run 'uvx --from=poethepoet poe docs-generate' and commit the result.
+
+### What goes where
+
+| Content type | Location | Notes |
+|---|---|---|
+| **Per-resource / data-source reference** | `templates/resources/*.md.tmpl`, `templates/data-sources/*.md.tmpl` | Auto-generated from Go source via `tfplugindocs`. Do not edit by hand — change the Go schema descriptions instead. |
+| **Provider index page** | `templates/index.md.tmpl` | Uses Go template syntax (`{{.Description}}`, `{{tffile ...}}`). Hand-editable for narrative content. |
+| **Guides and tutorials** | `templates/guides/*.md.tmpl` | Plain Markdown (no Go template directives needed). Add new `.md.tmpl` files here for new guides. |
+
+### Adding or editing a guide
+
+1. Create or edit a `.md.tmpl` file in `templates/guides/` (e.g., `templates/guides/my_guide.md.tmpl`).
+2. Regenerate docs:
+   ```bash
+   uvx --from=poethepoet poe docs-generate
+   ```
+   This runs `go generate ./...` and produces the corresponding file in `docs/guides/`.
+3. Commit **both** the template and the generated output:
+   ```bash
+   git add templates/guides/my_guide.md.tmpl docs/guides/my_guide.md
+   git commit -m "docs: add my_guide"
+   ```
+4. Optionally link to the new guide from `templates/index.md.tmpl` using Terraform's admonition syntax:
+   ```markdown
+   -> Check out the [My Guide](guides/my_guide) for details.
+   ```
+   Then regenerate and commit again.
+
+### When docs are published
+
+Documentation in `docs/` is committed to the repository and included in every GitHub release. The Terraform Registry reads docs from the **tagged release**, not from `main` directly. This means:
+
+- Docs changes merged to `main` are **not visible on the registry** until a new provider version is released.
+- To publish updated docs, merge your changes, then follow the [release process](#releasing) to create and publish a new release.
+- The registry syncs within minutes of a GitHub release being published.
+
+If you need docs changes to be visible immediately (e.g., a critical correction), you can publish a patch release.
+
+### Duplicate content: registry vs docs.airbyte.com
+
+The Terraform Registry is the canonical home for all provider documentation — getting started guides, resource/data-source reference, and migration guides all live here.
+
+The [docs.airbyte.com Terraform page](https://docs.airbyte.com/developers/terraform-documentation) is a lightweight landing page that links to the registry. It does **not** duplicate tutorial or reference content. If you need to add Terraform documentation:
+
+- **Tutorial / how-to / reference** → add it to `templates/guides/` in this repo (appears on the registry)
+- **Landing page / cross-linking** → edit `docs/developers/terraform-documentation.md` in the [airbyte repo](https://github.com/airbytehq/airbyte)
+
+This avoids maintaining the same content in two places and ensures Terraform users find everything on the registry where they expect it.
+
+## Releasing
+
+This project uses [`semantic-pr-release-drafter`](https://github.com/aaronsteers/semantic-pr-release-drafter) for automated release management. To release, simply click "`Edit`" on the latest release draft from the [releases page](https://github.com/airbytehq/terraform-provider-airbyte/releases), and then click "`Publish release`". This publish operation will trigger all necessary downstream publish operations.
+
+ℹ️ For more detailed instructions, please see the [Releasing Guide](https://github.com/aaronsteers/semantic-pr-release-drafter/blob/main/docs/releasing.md).
+
+After each merge to main, a draft release is created/updated automatically. Once published, the release is synced to the Terraform Registry within minutes.
+
+Terraform receives webhook notifications from GitHub, see below.
+
+### Giving Terraform Registry Access to Webhook Notifications
+
+In order for Terraform Registry to receive webhook notifications, an admin user on GitHub must install the "Terraform Registry" GitHub App on behalf of the Airbyte organization. This app is associated with that admin user, specifically, and allows Terraform to receive webhook notifications when new releases are published.
+
+Note that the "Terraform Registry" GitHub App is not to be confused with "Terraform Cloud" which is their customer-targeted app, not for publishing.
+
+### Logging into the Terraform Registry
+
+You will log in to the Terraform Registry is performed with your GitHub account here: [Terraform Registry Login](https://registry.terraform.io/sign-in). When you sign in, you must select "legacy" login and then "GitHub" for login provider, since we do not have a registered (newer) Hashicorp login account.
+
+## Important Note on Pre-releases
+
+You may publish a prerelease by following the steps below:
+
+1. Modify an existing release draft, setting its `Title` and `Tag` _both_ to the desired prerelease version (e.g., `v1.0.0-rc1`). This version will persist across future draft updates until you change it again or delete the draft.
+2. Click "Save draft". At this point, your version number will be correct but the attached build artifacts will still correspond to the previous version number.
+3. Manually rerun the "Release Drafter" workflow from the Actions tab to update the release draft assets with build artifacts matching the new version.
+4. Verify that the correctly-named assets are attached to the draft release.
+5. Publish as usual by clicking "Edit" -> "Publish release". You can uncheck the "Set as latest" checkbox but _do not_ check the "Set as a pre-release" checkbox.
+
+> [!Warning]
+> Do not check the box to "Set as a pre-release" even if you are publishing a prerelease. Doing so will prevent the Terraform Registry from syncing the release, which in turn prevents users from installing the new version of the provider.
+>
+> Terraform will still recognize the version as a prerelease based on the version string itself (e.g., `1.0.0-rc1`).
+
+## Updating Upstream Dependencies
+
+### Updating the OpenAPI Spec
+
+In general, no upstream action should be needed to capture updates to upstream OpenAPI spec changes. A legacy `api_terraform.yaml` file is no longer used, and instead this provider performs its own spec transformations (as needed) directly from the upstream OpenAPI spec document. See [Code Generation Lineage](#code-generation-lineage) above for the full flow.
+
+The OpenAPI spec is maintained in the [airbyte-platform-internal](https://github.com/airbytehq/airbyte-platform-internal) repository at [`oss/airbyte-api/server-api/src/main/openapi/api.yaml`](https://github.com/airbytehq/airbyte-platform-internal/blob/master/oss/airbyte-api/server-api/src/main/openapi/api.yaml).
+
+### Updating the Connector Models
+
+As of v1.1, typed connector-specific resources (e.g. `airbyte_source_postgres`) have been removed. All connectors are now managed via the generic `airbyte_source` / `airbyte_destination` resources. The spec generation script no longer fetches connector registries or generates connector-specific schemas.

@@ -13,39 +13,57 @@ type InitiateOauthRequest struct {
 	WorkspaceID string `json:"workspaceId"`
 	// The values required to configure OAuth flows. The schema for this must match the `OAuthConfigSpecification.oauthUserInputFromConnectorConfigSpecification` schema.
 	OAuthInputConfiguration any `json:"oAuthInputConfiguration,omitempty"`
+	// Optional OAuth scopes to request, overriding the connector's default scopes. Only supported for connectors that define scopes as an array.
+	RequestedScopes []string `json:"requestedScopes,omitempty"`
+	// Optional OAuth optional_scopes to request, overriding the connector's default optional_scopes. Only applied when requestedScopes is also provided.
+	RequestedOptionalScopes []string `json:"requestedOptionalScopes,omitempty"`
 }
 
-func (o *InitiateOauthRequest) GetName() *string {
-	if o == nil {
+func (i *InitiateOauthRequest) GetName() *string {
+	if i == nil {
 		return nil
 	}
-	return o.Name
+	return i.Name
 }
 
-func (o *InitiateOauthRequest) GetSourceType() *string {
-	if o == nil {
+func (i *InitiateOauthRequest) GetSourceType() *string {
+	if i == nil {
 		return nil
 	}
-	return o.SourceType
+	return i.SourceType
 }
 
-func (o *InitiateOauthRequest) GetRedirectURL() string {
-	if o == nil {
+func (i *InitiateOauthRequest) GetRedirectURL() string {
+	if i == nil {
 		return ""
 	}
-	return o.RedirectURL
+	return i.RedirectURL
 }
 
-func (o *InitiateOauthRequest) GetWorkspaceID() string {
-	if o == nil {
+func (i *InitiateOauthRequest) GetWorkspaceID() string {
+	if i == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return i.WorkspaceID
 }
 
-func (o *InitiateOauthRequest) GetOAuthInputConfiguration() any {
-	if o == nil {
+func (i *InitiateOauthRequest) GetOAuthInputConfiguration() any {
+	if i == nil {
 		return nil
 	}
-	return o.OAuthInputConfiguration
+	return i.OAuthInputConfiguration
+}
+
+func (i *InitiateOauthRequest) GetRequestedScopes() []string {
+	if i == nil {
+		return nil
+	}
+	return i.RequestedScopes
+}
+
+func (i *InitiateOauthRequest) GetRequestedOptionalScopes() []string {
+	if i == nil {
+		return nil
+	}
+	return i.RequestedOptionalScopes
 }

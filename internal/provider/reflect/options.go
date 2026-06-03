@@ -2,11 +2,6 @@
 
 package reflect
 
-const (
-	SourceTypeState = iota
-	SourceTypePlan
-)
-
 // Options provides configuration settings for how the reflection behavior
 // works, letting callers tweak different behaviors based on their needs.
 type Options struct {
@@ -19,9 +14,4 @@ type Options struct {
 	// translated into empty values without provider interaction, or if
 	// they must be explicitly handled.
 	UnhandledUnknownAsEmpty bool
-
-	// SourceType informs the reflection system what the source is
-	// such that it can make decisions based on the tfPlanOnly annotation
-	// The default is SourceTypeState
-	SourceType int
 }

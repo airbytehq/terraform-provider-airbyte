@@ -10,11 +10,11 @@ type DeleteTagRequest struct {
 	TagID string `pathParam:"style=simple,explode=false,name=tagId"`
 }
 
-func (o *DeleteTagRequest) GetTagID() string {
-	if o == nil {
+func (d *DeleteTagRequest) GetTagID() string {
+	if d == nil {
 		return ""
 	}
-	return o.TagID
+	return d.TagID
 }
 
 type DeleteTagResponse struct {
@@ -26,23 +26,23 @@ type DeleteTagResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *DeleteTagResponse) GetContentType() string {
-	if o == nil {
+func (d *DeleteTagResponse) GetContentType() string {
+	if d == nil {
 		return ""
 	}
-	return o.ContentType
+	return d.ContentType
 }
 
-func (o *DeleteTagResponse) GetStatusCode() int {
-	if o == nil {
+func (d *DeleteTagResponse) GetStatusCode() int {
+	if d == nil {
 		return 0
 	}
-	return o.StatusCode
+	return d.StatusCode
 }
 
-func (o *DeleteTagResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (d *DeleteTagResponse) GetRawResponse() *http.Response {
+	if d == nil {
 		return nil
 	}
-	return o.RawResponse
+	return d.RawResponse
 }

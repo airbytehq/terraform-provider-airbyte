@@ -13,18 +13,18 @@ type GetDestinationRequest struct {
 	IncludeSecretCoordinates *bool `queryParam:"style=form,explode=true,name=includeSecretCoordinates"`
 }
 
-func (o *GetDestinationRequest) GetDestinationID() string {
-	if o == nil {
+func (g *GetDestinationRequest) GetDestinationID() string {
+	if g == nil {
 		return ""
 	}
-	return o.DestinationID
+	return g.DestinationID
 }
 
-func (o *GetDestinationRequest) GetIncludeSecretCoordinates() *bool {
-	if o == nil {
+func (g *GetDestinationRequest) GetIncludeSecretCoordinates() *bool {
+	if g == nil {
 		return nil
 	}
-	return o.IncludeSecretCoordinates
+	return g.IncludeSecretCoordinates
 }
 
 type GetDestinationResponse struct {
@@ -38,30 +38,30 @@ type GetDestinationResponse struct {
 	DestinationResponse *shared.DestinationResponse
 }
 
-func (o *GetDestinationResponse) GetContentType() string {
-	if o == nil {
+func (g *GetDestinationResponse) GetContentType() string {
+	if g == nil {
 		return ""
 	}
-	return o.ContentType
+	return g.ContentType
 }
 
-func (o *GetDestinationResponse) GetStatusCode() int {
-	if o == nil {
+func (g *GetDestinationResponse) GetStatusCode() int {
+	if g == nil {
 		return 0
 	}
-	return o.StatusCode
+	return g.StatusCode
 }
 
-func (o *GetDestinationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (g *GetDestinationResponse) GetRawResponse() *http.Response {
+	if g == nil {
 		return nil
 	}
-	return o.RawResponse
+	return g.RawResponse
 }
 
-func (o *GetDestinationResponse) GetDestinationResponse() *shared.DestinationResponse {
-	if o == nil {
+func (g *GetDestinationResponse) GetDestinationResponse() *shared.DestinationResponse {
+	if g == nil {
 		return nil
 	}
-	return o.DestinationResponse
+	return g.DestinationResponse
 }

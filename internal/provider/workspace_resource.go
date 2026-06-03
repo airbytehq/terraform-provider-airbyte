@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -30,6 +29,7 @@ func NewWorkspaceResource() resource.Resource {
 
 // WorkspaceResource defines the resource implementation.
 type WorkspaceResource struct {
+	// Provider configured SDK client.
 	client *sdk.SDK
 }
 
@@ -438,8 +438,13 @@ func (r *WorkspaceResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	request := *data.ToSharedWorkspaceCreateRequest()
-	res, err := r.client.Workspaces.CreateWorkspace(ctx, request)
+	request, requestDiags := data.ToSharedWorkspaceCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res, err := r.client.Workspaces.CreateWorkspace(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -459,36 +464,17 @@ func (r *WorkspaceResource) Create(ctx context.Context, req resource.CreateReque
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedWorkspaceResponse(res.WorkspaceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var workspaceID string
-	workspaceID = data.WorkspaceID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedWorkspaceResponse(ctx, res.WorkspaceResponse)...)
 
-	request1 := operations.GetWorkspaceRequest{
-		WorkspaceID: workspaceID,
-	}
-	res1, err := r.client.Workspaces.GetWorkspace(ctx, request1)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res1 != nil && res1.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
-		}
+	if resp.Diagnostics.HasError() {
 		return
 	}
-	if res1 == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
 		return
 	}
-	if res1.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
-		return
-	}
-	if !(res1.WorkspaceResponse != nil) {
-		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
-		return
-	}
-	data.RefreshFromSharedWorkspaceResponse(res1.WorkspaceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -512,13 +498,13 @@ func (r *WorkspaceResource) Read(ctx context.Context, req resource.ReadRequest, 
 		return
 	}
 
-	var workspaceID string
-	workspaceID = data.WorkspaceID.ValueString()
+	request, requestDiags := data.ToOperationsGetWorkspaceRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetWorkspaceRequest{
-		WorkspaceID: workspaceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Workspaces.GetWorkspace(ctx, request)
+	res, err := r.client.Workspaces.GetWorkspace(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -542,7 +528,11 @@ func (r *WorkspaceResource) Read(ctx context.Context, req resource.ReadRequest, 
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedWorkspaceResponse(res.WorkspaceResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedWorkspaceResponse(ctx, res.WorkspaceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -562,15 +552,13 @@ func (r *WorkspaceResource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	var workspaceID string
-	workspaceID = data.WorkspaceID.ValueString()
+	request, requestDiags := data.ToOperationsUpdateWorkspaceRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	workspaceUpdateRequest := *data.ToSharedWorkspaceUpdateRequest()
-	request := operations.UpdateWorkspaceRequest{
-		WorkspaceID:            workspaceID,
-		WorkspaceUpdateRequest: workspaceUpdateRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Workspaces.UpdateWorkspace(ctx, request)
+	res, err := r.client.Workspaces.UpdateWorkspace(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -590,36 +578,17 @@ func (r *WorkspaceResource) Update(ctx context.Context, req resource.UpdateReque
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedWorkspaceResponse(res.WorkspaceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var workspaceId1 string
-	workspaceId1 = data.WorkspaceID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedWorkspaceResponse(ctx, res.WorkspaceResponse)...)
 
-	request1 := operations.GetWorkspaceRequest{
-		WorkspaceID: workspaceId1,
-	}
-	res1, err := r.client.Workspaces.GetWorkspace(ctx, request1)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res1 != nil && res1.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
-		}
+	if resp.Diagnostics.HasError() {
 		return
 	}
-	if res1 == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
 		return
 	}
-	if res1.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
-		return
-	}
-	if !(res1.WorkspaceResponse != nil) {
-		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
-		return
-	}
-	data.RefreshFromSharedWorkspaceResponse(res1.WorkspaceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -643,13 +612,13 @@ func (r *WorkspaceResource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	var workspaceID string
-	workspaceID = data.WorkspaceID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteWorkspaceRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteWorkspaceRequest{
-		WorkspaceID: workspaceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Workspaces.DeleteWorkspace(ctx, request)
+	res, err := r.client.Workspaces.DeleteWorkspace(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -661,7 +630,10 @@ func (r *WorkspaceResource) Delete(ctx context.Context, req resource.DeleteReque
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
+	switch res.StatusCode {
+	case 204, 404:
+		break
+	default:
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

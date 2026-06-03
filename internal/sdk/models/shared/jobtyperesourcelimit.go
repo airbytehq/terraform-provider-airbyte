@@ -10,16 +10,16 @@ type JobTypeResourceLimit struct {
 	ResourceRequirements ResourceRequirements `json:"resourceRequirements"`
 }
 
-func (o *JobTypeResourceLimit) GetJobType() JobType {
-	if o == nil {
+func (j *JobTypeResourceLimit) GetJobType() JobType {
+	if j == nil {
 		return JobType("")
 	}
-	return o.JobType
+	return j.JobType
 }
 
-func (o *JobTypeResourceLimit) GetResourceRequirements() ResourceRequirements {
-	if o == nil {
+func (j *JobTypeResourceLimit) GetResourceRequirements() ResourceRequirements {
+	if j == nil {
 		return ResourceRequirements{}
 	}
-	return o.ResourceRequirements
+	return j.ResourceRequirements
 }

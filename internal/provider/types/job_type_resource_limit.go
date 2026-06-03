@@ -2,9 +2,11 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type JobTypeResourceLimit struct {
-	JobType              types.String         `tfsdk:"job_type"`
-	ResourceRequirements ResourceRequirements `tfsdk:"resource_requirements"`
+	JobType              types.String          `tfsdk:"job_type"`
+	ResourceRequirements *ResourceRequirements `tfsdk:"resource_requirements"`
 }

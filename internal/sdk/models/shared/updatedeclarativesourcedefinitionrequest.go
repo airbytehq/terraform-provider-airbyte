@@ -7,9 +7,9 @@ type UpdateDeclarativeSourceDefinitionRequest struct {
 	Manifest any `json:"manifest"`
 }
 
-func (o *UpdateDeclarativeSourceDefinitionRequest) GetManifest() any {
-	if o == nil {
+func (u *UpdateDeclarativeSourceDefinitionRequest) GetManifest() any {
+	if u == nil {
 		return nil
 	}
-	return o.Manifest
+	return u.Manifest
 }

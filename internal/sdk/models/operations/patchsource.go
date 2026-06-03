@@ -12,18 +12,18 @@ type PatchSourceRequest struct {
 	SourcePatchRequest *shared.SourcePatchRequest `request:"mediaType=application/json"`
 }
 
-func (o *PatchSourceRequest) GetSourceID() string {
-	if o == nil {
+func (p *PatchSourceRequest) GetSourceID() string {
+	if p == nil {
 		return ""
 	}
-	return o.SourceID
+	return p.SourceID
 }
 
-func (o *PatchSourceRequest) GetSourcePatchRequest() *shared.SourcePatchRequest {
-	if o == nil {
+func (p *PatchSourceRequest) GetSourcePatchRequest() *shared.SourcePatchRequest {
+	if p == nil {
 		return nil
 	}
-	return o.SourcePatchRequest
+	return p.SourcePatchRequest
 }
 
 type PatchSourceResponse struct {
@@ -37,30 +37,30 @@ type PatchSourceResponse struct {
 	SourceResponse *shared.SourceResponse
 }
 
-func (o *PatchSourceResponse) GetContentType() string {
-	if o == nil {
+func (p *PatchSourceResponse) GetContentType() string {
+	if p == nil {
 		return ""
 	}
-	return o.ContentType
+	return p.ContentType
 }
 
-func (o *PatchSourceResponse) GetStatusCode() int {
-	if o == nil {
+func (p *PatchSourceResponse) GetStatusCode() int {
+	if p == nil {
 		return 0
 	}
-	return o.StatusCode
+	return p.StatusCode
 }
 
-func (o *PatchSourceResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (p *PatchSourceResponse) GetRawResponse() *http.Response {
+	if p == nil {
 		return nil
 	}
-	return o.RawResponse
+	return p.RawResponse
 }
 
-func (o *PatchSourceResponse) GetSourceResponse() *shared.SourceResponse {
-	if o == nil {
+func (p *PatchSourceResponse) GetSourceResponse() *shared.SourceResponse {
+	if p == nil {
 		return nil
 	}
-	return o.SourceResponse
+	return p.SourceResponse
 }

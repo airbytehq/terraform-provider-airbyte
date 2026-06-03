@@ -7,9 +7,9 @@ type PermissionsResponse struct {
 	Data []PermissionResponseRead `json:"data"`
 }
 
-func (o *PermissionsResponse) GetData() []PermissionResponseRead {
-	if o == nil {
+func (p *PermissionsResponse) GetData() []PermissionResponseRead {
+	if p == nil {
 		return []PermissionResponseRead{}
 	}
-	return o.Data
+	return p.Data
 }

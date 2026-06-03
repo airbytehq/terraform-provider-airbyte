@@ -11,37 +11,37 @@ type DefinitionResponse struct {
 	DocumentationURL *string `json:"documentationUrl,omitempty"`
 }
 
-func (o *DefinitionResponse) GetID() string {
-	if o == nil {
+func (d *DefinitionResponse) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DefinitionResponse) GetName() string {
-	if o == nil {
+func (d *DefinitionResponse) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DefinitionResponse) GetDockerRepository() string {
-	if o == nil {
+func (d *DefinitionResponse) GetDockerRepository() string {
+	if d == nil {
 		return ""
 	}
-	return o.DockerRepository
+	return d.DockerRepository
 }
 
-func (o *DefinitionResponse) GetDockerImageTag() string {
-	if o == nil {
+func (d *DefinitionResponse) GetDockerImageTag() string {
+	if d == nil {
 		return ""
 	}
-	return o.DockerImageTag
+	return d.DockerImageTag
 }
 
-func (o *DefinitionResponse) GetDocumentationURL() *string {
-	if o == nil {
+func (d *DefinitionResponse) GetDocumentationURL() *string {
+	if d == nil {
 		return nil
 	}
-	return o.DocumentationURL
+	return d.DocumentationURL
 }

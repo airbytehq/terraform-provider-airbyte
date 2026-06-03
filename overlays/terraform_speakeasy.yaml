@@ -1,0 +1,191 @@
+# Speakeasy Overlay for Terraform Provider
+# This overlay applies Speakeasy-specific extensions to the generated OpenAPI spec.
+# It is applied after the Python script generates the base terraform spec.
+#
+# Documentation: https://www.speakeasy.com/docs/openapi/overlays
+overlay: 1.0.0
+info:
+  title: Terraform Speakeasy Extensions
+  version: 1.0.0
+
+actions:
+  # =============================================================================
+  # Missing Entity Operation Annotations
+  # =============================================================================
+  # The upstream api.yaml is missing `x-speakeasy-entity-operation: Source#delete`
+  # on the DELETE /sources/{sourceId} operation. Without this annotation, Speakeasy
+  # generates a no-op Delete method for the generic `airbyte_source` resource,
+  # causing `terraform destroy` to report success without actually deleting the
+  # source in Airbyte.
+  #
+  # The destination delete already has the correct annotation in the upstream spec.
+  # The per-connector typed source resources are unaffected because the generation
+  # script (generate_terraform_spec.py) adds the annotation independently.
+  #
+  # Upstream location:
+  #   https://github.com/airbytehq/airbyte-platform/blob/main/airbyte-api/server-api/src/main/openapi/api.yaml
+  #   (DELETE /sources/{sourceId} — has operationId: deleteSource but missing
+  #    x-speakeasy-entity-operation: Source#delete)
+  #
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/361
+
+  - target: "$.paths['/sources/{sourceId}'].delete"
+    description: "Add missing Source#delete entity operation for generic airbyte_source resource"
+    update:
+      x-speakeasy-entity-operation: "Source#delete"
+
+  # =============================================================================
+  # Circular Reference Handling
+  # =============================================================================
+  # The upstream api.yaml uses `x-airbyte-circular-ref: true` to mark schemas with
+  # circular references. Speakeasy doesn't understand this marker and will hang
+  # trying to resolve the circular reference. We add `x-speakeasy-type-override: any`
+  # to tell Speakeasy to treat these schemas as arbitrary JSON blobs.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/250
+
+  - target: "$.components.schemas.RowFilteringOperation"
+    description: "Add Speakeasy type override for circular reference in RowFilteringOperation"
+    update:
+      x-speakeasy-type-override: any
+
+  # =============================================================================
+  # Mapper Configuration Naming
+  # =============================================================================
+  # The MapperConfiguration oneOf schemas have full names like "HashingMapperConfiguration"
+  # which Speakeasy converts to snake_case attributes like "hashing_mapper_configuration".
+  # Since the parent is already named "mapper_configuration", this is redundant.
+  # We use x-speakeasy-name-override to use shorter names matching the schema titles.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/pull/239
+
+  - target: "$.components.schemas.HashingMapperConfiguration"
+    description: "Use shorter name 'Hashing' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: Hashing
+
+  - target: "$.components.schemas.EncryptionMapperConfiguration"
+    description: "Use shorter name 'Encryption' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: Encryption
+
+  - target: "$.components.schemas.FieldFilteringMapperConfiguration"
+    description: "Use shorter name 'FieldFiltering' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: FieldFiltering
+
+  - target: "$.components.schemas.FieldRenamingMapperConfiguration"
+    description: "Use shorter name 'FieldRenaming' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: FieldRenaming
+
+  - target: "$.components.schemas.RowFilteringMapperConfiguration"
+    description: "Use shorter name 'RowFiltering' for Terraform attribute"
+    update:
+      x-speakeasy-name-override: RowFiltering
+
+  # =============================================================================
+  # Sensitive Field Handling
+  # =============================================================================
+  # Connector specs use `airbyte_secret: true` to mark sensitive fields (API keys,
+  # passwords, tokens, etc.). Speakeasy needs `x-speakeasy-param-sensitive: true`
+  # to generate `Sensitive: true` in the Terraform provider schema, which prevents
+  # secrets from appearing in plan output and CI/CD logs.
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/234
+
+  - target: "$.components.schemas..properties.*[?(@.airbyte_secret == true)]"
+    description: "Mark airbyte_secret fields as sensitive for Terraform"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  # =============================================================================
+  # Generic Source/Destination Configuration
+  # =============================================================================
+  # SourceConfiguration and DestinationConfiguration are defined in the upstream
+  # api.yaml as free-form objects (no type, no properties). Speakeasy generates
+  # these as empty Go structs, making the generic airbyte_source/airbyte_destination
+  # resources unable to pass configuration to the API.
+  #
+  # Adding x-speakeasy-type-override: any tells Speakeasy to generate these as
+  # `any` (interface{}) in the SDK and `jsontypes.Normalized` in the Terraform
+  # schema, allowing arbitrary JSON configuration to be passed through.
+  #
+  # The configuration attribute is also marked as sensitive since it may contain
+  # secrets (API keys, passwords, etc.) when used with the generic resources.
+  # Users who want clean diffs on non-sensitive values should use the
+  # airbyte_connector_configuration data source to bifurcate their config.
+  #
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/253
+  # See: https://github.com/airbytehq/terraform-provider-airbyte/issues/234
+
+  - target: "$.components.schemas.SourceConfiguration"
+    description: "Allow arbitrary JSON for generic source configuration"
+    update:
+      x-speakeasy-type-override: any
+
+  - target: "$.components.schemas.DestinationConfiguration"
+    description: "Allow arbitrary JSON for generic destination configuration"
+    update:
+      x-speakeasy-type-override: any
+
+  - target: "$.components.schemas.SourceCreateRequest.properties.configuration"
+    description: "Mark generic source configuration as sensitive"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.SourcePutRequest.properties.configuration"
+    description: "Mark generic source configuration as sensitive (update)"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.SourcePatchRequest.properties.configuration"
+    description: "Mark generic source configuration as sensitive (patch)"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.DestinationCreateRequest.properties.configuration"
+    description: "Mark generic destination configuration as sensitive"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.DestinationPutRequest.properties.configuration"
+    description: "Mark generic destination configuration as sensitive (update)"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  - target: "$.components.schemas.DestinationPatchRequest.properties.configuration"
+    description: "Mark generic destination configuration as sensitive (patch)"
+    update:
+      x-speakeasy-param-sensitive: true
+
+  # =============================================================================
+  # Connection Stream Drift Fixes
+  # =============================================================================
+
+  # --- Layer 1: streams as SetNestedAttribute with UniqueByNameAndNamespace plan modifier ---
+  # The upstream spec defines StreamConfigurations.streams with `format: set`,
+  # which causes Speakeasy to generate SetNestedAttribute. Streams are identified
+  # by the composite key (name, namespace), not by position. We use
+  # x-speakeasy-plan-modifiers to wire in a custom UniqueByNameAndNamespace
+  # modifier that matches set elements by (name, namespace) instead of by hash,
+  # preserving computed attributes (cursor_field, primary_key) across plan cycles.
+
+  - target: "$.components.schemas.StreamConfigurations.properties.streams"
+    description: "Add UniqueByNameAndNamespace plan modifier to correlate streams by (name, namespace) instead of hash"
+    update:
+      x-speakeasy-plan-modifiers: UniqueByNameAndNamespace
+
+  # --- Layer 2: Make cursorField/primaryKey nullable ---
+  # The upstream spec defines cursorField and primaryKey as non-nullable,
+  # non-required arrays. Without nullable, Speakeasy generates unconditional
+  # serialization that always sends these values in API requests — even when
+  # the user didn't specify them. This causes source-defined values to
+  # round-trip back to the API and creates drift. Making them nullable
+  # generates nil guards that omit them when unset.
+  - target: "$.components.schemas.StreamConfiguration.properties.cursorField"
+    description: "Make cursorField nullable to generate nil guards for source-defined values"
+    update:
+      nullable: true
+
+  - target: "$.components.schemas.StreamConfiguration.properties.primaryKey"
+    description: "Make primaryKey nullable to generate nil guards for source-defined values"
+    update:
+      nullable: true

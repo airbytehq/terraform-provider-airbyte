@@ -52,10 +52,12 @@ signs:
       - "--detach-sign"
       - "${artifact}"
 release:
+  # Upload to existing draft release created by semantic-pr-release-drafter
+  draft: true
+  use_existing_draft: true
+  replace_existing_artifacts: true
   extra_files:
     - glob: 'terraform-registry-manifest.json'
       name_template: '{{ .ProjectName }}_{{ .Version }}_manifest.json'
-  # If you want to manually examine the release before its live, uncomment this line:
-  # draft: true
 changelog:
   disable: true

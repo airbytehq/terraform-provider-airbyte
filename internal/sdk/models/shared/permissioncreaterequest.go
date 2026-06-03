@@ -11,30 +11,30 @@ type PermissionCreateRequest struct {
 	OrganizationID *string `json:"organizationId,omitempty"`
 }
 
-func (o *PermissionCreateRequest) GetPermissionType() PublicPermissionType {
-	if o == nil {
+func (p *PermissionCreateRequest) GetPermissionType() PublicPermissionType {
+	if p == nil {
 		return PublicPermissionType("")
 	}
-	return o.PermissionType
+	return p.PermissionType
 }
 
-func (o *PermissionCreateRequest) GetUserID() string {
-	if o == nil {
+func (p *PermissionCreateRequest) GetUserID() string {
+	if p == nil {
 		return ""
 	}
-	return o.UserID
+	return p.UserID
 }
 
-func (o *PermissionCreateRequest) GetWorkspaceID() *string {
-	if o == nil {
+func (p *PermissionCreateRequest) GetWorkspaceID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.WorkspaceID
+	return p.WorkspaceID
 }
 
-func (o *PermissionCreateRequest) GetOrganizationID() *string {
-	if o == nil {
+func (p *PermissionCreateRequest) GetOrganizationID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return p.OrganizationID
 }

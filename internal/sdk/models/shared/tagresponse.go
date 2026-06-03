@@ -11,30 +11,30 @@ type TagResponse struct {
 	WorkspaceID string `json:"workspaceId"`
 }
 
-func (o *TagResponse) GetTagID() string {
-	if o == nil {
+func (t *TagResponse) GetTagID() string {
+	if t == nil {
 		return ""
 	}
-	return o.TagID
+	return t.TagID
 }
 
-func (o *TagResponse) GetName() string {
-	if o == nil {
+func (t *TagResponse) GetName() string {
+	if t == nil {
 		return ""
 	}
-	return o.Name
+	return t.Name
 }
 
-func (o *TagResponse) GetColor() string {
-	if o == nil {
+func (t *TagResponse) GetColor() string {
+	if t == nil {
 		return ""
 	}
-	return o.Color
+	return t.Color
 }
 
-func (o *TagResponse) GetWorkspaceID() string {
-	if o == nil {
+func (t *TagResponse) GetWorkspaceID() string {
+	if t == nil {
 		return ""
 	}
-	return o.WorkspaceID
+	return t.WorkspaceID
 }

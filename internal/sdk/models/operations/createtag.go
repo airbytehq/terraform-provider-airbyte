@@ -18,30 +18,30 @@ type CreateTagResponse struct {
 	TagResponse *shared.TagResponse
 }
 
-func (o *CreateTagResponse) GetContentType() string {
-	if o == nil {
+func (c *CreateTagResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *CreateTagResponse) GetStatusCode() int {
-	if o == nil {
+func (c *CreateTagResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *CreateTagResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *CreateTagResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *CreateTagResponse) GetTagResponse() *shared.TagResponse {
-	if o == nil {
+func (c *CreateTagResponse) GetTagResponse() *shared.TagResponse {
+	if c == nil {
 		return nil
 	}
-	return o.TagResponse
+	return c.TagResponse
 }

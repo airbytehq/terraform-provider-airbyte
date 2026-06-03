@@ -4,29 +4,29 @@ package shared
 
 type DestinationPatchRequest struct {
 	Name *string `json:"name,omitempty"`
-	// The values required to configure the destination.
+	// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
 	Configuration any `json:"configuration,omitempty"`
 	// actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (o *DestinationPatchRequest) GetName() *string {
-	if o == nil {
+func (d *DestinationPatchRequest) GetName() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DestinationPatchRequest) GetConfiguration() any {
-	if o == nil {
+func (d *DestinationPatchRequest) GetConfiguration() any {
+	if d == nil {
 		return nil
 	}
-	return o.Configuration
+	return d.Configuration
 }
 
-func (o *DestinationPatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if o == nil {
+func (d *DestinationPatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if d == nil {
 		return nil
 	}
-	return o.ResourceAllocation
+	return d.ResourceAllocation
 }

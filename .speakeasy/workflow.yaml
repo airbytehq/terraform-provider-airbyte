@@ -1,12 +1,18 @@
 workflowVersion: 1.0.0
-speakeasyVersion: latest
+# `pinned` tells the Speakeasy CLI to use whatever version is currently installed
+# without attempting a blue/green auto-upgrade. The actual version is pinned in
+# .github/speakeasy/dummy-compose.yml and bumped by Dependabot's `docker-compose` ecosystem.
+# https://www.speakeasy.com/docs/speakeasy-reference/workflow-file#speakeasy-version
+speakeasyVersion: pinned
 sources:
-    my-source:
+    airbyte-api:
         inputs:
-            - location: https://raw.githubusercontent.com/airbytehq/airbyte-platform/refs/heads/main/airbyte-api/server-api/src/main/openapi/api_terraform.yaml
+            - location: ./generated/api_terraform.yaml
+        overlays:
+            - location: ./overlays/terraform_speakeasy.yaml
         registry:
             location: registry.speakeasyapi.dev/airbyte/airbyte-prod/my-source
 targets:
     terraform-provider-airbyte:
         target: terraform
-        source: my-source
+        source: airbyte-api

@@ -5,7 +5,7 @@ package shared
 type SourcePatchRequest struct {
 	Name        *string `json:"name,omitempty"`
 	WorkspaceID *string `json:"workspaceId,omitempty"`
-	// The values required to configure the source.
+	// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
 	Configuration any `json:"configuration,omitempty"`
 	// Optional secretID obtained through the  OAuth redirect flow.
 	SecretID *string `json:"secretId,omitempty"`
@@ -13,37 +13,37 @@ type SourcePatchRequest struct {
 	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
-func (o *SourcePatchRequest) GetName() *string {
-	if o == nil {
+func (s *SourcePatchRequest) GetName() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Name
+	return s.Name
 }
 
-func (o *SourcePatchRequest) GetWorkspaceID() *string {
-	if o == nil {
+func (s *SourcePatchRequest) GetWorkspaceID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.WorkspaceID
+	return s.WorkspaceID
 }
 
-func (o *SourcePatchRequest) GetConfiguration() any {
-	if o == nil {
+func (s *SourcePatchRequest) GetConfiguration() any {
+	if s == nil {
 		return nil
 	}
-	return o.Configuration
+	return s.Configuration
 }
 
-func (o *SourcePatchRequest) GetSecretID() *string {
-	if o == nil {
+func (s *SourcePatchRequest) GetSecretID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.SecretID
+	return s.SecretID
 }
 
-func (o *SourcePatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
-	if o == nil {
+func (s *SourcePatchRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if s == nil {
 		return nil
 	}
-	return o.ResourceAllocation
+	return s.ResourceAllocation
 }
