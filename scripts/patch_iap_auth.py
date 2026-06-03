@@ -115,7 +115,7 @@ def patch_provider_schema(content: str) -> str:
 
 
 def patch_provider_transport_opts(content: str) -> str:
-    """Pass IAP config from nested block to ProviderHTTPTransportOpts."""
+    """Initialize IAP manager in Configure and pass to ProviderHTTPTransportOpts."""
     marker = "data.GoogleIAP"
     if marker in content:
         print("  Skipping transport opts (already present)")
@@ -146,21 +146,31 @@ def patch_provider_transport_opts(content: str) -> str:
     # Find the end of the struct literal line (after closing brace)
     line_end = content.find("\n", close_idx)
 
-    # Insert conditional IAP config after the struct literal
+    # Insert IAP init with diagnostics error handling after the struct literal
     insert = """
 \tif data.GoogleIAP != nil {
-\t\tproviderHTTPTransportOpts.GoogleIAPServiceAccountKey = data.GoogleIAP.ServiceAccountKey.ValueString()
-\t\tproviderHTTPTransportOpts.GoogleIAPClientID = data.GoogleIAP.ClientID.ValueString()
+\t\tiapManager, err := NewIAPTokenManager(
+\t\t\tdata.GoogleIAP.ServiceAccountKey.ValueString(),
+\t\t\tdata.GoogleIAP.ClientID.ValueString(),
+\t\t)
+\t\tif err != nil {
+\t\t\tresp.Diagnostics.AddError(
+\t\t\t\t"Google IAP Configuration Error",
+\t\t\t\t"Failed to initialize IAP token manager: "+err.Error(),
+\t\t\t)
+\t\t\treturn
+\t\t}
+\t\tproviderHTTPTransportOpts.IAPManager = iapManager
 \t}
 """
     content = content[: line_end + 1] + insert + content[line_end + 1 :]
-    print("  Added IAP nested config extraction to ProviderHTTPTransportOpts")
+    print("  Added IAP init with diagnostics to Configure")
     return content
 
 
 def patch_utils_transport_opts_struct(content: str) -> str:
-    """Add IAP fields to ProviderHTTPTransportOpts struct in utils.go."""
-    marker = "GoogleIAPServiceAccountKey string"
+    """Add IAPManager field to ProviderHTTPTransportOpts struct in utils.go."""
+    marker = "IAPManager *IAPTokenManager"
     if marker in content:
         print("  Skipping ProviderHTTPTransportOpts fields (already present)")
         return content
@@ -188,14 +198,12 @@ def patch_utils_transport_opts_struct(content: str) -> str:
                 break
 
     insert = (
-        "\n\t// Google IAP Service Account Key (JSON content or file path)\n"
-        "\tGoogleIAPServiceAccountKey string\n"
-        "\n\t// Google IAP Client ID (OAuth2 Client ID configured for IAP)\n"
-        "\tGoogleIAPClientID string\n"
+        "\n\t// Google IAP Token Manager (initialized by provider Configure).\n"
+        "\tIAPManager *IAPTokenManager\n"
     )
 
     content = content[:close_idx] + insert + content[close_idx:]
-    print("  Added IAP fields to ProviderHTTPTransportOpts struct")
+    print("  Added IAPManager field to ProviderHTTPTransportOpts struct")
     return content
 
 
@@ -233,13 +241,13 @@ def patch_utils_transport_struct(content: str) -> str:
 
 
 def patch_utils_new_transport(content: str) -> str:
-    """Patch NewProviderHTTPTransport to initialize IAP manager."""
-    marker = "NewIAPTokenManager("
+    """Patch NewProviderHTTPTransport to pass IAP manager from opts."""
+    marker = "iapManager: opts.IAPManager"
     if marker in content:
         print("  Skipping NewProviderHTTPTransport (already patched)")
         return content
 
-    # Find the function
+    # Find the return struct literal
     target = "func NewProviderHTTPTransport(opts ProviderHTTPTransportOpts) *providerHttpTransport {"
     idx = content.find(target)
     if idx == -1:
@@ -249,31 +257,13 @@ def patch_utils_new_transport(content: str) -> str:
         )
         return content
 
-    # Find the return statement
     return_target = "return &providerHttpTransport{"
     return_idx = content.find(return_target, idx)
     if return_idx == -1:
         print("WARNING: Could not find return in NewProviderHTTPTransport", file=sys.stderr)
         return content
 
-    # Insert IAP initialization before the return
-    iap_init = """\tvar iapManager *IAPTokenManager
-\tif opts.GoogleIAPServiceAccountKey != "" && opts.GoogleIAPClientID != "" {
-\t\tvar err error
-\t\tiapManager, err = NewIAPTokenManager(opts.GoogleIAPServiceAccountKey, opts.GoogleIAPClientID)
-\t\tif err != nil {
-\t\t\ttflog.Error(context.Background(), "Failed to initialize IAP token manager", map[string]interface{}{
-\t\t\t\t"error": err.Error(),
-\t\t\t})
-\t\t}
-\t}
-
-"""
-    content = content[:return_idx] + iap_init + content[return_idx:]
-
-    # Now add iapManager to the return struct
-    # Re-find the return after our insertion
-    return_idx = content.find(return_target, idx)
+    # Find closing brace of the return struct
     brace_start = content.find("{", return_idx)
     brace_depth = 0
     close_idx = brace_start
@@ -285,11 +275,11 @@ def patch_utils_new_transport(content: str) -> str:
             if brace_depth == 0:
                 break
 
-    # Insert iapManager field before closing brace
-    insert = "\t\tiapManager: iapManager,\n\t"
+    # Insert iapManager field before the closing brace
+    insert = "\t\tiapManager: opts.IAPManager,\n"
     last_nl = content.rfind("\n", brace_start, close_idx)
     content = content[: last_nl + 1] + insert + content[last_nl + 1 :]
-    print("  Patched NewProviderHTTPTransport with IAP initialization")
+    print("  Patched NewProviderHTTPTransport to pass IAPManager from opts")
     return content
 
 
@@ -316,10 +306,9 @@ def patch_utils_roundtrip(content: str) -> str:
 \tif t.iapManager != nil {
 \t\ttoken, err := t.iapManager.GetToken()
 \t\tif err != nil {
-\t\t\ttflog.Error(ctx, "Failed to get IAP token", map[string]interface{}{
-\t\t\t\t"error": err.Error(),
-\t\t\t})
-\t\t} else if token != "" {
+\t\t\treturn nil, fmt.Errorf("failed to get IAP token: %w", err)
+\t\t}
+\t\tif token != "" {
 \t\t\treq.Header.Set("Authorization", "Bearer "+token)
 \t\t}
 \t}"""

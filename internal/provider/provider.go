@@ -163,8 +163,18 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	}
 
 	if data.GoogleIAP != nil {
-		providerHTTPTransportOpts.GoogleIAPServiceAccountKey = data.GoogleIAP.ServiceAccountKey.ValueString()
-		providerHTTPTransportOpts.GoogleIAPClientID = data.GoogleIAP.ClientID.ValueString()
+		iapManager, err := NewIAPTokenManager(
+			data.GoogleIAP.ServiceAccountKey.ValueString(),
+			data.GoogleIAP.ClientID.ValueString(),
+		)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Google IAP Configuration Error",
+				"Failed to initialize IAP token manager: "+err.Error(),
+			)
+			return
+		}
+		providerHTTPTransportOpts.IAPManager = iapManager
 	}
 
 	httpClient := http.DefaultClient

@@ -102,31 +102,17 @@ type ProviderHTTPTransportOpts struct {
 	// Underlying HTTP transport.
 	Transport http.RoundTripper
 
-	// Google IAP Service Account Key (JSON content or file path)
-	GoogleIAPServiceAccountKey string
-
-	// Google IAP Client ID (OAuth2 Client ID configured for IAP)
-	GoogleIAPClientID string
+	// Google IAP Token Manager (initialized by provider Configure).
+	IAPManager *IAPTokenManager
 }
 
 // Note: this is taken as a more minimal/specific version of https://github.com/hashicorp/terraform-plugin-sdk/blob/main/helper/logging/logging_http_transport.go
 func NewProviderHTTPTransport(opts ProviderHTTPTransportOpts) *providerHttpTransport {
-		var iapManager *IAPTokenManager
-	if opts.GoogleIAPServiceAccountKey != "" && opts.GoogleIAPClientID != "" {
-		var err error
-		iapManager, err = NewIAPTokenManager(opts.GoogleIAPServiceAccountKey, opts.GoogleIAPClientID)
-		if err != nil {
-			tflog.Error(context.Background(), "Failed to initialize IAP token manager", map[string]interface{}{
-				"error": err.Error(),
-			})
-		}
-	}
-
-return &providerHttpTransport{
+	return &providerHttpTransport{
 		setHeaders: opts.SetHeaders,
 		transport:  opts.Transport,
-		iapManager: iapManager,
-		}
+		iapManager: opts.IAPManager,
+	}
 }
 
 const (
@@ -161,10 +147,9 @@ func (t *providerHttpTransport) RoundTrip(req *http.Request) (*http.Response, er
 	if t.iapManager != nil {
 		token, err := t.iapManager.GetToken()
 		if err != nil {
-			tflog.Error(ctx, "Failed to get IAP token", map[string]interface{}{
-				"error": err.Error(),
-			})
-		} else if token != "" {
+			return nil, fmt.Errorf("failed to get IAP token: %w", err)
+		}
+		if token != "" {
 			req.Header.Set("Authorization", "Bearer "+token)
 		}
 	}
