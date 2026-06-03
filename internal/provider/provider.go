@@ -39,8 +39,7 @@ type AirbyteProviderModel struct {
 	ServerURL    types.String `tfsdk:"server_url"`
 	TokenURL     types.String `tfsdk:"token_url"`
 	Username     types.String `tfsdk:"username"`
-	GoogleIAPServiceAccountKey types.String `tfsdk:"google_iap_service_account_key"`
-	GoogleIAPClientID          types.String `tfsdk:"google_iap_client_id"`
+	GoogleIAP *GoogleIAPModel `tfsdk:"google_iap"`
 }
 
 func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -85,14 +84,20 @@ func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest
 				Optional:            true,
 				Sensitive:           true,
 			},
-			"google_iap_service_account_key": schema.StringAttribute{
+			"google_iap": schema.SingleNestedAttribute{
 				Optional:    true,
-				Sensitive:   true,
-				Description: `Google Service Account JSON key for IAP authentication (content or file path)`,
-			},
-			"google_iap_client_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `OAuth2 Client ID configured for Google IAP`,
+				Description: `Google Identity-Aware Proxy (IAP) authentication. When set, the provider automatically obtains and refreshes IAP tokens for all API requests.`,
+				Attributes: map[string]schema.Attribute{
+					"service_account_key": schema.StringAttribute{
+						Required:    true,
+						Sensitive:   true,
+						Description: `Google Service Account JSON key for IAP authentication (content or file path).`,
+					},
+					"client_id": schema.StringAttribute{
+						Required:    true,
+						Description: `OAuth2 Client ID configured for Google IAP.`,
+					},
+				},
 			},
 		},
 		MarkdownDescription: `airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.`,
@@ -155,9 +160,12 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	providerHTTPTransportOpts := ProviderHTTPTransportOpts{
 		SetHeaders: make(map[string]string),
 		Transport:  http.DefaultTransport,
-		GoogleIAPServiceAccountKey: data.GoogleIAPServiceAccountKey.ValueString(),
-		GoogleIAPClientID:          data.GoogleIAPClientID.ValueString(),
-		}
+	}
+
+	if data.GoogleIAP != nil {
+		providerHTTPTransportOpts.GoogleIAPServiceAccountKey = data.GoogleIAP.ServiceAccountKey.ValueString()
+		providerHTTPTransportOpts.GoogleIAPClientID = data.GoogleIAP.ClientID.ValueString()
+	}
 
 	httpClient := http.DefaultClient
 	httpClient.Transport = NewProviderHTTPTransport(providerHTTPTransportOpts)

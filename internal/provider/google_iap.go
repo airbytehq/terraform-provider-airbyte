@@ -18,8 +18,15 @@ import (
 	"sync"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"golang.org/x/sync/singleflight"
 )
+
+// GoogleIAPModel describes the nested google_iap provider configuration block.
+type GoogleIAPModel struct {
+	ServiceAccountKey types.String `tfsdk:"service_account_key"`
+	ClientID          types.String `tfsdk:"client_id"`
+}
 
 // ServiceAccountKey represents the structure of a Google Service Account JSON key file
 type ServiceAccountKey struct {
