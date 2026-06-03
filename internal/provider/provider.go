@@ -32,13 +32,13 @@ type AirbyteProvider struct {
 
 // AirbyteProviderModel describes the provider data model.
 type AirbyteProviderModel struct {
-	BearerAuth                 types.String `tfsdk:"bearer_auth"`
-	ClientID                   types.String `tfsdk:"client_id"`
-	ClientSecret               types.String `tfsdk:"client_secret"`
-	Password                   types.String `tfsdk:"password"`
-	ServerURL                  types.String `tfsdk:"server_url"`
-	TokenURL                   types.String `tfsdk:"token_url"`
-	Username                   types.String `tfsdk:"username"`
+	BearerAuth   types.String `tfsdk:"bearer_auth"`
+	ClientID     types.String `tfsdk:"client_id"`
+	ClientSecret types.String `tfsdk:"client_secret"`
+	Password     types.String `tfsdk:"password"`
+	ServerURL    types.String `tfsdk:"server_url"`
+	TokenURL     types.String `tfsdk:"token_url"`
+	Username     types.String `tfsdk:"username"`
 	GoogleIAPServiceAccountKey types.String `tfsdk:"google_iap_service_account_key"`
 	GoogleIAPClientID          types.String `tfsdk:"google_iap_client_id"`
 }
@@ -153,11 +153,11 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	}
 
 	providerHTTPTransportOpts := ProviderHTTPTransportOpts{
-		SetHeaders:                 make(map[string]string),
-		Transport:                  http.DefaultTransport,
+		SetHeaders: make(map[string]string),
+		Transport:  http.DefaultTransport,
 		GoogleIAPServiceAccountKey: data.GoogleIAPServiceAccountKey.ValueString(),
 		GoogleIAPClientID:          data.GoogleIAPClientID.ValueString(),
-	}
+		}
 
 	httpClient := http.DefaultClient
 	httpClient.Transport = NewProviderHTTPTransport(providerHTTPTransportOpts)

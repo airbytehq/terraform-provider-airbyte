@@ -111,24 +111,22 @@ type ProviderHTTPTransportOpts struct {
 
 // Note: this is taken as a more minimal/specific version of https://github.com/hashicorp/terraform-plugin-sdk/blob/main/helper/logging/logging_http_transport.go
 func NewProviderHTTPTransport(opts ProviderHTTPTransportOpts) *providerHttpTransport {
-	var iapManager *IAPTokenManager
+		var iapManager *IAPTokenManager
 	if opts.GoogleIAPServiceAccountKey != "" && opts.GoogleIAPClientID != "" {
 		var err error
 		iapManager, err = NewIAPTokenManager(opts.GoogleIAPServiceAccountKey, opts.GoogleIAPClientID)
 		if err != nil {
-			// Log the error but continue - IAP will not work but provider can still function
-			// for non-IAP endpoints
 			tflog.Error(context.Background(), "Failed to initialize IAP token manager", map[string]interface{}{
 				"error": err.Error(),
 			})
 		}
 	}
 
-	return &providerHttpTransport{
+return &providerHttpTransport{
 		setHeaders: opts.SetHeaders,
 		transport:  opts.Transport,
 		iapManager: iapManager,
-	}
+		}
 }
 
 const (
