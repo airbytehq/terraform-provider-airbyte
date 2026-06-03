@@ -184,6 +184,8 @@ jobs:
       - name: Create and push tag
         run: |
           VERSION="${{ inputs.version }}"
+          git config user.name "${{ steps.import_gpg.outputs.name }}"
+          git config user.email "${{ steps.import_gpg.outputs.email }}"
           git tag -a "$VERSION" -m "Pre-release $VERSION"
           git push origin "$VERSION"
 
