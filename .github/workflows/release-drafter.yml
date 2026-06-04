@@ -97,7 +97,7 @@ jobs:
       # GoReleaser will find the existing draft release and upload assets to it.
       # Configured with `draft: true` and `use_existing_draft: true` in `.goreleaser.yml`.
       - name: Build and upload release assets
-        uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
+        uses: goreleaser/goreleaser-action@5daf1e915a5f0af01ddbcd89a43b8061ff4f1a89 # v7.2.2
         with:
           args: release --clean
         env:
