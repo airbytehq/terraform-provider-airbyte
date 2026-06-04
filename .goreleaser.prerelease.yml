@@ -3,7 +3,9 @@
 # This is a variant of .goreleaser.yml used by the pre-release workflow.
 # Differences from the production config:
 #   - release.draft = false   (immediately visible, not a draft)
-#   - release.prerelease = true (Terraform Registry won't make it the default)
+#   - release.prerelease removed (the semver pre-release suffix in the tag is
+#     enough for Terraform Registry to treat it as non-default; setting the
+#     GitHub "pre-release" flag would actually prevent the Registry from syncing)
 #   - release.use_existing_draft removed (creates a new release)
 #   - changelog.disable removed (includes auto-generated changelog)
 #
@@ -58,7 +60,6 @@ signs:
       - "${artifact}"
 release:
   draft: false
-  prerelease: true
   replace_existing_artifacts: true
   extra_files:
     - glob: 'terraform-registry-manifest.json'
