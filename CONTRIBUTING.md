@@ -97,12 +97,12 @@ Pre-releases let you publish a provider version for testing without making it th
 
 1. **Slash command on a PR** (recommended for PR-based work):
    ```
-   /pre-release version=v1.3.0-rc.1
+   /pre-release version=v1.3.0-rc1
    ```
    This builds from the PR's head branch.
 
 2. **Manual workflow dispatch** (from the [Actions tab](https://github.com/airbytehq/terraform-provider-airbyte/actions/workflows/pre-release-command.yml)):
-   - **version** (required): e.g. `v1.3.0-rc.1`, `v1.3.0-beta.1`. Must be valid semver with a pre-release suffix.
+   - **version** (required): e.g. `v1.3.0-rc1`, `v1.3.0-beta1`. Must be valid semver with a pre-release suffix (no dots in the suffix).
    - **ref** (optional, default: `main`): branch, tag, or commit SHA to build from.
 
 **Safety checks** — the workflow will fail if:
@@ -116,7 +116,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "1.3.0-rc.1"  # no 'v' prefix in Terraform
+      version = "1.3.0-rc1"  # no 'v' prefix in Terraform
     }
   }
 }
