@@ -289,6 +289,10 @@ func (s *Organizations) CreateOrUpdateOrganizationOAuthCredentials(ctx context.C
 
 // DeleteOrganizationOAuthCredentials - Delete OAuth override credentials for an organization and source/destination type.
 // Delete a set of OAuth credentials that overrides the Airbyte-provided OAuth credentials used for source/destination OAuth.
+//
+// > 🚧Warning
+// >
+// > Deleting an override that is actively used by existing sources or destinations will cause those connectors to fail on their next sync and require re-authentication.
 func (s *Organizations) DeleteOrganizationOAuthCredentials(ctx context.Context, request operations.DeleteOrganizationOAuthCredentialsRequest, opts ...operations.Option) (*operations.DeleteOrganizationOAuthCredentialsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
