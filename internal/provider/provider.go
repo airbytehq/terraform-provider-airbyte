@@ -28,6 +28,7 @@ type AirbyteProvider struct {
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
 	version string
+	config  providerRuntimeConfig
 }
 
 // AirbyteProviderModel describes the provider data model.
@@ -36,6 +37,7 @@ type AirbyteProviderModel struct {
 	ClientID     types.String `tfsdk:"client_id"`
 	ClientSecret types.String `tfsdk:"client_secret"`
 	Password     types.String `tfsdk:"password"`
+	ConfigAPIRoot types.String `tfsdk:"config_api_root"`
 	ServerURL    types.String `tfsdk:"server_url"`
 	TokenURL     types.String `tfsdk:"token_url"`
 	Username     types.String `tfsdk:"username"`
@@ -68,6 +70,10 @@ func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest
 				MarkdownDescription: `HTTP Basic password.`,
 				Optional:            true,
 				Sensitive:           true,
+			},
+			"config_api_root": schema.StringAttribute{
+				Description: `Internal config API root used for connection schedule features not exposed by the public API (defaults to the corresponding Airbyte config API for server_url).`,
+				Optional:    true,
 			},
 			"server_url": schema.StringAttribute{
 				Description: `Server URL (defaults to https://api.airbyte.com/v1)`,
@@ -156,10 +162,22 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	}
 
 	client := sdk.New(opts...)
+	configAPIRoot := data.ConfigAPIRoot.ValueString()
+	if configAPIRoot == "" {
+		configAPIRoot = deriveConfigAPIRoot(serverUrl)
+	}
 	resp.ActionData = client
 	resp.DataSourceData = client
 	resp.EphemeralResourceData = client
 	resp.ListResourceData = client
+	resp.ActionData = client
+	resp.DataSourceData = client
+	resp.EphemeralResourceData = client
+	resp.ListResourceData = client
+	p.config = providerRuntimeConfig{
+		ConfigAPIRoot: configAPIRoot,
+		HTTPClient:    httpClient,
+	}
 	resp.ResourceData = client
 }
 
@@ -173,7 +191,11 @@ func (p *AirbyteProvider) Actions(_ context.Context) []func() action.Action {
 
 func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewConnectionResource,
+		func() resource.Resource {
+			resource := NewConnectionResource().(*ConnectionResource)
+			resource.config = p.config
+			return resource
+		},
 		NewDeclarativeSourceDefinitionResource,
 		NewDestinationResource,
 		NewDestinationDefinitionResource,

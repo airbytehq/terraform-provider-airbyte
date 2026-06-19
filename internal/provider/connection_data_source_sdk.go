@@ -141,7 +141,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 		r.Prefix = types.StringPointerValue(resp.Prefix)
 		r.Schedule = &tfTypes.ConnectionScheduleResponse{}
 		r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
-		r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
+		applyCronScheduleDataSourceResponse(r.Schedule, resp.Schedule.CronExpression, nil)
 		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 		r.SourceID = types.StringValue(resp.SourceID)
 		r.Status = types.StringValue(string(resp.Status))

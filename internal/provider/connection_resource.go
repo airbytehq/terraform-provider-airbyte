@@ -42,6 +42,7 @@ func NewConnectionResource() resource.Resource {
 type ConnectionResource struct {
 	// Provider configured SDK client.
 	client *sdk.SDK
+	config providerRuntimeConfig
 }
 
 // ConnectionResourceModel describes the resource data model.
@@ -612,6 +613,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 						},
 					},
+					"cron_time_zone": schema.StringAttribute{
+						Computed: true,
+						Optional: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+						},
+						Description: `IANA time zone used to evaluate cron schedules, for example "America/New_York". Defaults to Airbyte's API default when omitted.`,
+					},
 					"schedule_type": schema.StringAttribute{
 						Computed: true,
 						Optional: true,
@@ -795,7 +804,9 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	plannedCronTimeZone := configuredCronTimeZone(data.Schedule)
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, res.ConnectionResponse.ConnectionID, res.RawResponse, plannedCronTimeZone)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -859,7 +870,9 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	previousCronTimeZone := configuredCronTimeZone(data.Schedule)
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.refreshCronTimeZone(ctx, data, res.RawResponse, previousCronTimeZone)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -909,7 +922,9 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	plannedCronTimeZone := configuredCronTimeZone(data.Schedule)
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	resp.Diagnostics.Append(r.applyCronTimeZone(ctx, data, request.ConnectionID, res.RawResponse, plannedCronTimeZone)...)
 
 	if resp.Diagnostics.HasError() {
 		return

@@ -193,6 +193,7 @@ Read-Only:
 
 - `basic_timing` (String)
 - `cron_expression` (String)
+- `cron_time_zone` (String)
 - `schedule_type` (String)
 
 
