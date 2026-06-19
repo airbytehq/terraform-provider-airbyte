@@ -37,7 +37,16 @@ provider "airbyte" {
 - `bearer_auth` (String, Sensitive) HTTP Bearer.
 - `client_id` (String, Sensitive) OAuth2 Client Credentials Flow client identifier.
 - `client_secret` (String, Sensitive) OAuth2 Client Credentials Flow client secret.
+- `google_iap` (Attributes) Google Identity-Aware Proxy (IAP) authentication. When set, the provider automatically obtains and refreshes IAP tokens for all API requests. (see [below for nested schema](#nestedatt--google_iap))
 - `password` (String, Sensitive) HTTP Basic password.
 - `server_url` (String) Server URL (defaults to https://api.airbyte.com/v1)
 - `token_url` (String, Sensitive) OAuth2 Client Credentials Flow token URL.
 - `username` (String, Sensitive) HTTP Basic username.
+
+<a id="nestedatt--google_iap"></a>
+### Nested Schema for `google_iap`
+
+Required:
+
+- `client_id` (String) OAuth2 Client ID configured for Google IAP.
+- `service_account_key` (String, Sensitive) Google Service Account JSON key for IAP authentication (content or file path).
