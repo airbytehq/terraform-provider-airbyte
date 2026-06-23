@@ -212,6 +212,7 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceResource,
 		NewSourceDefinitionResource,
 		NewWorkspaceResource,
+		NewConnectorVersionOverrideResource,
 	}
 }
 
