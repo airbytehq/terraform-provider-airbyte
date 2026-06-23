@@ -47,6 +47,7 @@ jobs:
             perf
             build
             revert
+            prompts
           # Require a scope to be provided (optional)
           requireScope: false
           # Configure which scopes are allowed (empty = any scope allowed)
