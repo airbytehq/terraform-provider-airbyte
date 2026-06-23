@@ -69,7 +69,7 @@ jobs:
           echo "Generated docs diff saved to generated-docs-diff.patch"
       - name: Upload diff artifact
         if: failure() && steps.docs_drift.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: generated-docs-diff
           path: generated-docs-diff.patch
