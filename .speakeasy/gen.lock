@@ -1,17 +1,17 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: f3feb9f838385970449b0a27fabbb4d0
+  docChecksum: 80f322b52e51ed45fbea30db0d07919c
   docVersion: 1.0.0
   speakeasyVersion: 1.761.11
   generationVersion: 2.881.17
-  releaseVersion: 1.2.1
-  configChecksum: 591cd51e1ac8e8d100409601e2b5ed67
+  releaseVersion: 1.3.0
+  configChecksum: 0061f5f9dcba0f4b443defd79ba23611
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 persistentEdits:
-  generation_id: d2d1f4e0-b1fb-46e3-8a87-edf86b7aa397
-  pristine_commit_hash: e4a39dfff0f501b6133411d62df6ef0a00b01479
-  pristine_tree_hash: 700737bd165067f5b8e4c3b2ae75b042569168d7
+  generation_id: 496c7f3e-24ec-44b0-b3bb-00b33ae6fcad
+  pristine_commit_hash: 5a62f5387b938e04b42806442b28c98415a4f6cb
+  pristine_tree_hash: db7b33b388cbd8400e0494754c7380c91d8828c2
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -74,8 +74,8 @@ trackedFiles:
     pristine_git_object: 8f46fa23e9ff318c727d03f0dcf5a8a677b6e617
   examples/provider/provider.tf:
     id: 954e955c0240
-    last_write_checksum: sha1:80cbf5a084ca19de5601b82a28ee5fcab18e68d4
-    pristine_git_object: eeeb7a3e59b2aa9056bf64ca06bc55dd53c2e3a8
+    last_write_checksum: sha1:aeee55306df46e54be4a92debda95ece7ba14495
+    pristine_git_object: 3c77d0e09ad4d07dfac6da2bd7c8f3b34d348694
   examples/resources/airbyte_connection/import-by-string-id.tf:
     id: 8c04ff01f5ae
     last_write_checksum: sha1:d0e6ff899bd5da0e7018c9420f4face02263ff4c
@@ -888,6 +888,10 @@ trackedFiles:
     id: 1193e004e5cc
     last_write_checksum: sha1:64fafd85d4c18b2696cc6ad64c82b98340257189
     pristine_git_object: f4f1242215da838b5acb73fd4bef3bdca7dc4586
+  internal/sdk/models/operations/deleteworkspaceoauthcredentials.go:
+    id: dcc2aa035d77
+    last_write_checksum: sha1:f0b8f83e2f1cce1b2af2cc026a955a686000e8fb
+    pristine_git_object: 71b7ecafb617e42fbc34081e37243a226d41971e
   internal/sdk/models/operations/generateembeddedscopedtoken.go:
     id: 14041f8beab6
     last_write_checksum: sha1:4e55bbfd8f1e92e451eb9776f2d4f42685d3edba
@@ -1622,8 +1626,8 @@ trackedFiles:
     pristine_git_object: e6e5a01c6e721e879e24a38a1f97e3e27d4686d4
   internal/sdk/organizations.go:
     id: df1bc34ceddd
-    last_write_checksum: sha1:f9ebb5cb5528e98d629bdd93a9a2fa9fc9c480ef
-    pristine_git_object: 660a9c315c15da8ce78b3a65095a8176ddb80eb7
+    last_write_checksum: sha1:cf4e399be2c6be36f6553c787092df81ee088326
+    pristine_git_object: bbf550be144d304548179916c9a4936b56e93601
   internal/sdk/permissions.go:
     id: e664b375b187
     last_write_checksum: sha1:fd4f0227af254f39dfd8bfbcc36f701da899d494
@@ -1646,8 +1650,8 @@ trackedFiles:
     pristine_git_object: 5b3dc7c122d8ab08905485342d7474f8f163888d
   internal/sdk/sdk.go:
     id: 02d7190ee502
-    last_write_checksum: sha1:5aecaadee93c3c44a14e05d5c22ba22360158cf0
-    pristine_git_object: 6612e3e78361dd69c0192a3a326d54ce4ac75a60
+    last_write_checksum: sha1:6e2aca099b7e763a6de0de116704c16cabcf4b47
+    pristine_git_object: 06da2d84f14d2123e59fe2de55e5864429859855
   internal/sdk/sourcedefinitions.go:
     id: 6cda810b4781
     last_write_checksum: sha1:078f7fbb18285e856fbde7c941686d2c8f9cc97f
@@ -1686,8 +1690,8 @@ trackedFiles:
     pristine_git_object: 22bee9295cfe5c6b134a0f3ffd3312fd73332ea7
   internal/sdk/workspaces.go:
     id: 436a1d832809
-    last_write_checksum: sha1:7e6db14fbe95be3be64173586a37fb2aeb06c4e3
-    pristine_git_object: 4af68ac2371d726ee1992b484107cad1f61a47f2
+    last_write_checksum: sha1:d2091708c4f39620194108519bd6d42cbe057cbd
+    pristine_git_object: 6f9791f9379752d3e2a117651c210ce84cb905ec
   internal/validators/DateValidator.go:
     id: 4fdfa187ab97
     last_write_checksum: sha1:1b5e06b330396f49427876f2971b0626432e9376
@@ -21922,6 +21926,13 @@ examples:
       parameters:
         path:
           destinationId: "<value>"
+  deleteWorkspaceOAuthCredentials:
+    speakeasy-default-delete-workspace-O-auth-credentials:
+      parameters:
+        path:
+          workspaceId: "<value>"
+          actorType: "source"
+          name: "<value>"
 examplesVersion: 1.0.2
 generatedTests: {}
 generatedFiles:

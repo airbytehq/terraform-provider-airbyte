@@ -13,6 +13,12 @@ Your contribution is appreciated. Here are some helpful tips and resources.
 - `/tf-examples project=pre-1.0 action=apply` - Apply terraform changes to the pre-1.0 example project
 - `/tf-examples project=pre-1.0 action=destroy` - Destroy terraform resources in the pre-1.0 example project
 
+### Pre-Release Commands
+
+- `/pre-release version=v1.3.0-rc1` - Build and publish a pre-release from this PR's branch
+
+Pre-releases are published to the Terraform Registry but are **not** the default version. See [CONTRIBUTING.md — Pre-Release Process](CONTRIBUTING.md#pre-release-process) for details.
+
 </details>
 
 <details>
