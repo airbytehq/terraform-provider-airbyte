@@ -692,6 +692,8 @@ func (s *Groups) DeleteGroup(ctx context.Context, request operations.DeleteGroup
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
 		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
@@ -1090,6 +1092,8 @@ func (s *Groups) RemoveGroupMember(ctx context.Context, request operations.Remov
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
 		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
