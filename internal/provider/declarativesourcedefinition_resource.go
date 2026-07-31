@@ -7,6 +7,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	custom_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
@@ -53,7 +54,7 @@ func (r *DeclarativeSourceDefinitionResource) Schema(ctx context.Context, req re
 			"id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.UseStateForUnknown(),
+					custom_stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"manifest": schema.StringAttribute{
