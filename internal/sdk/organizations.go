@@ -151,6 +151,7 @@ func (s *Organizations) ListOrganizationsForUser(ctx context.Context, opts ...op
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -269,9 +270,11 @@ func (s *Organizations) CreateOrUpdateOrganizationOAuthCredentials(ctx context.C
 
 	switch {
 	case httpRes.StatusCode == 200:
+		utils.DrainBody(httpRes)
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 403:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
@@ -286,6 +289,10 @@ func (s *Organizations) CreateOrUpdateOrganizationOAuthCredentials(ctx context.C
 
 // DeleteOrganizationOAuthCredentials - Delete OAuth override credentials for an organization and source/destination type.
 // Delete a set of OAuth credentials that overrides the Airbyte-provided OAuth credentials used for source/destination OAuth.
+//
+// > 🚧Warning
+// >
+// > Deleting an override that is actively used by existing sources or destinations will cause those connectors to fail on their next sync and require re-authentication.
 func (s *Organizations) DeleteOrganizationOAuthCredentials(ctx context.Context, request operations.DeleteOrganizationOAuthCredentialsRequest, opts ...operations.Option) (*operations.DeleteOrganizationOAuthCredentialsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -382,9 +389,11 @@ func (s *Organizations) DeleteOrganizationOAuthCredentials(ctx context.Context, 
 
 	switch {
 	case httpRes.StatusCode == 204:
+		utils.DrainBody(httpRes)
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 403:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

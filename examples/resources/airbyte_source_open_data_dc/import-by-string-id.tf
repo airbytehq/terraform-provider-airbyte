@@ -1,4 +1,0 @@
-import {
-  to = airbyte_source_open_data_dc.my_airbyte_source_open_data_dc
-  id = "..."
-}

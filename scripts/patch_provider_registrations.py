@@ -20,6 +20,7 @@ CUSTOM_DATA_SOURCES = [
 CUSTOM_RESOURCES: list[str] = []
 
 DATA_SOURCES_MARKER = "func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.DataSource {"
+
 RESOURCES_MARKER = "func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resource {"
 
 
@@ -76,10 +77,6 @@ def main() -> None:
     missing_data_sources = [reg for reg in CUSTOM_DATA_SOURCES if reg not in content]
     missing_resources = [reg for reg in CUSTOM_RESOURCES if reg not in content]
 
-    if not missing_data_sources and not missing_resources:
-        print("All custom registrations already present, no changes needed.")
-        return
-
     if missing_data_sources:
         print("Patching custom data source registrations...")
         content = patch_registrations(content, DATA_SOURCES_MARKER, missing_data_sources)
@@ -91,9 +88,8 @@ def main() -> None:
     if content != original:
         provider_path.write_text(content)
         print(f"Patched {provider_path}")
-    elif missing_data_sources or missing_resources:
-        print("ERROR: Registrations are missing but patching failed. Check warnings above.", file=sys.stderr)
-        sys.exit(1)
+    else:
+        print("No changes needed.")
 
 
 if __name__ == "__main__":

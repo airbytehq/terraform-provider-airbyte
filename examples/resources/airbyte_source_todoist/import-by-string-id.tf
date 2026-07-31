@@ -1,4 +1,0 @@
-import {
-  to = airbyte_source_todoist.my_airbyte_source_todoist
-  id = "..."
-}

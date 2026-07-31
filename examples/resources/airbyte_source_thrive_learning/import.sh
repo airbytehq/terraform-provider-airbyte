@@ -1,1 +1,0 @@
-terraform import airbyte_source_thrive_learning.my_airbyte_source_thrive_learning "..."

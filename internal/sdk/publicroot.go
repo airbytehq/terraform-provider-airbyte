@@ -58,7 +58,7 @@ func (s *PublicRoot) GetDocumentation(ctx context.Context, opts ...operations.Op
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "getDocumentation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   nil,
 	}
 
@@ -121,6 +121,7 @@ func (s *PublicRoot) GetDocumentation(ctx context.Context, opts ...operations.Op
 
 	switch {
 	case httpRes.StatusCode == 200:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

@@ -1,1 +1,0 @@
-terraform import airbyte_source_airbyte_victorops_source.my_airbyte_source_airbyte_victorops_source "..."

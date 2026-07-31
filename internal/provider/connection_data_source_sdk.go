@@ -23,9 +23,13 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 		for _, streamsItem := range resp.Configurations.Streams {
 			var streams tfTypes.StreamConfiguration
 
-			streams.CursorField = make([]types.String, 0, len(streamsItem.CursorField))
-			for _, v := range streamsItem.CursorField {
-				streams.CursorField = append(streams.CursorField, types.StringValue(v))
+			if streamsItem.CursorField != nil {
+				streams.CursorField = make([]types.String, 0, len(streamsItem.CursorField))
+				for _, v := range streamsItem.CursorField {
+					streams.CursorField = append(streams.CursorField, types.StringValue(v))
+				}
+			} else {
+				streams.CursorField = nil
 			}
 			streams.DestinationObjectName = types.StringPointerValue(streamsItem.DestinationObjectName)
 			streams.IncludeFiles = types.BoolPointerValue(streamsItem.IncludeFiles)
@@ -86,14 +90,18 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 			}
 			streams.Name = types.StringValue(streamsItem.Name)
 			streams.Namespace = types.StringPointerValue(streamsItem.Namespace)
-			streams.PrimaryKey = nil
-			for _, primaryKeyItem := range streamsItem.PrimaryKey {
-				var primaryKey []types.String
-				primaryKey = make([]types.String, 0, len(primaryKeyItem))
-				for _, v := range primaryKeyItem {
-					primaryKey = append(primaryKey, types.StringValue(v))
+			if streamsItem.PrimaryKey != nil {
+				streams.PrimaryKey = nil
+				for _, primaryKeyItem := range streamsItem.PrimaryKey {
+					var primaryKey []types.String
+					primaryKey = make([]types.String, 0, len(primaryKeyItem))
+					for _, v := range primaryKeyItem {
+						primaryKey = append(primaryKey, types.StringValue(v))
+					}
+					streams.PrimaryKey = append(streams.PrimaryKey, primaryKey)
 				}
-				streams.PrimaryKey = append(streams.PrimaryKey, primaryKey)
+			} else {
+				streams.PrimaryKey = nil
 			}
 			streams.SelectedFields = []tfTypes.SelectedFieldInfo{}
 

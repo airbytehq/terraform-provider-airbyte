@@ -209,10 +209,19 @@ func (c *clientCredentialsHook) getCredentials(ctx HookContext, source func(ctx 
 }
 
 func (c *clientCredentialsHook) getCredentialsGlobal(sec any) (*credentials, error) {
-	security, ok := sec.(shared.Security)
-
-	if !ok {
-		return nil, fmt.Errorf("unexpected security type: %T", sec)
+	secPtr, ptrOk := sec.(*shared.Security)
+	var security shared.Security
+	if ptrOk {
+		if secPtr == nil {
+			return nil, nil
+		}
+		security = *secPtr
+	} else {
+		var ok bool
+		security, ok = sec.(shared.Security)
+		if !ok {
+			return nil, fmt.Errorf("unexpected security type: %T", sec)
+		}
 	}
 
 	if security.ClientCredentials == nil {

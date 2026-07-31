@@ -1,4 +1,0 @@
-import {
-  to = airbyte_source_less_annoying_crm.my_airbyte_source_less_annoying_crm
-  id = "..."
-}

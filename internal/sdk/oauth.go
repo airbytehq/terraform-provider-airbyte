@@ -59,7 +59,7 @@ func (s *OAuth) OauthCallback(ctx context.Context, request operations.OauthCallb
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "oauthCallback",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   nil,
 	}
 
@@ -126,6 +126,7 @@ func (s *OAuth) OauthCallback(ctx context.Context, request operations.OauthCallb
 
 	switch {
 	case httpRes.StatusCode == 302:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

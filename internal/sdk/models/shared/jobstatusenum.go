@@ -11,6 +11,7 @@ type JobStatusEnum string
 
 const (
 	JobStatusEnumPending    JobStatusEnum = "pending"
+	JobStatusEnumQueued     JobStatusEnum = "queued"
 	JobStatusEnumRunning    JobStatusEnum = "running"
 	JobStatusEnumIncomplete JobStatusEnum = "incomplete"
 	JobStatusEnumFailed     JobStatusEnum = "failed"
@@ -28,6 +29,8 @@ func (e *JobStatusEnum) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "pending":
+		fallthrough
+	case "queued":
 		fallthrough
 	case "running":
 		fallthrough

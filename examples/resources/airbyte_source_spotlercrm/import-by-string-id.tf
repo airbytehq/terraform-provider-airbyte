@@ -1,4 +1,0 @@
-import {
-  to = airbyte_source_spotlercrm.my_airbyte_source_spotlercrm
-  id = "..."
-}

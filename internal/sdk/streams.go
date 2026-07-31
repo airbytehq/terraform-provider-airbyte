@@ -156,6 +156,7 @@ func (s *Streams) GetStreamProperties(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 403:
 		fallthrough
 	case httpRes.StatusCode == 404:
+		utils.DrainBody(httpRes)
 	default:
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {

@@ -1,4 +1,0 @@
-import {
-  to = airbyte_source_tyntec_sms.my_airbyte_source_tyntec_sms
-  id = "..."
-}

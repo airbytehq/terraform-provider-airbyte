@@ -1,0 +1,209 @@
+# Migrating to Generic Resources
+
+## Overview
+
+Version 1.0 of the Airbyte Terraform provider introduced **generic connector resources** (`airbyte_source` and `airbyte_destination`) that replace the typed connector-specific resources (e.g., `airbyte_source_postgres`, `airbyte_destination_bigquery`).
+
+> **Removal Notice**
+> Typed connector-specific resources were deprecated in 1.0 and have been **removed in 1.1**. If you are upgrading from a pre-1.1 provider version, you must migrate to the generic resources before upgrading to v1.1.
+
+## Recommended upgrade path
+
+To avoid combining version updates with resource migration in a single step, we recommend upgrading in phases:
+
+1. **Upgrade to v1.0** — Typed resources still work but emit deprecation warnings. Your existing configuration continues to function without changes.
+2. **Resolve all deprecation warnings** — Migrate each typed resource to its generic equivalent using `moved` blocks (see [Migration walkthrough](#migration-walkthrough) below). Run `terraform plan` after each change and confirm no destroy actions. Take your time — v1.0 is stable and there is no rush.
+3. **Upgrade to v1.1+** — Once all deprecation warnings are resolved and your `terraform plan` is clean, upgrade the provider version. Since all typed resources have already been replaced, the upgrade is a no-op.
+
+> **Tip:** The `moved` block approach (Step 2) preserves your existing Airbyte resources in-place. Terraform will show `moved` in the plan output, not `create`/`destroy`. This avoids any disruption to running connections.
+
+The recommended way to use the generic resources is with the [`airbyte_connector_configuration`](../data-sources/connector_configuration.md) data source, which provides:
+- Automatic `definition_id` resolution from connector name
+- Optional version pinning via `connector_version` (e.g. `"3.6.28"`)
+- Type-validated configuration against the connector's JSONSchema spec (catches errors at `terraform plan` time)
+- Separation of sensitive and non-sensitive values for clean diffs
+
+## Migration walkthrough
+
+> **Warning**
+> The `moved` block approach requires **Terraform 1.8 or later**. For older versions, see [Alternative methods (Terraform < 1.8)](#alternative-methods-terraform--18) below.
+
+This walkthrough shows a complete migration from a typed resource to the generic resource with validated configuration, using `moved` to preserve state.
+
+### Step 1 — Replace the typed resource
+
+Remove the typed resource and add a `moved` block pointing from the old address to the new one. Use the `airbyte_connector_configuration` data source for type-validated configuration and automatic `definition_id` resolution.
+
+**Before (typed resource):**
+
+```hcl
+resource "airbyte_source_postgres" "my_pg_source" {
+  name         = "Production Postgres"
+  workspace_id = var.workspace_id
+
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "readonly"
+    password = var.db_password
+  }
+}
+```
+
+**After (generic resource with validated configuration):**
+
+```hcl
+data "airbyte_connector_configuration" "my_pg_source_config" {
+  connector_name = "source-postgres"
+  # connector_version = "3.6.28"  # optional: pin to a specific version
+  configuration = {
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "readonly"
+  }
+  configuration_secrets = {
+    password = var.db_password
+  }
+}
+
+resource "airbyte_source" "my_pg_source" {
+  name          = "Production Postgres"
+  workspace_id  = var.workspace_id
+  definition_id = data.airbyte_connector_configuration.my_pg_source_config.definition_id
+  configuration = data.airbyte_connector_configuration.my_pg_source_config.configuration_json
+}
+
+// ℹ️ The `moved` block informs terraform to not
+// delete and/or recreate your resources.
+// This block may be deleted once your migration
+// to the 1.0 provider is fully complete.
+moved {
+  from = airbyte_source_postgres.my_pg_source
+  to   = airbyte_source.my_pg_source
+}
+```
+
+The `airbyte_connector_configuration` data source validates your configuration against the connector's JSON schema during `terraform plan`, so typos and missing fields are caught before apply. Non-sensitive values (`host`, `port`, etc.) produce clean diffs, while the merged `configuration_json` is marked sensitive.
+
+### Step 2 — Update references
+
+Update any resources that reference the old typed resource:
+
+```hcl
+# Before:
+source_id = airbyte_source_postgres.my_pg_source.source_id
+
+# After:
+source_id = airbyte_source.my_pg_source.source_id
+```
+
+### Step 3 — Plan and verify
+
+Run `terraform plan` and confirm:
+
+- There are **no** destroy actions.
+- Terraform shows `moved` for the resource, not `create`/`destroy`.
+- Any updates shown are configuration changes you expect.
+
+### Step 4 — Apply and clean up
+
+Run `terraform apply` to complete the migration. After a successful apply, you may optionally remove the `moved` block — it is only required during the initial migration.
+
+### Migrating destinations
+
+The same approach works for destinations:
+
+```hcl
+data "airbyte_connector_configuration" "my_bigquery_dest_config" {
+  connector_name = "destination-bigquery"
+  # connector_version = "2.9.4"  # optional: pin to a specific version
+  configuration = {
+    project_id = "my-gcp-project"
+    dataset_id = "my_dataset"
+  }
+  configuration_secrets = {
+    credentials_json = var.gcp_credentials
+  }
+}
+
+resource "airbyte_destination" "my_bigquery_dest" {
+  name          = "BigQuery"
+  workspace_id  = var.workspace_id
+  definition_id = data.airbyte_connector_configuration.my_bigquery_dest_config.definition_id
+  configuration = data.airbyte_connector_configuration.my_bigquery_dest_config.configuration_json
+}
+
+// ℹ️ The `moved` block informs terraform to not
+// delete and/or recreate your resources.
+// This block may be deleted once your migration
+// to the 1.0 provider is fully complete.
+moved {
+  from = airbyte_destination_bigquery.my_bigquery_dest
+  to   = airbyte_destination.my_bigquery_dest
+}
+```
+
+### Migrating from `_custom` resources
+
+If you were using `airbyte_source_custom` or `airbyte_destination_custom` from a pre-1.0 provider version, these have been replaced by the generic `airbyte_source` and `airbyte_destination` resources. The generic resources have the same contract (JSON configuration, `definition_id`, etc.), so migrating is straightforward:
+
+```hcl
+resource "airbyte_source" "my_source" {
+  name          = "My Custom Source"
+  workspace_id  = var.workspace_id
+  definition_id = "ab5e6175-68e1-4c17-bff9-56103bbb0d80"
+
+  configuration = jsonencode({
+    api_key = var.api_key
+    host    = "api.example.com"
+  })
+}
+
+// ℹ️ The `moved` block informs terraform to not
+// delete and/or recreate your resources.
+// This block may be deleted once your migration
+// to the 1.0 provider is fully complete.
+moved {
+  from = airbyte_source_custom.my_source
+  to   = airbyte_source.my_source
+}
+```
+
+> **Note**
+> - The `_custom` resources already used JSON configuration, so your `configuration` block can remain unchanged. Only the resource type name changes.
+> - Optionally, you can leverage the `airbyte_connector_configuration` data source for pre-validation of data types and auto-discovery of the internal definition ID. See above example for more information.
+
+## Inline JSON configuration (without the data source)
+
+For simpler cases where you don't need type validation or the sensitive/non-sensitive split, pass JSON configuration directly:
+
+```hcl
+resource "airbyte_source" "my_source" {
+  name          = "My Postgres Source"
+  workspace_id  = var.workspace_id
+  definition_id = "decd338e-5647-4c0b-adf4-da0e75f5a750"
+  configuration = jsonencode({
+    host     = "db.example.com"
+    port     = 5432
+    database = "mydb"
+    username = "readonly"
+    password = var.db_password
+  })
+}
+```
+
+The entire `configuration` attribute is marked as sensitive, so all values are hidden in plan output. Use this approach only if you don't need per-field diff visibility.
+
+### Finding the definition_id
+
+The generic resource requires a `definition_id` to identify the connector type. You can find it by:
+
+- Using the `airbyte_connector_configuration` data source to resolve it automatically from the connector name (recommended).
+- Running `terraform state show airbyte_source_postgres.my_source` before migrating and noting the `definition_id` attribute.
+- Looking up the connector in the Airbyte UI under **Settings > Sources** or **Settings > Destinations**.
+
+## Alternative methods (Terraform < 1.8)
+
+If you cannot use Terraform 1.8+ and the `moved` block, see the Terraform documentation on [moving resources](https://developer.hashicorp.com/terraform/cli/state/move) and [state management](https://developer.hashicorp.com/terraform/cli/state) for alternative approaches such as `terraform state rm` + `terraform import`.
