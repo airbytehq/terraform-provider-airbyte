@@ -39,7 +39,11 @@ terraform:
   additionalProviderAttributes:
     httpHeaders: ""
     tlsSkipVerify: ""
-  additionalResources: []
+  additionalResources:
+    # Hand-coded resource for managing connector version overrides via the
+    # internal config API (scoped_configuration). See
+    # internal/provider/connector_version_override_resource.go.
+    - resource: NewConnectorVersionOverrideResource
   allowUnknownFieldsInWeakUnions: false
   author: airbytehq
   baseErrorName: SDKError
