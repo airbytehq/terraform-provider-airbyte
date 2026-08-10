@@ -8,8 +8,12 @@ configuration:
 The behavior may therefore not match any released version of the provider and
 applying changes may cause the state to become incompatible with published
 releases.
-airbyte_declarative_source_definition.repro: Refreshing state... [id=ae823ff3-c40a-4100-b0f8-8a8701eb2d11]
+airbyte_declarative_source_definition.repro: Refreshing state... [id=362f2e29-9cc3-419d-a3e7-934dd591531f]
+data.airbyte_connector_configuration.dev_null[0]: Reading...
+data.airbyte_connector_configuration.dev_null[0]: Read complete after 0s
+airbyte_destination.dev_null[0]: Refreshing state... [name=tf-declarative-source-id-repro-dev-null]
 airbyte_source.repro: Refreshing state... [name=tf-declarative-source-id-repro]
+airbyte_connection.repro[0]: Refreshing state... [name=tf-declarative-source-id-repro-connection]
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -19,7 +23,7 @@ Terraform will perform the following actions:
 
   # airbyte_declarative_source_definition.repro will be updated in-place
   ~ resource "airbyte_declarative_source_definition" "repro" {
-        id           = "ae823ff3-c40a-4100-b0f8-8a8701eb2d11"
+        id           = "362f2e29-9cc3-419d-a3e7-934dd591531f"
       ~ manifest     = jsonencode(
           ~ {
               ~ description = "initial declarative source definition" -> "updated declarative source definition"

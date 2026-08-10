@@ -8,8 +8,12 @@ configuration:
 The behavior may therefore not match any released version of the provider and
 applying changes may cause the state to become incompatible with published
 releases.
-airbyte_declarative_source_definition.repro: Refreshing state... [id=6ba59bc5-13fb-4cca-8067-098f33dffbb3]
+data.airbyte_connector_configuration.dev_null[0]: Reading...
+airbyte_declarative_source_definition.repro: Refreshing state... [id=a6063686-5106-4251-b5f7-00dc4b16b731]
+data.airbyte_connector_configuration.dev_null[0]: Read complete after 0s
+airbyte_destination.dev_null[0]: Refreshing state... [name=tf-declarative-source-id-repro-dev-null]
 airbyte_source.repro: Refreshing state... [name=tf-declarative-source-id-repro]
+airbyte_connection.repro[0]: Refreshing state... [name=tf-declarative-source-id-repro-connection]
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -18,9 +22,39 @@ plan. Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
+  # airbyte_connection.repro[0] must be replaced
+-/+ resource "airbyte_connection" "repro" {
+      ~ configurations                       = {
+          ~ streams = [
+              - {
+                  - cursor_field    = [] -> null
+                  - include_files   = false -> null
+                  - mappers         = [] -> null
+                  - name            = "jsonplaceholder_posts" -> null
+                  - selected_fields = [] -> null
+                  - sync_mode       = "full_refresh_overwrite" -> null
+                },
+            ] -> (known after apply)
+        } -> (known after apply)
+      ~ connection_id                        = "5f9fb0cb-5dbb-4491-8b3f-12fd193aa213" -> (known after apply)
+      ~ created_at                           = 1786389307 -> (known after apply)
+        name                                 = "tf-declarative-source-id-repro-connection"
+      + namespace_format                     = (known after apply)
+      ~ schedule                             = {
+          + basic_timing    = (known after apply)
+          + cron_expression = (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+      ~ source_id                            = "eeba6e2f-dd14-48d1-819d-7a6bfe77bcc6" -> (known after apply) # forces replacement
+      + status_reason                        = (known after apply)
+      ~ tags                                 = [] -> (known after apply)
+      ~ workspace_id                         = "266ebdfe-0d7b-4540-9817-de7e4505ba61" -> (known after apply)
+        # (5 unchanged attributes hidden)
+    }
+
   # airbyte_declarative_source_definition.repro will be updated in-place
   ~ resource "airbyte_declarative_source_definition" "repro" {
-      ~ id           = "6ba59bc5-13fb-4cca-8067-098f33dffbb3" -> (known after apply)
+      ~ id           = "a6063686-5106-4251-b5f7-00dc4b16b731" -> (known after apply)
       ~ manifest     = jsonencode(
           ~ {
               ~ description = "initial declarative source definition" -> "updated declarative source definition"
@@ -34,20 +68,21 @@ Terraform will perform the following actions:
 
   # airbyte_source.repro must be replaced
 -/+ resource "airbyte_source" "repro" {
-      ~ created_at          = 1786386817 -> (known after apply)
-      ~ definition_id       = "6ba59bc5-13fb-4cca-8067-098f33dffbb3" -> (known after apply) # forces replacement
+      ~ created_at          = 1786389289 -> (known after apply)
+      ~ definition_id       = "a6063686-5106-4251-b5f7-00dc4b16b731" -> (known after apply) # forces replacement
         name                = "tf-declarative-source-id-repro"
       + resource_allocation = (known after apply)
-      ~ source_id           = "2b704754-bfcb-4111-98e7-5f433ef504d0" -> (known after apply)
+      ~ source_id           = "eeba6e2f-dd14-48d1-819d-7a6bfe77bcc6" -> (known after apply)
       ~ source_type         = null -> (known after apply)
         # (2 unchanged attributes hidden)
     }
 
-Plan: 1 to add, 1 to change, 1 to destroy.
+Plan: 2 to add, 1 to change, 2 to destroy.
 
 Changes to Outputs:
-  ~ definition_id = "6ba59bc5-13fb-4cca-8067-098f33dffbb3" -> (known after apply)
-  ~ source_id     = "2b704754-bfcb-4111-98e7-5f433ef504d0" -> (known after apply)
+  ~ connection_id = "5f9fb0cb-5dbb-4491-8b3f-12fd193aa213" -> (known after apply)
+  ~ definition_id = "a6063686-5106-4251-b5f7-00dc4b16b731" -> (known after apply)
+  ~ source_id     = "eeba6e2f-dd14-48d1-819d-7a6bfe77bcc6" -> (known after apply)
 
 ─────────────────────────────────────────────────────────────────────────────
 

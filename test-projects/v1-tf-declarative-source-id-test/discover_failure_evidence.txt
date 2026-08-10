@@ -1,36 +1,31 @@
-DISCOVER failure evidence
+DISCOVER fixture diagnosis
 
-Manifest fixture:
-- Source stream: jsonplaceholder_posts
-- Requester: https://jsonplaceholder.typicode.com/posts
-- Source configuration: {}
+The initial manifest used version `0.1.0`. Connector Builder output in the
+Devin Sandbox and the current declarative manifests use real CDK versions; the
+fixture was changed to `6.48.15`.
 
-Connection-creation run:
-- Definition ID: a4e9fe85-1758-4f52-843d-242d2b86b3cc
-- Source ID: 9349ab43-4da9-4f77-bd8c-debd5561a4c0
-- Destination ID: 3d0e4741-c160-4e82-b8ed-4753c302ee7d
-- Result: HTTP 500
-- Error: The main container of the DISCOVER operation returned an exit code 1
+After that version change, standalone DISCOVER still failed for:
 
-Standalone discover-schema run:
+- Definition ID: 4507eb5e-caab-4d69-bdfa-02f2adcdcea8
+- Source ID: e004b3bd-b97b-4ba6-953d-564e86d273d1
+- Job ID: 005015f7-f705-4723-9a6c-080e785b5903
 - Endpoint: POST https://cloud.airbyte.com/api/v1/sources/discover_schema
-- Definition ID: 5e5b1ad8-b0bb-4695-8408-c5b8efbcaf1e
-- Source ID: 744853e2-0569-4822-ac7c-48f0d4b54496
-- Job ID: 48ae1d9e-8ee8-4209-b2af-eb8dd1ca4704
-- Created: 2026-08-10T18:38:14Z
-- Ended: 2026-08-10T18:38:30Z
-- Result: HTTP 200 with jobInfo.succeeded=false
-- failureReason.externalMessage: The main container of the DISCOVER operation returned an exit code 1
-- failureReason.failureOrigin: source
-- failureReason.failureType: system_error
 
-The structured job log contained these relevant connector-side events:
-- START DISCOVER
-- Connector exited with exit code 1
-- Reading messages from protocol version 0.2.0
-- Output file jobOutput.json found
-- END DISCOVER
+The job response exposed the connector traceback:
 
-The response returned logLines=[]; no connector stderr or exception text was
-exposed by the Cloud API. The standalone discover failure reproduces the
-connection-creation failure without a connection resource.
+```text
+Additional properties are not allowed ('__injected_declarative_manifest' was unexpected)
+...
+AirbyteTracedException: Additional properties are not allowed ('__injected_declarative_manifest' was unexpected)
+```
+
+The source manifest's empty connection specification had
+`additionalProperties = false`. Cloud injects
+`__injected_declarative_manifest` into the source configuration during
+DISCOVER, so the fixture rejected the platform-injected field.
+
+Changing the specification to `additionalProperties = true` made DISCOVER and
+connection creation succeed. The connection-preservation e2e then passed with
+the fixed provider, including the real manifest apply and unchanged source and
+connection IDs. This evidence identifies a fixture configuration error, not a
+Cloud-wide declarative-source failure.

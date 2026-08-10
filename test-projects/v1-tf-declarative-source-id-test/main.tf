@@ -38,7 +38,7 @@ variable "manifest_description" {
 
 variable "enable_connection" {
   description = "Also create the dev-null destination and connection."
-  default     = false
+  default     = true
   type        = bool
 }
 
@@ -46,7 +46,7 @@ resource "airbyte_declarative_source_definition" "repro" {
   name         = "tf-declarative-source-id-repro"
   workspace_id = var.workspace_id
   manifest = jsonencode({
-    version = "0.1.0"
+    version = "6.48.15"
     type    = "DeclarativeSource"
     check = {
       type         = "CheckStream"
@@ -98,7 +98,7 @@ resource "airbyte_declarative_source_definition" "repro" {
         type                 = "object"
         "$schema"            = "http://json-schema.org/draft-07/schema#"
         properties           = {}
-        additionalProperties = false
+        additionalProperties = true
       }
     }
     description = var.manifest_description
