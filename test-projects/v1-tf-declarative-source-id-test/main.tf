@@ -50,17 +50,17 @@ resource "airbyte_declarative_source_definition" "repro" {
     type    = "DeclarativeSource"
     check = {
       type         = "CheckStream"
-      stream_names = ["terraform_provider_regression"]
+      stream_names = ["jsonplaceholder_posts"]
     }
     streams = [{
       type = "DeclarativeStream"
-      name = "terraform_provider_regression"
+      name = "jsonplaceholder_posts"
       retriever = {
         type = "SimpleRetriever"
         requester = {
           type        = "HttpRequester"
-          url_base    = "https://example.com"
-          path        = "terraform-provider-regression"
+          url_base    = "https://jsonplaceholder.typicode.com"
+          path        = "posts"
           http_method = "GET"
         }
         record_selector = {
@@ -74,8 +74,21 @@ resource "airbyte_declarative_source_definition" "repro" {
       schema_loader = {
         type = "InlineSchemaLoader"
         schema = {
-          type       = "object"
-          properties = {}
+          type = "object"
+          properties = {
+            userId = {
+              type = "integer"
+            }
+            id = {
+              type = "integer"
+            }
+            title = {
+              type = "string"
+            }
+            body = {
+              type = "string"
+            }
+          }
         }
       }
     }]
