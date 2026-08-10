@@ -107,6 +107,22 @@ rm -f tfplan .terraformrc drift_output.txt
 rm -rf provider-override .terraform .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup
 ```
 
+## Declarative Source ID Regression Scenario
+
+Use `test-projects/v1-tf-declarative-source-id-test/` to verify that a
+manifest-only update preserves the declarative source definition ID.
+
+1. Build binaries from both the PR branch and `origin/main`, and configure a
+   Terraform dev override for one binary at a time.
+2. Apply the fixture with the main binary.
+3. Change only `manifest_description`, then run `terraform plan` against the
+   existing state and capture the plan.
+4. Switch to the PR binary and run the identical plan against the same state.
+5. The fixed plan must keep `id` known, contain no `# forces replacement` or
+   `must be replaced` markers, and report `0 to destroy`.
+6. Always run `terraform destroy -auto-approve`, then verify the sandbox has no
+   repro definitions, sources, destinations, or connections remaining.
+
 ## What This Tests
 
 | Resource Type | Count | Approach |

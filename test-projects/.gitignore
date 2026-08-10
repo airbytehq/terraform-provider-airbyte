@@ -14,13 +14,3 @@ provider-bin/
 
 # Active provider binary (copied from provider-bin)
 provider-override/
-
-# Provider dev override config written by assert-repro.sh
-.terraformrc
-
-# Transient run artifacts from assert-repro.sh
-*.tfplan
-initial_plan_output.txt
-drift_output.txt
-changed_plan_output.txt
-destroy_output.txt
