@@ -109,19 +109,137 @@ rm -rf provider-override .terraform .terraform.lock.hcl terraform.tfstate terraf
 
 ## Declarative Source ID Regression Scenario
 
-Use `test-projects/v1-tf-declarative-source-id-test/` to verify that a
-manifest-only update preserves the declarative source definition ID.
+Use `test-projects/v1-tf-declarative-source-id-test/` to reproduce the
+declarative source definition ID replacement cascade. The fixture creates:
 
-1. Build binaries from both the PR branch and `origin/main`, and configure a
-   Terraform dev override for one binary at a time.
-2. Apply the fixture with the main binary.
-3. Change only `manifest_description`, then run `terraform plan` against the
-   existing state and capture the plan.
-4. Switch to the PR binary and run the identical plan against the same state.
-5. The fixed plan must keep `id` known, contain no `# forces replacement` or
-   `must be replaced` markers, and report `0 to destroy`.
-6. Always run `terraform destroy -auto-approve`, then verify the sandbox has no
-   repro definitions, sources, destinations, or connections remaining.
+- an `airbyte_declarative_source_definition` with one JSONPlaceholder stream;
+- an `airbyte_source` that references the definition ID;
+- a SILENT `destination-dev-null` destination; and
+- an `airbyte_connection` for the source.
+
+The connection is enabled by default through `enable_connection = true`.
+
+The bug requires prior state. It appears only when Terraform replans an
+already-applied definition after `manifest_description` changes. A plan-only
+check cannot detect this state-preservation bug.
+
+### Run the regression
+
+Run each provider binary in a fresh Terraform state. The commands below use
+the fixed branch binary first, then a clean `origin/main` binary.
+
+Build both binaries:
+
+```bash
+cd /home/ubuntu/repos/terraform-provider-airbyte
+go build -o dist/terraform-provider-airbyte .
+git worktree add --detach /tmp/terraform-provider-airbyte-main origin/main
+(cd /tmp/terraform-provider-airbyte-main && go clean -cache && go build -a -o /tmp/terraform-provider-airbyte-main/terraform-provider-airbyte .)
+```
+
+Prepare the fixture and credentials:
+
+```bash
+cd /home/ubuntu/repos/terraform-provider-airbyte/test-projects/v1-tf-declarative-source-id-test
+export TF_VAR_airbyte_client_id="$AIRBYTE_CLOUD_CLIENT_ID"
+export TF_VAR_airbyte_client_secret="$AIRBYTE_CLOUD_CLIENT_SECRET"
+export TF_VAR_workspace_id="$AIRBYTE_CLOUD_DEVIN_SANDBOX_WORKSPACE_ID"
+mkdir -p provider-override
+```
+
+For each binary, set `PROVIDER_BINARY` and run the same lifecycle:
+
+```bash
+export PROVIDER_BINARY=/home/ubuntu/repos/terraform-provider-airbyte/dist/terraform-provider-airbyte
+cp "$PROVIDER_BINARY" provider-override/terraform-provider-airbyte
+chmod +x provider-override/terraform-provider-airbyte
+OVERRIDE_DIR="$(pwd)/provider-override"
+cat > .terraformrc <<EOF
+provider_installation {
+  dev_overrides {
+    "airbytehq/airbyte" = "${OVERRIDE_DIR}"
+  }
+  direct {}
+}
+EOF
+export TF_CLI_CONFIG_FILE="$(pwd)/.terraformrc"
+
+terraform init
+terraform plan -out=initial.tfplan \
+  -var='manifest_description=initial declarative source definition'
+terraform apply -auto-approve initial.tfplan
+
+initial_source_id="$(terraform output -raw source_id)"
+initial_connection_id="$(terraform output -raw connection_id)"
+
+terraform plan -detailed-exitcode \
+  -var='manifest_description=initial declarative source definition'
+terraform plan -detailed-exitcode -out=changed.tfplan \
+  -var='manifest_description=updated declarative source definition' \
+  2>&1 | tee changed_plan_output.txt
+
+terraform apply -auto-approve changed.tfplan
+test "$(terraform output -raw source_id)" = "$initial_source_id"
+test "$(terraform output -raw connection_id)" = "$initial_connection_id"
+terraform destroy -auto-approve
+```
+
+The changed plan must contain no `must be replaced` or `forces replacement`
+markers and must report `0 to destroy`. Capture IDs before the changed apply
+and compare both the source ID and connection ID after the apply.
+
+Repeat the same commands with:
+
+```bash
+export PROVIDER_BINARY=/tmp/terraform-provider-airbyte-main/terraform-provider-airbyte
+```
+
+For `origin/main`, stop after capturing the changed plan. Its expected output
+contains replacement markers for both `airbyte_source.repro` and
+`airbyte_connection.repro[0]`:
+
+```text
+Plan: 2 to add, 1 to change, 2 to destroy
+```
+
+The fixed provider must instead report:
+
+```text
+Plan: 0 to add, 1 to change, 0 to destroy
+```
+
+Always run `terraform destroy -auto-approve`, including after a failed plan.
+Then query the Devin Sandbox API. This check must return zero matching
+resources:
+
+```bash
+token="$(curl -fsS \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode grant_type=client_credentials \
+  --data-urlencode "client_id=$AIRBYTE_CLOUD_CLIENT_ID" \
+  --data-urlencode "client_secret=$AIRBYTE_CLOUD_CLIENT_SECRET" \
+  https://api.airbyte.com/v1/applications/token | jq -r .access_token)"
+
+for endpoint in \
+  "sources?workspaceIds=$TF_VAR_workspace_id" \
+  "destinations?workspaceIds=$TF_VAR_workspace_id" \
+  "connections?workspaceIds=$TF_VAR_workspace_id" \
+  "workspaces/$TF_VAR_workspace_id/definitions/declarative_sources"; do
+  curl -fsS -H "Authorization: Bearer $token" \
+    "https://api.airbyte.com/v1/$endpoint" |
+    jq '[.. | objects | select((.name? // "") | startswith("tf-declarative-source-id-repro"))] | length'
+done
+```
+
+Each result must be `0` for the Devin Sandbox workspace.
+
+### Gotchas
+
+- `manifest.version` must be a real CDK version. A bogus value can make the
+  connector container exit 1 while the job response exposes empty `logLines`.
+- The connection specification must allow additional properties. Cloud injects
+  `__injected_declarative_manifest` into the source configuration during
+  DISCOVER.
 
 ## What This Tests
 
