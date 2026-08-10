@@ -50,39 +50,35 @@ resource "airbyte_declarative_source_definition" "repro" {
     type    = "DeclarativeSource"
     check = {
       type         = "CheckStream"
-      stream_names = []
+      stream_names = ["terraform_provider_regression"]
     }
-    definitions = {
-      streams = {
-        terraform_provider_regression = {
-          type = "DeclarativeStream"
-          name = "terraform_provider_regression"
-          retriever = {
-            type = "SimpleRetriever"
-            requester = {
-              type        = "HttpRequester"
-              url_base    = "https://example.com"
-              path        = "terraform-provider-regression"
-              http_method = "GET"
-            }
-            record_selector = {
-              type = "RecordSelector"
-              extractor = {
-                type       = "DpathExtractor"
-                field_path = []
-              }
-            }
-          }
-          schema_loader = {
-            type = "InlineSchemaLoader"
-            schema = {
-              type       = "object"
-              properties = {}
-            }
+    streams = [{
+      type = "DeclarativeStream"
+      name = "terraform_provider_regression"
+      retriever = {
+        type = "SimpleRetriever"
+        requester = {
+          type        = "HttpRequester"
+          url_base    = "https://example.com"
+          path        = "terraform-provider-regression"
+          http_method = "GET"
+        }
+        record_selector = {
+          type = "RecordSelector"
+          extractor = {
+            type       = "DpathExtractor"
+            field_path = []
           }
         }
       }
-    }
+      schema_loader = {
+        type = "InlineSchemaLoader"
+        schema = {
+          type       = "object"
+          properties = {}
+        }
+      }
+    }]
     spec = {
       type = "Spec"
       connection_specification = {
@@ -138,4 +134,8 @@ output "definition_id" {
 
 output "source_id" {
   value = airbyte_source.repro.source_id
+}
+
+output "connection_id" {
+  value = try(airbyte_connection.repro[0].connection_id, "")
 }

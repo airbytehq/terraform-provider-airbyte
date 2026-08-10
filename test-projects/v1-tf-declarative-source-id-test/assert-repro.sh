@@ -11,6 +11,7 @@ cd "$project_dir"
 provider_binary="${PROVIDER_BINARY:-$project_dir/../../dist/terraform-provider-airbyte}"
 initial_description="${INITIAL_MANIFEST_DESCRIPTION:-initial declarative source definition}"
 changed_description="${CHANGED_MANIFEST_DESCRIPTION:-updated declarative source definition}"
+connection_enabled="${TF_VAR_enable_connection:-false}"
 initial_plan="$project_dir/initial.tfplan"
 changed_plan="$project_dir/changed.tfplan"
 initial_output="$project_dir/initial_plan_output.txt"
@@ -52,6 +53,11 @@ terraform init -no-color
 terraform plan -no-color -out="$initial_plan" \
   -var="manifest_description=$initial_description" 2>&1 | tee "$initial_output"
 terraform apply -no-color -auto-approve "$initial_plan"
+initial_source_id="$(terraform output -no-color -raw source_id)"
+initial_connection_id=""
+if [[ "$connection_enabled" == "true" ]]; then
+  initial_connection_id="$(terraform output -no-color -raw connection_id)"
+fi
 
 set +e
 terraform plan -no-color -detailed-exitcode \
@@ -85,4 +91,21 @@ if ! grep -Eq 'Plan: [0-9]+ to add, [0-9]+ to change, 0 to destroy' "$changed_ou
   exit 1
 fi
 
-echo "PASS: post-apply drift is clean and manifest-only update has no replacement or destroy."
+terraform apply -no-color -auto-approve "$changed_plan"
+
+final_source_id="$(terraform output -no-color -raw source_id)"
+if [[ "$final_source_id" != "$initial_source_id" ]]; then
+  echo "source ID changed after applying the manifest update: $initial_source_id -> $final_source_id" >&2
+  exit 1
+fi
+
+if [[ "$connection_enabled" == "true" ]]; then
+  final_connection_id="$(terraform output -no-color -raw connection_id)"
+  if [[ "$final_connection_id" != "$initial_connection_id" ]]; then
+    echo "connection ID changed after applying the manifest update: $initial_connection_id -> $final_connection_id" >&2
+    exit 1
+  fi
+  echo "PASS: post-apply drift is clean and applying the manifest update preserves source and connection IDs."
+else
+  echo "PASS: post-apply drift is clean and applying the manifest update preserves the source ID."
+fi

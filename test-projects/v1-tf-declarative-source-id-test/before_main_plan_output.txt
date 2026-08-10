@@ -8,7 +8,7 @@ configuration:
 The behavior may therefore not match any released version of the provider and
 applying changes may cause the state to become incompatible with published
 releases.
-airbyte_declarative_source_definition.repro: Refreshing state... [id=78f4d0c0-2f3b-47cd-8c1d-68fe9281292a]
+airbyte_declarative_source_definition.repro: Refreshing state... [id=6ba59bc5-13fb-4cca-8067-098f33dffbb3]
 airbyte_source.repro: Refreshing state... [name=tf-declarative-source-id-repro]
 
 Terraform used the selected providers to generate the following execution
@@ -20,7 +20,7 @@ Terraform will perform the following actions:
 
   # airbyte_declarative_source_definition.repro will be updated in-place
   ~ resource "airbyte_declarative_source_definition" "repro" {
-      ~ id           = "78f4d0c0-2f3b-47cd-8c1d-68fe9281292a" -> (known after apply)
+      ~ id           = "6ba59bc5-13fb-4cca-8067-098f33dffbb3" -> (known after apply)
       ~ manifest     = jsonencode(
           ~ {
               ~ description = "initial declarative source definition" -> "updated declarative source definition"
@@ -34,11 +34,11 @@ Terraform will perform the following actions:
 
   # airbyte_source.repro must be replaced
 -/+ resource "airbyte_source" "repro" {
-      ~ created_at          = 1786386206 -> (known after apply)
-      ~ definition_id       = "78f4d0c0-2f3b-47cd-8c1d-68fe9281292a" -> (known after apply) # forces replacement
+      ~ created_at          = 1786386817 -> (known after apply)
+      ~ definition_id       = "6ba59bc5-13fb-4cca-8067-098f33dffbb3" -> (known after apply) # forces replacement
         name                = "tf-declarative-source-id-repro"
       + resource_allocation = (known after apply)
-      ~ source_id           = "b2808c50-26ed-433a-9fb2-9c11369287b8" -> (known after apply)
+      ~ source_id           = "2b704754-bfcb-4111-98e7-5f433ef504d0" -> (known after apply)
       ~ source_type         = null -> (known after apply)
         # (2 unchanged attributes hidden)
     }
@@ -46,8 +46,8 @@ Terraform will perform the following actions:
 Plan: 1 to add, 1 to change, 1 to destroy.
 
 Changes to Outputs:
-  ~ definition_id = "78f4d0c0-2f3b-47cd-8c1d-68fe9281292a" -> (known after apply)
-  ~ source_id     = "b2808c50-26ed-433a-9fb2-9c11369287b8" -> (known after apply)
+  ~ definition_id = "6ba59bc5-13fb-4cca-8067-098f33dffbb3" -> (known after apply)
+  ~ source_id     = "2b704754-bfcb-4111-98e7-5f433ef504d0" -> (known after apply)
 
 ─────────────────────────────────────────────────────────────────────────────
 
