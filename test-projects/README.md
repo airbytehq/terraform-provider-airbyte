@@ -7,6 +7,7 @@ This directory contains test projects for validating the Airbyte Terraform provi
 | Directory | Description |
 | --- | --- |
 | `v1-tf-generic-test/` | **Current** — uses only generic resources (`airbyte_source`, `airbyte_destination`). Target for the CI plan check and the Devin E2E testing skill. |
+| `v1-tf-declarative-source-id-test/` | Regression test for preserving a declarative source definition ID across manifest-only updates. |
 | `v0-tf-migration-test/0.x-to-1.0/` | Pre-1.0 project using bearer auth and typed resources (`airbyte_source_faker`, etc.). Useful for testing migration from 0.x to 1.0. |
 | `v0-tf-migration-test/1.0-to-1.1/` | Early 1.0 project using OAuth auth and typed resources. Useful for testing migration from 1.0 to 1.1 (typed → generic). |
 
