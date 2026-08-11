@@ -72,6 +72,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    # If resource contention occurs, bump this to ubuntu-latest-16core.
     runs-on: ubuntu-latest
     steps:
       # Step 2: Checkout the exact commit the draft was pinned to, to build assets
