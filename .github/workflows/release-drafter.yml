@@ -6,6 +6,15 @@
 # How it works:
 # - On push to main: Updates the draft release with the merged PR and pre-built assets
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
+# - The release body is rendered from `.github/release-drafter.yml`
+#
+# The draft is prepared in two passes of semantic-pr-release-drafter:
+# 1. The first pass creates/updates the draft with a "NOT READY FOR PUBLISHING"
+#    banner and pins the release to the commit it evaluated.
+# 2. GoReleaser builds and uploads the assets to that same draft.
+# 3. The second pass finalizes the same release by id, which removes the banner.
+#    It attaches nothing and keeps the GoReleaser assets in place.
+# If the build fails, the banner stays put and the draft is not publishable.
 #
 # To publish a release:
 # 1. Go to the Releases page
@@ -40,39 +49,22 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest-16core
     steps:
-      # Step 1: Create/update draft release (no assets yet)
+      # Step 1: Create/update draft release with a "not ready" banner (no assets yet)
       - name: Create draft release
-        uses: aaronsteers/semantic-pr-release-drafter@v2.2.0
+        uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
         id: release-drafter
-        with:
-          name-template: 'v$RESOLVED_VERSION'
-          tag-template: 'v$RESOLVED_VERSION'
-          change-template: '- $TITLE (#$NUMBER)'
-          reset-files: 'true'
-          template: |
-            ## Changes
-
-            $CHANGES
-
-            ## Installation
-
-            ```hcl
-            terraform {
-              required_providers {
-                airbyte = {
-                  source  = "airbytehq/airbyte"
-                  version = "$RESOLVED_VERSION"
-                }
-              }
-            }
-            ```
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          not-ready: true
+          # Drop any assets left over from an earlier run before GoReleaser uploads.
+          reset-files: 'true'
 
-      # Step 2: Checkout code to build assets
+      # Step 2: Checkout the exact commit the draft was pinned to, to build assets
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
         with:
           fetch-depth: 0
+          ref: ${{ steps.release-drafter.outputs.resolved-sha }}
 
       - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
         with:
@@ -104,3 +96,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
           GORELEASER_CURRENT_TAG: v${{ steps.release-drafter.outputs.resolved-version }}
+
+      # Step 6: Finalize the same draft: removes the "not ready" banner.
+      # Targets the release created in step 1 by id, so version, tag and target
+      # commit come from that release and cannot drift if main moved meanwhile.
+      - name: Finalize draft release
+        uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          prepared-release-id: ${{ steps.release-drafter.outputs.id }}
+          # Keep the assets GoReleaser just uploaded.
+          reset-files: 'false'

@@ -1,0 +1,31 @@
+# Shared release-drafter config.
+#
+# Both invocations of `semantic-pr-release-drafter` in
+# `.github/workflows/release-drafter.yml` (the initial "not ready" draft and the
+# finalize pass) read this file, so the release body is rendered identically on
+# each pass. Keep the templates here rather than inline in the workflow.
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+change-template: '- $TITLE (#$NUMBER)'
+template: |
+  ## Changes
+
+  $CHANGES
+
+  ## Terraform Registry
+
+  This provider is automatically published to the Terraform Registry:
+  - [`airbytehq/airbyte/$RESOLVED_VERSION`](https://registry.terraform.io/providers/airbytehq/airbyte/$RESOLVED_VERSION/docs)
+
+  ## Installation
+
+  ```hcl
+  terraform {
+    required_providers {
+      airbyte = {
+        source  = "airbytehq/airbyte"
+        version = "$RESOLVED_VERSION"
+      }
+    }
+  }
+  ```
