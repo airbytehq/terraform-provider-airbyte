@@ -53,12 +53,12 @@ jobs:
       - name: Create draft release
         uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
         id: release-drafter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           not-ready: true
           # Drop any assets left over from an earlier run before GoReleaser uploads.
           reset-files: 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 2: Checkout the exact commit the draft was pinned to, to build assets
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
@@ -102,9 +102,9 @@ jobs:
       # commit come from that release and cannot drift if main moved meanwhile.
       - name: Finalize draft release
         uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           prepared-release-id: ${{ steps.release-drafter.outputs.id }}
           # Keep the assets GoReleaser just uploaded.
           reset-files: 'false'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
