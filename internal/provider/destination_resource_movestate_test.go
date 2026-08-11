@@ -54,6 +54,8 @@ func TestDestinationResourceMoveState(t *testing.T) {
 		},
 	}
 
+	// The raw state is deliberately invalid JSON, so a parse diagnostic is
+	// raised only when the mover accepts the source resource and provider.
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			req := resource.MoveStateRequest{
