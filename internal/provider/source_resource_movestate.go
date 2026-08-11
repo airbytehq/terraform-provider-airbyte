@@ -21,7 +21,7 @@ func (r *SourceResource) MoveState(ctx context.Context) []resource.StateMover {
 				if req.SourceTypeName == "airbyte_source" {
 					return
 				}
-				if req.SourceProviderAddress != "airbyte" && !strings.HasSuffix(req.SourceProviderAddress, "airbytehq/airbyte") {
+				if !isAirbyteProviderAddress(req.SourceProviderAddress) {
 					return
 				}
 
