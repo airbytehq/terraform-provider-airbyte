@@ -9,9 +9,11 @@
 # - The release body is rendered from `.github/release-drafter.yml`
 #
 # The draft is prepared in two passes of semantic-pr-release-drafter:
-# 1. The first pass creates/updates the draft with a "NOT READY FOR PUBLISHING"
-#    banner and pins the release to the commit it evaluated.
-# 2. GoReleaser builds and uploads the assets to that same draft.
+# 1. A fast, separate job on a standard runner creates/updates the draft with a
+#    "NOT READY FOR PUBLISHING" banner and pins the release to the commit it evaluated.
+#    Keeping this pass separate makes the banner visible while the build runner starts.
+# 2. The heavyweight build job waits for the first pass, then GoReleaser builds and
+#    uploads the assets to that same draft.
 # 3. The second pass finalizes the same release by id, which removes the banner.
 #    It attaches nothing and keeps the GoReleaser assets in place.
 # If the build fails, the banner stays put and the draft is not publishable.
@@ -42,17 +44,21 @@ permissions:
   contents: read
 
 jobs:
-  draft_release:
-    name: Draft Release with Assets
+  prepare_release:
+    name: Prepare Not-Ready Draft
     permissions:
       contents: write
       pull-requests: write
-    runs-on: ubuntu-latest-16core
+    runs-on: ubuntu-latest
+    outputs:
+      release_id: ${{ steps.prepare_release.outputs.id }}
+      resolved_version: ${{ steps.prepare_release.outputs.resolved-version }}
+      resolved_sha: ${{ steps.prepare_release.outputs.resolved-sha }}
     steps:
-      # Step 1: Create/update draft release with a "not ready" banner (no assets yet)
+      # Create/update the draft before the heavyweight build runner is provisioned.
       - name: Create draft release
         uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
-        id: release-drafter
+        id: prepare_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -60,11 +66,19 @@ jobs:
           # Drop any assets left over from an earlier run before GoReleaser uploads.
           reset-files: 'true'
 
+  draft_release:
+    name: Draft Release with Assets
+    needs: prepare_release
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest-16core
+    steps:
       # Step 2: Checkout the exact commit the draft was pinned to, to build assets
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
         with:
           fetch-depth: 0
-          ref: ${{ steps.release-drafter.outputs.resolved-sha }}
+          ref: ${{ needs.prepare_release.outputs.resolved_sha }}
 
       - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
         with:
@@ -82,7 +96,7 @@ jobs:
       # Step 4: Create local tag for GoReleaser (not pushed)
       - name: Create local tag
         run: |
-          VERSION="${{ steps.release-drafter.outputs.resolved-version }}"
+          VERSION="${{ needs.prepare_release.outputs.resolved_version }}"
           git tag "v${VERSION}" || true  # Ignore if tag already exists locally
 
       # Step 5: Build and upload assets using GoReleaser
@@ -95,7 +109,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
-          GORELEASER_CURRENT_TAG: v${{ steps.release-drafter.outputs.resolved-version }}
+          GORELEASER_CURRENT_TAG: v${{ needs.prepare_release.outputs.resolved_version }}
 
       # Step 6: Finalize the same draft: removes the "not ready" banner.
       # Targets the release created in step 1 by id, so version, tag and target
@@ -105,6 +119,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          prepared-release-id: ${{ steps.release-drafter.outputs.id }}
+          prepared-release-id: ${{ needs.prepare_release.outputs.release_id }}
           # Keep the assets GoReleaser just uploaded.
           reset-files: 'false'
