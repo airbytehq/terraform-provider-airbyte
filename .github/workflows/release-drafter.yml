@@ -11,9 +11,9 @@
 # The draft is prepared in two passes of semantic-pr-release-drafter:
 # 1. A fast, separate job on a standard runner creates/updates the draft with a
 #    "NOT READY FOR PUBLISHING" banner and pins the release to the commit it evaluated.
-#    Keeping this pass separate makes the banner visible while the build runner starts.
-# 2. The heavyweight build job waits for the first pass, then GoReleaser builds and
-#    uploads the assets to that same draft.
+#    Keeping this pass separate makes the banner visible while the build job starts.
+# 2. The build job waits for the first pass, then GoReleaser builds and uploads the
+#    assets to that same draft.
 # 3. The second pass finalizes the same release by id, which removes the banner.
 #    It attaches nothing and keeps the GoReleaser assets in place.
 # If the build fails, the banner stays put and the draft is not publishable.
@@ -55,7 +55,7 @@ jobs:
       resolved_version: ${{ steps.prepare_release.outputs.resolved-version }}
       resolved_sha: ${{ steps.prepare_release.outputs.resolved-sha }}
     steps:
-      # Create/update the draft before the heavyweight build runner is provisioned.
+      # Create/update the draft before the build runner is provisioned.
       - name: Create draft release
         uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
         id: prepare_release
@@ -72,7 +72,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    runs-on: ubuntu-latest-16core
+    runs-on: ubuntu-latest
     steps:
       # Step 2: Checkout the exact commit the draft was pinned to, to build assets
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
