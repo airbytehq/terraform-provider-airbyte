@@ -12,9 +12,9 @@ template: |
 
   $CHANGES
 
-  ## Terraform Registry Docs
+  ## Terraform Registry
 
-  Versioned documentation and installation instructions for this release are available on the Terraform Registry:
+  This provider is automatically published to the Terraform Registry:
   - [`airbytehq/airbyte/$RESOLVED_VERSION`](https://registry.terraform.io/providers/airbytehq/airbyte/$RESOLVED_VERSION/docs)
 
   ## Installation
