@@ -141,12 +141,16 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(ctx contex
 			r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
 		}
 		r.Prefix = types.StringPointerValue(resp.Prefix)
+		schedulePriorData := r.Schedule
 		if r.Schedule == nil {
 			r.Schedule = &tfTypes.AirbyteAPIConnectionSchedule{}
 		}
 		r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
 		r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
 		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
+		if schedulePriorData != nil {
+			r.Schedule.CronTimeZone = schedulePriorData.CronTimeZone
+		}
 		r.SourceID = types.StringValue(resp.SourceID)
 		r.Status = types.StringValue(string(resp.Status))
 		r.StatusReason = types.StringPointerValue(resp.StatusReason)
@@ -455,9 +459,16 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 		} else {
 			cronExpression = nil
 		}
+		cronTimeZone := new(string)
+		if !r.Schedule.CronTimeZone.IsUnknown() && !r.Schedule.CronTimeZone.IsNull() {
+			*cronTimeZone = r.Schedule.CronTimeZone.ValueString()
+		} else {
+			cronTimeZone = nil
+		}
 		schedule = &shared.AirbyteAPIConnectionSchedule{
 			ScheduleType:   scheduleType,
 			CronExpression: cronExpression,
+			CronTimeZone:   cronTimeZone,
 		}
 	}
 	dataResidency := new(string)
@@ -769,9 +780,16 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 		} else {
 			cronExpression = nil
 		}
+		cronTimeZone := new(string)
+		if !r.Schedule.CronTimeZone.IsUnknown() && !r.Schedule.CronTimeZone.IsNull() {
+			*cronTimeZone = r.Schedule.CronTimeZone.ValueString()
+		} else {
+			cronTimeZone = nil
+		}
 		schedule = &shared.AirbyteAPIConnectionSchedule{
 			ScheduleType:   scheduleType,
 			CronExpression: cronExpression,
+			CronTimeZone:   cronTimeZone,
 		}
 	}
 	dataResidency := new(string)
