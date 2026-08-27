@@ -67,6 +67,7 @@ resource "airbyte_connection" "my_connection" {
   prefix                               = ""
   schedule = {
     cron_expression = "...my_cron_expression..."
+    cron_time_zone  = "...my_cron_time_zone..."
     schedule_type   = "cron"
   }
   source_id = "b5b2b4a5-bba6-4c3f-b0ef-ab87b373f331"
@@ -238,6 +239,7 @@ Optional:
 Optional:
 
 - `cron_expression` (String)
+- `cron_time_zone` (String) Supported timezone ID or fixed offset for the cron schedule; defaults to UTC and cannot start with Etc.
 - `schedule_type` (String) Not Null; must be one of ["manual", "cron"]
 
 Read-Only:

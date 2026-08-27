@@ -612,6 +612,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 						},
 					},
+					"cron_time_zone": schema.StringAttribute{
+						Computed: true,
+						Optional: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+						},
+						Description: `Supported timezone ID or fixed offset for the cron schedule; defaults to UTC and cannot start with Etc.`,
+					},
 					"schedule_type": schema.StringAttribute{
 						Computed: true,
 						Optional: true,

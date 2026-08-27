@@ -9,5 +9,6 @@ import (
 type AirbyteAPIConnectionSchedule struct {
 	BasicTiming    types.String `tfsdk:"basic_timing"`
 	CronExpression types.String `tfsdk:"cron_expression"`
+	CronTimeZone   types.String `tfsdk:"cron_time_zone"`
 	ScheduleType   types.String `tfsdk:"schedule_type"`
 }
