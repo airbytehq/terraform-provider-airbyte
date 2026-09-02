@@ -65,7 +65,7 @@ func (r *SourceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 			},
 			"include_secret_coordinates": schema.BoolAttribute{
 				Optional:    true,
-				Description: `Rather than return *** for secret properties include the secret coordinate information`,
+				Description: `Rather than return *** for secret properties include the secret coordinate information. Coordinates are opaque pointers, not secret values, and resolving one requires access to the secret storage that holds it. They are not stable: a coordinate changes when the secret is rewritten.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

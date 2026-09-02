@@ -28,7 +28,7 @@ data "airbyte_source" "my_source" {
 
 ### Optional
 
-- `include_secret_coordinates` (Boolean) Rather than return *** for secret properties include the secret coordinate information
+- `include_secret_coordinates` (Boolean) Rather than return *** for secret properties include the secret coordinate information. Coordinates are opaque pointers, not secret values, and resolving one requires access to the secret storage that holds it. They are not stable: a coordinate changes when the secret is rewritten.
 
 ### Read-Only
 
