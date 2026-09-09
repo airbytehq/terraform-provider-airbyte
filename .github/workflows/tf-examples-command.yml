@@ -126,7 +126,7 @@ jobs:
       - name: Download state artifact
         id: download-state
         continue-on-error: true
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v21
         with:
           name: ${{ matrix.artifact }}
           path: ${{ env.TF_STATE_DIR }}
