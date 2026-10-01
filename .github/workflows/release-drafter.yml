@@ -53,7 +53,7 @@ jobs:
     steps:
       # Create/update the draft before the build runner is provisioned.
       - name: Create empty draft
-        uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
+        uses: airbytehq/semantic-pr-release-drafter@v2.3.4
         id: prepare-empty-draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -116,7 +116,7 @@ jobs:
       # Targets the release created in step 1 by id, so version, tag and target
       # commit come from that release and cannot drift if main moved meanwhile.
       - name: Finalize draft release
-        uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
+        uses: airbytehq/semantic-pr-release-drafter@v2.3.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

@@ -13,6 +13,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check for TK-TODO markers  # IGNORE:TK
-        uses: aaronsteers/tk-todo-check-action@v1  # IGNORE:TK
+        uses: airbytehq/tk-todo-check-action@v1  # IGNORE:TK
         with:
           fail-on-found: "true"
