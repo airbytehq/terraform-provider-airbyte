@@ -93,10 +93,12 @@ func (m uniqueByNameAndNamespace) PlanModifySet(ctx context.Context, req planmod
 
 	// For each plan element, if we find a matching state element by key,
 	// carry over computed attributes (cursor_field, primary_key) that are
-	// unknown or null-from-SuppressDiff in the plan but known in state.
-	// Note: inner plan modifiers (e.g. SuppressDiff on cursor_field) run
-	// before this set-level modifier, so they may have already converted
-	// unknown → null when no hash-matched state element was found.
+	// unknown or null in the plan but known in state.
+	// Note: this set-level modifier runs before the per-element attribute
+	// modifiers. Those see the prior-state element at the same set index, not
+	// the matching stream, which is why the stream attributes carry no
+	// SuppressDiff (see scripts/patch_stream_suppress_diff.py). Elements with
+	// no match here are new streams and keep their unknown computed values.
 	merged := make([]attr.Value, 0, len(planElems))
 	for _, planElem := range planElems {
 		key := m.compositeKey(planElem)
@@ -150,9 +152,8 @@ func (m uniqueByNameAndNamespace) compositeKey(elem attr.Value) string {
 //
 // We merge from state when the plan attribute is unknown, null, OR an empty
 // collection (empty list/set), because:
-//   - Inner plan modifiers (e.g. SuppressDiff on cursor_field) execute before
-//     this set-level modifier and may convert unknown → null when no
-//     hash-matched state element was found.
+//   - Terraform core proposes null (not unknown) for computed attributes
+//     when it cannot correlate a set element with prior state.
 //   - The API may return empty arrays (e.g. primary_key: []) which Terraform
 //     represents as empty lists, while state may have null. Both are
 //     semantically "not set", but they produce different set hashes, causing

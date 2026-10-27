@@ -5,7 +5,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	speakeasy_boolplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/boolplanmodifier"
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
@@ -96,36 +95,24 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 							},
 							Attributes: map[string]schema.Attribute{
 								"cursor_field": schema.ListAttribute{
-									Computed: true,
-									Optional: true,
-									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-									},
+									Computed:    true,
+									Optional:    true,
 									ElementType: types.StringType,
 									Description: `Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if ` + "`" + `sync_mode` + "`" + ` is ` + "`" + `incremental` + "`" + ` unless there is a default.`,
 								},
 								"destination_object_name": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-									PlanModifiers: []planmodifier.String{
-										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-									},
+									Computed:    true,
+									Optional:    true,
 									Description: `The name of the destination object that this stream will be written to, used for data activation destinations.`,
 								},
 								"include_files": schema.BoolAttribute{
-									Computed: true,
-									Optional: true,
-									PlanModifiers: []planmodifier.Bool{
-										speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
-									},
+									Computed:    true,
+									Optional:    true,
 									Description: `Whether to move raw files from the source to the destination during the sync.`,
 								},
 								"mappers": schema.ListNestedAttribute{
 									Computed: true,
 									Optional: true,
-									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-									},
 									NestedObject: schema.NestedAttributeObject{
 										Validators: []validator.Object{
 											speakeasy_objectvalidators.NotNull(),
@@ -429,30 +416,21 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									Description: `Mappers that should be applied to the stream before writing to the destination.`,
 								},
 								"name": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-									PlanModifiers: []planmodifier.String{
-										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-									},
+									Computed:    true,
+									Optional:    true,
 									Description: `Not Null`,
 									Validators: []validator.String{
 										speakeasy_stringvalidators.NotNull(),
 									},
 								},
 								"namespace": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-									PlanModifiers: []planmodifier.String{
-										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-									},
+									Computed:    true,
+									Optional:    true,
 									Description: `Namespace of the stream.`,
 								},
 								"primary_key": schema.ListAttribute{
 									Computed: true,
 									Optional: true,
-									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-									},
 									ElementType: types.ListType{
 										ElemType: types.StringType,
 									},
@@ -461,9 +439,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"selected_fields": schema.SetNestedAttribute{
 									Computed: true,
 									Optional: true,
-									PlanModifiers: []planmodifier.Set{
-										speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
-									},
 									NestedObject: schema.NestedAttributeObject{
 										Validators: []validator.Object{
 											speakeasy_objectvalidators.NotNull(),
@@ -485,11 +460,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									Description: `Paths to the fields that will be included in the configured catalog.`,
 								},
 								"sync_mode": schema.StringAttribute{
-									Computed: true,
-									Optional: true,
-									PlanModifiers: []planmodifier.String{
-										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-									},
+									Computed:    true,
+									Optional:    true,
 									Description: `must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "full_refresh_update", "full_refresh_soft_delete", "incremental_append", "incremental_deduped_history", "incremental_update", "incremental_soft_delete"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
