@@ -5,6 +5,7 @@
 #
 # How it works:
 # - On push to main: Updates the draft release with the merged PR and pre-built assets
+# - After the draft is finalized: Posts a notice to #dev-platform-terraform-provider in Slack
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 # - The release body is rendered from `.github/release-drafter.yml`
 #
@@ -123,3 +124,26 @@ jobs:
           prepared-release-id: ${{ needs.prepare-empty-draft.outputs.release-id }}
           # Keep the assets GoReleaser just uploaded.
           reset-files: 'false'
+
+  notify-slack:
+    name: Notify Slack
+    needs: [prepare-empty-draft, build-and-attach-assets]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post release draft update to Slack
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        with:
+          token: ${{ secrets.SLACK_BOT_TOKEN_AIRBYTE_TEAM }}
+          method: chat.postMessage
+          payload: |
+            channel: C0A1SKM14LV
+            text: "Terraform provider release draft v${{ needs.prepare-empty-draft.outputs.resolved-version }} was updated."
+            blocks:
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: ":package: *Release draft updated*\n<https://github.com/${{ github.repository }}/releases|v${{ needs.prepare-empty-draft.outputs.resolved-version }} draft> now includes main through <https://github.com/${{ github.repository }}/commit/${{ needs.prepare-empty-draft.outputs.resolved-sha }}|this commit>."
+              - type: context
+                elements:
+                  - type: mrkdwn
+                    text: "<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow run>"
