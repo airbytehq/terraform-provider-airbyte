@@ -49,6 +49,7 @@ resource "airbyte_connection" "my_connection" {
   namespace_definition                 = "destination"
   namespace_format                     = "$${SOURCE_NAMESPACE}"
   non_breaking_schema_updates_behavior = "ignore"
+  notify_schema_changes                = false
   prefix                               = ""
   schedule = {
     cron_expression = "...my_cron_expression..."

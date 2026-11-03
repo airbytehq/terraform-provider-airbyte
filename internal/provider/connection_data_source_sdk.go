@@ -138,6 +138,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 		} else {
 			r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
 		}
+		r.NotifySchemaChanges = types.BoolPointerValue(resp.NotifySchemaChanges)
 		r.Prefix = types.StringPointerValue(resp.Prefix)
 		r.Schedule = &tfTypes.ConnectionScheduleResponse{}
 		r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)

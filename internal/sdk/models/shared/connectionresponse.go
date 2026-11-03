@@ -18,6 +18,8 @@ type ConnectionResponse struct {
 	Schedule ConnectionScheduleResponse `json:"schedule"`
 	// Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 	NonBreakingSchemaUpdatesBehavior *NonBreakingSchemaUpdatesBehaviorEnum `default:"ignore" json:"nonBreakingSchemaUpdatesBehavior"`
+	// Turns schema change notifications on or off for this connection. The workspace's notification settings decide where they are sent. Breaking changes use `connectionUpdateActionRequired`. Other schema changes use `connectionUpdate`.
+	NotifySchemaChanges *bool `json:"notifySchemaChanges,omitempty"`
 	// Define the location where the data will be stored in the destination
 	NamespaceDefinition *NamespaceDefinitionEnum `default:"destination" json:"namespaceDefinition"`
 	NamespaceFormat     *string                  `json:"namespaceFormat,omitempty"`
@@ -94,6 +96,13 @@ func (c *ConnectionResponse) GetNonBreakingSchemaUpdatesBehavior() *NonBreakingS
 		return nil
 	}
 	return c.NonBreakingSchemaUpdatesBehavior
+}
+
+func (c *ConnectionResponse) GetNotifySchemaChanges() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.NotifySchemaChanges
 }
 
 func (c *ConnectionResponse) GetNamespaceDefinition() *NamespaceDefinitionEnum {

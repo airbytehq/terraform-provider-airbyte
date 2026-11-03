@@ -23,8 +23,10 @@ type ConnectionPatchRequest struct {
 	Prefix *string `json:"prefix,omitempty"`
 	// Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 	NonBreakingSchemaUpdatesBehavior *NonBreakingSchemaUpdatesBehaviorEnumNoDefault `json:"nonBreakingSchemaUpdatesBehavior,omitempty"`
-	Status                           *ConnectionStatusEnum                          `json:"status,omitempty"`
-	Tags                             []Tag                                          `json:"tags,omitempty"`
+	// Turns schema change notifications on or off for this connection. The workspace's notification settings decide where they are sent. Breaking changes use `connectionUpdateActionRequired`. Other schema changes use `connectionUpdate`.
+	NotifySchemaChanges *bool                 `json:"notifySchemaChanges,omitempty"`
+	Status              *ConnectionStatusEnum `json:"status,omitempty"`
+	Tags                []Tag                 `json:"tags,omitempty"`
 }
 
 func (c ConnectionPatchRequest) MarshalJSON() ([]byte, error) {
@@ -92,6 +94,13 @@ func (c *ConnectionPatchRequest) GetNonBreakingSchemaUpdatesBehavior() *NonBreak
 		return nil
 	}
 	return c.NonBreakingSchemaUpdatesBehavior
+}
+
+func (c *ConnectionPatchRequest) GetNotifySchemaChanges() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.NotifySchemaChanges
 }
 
 func (c *ConnectionPatchRequest) GetStatus() *ConnectionStatusEnum {

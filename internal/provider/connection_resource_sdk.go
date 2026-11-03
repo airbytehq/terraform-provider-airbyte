@@ -140,6 +140,7 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(ctx contex
 		} else {
 			r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
 		}
+		r.NotifySchemaChanges = types.BoolPointerValue(resp.NotifySchemaChanges)
 		r.Prefix = types.StringPointerValue(resp.Prefix)
 		schedulePriorData := r.Schedule
 		if r.Schedule == nil {
@@ -501,6 +502,12 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 	} else {
 		nonBreakingSchemaUpdatesBehavior = nil
 	}
+	notifySchemaChanges := new(bool)
+	if !r.NotifySchemaChanges.IsUnknown() && !r.NotifySchemaChanges.IsNull() {
+		*notifySchemaChanges = r.NotifySchemaChanges.ValueBool()
+	} else {
+		notifySchemaChanges = nil
+	}
 	status := new(shared.ConnectionStatusEnum)
 	if !r.Status.IsUnknown() && !r.Status.IsNull() {
 		*status = shared.ConnectionStatusEnum(r.Status.ValueString())
@@ -539,6 +546,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest(ctx context.Co
 		NamespaceFormat:                  namespaceFormat,
 		Prefix:                           prefix,
 		NonBreakingSchemaUpdatesBehavior: nonBreakingSchemaUpdatesBehavior,
+		NotifySchemaChanges:              notifySchemaChanges,
 		Status:                           status,
 		Tags:                             tags,
 	}
@@ -822,6 +830,12 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 	} else {
 		nonBreakingSchemaUpdatesBehavior = nil
 	}
+	notifySchemaChanges := new(bool)
+	if !r.NotifySchemaChanges.IsUnknown() && !r.NotifySchemaChanges.IsNull() {
+		*notifySchemaChanges = r.NotifySchemaChanges.ValueBool()
+	} else {
+		notifySchemaChanges = nil
+	}
 	status := new(shared.ConnectionStatusEnum)
 	if !r.Status.IsUnknown() && !r.Status.IsNull() {
 		*status = shared.ConnectionStatusEnum(r.Status.ValueString())
@@ -858,6 +872,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest(ctx context.Con
 		NamespaceFormat:                  namespaceFormat,
 		Prefix:                           prefix,
 		NonBreakingSchemaUpdatesBehavior: nonBreakingSchemaUpdatesBehavior,
+		NotifySchemaChanges:              notifySchemaChanges,
 		Status:                           status,
 		Tags:                             tags,
 	}
