@@ -5,7 +5,8 @@
 #
 # How it works:
 # - On push to main: Updates the draft release with the merged PR and pre-built assets
-# - Runs whose new commits are all ci:, test:, or style: are no-ops; manual dispatches always run.
+# - After the draft is finalized: Posts a notice to #dev-platform-terraform-provider in Slack
+# - Push runs whose new commits since the last successful run are all ci:, test:, or style: are no-ops; manual dispatches always run.
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 # - The release body is rendered from `.github/release-drafter.yml`
 #
