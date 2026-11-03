@@ -72,7 +72,7 @@ jobs:
           elif ! git merge-base --is-ancestor "$base" "$HEAD_SHA"; then
             should_draft=true
             reason=previous-success-not-ancestor
-          elif git log --first-parent --format=%B "$base..$HEAD_SHA" | grep -Eq '^BREAKING[ -]CHANGE:'; then
+          elif [ -n "$(git log --first-parent -E --grep='^BREAKING[ -]CHANGE:' --format=%H "$base..$HEAD_SHA")" ]; then
             should_draft=true
             reason=breaking-change-footer
           else
