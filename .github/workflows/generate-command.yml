@@ -6,7 +6,7 @@
 # Triggers:
 # - On push to main: Auto-generates after every merge to ensure provider stays up-to-date (auto-merge enabled)
 # - Daily schedule (6 AM UTC): Catches upstream API spec changes (auto-merge enabled)
-# - Manual workflow_dispatch: For on-demand generation
+# - Manual workflow_dispatch: For on-demand generation (auto-merge enabled when dispatched from main and a new PR is created)
 # - Slash command (/generate): Regenerates and pushes results back to the PR branch
 # - workflow_call: For validation from other workflows (e.g., PR checks)
 #
@@ -284,6 +284,7 @@ jobs:
               if: |
                   (github.event_name == 'push'
                    || github.event_name == 'schedule'
+                   || (github.event_name == 'workflow_dispatch' && github.ref_name == 'main')
                   ) && steps.create-pr.outputs.pull-request-operation == 'created'
               env:
                   # The merge is attributed to whoever enabled auto-merge. Merges by
