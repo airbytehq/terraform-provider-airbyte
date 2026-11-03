@@ -6,10 +6,9 @@
 # How it works:
 # - On push to main: Updates the draft release with the merged PR and pre-built assets
 # - After the draft is finalized: Posts a notice to #dev-platform-terraform-provider in Slack
-# - Push runs whose new commits since the last successful run are all ci:, test:, or style: are no-ops; manual dispatches always run.
-# - Since v2.6.0, the action also skips the draft (skipped=true) when every commit since
-#   the last release is in a non-triggering default category (test:, or hidden ci:);
-#   the build and Slack jobs are skipped too.
+# - The action skips the draft (`skipped=true`) when every commit since the last release is
+#   in a non-triggering category (by default `test:`, or hidden `ci:`); the build and Slack
+#   jobs are then skipped too.
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 # - The release body is rendered from `.github/release-drafter.yml`
 #
@@ -49,57 +48,8 @@ permissions:
   contents: read
 
 jobs:
-  check-changes:
-    name: Check for Releasable Changes
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-
-      - name: Resolve Variables
-        id: resolve-vars
-        if: github.event_name == 'push'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          HEAD_SHA: ${{ github.sha }}
-        run: |
-          base="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow release-drafter.yml --branch main --status success --limit 1 --json headSha --jq '.[0].headSha // ""')"
-
-          if [ -z "$base" ]; then
-            should_draft=true
-            reason=no-previous-successful-run
-          elif ! git merge-base --is-ancestor "$base" "$HEAD_SHA"; then
-            should_draft=true
-            reason=previous-success-not-ancestor
-          elif [ -n "$(git log --first-parent -E --grep='^BREAKING[ -]CHANGE:' --format=%H "$base..$HEAD_SHA")" ]; then
-            should_draft=true
-            reason=breaking-change-footer
-          else
-            subjects="$(git log --first-parent --format=%s "$base..$HEAD_SHA")"
-            printf '%s\n' "$subjects"
-            remaining_subjects="$(printf '%s\n' "$subjects" | grep -Ev '^(ci|test|style)(\([^)]*\))?: ' | sed '/^$/d' || true)"
-
-            if [ -n "$remaining_subjects" ]; then
-              should_draft=true
-              reason=meaningful-commits
-            else
-              should_draft=false
-              reason=ci-test-style-only
-            fi
-          fi
-
-          printf 'should_draft=%s\nreason=%s\n' "$should_draft" "$reason" | tee -a "$GITHUB_OUTPUT"
-    outputs:
-      should_draft: ${{ github.event_name == 'workflow_dispatch' || steps.resolve-vars.outputs.should_draft == 'true' }}
-
   prepare-empty-draft:
     name: Prepare Empty Draft
-    needs: check-changes
-    if: needs.check-changes.outputs.should_draft == 'true'
     permissions:
       contents: write
       pull-requests: write
