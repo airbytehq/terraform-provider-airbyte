@@ -286,7 +286,9 @@ jobs:
                    || github.event_name == 'schedule'
                   ) && steps.create-pr.outputs.pull-request-operation == 'created'
               env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  # The merge is attributed to whoever enabled auto-merge. Merges by
+                  # GITHUB_TOKEN don't fire push workflows (Release Drafter, Generate).
+                  GH_TOKEN: ${{ steps.get-pr-token.outputs.token }}
               run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
 
             - name: Append success comment
