@@ -5,7 +5,7 @@
 #
 # How it works:
 # - On push to main: Updates the draft release with the merged PR and pre-built assets
-# - After the draft is finalized: Posts a notice to #dev-platform-terraform-provider in Slack
+# - After the draft is finalized: Posts to Slack when commits since the last successful run include changes beyond ci:, test:, or style:.
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 # - The release body is rendered from `.github/release-drafter.yml`
 #
@@ -128,9 +128,47 @@ jobs:
   notify-slack:
     name: Notify Slack
     needs: [prepare-empty-draft, build-and-attach-assets]
+    permissions:
+      contents: read
+      actions: read
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Resolve Variables
+        id: resolve-vars
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESOLVED_SHA: ${{ needs.prepare-empty-draft.outputs.resolved-sha }}
+        run: |
+          base="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow release-drafter.yml --branch main --status success --limit 1 --json headSha --jq '.[0].headSha // ""')"
+
+          if [ -z "$base" ]; then
+            should_notify=true
+            reason=no-previous-successful-run
+          elif ! git merge-base --is-ancestor "$base" "$RESOLVED_SHA"; then
+            should_notify=true
+            reason=previous-success-not-ancestor
+          else
+            subjects="$(git log --first-parent --format=%s "$base..$RESOLVED_SHA")"
+            printf '%s\n' "$subjects"
+            remaining_subjects="$(printf '%s\n' "$subjects" | grep -Ev '^(ci|test|style)(\([^)]*\))?: ' | sed '/^$/d' || true)"
+
+            if [ -n "$remaining_subjects" ]; then
+              should_notify=true
+              reason=meaningful-commits
+            else
+              should_notify=false
+              reason=ci-test-style-only
+            fi
+          fi
+
+          printf 'should_notify=%s\nreason=%s\n' "$should_notify" "$reason" | tee -a "$GITHUB_OUTPUT"
+
       - name: Post release draft update to Slack
+        if: steps.resolve-vars.outputs.should_notify == 'true'
         uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
         with:
           token: ${{ secrets.SLACK_BOT_TOKEN_AIRBYTE_TEAM }}
