@@ -55,6 +55,7 @@ type ConnectionResourceModel struct {
 	NamespaceDefinition              types.String                          `tfsdk:"namespace_definition"`
 	NamespaceFormat                  types.String                          `tfsdk:"namespace_format"`
 	NonBreakingSchemaUpdatesBehavior types.String                          `tfsdk:"non_breaking_schema_updates_behavior"`
+	NotifySchemaChanges              types.Bool                            `tfsdk:"notify_schema_changes"`
 	Prefix                           types.String                          `tfsdk:"prefix"`
 	Schedule                         *tfTypes.AirbyteAPIConnectionSchedule `tfsdk:"schedule"`
 	SourceID                         types.String                          `tfsdk:"source_id"`
@@ -582,6 +583,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"propagate_fully",
 					),
 				},
+			},
+			"notify_schema_changes": schema.BoolAttribute{
+				Computed: true,
+				Optional: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
+				Description: `Turns schema change notifications on or off for this connection. The workspace's notification settings decide where they are sent. Breaking changes use ` + "`" + `connectionUpdateActionRequired` + "`" + `. Other schema changes use ` + "`" + `connectionUpdate` + "`" + `. If omitted, it is true when the workspace's ` + "`" + `connectionUpdate` + "`" + ` settings have email or webhook enabled. Otherwise it is false.`,
 			},
 			"prefix": schema.StringAttribute{
 				Computed: true,

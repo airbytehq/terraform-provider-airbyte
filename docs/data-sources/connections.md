@@ -56,6 +56,7 @@ Read-Only:
 - `namespace_definition` (String) Define the location where the data will be stored in the destination
 - `namespace_format` (String)
 - `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
+- `notify_schema_changes` (Boolean) Turns schema change notifications on or off for this connection. The workspace's notification settings decide where they are sent. Breaking changes use `connectionUpdateActionRequired`. Other schema changes use `connectionUpdate`.
 - `prefix` (String)
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--data--schedule))
 - `source_id` (String)

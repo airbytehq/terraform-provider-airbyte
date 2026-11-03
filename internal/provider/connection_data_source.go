@@ -38,6 +38,7 @@ type ConnectionDataSourceModel struct {
 	NamespaceDefinition              types.String                        `tfsdk:"namespace_definition"`
 	NamespaceFormat                  types.String                        `tfsdk:"namespace_format"`
 	NonBreakingSchemaUpdatesBehavior types.String                        `tfsdk:"non_breaking_schema_updates_behavior"`
+	NotifySchemaChanges              types.Bool                          `tfsdk:"notify_schema_changes"`
 	Prefix                           types.String                        `tfsdk:"prefix"`
 	Schedule                         *tfTypes.ConnectionScheduleResponse `tfsdk:"schedule"`
 	SourceID                         types.String                        `tfsdk:"source_id"`
@@ -250,6 +251,10 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed:    true,
 				Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
+			},
+			"notify_schema_changes": schema.BoolAttribute{
+				Computed:    true,
+				Description: `Turns schema change notifications on or off for this connection. The workspace's notification settings decide where they are sent. Breaking changes use ` + "`" + `connectionUpdateActionRequired` + "`" + `. Other schema changes use ` + "`" + `connectionUpdate` + "`" + `.`,
 			},
 			"prefix": schema.StringAttribute{
 				Computed: true,
