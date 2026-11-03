@@ -240,12 +240,14 @@ jobs:
               id: changes
               # A diff that only bumps the release version and Speakeasy checksums is noise:
               # it opens version-only regen PRs after every release. Ignore it.
+              env:
+                  VERSION_FILES: '^(gen\.yaml|\.speakeasy/gen\.lock|internal/sdk/sdk\.go|docs/index\.md|examples/provider/provider\.tf|README\.md)$'
+                  CHECKSUM_LINES: '^ *(configChecksum|generation_id|pristine_commit_hash|pristine_tree_hash|last_write_checksum|pristine_git_object):'
               run: |
-                  VERSION_FILES='^(gen\.yaml|\.speakeasy/gen\.lock|internal/sdk/sdk\.go|docs/index\.md|examples/provider/provider\.tf|README\.md)$'
                   normalize() {
                       sed -E \
                           -e 's/[0-9]+\.[0-9]+\.[0-9]+/X.Y.Z/g' \
-                          -e '/^ *(configChecksum|generation_id|pristine_commit_hash|pristine_tree_hash|last_write_checksum|pristine_git_object):/d'
+                          -e "\#${CHECKSUM_LINES}#d"
                   }
                   changed=$(git status --porcelain --untracked-files=all | cut -c4-)
                   has_changes=false
