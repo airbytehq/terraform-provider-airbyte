@@ -238,12 +238,27 @@ jobs:
             - name: Check for changes
               if: ${{ !inputs.dry_run }}
               id: changes
+              # A diff that only bumps the release version and Speakeasy checksums is noise:
+              # it opens version-only regen PRs after every release. Ignore it.
               run: |
-                  if [ -n "$(git status --porcelain)" ]; then
-                      echo "has_changes=true" >> $GITHUB_OUTPUT
+                  VERSION_FILES='^(gen\.yaml|\.speakeasy/gen\.lock|internal/sdk/sdk\.go|docs/index\.md|examples/provider/provider\.tf|README\.md)$'
+                  normalize() {
+                      sed -E \
+                          -e 's/[0-9]+\.[0-9]+\.[0-9]+/X.Y.Z/g' \
+                          -e '/^ *(configChecksum|generation_id|pristine_commit_hash|pristine_tree_hash|last_write_checksum|pristine_git_object):/d'
+                  }
+                  changed=$(git status --porcelain --untracked-files=all | cut -c4-)
+                  has_changes=false
+                  if echo "$changed" | grep -qvE "$VERSION_FILES|^$"; then
+                      has_changes=true
                   else
-                      echo "has_changes=false" >> $GITHUB_OUTPUT
+                      for f in $changed; do
+                          cmp -s <(git show "HEAD:$f" | normalize) <(normalize < "$f") || has_changes=true
+                      done
                   fi
+                  [ -n "$changed" ] && [ "$has_changes" = false ] \
+                      && echo "Only version and checksum changes found; skipping PR."
+                  echo "has_changes=$has_changes" >> "$GITHUB_OUTPUT"
 
             # --- PR branch mode: commit and push to the existing PR branch ---
             - name: Push regenerated code to PR branch
