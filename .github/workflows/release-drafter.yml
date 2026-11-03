@@ -7,6 +7,9 @@
 # - On push to main: Updates the draft release with the merged PR and pre-built assets
 # - After the draft is finalized: Posts a notice to #dev-platform-terraform-provider in Slack
 # - Push runs whose new commits since the last successful run are all ci:, test:, or style: are no-ops; manual dispatches always run.
+# - Since v2.6.0, the action also skips the draft (skipped=true) when every commit since
+#   the last release is in a non-triggering default category (test:, or hidden ci:);
+#   the build and Slack jobs are skipped too.
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 # - The release body is rendered from `.github/release-drafter.yml`
 #
@@ -104,7 +107,7 @@ jobs:
     steps:
       # Create/update the draft before the build runner is provisioned.
       - name: Create empty draft
-        uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
+        uses: aaronsteers/semantic-pr-release-drafter@8ebe479080d2ecb71377d5d6622ff97ca55b4655 # v2.6.0
         id: prepare-empty-draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -116,10 +119,12 @@ jobs:
       release-id: ${{ steps.prepare-empty-draft.outputs.id }}
       resolved-version: ${{ steps.prepare-empty-draft.outputs.resolved-version }}
       resolved-sha: ${{ steps.prepare-empty-draft.outputs.resolved-sha }}
+      skipped: ${{ steps.prepare-empty-draft.outputs.skipped }}
 
   build-and-attach-assets:
     name: Draft Release with Assets
     needs: prepare-empty-draft
+    if: needs.prepare-empty-draft.outputs.skipped != 'true'
     permissions:
       contents: write
       pull-requests: write
@@ -167,7 +172,7 @@ jobs:
       # Targets the release created in step 1 by id, so version, tag and target
       # commit come from that release and cannot drift if main moved meanwhile.
       - name: Finalize draft release
-        uses: aaronsteers/semantic-pr-release-drafter@v2.3.4
+        uses: aaronsteers/semantic-pr-release-drafter@8ebe479080d2ecb71377d5d6622ff97ca55b4655 # v2.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
