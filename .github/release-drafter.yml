@@ -7,6 +7,35 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 change-template: '- $TITLE (#$NUMBER)'
+categories:
+  - title: '⚠️ Breaking Changes'
+    commit-types: [breaking]
+    commit-scopes: []
+    collapse-after: 0
+  - title: '🔌 Resource and Data Source Updates'
+    commit-types: [chore]
+    commit-scopes: [api]
+    collapse-after: 0
+  - title: '✨ New Features'
+    commit-types: [feat]
+    commit-scopes: []
+    collapse-after: 0
+  - title: '🐛 Bug Fixes'
+    commit-types: [fix]
+    commit-scopes: []
+    collapse-after: 0
+  - title: '▲ Other Changes'
+    commit-types: [refactor, perf, style]
+    commit-scopes: []
+    collapse-after: 2
+  - title: '📖 Documentation'
+    commit-types: [docs]
+    commit-scopes: []
+    collapse-after: 2
+  - title: '⚙️ Under the Hood'
+    commit-types: [chore, ci, build, test, revert, infra]
+    commit-scopes: []
+    collapse-after: 2
 template: |
   ## Changes
 
