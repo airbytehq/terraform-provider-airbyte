@@ -250,6 +250,10 @@ func (r *ConnectionsDataSource) Schema(ctx context.Context, req datasource.Schem
 							Computed:    true,
 							Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 						},
+						"notify_schema_changes": schema.BoolAttribute{
+							Computed:    true,
+							Description: `Turns schema change notifications on or off for this connection. The workspace's notification settings decide where they are sent. Breaking changes use ` + "`" + `connectionUpdateActionRequired` + "`" + `. Other schema changes use ` + "`" + `connectionUpdate` + "`" + `.`,
+						},
 						"prefix": schema.StringAttribute{
 							Computed: true,
 						},

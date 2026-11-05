@@ -64,9 +64,11 @@ resource "airbyte_connection" "my_connection" {
   namespace_definition                 = "destination"
   namespace_format                     = "$${SOURCE_NAMESPACE}"
   non_breaking_schema_updates_behavior = "ignore"
+  notify_schema_changes                = false
   prefix                               = ""
   schedule = {
     cron_expression = "...my_cron_expression..."
+    cron_time_zone  = "...my_cron_time_zone..."
     schedule_type   = "cron"
   }
   source_id = "b5b2b4a5-bba6-4c3f-b0ef-ab87b373f331"
@@ -98,6 +100,7 @@ resource "airbyte_connection" "my_connection" {
 - `namespace_definition` (String) Define the location where the data will be stored in the destination. Default: "destination"; must be one of ["source", "destination", "custom_format"]
 - `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
 - `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. Default: "ignore"; must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
+- `notify_schema_changes` (Boolean) Turns schema change notifications on or off for this connection. The workspace's notification settings decide where they are sent. Breaking changes use `connectionUpdateActionRequired`. Other schema changes use `connectionUpdate`. If omitted, it is true when the workspace's `connectionUpdate` settings have email or webhook enabled. Otherwise it is false.
 - `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”). Default: ""
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `status` (String) must be one of ["active", "inactive", "deprecated", "locked"]
@@ -238,6 +241,7 @@ Optional:
 Optional:
 
 - `cron_expression` (String)
+- `cron_time_zone` (String) Supported timezone ID or fixed offset for the cron schedule; defaults to UTC and cannot start with Etc.
 - `schedule_type` (String) Not Null; must be one of ["manual", "cron"]
 
 Read-Only:

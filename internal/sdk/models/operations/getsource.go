@@ -9,7 +9,7 @@ import (
 
 type GetSourceRequest struct {
 	SourceID string `pathParam:"style=simple,explode=false,name=sourceId"`
-	// Rather than return *** for secret properties include the secret coordinate information
+	// Rather than return *** for secret properties include the secret coordinate information. Coordinates are opaque pointers, not secret values, and resolving one requires access to the secret storage that holds it. They are not stable: a coordinate changes when the secret is rewritten.
 	IncludeSecretCoordinates *bool `queryParam:"style=form,explode=true,name=includeSecretCoordinates"`
 }
 

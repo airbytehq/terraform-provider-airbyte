@@ -15,6 +15,7 @@ type ConnectionResponse struct {
 	NamespaceDefinition              types.String                `tfsdk:"namespace_definition"`
 	NamespaceFormat                  types.String                `tfsdk:"namespace_format"`
 	NonBreakingSchemaUpdatesBehavior types.String                `tfsdk:"non_breaking_schema_updates_behavior"`
+	NotifySchemaChanges              types.Bool                  `tfsdk:"notify_schema_changes"`
 	Prefix                           types.String                `tfsdk:"prefix"`
 	Schedule                         *ConnectionScheduleResponse `tfsdk:"schedule"`
 	SourceID                         types.String                `tfsdk:"source_id"`

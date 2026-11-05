@@ -6,6 +6,8 @@ package shared
 type AirbyteAPIConnectionSchedule struct {
 	ScheduleType   ScheduleTypeEnum `json:"scheduleType"`
 	CronExpression *string          `json:"cronExpression,omitempty"`
+	// Supported timezone ID or fixed offset for the cron schedule; defaults to UTC and cannot start with Etc.
+	CronTimeZone *string `json:"cronTimeZone,omitempty"`
 }
 
 func (a *AirbyteAPIConnectionSchedule) GetScheduleType() ScheduleTypeEnum {
@@ -20,4 +22,11 @@ func (a *AirbyteAPIConnectionSchedule) GetCronExpression() *string {
 		return nil
 	}
 	return a.CronExpression
+}
+
+func (a *AirbyteAPIConnectionSchedule) GetCronTimeZone() *string {
+	if a == nil {
+		return nil
+	}
+	return a.CronTimeZone
 }
