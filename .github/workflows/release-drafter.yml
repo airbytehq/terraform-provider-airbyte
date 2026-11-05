@@ -7,8 +7,8 @@
 # - On push to main: Updates the draft release with the merged PR and pre-built assets
 # - After the draft is finalized: Posts a notice to #dev-platform-terraform-provider in Slack
 # - The action skips the draft (`skipped=true`) when every commit since the last release is
-#   in a non-triggering category (by default `test:`, or hidden `ci:`); the build and Slack
-#   jobs are then skipped too.
+#   in a non-triggering category (`ci:` and `test:`, hidden in `.github/release-drafter.yml`);
+#   the build and Slack jobs are then skipped too.
 # - Categories are determined by conventional commit type (feat, fix, chore, etc.)
 # - The release body is rendered from `.github/release-drafter.yml`
 #

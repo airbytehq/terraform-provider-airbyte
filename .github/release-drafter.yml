@@ -33,9 +33,14 @@ categories:
     commit-scopes: []
     collapse-after: 2
   - title: '⚙️ Under the Hood'
-    commit-types: [chore, ci, build, test, revert, infra]
+    commit-types: [chore, build, revert, infra]
     commit-scopes: []
     collapse-after: 2
+  # Omitted from release notes; on their own they don't refresh the draft.
+  - title: '🤖 CI and Tests'
+    commit-types: [ci, test]
+    commit-scopes: []
+    hidden: true
 template: |
   ## Changes
 
