@@ -87,6 +87,75 @@ func strList(vals ...string) attr.Value {
 	return l
 }
 
+func TestConnectionPlan_UpdatedStreamWithOmittedNamespace(t *testing.T) {
+	for _, tc := range []struct {
+		name      string
+		namespace types.String
+	}{
+		{"non_null", types.StringValue("public")},
+		{"null", types.StringNull()},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			s := newStreamsSetup(t)
+			prior := s.streamValue(t, "table_a", map[string]attr.Value{
+				"namespace":    tc.namespace,
+				"sync_mode":    types.StringValue("full_refresh_append"),
+				"primary_key":  pk("a_id"),
+				"cursor_field": strList("updated_at"),
+			})
+			config := s.streamValue(t, "table_a", map[string]attr.Value{
+				"sync_mode": types.StringValue("incremental_deduped_history"),
+			})
+			got := s.planStreams(t, []attr.Value{prior}, []attr.Value{config}, []attr.Value{config})["table_a"]
+			t.Logf("namespace=%s primary_key=%s cursor_field=%s sync_mode=%s", got["namespace"], got["primary_key"], got["cursor_field"], got["sync_mode"])
+			require.Equal(t, types.StringValue("incremental_deduped_history"), got["sync_mode"])
+			require.True(t, tc.namespace.Equal(got["namespace"]), "namespace: %s", got["namespace"])
+			require.True(t, pk("a_id").Equal(got["primary_key"]), "primary_key: %s", got["primary_key"])
+			require.True(t, strList("updated_at").Equal(got["cursor_field"]), "cursor_field: %s", got["cursor_field"])
+		})
+	}
+}
+
+func TestConnectionPlan_UnknownNamespaceDoesNotGuessBetweenStreams(t *testing.T) {
+	for _, namespaces := range [][]string{{"public", "analytics"}, {"", "analytics"}} {
+		t.Run(namespaces[0]+"_and_"+namespaces[1], func(t *testing.T) {
+			s := newStreamsSetup(t)
+			var prior []attr.Value
+			for _, ns := range namespaces {
+				namespace := types.StringValue(ns)
+				if ns == "" {
+					namespace = types.StringNull()
+				}
+				prior = append(prior, s.streamValue(t, "table_a", map[string]attr.Value{
+					"namespace":   namespace,
+					"sync_mode":   types.StringValue("full_refresh_append"),
+					"primary_key": pk(ns + "_id"),
+				}))
+			}
+			config := s.streamValue(t, "table_a", map[string]attr.Value{
+				"sync_mode": types.StringValue("incremental_deduped_history"),
+			})
+			got := s.planStreams(t, prior, []attr.Value{config}, []attr.Value{config})["table_a"]
+			require.True(t, got["namespace"].IsUnknown(), "namespace: %s", got["namespace"])
+			require.True(t, got["primary_key"].IsUnknown(), "primary_key: %s", got["primary_key"])
+		})
+	}
+}
+
+func TestConnectionPlan_ExplicitNamespaceChangeDoesNotReuseComputedValues(t *testing.T) {
+	s := newStreamsSetup(t)
+	prior := s.streamValue(t, "table_a", map[string]attr.Value{
+		"namespace":   types.StringValue("public"),
+		"primary_key": pk("a_id"),
+	})
+	config := s.streamValue(t, "table_a", map[string]attr.Value{
+		"namespace": types.StringValue("analytics"),
+	})
+	got := s.planStreams(t, []attr.Value{prior}, []attr.Value{config}, []attr.Value{config})["table_a"]
+	require.Equal(t, types.StringValue("analytics"), got["namespace"])
+	require.True(t, got["primary_key"].IsUnknown(), "primary_key: %s", got["primary_key"])
+}
+
 // TestConnectionPlan_NewStreamDoesNotInheritNeighborValues reproduces
 // https://github.com/airbytehq/terraform-provider-airbyte/issues/476: adding a
 // stream to an existing connection must plan its source-defined computed

@@ -103,8 +103,21 @@ func (m uniqueByNameAndNamespace) PlanModifySet(ctx context.Context, req planmod
 	for _, planElem := range planElems {
 		key := m.compositeKey(planElem)
 		stateElem, found := stateByKey[key]
+		configElem := configByKey[key]
+		if obj, ok := planElem.(basetypes.ObjectValue); ok && obj.Attributes()["namespace"].IsUnknown() {
+			// An omitted computed namespace cannot identify a stream until state
+			// is correlated. Fall back to name only when it is unambiguous.
+			found = false
+			name := obj.Attributes()["name"]
+			candidateState := uniqueElementByName(stateElems, name)
+			candidateConfig := uniqueElementByName(configElems, name)
+			if !name.IsNull() && !name.IsUnknown() && uniqueElementByName(planElems, name) != nil && candidateState != nil && candidateConfig != nil {
+				if candidateConfig.(basetypes.ObjectValue).Attributes()["namespace"].IsNull() {
+					stateElem, configElem, found = candidateState, candidateConfig, true
+				}
+			}
+		}
 		if found && key != "" {
-			configElem := configByKey[key] // may be zero-value if not found
 			mergedElem := m.mergeComputedFromState(planElem, stateElem, configElem)
 			merged = append(merged, mergedElem)
 		} else {
@@ -117,6 +130,19 @@ func (m uniqueByNameAndNamespace) PlanModifySet(ctx context.Context, req planmod
 	if !resp.Diagnostics.HasError() {
 		resp.PlanValue = newSet
 	}
+}
+
+func uniqueElementByName(elems []attr.Value, name attr.Value) attr.Value {
+	var match attr.Value
+	for _, elem := range elems {
+		if obj, ok := elem.(basetypes.ObjectValue); ok && obj.Attributes()["name"].Equal(name) {
+			if match != nil {
+				return nil
+			}
+			match = elem
+		}
+	}
+	return match
 }
 
 // compositeKey extracts the composite key from a set element (assumed to be an Object).
