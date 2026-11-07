@@ -3,9 +3,24 @@ package provider
 import (
 	"encoding/json"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
+
+func isAirbyteProviderAddress(address string) bool {
+	parts := strings.Split(address, "/")
+	switch len(parts) {
+	case 1:
+		return parts[0] == "airbyte"
+	case 2:
+		return parts[0] == "airbytehq" && parts[1] == "airbyte"
+	case 3:
+		return parts[0] != "" && parts[1] == "airbytehq" && parts[2] == "airbyte"
+	default:
+		return false
+	}
+}
 
 func extractJSONString(raw map[string]json.RawMessage, key string) string {
 	v, ok := raw[key]
