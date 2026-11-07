@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -86,7 +87,7 @@ func TestDefinitionPlan(t *testing.T) {
 					require.False(t, plan.GetAttribute(ctx, path.Root("id"), &plannedID).HasError())
 					require.False(t, plan.GetAttribute(ctx, path.Root("docker_image_tag"), &tag).HasError())
 					t.Logf("planned id=%s docker_image_tag=%s", plannedID, tag)
-					require.Equal(t, id, plannedID)
+					assert.Equal(t, id, plannedID)
 					require.Equal(t, types.StringValue(tc.tag), tag)
 					require.Empty(t, replacements)
 
@@ -123,6 +124,12 @@ func TestDefinitionPlan(t *testing.T) {
 				proposed := definitionPlanValue(t, sr.Schema, configValues)
 				_, replacements := planDefinitionResource(t, definition, typeName, prior, proposed, config)
 				require.Contains(t, replacements, tftypes.NewAttributePath().WithAttributeName("docker_repository"))
+			})
+			t.Run("destroy", func(t *testing.T) {
+				null := tftypes.NewValue(sr.Schema.Type().TerraformType(ctx), nil)
+				plan, replacements := planDefinitionResource(t, definition, typeName, prior, null, null)
+				require.True(t, plan.Raw.IsNull())
+				require.Empty(t, replacements)
 			})
 		})
 	}
