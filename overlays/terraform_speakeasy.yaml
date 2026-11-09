@@ -171,6 +171,11 @@ actions:
     update:
       x-speakeasy-plan-modifiers: UseStateForUnknown
 
+  - target: "$.components.schemas.DefinitionResponse.properties.id"
+    description: "Preserve source and destination definition ids during in-place updates (#475)"
+    update:
+      x-speakeasy-plan-modifiers: UseStateForUnknown
+
   # =============================================================================
   # Connection Stream Drift Fixes
   # =============================================================================
