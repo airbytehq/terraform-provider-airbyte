@@ -107,13 +107,25 @@ jobs:
               DIFF_OUTPUT="${DIFF_OUTPUT}${DOCS_DIFF}"$'\n'
           fi
 
+          FILTERED_DIFF=""
+          while IFS= read -r line; do
+              [ -n "$line" ] || continue
+              if [[ "$line" =~ ^Files\ (.+)\ and\ (.+)\ differ$ ]] \
+                  && scripts/is_version_only_change.sh "${BASH_REMATCH[1]}" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"; then
+                  echo "Ignoring version-only changes: ${BASH_REMATCH[1]}"
+                  continue
+              fi
+              FILTERED_DIFF="${FILTERED_DIFF}${line}"$'\n'
+          done <<< "$DIFF_OUTPUT"
+          DIFF_OUTPUT="$FILTERED_DIFF"
+
           if [ -n "$DIFF_OUTPUT" ]; then
-              echo "has_diff=true" >> $GITHUB_OUTPUT
+              echo "has_diff=true" | tee -a "$GITHUB_OUTPUT"
               echo "::warning::Generated code drift detected. The committed code does not match what the generation pipeline produces."
               echo "$DIFF_OUTPUT" | head -50
               echo "$DIFF_OUTPUT" | head -20 > /tmp/diff_summary.txt
           else
-              echo "has_diff=false" >> $GITHUB_OUTPUT
+              echo "has_diff=false" | tee -a "$GITHUB_OUTPUT"
               echo "Zero-diff check passed. Committed code matches generation output."
           fi
 

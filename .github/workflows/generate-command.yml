@@ -238,29 +238,18 @@ jobs:
             - name: Check for changes
               if: ${{ !inputs.dry_run }}
               id: changes
-              # A diff that only bumps the release version and Speakeasy checksums is noise:
-              # it opens version-only regen PRs after every release. Ignore it.
-              env:
-                  VERSION_FILES: '^(gen\.yaml|\.speakeasy/gen\.lock|internal/sdk/sdk\.go|docs/index\.md|examples/provider/provider\.tf|README\.md)$'
-                  CHECKSUM_LINES: '^ *(configChecksum|generation_id|pristine_commit_hash|pristine_tree_hash|last_write_checksum|pristine_git_object):'
               run: |
-                  normalize() {
-                      sed -E \
-                          -e 's/[0-9]+\.[0-9]+\.[0-9]+/X.Y.Z/g' \
-                          -e "\#${CHECKSUM_LINES}#d"
-                  }
                   changed=$(git status --porcelain --untracked-files=all | cut -c4-)
                   has_changes=false
-                  if echo "$changed" | grep -qvE "$VERSION_FILES|^$"; then
-                      has_changes=true
-                  else
-                      for f in $changed; do
-                          cmp -s <(git show "HEAD:$f" | normalize) <(normalize < "$f") || has_changes=true
-                      done
-                  fi
+                  while IFS= read -r f; do
+                      [ -n "$f" ] || continue
+                      git cat-file -e "HEAD:$f" 2>/dev/null && [ -f "$f" ] \
+                          && scripts/is_version_only_change.sh "$f" <(git show "HEAD:$f" 2>/dev/null) "$f" \
+                          || has_changes=true
+                  done <<< "$changed"
                   [ -n "$changed" ] && [ "$has_changes" = false ] \
                       && echo "Only version and checksum changes found; skipping PR."
-                  echo "has_changes=$has_changes" >> "$GITHUB_OUTPUT"
+                  echo "has_changes=$has_changes" | tee -a "$GITHUB_OUTPUT"
 
             # --- PR branch mode: commit and push to the existing PR branch ---
             - name: Push regenerated code to PR branch
