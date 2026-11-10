@@ -207,6 +207,8 @@ uvx --from=poethepoet poe <task-name>
 | File | Purpose |
 |------|---------|
 | `scripts/generate_terraform_spec.py` | Generates the Terraform-specific OpenAPI spec from upstream sources |
+| `internal/provider/connection_tags_helpers.go` | Hand-written connection tag ordering helper |
+| `internal/provider/connection_tags_test.go` | Hand-written connection tag ordering tests |
 | `overlays/terraform_speakeasy.yaml` | Speakeasy overlay for Terraform-specific customizations |
 | `.github/workflows/*` | CI/CD workflows (release, pre-release, generation, testing) |
 | `.goreleaser*.yml` | GoReleaser configs (stable and pre-release) |
