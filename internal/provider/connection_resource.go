@@ -785,7 +785,9 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	priorTags := data.Tags
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	data.Tags = preserveConnectionTagOrder(data.Tags, priorTags)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -849,7 +851,9 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	priorTags := data.Tags
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	data.Tags = preserveConnectionTagOrder(data.Tags, priorTags)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -899,7 +903,9 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
+	priorTags := data.Tags
 	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+	data.Tags = preserveConnectionTagOrder(data.Tags, priorTags)
 
 	if resp.Diagnostics.HasError() {
 		return
