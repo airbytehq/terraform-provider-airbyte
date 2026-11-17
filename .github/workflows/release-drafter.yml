@@ -102,8 +102,10 @@ jobs:
 
       # Step 4: Create local tag for GoReleaser (not pushed)
       - name: Create local tag
+        env:
+          NEEDS_PREPARE_EMPTY_DRAFT_RESOLVED_VERSION: ${{ needs.prepare-empty-draft.outputs.resolved-version }}
         run: |
-          VERSION="${{ needs.prepare-empty-draft.outputs.resolved-version }}"
+          VERSION="${NEEDS_PREPARE_EMPTY_DRAFT_RESOLVED_VERSION}"
           git tag "v${VERSION}" || true  # Ignore if tag already exists locally
 
       # Step 5: Build and upload assets using GoReleaser
