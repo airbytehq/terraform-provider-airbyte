@@ -38,8 +38,10 @@ jobs:
               uses: astral-sh/setup-uv@v5
 
             - name: Delete all generated code
+              env:
+                IN_BRANCH: ${{ inputs.branch }}
               run: |
-                echo "=== Cleaning branch: ${{ inputs.branch }} ==="
+                echo "=== Cleaning branch: ${IN_BRANCH} ==="
                 uvx --from=poethepoet poe clean-generated
                 echo "=== Done. All generated code removed. ==="
 

@@ -116,14 +116,21 @@ jobs:
         id: resolve-ref
         env:
           GH_TOKEN: ${{ steps.get-app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          IN_PR: ${{ inputs.pr }}
         run: |
-          PR_HEAD=$(gh pr view "${{ inputs.pr }}" --repo "${{ github.repository }}" --json headRefName -q '.headRefName')
+          if [[ ! "${IN_PR}" =~ ^[0-9]+$ ]]; then
+            echo "::error::The pr input must be a number."
+            exit 1
+          fi
+          PR_HEAD=$(gh pr view "${IN_PR}" --repo "${GITHUB_REPOSITORY}" --json headRefName -q '.headRefName')
           echo "ref=$PR_HEAD" >> "$GITHUB_OUTPUT"
 
       # ── Validate version input ──────────────────────────────────────
       - name: Validate pre-release version
+        env:
+          IN_VERSION: ${{ inputs.version }}
         run: |
-          VERSION="${{ inputs.version }}"
+          VERSION="${IN_VERSION}"
 
           # Ensure version starts with 'v'
           if [[ ! "$VERSION" =~ ^v ]]; then
@@ -177,11 +184,12 @@ jobs:
       - name: Check for existing release or tag
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IN_VERSION: ${{ inputs.version }}
         run: |
-          VERSION="${{ inputs.version }}"
+          VERSION="${IN_VERSION}"
 
           # Fail if a GitHub Release already exists for this version
-          if gh release view "$VERSION" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+          if gh release view "$VERSION" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
             echo "::error::Release $VERSION already exists. Use a different version or delete the existing release first."
             exit 1
           fi
@@ -194,10 +202,14 @@ jobs:
 
       # ── Tag the commit ──────────────────────────────────────────────
       - name: Create and push tag
+        env:
+          IN_VERSION: ${{ inputs.version }}
+          STEP_IMPORT_GPG_NAME: ${{ steps.import_gpg.outputs.name }}
+          STEP_IMPORT_GPG_EMAIL: ${{ steps.import_gpg.outputs.email }}
         run: |
-          VERSION="${{ inputs.version }}"
-          git config user.name "${{ steps.import_gpg.outputs.name }}"
-          git config user.email "${{ steps.import_gpg.outputs.email }}"
+          VERSION="${IN_VERSION}"
+          git config user.name "${STEP_IMPORT_GPG_NAME}"
+          git config user.email "${STEP_IMPORT_GPG_EMAIL}"
           git tag -a "$VERSION" -m "Pre-release $VERSION"
           git push origin "$VERSION"
 
