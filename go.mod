@@ -1,10 +1,10 @@
 module github.com/airbytehq/terraform-provider-airbyte
 
-go 1.25.8
+go 1.25.13
 
 require (
 	github.com/dlclark/regexp2 v1.12.0
-	github.com/hashicorp/go-uuid v1.0.3
+	github.com/hashicorp/go-uuid v1.0.4
 	github.com/hashicorp/terraform-plugin-docs v0.25.0
 	github.com/hashicorp/terraform-plugin-framework v1.19.0
 	github.com/hashicorp/terraform-plugin-framework-jsontypes v0.2.0
