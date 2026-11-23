@@ -1,6 +1,6 @@
 module github.com/airbytehq/terraform-provider-airbyte
 
-go 1.25.8
+go 1.26.0
 
 require (
 	github.com/dlclark/regexp2 v1.12.0
@@ -13,7 +13,7 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.10.0
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.3
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/sync v0.20.0
+	golang.org/x/sync v0.25.0
 )
 
 require (
