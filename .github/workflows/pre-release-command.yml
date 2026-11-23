@@ -216,7 +216,7 @@ jobs:
       # ── Build and publish with GoReleaser ───────────────────────────
       # Uses .goreleaser.prerelease.yml which sets draft=false (no prerelease flag).
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
+        uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
         with:
           args: release --clean --config .goreleaser.prerelease.yml
           version: latest
